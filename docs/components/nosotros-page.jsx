@@ -157,7 +157,7 @@ const NosotrosTeam = ({ lang }) => {
           <div className="nosotros-person reveal">
             <div className="portrait">
               <img decoding="async" src="assets/photo-alex.jpg" alt="Alex Berruezo"
-                width="840" height="1120"
+                width="1195" height="1600"
                 loading="lazy"
                 onError={e => { e.currentTarget.style.display='none'; e.currentTarget.nextSibling && (e.currentTarget.nextSibling.style.display='block'); }}/>
               <WatermarkBadge size={28} pos={{ bottom: 8, right: 8 }}/>
@@ -178,7 +178,7 @@ const NosotrosTeam = ({ lang }) => {
           <div className="nosotros-person reveal delay-1">
             <div className="portrait">
               <img decoding="async" src="assets/photo-fran.jpg" alt="Fran Moral"
-                width="925" height="2000"
+                width="711" height="1600"
                 loading="lazy"
                 onError={e => { e.currentTarget.style.display='none'; e.currentTarget.nextSibling && (e.currentTarget.nextSibling.style.display='block'); }}/>
               <WatermarkBadge size={28} pos={{ bottom: 8, right: 8 }}/>

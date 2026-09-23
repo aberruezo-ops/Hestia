@@ -4488,8 +4488,8 @@ const _waMsgForPage = (lang) => {
   return _CONTACT_WA_MSGS[lang][page] || (lang === 'es' ? 'Hola, me interesa Hestía Your Home.' : 'Hi, I\'d like to know more about Hestía Your Home.');
 };
 const _CONTACT_PERSONS = [
-  { id: 'alex', name: 'Alex', photo: 'assets/photo-alex.jpg', photoW: 840, photoH: 1120, imgClass: 'wc-avatar-img-alex', langLbl: 'Español', tel: '+34 620 316 370', telHref: 'tel:+34620316370', waNumber: '34620316370' },
-  { id: 'fran', name: 'Fran', photo: 'assets/photo-fran.jpg', photoW: 925, photoH: 2000, imgClass: 'wc-avatar-img-fran', langLbl: 'English', tel: '+34 654 138 251', telHref: 'tel:+34654138251', waNumber: '34654138251' },
+  { id: 'alex', name: 'Alex', photo: 'assets/photo-alex.jpg', photoW: 1195, photoH: 1600, imgClass: 'wc-avatar-img-alex', langLbl: 'Español', tel: '+34 620 316 370', telHref: 'tel:+34620316370', waNumber: '34620316370' },
+  { id: 'fran', name: 'Fran', photo: 'assets/photo-fran.jpg', photoW: 711, photoH: 1600, imgClass: 'wc-avatar-img-fran', langLbl: 'English', tel: '+34 654 138 251', telHref: 'tel:+34654138251', waNumber: '34654138251' },
 ];
 const WcWaIcon = () => (
   <svg width="13" height="13" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">

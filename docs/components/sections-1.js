@@ -24,59 +24,57 @@
 const VIDEO_V = '2026-06-20';
 const HERO_VIDEOS = [{
   src: 'assets/Videoshome/hero-playa-almeria.mp4',
-  poster: 'assets/hero-terrace-night.jpg',
+  poster: 'assets/hero-poster-playa-almeria.jpg',
   mood: 'violet',
   alt: 'Costa aérea · turquesa'
 }, {
   src: 'assets/Videoshome/hero-cabo-gata-mediodia.mp4',
-  poster: 'assets/hero-terrace-night.jpg',
+  poster: 'assets/hero-poster-cabo-gata-mediodia.jpg',
   mood: 'teal',
   alt: 'Cabo de Gata · mediodía'
 }, {
   src: 'assets/Videoshome/hero-atardecer-aereo.mp4',
-  poster: 'assets/hero-terrace-night.jpg',
+  poster: 'assets/hero-poster-atardecer-aereo.jpg',
   mood: 'warm',
   alt: 'Atardecer aéreo sobre la playa'
 }, {
   src: 'assets/Videoshome/hero-cala-rocosa.mp4',
-  poster: 'assets/hero-terrace-night.jpg',
+  poster: 'assets/hero-poster-cala-rocosa.jpg',
   mood: 'night',
   alt: 'Cala rocosa con agua cristalina · cenital'
 }, {
   src: 'assets/Videoshome/hero-playa-aerea-turquesa.mp4',
-  poster: 'assets/hero-terrace-night.jpg',
+  poster: 'assets/hero-poster-playa-aerea-turquesa.jpg',
   mood: 'teal',
   alt: 'Playa aérea · arena dorada y agua turquesa'
 }, {
   src: 'assets/Videoshome/hero-atardecer-logo.mp4',
-  poster: 'assets/hero-terrace-night.jpg',
+  poster: 'assets/hero-poster-atardecer-logo.jpg',
   mood: 'warm',
   alt: 'Atardecer cinematográfico con logo Hestía'
 }, {
   src: 'assets/Videoshome/hero-olas-acantilado.mp4',
-  poster: 'assets/hero-terrace-night.jpg',
+  poster: 'assets/hero-poster-olas-acantilado.jpg',
   mood: 'night',
   alt: 'Olas rompiendo en acantilado rocoso'
 }, {
   src: 'assets/Videoshome/hero-cala-aerea.mp4',
-  poster: 'assets/hero-terrace-night.jpg',
+  poster: 'assets/hero-poster-cala-aerea.jpg',
   mood: 'teal',
   alt: 'Cala aérea · arena dorada y agua azul intenso'
 }, {
-  src: 'assets/Videoshome/hero-piscina-verano.mp4',
-  poster: 'assets/hero-terrace-night.jpg',
-  mood: 'teal',
-  alt: 'Piscina en verano'
-}, {
   src: 'assets/Videoshome/hero-rompeolas.mp4',
-  poster: 'assets/hero-terrace-night.jpg',
+  poster: 'assets/hero-poster-rompeolas.jpg',
   mood: 'night',
   alt: 'Olas rompiendo en el rompeolas · espuma y mar abierto'
 }
 // Para añadir un vídeo: súbelo a docs/assets/Videoshome/ y añade
-// una entrada con la misma forma. Para hacerlo circular, procesa
-// con ffmpeg crossfade end→start (ver scripts/build-pdf.mjs para
-// el comando exacto que usamos). Moods: violet | teal | warm | night.
+// una entrada con la misma forma. El poster es un fotograma propio del
+// clip (ver docs/assets/hero-poster-*.jpg), nunca el genérico de otro
+// vídeo: si no coincide con el contenido, se nota un salto al cargar.
+// Para hacerlo circular, procesa con ffmpeg crossfade end→start (ver
+// scripts/build-pdf.mjs para el comando exacto que usamos).
+// Moods: violet | teal | warm | night.
 ];
 
 // --- HERO cinematográfico ---
@@ -345,8 +343,8 @@ const APARTMENTS = [{
   license: 'VFT/AL/01580',
   concept: 'apt_01_concept',
   img: 'assets/apt-vm-gallery-26.jpg',
-  imgW: 1500,
-  imgH: 1276,
+  imgW: 1600,
+  imgH: 1371,
   rating: '9.8',
   meta: ['6 + bebé', '2 hab.', 'Piscina', 'Mascotas · petición']
 }, {
@@ -357,8 +355,8 @@ const APARTMENTS = [{
   license: 'VFT/AL/05535',
   concept: 'apt_02_concept',
   img: 'assets/apt-vt-gallery-33.jpg',
-  imgW: 1200,
-  imgH: 1462,
+  imgW: 1280,
+  imgH: 1600,
   rating: '10',
   meta: ['6 + bebé', '2 hab.', 'Ático', 'SPA']
 }, {
@@ -369,8 +367,8 @@ const APARTMENTS = [{
   license: 'VFT/AL/07056',
   concept: 'apt_03_concept',
   img: 'assets/apt-vs-gallery-33.jpg',
-  imgW: 1500,
-  imgH: 1406,
+  imgW: 1600,
+  imgH: 1422,
   rating: '9.9',
   meta: ['6 + bebé', '2 hab.', '3 piscinas', 'Salinas']
 }];
