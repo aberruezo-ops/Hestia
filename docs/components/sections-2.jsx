@@ -76,7 +76,7 @@ const Team = ({ lang }) => {
         <div className="team-grid">
           <div className="team-member alex">
             <div className="portrait">
-              <img decoding="async" src="assets/photo-alex.jpg" alt="Alex Berruezo" width="731" height="1014" loading="lazy" onError={e => { e.currentTarget.style.display='none'; }}/>
+              <img decoding="async" src="assets/photo-alex.jpg" alt="Alex Berruezo" width="1195" height="1600" loading="lazy" onError={e => { e.currentTarget.style.display='none'; }}/>
               <WatermarkBadge size={26} pos={{ bottom: 8, right: 8 }}/>
               <svg viewBox="0 0 100 125" className="silhouette" preserveAspectRatio="xMidYMax meet">
                 <defs>
@@ -101,7 +101,7 @@ const Team = ({ lang }) => {
           </div>
           <div className="team-member fran">
             <div className="portrait">
-              <img decoding="async" src="assets/photo-fran.jpg" alt="Fran Moral" width="925" height="2000" loading="lazy" onError={e => { e.currentTarget.style.display='none'; }}/>
+              <img decoding="async" src="assets/photo-fran.jpg" alt="Fran Moral" width="711" height="1600" loading="lazy" onError={e => { e.currentTarget.style.display='none'; }}/>
               <WatermarkBadge size={26} pos={{ bottom: 8, right: 8 }}/>
               <svg viewBox="0 0 100 125" className="silhouette" preserveAspectRatio="xMidYMax meet">
                 <defs>

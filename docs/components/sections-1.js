@@ -343,8 +343,8 @@ const APARTMENTS = [{
   license: 'VFT/AL/01580',
   concept: 'apt_01_concept',
   img: 'assets/apt-vm-gallery-26.jpg',
-  imgW: 1500,
-  imgH: 1276,
+  imgW: 1600,
+  imgH: 1371,
   rating: '9.8',
   meta: ['6 + bebé', '2 hab.', 'Piscina', 'Mascotas · petición']
 }, {
@@ -355,8 +355,8 @@ const APARTMENTS = [{
   license: 'VFT/AL/05535',
   concept: 'apt_02_concept',
   img: 'assets/apt-vt-gallery-33.jpg',
-  imgW: 1200,
-  imgH: 1462,
+  imgW: 1280,
+  imgH: 1600,
   rating: '10',
   meta: ['6 + bebé', '2 hab.', 'Ático', 'SPA']
 }, {
@@ -367,8 +367,8 @@ const APARTMENTS = [{
   license: 'VFT/AL/07056',
   concept: 'apt_03_concept',
   img: 'assets/apt-vs-gallery-33.jpg',
-  imgW: 1500,
-  imgH: 1406,
+  imgW: 1600,
+  imgH: 1422,
   rating: '9.9',
   meta: ['6 + bebé', '2 hab.', '3 piscinas', 'Salinas']
 }];

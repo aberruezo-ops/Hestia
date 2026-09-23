@@ -1700,8 +1700,8 @@ const ReservasAside = ({
     decoding: "async",
     src: "assets/photo-alex.jpg",
     alt: "Alex Berruezo",
-    width: "731",
-    height: "1014",
+    width: "1195",
+    height: "1600",
     loading: "lazy",
     onError: e => {
       e.currentTarget.style.display = 'none';
@@ -1738,8 +1738,8 @@ const ReservasAside = ({
     decoding: "async",
     src: "assets/photo-fran.jpg",
     alt: "Fran Moral",
-    width: "925",
-    height: "2000",
+    width: "711",
+    height: "1600",
     loading: "lazy",
     onError: e => {
       e.currentTarget.style.display = 'none';
