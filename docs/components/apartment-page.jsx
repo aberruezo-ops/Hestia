@@ -62,6 +62,7 @@ const APT_DATA = {
       'assets/apt-vm-gallery-18.jpg',
       'assets/apt-vm-gallery-19.jpg',
       'assets/apt-vm-gallery-20.jpg',
+      'assets/apt-vm-gallery-27.jpg',
     ],
     es: {
       name: 'Hestía Mar',
