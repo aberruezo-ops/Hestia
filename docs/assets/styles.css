@@ -10390,6 +10390,13 @@ body[data-apt="salinas"] a.apt-page-reserve-btn:hover {
   flex-direction: column;
   gap: 22px;
 }
+.voz-card-img {
+  width: 100%;
+  aspect-ratio: 16/10;
+  object-fit: cover;
+  display: block;
+  border-radius: 10px 0 10px 0;
+}
 .voz-card-head {
   display: flex;
   align-items: baseline;
@@ -10490,10 +10497,21 @@ body[data-apt="salinas"] a.apt-page-reserve-btn:hover {
   gap: 28px;
 }
 .noticias-article {
+  display: flex;
+  gap: 16px;
   padding-bottom: 24px;
   border-bottom: 1px solid rgba(61,26,53,.07);
 }
 .noticias-article:last-child { border-bottom: none; padding-bottom: 0; }
+.noticias-article-img {
+  width: 92px;
+  height: 92px;
+  min-width: 92px;
+  object-fit: cover;
+  border-radius: 10px 0 10px 0;
+  flex-shrink: 0;
+}
+.noticias-article-body { flex: 1; min-width: 0; }
 .noticias-tag {
   display: inline-block;
   font-family: var(--sans);

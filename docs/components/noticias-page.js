@@ -19,6 +19,7 @@ const NOTICIAS = {
     "apt": "Hestía Mar",
     "slug": "mar.html",
     "accent": "var(--vm)",
+    "img": "assets/apt-vm-gallery-26.jpg",
     "curiosidad": {
       "es": "Septiembre es el mes que en Vera Playa guardamos para nosotros. El termómetro se queda en torno a los 28°C de máxima y las noches no bajan de los 20, el agua conserva el calor de todo el verano y la playa, a cinco minutos a pie de Hestía Mar, recupera el silencio. La terraza esquinera vuelve a ser de mañana, de tarde y de noche, sin esperar a que afloje el calor.",
       "en": "September is the month we in Vera Playa keep for ourselves. Highs settle around 28°C and nights stay above 20, the sea holds the warmth of the whole summer, and the beach, five minutes on foot from Hestía Mar, gets its quiet back. The corner terrace is yours morning, afternoon and night again, no waiting for the heat to ease."
@@ -32,6 +33,7 @@ const NOTICIAS = {
     "apt": "Hestía Thalassa",
     "slug": "thalassa.html",
     "accent": "var(--vt)",
+    "img": "assets/apt-vt-gallery-33.jpg",
     "curiosidad": {
       "es": "Con las tardes más suaves, la terraza panorámica del ático se disfruta entera, sin buscar la sombra. Es también el mes en que el SPA y la sauna comunitarios dejan de parecer un lujo de invierno y pasan a cerrar el día: mar por la mañana, vapor al caer el sol y el Salar de los Canos cambiando de color desde arriba.",
       "en": "With milder evenings, the penthouse's 360° terrace can be enjoyed in full, no hunting for shade. It's also the month when the shared spa and sauna stop feeling like a winter luxury and start closing the day: sea in the morning, steam at sunset, and the Salar de los Canos changing colour from above."
@@ -45,6 +47,7 @@ const NOTICIAS = {
     "apt": "Hestía Salinas",
     "slug": "salinas.html",
     "accent": "var(--vs-dk)",
+    "img": "assets/apt-vs-gallery-33.jpg",
     "curiosidad": {
       "es": "Septiembre abre la temporada de estancias largas (de septiembre a junio), y Hestía Salinas es el que mejor la entiende: el más luminoso de los tres, con dos terrazas, tres piscinas y el Parque Natural de las Salinas de Puerto Rey al lado. La fibra hasta 600 Mbps simétricos y una mesa de trabajo bajo petición convierten una semana de teletrabajo en un mes.",
       "en": "September opens the long-stay season (September to June), and Hestía Salinas is the one that understands it best: the brightest of the three, with two terraces, three pools and the Salinas de Puerto Rey Natural Park next door. Fibre up to 600 Mbps symmetrical and a work desk on request turn a week of remote work into a month."
@@ -387,7 +390,12 @@ const VozCard = ({
   style: {
     '--voz-accent': item.accent
   }
-}, /*#__PURE__*/React.createElement("div", {
+}, item.img && /*#__PURE__*/React.createElement("img", {
+  className: "voz-card-img",
+  src: item.img,
+  alt: item.apt,
+  loading: "lazy"
+}), /*#__PURE__*/React.createElement("div", {
   className: "voz-card-head"
 }, /*#__PURE__*/React.createElement("span", {
   className: "voz-num"
@@ -424,13 +432,20 @@ const ArticleCard = ({
 }) => /*#__PURE__*/React.createElement("div", {
   className: "noticias-article",
   id: id
+}, article.img && /*#__PURE__*/React.createElement("img", {
+  className: "noticias-article-img",
+  src: article.img,
+  alt: "",
+  loading: "lazy"
+}), /*#__PURE__*/React.createElement("div", {
+  className: "noticias-article-body"
 }, /*#__PURE__*/React.createElement("span", {
   className: "noticias-tag"
 }, article.tag[lang]), /*#__PURE__*/React.createElement("h3", {
   className: "noticias-titulo"
 }, article.titulo[lang]), /*#__PURE__*/React.createElement("p", {
   className: "noticias-cuerpo"
-}, article.cuerpo[lang]));
+}, article.cuerpo[lang])));
 
 // Article card variant for by-month view: includes zone badge
 const ArticleCardWithZone = ({
@@ -442,6 +457,13 @@ const ArticleCardWithZone = ({
   style: {
     '--cat-accent': cat.accent
   }
+}, article.img && /*#__PURE__*/React.createElement("img", {
+  className: "noticias-article-img",
+  src: article.img,
+  alt: "",
+  loading: "lazy"
+}), /*#__PURE__*/React.createElement("div", {
+  className: "noticias-article-body"
 }, /*#__PURE__*/React.createElement("div", {
   className: "noticias-article-meta"
 }, /*#__PURE__*/React.createElement("span", {
@@ -454,7 +476,7 @@ const ArticleCardWithZone = ({
   className: "noticias-titulo"
 }, article.titulo[lang]), /*#__PURE__*/React.createElement("p", {
   className: "noticias-cuerpo"
-}, article.cuerpo[lang]));
+}, article.cuerpo[lang])));
 const NoticiasPage = ({
   lang
 }) => {
