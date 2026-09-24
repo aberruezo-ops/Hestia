@@ -46,7 +46,7 @@ const amenityHi = emoji => AMENITY_HI[(emoji || '').replace(/️/g, '')];
 
 // Versión de caché de las fotos de galería. Súbela al reemplazar fotos con el
 // mismo nombre para que el navegador cargue las nuevas y no las cacheadas.
-const GALLERY_V = '12';
+const GALLERY_V = '14';
 const APT_DATA = {
   vm: {
     id: 'vm',
@@ -70,7 +70,7 @@ const APT_DATA = {
     others: ['vt', 'vs'],
     // Orden por estancia (recorrido de visita): salón/comedor + detalles,
     // cocina, dormitorio principal, dormitorio 2, baños, terraza, piscina.
-    gallery_imgs: ['assets/apt-vm-gallery-1.jpg', 'assets/apt-vm-gallery-2.jpg', 'assets/apt-vm-gallery-3.jpg', 'assets/apt-vm-gallery-21.jpg', 'assets/apt-vm-gallery-22.jpg', 'assets/apt-vm-gallery-5.jpg', 'assets/apt-vm-gallery-23.jpg', 'assets/apt-vm-gallery-24.jpg', 'assets/apt-vm-gallery-6.jpg', 'assets/apt-vm-gallery-7.jpg', 'assets/apt-vm-gallery-8.jpg', 'assets/apt-vm-gallery-26.jpg', 'assets/apt-vm-gallery-10.jpg', 'assets/apt-vm-gallery-25.jpg', 'assets/apt-vm-gallery-9.jpg', 'assets/apt-vm-gallery-11.jpg', 'assets/apt-vm-gallery-15.jpg', 'assets/apt-vm-gallery-16.jpg', 'assets/apt-vm-gallery-17.jpg', 'assets/apt-vm-gallery-13.jpg', 'assets/apt-vm-gallery-14.jpg', 'assets/apt-vm-gallery-4.jpg', 'assets/apt-vm-gallery-18.jpg', 'assets/apt-vm-gallery-19.jpg', 'assets/apt-vm-gallery-20.jpg'],
+    gallery_imgs: ['assets/apt-vm-gallery-1.jpg', 'assets/apt-vm-gallery-2.jpg', 'assets/apt-vm-gallery-3.jpg', 'assets/apt-vm-gallery-21.jpg', 'assets/apt-vm-gallery-22.jpg', 'assets/apt-vm-gallery-5.jpg', 'assets/apt-vm-gallery-23.jpg', 'assets/apt-vm-gallery-24.jpg', 'assets/apt-vm-gallery-6.jpg', 'assets/apt-vm-gallery-7.jpg', 'assets/apt-vm-gallery-8.jpg', 'assets/apt-vm-gallery-26.jpg', 'assets/apt-vm-gallery-10.jpg', 'assets/apt-vm-gallery-25.jpg', 'assets/apt-vm-gallery-9.jpg', 'assets/apt-vm-gallery-11.jpg', 'assets/apt-vm-gallery-15.jpg', 'assets/apt-vm-gallery-16.jpg', 'assets/apt-vm-gallery-17.jpg', 'assets/apt-vm-gallery-13.jpg', 'assets/apt-vm-gallery-14.jpg', 'assets/apt-vm-gallery-4.jpg', 'assets/apt-vm-gallery-18.jpg', 'assets/apt-vm-gallery-19.jpg', 'assets/apt-vm-gallery-20.jpg', 'assets/apt-vm-gallery-27.jpg'],
     es: {
       name: 'Hestía Mar',
       concept: 'El campo de olivos llega al mar.',

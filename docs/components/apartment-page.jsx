@@ -17,7 +17,7 @@ const amenityHi = (emoji) => AMENITY_HI[(emoji || '').replace(/️/g, '')];
 
 // Versión de caché de las fotos de galería. Súbela al reemplazar fotos con el
 // mismo nombre para que el navegador cargue las nuevas y no las cacheadas.
-const GALLERY_V = '12';
+const GALLERY_V = '14';
 
 const APT_DATA = {
   vm: {
@@ -62,6 +62,7 @@ const APT_DATA = {
       'assets/apt-vm-gallery-18.jpg',
       'assets/apt-vm-gallery-19.jpg',
       'assets/apt-vm-gallery-20.jpg',
+      'assets/apt-vm-gallery-27.jpg',
     ],
     es: {
       name: 'Hestía Mar',
