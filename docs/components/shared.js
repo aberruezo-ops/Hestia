@@ -2186,10 +2186,11 @@ const AnimatedPrice = ({
   value,
   format,
   className,
-  duration = 560
+  duration = 560,
+  from
 }) => {
   const to = Math.round(value) || 0;
-  const [display, setDisplay] = React.useState(() => Math.round(to * 0.92));
+  const [display, setDisplay] = React.useState(() => from != null ? from : Math.round(to * 0.92));
   const dispRef = React.useRef(display);
   const rafRef = React.useRef(0);
   React.useEffect(() => {

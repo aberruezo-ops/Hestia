@@ -479,7 +479,7 @@ const Apartments = ({ lang }) => {
                   {minPrice && (
                     <div className="apt-price-badge">
                       <span className="apb-label">{lang === 'es' ? 'desde' : 'from'}</span>
-                      <span className="apb-price">{minPrice.toLocaleString('es-ES')}€</span>
+                      <span className="apb-price"><AnimatedPrice value={minPrice} from={0} duration={900} format={v => v.toLocaleString('es-ES')} />€</span>
                       <span className="apb-per">{lang === 'es' ? '/noche · precio directo orientativo' : '/night · guide direct price'}</span>
                       <span className="apb-match">
                         {lang === 'es'

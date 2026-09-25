@@ -318,9 +318,9 @@ const EmojiIcon = ({ emoji, size = 20, className, style }) => {
 // en la reserva). El valor crudo se anima con easeOutCubic; se formatea con `format`.
 // Respeta prefers-reduced-motion (salta al valor final). Arranca al 92% para dar un
 // tick satisfactorio en la primera aparición sin llegar a parpadear un "0 €".
-const AnimatedPrice = ({ value, format, className, duration = 560 }) => {
+const AnimatedPrice = ({ value, format, className, duration = 560, from }) => {
   const to = Math.round(value) || 0;
-  const [display, setDisplay] = React.useState(() => Math.round(to * 0.92));
+  const [display, setDisplay] = React.useState(() => from != null ? from : Math.round(to * 0.92));
   const dispRef = React.useRef(display);
   const rafRef = React.useRef(0);
   React.useEffect(() => {

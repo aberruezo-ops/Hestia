@@ -28,6 +28,7 @@ const APT_DATA = {
     accent: '#6B7A3A', accent2: '#8B9A52', accent_dk: '#4A5628',
     hero_img: 'assets/apt-vm-gallery-26.jpg',
     bedroom_img: 'assets/apt-vm-gallery-26.jpg',
+    reveal_img: 'assets/apt-vm-gallery-27.jpg',
     floorplan_img: 'assets/apt-vm-plano.jpg?v=2',
     floorplan_subtitle_es: 'distribución en planta.',
     floorplan_subtitle_en: 'floor layout.',
@@ -89,6 +90,7 @@ const APT_DATA = {
     accent: '#B86A3C', accent2: '#D08B5A', accent_dk: '#8A4A24',
     hero_img: 'assets/apt-vt-gallery-33.jpg',
     bedroom_img: 'assets/apt-vt-gallery-33.jpg',
+    reveal_img: 'assets/apt-vt-gallery-20.jpg',
     floorplan_img: 'assets/apt-vt-plano.png',
     floorplan_subtitle_es: 'distribución del ático.',
     floorplan_subtitle_en: 'penthouse layout.',
@@ -153,6 +155,7 @@ const APT_DATA = {
     accent: '#D4A84A', accent2: '#E8C476', accent_dk: '#7A5E1A',
     hero_img: 'assets/apt-vs-gallery-33.jpg',
     bedroom_img: 'assets/apt-vs-gallery-33.jpg',
+    reveal_img: 'assets/apt-vs-gallery-32.jpg',
     floorplan_img: 'assets/apt-vs-floorplan.jpg',
     floorplan_subtitle_es: 'distribución en planta.',
     floorplan_subtitle_en: 'floor layout.',
@@ -516,6 +519,28 @@ const AptPageHero = ({ apt, lang, scrolled, mode }) => {
         <p className="apt-page-cancel">
           {lang === 'es' ? '✓ Política de cancelación sin competencia' : '✓ Unmatched cancellation policy'}
         </p>
+      </div>
+    </section>
+  );
+};
+
+// --- Reveal cinematográfico ---
+// Pausa a pantalla completa entre el hero (nombre/precio/CTA) y la galería:
+// una foto real atmosférica de la propia Hestía, teñida con su color, con
+// la cita de la marca en grande. No es información nueva (la cita ya vive
+// en el hero de arriba) — es un momento de marca, no un dato más.
+const AptCinematicReveal = ({ apt, lang }) => {
+  const d = apt[lang];
+  if (!apt.reveal_img) return null;
+  return (
+    <section className="apt-reveal" style={{ '--apt-accent': apt.accent, '--apt-accent2': apt.accent2 }}>
+      <picture>
+        <source srcSet={apt.reveal_img.replace(/\.(jpg|jpeg|png)$/i, '.webp')} type="image/webp"/>
+        <img src={apt.reveal_img} alt="" className="apt-reveal-img" loading="lazy" decoding="async"/>
+      </picture>
+      <div className="apt-reveal-tint"/>
+      <div className="apt-reveal-content">
+        <p className="apt-reveal-quote">« {d.concept} »</p>
       </div>
     </section>
   );
@@ -1440,6 +1465,7 @@ const ApartmentPageApp = () => {
                 estas secciones, así que la trazabilidad acceso→reserva no
                 se resiente; solo cambia el orden de lectura en scroll. */}
             <AptPageHero apt={apt} lang={lang} scrolled={scrolled} mode={mode} />
+            <AptCinematicReveal apt={apt} lang={lang} />
             <AptPageGallery apt={apt} lang={lang} />
             <AptVideoDesc apt={apt} lang={lang} />
             <TrustStrip apt={apt} lang={lang} />
