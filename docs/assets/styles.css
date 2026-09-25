@@ -1820,6 +1820,13 @@ section {
 body.apt-bar-shown .cookies {
   bottom: calc(var(--apt-sticky-h, 60px) + 16px);
 }
+/* Desktop: más estrecho para no solaparse con contenido centrado (720px)
+   que pueda caer en su misma franja vertical al hacer scroll (confirmado
+   en el FAQ de reservas.html). Solo en desktop: en móvil ya va a ancho
+   completo (left/right:12px) y no compite con contenido centrado. */
+@media (min-width: 1024px) {
+  .cookies { width: min(320px, calc(100% - 40px)); }
+}
 /* ✦ corporativo al inicio. */
 .cookies::before {
   content: '✦';
