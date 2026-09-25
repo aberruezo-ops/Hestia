@@ -76,6 +76,7 @@ const NOTICIAS = {
             "es": "Playa",
             "en": "Beach"
           },
+          "img": "assets/noticias-sep2026-playa.jpg",
           "titulo": {
             "es": "Septiembre en Vera Playa: el mismo mar, la mitad de gente",
             "en": "September in Vera Playa: the same sea, half the people"
@@ -93,6 +94,7 @@ const NOTICIAS = {
             "es": "Chiringuito",
             "en": "Beach bar"
           },
+          "img": "assets/noticias-sep2026-paella.jpg",
           "titulo": {
             "es": "Chiringuito Manaca, en la Playa del Sombrerico: paella y atardecer a pie de cala",
             "en": "Chiringuito Manaca, on Playa del Sombrerico: paella and sunset at the water's edge"
