@@ -97,6 +97,20 @@ const Hero = ({
   const heroTomorrow = _heroAdd(heroToday, 1);
   const [hcIn, setHcIn] = React.useState(heroTomorrow);
   const [hcOut, setHcOut] = React.useState(_heroAdd(heroTomorrow, 7));
+  // El buscador de HomeSearch, más abajo en esta misma página, arrancaba
+  // siempre vacío aunque el visitante ya hubiera elegido fechas aquí en
+  // el hero: parecía un selector roto o un segundo paso desconectado.
+  // Arrancan con el mismo valor por defecto (sin necesitar sincronizarse:
+  // los dos calculan tomorrow/+7 igual) y, si el visitante cambia las
+  // fechas del hero, este evento avisa a HomeSearch para que las iguale.
+  React.useEffect(() => {
+    window.dispatchEvent(new CustomEvent('hestia:hero-dates', {
+      detail: {
+        checkin: hcIn,
+        checkout: hcOut
+      }
+    }));
+  }, [hcIn, hcOut]);
   // Antes, un rango inválido hacía que el formulario no hiciera nada al
   // pulsar el botón, sin ningún aviso: el usuario no podía saber si había
   // funcionado, fallado o estaba cargando. El date input ya limita el
