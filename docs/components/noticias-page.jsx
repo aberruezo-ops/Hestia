@@ -120,6 +120,7 @@ const NOTICIAS = {
             "es": "Feria",
             "en": "Fair"
           },
+          "img": "assets/noticias-sep2026-feria-vera.jpg",
           "titulo": {
             "es": "Feria de Vera, San Cleofás, del 24 al 29 de septiembre",
             "en": "Vera Fair, San Cleofás, 24 to 29 September"
@@ -147,6 +148,7 @@ const NOTICIAS = {
             "es": "Cabo de Gata",
             "en": "Cabo de Gata"
           },
+          "img": "assets/noticias-sep2026-cabo-gata.jpg",
           "titulo": {
             "es": "Las calas de Cabo de Gata, ahora sí: snorkel sin madrugar en Los Cocederos",
             "en": "Cabo de Gata's coves, now is the time: snorkelling without an early start at Los Cocederos"
@@ -164,6 +166,7 @@ const NOTICIAS = {
             "es": "Restaurante",
             "en": "Restaurant"
           },
+          "img": "assets/noticias-sep2026-asador.jpg",
           "titulo": {
             "es": "Asador Martín Fierro, en Las Negras: parrilla argentina dentro del Parque Natural",
             "en": "Asador Martín Fierro, in Las Negras: Argentine grill inside the Natural Park"
@@ -191,6 +194,7 @@ const NOTICIAS = {
             "es": "Feria",
             "en": "Fair"
           },
+          "img": "assets/noticias-sep2026-lorca.jpg",
           "titulo": {
             "es": "Feria de Lorca en septiembre: confirma fechas y programa antes de ir",
             "en": "Lorca Fair in September: check dates and programme before going"
@@ -208,6 +212,7 @@ const NOTICIAS = {
             "es": "Cala",
             "en": "Cove"
           },
+          "img": "assets/noticias-sep2026-cala-cortina.jpg",
           "titulo": {
             "es": "Cala Cortina sin buscar aparcamiento: la cala urbana de la costa murciana, en septiembre",
             "en": "Cala Cortina without hunting for parking: the Murcia coast's urban cove, in September"
