@@ -421,6 +421,35 @@ const _aptNextFree = (data, aptId) => {
     nights: null
   };
 };
+
+// Precio que sube animado desde 0 hasta el valor real, justo el instante
+// (fechas elegidas -> aparece el precio) de más tensión de conversión.
+// Respeta prefers-reduced-motion: ahí muestra el valor final sin animar.
+const CountUpNumber = ({
+  value,
+  duration = 900
+}) => {
+  const [display, setDisplay] = React.useState(0);
+  const prefersReducedMotion = React.useMemo(() => !!(window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches), []);
+  React.useEffect(() => {
+    if (value == null) return;
+    if (prefersReducedMotion) {
+      setDisplay(value);
+      return;
+    }
+    let raf;
+    const start = performance.now();
+    const tick = now => {
+      const t = Math.min(1, (now - start) / duration);
+      const eased = 1 - Math.pow(1 - t, 3);
+      setDisplay(Math.round(value * eased));
+      if (t < 1) raf = requestAnimationFrame(tick);
+    };
+    raf = requestAnimationFrame(tick);
+    return () => cancelAnimationFrame(raf);
+  }, [value, prefersReducedMotion, duration]);
+  return display.toLocaleString('es-ES');
+};
 const Apartments = ({
   lang
 }) => {
@@ -620,7 +649,9 @@ const Apartments = ({
       className: "apb-label"
     }, lang === 'es' ? 'desde' : 'from'), /*#__PURE__*/React.createElement("span", {
       className: "apb-price"
-    }, minPrice.toLocaleString('es-ES'), "€"), /*#__PURE__*/React.createElement("span", {
+    }, /*#__PURE__*/React.createElement(CountUpNumber, {
+      value: minPrice
+    }), "€"), /*#__PURE__*/React.createElement("span", {
       className: "apb-per"
     }, lang === 'es' ? '/noche · precio directo orientativo' : '/night · guide direct price'), /*#__PURE__*/React.createElement("span", {
       className: "apb-match"
