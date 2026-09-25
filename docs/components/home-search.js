@@ -90,6 +90,21 @@ const HsDateRange = ({
   const todayDate = new Date(today + 'T12:00:00Z');
   const [viewY, setViewY] = React.useState(todayDate.getUTCFullYear());
   const [viewM, setViewM] = React.useState(todayDate.getUTCMonth());
+  // Si checkin llega de fuera (ej. sincronizado desde el buscador del hero)
+  // y su mes no es uno de los dos que ya se ven, salta el calendario hasta
+  // ahí. Si ya está visible (el caso normal de click dentro del propio
+  // calendario) no hace nada, para no interrumpir la vista del visitante.
+  React.useEffect(() => {
+    if (!checkin) return;
+    const [cy, cm] = checkin.split('-').map(Number);
+    const y2 = viewM === 11 ? viewY + 1 : viewY;
+    const m2 = viewM === 11 ? 0 : viewM + 1;
+    const visible = cy === viewY && cm - 1 === viewM || cy === y2 && cm - 1 === m2;
+    if (!visible) {
+      setViewY(cy);
+      setViewM(cm - 1);
+    }
+  }, [checkin]);
   const blocked = React.useMemo(() => {
     if (!apt || !avail || !avail[apt]) return [];
     return avail[apt].blocked || [];
@@ -542,6 +557,21 @@ const HomeSearch = ({
   const [checkin, setCheckin] = React.useState('');
   const [checkout, setCheckout] = React.useState('');
   const [guests, setGuests] = React.useState(2);
+  // Si el visitante ya eligió fechas en el buscador del hero (más arriba,
+  // misma página) y las cambia, este calendario las sigue en vez de quedarse
+  // vacío/desactualizado: evita rellenar el hero, bajar, y encontrarse un
+  // segundo selector que parece una tarea aparte. Deja de seguir en cuanto
+  // el visitante toca el calendario aquí directamente (userTouched).
+  const userTouchedRef = React.useRef(false);
+  React.useEffect(() => {
+    const onHeroDates = e => {
+      if (userTouchedRef.current) return;
+      setCheckin(e.detail.checkin);
+      setCheckout(e.detail.checkout);
+    };
+    window.addEventListener('hestia:hero-dates', onHeroDates);
+    return () => window.removeEventListener('hestia:hero-dates', onHeroDates);
+  }, []);
   // Extras (cuna, trona, sábanas, toallas, mascota) se rellenan SOLO en
   // /reservas para no duplicar trabajo. Aquí solo huéspedes + fechas.
 
@@ -711,10 +741,12 @@ const HomeSearch = ({
     checkin: checkin,
     checkout: checkout,
     setCheckin: v => {
+      userTouchedRef.current = true;
       setCheckin(v);
       setResults(null);
     },
     setCheckout: v => {
+      userTouchedRef.current = true;
       setCheckout(v);
       setResults(null);
     },

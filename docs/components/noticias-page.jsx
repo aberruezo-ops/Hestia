@@ -18,6 +18,7 @@ const NOTICIAS = {
       "apt": "Hestía Mar",
       "slug": "mar.html",
       "accent": "var(--vm)",
+      "img": "assets/apt-vm-gallery-26.jpg",
       "curiosidad": {
         "es": "Septiembre es el mes que en Vera Playa guardamos para nosotros. El termómetro se queda en torno a los 28°C de máxima y las noches no bajan de los 20, el agua conserva el calor de todo el verano y la playa, a cinco minutos a pie de Hestía Mar, recupera el silencio. La terraza esquinera vuelve a ser de mañana, de tarde y de noche, sin esperar a que afloje el calor.",
         "en": "September is the month we in Vera Playa keep for ourselves. Highs settle around 28°C and nights stay above 20, the sea holds the warmth of the whole summer, and the beach, five minutes on foot from Hestía Mar, gets its quiet back. The corner terrace is yours morning, afternoon and night again, no waiting for the heat to ease."
@@ -32,6 +33,7 @@ const NOTICIAS = {
       "apt": "Hestía Thalassa",
       "slug": "thalassa.html",
       "accent": "var(--vt)",
+      "img": "assets/apt-vt-gallery-33.jpg",
       "curiosidad": {
         "es": "Con las tardes más suaves, la terraza panorámica del ático se disfruta entera, sin buscar la sombra. Es también el mes en que el SPA y la sauna comunitarios dejan de parecer un lujo de invierno y pasan a cerrar el día: mar por la mañana, vapor al caer el sol y el Salar de los Canos cambiando de color desde arriba.",
         "en": "With milder evenings, the penthouse's 360° terrace can be enjoyed in full, no hunting for shade. It's also the month when the shared spa and sauna stop feeling like a winter luxury and start closing the day: sea in the morning, steam at sunset, and the Salar de los Canos changing colour from above."
@@ -46,6 +48,7 @@ const NOTICIAS = {
       "apt": "Hestía Salinas",
       "slug": "salinas.html",
       "accent": "var(--vs-dk)",
+      "img": "assets/apt-vs-gallery-33.jpg",
       "curiosidad": {
         "es": "Septiembre abre la temporada de estancias largas (de septiembre a junio), y Hestía Salinas es el que mejor la entiende: el más luminoso de los tres, con dos terrazas, tres piscinas y el Parque Natural de las Salinas de Puerto Rey al lado. La fibra hasta 600 Mbps simétricos y una mesa de trabajo bajo petición convierten una semana de teletrabajo en un mes.",
         "en": "September opens the long-stay season (September to June), and Hestía Salinas is the one that understands it best: the brightest of the three, with two terraces, three pools and the Salinas de Puerto Rey Natural Park next door. Fibre up to 600 Mbps symmetrical and a work desk on request turn a week of remote work into a month."
@@ -73,6 +76,7 @@ const NOTICIAS = {
             "es": "Playa",
             "en": "Beach"
           },
+          "img": "assets/noticias-sep2026-playa.jpg",
           "titulo": {
             "es": "Septiembre en Vera Playa: el mismo mar, la mitad de gente",
             "en": "September in Vera Playa: the same sea, half the people"
@@ -90,6 +94,7 @@ const NOTICIAS = {
             "es": "Chiringuito",
             "en": "Beach bar"
           },
+          "img": "assets/noticias-sep2026-paella.jpg",
           "titulo": {
             "es": "Chiringuito Manaca, en la Playa del Sombrerico: paella y atardecer a pie de cala",
             "en": "Chiringuito Manaca, on Playa del Sombrerico: paella and sunset at the water's edge"
@@ -117,6 +122,7 @@ const NOTICIAS = {
             "es": "Feria",
             "en": "Fair"
           },
+          "img": "assets/noticias-sep2026-feria-vera.jpg",
           "titulo": {
             "es": "Feria de Vera, San Cleofás, del 24 al 29 de septiembre",
             "en": "Vera Fair, San Cleofás, 24 to 29 September"
@@ -144,6 +150,7 @@ const NOTICIAS = {
             "es": "Cabo de Gata",
             "en": "Cabo de Gata"
           },
+          "img": "assets/noticias-sep2026-cabo-gata.jpg",
           "titulo": {
             "es": "Las calas de Cabo de Gata, ahora sí: snorkel sin madrugar en Los Cocederos",
             "en": "Cabo de Gata's coves, now is the time: snorkelling without an early start at Los Cocederos"
@@ -161,6 +168,7 @@ const NOTICIAS = {
             "es": "Restaurante",
             "en": "Restaurant"
           },
+          "img": "assets/noticias-sep2026-asador.jpg",
           "titulo": {
             "es": "Asador Martín Fierro, en Las Negras: parrilla argentina dentro del Parque Natural",
             "en": "Asador Martín Fierro, in Las Negras: Argentine grill inside the Natural Park"
@@ -188,6 +196,7 @@ const NOTICIAS = {
             "es": "Feria",
             "en": "Fair"
           },
+          "img": "assets/noticias-sep2026-lorca.jpg",
           "titulo": {
             "es": "Feria de Lorca en septiembre: confirma fechas y programa antes de ir",
             "en": "Lorca Fair in September: check dates and programme before going"
@@ -205,6 +214,7 @@ const NOTICIAS = {
             "es": "Cala",
             "en": "Cove"
           },
+          "img": "assets/noticias-sep2026-cala-cortina.jpg",
           "titulo": {
             "es": "Cala Cortina sin buscar aparcamiento: la cala urbana de la costa murciana, en septiembre",
             "en": "Cala Cortina without hunting for parking: the Murcia coast's urban cove, in September"
@@ -359,6 +369,7 @@ const ShareSection = ({ lang }) => {
 
 const VozCard = ({ item, lang }) => (
   <div className="voz-card" style={{ '--voz-accent': item.accent }}>
+    {item.img && <img className="voz-card-img" src={item.img} alt={item.apt} loading="lazy" />}
     <div className="voz-card-head">
       <span className="voz-num">{item.num}</span>
       <a href={item.slug} className="voz-apt-name">{item.apt}</a>
@@ -383,24 +394,30 @@ const VozCard = ({ item, lang }) => (
 
 const ArticleCard = ({ article, lang, id }) => (
   <div className="noticias-article" id={id}>
-    <span className="noticias-tag">{article.tag[lang]}</span>
-    <h3 className="noticias-titulo">{article.titulo[lang]}</h3>
-    <p className="noticias-cuerpo">{article.cuerpo[lang]}</p>
+    {article.img && <img className="noticias-article-img" src={article.img} alt="" loading="lazy" />}
+    <div className="noticias-article-body">
+      <span className="noticias-tag">{article.tag[lang]}</span>
+      <h3 className="noticias-titulo">{article.titulo[lang]}</h3>
+      <p className="noticias-cuerpo">{article.cuerpo[lang]}</p>
+    </div>
   </div>
 );
 
 // Article card variant for by-month view: includes zone badge
 const ArticleCardWithZone = ({ article, cat, lang }) => (
   <div className="noticias-article" style={{ '--cat-accent': cat.accent }}>
-    <div className="noticias-article-meta">
-      <span className="noticias-tag">{article.tag[lang]}</span>
-      <span className="noticias-zone-badge">
-        <span className="noticias-zone-icon">{catIcon(cat.icon)}</span>
-        {cat.cat[lang]}
-      </span>
+    {article.img && <img className="noticias-article-img" src={article.img} alt="" loading="lazy" />}
+    <div className="noticias-article-body">
+      <div className="noticias-article-meta">
+        <span className="noticias-tag">{article.tag[lang]}</span>
+        <span className="noticias-zone-badge">
+          <span className="noticias-zone-icon">{catIcon(cat.icon)}</span>
+          {cat.cat[lang]}
+        </span>
+      </div>
+      <h3 className="noticias-titulo">{article.titulo[lang]}</h3>
+      <p className="noticias-cuerpo">{article.cuerpo[lang]}</p>
     </div>
-    <h3 className="noticias-titulo">{article.titulo[lang]}</h3>
-    <p className="noticias-cuerpo">{article.cuerpo[lang]}</p>
   </div>
 );
 
