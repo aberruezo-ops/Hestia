@@ -675,7 +675,7 @@ const Compare = ({
 }) => {
   const rows = lang === 'es' ? [{
     label: 'Concepto',
-    vm: 'El mar desde los olivos',
+    vm: 'Entre el mar y el desierto',
     vt: 'Ático · mar y Salar de los Canos',
     vs: 'Amanecer cerca de las salinas'
   }, {
@@ -747,7 +747,7 @@ const Compare = ({
     rate: true
   }] : [{
     label: 'Concept',
-    vm: 'Sea through the olive grove',
+    vm: 'Between the sea and the desert',
     vt: 'Penthouse · sea & Salar de los Canos',
     vs: 'Sunrise near the salt flats'
   }, {

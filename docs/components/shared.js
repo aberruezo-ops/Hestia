@@ -2395,7 +2395,7 @@ const COPY = {
     apts_title: /*#__PURE__*/React.createElement(React.Fragment, null, "Tres atmósferas, ", /*#__PURE__*/React.createElement("em", null, "una misma casa.")),
     apts_sub: 'Cada uno toma su color del paisaje que lo rodea. Tres hogares: elige el tuyo, o ven tres veces.',
     apts_pets: 'Mascotas bienvenidas en los tres, con petición previa.',
-    apt_01_concept: 'El campo de olivos llega al mar',
+    apt_01_concept: 'El verde distinto de una tierra entre el mar y el desierto',
     apt_02_concept: 'El ático sobre el Mediterráneo y el Salar de los Canos',
     apt_03_concept: 'El amarillo albero del amanecer, cerca de las salinas',
     apt_cta: 'Ver Hestía',
@@ -2458,7 +2458,7 @@ const COPY = {
     apts_title: /*#__PURE__*/React.createElement(React.Fragment, null, "Three moods, ", /*#__PURE__*/React.createElement("em", null, "one same home.")),
     apts_sub: 'Each one borrows its colour from the landscape around it. Three homes: choose yours, or come three times.',
     apts_pets: 'Pets welcome in all three, on request.',
-    apt_01_concept: 'Where the olive grove meets the sea',
+    apt_01_concept: 'The distinct green of a land between the sea and the desert',
     apt_02_concept: 'Penthouse above the Mediterranean and the Salar de los Canos',
     apt_03_concept: 'Ochre yellow, sunrise near the salt flats',
     apt_cta: 'See Hestía',
@@ -2947,8 +2947,8 @@ const SABIAS_QUE_FACTS = [/* ── Almería y Vera Playa ── */
   en: 'The Puerto Rey salt flats were worked by the Romans over 2,000 years ago to produce garum, the most prized condiment of antiquity.'
 }, {
   type: 'fact',
-  es: 'El olivar que inspira a Hestía Mar lleva siglos en la costa de Vera. El aceite de oliva de Almería ya se exportaba en época fenicia.',
-  en: 'The olive grove behind Hestía Mar has stood on the Vera coast for centuries. Almería\'s olive oil was already exported in Phoenician times.'
+  es: 'El Desierto de Tabernas, a menos de una hora de Vera Playa, es el único desierto de Europa: ha sido plató de wésterns y de películas como Indiana Jones.',
+  en: 'The Tabernas Desert, under an hour from Vera Playa, is Europe\'s only desert: it has been the backdrop for westerns and films like Indiana Jones.'
 }, {
   type: 'fact',
   es: 'La mojama de atún de Garrucha, a pocos kilómetros de Vera: es una de las conservas más antiguas del Mediterráneo, con más de 2.000 años de tradición.',
