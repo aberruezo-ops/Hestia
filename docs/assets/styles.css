@@ -5881,6 +5881,47 @@ body[data-apt="salinas"] a.apt-page-reserve-btn:hover {
   opacity: 0.62;
 }
 
+/* --- Reveal cinematográfico: pausa entre el hero y la galería --- */
+.apt-reveal {
+  position: relative;
+  min-height: 62vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+}
+.apt-reveal-img {
+  position: absolute; inset: 0;
+  width: 100%; height: 100%;
+  object-fit: cover;
+  object-position: center;
+}
+.apt-reveal-tint {
+  position: absolute; inset: 0;
+  /* Tinte del color del apartamento + oscurecido general para que la
+     cita en crema siempre tenga contraste, sea cual sea la foto. */
+  background:
+    linear-gradient(180deg, rgba(42,15,46,.55) 0%, rgba(42,15,46,.30) 40%, rgba(42,15,46,.60) 100%),
+    color-mix(in srgb, var(--apt-accent, var(--sol)) 22%, transparent);
+}
+.apt-reveal-content {
+  position: relative;
+  z-index: 1;
+  max-width: 900px;
+  padding: 0 var(--page-pad);
+  text-align: center;
+}
+.apt-reveal-quote {
+  font-family: var(--serif);
+  font-style: italic;
+  font-weight: 300;
+  font-size: clamp(28px, 4.4vw, 58px);
+  line-height: 1.2;
+  color: var(--crema);
+  margin: 0;
+  text-wrap: balance;
+}
+
 /* --- Gallery carousel lightbox --- */
 .gc-stage { cursor: zoom-in; }
 .gc-zoom-hint {

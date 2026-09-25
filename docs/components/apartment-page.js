@@ -62,6 +62,7 @@ const APT_DATA = {
     accent_dk: '#4A5628',
     hero_img: 'assets/apt-vm-gallery-26.jpg',
     bedroom_img: 'assets/apt-vm-gallery-26.jpg',
+    reveal_img: 'assets/apt-vm-gallery-27.jpg',
     floorplan_img: 'assets/apt-vm-plano.jpg?v=2',
     floorplan_subtitle_es: 'distribución en planta.',
     floorplan_subtitle_en: 'floor layout.',
@@ -102,6 +103,7 @@ const APT_DATA = {
     accent_dk: '#8A4A24',
     hero_img: 'assets/apt-vt-gallery-33.jpg',
     bedroom_img: 'assets/apt-vt-gallery-33.jpg',
+    reveal_img: 'assets/apt-vt-gallery-20.jpg',
     floorplan_img: 'assets/apt-vt-plano.png',
     floorplan_subtitle_es: 'distribución del ático.',
     floorplan_subtitle_en: 'penthouse layout.',
@@ -142,6 +144,7 @@ const APT_DATA = {
     accent_dk: '#7A5E1A',
     hero_img: 'assets/apt-vs-gallery-33.jpg',
     bedroom_img: 'assets/apt-vs-gallery-33.jpg',
+    reveal_img: 'assets/apt-vs-gallery-32.jpg',
     floorplan_img: 'assets/apt-vs-floorplan.jpg',
     floorplan_subtitle_es: 'distribución en planta.',
     floorplan_subtitle_en: 'floor layout.',
@@ -539,6 +542,41 @@ const AptPageHero = ({
   }, lang === 'es' ? 'Ver disponibilidad' : 'Check availability')), /*#__PURE__*/React.createElement("p", {
     className: "apt-page-cancel"
   }, lang === 'es' ? '✓ Política de cancelación sin competencia' : '✓ Unmatched cancellation policy')));
+};
+
+// --- Reveal cinematográfico ---
+// Pausa a pantalla completa entre el hero (nombre/precio/CTA) y la galería:
+// una foto real atmosférica de la propia Hestía, teñida con su color, con
+// la cita de la marca en grande. No es información nueva (la cita ya vive
+// en el hero de arriba) — es un momento de marca, no un dato más.
+const AptCinematicReveal = ({
+  apt,
+  lang
+}) => {
+  const d = apt[lang];
+  if (!apt.reveal_img) return null;
+  return /*#__PURE__*/React.createElement("section", {
+    className: "apt-reveal",
+    style: {
+      '--apt-accent': apt.accent,
+      '--apt-accent2': apt.accent2
+    }
+  }, /*#__PURE__*/React.createElement("picture", null, /*#__PURE__*/React.createElement("source", {
+    srcSet: apt.reveal_img.replace(/\.(jpg|jpeg|png)$/i, '.webp'),
+    type: "image/webp"
+  }), /*#__PURE__*/React.createElement("img", {
+    src: apt.reveal_img,
+    alt: "",
+    className: "apt-reveal-img",
+    loading: "lazy",
+    decoding: "async"
+  })), /*#__PURE__*/React.createElement("div", {
+    className: "apt-reveal-tint"
+  }), /*#__PURE__*/React.createElement("div", {
+    className: "apt-reveal-content"
+  }, /*#__PURE__*/React.createElement("p", {
+    className: "apt-reveal-quote"
+  }, "« ", d.concept, " »")));
 };
 
 // --- TrustStrip ---
@@ -1656,6 +1694,9 @@ const ApartmentPageApp = () => {
     lang: lang,
     scrolled: scrolled,
     mode: mode
+  }), /*#__PURE__*/React.createElement(AptCinematicReveal, {
+    apt: apt,
+    lang: lang
   }), /*#__PURE__*/React.createElement(AptPageGallery, {
     apt: apt,
     lang: lang
