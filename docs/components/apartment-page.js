@@ -46,7 +46,7 @@ const amenityHi = emoji => AMENITY_HI[(emoji || '').replace(/️/g, '')];
 
 // Versión de caché de las fotos de galería. Súbela al reemplazar fotos con el
 // mismo nombre para que el navegador cargue las nuevas y no las cacheadas.
-const GALLERY_V = '14';
+const GALLERY_V = '15';
 const APT_DATA = {
   vm: {
     id: 'vm',
@@ -112,7 +112,7 @@ const APT_DATA = {
     others: ['vm', 'vs'],
     // Orden por estancia (recorrido de visita): entrada, salón/comedor,
     // cocina, dormitorio principal, dormitorio 2, baños, terraza, piscinas.
-    gallery_imgs: ['assets/apt-vt-gallery-08.jpg', 'assets/apt-vt-gallery-20.jpg', 'assets/apt-vt-gallery-10.jpg', 'assets/apt-vt-gallery-05.jpg', 'assets/apt-vt-gallery-06.jpg', 'assets/apt-vt-gallery-19.jpg', 'assets/apt-vt-gallery-33.jpg', 'assets/apt-vt-gallery-23.jpg', 'assets/apt-vt-gallery-24.jpg', 'assets/apt-vt-gallery-03.jpg', 'assets/apt-vt-gallery-21.jpg', 'assets/apt-vt-gallery-04.jpg', 'assets/apt-vt-gallery-12.jpg', 'assets/apt-vt-gallery-32.jpg', 'assets/apt-vt-gallery-07.jpg', 'assets/apt-vt-gallery-14.jpg', 'assets/apt-vt-gallery-16.jpg', 'assets/apt-vt-gallery-17.jpg', 'assets/apt-vt-gallery-11.jpg', 'assets/apt-vt-gallery-01.jpg', 'assets/apt-vt-gallery-09.jpg', 'assets/apt-vt-gallery-31.jpg', 'assets/apt-vt-gallery-30.jpg', 'assets/apt-vt-gallery-18.jpg', 'assets/apt-vt-gallery-25.jpg', 'assets/apt-vt-gallery-26.jpg', 'assets/apt-vt-gallery-27.jpg', 'assets/apt-vt-gallery-28.jpg', 'assets/apt-vt-gallery-29.jpg'],
+    gallery_imgs: ['assets/apt-vt-gallery-08.jpg', 'assets/apt-vt-gallery-20.jpg', 'assets/apt-vt-gallery-34.jpg', 'assets/apt-vt-gallery-10.jpg', 'assets/apt-vt-gallery-05.jpg', 'assets/apt-vt-gallery-06.jpg', 'assets/apt-vt-gallery-19.jpg', 'assets/apt-vt-gallery-33.jpg', 'assets/apt-vt-gallery-23.jpg', 'assets/apt-vt-gallery-24.jpg', 'assets/apt-vt-gallery-03.jpg', 'assets/apt-vt-gallery-21.jpg', 'assets/apt-vt-gallery-04.jpg', 'assets/apt-vt-gallery-12.jpg', 'assets/apt-vt-gallery-32.jpg', 'assets/apt-vt-gallery-07.jpg', 'assets/apt-vt-gallery-14.jpg', 'assets/apt-vt-gallery-16.jpg', 'assets/apt-vt-gallery-17.jpg', 'assets/apt-vt-gallery-11.jpg', 'assets/apt-vt-gallery-01.jpg', 'assets/apt-vt-gallery-09.jpg', 'assets/apt-vt-gallery-31.jpg', 'assets/apt-vt-gallery-30.jpg', 'assets/apt-vt-gallery-18.jpg', 'assets/apt-vt-gallery-25.jpg', 'assets/apt-vt-gallery-26.jpg', 'assets/apt-vt-gallery-27.jpg', 'assets/apt-vt-gallery-28.jpg', 'assets/apt-vt-gallery-29.jpg'],
     es: {
       name: 'Hestía Thalassa',
       concept: 'El ático sobre el Mediterráneo y el Salar de los Canos.',
