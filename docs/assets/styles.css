@@ -3178,6 +3178,14 @@ body.apt-bar-shown .cookies {
   padding: clamp(100px, 10vw, 160px) var(--page-pad);
   position: relative;
   overflow: hidden;
+  /* Capítulo a pantalla completa: en desktop el contenido cabe holgado
+     en dos columnas, así que sin esto quedaba como una sección más de
+     scroll. min-height + centrado vertical le da la pausa cinematográfica.
+     En móvil el contenido apilado ya supera el 100vh solo, así que aquí
+     no cambia nada (ver override en la media query de mobile). */
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
 }
 .manifest::before {
   content: '';
@@ -3188,6 +3196,7 @@ body.apt-bar-shown .cookies {
   background: radial-gradient(circle, rgba(58,170,187,0.12), transparent 65%);
 }
 .manifest-inner {
+  width: 100%;
   max-width: 1200px;
   margin: 0 auto;
   display: grid;
@@ -3198,8 +3207,9 @@ body.apt-bar-shown .cookies {
 }
 .manifest .eyebrow { color: var(--sol-lt); margin-bottom: 18px; display: block; }
 .manifest h2 {
-  font-size: clamp(36px, 4.5vw, 72px);
-  line-height: 1.02;
+  font-size: clamp(36px, 4.8vw, 78px);
+  line-height: 1.05;
+  margin-bottom: 24px;
 }
 .manifest h2 em { font-style: italic; color: var(--sol-lt); }
 /* Manifest lead — dos párrafos narrativos que introducen el "viajero
