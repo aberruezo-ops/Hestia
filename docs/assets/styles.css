@@ -16610,6 +16610,70 @@ body.apt-bar-shown .widget-stack {
   .opi-res-datos div b { font-size: 23px; }
 }
 
+/* Desglose por categoría: superficie clara anidada en la sección oscura
+   de testimonios (igual patrón que .opi-resumen), texto oscuro propio. */
+.opi-cat-bars {
+  margin: 0 0 30px;
+  padding: 24px 26px;
+  background: var(--arena, #F0E8D5);
+  border-radius: 10px 0 10px 0;
+}
+.opi-cat-title {
+  font-family: var(--sans);
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: .16em;
+  text-transform: uppercase;
+  color: var(--ber-dk, #2A0F2E);
+  opacity: .7;
+  margin-bottom: 18px;
+}
+.opi-cat-list { display: flex; flex-direction: column; gap: 14px; }
+.opi-cat-row {
+  display: grid;
+  grid-template-columns: 150px 1fr 40px;
+  align-items: center;
+  gap: 14px;
+}
+.opi-cat-label {
+  font-family: var(--sans);
+  font-size: 13.5px;
+  font-weight: 600;
+  color: var(--ber-dk, #2A0F2E);
+}
+.opi-cat-track {
+  height: 8px;
+  border-radius: 6px;
+  background: rgba(42,15,46,.10);
+  overflow: hidden;
+}
+.opi-cat-fill {
+  height: 100%;
+  border-radius: 6px;
+  background: var(--sol, #3AAABB);
+  transition: width 1s cubic-bezier(.2,.8,.2,1);
+}
+.opi-cat-val {
+  font-family: var(--serif);
+  font-size: 16px;
+  font-weight: 500;
+  color: var(--ber-dk, #2A0F2E);
+  font-variant-numeric: tabular-nums;
+  text-align: right;
+}
+.opi-cat-note {
+  margin: 16px 0 0;
+  font-size: 11.5px;
+  line-height: 1.5;
+  color: var(--ink-soft);
+  opacity: .8;
+}
+@media (max-width: 560px) {
+  .opi-cat-row { grid-template-columns: 100px 1fr 32px; gap: 8px; }
+  .opi-cat-label { font-size: 11.5px; }
+  .opi-cat-val { font-size: 14px; }
+}
+
 .opiniones-empty {
   text-align: center;
   font-size: 14px;
