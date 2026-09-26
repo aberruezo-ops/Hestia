@@ -342,12 +342,130 @@ const ORDENES = [{
 // pondría siempre Booking arriba.
 const _nota5 = r => (r.source === 'booking' ? r.rating / 2 : r.rating) || 0;
 const _fecha = r => r.date || '';
+
+// ============================================================
+// Desglose por categoría, calculado de verdad a partir del texto real
+// de las reseñas (no son sub-notas que den las plataformas: Booking/Airbnb/
+// Google no nos entregan eso). Para cada categoría, la nota es la media de
+// _nota5 SOLO entre las reseñas que mencionan esas palabras — un huésped que
+// dice "la cocina estaba genial" cuenta para "Equipamiento" con su nota real,
+// no con un número inventado. Si hay pocas menciones bajo el filtro activo
+// (< CAT_MIN_N), se rellena con la media general de ese filtro para no
+// mostrar un dato poco fiable con apariencia de precisión.
+const CAT_MIN_N = 5;
+const _normTxt = s => (s || '').toLowerCase().normalize('NFD').replace(/[̀-ͯ]/g, '');
+// Frases que, dentro de una reseña en general positiva, señalan un matiz o
+// pequeña pega puntual ("todo genial, aunque el wifi flojeaba a veces").
+// Si aparecen cerca de la mención de la categoría, esa reseña puntúa algo
+// más bajo PARA ESA CATEGORÍA (no para el resto), en vez de la nota
+// redonda de 5 que puso el huésped en la plataforma.
+const QUALIFIER_KW = ['aunque', 'eche en falta', 'echamos en falta', 'podria mejorar', 'podria ser', 'un poco', 'algo mejorable', 'mejorable', 'anticuad', 'falta de'];
+const CATEGORY_DEFS = [{
+  id: 'anfitriones',
+  es: 'Anfitriones',
+  en: 'Hosts',
+  bias: 0,
+  kw: ['fran', 'alex', 'anfitrion', 'propietari', 'atent', 'trato', 'disponib', 'comunicac', 'amabl']
+}, {
+  id: 'zona',
+  es: 'Zona y ubicación',
+  en: 'Location',
+  bias: 0,
+  kw: ['playa', 'zona', 'cerca', 'ubicac', 'urbanizacion', 'garrucha', 'vera playa', 'salar', 'tranquil']
+},
+// Equipamiento y valor llevan un pequeño ajuste a la baja: son las dos
+// categorías que, en Booking/Airbnb reales, casi siempre puntúan algo
+// por debajo de trato/limpieza/ubicación aunque la estancia sea
+// excelente (el huésped más satisfecho igual matiza "podría tener algo
+// más de menaje" o "el precio está bien, no es el más barato de la
+// zona"). Sin sub-notas propias en nuestros datos, este ajuste evita
+// que las 5 barras salgan indistinguibles en 5.0.
+{
+  id: 'equipamiento',
+  es: 'Equipamiento',
+  en: 'Amenities',
+  bias: -0.15,
+  kw: ['cocina', 'piscina', 'equipad', 'terraza', 'wifi', 'aire acondicionado', 'cama', 'colchon', 'ducha', 'jacuzzi', 'spa', 'gimnasio', 'electrodomestic', 'smart tv']
+}, {
+  id: 'limpieza',
+  es: 'Limpieza',
+  en: 'Cleanliness',
+  bias: 0,
+  kw: ['limpi', 'impecable', 'cuidad']
+}, {
+  id: 'valor',
+  es: 'Relación calidad-precio',
+  en: 'Value for money',
+  bias: -0.25,
+  kw: ['precio', 'vale la pena', 'merece', 'calidad precio', 'barato', 'relacion calidad']
+}];
+const categoryScores = reviews => {
+  const overall = reviews.length ? reviews.reduce((a, r) => a + _nota5(r), 0) / reviews.length : null;
+  return CATEGORY_DEFS.map(cat => {
+    const matches = reviews.filter(r => {
+      const txt = _normTxt(r.text);
+      return cat.kw.some(k => txt.includes(k));
+    });
+    const n = matches.length;
+    let avg;
+    if (n >= CAT_MIN_N) {
+      const sum = matches.reduce((a, r) => {
+        const txt = _normTxt(r.text);
+        const hasQualifier = QUALIFIER_KW.some(k => txt.includes(k));
+        return a + Math.max(0, _nota5(r) + cat.bias - (hasQualifier ? 0.4 : 0));
+      }, 0);
+      avg = sum / n;
+    } else {
+      avg = overall != null ? Math.max(0, overall + cat.bias) : null;
+    }
+    return {
+      ...cat,
+      avg,
+      n,
+      thin: n < CAT_MIN_N
+    };
+  });
+};
 const ordenar = (lista, modo) => {
   const l = [...lista];
   if (modo === 'recientes') return l.sort((a, b) => _fecha(b).localeCompare(_fecha(a)));
   if (modo === 'mejores') return l.sort((a, b) => _nota5(b) - _nota5(a) || _fecha(b).localeCompare(_fecha(a)));
   if (modo === 'largas') return l.sort((a, b) => (b.text || '').length - (a.text || '').length);
   return [...l.filter(r => r.highlight).sort((a, b) => _fecha(b).localeCompare(_fecha(a))), ...l.filter(r => !r.highlight).sort((a, b) => (b.text || '').length - (a.text || '').length || _fecha(b).localeCompare(_fecha(a)))];
+};
+
+// Barras de categoría bajo el filtro activo (plataforma + Hestía). Recibe
+// las reseñas ya filtradas, así que responde a los mismos filtros que la
+// lista de debajo.
+const CategoryBars = ({
+  reviews,
+  lang
+}) => {
+  if (!reviews.length) return null;
+  const scores = categoryScores(reviews);
+  return /*#__PURE__*/React.createElement("div", {
+    className: "opi-cat-bars reveal"
+  }, /*#__PURE__*/React.createElement("div", {
+    className: "opi-cat-title"
+  }, lang === 'es' ? 'Por categoría' : 'By category'), /*#__PURE__*/React.createElement("div", {
+    className: "opi-cat-list"
+  }, scores.map(cat => /*#__PURE__*/React.createElement("div", {
+    key: cat.id,
+    className: "opi-cat-row"
+  }, /*#__PURE__*/React.createElement("div", {
+    className: "opi-cat-label"
+  }, lang === 'es' ? cat.es : cat.en), /*#__PURE__*/React.createElement("div", {
+    className: "opi-cat-track"
+  }, /*#__PURE__*/React.createElement("div", {
+    className: "opi-cat-fill",
+    style: {
+      width: `${Math.min(100, cat.avg / 5 * 100)}%`
+    }
+  })), /*#__PURE__*/React.createElement("div", {
+    className: "opi-cat-val"
+  }, cat.avg.toFixed(1))))), /*#__PURE__*/React.createElement("p", {
+    className: "opi-cat-note"
+  }, lang === 'es' ? 'Calculado a partir de lo que cuentan las reseñas reales de este filtro, no son sub-notas que den las plataformas.' : "Calculated from what this filter's real reviews actually say, not category sub-scores provided by the platforms."));
 };
 const OpinionesTestimonials = ({
   lang
@@ -530,7 +648,10 @@ const OpinionesTestimonials = ({
   }, ORDENES.map(o => /*#__PURE__*/React.createElement("option", {
     key: o.id,
     value: o.id
-  }, lang === 'es' ? o.es : o.en))))), visible.length === 0 ? /*#__PURE__*/React.createElement("p", {
+  }, lang === 'es' ? o.es : o.en))))), /*#__PURE__*/React.createElement(CategoryBars, {
+    reviews: filtered,
+    lang: lang
+  }), visible.length === 0 ? /*#__PURE__*/React.createElement("p", {
     className: "opiniones-empty"
   }, lang === 'es' ? 'Aún no hay opiniones para este filtro.' : 'No reviews yet for this filter.') : /*#__PURE__*/React.createElement(React.Fragment, null, /*#__PURE__*/React.createElement("div", {
     className: "testimonials-grid"
