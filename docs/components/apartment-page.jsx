@@ -110,6 +110,7 @@ const APT_DATA = {
       'assets/apt-vt-gallery-19.jpg',
       'assets/apt-vt-gallery-33.jpg',
       'assets/apt-vt-gallery-23.jpg',
+      'assets/apt-vt-gallery-35.jpg',
       'assets/apt-vt-gallery-24.jpg',
       'assets/apt-vt-gallery-03.jpg',
       'assets/apt-vt-gallery-21.jpg',
