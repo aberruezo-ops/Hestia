@@ -265,7 +265,7 @@ const CATEGORY_DEFS = [
     kw: ['cocina', 'piscina', 'equipad', 'terraza', 'wifi', 'aire acondicionado', 'cama', 'colchon', 'ducha', 'jacuzzi', 'spa', 'gimnasio', 'electrodomestic', 'smart tv'] },
   { id: 'limpieza', es: 'Limpieza', en: 'Cleanliness', bias: 0,
     kw: ['limpi', 'impecable', 'cuidad'] },
-  { id: 'valor', es: 'Relación calidad-precio', en: 'Value for money', bias: -0.25,
+  { id: 'valor', es: 'Relación calidad-precio', en: 'Value for money', bias: -0.05,
     kw: ['precio', 'vale la pena', 'merece', 'calidad precio', 'barato', 'relacion calidad'] },
 ];
 const categoryScores = (reviews) => {
@@ -287,11 +287,13 @@ const categoryScores = (reviews) => {
     } else {
       avg = overall != null ? Math.max(0, overall + cat.bias) : null;
     }
-    // Suelo editorial: ninguna categoría se muestra por debajo de 4.80, y
-    // "Relación calidad-precio" se fija en 4.91 (decisión de negocio, no
-    // calculada). El resto sigue saliendo del texto real de las reseñas.
+    // Suelo editorial: ninguna categoría baja de 4.80, y "Relación
+    // calidad-precio" nunca baja de 4.92 (algo más exigente ahí porque es
+    // la categoría más sensible a percepción). Sigue calculándose
+    // proporcionalmente del texto real de las reseñas, el suelo solo actúa
+    // cuando el cálculo cae por debajo.
     if (avg != null) {
-      avg = cat.id === 'valor' ? 4.91 : Math.max(4.80, avg);
+      avg = Math.max(cat.id === 'valor' ? 4.92 : 4.80, avg);
     }
     return { ...cat, avg, n, thin: n < CAT_MIN_N };
   });
