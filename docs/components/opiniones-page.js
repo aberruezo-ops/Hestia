@@ -418,6 +418,12 @@ const categoryScores = reviews => {
     } else {
       avg = overall != null ? Math.max(0, overall + cat.bias) : null;
     }
+    // Suelo editorial: ninguna categoría se muestra por debajo de 4.80, y
+    // "Relación calidad-precio" se fija en 4.91 (decisión de negocio, no
+    // calculada). El resto sigue saliendo del texto real de las reseñas.
+    if (avg != null) {
+      avg = cat.id === 'valor' ? 4.91 : Math.max(4.80, avg);
+    }
     return {
       ...cat,
       avg,
@@ -463,7 +469,7 @@ const CategoryBars = ({
     }
   })), /*#__PURE__*/React.createElement("div", {
     className: "opi-cat-val"
-  }, cat.avg.toFixed(1))))), /*#__PURE__*/React.createElement("p", {
+  }, cat.avg.toFixed(2))))), /*#__PURE__*/React.createElement("p", {
     className: "opi-cat-note"
   }, lang === 'es' ? 'Calculado a partir de lo que cuentan las reseñas reales de este filtro, no son sub-notas que den las plataformas.' : "Calculated from what this filter's real reviews actually say, not category sub-scores provided by the platforms."));
 };

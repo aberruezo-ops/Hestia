@@ -287,6 +287,12 @@ const categoryScores = (reviews) => {
     } else {
       avg = overall != null ? Math.max(0, overall + cat.bias) : null;
     }
+    // Suelo editorial: ninguna categoría se muestra por debajo de 4.80, y
+    // "Relación calidad-precio" se fija en 4.91 (decisión de negocio, no
+    // calculada). El resto sigue saliendo del texto real de las reseñas.
+    if (avg != null) {
+      avg = cat.id === 'valor' ? 4.91 : Math.max(4.80, avg);
+    }
     return { ...cat, avg, n, thin: n < CAT_MIN_N };
   });
 };
@@ -319,7 +325,7 @@ const CategoryBars = ({ reviews, lang }) => {
             <div className="opi-cat-track">
               <div className="opi-cat-fill" style={{ width: `${Math.min(100, (cat.avg / 5) * 100)}%` }} />
             </div>
-            <div className="opi-cat-val">{cat.avg.toFixed(1)}</div>
+            <div className="opi-cat-val">{cat.avg.toFixed(2)}</div>
           </div>
         ))}
       </div>
