@@ -5686,6 +5686,16 @@ const AptGuideView = ({ apt, lang, onClose }) => {
         <aside className={`ag-nav no-print${navOpen ? ' is-open' : ''}`}>
           <div className="ag-nav-inner">
             <span className="ag-nav-label">{lang === 'es' ? 'Índice' : 'Contents'}</span>
+            <div
+              className="ag-nav-progress"
+              role="progressbar"
+              aria-label={lang === 'es' ? 'Avance en la guía' : 'Progress through the guide'}
+              aria-valuenow={activeSecIdx + 1}
+              aria-valuemin={1}
+              aria-valuemax={GUIDE_SECTIONS.length}
+            >
+              <div className="ag-nav-progress-fill" style={{ width: `${((activeSecIdx + 1) / GUIDE_SECTIONS.length) * 100}%` }} />
+            </div>
             <ol className="ag-nav-list">
               {GUIDE_GROUPS.map((g, gi) => (
                 <React.Fragment key={gi}>

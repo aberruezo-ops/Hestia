@@ -11509,7 +11509,19 @@ const AptGuideView = ({
     className: "ag-nav-inner"
   }, /*#__PURE__*/React.createElement("span", {
     className: "ag-nav-label"
-  }, lang === 'es' ? 'Índice' : 'Contents'), /*#__PURE__*/React.createElement("ol", {
+  }, lang === 'es' ? 'Índice' : 'Contents'), /*#__PURE__*/React.createElement("div", {
+    className: "ag-nav-progress",
+    role: "progressbar",
+    "aria-label": lang === 'es' ? 'Avance en la guía' : 'Progress through the guide',
+    "aria-valuenow": activeSecIdx + 1,
+    "aria-valuemin": 1,
+    "aria-valuemax": GUIDE_SECTIONS.length
+  }, /*#__PURE__*/React.createElement("div", {
+    className: "ag-nav-progress-fill",
+    style: {
+      width: `${(activeSecIdx + 1) / GUIDE_SECTIONS.length * 100}%`
+    }
+  })), /*#__PURE__*/React.createElement("ol", {
     className: "ag-nav-list"
   }, GUIDE_GROUPS.map((g, gi) => /*#__PURE__*/React.createElement(React.Fragment, {
     key: gi
