@@ -3358,6 +3358,7 @@ body.apt-bar-shown .cookies {
 @media (hover: hover) and (pointer: fine) {
   .ratings-marquee:hover .rm-track { animation-play-state: paused; }
 }
+.ratings-marquee.is-offscreen .rm-track { animation-play-state: paused; }
 @media (prefers-reduced-motion: reduce) {
   .rm-track { animation: none; }
 }

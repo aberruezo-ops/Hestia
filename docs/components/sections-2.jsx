@@ -246,8 +246,23 @@ const RatingsMarquee = ({ lang }) => {
   ];
   // Duplicamos el array para que el loop sea continuo (translateX -50%).
   const doubled = [...items, ...items];
+  // La animación CSS (28s linear infinite) seguía calculando el transform
+  // cada frame aunque la franja estuviera fuera de pantalla (más arriba o
+  // más abajo del scroll). is-offscreen pausa animation-play-state solo
+  // mientras no es visible; useReveal() no sirve aquí porque deja de
+  // observar tras la primera entrada (es un reveal de una sola vez).
+  const ref = React.useRef(null);
+  React.useEffect(() => {
+    if (!ref.current || !('IntersectionObserver' in window)) return;
+    const io = new IntersectionObserver(
+      ([e]) => ref.current && ref.current.classList.toggle('is-offscreen', !e.isIntersecting),
+      { threshold: 0.01 }
+    );
+    io.observe(ref.current);
+    return () => io.disconnect();
+  }, []);
   return (
-    <section className="ratings-marquee" aria-label={lang === 'es' ? 'Plataformas y métricas' : 'Platforms and metrics'}>
+    <section ref={ref} className="ratings-marquee" aria-label={lang === 'es' ? 'Plataformas y métricas' : 'Platforms and metrics'}>
       <div className="rm-track" aria-hidden="true">
         {doubled.map((it, i) => (
           <React.Fragment key={i}>
