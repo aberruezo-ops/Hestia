@@ -2202,6 +2202,26 @@ body.apt-bar-shown .cookies {
 }
 .hero-title .it { font-style: italic; font-weight: 300; color: var(--sol-lt); }
 
+/* Entrada del titular del hero, palabra a palabra. Se dispara una vez al
+   montar (el hero ya está visible al cargar, no hace falta scroll para
+   verlo) — ver WordReveal en sections-1.jsx. Con prefers-reduced-motion,
+   el componente añade is-visible de inmediato y no hay transición. */
+.word-reveal__word {
+  display: inline-block;
+  opacity: 0;
+  transform: translate3d(0, 20px, 0);
+  transition: opacity 0.8s cubic-bezier(0.16, 1, 0.3, 1),
+              transform 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+  transition-delay: calc(var(--word-index) * 70ms);
+}
+.word-reveal.is-visible .word-reveal__word {
+  opacity: 1;
+  transform: translate3d(0, 0, 0);
+}
+@media (prefers-reduced-motion: reduce) {
+  .word-reveal__word { opacity: 1; transform: none; transition: none; }
+}
+
 .hero-sub {
   margin-top: 26px;
   font-family: var(--sans);

@@ -77,6 +77,77 @@ const HERO_VIDEOS = [{
 // Moods: violet | teal | warm | night.
 ];
 
+// Reparte un texto en <span> por palabra, con --word-index para el stagger
+// en cascada (ver .word-reveal en styles.css). Preserva los espacios como
+// nodos de texto sueltos, no como parte del span, para que la selección y
+// el lector de pantalla lean la frase normal (el <span> padre lleva
+// aria-label con el texto completo y cada palabra queda aria-hidden).
+const wordSpans = (text, startIndex) => {
+  const parts = text.split(/(\s+)/);
+  let i = startIndex;
+  return parts.map((part, pi) => {
+    if (!part.trim()) return part;
+    const idx = i++;
+    return /*#__PURE__*/React.createElement("span", {
+      key: pi,
+      className: "word-reveal__word",
+      style: {
+        '--word-index': idx
+      },
+      "aria-hidden": "true"
+    }, part);
+  });
+};
+const WordReveal = ({
+  lines,
+  reducedMotion,
+  as: Tag = 'h1',
+  className = ''
+}) => {
+  const ref = React.useRef(null);
+  const label = lines.map(l => typeof l === 'string' ? l : l.text).join(' ');
+  React.useEffect(() => {
+    if (reducedMotion || !ref.current) return;
+    const raf = requestAnimationFrame(() => ref.current && ref.current.classList.add('is-visible'));
+    return () => cancelAnimationFrame(raf);
+  }, [reducedMotion]);
+  let idx = 0;
+  const rendered = lines.map((line, li) => {
+    const text = typeof line === 'string' ? line : line.text;
+    const lineClass = typeof line === 'string' ? undefined : line.className;
+    // asWord: la línea entera es UN solo nodo de texto, no palabra a palabra.
+    // Necesario para .it (shimmer con -webkit-background-clip: text): ese
+    // recorte exige que el propio elemento tenga el texto en directo, no en
+    // spans hijos, o el degradado no tiene nada que recortar y el texto
+    // hereda -webkit-text-fill-color: transparent sin su propio fondo.
+    let content;
+    if (typeof line === 'object' && line.asWord) {
+      content = /*#__PURE__*/React.createElement("span", {
+        className: `word-reveal__word${lineClass ? ' ' + lineClass : ''}`,
+        style: {
+          '--word-index': idx
+        },
+        "aria-hidden": "true"
+      }, text);
+      idx += 1;
+    } else {
+      const spans = wordSpans(text, idx);
+      idx += text.split(/\s+/).filter(Boolean).length;
+      content = lineClass ? /*#__PURE__*/React.createElement("span", {
+        className: lineClass
+      }, spans) : spans;
+    }
+    return /*#__PURE__*/React.createElement(React.Fragment, {
+      key: li
+    }, li > 0 && /*#__PURE__*/React.createElement("br", null), content);
+  });
+  return /*#__PURE__*/React.createElement(Tag, {
+    ref: ref,
+    className: `word-reveal ${className}${reducedMotion ? ' is-visible' : ''}`,
+    "aria-label": label
+  }, rendered);
+};
+
 // --- HERO cinematográfico ---
 const Hero = ({
   lang,
@@ -223,11 +294,16 @@ const Hero = ({
     type: "video/mp4"
   })), /*#__PURE__*/React.createElement("div", {
     className: "hero-content"
-  }, /*#__PURE__*/React.createElement("h1", {
-    className: "hero-title"
-  }, t.hero_title_1, /*#__PURE__*/React.createElement("br", null), /*#__PURE__*/React.createElement("span", {
-    className: "it"
-  }, t.hero_title_2)), /*#__PURE__*/React.createElement("div", {
+  }, /*#__PURE__*/React.createElement(WordReveal, {
+    as: "h1",
+    className: "hero-title",
+    reducedMotion: prefersReducedMotion,
+    lines: [t.hero_title_1, {
+      text: t.hero_title_2,
+      className: 'it',
+      asWord: true
+    }]
+  }), /*#__PURE__*/React.createElement("div", {
     className: "hero-sub"
   }, t.hero_sub), /*#__PURE__*/React.createElement("form", {
     className: "hero-availform",
