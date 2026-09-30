@@ -173,8 +173,8 @@ Cualquier zona que liste/compare/enlace los tres (footer, tabla comparativa, sel
 ## Tipografía
 
 ```css
---serif: 'Playfair Display', 'Lora', Georgia, serif;  /* títulos, headings */
---sans:  'Inter', system-ui, -apple-system, sans-serif; /* cuerpo, UI */
+--serif: 'Fraunces', 'Lora', Georgia, serif;  /* títulos, headings */
+--sans:  'Hanken Grotesk', system-ui, -apple-system, sans-serif; /* cuerpo, UI */
 ```
 
 **Reglas:**

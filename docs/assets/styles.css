@@ -2202,6 +2202,26 @@ body.apt-bar-shown .cookies {
 }
 .hero-title .it { font-style: italic; font-weight: 300; color: var(--sol-lt); }
 
+/* Entrada del titular del hero, palabra a palabra. Se dispara una vez al
+   montar (el hero ya está visible al cargar, no hace falta scroll para
+   verlo) — ver WordReveal en sections-1.jsx. Con prefers-reduced-motion,
+   el componente añade is-visible de inmediato y no hay transición. */
+.word-reveal__word {
+  display: inline-block;
+  opacity: 0;
+  transform: translate3d(0, 20px, 0);
+  transition: opacity 0.8s cubic-bezier(0.16, 1, 0.3, 1),
+              transform 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+  transition-delay: calc(var(--word-index) * 70ms);
+}
+.word-reveal.is-visible .word-reveal__word {
+  opacity: 1;
+  transform: translate3d(0, 0, 0);
+}
+@media (prefers-reduced-motion: reduce) {
+  .word-reveal__word { opacity: 1; transform: none; transition: none; }
+}
+
 .hero-sub {
   margin-top: 26px;
   font-family: var(--sans);
@@ -3433,74 +3453,28 @@ body.apt-bar-shown .cookies {
 /* ============================================================
    DIRECT PERKS TEASER — banda corta encima de ContactCTA
    ============================================================ */
-.direct-perks-teaser {
-  background-color: #2A0F2E;
-  color: #F0E8D5;
-  padding: clamp(20px, 3vw, 36px) var(--page-pad) clamp(36px, 4vw, 52px);
-  border-top: 1px solid rgba(240, 232, 213, 0.08);
-  position: relative;
-}
-/* En desktop el WidgetStack flotante a la derecha ya hostea el CTA
-   "Ver todas las ventajas" — la banda inline es redundante. La
-   mostramos solo en mobile (donde el WidgetStack está oculto). */
-@media (min-width: 768px) {
-  .direct-perks-teaser { display: none; }
-}
-.direct-perks-teaser::before {
-  content: '';
-  position: absolute;
-  top: 0; left: 50%;
-  width: 80px;
-  height: 1px;
-  background: #6FC4D1;
-  transform: translateX(-50%);
-  opacity: 0.45;
-}
-.dpt-inner {
-  max-width: 900px;
-  margin: 0 auto;
-  display: flex;
-  flex-wrap: wrap;
-  gap: 18px;
+/* Enlace "ver ventajas de reserva directa", fundido en .contact-cta.
+   En desktop el WidgetStack flotante ya hostea el mismo CTA, así que
+   solo se muestra en mobile (antes vivía en su propia banda con su
+   propio eyebrow "Reserva directa...", repitiendo el de esta sección). */
+.cta-perks-link {
+  display: none;
   align-items: center;
-  justify-content: space-between;
-}
-.dpt-eyebrow {
-  color: #6FC4D1 !important;
-  font-size: 11px;
-  letter-spacing: 0.18em;
-  font-weight: 600;
-}
-.dpt-btn {
-  display: inline-flex;
-  align-items: center;
-  gap: 10px;
-  padding: 11px 22px;
-  border-radius: 10px 0 10px 0;
-  background-color: #3AAABB !important;
-  background-image: none !important;
-  color: #2A0F2E !important;
-  border: 0 !important;
+  justify-content: center;
+  gap: 8px;
+  margin: 28px auto 0;
+  background: none;
+  border: 0;
+  color: var(--sol-lt);
   font-family: var(--sans);
-  font-size: 12px;
-  font-weight: 700;
-  letter-spacing: 0.10em;
-  text-transform: uppercase;
+  font-size: 13px;
+  font-weight: 600;
+  letter-spacing: 0.04em;
   cursor: pointer;
-  box-shadow: 0 4px 16px rgba(58, 170, 187, 0.40);
-  transition: background-color .25s ease, transform .15s ease, box-shadow .25s ease;
 }
-.dpt-btn:hover {
-  background-color: #6FC4D1 !important;
-  transform: translateY(-1px);
-  box-shadow: 0 5px 18px rgba(58, 170, 187, 0.42);
-}
-.dpt-btn:active { transform: translateY(0) scale(.98); }
-.dpt-arrow { font-size: 14px; line-height: 1; transition: transform .25s ease; }
-.dpt-btn:hover .dpt-arrow { transform: translateX(3px); }
+.cta-perks-link:hover { color: var(--crema); }
 @media (max-width: 767px) {
-  .dpt-inner { flex-direction: column; gap: 14px; text-align: center; }
-  .dpt-btn { width: 100%; justify-content: center; box-sizing: border-box; }
+  .cta-perks-link { display: inline-flex; }
 }
 
 /* ============================================================
@@ -10323,6 +10297,12 @@ body[data-apt="salinas"] a.apt-page-reserve-btn:hover {
   z-index: 1;
   pointer-events: none;
 }
+.noticias-hero-leaves {
+  position: absolute; inset: 0;
+  width: 100%; height: 100%;
+  z-index: 1;
+  pointer-events: none;
+}
 .noticias-hero-inner {
   position: relative; z-index: 2;
   max-width: 780px;
@@ -10958,7 +10938,6 @@ body[data-apt="salinas"] a.apt-page-reserve-btn:hover {
 .ratings,
 .ratings-marquee,
 .quick-faq,
-.direct-perks-teaser,
 .contact-cta,
 .apt-page-desc,
 .apt-page-gallery,
@@ -11042,7 +11021,6 @@ body[data-apt="salinas"] a.apt-page-reserve-btn:hover {
 .manifest             { z-index: 42; }
 .ratings              { z-index: 41; }
 .quick-faq            { z-index: 40; }
-.direct-perks-teaser  { z-index: 40; }
 .contact-cta          { z-index: 40; }
 .apt-page-desc        { z-index: 49; }
 .apt-page-gallery     { z-index: 48; }
@@ -11061,7 +11039,6 @@ body[data-apt="salinas"] a.apt-page-reserve-btn:hover {
 .ratings             { padding-top: calc(clamp(90px,  10vw, 140px) + 32px); }
 .ratings-marquee     { padding-top: calc(16px + 32px); padding-bottom: 52px; }
 .quick-faq           { padding-top: calc(72px                       + 32px); }
-.direct-perks-teaser { padding-top: calc(clamp(20px, 3vw,  36px)  + 32px); }
 .contact-cta         { padding-top: calc(clamp(100px, 12vw, 180px) + 32px); }
 .apt-page-desc       { padding-top: calc(80px                       + 32px); }
 .apt-page-gallery    { padding-top: calc(80px                       + 32px); }
@@ -11197,7 +11174,7 @@ body:has(.porque-hero)  .nos-colores { z-index: 45; }
 .hero, .apt-page-hero, .page-hero,
 .home-search, .counters, .manifest,
 .contact-cta, .contacto-hero,
-.ratings-marquee, .direct-perks-teaser, .opiniones-share-cta {
+.ratings-marquee, .opiniones-share-cta {
   transform: translateZ(0);
   backface-visibility: hidden;
 }
@@ -11838,6 +11815,18 @@ footer,
   color: var(--apt-accent);
   padding-bottom: 8px;
   border-bottom: 1px solid color-mix(in srgb, var(--apt-accent) 22%, transparent);
+}
+.ag-nav-progress {
+  height: 2px;
+  background: color-mix(in srgb, var(--apt-accent) 14%, transparent);
+  border-radius: 2px;
+  overflow: hidden;
+  flex-shrink: 0;
+}
+.ag-nav-progress-fill {
+  height: 100%;
+  background: var(--apt-accent);
+  transition: width 260ms var(--ease-out, cubic-bezier(0.23, 1, 0.32, 1));
 }
 .ag-nav-list {
   list-style: none;
@@ -22705,7 +22694,7 @@ img[src$="photo-alex.jpg"]:not(.avatar-img):hover {
 }
 .lm-card:hover { background: rgba(255, 255, 255, 0.09); }
 .lm-card-apt {
-  font-size: 9px;
+  font-size: 11px;
   font-weight: 700;
   letter-spacing: 0.12em;
   color: color-mix(in srgb, var(--lm-color, #3AAABB) 50%, var(--crema, #FAF6F0));
@@ -22747,7 +22736,7 @@ img[src$="photo-alex.jpg"]:not(.avatar-img):hover {
 .lm-card-lm-badge {
   display: inline-block;
   font-family: var(--sans);
-  font-size: 8px;
+  font-size: 11px;
   font-weight: 700;
   letter-spacing: .12em;
   color: #fff;
@@ -22773,7 +22762,7 @@ img[src$="photo-alex.jpg"]:not(.avatar-img):hover {
 .lm-card--longstay:hover { background: rgba(58, 170, 187, 0.13); }
 .lm-card-apt--longstay {
   color: #3AAABB;
-  font-size: 9px;
+  font-size: 11px;
   font-weight: 700;
   letter-spacing: 0.14em;
 }
@@ -23509,7 +23498,7 @@ img[src$="photo-alex.jpg"]:not(.avatar-img):hover {
 .lss-pill-reg { text-decoration: line-through; opacity: .55; font-weight: 500; font-size: 11px; }
 .lss-pill-arrow { opacity: .5; font-size: 11px; }
 .lss-pill-ls { font-weight: 700; font-size: 13px; color: #fff; letter-spacing: -.01em; }
-.lss-pill-save { font-size: 10px; font-weight: 700; background: rgba(255,255,255,.2); border-radius: 4px 0 4px 0; padding: 1px 5px; letter-spacing: .02em; }
+.lss-pill-save { font-size: 11px; font-weight: 700; background: rgba(255,255,255,.2); border-radius: 4px 0 4px 0; padding: 1px 5px; letter-spacing: .02em; }
 .lss-cta {
   display: inline-block;
   background: color-mix(in srgb, var(--accent, #3AAABB) 70%, #000);
