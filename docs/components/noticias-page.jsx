@@ -421,6 +421,124 @@ const ArticleCardWithZone = ({ article, cat, lang }) => (
   </div>
 );
 
+// ── Hojas cayendo, guiño de otoño sobre el hero del blog ──────────
+// Cada Hestía presta su color (olivo, cobre, dorado): las hojas son el
+// territorio entero cayendo, no un efecto genérico. El giro (scaleX con
+// coseno) es lo que hace que lean como hoja y no como confeti: cruza por
+// cero al ponerse de canto y ahí se ve el reverso, más pálido, para que
+// no sea un recorte plano girando. La deriva lateral va acoplada a ese
+// mismo ángulo (seno, noventa grados desfasado), nunca independiente.
+const LEAF_COLORS = [
+  { face: '#6B7A3A', back: '#9CA870' }, // Mar · olivo
+  { face: '#B86A3C', back: '#D9A47E' }, // Thalassa · cobre
+  { face: '#D4A84A', back: '#E8CD94' }, // Salinas · dorado
+];
+const _leafSprite = (hex) => {
+  const c = document.createElement('canvas');
+  c.width = 32; c.height = 32;
+  const ctx = c.getContext('2d');
+  ctx.fillStyle = hex;
+  ctx.beginPath();
+  ctx.moveTo(16, 2);
+  ctx.bezierCurveTo(28, 8, 28, 22, 16, 30);
+  ctx.bezierCurveTo(4, 22, 4, 8, 16, 2);
+  ctx.fill();
+  ctx.strokeStyle = 'rgba(0,0,0,0.12)'; ctx.lineWidth = 1;
+  ctx.beginPath(); ctx.moveTo(16, 6); ctx.lineTo(16, 27); ctx.stroke();
+  return c;
+};
+const FallingLeaves = ({ reducedMotion }) => {
+  const canvasRef = React.useRef(null);
+  React.useEffect(() => {
+    if (reducedMotion) return;
+    const canvas = canvasRef.current;
+    if (!canvas) return;
+    const ctx = canvas.getContext('2d');
+    const section = canvas.closest('.noticias-hero');
+    const sprites = LEAF_COLORS.map(c => ({ face: _leafSprite(c.face), back: _leafSprite(c.back) }));
+
+    let w = 0, h = 0, dpr = Math.min(window.devicePixelRatio || 1, 2);
+    let leaves = [];
+    let visible = true;
+    let raf = null, lastTime = 0;
+
+    const spawn = (n, seedAbove) => {
+      const out = [];
+      for (let i = 0; i < n; i++) {
+        out.push({
+          x: Math.random() * w,
+          y: seedAbove ? -Math.random() * h : Math.random() * h,
+          fall: 18 + Math.random() * 22,
+          roll: Math.random() * Math.PI * 2,
+          rollRate: (Math.random() - 0.5) * 0.6,
+          spin: Math.random() * Math.PI * 2,
+          spinRate: 1.2 + Math.random() * 1.6,
+          slip: 14 + Math.random() * 18,
+          scale: 0.5 + Math.random() * 0.9,
+          alpha: 0.35 + Math.random() * 0.4,
+          sprite: sprites[(Math.random() * sprites.length) | 0],
+        });
+      }
+      return out;
+    };
+
+    const resize = () => {
+      const rect = section.getBoundingClientRect();
+      w = rect.width; h = rect.height;
+      if (!w || !h) return;
+      canvas.width = w * dpr; canvas.height = h * dpr;
+      canvas.style.width = w + 'px'; canvas.style.height = h + 'px';
+      ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+      const k = Math.min(Math.max(Math.sqrt((w * h) / (1440 * 500)), 0.5), 1.3);
+      const target = Math.round(22 * k);
+      if (leaves.length !== target) leaves = spawn(target, false);
+    };
+
+    const ro = new ResizeObserver(resize);
+    ro.observe(section);
+    resize();
+
+    const io = new IntersectionObserver(([e]) => { visible = e.isIntersecting; }, { threshold: 0 });
+    io.observe(section);
+
+    const tick = (t) => {
+      raf = requestAnimationFrame(tick);
+      if (!visible || document.hidden || !w || !h) { lastTime = t; return; }
+      const dt = Math.min((t - (lastTime || t)) / 1000, 1 / 30);
+      lastTime = t;
+      ctx.clearRect(0, 0, w, h);
+      for (const l of leaves) {
+        l.roll += l.rollRate * dt;
+        l.spin += l.spinRate * dt;
+        l.x += Math.sin(l.spin) * l.slip * dt;
+        l.y += l.fall * dt;
+        if (l.y > h + 20) { l.y = -20; l.x = Math.random() * w; }
+        if (l.x < -20) l.x = w + 20; else if (l.x > w + 20) l.x = -20;
+        const tumble = Math.cos(l.spin);
+        const img = tumble < 0 ? l.sprite.back : l.sprite.face;
+        ctx.save();
+        ctx.translate(l.x, l.y);
+        ctx.rotate(l.roll);
+        ctx.scale(Math.max(Math.abs(tumble), 0.06) * (tumble < 0 ? -1 : 1), 1);
+        ctx.globalAlpha = l.alpha;
+        const s = 16 * l.scale;
+        ctx.drawImage(img, -s / 2, -s / 2, s, s);
+        ctx.restore();
+      }
+    };
+    raf = requestAnimationFrame(tick);
+
+    return () => {
+      cancelAnimationFrame(raf);
+      ro.disconnect();
+      io.disconnect();
+    };
+  }, [reducedMotion]);
+
+  if (reducedMotion) return null;
+  return <canvas className="noticias-hero-leaves" ref={canvasRef} aria-hidden="true" />;
+};
+
 const NoticiasPage = ({ lang }) => {
   const N = NOTICIAS;
   const [terrView, setTerrViewState] = React.useState(
@@ -502,6 +620,7 @@ const NoticiasPage = ({ lang }) => {
           aria-hidden="true"
         />
         <div className="noticias-hero-wash"/>
+        <FallingLeaves reducedMotion={prefersReducedMotion} />
         <div className="noticias-hero-inner">
           <div className="noticias-edition-badge">
             {lang === 'es' ? 'Edición · ' + NOTICIAS.edition.es : 'Edition · ' + NOTICIAS.edition.en}
