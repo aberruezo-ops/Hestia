@@ -857,7 +857,7 @@ const Footer = ({ lang }) => {
         <div className="col footer-brand">
           <img decoding="async" src="assets/logo-teal-transparent.png" alt="Hestía" className="hestia-logo" loading="lazy" width="600" height="600"/>
           <div className="wordmark" style={{fontSize: 13, marginBottom: 4}}>HESTÍA</div>
-          <div className="your-home" style={{fontSize: 9, marginBottom: 16}}>your home!</div>
+          <div className="your-home" style={{fontSize: 11, marginBottom: 16}}>your home!</div>
           <div className="tagline">
             {lang === 'es'
               ? '« Tu hogar lejos de tu casa. »'

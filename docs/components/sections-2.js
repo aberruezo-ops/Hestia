@@ -367,38 +367,18 @@ const RatingsMarquee = ({
   }, "✦")))));
 };
 
-// --- DIRECT PERKS TEASER --- banda corta encima de ContactCTA con un
-// solo botón que abre el modal de ventajas de la reserva directa.
-// Garantiza acceso al modal en móvil en TODAS las páginas con ContactCTA.
-const DirectPerksTeaser = ({
-  lang
-}) => /*#__PURE__*/React.createElement("section", {
-  className: "direct-perks-teaser",
-  "aria-labelledby": "dpt-eyebrow"
-}, /*#__PURE__*/React.createElement("div", {
-  className: "dpt-inner"
-}, /*#__PURE__*/React.createElement("span", {
-  id: "dpt-eyebrow",
-  className: "eyebrow dpt-eyebrow"
-}, lang === 'es' ? 'Reserva directa · la mejor forma de reservar' : 'Direct booking · the best way to book'), /*#__PURE__*/React.createElement("button", {
-  type: "button",
-  className: "dpt-btn",
-  onClick: () => window.dispatchEvent(new Event('hestia:open-direct-perks')),
-  "aria-haspopup": "dialog"
-}, /*#__PURE__*/React.createElement("span", null, lang === 'es' ? 'Ver todas las ventajas' : 'See all perks'), /*#__PURE__*/React.createElement("span", {
-  className: "dpt-arrow",
-  "aria-hidden": "true"
-}, "→"))));
-
 // --- CONTACT CTA ---
+// El botón de "ver ventajas de reserva directa" vivía en una banda propia
+// (DirectPerksTeaser), con su propio eyebrow "Reserva directa...", justo
+// encima del eyebrow de esta sección ("Reserva directa, sin intermediarios"):
+// el mismo mensaje repetido dos veces seguidas en mobile (en desktop el
+// WidgetStack ya lo cubre). Se funde aquí como un enlace de una línea.
 const ContactCTA = ({
   lang,
   availHref
 }) => {
   const t = COPY[lang];
-  return /*#__PURE__*/React.createElement(React.Fragment, null, /*#__PURE__*/React.createElement(DirectPerksTeaser, {
-    lang: lang
-  }), /*#__PURE__*/React.createElement("section", {
+  return /*#__PURE__*/React.createElement("section", {
     className: "contact-cta on-dark",
     id: "contacto",
     "data-screen-label": "10 Contacto"
@@ -425,9 +405,16 @@ const ContactCTA = ({
     className: "btn btn-ghost-light"
   }, t.contact_cta_avail, " ", /*#__PURE__*/React.createElement("span", {
     className: "arrow"
-  }, "→"))), /*#__PURE__*/React.createElement("div", {
+  }, "→"))), /*#__PURE__*/React.createElement("button", {
+    type: "button",
+    className: "cta-perks-link",
+    onClick: () => window.dispatchEvent(new Event('hestia:open-direct-perks')),
+    "aria-haspopup": "dialog"
+  }, lang === 'es' ? 'Ver todas las ventajas de la reserva directa' : 'See all direct-booking perks', /*#__PURE__*/React.createElement("span", {
+    "aria-hidden": "true"
+  }, "→")), /*#__PURE__*/React.createElement("div", {
     className: "address"
-  }, "Calle Islas Canarias 7 · 04621 Vera Playa · Almería"))));
+  }, "Calle Islas Canarias 7 · 04621 Vera Playa · Almería")));
 };
 Object.assign(window, {
   Counters,

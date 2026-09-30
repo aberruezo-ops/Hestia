@@ -1426,7 +1426,7 @@ const Footer = ({
   }, "HESTÍA"), /*#__PURE__*/React.createElement("div", {
     className: "your-home",
     style: {
-      fontSize: 9,
+      fontSize: 11,
       marginBottom: 16
     }
   }, "your home!"), /*#__PURE__*/React.createElement("div", {
