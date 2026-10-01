@@ -875,7 +875,16 @@ const GalleryCarousel = ({
     style: {
       objectPosition: posFor(src)
     }
-  })))))), lightbox && /*#__PURE__*/React.createElement("div", {
+  })))))), lightbox && ReactDOM.createPortal(
+  /*#__PURE__*/
+  // .apt-page-gallery es position:relative + z-index propio (apilado
+  // de secciones con esquina redondeada): sin portal, este fixed
+  // quedaba atrapado en ESA pila local, con el header (z-index 99)
+  // pintando por encima y bloqueando el toque, aunque el botón de
+  // cerrar existiera y pareciera bien posicionado (confirmado con
+  // elementFromPoint: el centro del botón devolvía el <header>, no
+  // el botón). Montado en <body>, compite en la pila raíz y gana.
+  React.createElement("div", {
     className: "gc-lightbox",
     onClick: closeLightbox,
     role: "dialog",
@@ -916,7 +925,7 @@ const GalleryCarousel = ({
     className: "gc-lb-caption"
   }, captions[cur]), /*#__PURE__*/React.createElement("div", {
     className: "gc-lb-counter"
-  }, cur + 1, " / ", n)));
+  }, cur + 1, " / ", n)), document.body));
 };
 const AptVideoDesc = ({
   apt,

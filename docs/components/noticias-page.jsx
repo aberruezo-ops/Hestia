@@ -720,7 +720,10 @@ const NoticiasPage = ({ lang }) => {
               ))}
             </div>
           ) : (
-            <div className="noticias-mes-grid">
+            <div
+              className="noticias-mes-grid"
+              style={{ gridTemplateColumns: `repeat(${Math.min(byMonth.length, 3)}, minmax(240px, 360px))` }}
+            >
               {byMonth.map(({ month, items }) => (
                 <div key={month} className="noticias-mes-col">
                   <div className="noticias-mes-head">

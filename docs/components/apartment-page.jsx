@@ -785,7 +785,14 @@ const GalleryCarousel = ({ imgs, captions, lang = 'es' }) => {
           ))}
         </div>
       </div>
-      {lightbox && (
+      {lightbox && ReactDOM.createPortal(
+        // .apt-page-gallery es position:relative + z-index propio (apilado
+        // de secciones con esquina redondeada): sin portal, este fixed
+        // quedaba atrapado en ESA pila local, con el header (z-index 99)
+        // pintando por encima y bloqueando el toque, aunque el botón de
+        // cerrar existiera y pareciera bien posicionado (confirmado con
+        // elementFromPoint: el centro del botón devolvía el <header>, no
+        // el botón). Montado en <body>, compite en la pila raíz y gana.
         <div className="gc-lightbox" onClick={closeLightbox} role="dialog" aria-modal="true" aria-label={lang === 'es' ? 'Galería de fotos' : 'Photo gallery'}>
           <button ref={lbCloseRef} className="gc-lb-close" onClick={closeLightbox} aria-label={lang === 'es' ? 'Cerrar' : 'Close'}>✕</button>
           <button className="gc-lb-prev" onClick={e => { e.stopPropagation(); setCur(i => (i - 1 + n) % n); }} aria-label={lang === 'es' ? 'Anterior' : 'Previous'}>‹</button>
@@ -796,7 +803,8 @@ const GalleryCarousel = ({ imgs, captions, lang = 'es' }) => {
           <button className="gc-lb-next" onClick={e => { e.stopPropagation(); setCur(i => (i + 1) % n); }} aria-label={lang === 'es' ? 'Siguiente' : 'Next'}>›</button>
           <div className="gc-lb-caption">{captions[cur]}</div>
           <div className="gc-lb-counter">{cur + 1} / {n}</div>
-        </div>
+        </div>,
+        document.body
       )}
     </>
   );

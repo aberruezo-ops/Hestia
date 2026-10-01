@@ -807,7 +807,10 @@ const NoticiasPage = ({
     lang: lang,
     id: `art-${ci}-${ai}`
   })))))) : /*#__PURE__*/React.createElement("div", {
-    className: "noticias-mes-grid"
+    className: "noticias-mes-grid",
+    style: {
+      gridTemplateColumns: `repeat(${Math.min(byMonth.length, 3)}, minmax(240px, 360px))`
+    }
   }, byMonth.map(({
     month,
     items

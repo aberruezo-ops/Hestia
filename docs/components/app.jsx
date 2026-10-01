@@ -89,8 +89,11 @@ const App = () => {
   // silencia con el botón. Los navegadores bloquean el audio hasta que el
   // usuario interactúa, así que intentamos reproducir al cargar y, si se
   // bloquea, lo lanzamos en el primer gesto (clic/tecla/tap).
+  // Opt-in, no opt-out: un sonido ambiente que arranca solo sorprende a
+  // quien navega en silencio (ej. en el trabajo, de noche). Por defecto
+  // suena solo si el visitante ya lo activó antes (localStorage === 'on').
   const [soundOn, setSoundOn] = React.useState(() => {
-    try { return localStorage.getItem('hestia-sound') !== 'off'; } catch (_) { return true; }
+    try { return localStorage.getItem('hestia-sound') === 'on'; } catch (_) { return false; }
   });
   const seaRef = React.useRef(null);
   React.useEffect(() => {
@@ -99,7 +102,7 @@ const App = () => {
     audio.preload = 'auto';
     audio.playsInline = true;
     seaRef.current = audio;
-    const wanted = () => { try { return localStorage.getItem('hestia-sound') !== 'off'; } catch (_) { return true; } };
+    const wanted = () => { try { return localStorage.getItem('hestia-sound') === 'on'; } catch (_) { return false; } };
     // Fundido de salida en los ~2.5 s finales de cada vuelta: el mar se apaga suave, no de golpe.
     audio.addEventListener('timeupdate', () => {
       const left = audio.duration - audio.currentTime;
