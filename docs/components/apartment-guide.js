@@ -12481,6 +12481,7 @@ const AptGuideGate = ({
     cancel: 'Cancel'
   };
   return /*#__PURE__*/React.createElement(React.Fragment, null, /*#__PURE__*/React.createElement("section", {
+    id: "guide",
     className: "apt-guide-gate",
     style: {
       '--apt-accent': apt.accent
