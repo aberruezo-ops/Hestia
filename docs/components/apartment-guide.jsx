@@ -6559,7 +6559,7 @@ const AptGuideGate = ({ apt, lang, onUnlock }) => {
 
   return (
     <>
-      <section className="apt-guide-gate" style={{ '--apt-accent': apt.accent }}>
+      <section id="guide" className="apt-guide-gate" style={{ '--apt-accent': apt.accent }}>
         <div className="apt-guide-gate-inner">
           <span className="apt-guide-gate-eyebrow">{lang === 'es' ? 'Guía del huésped' : 'Guest guide'}</span>
           <h2 className="apt-guide-gate-title">

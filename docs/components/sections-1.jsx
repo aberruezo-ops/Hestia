@@ -57,6 +57,10 @@ const HERO_VIDEOS = [
     poster: 'assets/hero-poster-rompeolas.jpg',
     mood: 'night',
     alt: 'Olas rompiendo en el rompeolas · espuma y mar abierto' },
+  { src: 'assets/Videoshome/hero-atardecer-orilla.mp4',
+    poster: 'assets/hero-poster-atardecer-orilla.jpg',
+    mood: 'warm',
+    alt: 'Atardecer en la orilla · olas y reflejo dorado en la arena' },
   // Para añadir un vídeo: súbelo a docs/assets/Videoshome/ y añade
   // una entrada con la misma forma. El poster es un fotograma propio del
   // clip (ver docs/assets/hero-poster-*.jpg), nunca el genérico de otro

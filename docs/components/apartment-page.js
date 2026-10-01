@@ -975,7 +975,7 @@ const AptVideoDesc = ({
   }, "→")), /*#__PURE__*/React.createElement("a", {
     href: guideHref,
     className: "btn btn-ghost"
-  }, lang === 'es' ? 'Guia del apartamento' : 'Apartment guide')))));
+  }, lang === 'es' ? 'Guía del apartamento' : 'Apartment guide')))));
 };
 const AptPageGallery = ({
   apt,
@@ -1092,132 +1092,6 @@ const AptFloorPlan = ({
     alt: "",
     className: "apt-fp-watermark-logo"
   }))))));
-};
-
-// --- Descarga de guía protegida por PIN ---
-//
-// El PIN es fricción de UX, no seguridad real (sitio estático).
-// Los PDFs se sirven desde assets/guides/{PIN}.pdf, la URL solo es
-// "adivinable" si conoces el PIN. Cualquiera con la URL puede descargar.
-//
-const APT_GUIDE_PIN = {
-  vm: 'HVM2016',
-  vt: 'HVT2019',
-  vs: 'HVS2021'
-};
-const AptGuideDownload = ({
-  apt,
-  lang
-}) => {
-  const expected = APT_GUIDE_PIN[apt.id];
-  const [pin, setPin] = React.useState('');
-  const [status, setStatus] = React.useState('idle'); // idle | error | success
-  const inputRef = React.useRef(null);
-  const t = lang === 'es' ? {
-    eyebrow: 'Guía digital',
-    title: `Descarga la guía de ${apt.es.name}`,
-    desc: 'Recomendaciones del barrio, restaurantes, calas, instrucciones de Hestía y todo lo que necesitas para tu estancia.',
-    placeholder: 'PIN de tu reserva',
-    submit: 'Descargar PDF',
-    helper: 'Encontrarás el PIN en tu confirmación de reserva.',
-    error: 'PIN incorrecto. Revisa tu confirmación de reserva.',
-    success: 'PIN correcto. Descargando la guía…'
-  } : {
-    eyebrow: 'Digital guide',
-    title: `Download your ${apt.en.name} guide`,
-    desc: 'Neighborhood recommendations, restaurants, coves, Hestía instructions and everything you need for your stay.',
-    placeholder: 'Booking PIN',
-    submit: 'Download PDF',
-    helper: 'You will find the PIN in your booking confirmation.',
-    error: 'Wrong PIN. Check your booking confirmation.',
-    success: 'PIN accepted. Downloading the guide…'
-  };
-  const handleSubmit = async e => {
-    e.preventDefault();
-    const entered0 = (inputRef.current && inputRef.current.value || pin).trim().toUpperCase();
-    const {
-      entered,
-      ok
-    } = window.submitGuidePin ? await window.submitGuidePin(inputRef, pin, apt.id) : {
-      entered: entered0,
-      ok: window.validateGuidePin ? await window.validateGuidePin(apt.id, entered0) : entered0 === expected
-    };
-    if (entered !== pin) setPin(entered);
-    if (ok) {
-      setStatus('success');
-      // El PDF se sirve con el nombre del PIN maestro; los PINs de huésped
-      // validan el acceso pero el fichero es el mismo.
-      const a = document.createElement('a');
-      a.href = `assets/guides/${expected}.pdf`;
-      a.download = `Guia-${apt.es.name.replace(/\s+/g, '-')}.pdf`;
-      document.body.appendChild(a);
-      a.click();
-      a.remove();
-    } else {
-      setStatus('error');
-      if (inputRef.current) inputRef.current.focus();
-    }
-  };
-  return /*#__PURE__*/React.createElement("section", {
-    id: "guide",
-    className: "apt-guide",
-    "data-apt": apt.id,
-    style: {
-      '--apt-accent': apt.accent,
-      '--apt-accent2': apt.accent2
-    }
-  }, /*#__PURE__*/React.createElement("div", {
-    className: "apt-guide-inner"
-  }, /*#__PURE__*/React.createElement("div", {
-    className: "apt-guide-copy"
-  }, /*#__PURE__*/React.createElement("span", {
-    className: "apt-guide-eyebrow"
-  }, t.eyebrow), /*#__PURE__*/React.createElement("h2", {
-    className: "apt-guide-title"
-  }, t.title), /*#__PURE__*/React.createElement("p", {
-    className: "apt-guide-desc"
-  }, t.desc)), /*#__PURE__*/React.createElement("form", {
-    className: `apt-guide-form${status === 'error' ? ' is-error' : ''}${status === 'success' ? ' is-success' : ''}`,
-    onSubmit: handleSubmit,
-    noValidate: true
-  }, /*#__PURE__*/React.createElement("label", {
-    htmlFor: `guide-pin-${apt.id}`,
-    className: "apt-guide-label"
-  }, t.placeholder), /*#__PURE__*/React.createElement("div", {
-    className: "apt-guide-row"
-  }, /*#__PURE__*/React.createElement("input", {
-    ref: inputRef,
-    id: `guide-pin-${apt.id}`,
-    type: "text",
-    inputMode: "text",
-    autoComplete: "off",
-    autoCapitalize: "characters",
-    autoCorrect: "off",
-    spellCheck: false,
-    enterKeyHint: "go",
-    "data-1p-ignore": "true",
-    "data-lpignore": "true",
-    maxLength: 12,
-    className: "apt-guide-input",
-    placeholder: `${(APT_GUIDE_PIN[apt.id] || 'HVX0000').slice(0, 3)}0000`,
-    value: pin,
-    onChange: e => {
-      setPin(e.target.value);
-      if (status !== 'idle') setStatus('idle');
-    },
-    "aria-invalid": status === 'error',
-    "aria-describedby": `guide-msg-${apt.id}`
-  }), /*#__PURE__*/React.createElement("button", {
-    type: "submit",
-    className: "apt-guide-btn"
-  }, /*#__PURE__*/React.createElement("span", null, t.submit), /*#__PURE__*/React.createElement("span", {
-    className: "apt-guide-arrow",
-    "aria-hidden": "true"
-  }, "↓"))), /*#__PURE__*/React.createElement("p", {
-    id: `guide-msg-${apt.id}`,
-    className: "apt-guide-msg",
-    role: "status"
-  }, status === 'error' ? t.error : status === 'success' ? t.success : t.helper))));
 };
 
 // --- Mini reseñas antes del calendario ---
