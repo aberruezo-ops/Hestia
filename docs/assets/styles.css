@@ -5755,6 +5755,12 @@ body.no-stars .hero .stars { display: none; }
   letter-spacing: 0.32em;
   color: var(--apt-accent, var(--sol-lt));
   margin-bottom: 16px;
+  /* El wash del hero es más denso abajo (donde va el precio/CTA) y casi
+     transparente arriba, justo donde cae este dato de licencia: sobre
+     algunas fotos (confirmado en Thalassa) el color de acento se funde
+     con la almohada. La sombra mantiene el color de marca legible sin
+     perderlo, en vez de cambiarlo a un tono neutro. */
+  text-shadow: 0 1px 4px rgba(0,0,0,.65), 0 1px 10px rgba(0,0,0,.5);
 }
 .apt-page-eyebrow .sep { margin: 0 8px; opacity: 0.75; }
 .apt-page-name {
@@ -10508,11 +10514,18 @@ body[data-apt="salinas"] a.apt-page-reserve-btn:hover {
   font-size: clamp(28px, 4vw, 52px);
   margin-bottom: 56px;
 }
+/* columns, no grid: con grid de 2 columnas, la fila se igualaba a la
+   categoría más alta y dejaba un hueco en blanco debajo de la más corta
+   antes de que empezara la fila siguiente (ej. "Fiestas de pueblos
+   cercanos" con 1 artículo junto a "Vera Playa" con 2). Las columnas CSS
+   fluyen cada categoría de forma independiente, sin huecos forzados. */
 .noticias-terr-grid {
-  display: grid;
-  grid-template-columns: repeat(2, 1fr);
-  gap: 48px 56px;
-  align-items: start;
+  columns: 2;
+  column-gap: 56px;
+}
+.noticias-cat {
+  break-inside: avoid;
+  margin-bottom: 48px;
 }
 .noticias-cat-head {
   display: flex;
@@ -10770,7 +10783,8 @@ body[data-apt="salinas"] a.apt-page-reserve-btn:hover {
 /* Responsive */
 @media (max-width: 900px) {
   .voz-grid { grid-template-columns: 1fr; }
-  .noticias-terr-grid { grid-template-columns: 1fr; gap: 40px; }
+  .noticias-terr-grid { columns: 1; }
+  .noticias-cat { margin-bottom: 40px; }
 }
 @media (max-width: 600px) {
   .noticias-hero { padding-top: calc(var(--chrome-h, 116px) + 16px); padding-bottom: 60px; }

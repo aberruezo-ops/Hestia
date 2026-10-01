@@ -6209,8 +6209,8 @@ const DIRECT_PERKS = {
     id: 'descuento',
     icon: '🎁',
     stat: 'desde −{PCT}%',
-    t: 'Estancias largas desde {LS} €/mes.',
-    d: 'Mínimo 29 noches · septiembre a junio (no disponible en julio ni agosto). Sin comisión, con contrato de arrendamiento firmado y trato 100 % directo.',
+    t: 'Precio cerrado para estancias largas.',
+    d: 'Mínimo 29 noches · septiembre a junio (no disponible en julio ni agosto). Desde {LS} €/mes, sin comisión, con contrato de arrendamiento firmado y trato 100 % directo.',
     link: {
       href: 'estancias-largas.html',
       label: 'Ver tarifas y disponibilidad →'
@@ -6274,8 +6274,8 @@ const DIRECT_PERKS = {
     id: 'descuento',
     icon: '🎁',
     stat: 'from −{PCT}%',
-    t: 'Long stays from €{LS}/month.',
-    d: 'Minimum 29 nights · September to June (not available July or August). No commission, formal lease signed by both parties, 100% direct contact.',
+    t: 'A fixed price for long stays.',
+    d: 'Minimum 29 nights · September to June (not available July or August). From €{LS}/month, no commission, formal lease signed by both parties, 100% direct contact.',
     link: {
       href: 'estancias-largas.html',
       label: 'See rates and availability →'
@@ -6422,7 +6422,7 @@ const getDirectPerks = lang => {
   return DIRECT_PERKS[lang].map(p => p.id === 'descuento' ? {
     ...p,
     stat: p.stat.replace('{PCT}', pct),
-    t: p.t.replace('{LS}', fmt)
+    d: p.d.replace('{LS}', fmt)
   } : p);
 };
 const DirectBookingModal = ({
