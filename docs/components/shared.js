@@ -5343,6 +5343,40 @@ const _drFmtDate = (ds, lang) => {
   return lang === 'en' ? `${mm}-${dd}-${yy}` : `${dd}-${mm}-${yy}`;
 };
 const _drToday = () => new Date().toISOString().slice(0, 10);
+// Fechas en las que los TRES apartamentos están ocupados: la única vez que
+// el calendario debe bloquear una noche cuando aún no se ha elegido Hestía
+// (regla de negocio: una fecha se bloquea solo si los tres están ocupados).
+// DateRangePicker solo acepta un único array `blocked`, así que aquí se
+// calcula, día a día, la intersección de los tres. Sin esto, elegir fechas
+// antes que apartamento mostraba el calendario como totalmente libre aunque
+// esa noche ya no quedara ningún Hestía disponible, una sorpresa evitable
+// un paso después.
+const _allAptsBlocked = avail => {
+  if (!avail || !avail.vm || !avail.vt || !avail.vs) return [];
+  const lists = ['vm', 'vt', 'vs'].map(id => avail[id] && avail[id].blocked || []);
+  const isBlkIn = (list, ds) => list.some(r => ds >= r.start && ds < r.end);
+  const horizonStr = window.PRICES_V2 && window.PRICES_V2.bookingHorizon && window.PRICES_V2.bookingHorizon.lastCheckinDate || _drAdj(_drToday(), 548);
+  const ranges = [];
+  let rangeStart = null;
+  let ds = _drToday();
+  while (ds <= horizonStr) {
+    const blocked = lists.every(list => isBlkIn(list, ds));
+    if (blocked && rangeStart === null) rangeStart = ds;
+    if (!blocked && rangeStart !== null) {
+      ranges.push({
+        start: rangeStart,
+        end: ds
+      });
+      rangeStart = null;
+    }
+    ds = _drAdj(ds, 1);
+  }
+  if (rangeStart !== null) ranges.push({
+    start: rangeStart,
+    end: _drAdj(ds, 1)
+  });
+  return ranges;
+};
 const DateRangePicker = ({
   checkin,
   checkout,
@@ -5555,8 +5589,11 @@ const DateRangePicker = ({
       // Demasiado cerca del check-in para ser check-out válido
       // (rango < minNights). Se marca como "too-soon" y no clickable.
       const isTooSoon = _tooSoonForCheckout(ds);
-      // Un blocked-start es clickable (puede ser check-out: mañana libre)
-      const isClickable = !isPast && !isBeyond && !isTooSoon && (!isBlk || isBlkStart);
+      // Un blocked-start es clickable (puede ser check-out: mañana libre).
+      // too-soon SÍ es clickable: handleDayClick ya rechaza estos días con
+      // un mensaje claro (drMsg); si no fuera clickable, en touch (sin
+      // hover para el title) tocarlos no daba ninguna señal.
+      const isClickable = !isPast && !isBeyond && (!isBlk || isBlkStart);
       const showBlk = isBlk && !inSel && !inPrev;
       return /*#__PURE__*/React.createElement("div", {
         key: d,
@@ -6002,6 +6039,7 @@ Object.assign(window, {
   _drDiff,
   _drFmtDate,
   _calcLsTotal,
+  _allAptsBlocked,
   _hestiaFindAlternatives,
   _hestiaSendLead,
   _hestiaSendLeadFd,
