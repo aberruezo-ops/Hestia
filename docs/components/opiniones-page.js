@@ -64,13 +64,16 @@ const SOURCE_META = {
     color: '#3D1A35'
   }
 };
-// Convierte rating a 5 estrellas (icono unitario, sin escala expuesta).
-// Booking usa /10, Airbnb/Google/web /5: aquí solo se cuentan iconos de
-// estrella (visual, sin número al lado), así que basta con llevarlos a /5.
+// Convierte rating a 5 estrellas (icono unitario, sin escala expuesta): aquí
+// solo se cuentan iconos de estrella (visual, sin número al lado), derivado
+// de ratingNorm (shared.jsx) para que la normalización Booking/Airbnb/
+// Google/web se calcule en un único sitio.
 const ratingToStars = (rating, source) => {
   if (rating == null) return 5;
-  if (source === 'booking') return Math.round(rating / 2);
-  return Math.round(rating);
+  return Math.round(ratingNorm({
+    rating,
+    source
+  }) / 2);
 };
 const Stars = ({
   count,
@@ -138,6 +141,9 @@ const OpinionesRatings = ({
   lang
 }) => {
   const t = COPY[lang];
+  const booking = platformScore('booking');
+  const airbnb = platformScore('airbnb');
+  const google = platformScore('google');
   return /*#__PURE__*/React.createElement("section", {
     className: "opiniones-platforms section-cream"
   }, /*#__PURE__*/React.createElement("div", {
@@ -153,9 +159,9 @@ const OpinionesRatings = ({
     className: "platform"
   }, "Booking.com"), /*#__PURE__*/React.createElement("div", {
     className: "score"
-  }, "9", /*#__PURE__*/React.createElement("span", {
+  }, booking.int, /*#__PURE__*/React.createElement("span", {
     className: "dec"
-  }, ".8"), /*#__PURE__*/React.createElement("span", {
+  }, ".", booking.dec), /*#__PURE__*/React.createElement("span", {
     className: "score-max"
   }, "/10")), /*#__PURE__*/React.createElement("div", {
     className: "desc"
@@ -173,9 +179,9 @@ const OpinionesRatings = ({
     className: "platform"
   }, "Airbnb · Superhost"), /*#__PURE__*/React.createElement("div", {
     className: "score"
-  }, "10", /*#__PURE__*/React.createElement("span", {
+  }, airbnb.int, /*#__PURE__*/React.createElement("span", {
     className: "dec"
-  }, ".0"), /*#__PURE__*/React.createElement("span", {
+  }, ".", airbnb.dec), /*#__PURE__*/React.createElement("span", {
     className: "score-max"
   }, "/10")), /*#__PURE__*/React.createElement("div", {
     className: "desc"
@@ -193,9 +199,9 @@ const OpinionesRatings = ({
     className: "platform"
   }, "Google Maps"), /*#__PURE__*/React.createElement("div", {
     className: "score"
-  }, "9", /*#__PURE__*/React.createElement("span", {
+  }, google.int, /*#__PURE__*/React.createElement("span", {
     className: "dec"
-  }, ".8"), /*#__PURE__*/React.createElement("span", {
+  }, ".", google.dec), /*#__PURE__*/React.createElement("span", {
     className: "score-max"
   }, "/10")), /*#__PURE__*/React.createElement("div", {
     className: "desc"
@@ -340,17 +346,17 @@ const ORDENES = [{
   en: 'Most detailed'
 }];
 
-// Booking puntúa sobre 10 y el resto sobre 5: normalizamos todo a /10 (igual
-// que el resto del sitio), si no, ordenar por nota pondría siempre Booking
-// artificialmente abajo.
-const _nota10 = r => (r.source === 'booking' ? r.rating : r.rating * 2) || 0;
+// Envoltorio sobre ratingNorm (shared.jsx, fuente única de la normalización
+// Booking/Airbnb/Google/web) con fallback a 0 para reseñas sin rating
+// numérico: aquí se usa directo en sumas y comparaciones de orden.
+const _nota = r => ratingNorm(r) || 0;
 const _fecha = r => r.date || '';
 
 // ============================================================
 // Desglose por categoría, calculado de verdad a partir del texto real
 // de las reseñas (no son sub-notas que den las plataformas: Booking/Airbnb/
 // Google no nos entregan eso). Para cada categoría, la nota es la media de
-// _nota10 SOLO entre las reseñas que mencionan esas palabras — un huésped que
+// _nota SOLO entre las reseñas que mencionan esas palabras — un huésped que
 // dice "la cocina estaba genial" cuenta para "Equipamiento" con su nota real,
 // no con un número inventado. Si hay pocas menciones bajo el filtro activo
 // (< CAT_MIN_N), se rellena con la media general de ese filtro para no
@@ -403,7 +409,7 @@ const CATEGORY_DEFS = [{
   kw: ['precio', 'vale la pena', 'merece', 'calidad precio', 'barato', 'relacion calidad']
 }];
 const categoryScores = reviews => {
-  const overall = reviews.length ? reviews.reduce((a, r) => a + _nota10(r), 0) / reviews.length : null;
+  const overall = reviews.length ? reviews.reduce((a, r) => a + _nota(r), 0) / reviews.length : null;
   return CATEGORY_DEFS.map(cat => {
     const matches = reviews.filter(r => {
       const txt = _normTxt(r.text);
@@ -415,19 +421,17 @@ const categoryScores = reviews => {
       const sum = matches.reduce((a, r) => {
         const txt = _normTxt(r.text);
         const hasQualifier = QUALIFIER_KW.some(k => txt.includes(k));
-        return a + Math.max(0, _nota10(r) + cat.bias - (hasQualifier ? 0.8 : 0));
+        return a + Math.max(0, _nota(r) + cat.bias - (hasQualifier ? 0.8 : 0));
       }, 0);
       avg = sum / n;
     } else {
       avg = overall != null ? Math.max(0, overall + cat.bias) : null;
     }
-    // Suelo editorial: ninguna categoría baja de 9.60, y "Relación
-    // calidad-precio" nunca baja de 9.84 (algo más exigente ahí porque es
-    // la categoría más sensible a percepción). Sigue calculándose
-    // proporcionalmente del texto real de las reseñas, el suelo solo actúa
-    // cuando el cálculo cae por debajo.
+    // Suelo editorial (RATING_FLOOR_PARTIAL, shared.jsx): ninguna categoría
+    // baja de 9.70. Sigue calculándose proporcionalmente del texto real de
+    // las reseñas, el suelo solo actúa cuando el cálculo cae por debajo.
     if (avg != null) {
-      avg = Math.max(cat.id === 'valor' ? 9.84 : 9.60, avg);
+      avg = Math.max(RATING_FLOOR_PARTIAL, avg);
     }
     return {
       ...cat,
@@ -440,7 +444,7 @@ const categoryScores = reviews => {
 const ordenar = (lista, modo) => {
   const l = [...lista];
   if (modo === 'recientes') return l.sort((a, b) => _fecha(b).localeCompare(_fecha(a)));
-  if (modo === 'mejores') return l.sort((a, b) => _nota10(b) - _nota10(a) || _fecha(b).localeCompare(_fecha(a)));
+  if (modo === 'mejores') return l.sort((a, b) => _nota(b) - _nota(a) || _fecha(b).localeCompare(_fecha(a)));
   if (modo === 'largas') return l.sort((a, b) => (b.text || '').length - (a.text || '').length);
   return [...l.filter(r => r.highlight).sort((a, b) => _fecha(b).localeCompare(_fecha(a))), ...l.filter(r => !r.highlight).sort((a, b) => (b.text || '').length - (a.text || '').length || _fecha(b).localeCompare(_fecha(a)))];
 };
@@ -474,7 +478,7 @@ const CategoryBars = ({
     }
   })), /*#__PURE__*/React.createElement("div", {
     className: "opi-cat-val"
-  }, cat.avg.toFixed(1))))), /*#__PURE__*/React.createElement("p", {
+  }, fmtRating(cat.avg))))), /*#__PURE__*/React.createElement("p", {
     className: "opi-cat-note"
   }, lang === 'es' ? 'Calculado a partir de lo que cuentan las reseñas reales de este filtro, no son sub-notas que den las plataformas.' : "Calculated from what this filter's real reviews actually say, not category sub-scores provided by the platforms."));
 };
@@ -523,13 +527,16 @@ const OpinionesTestimonials = ({
   const visible = ordenar(filtered, orden);
 
   // Resumen de lo que hay bajo el filtro activo: da escala antes de leer.
+  // 'global' solo sin ningún filtro activo (la nota del sitio entero);
+  // cualquier filtro de plataforma o Hestía es un desglose ('partial').
   const resumen = (() => {
     if (!filtered.length) return null;
-    const media = filtered.reduce((a, r) => a + _nota10(r), 0) / filtered.length;
-    const cinco = filtered.filter(r => _nota10(r) >= 9.8).length;
+    const scope = filter === 'all' && aptFilter === 'all' ? 'global' : 'partial';
+    const media = ratingScore(filtered, scope);
+    const cinco = filtered.filter(r => _nota(r) >= 9.8).length;
     const anios = filtered.map(_fecha).filter(Boolean).sort();
     return {
-      media: media.toFixed(1),
+      media: fmtRating(media),
       cinco: Math.round(cinco / filtered.length * 100),
       desde: anios.length ? anios[0].slice(0, 4) : null,
       total: filtered.length

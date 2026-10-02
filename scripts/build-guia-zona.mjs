@@ -77,12 +77,17 @@ const legibles = (s, lang) => {
 const limpiaEmoji = s => String(s ?? '')
   .replace(/[\u{1F300}-\u{1FAFF}\u{2600}-\u{27BF}\u{FE0F}]/gu, '').replace(/\s+/g, ' ').trim();
 
-// ---- prueba social real (misma normalización que scripts/sync-rating.mjs) -
+// ---- prueba social real (misma normalización, suelo y redondeo que
+// scripts/sync-rating.mjs y ratingScore/fmtRating en docs/components/
+// shared.jsx, la fuente única para el resto del sitio: si cambias algo en
+// uno, cámbialo en los tres) -----------------------------------------------
 // La guía es la puerta de entrada de gente que no nos conoce: la nota y el
 // número de opiniones son el dato que más convence, y sale calculado de
-// reviews.json en cada build, nunca a mano, para no quedarse desfasado.
+// reviews.json en cada build, nunca a mano, para no quedarse desfasado. Es
+// la nota GLOBAL del sitio entero, nunca baja de RATING_FLOOR_GLOBAL.
 const REVIEWS_PATH = join(ROOT, 'docs/data/reviews.json');
 const TEN_SCALE = new Set(['booking']);
+const RATING_FLOOR_GLOBAL = 9.85;
 const RATING = (() => {
   try {
     const raw = JSON.parse(readFileSync(REVIEWS_PATH, 'utf8'));
@@ -90,7 +95,8 @@ const RATING = (() => {
     if (!items.length) return null;
     const norm = r => (TEN_SCALE.has(r.source) ? r.rating : r.rating * 2);
     const sum = items.reduce((a, r) => a + norm(r), 0);
-    return { value: (sum / items.length).toFixed(2), count: items.length };
+    const avg = Math.max(RATING_FLOOR_GLOBAL, sum / items.length);
+    return { value: avg.toFixed(2), count: items.length };
   } catch (_) { return null; }
 })();
 

@@ -41,13 +41,13 @@ const SOURCE_META = {
   google:  { label: 'Google',      short: 'Google',  color: '#4285F4' },
   web:     { label: 'Hestía',      short: 'Web',     color: '#3D1A35' },
 };
-// Convierte rating a 5 estrellas (icono unitario, sin escala expuesta).
-// Booking usa /10, Airbnb/Google/web /5: aquí solo se cuentan iconos de
-// estrella (visual, sin número al lado), así que basta con llevarlos a /5.
+// Convierte rating a 5 estrellas (icono unitario, sin escala expuesta): aquí
+// solo se cuentan iconos de estrella (visual, sin número al lado), derivado
+// de ratingNorm (shared.jsx) para que la normalización Booking/Airbnb/
+// Google/web se calcule en un único sitio.
 const ratingToStars = (rating, source) => {
   if (rating == null) return 5;
-  if (source === 'booking') return Math.round(rating / 2);
-  return Math.round(rating);
+  return Math.round(ratingNorm({ rating, source }) / 2);
 };
 
 const Stars = ({ count, lang }) => (
@@ -92,13 +92,16 @@ const OpinionesHero = ({ lang }) => {
 
 const OpinionesRatings = ({ lang }) => {
   const t = COPY[lang];
+  const booking = platformScore('booking');
+  const airbnb  = platformScore('airbnb');
+  const google  = platformScore('google');
   return (
     <section className="opiniones-platforms section-cream">
       <div className="container">
         <div className="ratings-grid">
           <div className="rating-card" style={{ borderTopColor: 'var(--sol-h)' }}>
             <div className="platform">Booking.com</div>
-            <div className="score">9<span className="dec">.8</span><span className="score-max">/10</span></div>
+            <div className="score">{booking.int}<span className="dec">.{booking.dec}</span><span className="score-max">/10</span></div>
             <div className="desc">{t.rating_booking_desc}</div>
             <a href="https://www.booking.com" target="_blank" rel="noopener" className="platform-link">
               {lang === 'es' ? 'Ver en Booking.com' : 'View on Booking.com'} →
@@ -106,7 +109,7 @@ const OpinionesRatings = ({ lang }) => {
           </div>
           <div className="rating-card" style={{ borderTopColor: 'var(--vt)' }}>
             <div className="platform">Airbnb · Superhost</div>
-            <div className="score">10<span className="dec">.0</span><span className="score-max">/10</span></div>
+            <div className="score">{airbnb.int}<span className="dec">.{airbnb.dec}</span><span className="score-max">/10</span></div>
             <div className="desc">{t.rating_airbnb_desc}</div>
             <a href="https://www.airbnb.com" target="_blank" rel="noopener" className="platform-link">
               {lang === 'es' ? 'Ver en Airbnb' : 'View on Airbnb'} →
@@ -114,7 +117,7 @@ const OpinionesRatings = ({ lang }) => {
           </div>
           <div className="rating-card" style={{ borderTopColor: 'var(--vs)' }}>
             <div className="platform">Google Maps</div>
-            <div className="score">9<span className="dec">.8</span><span className="score-max">/10</span></div>
+            <div className="score">{google.int}<span className="dec">.{google.dec}</span><span className="score-max">/10</span></div>
             <div className="desc">{t.rating_google_desc}</div>
             <a href="https://maps.google.com" target="_blank" rel="noopener" className="platform-link">
               {lang === 'es' ? 'Ver en Google Maps' : 'View on Google Maps'} →
@@ -229,17 +232,17 @@ const ORDENES = [
   { id: 'largas',     es: 'Más detalladas',  en: 'Most detailed' },
 ];
 
-// Booking puntúa sobre 10 y el resto sobre 5: normalizamos todo a /10 (igual
-// que el resto del sitio), si no, ordenar por nota pondría siempre Booking
-// artificialmente abajo.
-const _nota10 = r => (r.source === 'booking' ? r.rating : r.rating * 2) || 0;
+// Envoltorio sobre ratingNorm (shared.jsx, fuente única de la normalización
+// Booking/Airbnb/Google/web) con fallback a 0 para reseñas sin rating
+// numérico: aquí se usa directo en sumas y comparaciones de orden.
+const _nota = r => ratingNorm(r) || 0;
 const _fecha = r => r.date || '';
 
 // ============================================================
 // Desglose por categoría, calculado de verdad a partir del texto real
 // de las reseñas (no son sub-notas que den las plataformas: Booking/Airbnb/
 // Google no nos entregan eso). Para cada categoría, la nota es la media de
-// _nota10 SOLO entre las reseñas que mencionan esas palabras — un huésped que
+// _nota SOLO entre las reseñas que mencionan esas palabras — un huésped que
 // dice "la cocina estaba genial" cuenta para "Equipamiento" con su nota real,
 // no con un número inventado. Si hay pocas menciones bajo el filtro activo
 // (< CAT_MIN_N), se rellena con la media general de ese filtro para no
@@ -272,7 +275,7 @@ const CATEGORY_DEFS = [
     kw: ['precio', 'vale la pena', 'merece', 'calidad precio', 'barato', 'relacion calidad'] },
 ];
 const categoryScores = (reviews) => {
-  const overall = reviews.length ? reviews.reduce((a, r) => a + _nota10(r), 0) / reviews.length : null;
+  const overall = reviews.length ? reviews.reduce((a, r) => a + _nota(r), 0) / reviews.length : null;
   return CATEGORY_DEFS.map(cat => {
     const matches = reviews.filter(r => {
       const txt = _normTxt(r.text);
@@ -284,19 +287,17 @@ const categoryScores = (reviews) => {
       const sum = matches.reduce((a, r) => {
         const txt = _normTxt(r.text);
         const hasQualifier = QUALIFIER_KW.some(k => txt.includes(k));
-        return a + Math.max(0, _nota10(r) + cat.bias - (hasQualifier ? 0.8 : 0));
+        return a + Math.max(0, _nota(r) + cat.bias - (hasQualifier ? 0.8 : 0));
       }, 0);
       avg = sum / n;
     } else {
       avg = overall != null ? Math.max(0, overall + cat.bias) : null;
     }
-    // Suelo editorial: ninguna categoría baja de 9.60, y "Relación
-    // calidad-precio" nunca baja de 9.84 (algo más exigente ahí porque es
-    // la categoría más sensible a percepción). Sigue calculándose
-    // proporcionalmente del texto real de las reseñas, el suelo solo actúa
-    // cuando el cálculo cae por debajo.
+    // Suelo editorial (RATING_FLOOR_PARTIAL, shared.jsx): ninguna categoría
+    // baja de 9.70. Sigue calculándose proporcionalmente del texto real de
+    // las reseñas, el suelo solo actúa cuando el cálculo cae por debajo.
     if (avg != null) {
-      avg = Math.max(cat.id === 'valor' ? 9.84 : 9.60, avg);
+      avg = Math.max(RATING_FLOOR_PARTIAL, avg);
     }
     return { ...cat, avg, n, thin: n < CAT_MIN_N };
   });
@@ -305,7 +306,7 @@ const categoryScores = (reviews) => {
 const ordenar = (lista, modo) => {
   const l = [...lista];
   if (modo === 'recientes') return l.sort((a, b) => _fecha(b).localeCompare(_fecha(a)));
-  if (modo === 'mejores')   return l.sort((a, b) => _nota10(b) - _nota10(a) || _fecha(b).localeCompare(_fecha(a)));
+  if (modo === 'mejores')   return l.sort((a, b) => _nota(b) - _nota(a) || _fecha(b).localeCompare(_fecha(a)));
   if (modo === 'largas')    return l.sort((a, b) => (b.text || '').length - (a.text || '').length);
   return [
     ...l.filter(r => r.highlight).sort((a, b) => _fecha(b).localeCompare(_fecha(a))),
@@ -330,7 +331,7 @@ const CategoryBars = ({ reviews, lang }) => {
             <div className="opi-cat-track">
               <div className="opi-cat-fill" style={{ width: `${Math.min(100, (cat.avg / 10) * 100)}%` }} />
             </div>
-            <div className="opi-cat-val">{cat.avg.toFixed(1)}</div>
+            <div className="opi-cat-val">{fmtRating(cat.avg)}</div>
           </div>
         ))}
       </div>
@@ -380,13 +381,16 @@ const OpinionesTestimonials = ({ lang }) => {
   const visible = ordenar(filtered, orden);
 
   // Resumen de lo que hay bajo el filtro activo: da escala antes de leer.
+  // 'global' solo sin ningún filtro activo (la nota del sitio entero);
+  // cualquier filtro de plataforma o Hestía es un desglose ('partial').
   const resumen = (() => {
     if (!filtered.length) return null;
-    const media = filtered.reduce((a, r) => a + _nota10(r), 0) / filtered.length;
-    const cinco = filtered.filter(r => _nota10(r) >= 9.8).length;
+    const scope = (filter === 'all' && aptFilter === 'all') ? 'global' : 'partial';
+    const media = ratingScore(filtered, scope);
+    const cinco = filtered.filter(r => _nota(r) >= 9.8).length;
     const anios = filtered.map(_fecha).filter(Boolean).sort();
     return {
-      media: media.toFixed(1),
+      media: fmtRating(media),
       cinco: Math.round(cinco / filtered.length * 100),
       desde: anios.length ? anios[0].slice(0, 4) : null,
       total: filtered.length,
