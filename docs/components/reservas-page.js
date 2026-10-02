@@ -538,7 +538,6 @@ const ReservasForm = ({
   const [name, setName] = React.useState('');
   const [tel, setTel] = React.useState('');
   const [email, setEmail] = React.useState('');
-  const [emailConfirm, setEmailConfirm] = React.useState('');
   const [emailDns, setEmailDns] = React.useState(null); // null | 'checking' | 'ok' | 'baddomain' | 'nomx'
   const [comments, setComments] = React.useState('');
 
@@ -721,10 +720,9 @@ const ReservasForm = ({
   const hasName = name.trim().length >= 2;
   const hasTel = tel.replace(/\D/g, '').length >= 9;
   const hasEmail = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email.trim());
-  const emailMatch = email.trim().toLowerCase() === emailConfirm.trim().toLowerCase();
   const emailTypo = channel === 'email' ? _emailSuggest(email) : null;
   const emailDomain = email.includes('@') ? email.trim().split('@')[1].toLowerCase() : '';
-  const channelValid = channel === 'whatsapp' ? hasName && hasTel : hasName && hasEmail && emailMatch;
+  const channelValid = channel === 'whatsapp' ? hasName && hasTel : hasName && hasEmail;
 
   // Comprobación en vivo del dominio del email (registros MX vía DNS-over-HTTPS).
   // Avisa al instante si el dominio no existe o no puede recibir correos. No
@@ -845,6 +843,27 @@ const ReservasForm = ({
     window.addEventListener('beforeunload', onBeforeUnload);
     return () => window.removeEventListener('beforeunload', onBeforeUnload);
   }, []);
+
+  // En móvil, la burbuja flotante de chat/regalo (.float-chat, z-index 210,
+  // fixed abajo a la derecha) puede quedar justo encima de la esquina del
+  // botón de enviar cuando el formulario llega ahí haciendo scroll: un toque
+  // en esa esquina abría el regalo en vez de enviar la reserva (confirmado
+  // con elementFromPoint). Mismo patrón que apt-bar-shown/guide-open: oculta
+  // la burbuja solo mientras el botón de enviar está en pantalla.
+  React.useEffect(() => {
+    if (typeof IntersectionObserver === 'undefined') return;
+    const el = document.getElementById('rf-submit-zone');
+    if (!el) return;
+    const io = new IntersectionObserver(([entry]) => document.body.classList.toggle('rf-submit-in-view', entry.isIntersecting), {
+      threshold: 0,
+      rootMargin: '0px 0px -10% 0px'
+    });
+    io.observe(el);
+    return () => {
+      io.disconnect();
+      document.body.classList.remove('rf-submit-in-view');
+    };
+  }, [step]);
 
   // Avanzar pasos. step1Ready basta (sin apt), en step 2 el huésped
   // verá la disponibilidad de los 3 Hestías y puede elegir uno.
@@ -991,9 +1010,13 @@ const ReservasForm = ({
     }).catch(() => {});
   };
 
+  // Sin apartamento elegido, el calendario solo debe bloquear las noches en
+  // las que los TRES Hestías están ocupados (_allAptsBlocked, shared.jsx).
+  const allAptsBlocked = React.useMemo(() => _allAptsBlocked(avail), [avail]);
+
   // Razón por la que el botón de enviar/avanzar está bloqueado (hint inline).
   const step1Hint = !step1Ready && (!checkin || !checkout) ? lang === 'es' ? 'Elige las fechas de entrada y salida para continuar.' : 'Pick check-in and check-out dates to continue.' : null;
-  const sendHint = !apt ? lang === 'es' ? 'Vuelve al paso 2 y elige una Hestía.' : 'Go back to step 2 and pick a Hestía.' : !hasName ? lang === 'es' ? 'Escribe tu nombre.' : 'Enter your name.' : channel === 'whatsapp' && !hasTel ? lang === 'es' ? 'Escribe un teléfono válido (mín. 9 dígitos).' : 'Enter a valid phone (min. 9 digits).' : channel === 'email' && !hasEmail ? lang === 'es' ? 'Escribe un email válido.' : 'Enter a valid email.' : channel === 'email' && !emailMatch ? lang === 'es' ? 'Repite el mismo email en la confirmación.' : 'Re-type the same email in the confirmation.' : null;
+  const sendHint = !apt ? lang === 'es' ? 'Vuelve al paso 2 y elige una Hestía.' : 'Go back to step 2 and pick a Hestía.' : !hasName ? lang === 'es' ? 'Escribe tu nombre.' : 'Enter your name.' : channel === 'whatsapp' && !hasTel ? lang === 'es' ? 'Escribe un teléfono válido (mín. 9 dígitos).' : 'Enter a valid phone (min. 9 digits).' : channel === 'email' && !hasEmail ? lang === 'es' ? 'Escribe un email válido.' : 'Enter a valid email.' : null;
 
   // Resumen del paso 1 cuando está plegado: card con color del Hestía,
   // fechas en español, badge bonita.
@@ -1024,7 +1047,7 @@ const ReservasForm = ({
     className: "rf-summary-pill"
   }, nightsBooked, " ", nightsBooked === 1 ? lang === 'es' ? 'noche' : 'night' : lang === 'es' ? 'noches' : 'nights'), /*#__PURE__*/React.createElement("span", {
     className: "rf-summary-pill"
-  }, guests, " ", guests === 1 ? lang === 'es' ? 'huésped' : 'guest' : lang === 'es' ? 'huéspedes' : 'guests'), pets === 'yes' && /*#__PURE__*/React.createElement("span", {
+  }, guests), pets === 'yes' && /*#__PURE__*/React.createElement("span", {
     className: "rf-summary-pill"
   }, /*#__PURE__*/React.createElement(HiIcon, {
     name: "paw",
@@ -1128,13 +1151,13 @@ const ReservasForm = ({
     checkout: checkout,
     setCheckin: setCheckin,
     setCheckout: setCheckout,
-    blocked: apt && avail && avail[apt] ? avail[apt].blocked : [],
+    blocked: apt && avail && avail[apt] ? avail[apt].blocked : allAptsBlocked,
     gapOffers: apt && window.PRICES_V2 && window.PRICES_V2.gapOverrides ? Object.values(window.PRICES_V2.gapOverrides).filter(o => o && o.apt === apt) : [],
     accent: apt === 'vm' ? '#6B7A3A' : apt === 'vt' ? '#B86A3C' : apt === 'vs' ? '#D4A84A' : '#3AAABB',
     lang: lang
   }), !apt && /*#__PURE__*/React.createElement("p", {
     className: "form-help-note"
-  }, lang === 'es' ? '↑ Selecciona primero un Hestía para ver las fechas bloqueadas.' : '↑ Pick a Hestía first to see blocked dates.')), /*#__PURE__*/React.createElement("div", {
+  }, lang === 'es' ? '↑ De momento solo se bloquean las noches sin ningún Hestía libre. Elige uno para ver su disponibilidad completa.' : '↑ For now only nights with no Hestía free are blocked. Pick one to see its full availability.')), /*#__PURE__*/React.createElement("div", {
     className: "form-field full"
   }, /*#__PURE__*/React.createElement("label", null, t.f_guests), /*#__PURE__*/React.createElement("div", {
     className: "rf-chip-row",
@@ -1204,17 +1227,7 @@ const ReservasForm = ({
       verticalAlign: '-2px',
       marginRight: 4
     }
-  }), t.f_baby_yes))), checkin && checkout && nightsSelected > 0 && nightsSelected < minNights && /*#__PURE__*/React.createElement("div", {
-    className: "rf-min-nights-warn",
-    role: "alert"
-  }, /*#__PURE__*/React.createElement("strong", null, /*#__PURE__*/React.createElement(HiIcon, {
-    name: "alert",
-    size: 14,
-    style: {
-      verticalAlign: '-2px',
-      marginRight: 4
-    }
-  }), lang === 'es' ? 'Estancia mínima' : 'Minimum stay'), /*#__PURE__*/React.createElement("span", null, lang === 'es' ? `No aceptamos reservas de ${nightsSelected} ${nightsSelected === 1 ? 'noche' : 'noches'}. La estancia mínima en cualquier Hestía es de ${minNights} noches. Ajusta la fecha de salida para continuar.` : `We don't accept ${nightsSelected}-night stays. Minimum stay at any Hestía is ${minNights} nights. Adjust the check-out date to continue.`)), /*#__PURE__*/React.createElement("div", {
+  }), t.f_baby_yes))), /*#__PURE__*/React.createElement("div", {
     className: "rf-step-actions"
   }, /*#__PURE__*/React.createElement("button", {
     type: "button",
@@ -1627,19 +1640,6 @@ const ReservasForm = ({
     className: "rf-email-mismatch"
   }, lang === 'es' ? `"${emailDomain}" no parece poder recibir correos. Revísalo.` : `"${emailDomain}" does not seem able to receive emails. Please check it.`))), /*#__PURE__*/React.createElement("div", {
     className: "form-field full"
-  }, /*#__PURE__*/React.createElement("label", null, lang === 'es' ? 'Confirma tu email' : 'Confirm your email'), /*#__PURE__*/React.createElement("input", {
-    type: "email",
-    placeholder: lang === 'es' ? 'Repite tu email' : 'Re-type your email',
-    value: emailConfirm,
-    onChange: e => setEmailConfirm(e.target.value),
-    required: true,
-    autoComplete: "off"
-  }), /*#__PURE__*/React.createElement("div", {
-    "aria-live": "polite"
-  }, emailConfirm.trim() && !emailMatch && /*#__PURE__*/React.createElement("span", {
-    className: "rf-email-mismatch"
-  }, lang === 'es' ? 'Los dos emails no coinciden.' : 'The two emails do not match.'))), /*#__PURE__*/React.createElement("div", {
-    className: "form-field full"
   }, /*#__PURE__*/React.createElement("label", null, lang === 'es' ? 'Teléfono (opcional, por si el email falla)' : 'Phone (optional, in case the email fails)'), /*#__PURE__*/React.createElement("input", {
     type: "tel",
     placeholder: t.f_tel_ph,
@@ -1660,8 +1660,17 @@ const ReservasForm = ({
     placeholder: t.f_comments_ph,
     value: comments,
     onChange: e => setComments(e.target.value)
-  })), /*#__PURE__*/React.createElement("div", {
-    className: "rf-step-actions"
+  })), /*#__PURE__*/React.createElement("p", {
+    className: "rf-payment-note"
+  }, /*#__PURE__*/React.createElement(HiIcon, {
+    name: "shield",
+    size: 15,
+    style: {
+      verticalAlign: '-2px'
+    }
+  }), ' ', lang === 'es' ? 'Señal del 20 % para confirmar, resto a la llegada. Cancelación flexible: hablamos tu caso, sin letra pequeña.' : '20% deposit to confirm, balance on arrival. Flexible cancellation: we talk through your case, no small print.'), /*#__PURE__*/React.createElement("div", {
+    className: "rf-step-actions",
+    id: "rf-submit-zone"
   }, /*#__PURE__*/React.createElement("p", {
     className: "rf-privacy-note"
   }, lang === 'es' ? /*#__PURE__*/React.createElement(React.Fragment, null, /*#__PURE__*/React.createElement("small", null, "Al enviar aceptas nuestra ", /*#__PURE__*/React.createElement("a", {
