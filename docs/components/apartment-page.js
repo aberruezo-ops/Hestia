@@ -589,8 +589,8 @@ const TrustStrip = ({
   const all = window.REVIEWS && window.REVIEWS.items || [];
   const own = all.filter(r => r.status === 'published' && (r.apt === apt.id || r.apt === 'all'));
   const total = own.length;
-  // Booking usa /10, otros /5, normalizamos todo a /5
-  const ratings = own.map(r => r.source === 'booking' ? r.rating / 2 : r.rating).filter(n => typeof n === 'number' && !isNaN(n));
+  // Booking usa /10, otros /5, normalizamos todo a /10
+  const ratings = own.map(r => r.source === 'booking' ? r.rating : r.rating * 2).filter(n => typeof n === 'number' && !isNaN(n));
   const avg = ratings.length ? Math.round(ratings.reduce((s, n) => s + n, 0) / ratings.length * 10) / 10 : null;
   const countries = new Set(own.map(r => r.country).filter(Boolean));
   const years = new Date().getFullYear() - 2016;
@@ -601,7 +601,7 @@ const TrustStrip = ({
     v: total.toString(),
     l: lang === 'es' ? total === 1 ? 'reseña verificada' : 'reseñas verificadas' : total === 1 ? 'verified review' : 'verified reviews'
   }, avg ? {
-    v: `${avg}★`,
+    v: `${avg}/10`,
     l: lang === 'es' ? 'valoración media' : 'avg rating'
   } : null, countries.size > 1 ? {
     v: countries.size.toString(),
@@ -1436,8 +1436,8 @@ const ApartmentPageApp = () => {
       'reviewBody': r.text,
       'reviewRating': {
         '@type': 'Rating',
-        'ratingValue': r.source === 'booking' ? r.rating / 2 : r.rating,
-        'bestRating': 5,
+        'ratingValue': r.source === 'booking' ? r.rating : r.rating * 2,
+        'bestRating': 10,
         'worstRating': 1
       },
       'itemReviewed': {

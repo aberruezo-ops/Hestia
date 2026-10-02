@@ -310,11 +310,11 @@ const Ratings = ({
     className: "platform"
   }, "Airbnb · Superhost"), /*#__PURE__*/React.createElement("div", {
     className: "score"
-  }, "5", /*#__PURE__*/React.createElement("span", {
+  }, "10", /*#__PURE__*/React.createElement("span", {
     className: "dec"
   }, ".0"), /*#__PURE__*/React.createElement("span", {
     className: "score-max"
-  }, "/5")), /*#__PURE__*/React.createElement("div", {
+  }, "/10")), /*#__PURE__*/React.createElement("div", {
     className: "desc"
   }, t.rating_airbnb_desc), /*#__PURE__*/React.createElement("blockquote", {
     className: "rating-quote"
@@ -327,11 +327,11 @@ const Ratings = ({
     className: "platform"
   }, "Google Maps"), /*#__PURE__*/React.createElement("div", {
     className: "score"
-  }, "4", /*#__PURE__*/React.createElement("span", {
+  }, "9", /*#__PURE__*/React.createElement("span", {
     className: "dec"
-  }, ".9"), /*#__PURE__*/React.createElement("span", {
+  }, ".8"), /*#__PURE__*/React.createElement("span", {
     className: "score-max"
-  }, "/5")), /*#__PURE__*/React.createElement("div", {
+  }, "/10")), /*#__PURE__*/React.createElement("div", {
     className: "desc"
   }, t.rating_google_desc), /*#__PURE__*/React.createElement("blockquote", {
     className: "rating-quote"
@@ -344,7 +344,7 @@ const Ratings = ({
 const RatingsMarquee = ({
   lang
 }) => {
-  const items = lang === 'es' ? ['★ 9.8 · Booking.com', '★ 5.0 · Airbnb Superhost', '★ 4.9 · Google Maps', '630+ familias desde 2016', 'Sin comisiones · reserva directa', '10 años en Vera Playa', 'Mejor precio garantizado', 'Te responde Alex o Fran, normalmente en minutos'] : ['★ 9.8 · Booking.com', '★ 5.0 · Airbnb Superhost', '★ 4.9 · Google Maps', '630+ families since 2016', 'No commissions · direct booking', '10 years in Vera Playa', 'Best price guaranteed', 'Alex or Fran reply, usually in minutes'];
+  const items = lang === 'es' ? ['★ 9.8/10 · Booking.com', '★ 10.0/10 · Airbnb Superhost', '★ 9.8/10 · Google Maps', '630+ familias desde 2016', 'Sin comisiones · reserva directa', '10 años en Vera Playa', 'Mejor precio garantizado', 'Te responde Alex o Fran, normalmente en minutos'] : ['★ 9.8/10 · Booking.com', '★ 10.0/10 · Airbnb Superhost', '★ 9.8/10 · Google Maps', '630+ families since 2016', 'No commissions · direct booking', '10 years in Vera Playa', 'Best price guaranteed', 'Alex or Fran reply, usually in minutes'];
   // Duplicamos el array para que el loop sea continuo (translateX -50%).
   const doubled = [...items, ...items];
   // La animación CSS (28s linear infinite) seguía calculando el transform

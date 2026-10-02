@@ -41,7 +41,9 @@ const SOURCE_META = {
   google:  { label: 'Google',      short: 'Google',  color: '#4285F4' },
   web:     { label: 'Hestía',      short: 'Web',     color: '#3D1A35' },
 };
-// Convierte rating a 5 estrellas (Booking usa /10, Airbnb/Google /5).
+// Convierte rating a 5 estrellas (icono unitario, sin escala expuesta).
+// Booking usa /10, Airbnb/Google/web /5: aquí solo se cuentan iconos de
+// estrella (visual, sin número al lado), así que basta con llevarlos a /5.
 const ratingToStars = (rating, source) => {
   if (rating == null) return 5;
   if (source === 'booking') return Math.round(rating / 2);
@@ -104,7 +106,7 @@ const OpinionesRatings = ({ lang }) => {
           </div>
           <div className="rating-card" style={{ borderTopColor: 'var(--vt)' }}>
             <div className="platform">Airbnb · Superhost</div>
-            <div className="score">5<span className="dec">.0</span><span className="score-max">/5</span></div>
+            <div className="score">10<span className="dec">.0</span><span className="score-max">/10</span></div>
             <div className="desc">{t.rating_airbnb_desc}</div>
             <a href="https://www.airbnb.com" target="_blank" rel="noopener" className="platform-link">
               {lang === 'es' ? 'Ver en Airbnb' : 'View on Airbnb'} →
@@ -112,7 +114,7 @@ const OpinionesRatings = ({ lang }) => {
           </div>
           <div className="rating-card" style={{ borderTopColor: 'var(--vs)' }}>
             <div className="platform">Google Maps</div>
-            <div className="score">4<span className="dec">.9</span><span className="score-max">/5</span></div>
+            <div className="score">9<span className="dec">.8</span><span className="score-max">/10</span></div>
             <div className="desc">{t.rating_google_desc}</div>
             <a href="https://maps.google.com" target="_blank" rel="noopener" className="platform-link">
               {lang === 'es' ? 'Ver en Google Maps' : 'View on Google Maps'} →
@@ -227,16 +229,17 @@ const ORDENES = [
   { id: 'largas',     es: 'Más detalladas',  en: 'Most detailed' },
 ];
 
-// Booking puntúa sobre 10 y el resto sobre 5: sin normalizar, ordenar por nota
-// pondría siempre Booking arriba.
-const _nota5 = r => (r.source === 'booking' ? r.rating / 2 : r.rating) || 0;
+// Booking puntúa sobre 10 y el resto sobre 5: normalizamos todo a /10 (igual
+// que el resto del sitio), si no, ordenar por nota pondría siempre Booking
+// artificialmente abajo.
+const _nota10 = r => (r.source === 'booking' ? r.rating : r.rating * 2) || 0;
 const _fecha = r => r.date || '';
 
 // ============================================================
 // Desglose por categoría, calculado de verdad a partir del texto real
 // de las reseñas (no son sub-notas que den las plataformas: Booking/Airbnb/
 // Google no nos entregan eso). Para cada categoría, la nota es la media de
-// _nota5 SOLO entre las reseñas que mencionan esas palabras — un huésped que
+// _nota10 SOLO entre las reseñas que mencionan esas palabras — un huésped que
 // dice "la cocina estaba genial" cuenta para "Equipamiento" con su nota real,
 // no con un número inventado. Si hay pocas menciones bajo el filtro activo
 // (< CAT_MIN_N), se rellena con la media general de ese filtro para no
@@ -247,7 +250,7 @@ const _normTxt = (s) => (s || '').toLowerCase().normalize('NFD').replace(/[̀-ͯ
 // pequeña pega puntual ("todo genial, aunque el wifi flojeaba a veces").
 // Si aparecen cerca de la mención de la categoría, esa reseña puntúa algo
 // más bajo PARA ESA CATEGORÍA (no para el resto), en vez de la nota
-// redonda de 5 que puso el huésped en la plataforma.
+// redonda de 10 que puso el huésped en la plataforma.
 const QUALIFIER_KW = ['aunque', 'eche en falta', 'echamos en falta', 'podria mejorar', 'podria ser', 'un poco', 'algo mejorable', 'mejorable', 'anticuad', 'falta de'];
 const CATEGORY_DEFS = [
   { id: 'anfitriones', es: 'Anfitriones', en: 'Hosts', bias: 0,
@@ -260,16 +263,16 @@ const CATEGORY_DEFS = [
   // excelente (el huésped más satisfecho igual matiza "podría tener algo
   // más de menaje" o "el precio está bien, no es el más barato de la
   // zona"). Sin sub-notas propias en nuestros datos, este ajuste evita
-  // que las 5 barras salgan indistinguibles en 5.0.
-  { id: 'equipamiento', es: 'Equipamiento', en: 'Amenities', bias: -0.15,
+  // que las 5 barras salgan indistinguibles en 10.0.
+  { id: 'equipamiento', es: 'Equipamiento', en: 'Amenities', bias: -0.30,
     kw: ['cocina', 'piscina', 'equipad', 'terraza', 'wifi', 'aire acondicionado', 'cama', 'colchon', 'ducha', 'jacuzzi', 'spa', 'gimnasio', 'electrodomestic', 'smart tv'] },
   { id: 'limpieza', es: 'Limpieza', en: 'Cleanliness', bias: 0,
     kw: ['limpi', 'impecable', 'cuidad'] },
-  { id: 'valor', es: 'Relación calidad-precio', en: 'Value for money', bias: -0.05,
+  { id: 'valor', es: 'Relación calidad-precio', en: 'Value for money', bias: -0.10,
     kw: ['precio', 'vale la pena', 'merece', 'calidad precio', 'barato', 'relacion calidad'] },
 ];
 const categoryScores = (reviews) => {
-  const overall = reviews.length ? reviews.reduce((a, r) => a + _nota5(r), 0) / reviews.length : null;
+  const overall = reviews.length ? reviews.reduce((a, r) => a + _nota10(r), 0) / reviews.length : null;
   return CATEGORY_DEFS.map(cat => {
     const matches = reviews.filter(r => {
       const txt = _normTxt(r.text);
@@ -281,19 +284,19 @@ const categoryScores = (reviews) => {
       const sum = matches.reduce((a, r) => {
         const txt = _normTxt(r.text);
         const hasQualifier = QUALIFIER_KW.some(k => txt.includes(k));
-        return a + Math.max(0, _nota5(r) + cat.bias - (hasQualifier ? 0.4 : 0));
+        return a + Math.max(0, _nota10(r) + cat.bias - (hasQualifier ? 0.8 : 0));
       }, 0);
       avg = sum / n;
     } else {
       avg = overall != null ? Math.max(0, overall + cat.bias) : null;
     }
-    // Suelo editorial: ninguna categoría baja de 4.80, y "Relación
-    // calidad-precio" nunca baja de 4.92 (algo más exigente ahí porque es
+    // Suelo editorial: ninguna categoría baja de 9.60, y "Relación
+    // calidad-precio" nunca baja de 9.84 (algo más exigente ahí porque es
     // la categoría más sensible a percepción). Sigue calculándose
     // proporcionalmente del texto real de las reseñas, el suelo solo actúa
     // cuando el cálculo cae por debajo.
     if (avg != null) {
-      avg = Math.max(cat.id === 'valor' ? 4.92 : 4.80, avg);
+      avg = Math.max(cat.id === 'valor' ? 9.84 : 9.60, avg);
     }
     return { ...cat, avg, n, thin: n < CAT_MIN_N };
   });
@@ -302,7 +305,7 @@ const categoryScores = (reviews) => {
 const ordenar = (lista, modo) => {
   const l = [...lista];
   if (modo === 'recientes') return l.sort((a, b) => _fecha(b).localeCompare(_fecha(a)));
-  if (modo === 'mejores')   return l.sort((a, b) => _nota5(b) - _nota5(a) || _fecha(b).localeCompare(_fecha(a)));
+  if (modo === 'mejores')   return l.sort((a, b) => _nota10(b) - _nota10(a) || _fecha(b).localeCompare(_fecha(a)));
   if (modo === 'largas')    return l.sort((a, b) => (b.text || '').length - (a.text || '').length);
   return [
     ...l.filter(r => r.highlight).sort((a, b) => _fecha(b).localeCompare(_fecha(a))),
@@ -325,9 +328,9 @@ const CategoryBars = ({ reviews, lang }) => {
           <div key={cat.id} className="opi-cat-row">
             <div className="opi-cat-label">{lang === 'es' ? cat.es : cat.en}</div>
             <div className="opi-cat-track">
-              <div className="opi-cat-fill" style={{ width: `${Math.min(100, (cat.avg / 5) * 100)}%` }} />
+              <div className="opi-cat-fill" style={{ width: `${Math.min(100, (cat.avg / 10) * 100)}%` }} />
             </div>
-            <div className="opi-cat-val">{cat.avg.toFixed(2)}</div>
+            <div className="opi-cat-val">{cat.avg.toFixed(1)}</div>
           </div>
         ))}
       </div>
@@ -379,11 +382,11 @@ const OpinionesTestimonials = ({ lang }) => {
   // Resumen de lo que hay bajo el filtro activo: da escala antes de leer.
   const resumen = (() => {
     if (!filtered.length) return null;
-    const media = filtered.reduce((a, r) => a + _nota5(r), 0) / filtered.length;
-    const cinco = filtered.filter(r => _nota5(r) >= 4.9).length;
+    const media = filtered.reduce((a, r) => a + _nota10(r), 0) / filtered.length;
+    const cinco = filtered.filter(r => _nota10(r) >= 9.8).length;
     const anios = filtered.map(_fecha).filter(Boolean).sort();
     return {
-      media: media.toFixed(2),
+      media: media.toFixed(1),
       cinco: Math.round(cinco / filtered.length * 100),
       desde: anios.length ? anios[0].slice(0, 4) : null,
       total: filtered.length,
@@ -473,7 +476,7 @@ const OpinionesTestimonials = ({ lang }) => {
         {resumen && (
           <div className="opi-resumen reveal">
             <div className="opi-res-datos">
-              <div><b>{resumen.media}</b><span>{lang === 'es' ? 'sobre 5' : 'out of 5'}</span></div>
+              <div><b>{resumen.media}</b><span>{lang === 'es' ? 'sobre 10' : 'out of 10'}</span></div>
               <div><b>{resumen.total}</b><span>{lang === 'es' ? 'opiniones' : 'reviews'}</span></div>
               <div><b>{resumen.cinco}%</b><span>{lang === 'es' ? 'de sobresaliente' : 'top marks'}</span></div>
               {resumen.desde && <div><b>{resumen.desde}</b><span>{lang === 'es' ? 'desde' : 'since'}</span></div>}
