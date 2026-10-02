@@ -565,12 +565,9 @@ const TrustStrip = ({ apt, lang }) => {
   const own = all.filter(r =>
     r.status === 'published' && (r.apt === apt.id || r.apt === 'all'));
   const total = own.length;
-  // Booking usa /10, otros /5, normalizamos todo a /10
-  const ratings = own.map(r => r.source === 'booking' ? r.rating : r.rating * 2)
-    .filter(n => typeof n === 'number' && !isNaN(n));
-  const avg = ratings.length
-    ? Math.round((ratings.reduce((s, n) => s + n, 0) / ratings.length) * 10) / 10
-    : null;
+  // ratingScore/fmtRating: fuente única (shared.jsx). 'global' porque esta
+  // cifra se presenta como LA nota de este Hestía en su propia página.
+  const avg = ratingScore(own, 'global');
   const countries = new Set(own.map(r => r.country).filter(Boolean));
   const years = new Date().getFullYear() - 2016;
 
@@ -579,7 +576,7 @@ const TrustStrip = ({ apt, lang }) => {
       l: lang === 'es' ? 'desde 2016' : 'since 2016' },
     { v: total.toString(),
       l: lang === 'es' ? (total === 1 ? 'reseña verificada' : 'reseñas verificadas') : (total === 1 ? 'verified review' : 'verified reviews') },
-    avg ? { v: `${avg}/10`,
+    avg != null ? { v: `${fmtRating(avg)}/10`,
             l: lang === 'es' ? 'valoración media' : 'avg rating' } : null,
     countries.size > 1 ? { v: countries.size.toString(),
             l: lang === 'es' ? 'países de origen' : 'guest countries' } : null,
@@ -957,7 +954,10 @@ const _amrFlag = (cc) => {
   return String.fromCodePoint(b + cc.toUpperCase().charCodeAt(0) - 65) +
          String.fromCodePoint(b + cc.toUpperCase().charCodeAt(1) - 65);
 };
-const _amrStars = (r) => Math.round(r.source === 'booking' ? r.rating / 2 : r.rating);
+// Icono de estrella sin fracción al lado: cuenta de 0 a 5 (visual, no expone
+// escala), derivada de ratingNorm (shared.jsx) para que la normalización
+// Booking/Airbnb/Google/web se calcule en un único sitio.
+const _amrStars = (r) => Math.round(ratingNorm(r) / 2);
 const _amrSrc   = { booking: 'Booking', airbnb: 'Airbnb', google: 'Google', web: 'Hestía' };
 
 const AmrCard = ({ r, lang }) => {
@@ -1245,7 +1245,7 @@ const ApartmentPageApp = () => {
       'reviewBody': r.text,
       'reviewRating': {
         '@type': 'Rating',
-        'ratingValue': r.source === 'booking' ? r.rating : r.rating * 2,
+        'ratingValue': ratingNorm(r),
         'bestRating': 10,
         'worstRating': 1,
       },

@@ -6,12 +6,20 @@
 // multiplican por 2. Así la valoración estructurada es coherente con las reseñas
 // reales y no se desfasa cada vez que se publican nuevas.
 //
+// Replica, en Node (fuera del navegador), la misma normalización, el mismo
+// suelo editorial y el mismo redondeo que ratingScore/fmtRating en
+// docs/components/shared.jsx (la fuente única para el resto del sitio): si
+// cambias algo aquí, cámbialo también allí. Cada entrada de PAGES es una
+// nota GLOBAL (el sitio entero o la nota propia de un Hestía en su página),
+// nunca baja de RATING_FLOOR_GLOBAL.
+//
 // Uso:  node scripts/sync-rating.mjs
 
 import { readFileSync, writeFileSync } from 'node:fs';
 
 const REVIEWS = 'docs/data/reviews.json';
 const TEN_SCALE = new Set(['booking']);   // fuentes que ya puntúan sobre 10
+const RATING_FLOOR_GLOBAL = 9.85;
 
 // Página -> apartamento (null = total del sitio).
 const PAGES = {
@@ -28,7 +36,8 @@ const norm = r => (TEN_SCALE.has(r.source) ? r.rating : r.rating * 2);
 function agg(list) {
   if (!list.length) return null;
   const sum = list.reduce((a, r) => a + norm(r), 0);
-  return { value: (sum / list.length).toFixed(2), count: list.length };
+  const avg = Math.max(RATING_FLOOR_GLOBAL, sum / list.length);
+  return { value: avg.toFixed(2), count: list.length };
 }
 
 let changed = 0;

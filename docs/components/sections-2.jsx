@@ -175,6 +175,10 @@ const Manifest = ({ lang }) => {
 // --- RATINGS ---
 const Ratings = ({ lang }) => {
   const t = COPY[lang];
+  // Desglose por plataforma ('partial'), fuente única: platformScore (shared.jsx).
+  const booking = platformScore('booking');
+  const airbnb  = platformScore('airbnb');
+  const google  = platformScore('google');
   return (
     <section className="ratings" id="opiniones" data-screen-label="09 Opiniones">
       <div className="container">
@@ -184,7 +188,7 @@ const Ratings = ({ lang }) => {
         <div className="ratings-grid">
           <div className="rating-card" style={{borderTopColor: 'var(--vm)'}}>
             <div className="platform">Booking.com</div>
-            <div className="score">9<span className="dec">.8</span><span className="score-max">/10</span></div>
+            <div className="score">{booking.int}<span className="dec">.{booking.dec}</span><span className="score-max">/10</span></div>
             <div className="desc">{t.rating_booking_desc}</div>
             <blockquote className="rating-quote">
               {lang === 'es'
@@ -195,7 +199,7 @@ const Ratings = ({ lang }) => {
           </div>
           <div className="rating-card" style={{borderTopColor: 'var(--vt)'}}>
             <div className="platform">Airbnb · Superhost</div>
-            <div className="score">10<span className="dec">.0</span><span className="score-max">/10</span></div>
+            <div className="score">{airbnb.int}<span className="dec">.{airbnb.dec}</span><span className="score-max">/10</span></div>
             <div className="desc">{t.rating_airbnb_desc}</div>
             <blockquote className="rating-quote">
               {lang === 'es'
@@ -206,7 +210,7 @@ const Ratings = ({ lang }) => {
           </div>
           <div className="rating-card" style={{borderTopColor: 'var(--vs)'}}>
             <div className="platform">Google Maps</div>
-            <div className="score">9<span className="dec">.8</span><span className="score-max">/10</span></div>
+            <div className="score">{google.int}<span className="dec">.{google.dec}</span><span className="score-max">/10</span></div>
             <div className="desc">{t.rating_google_desc}</div>
             <blockquote className="rating-quote">
               {lang === 'es'
@@ -225,19 +229,23 @@ const Ratings = ({ lang }) => {
 // Texto-only marquee: sin logos externos (cero deps). Arena #F0E8D5 sobre
 // eggplant #2A0F2E (ratio ~11:1). Track duplicado para loop continuo.
 const RatingsMarquee = ({ lang }) => {
+  // Desglose por plataforma ('partial'), fuente única: platformScore (shared.jsx).
+  const booking = platformScore('booking');
+  const airbnb  = platformScore('airbnb');
+  const google  = platformScore('google');
   const items = lang === 'es' ? [
-    '★ 9.8/10 · Booking.com',
-    '★ 10.0/10 · Airbnb Superhost',
-    '★ 9.8/10 · Google Maps',
+    `★ ${booking.int}.${booking.dec}/10 · Booking.com`,
+    `★ ${airbnb.int}.${airbnb.dec}/10 · Airbnb Superhost`,
+    `★ ${google.int}.${google.dec}/10 · Google Maps`,
     '630+ familias desde 2016',
     'Sin comisiones · reserva directa',
     '10 años en Vera Playa',
     'Mejor precio garantizado',
     'Te responde Alex o Fran, normalmente en minutos',
   ] : [
-    '★ 9.8/10 · Booking.com',
-    '★ 10.0/10 · Airbnb Superhost',
-    '★ 9.8/10 · Google Maps',
+    `★ ${booking.int}.${booking.dec}/10 · Booking.com`,
+    `★ ${airbnb.int}.${airbnb.dec}/10 · Airbnb Superhost`,
+    `★ ${google.int}.${google.dec}/10 · Google Maps`,
     '630+ families since 2016',
     'No commissions · direct booking',
     '10 years in Vera Playa',

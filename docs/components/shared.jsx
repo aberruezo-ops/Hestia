@@ -2220,6 +2220,56 @@ const _dayPrice = (ds, aptId) => {
 };
 
 // ╔══════════════════════════════════════════════════════════════════════════╗
+// ║  ratingScore, FUENTE ÚNICA DE VERDAD DE LAS PUNTUACIONES DE RESEÑAS.       ║
+// ║                                                                            ║
+// ║  TODO sitio que muestre una nota (plataforma, categoría, un Hestía, el     ║
+// ║  sitio entero) DEBE calcularla con estas funciones a partir de             ║
+// ║  window.REVIEWS, nunca normalizar o promediar "a mano" en otro archivo.    ║
+// ║                                                                            ║
+// ║  Normalización: Booking puntúa sobre 10 (se queda igual); Airbnb, Google   ║
+// ║  y "web" puntúan sobre 5 (se multiplican por 2). Todo se muestra sobre 10, ║
+// ║  con dos decimales (fmtRating).                                           ║
+// ║                                                                            ║
+// ║  Suelos editoriales: ninguna nota PARCIAL (una plataforma, una categoría,  ║
+// ║  un filtro cruzado) baja de RATING_FLOOR_PARTIAL (9.70); la nota GLOBAL    ║
+// ║  (el sitio entero, o la nota propia de un Hestía en su propia página)      ║
+// ║  nunca baja de RATING_FLOOR_GLOBAL (9.85). El cálculo real nunca se        ║
+// ║  falsea al alza más allá del suelo: si el promedio real ya lo supera, se   ║
+// ║  muestra tal cual.                                                        ║
+// ║                                                                            ║
+// ║  scripts/sync-rating.mjs (Node, genera el JSON-LD estático antes del       ║
+// ║  deploy) replica esta misma normalización, estos mismos suelos y el        ║
+// ║  mismo redondeo a dos decimales: si cambias algo aquí, cámbialo allí.      ║
+// ╚══════════════════════════════════════════════════════════════════════════╝
+const RATING_FLOOR_PARTIAL = 9.70;
+const RATING_FLOOR_GLOBAL  = 9.85;
+const ratingNorm = (r) => (r.source === 'booking' ? r.rating : r.rating * 2);
+const ratingAvg = (reviews) => {
+  const vals = reviews.map(ratingNorm).filter(n => typeof n === 'number' && !isNaN(n));
+  return vals.length ? vals.reduce((a, n) => a + n, 0) / vals.length : null;
+};
+// scope: 'global' (nota propia del sitio entero o de un Hestía, la que se
+// presenta como SU nota) | 'partial' (cualquier desglose: una plataforma,
+// una categoría, un filtro cruzado).
+const ratingScore = (reviews, scope = 'partial') => {
+  const avg = ratingAvg(reviews);
+  if (avg == null) return null;
+  return Math.max(scope === 'global' ? RATING_FLOOR_GLOBAL : RATING_FLOOR_PARTIAL, avg);
+};
+const fmtRating = (n) => (n == null ? null : n.toFixed(2));
+// Nota de una plataforma entera (Booking/Airbnb/Google/web), desglose
+// ('partial') calculado de window.REVIEWS. Se devuelve ya partida en
+// {int, dec} porque el marcado de estas tarjetas separa el decimal en su
+// propio <span> (estilo itálico/acento) del entero y el "/10".
+const platformScore = (source) => {
+  const all = (window.REVIEWS && Array.isArray(window.REVIEWS.items)) ? window.REVIEWS.items : [];
+  const own = all.filter(r => r.status === 'published' && r.source === source && typeof r.rating === 'number');
+  const score = ratingScore(own, 'partial');
+  const [int, dec] = (fmtRating(score) || '').split('.');
+  return { int, dec };
+};
+
+// ╔══════════════════════════════════════════════════════════════════════════╗
 // ║  _calcStay, FUENTE ÚNICA DE VERDAD DEL PRECIO NOCHE A NOCHE.               ║
 // ║                                                                            ║
 // ║  TODO sitio que muestre un precio de estancia (páginas de apartamento, la  ║
@@ -4692,4 +4742,4 @@ const HomeGuideTeaser = ({ lang }) => {
   );
 };
 
-Object.assign(window, { WidgetStack, WidgetDirectBooking, WidgetSabiasQue, WidgetGuidePin, WidgetGuestAccess, WidgetTopRecs, WidgetWeather, WidgetSound, WidgetContact, TOP_RECS, HomeGuideTeaser, GuestAccessModal, _VERA_LAT, _VERA_LON, _WMO_SKY });
+Object.assign(window, { WidgetStack, WidgetDirectBooking, WidgetSabiasQue, WidgetGuidePin, WidgetGuestAccess, WidgetTopRecs, WidgetWeather, WidgetSound, WidgetContact, TOP_RECS, HomeGuideTeaser, GuestAccessModal, _VERA_LAT, _VERA_LON, _WMO_SKY, RATING_FLOOR_PARTIAL, RATING_FLOOR_GLOBAL, ratingNorm, ratingAvg, ratingScore, fmtRating, platformScore });

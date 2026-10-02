@@ -440,7 +440,7 @@ const APARTMENTS = [{
   img: 'assets/apt-vm-gallery-26.jpg',
   imgW: 1280,
   imgH: 1600,
-  rating: '9.8',
+  rating: null,
   meta: ['6 + bebé', '2 hab.', 'Piscina', 'Mascotas · petición']
 }, {
   id: 'vt',
@@ -452,7 +452,7 @@ const APARTMENTS = [{
   img: 'assets/apt-vt-gallery-33.jpg',
   imgW: 1280,
   imgH: 1600,
-  rating: '10',
+  rating: null,
   meta: ['6 + bebé', '2 hab.', 'Ático', 'SPA']
 }, {
   id: 'vs',
@@ -464,9 +464,21 @@ const APARTMENTS = [{
   img: 'assets/apt-vs-gallery-33.jpg',
   imgW: 1280,
   imgH: 1600,
-  rating: '9.9',
+  rating: null,
   meta: ['6 + bebé', '2 hab.', '3 piscinas', 'Salinas']
 }];
+// Nota de cada Hestía: fuente única (ratingScore/fmtRating, shared.jsx),
+// 'global' porque es la cifra que se presenta como LA nota de ese Hestía,
+// igual que en el TrustStrip de su propia página, para que nunca se
+// desincronicen. Se recalcula aquí, una vez, en vez de hardcodear un número
+// que haya que acordarse de actualizar a mano.
+(() => {
+  const all = window.REVIEWS && Array.isArray(window.REVIEWS.items) ? window.REVIEWS.items : [];
+  APARTMENTS.forEach(a => {
+    const own = all.filter(r => r.status === 'published' && (r.apt === a.id || r.apt === 'all') && typeof r.rating === 'number');
+    a.rating = fmtRating(ratingScore(own, 'global'));
+  });
+})();
 const _aptNextFree = (data, aptId) => {
   if (!data) return null;
   const today = new Date().toISOString().slice(0, 10);
@@ -754,6 +766,9 @@ const Apartments = ({
 const Compare = ({
   lang
 }) => {
+  // Misma nota que la miniatura del hero y el TrustStrip de cada ficha
+  // (APARTMENTS.rating, patchado una única vez desde ratingScore/fmtRating).
+  const _apRating = Object.fromEntries(APARTMENTS.map(a => [a.id, a.rating]));
   const rows = lang === 'es' ? [{
     label: 'Concepto',
     vm: 'Entre el mar y el desierto',
@@ -816,13 +831,13 @@ const Compare = ({
     vs: '✓ Personalizado'
   }, {
     label: 'Valoración',
-    vm: /*#__PURE__*/React.createElement(React.Fragment, null, "9.8 ", /*#__PURE__*/React.createElement("span", {
+    vm: /*#__PURE__*/React.createElement(React.Fragment, null, _apRating.vm, " ", /*#__PURE__*/React.createElement("span", {
       className: "rate-sub"
     }, "/10")),
-    vt: /*#__PURE__*/React.createElement(React.Fragment, null, "10 ", /*#__PURE__*/React.createElement("span", {
+    vt: /*#__PURE__*/React.createElement(React.Fragment, null, _apRating.vt, " ", /*#__PURE__*/React.createElement("span", {
       className: "rate-sub"
     }, "/10")),
-    vs: /*#__PURE__*/React.createElement(React.Fragment, null, "9.9 ", /*#__PURE__*/React.createElement("span", {
+    vs: /*#__PURE__*/React.createElement(React.Fragment, null, _apRating.vs, " ", /*#__PURE__*/React.createElement("span", {
       className: "rate-sub"
     }, "/10")),
     rate: true
@@ -888,13 +903,13 @@ const Compare = ({
     vs: '✓ Personal service'
   }, {
     label: 'Rating',
-    vm: /*#__PURE__*/React.createElement(React.Fragment, null, "9.8 ", /*#__PURE__*/React.createElement("span", {
+    vm: /*#__PURE__*/React.createElement(React.Fragment, null, _apRating.vm, " ", /*#__PURE__*/React.createElement("span", {
       className: "rate-sub"
     }, "/10")),
-    vt: /*#__PURE__*/React.createElement(React.Fragment, null, "10 ", /*#__PURE__*/React.createElement("span", {
+    vt: /*#__PURE__*/React.createElement(React.Fragment, null, _apRating.vt, " ", /*#__PURE__*/React.createElement("span", {
       className: "rate-sub"
     }, "/10")),
-    vs: /*#__PURE__*/React.createElement(React.Fragment, null, "9.9 ", /*#__PURE__*/React.createElement("span", {
+    vs: /*#__PURE__*/React.createElement(React.Fragment, null, _apRating.vs, " ", /*#__PURE__*/React.createElement("span", {
       className: "rate-sub"
     }, "/10")),
     rate: true

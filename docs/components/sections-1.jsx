@@ -336,15 +336,27 @@ const Hero = ({ lang, onScrollDown }) => {
 // --- APARTAMENTOS (scroll horizontal) ---
 const APARTMENTS = [
   { id: 'vm', num: '01', name: 'Hestía Mar',      slug: 'mar',      license: 'VFT/AL/01580', concept: 'apt_01_concept',
-    img: 'assets/apt-vm-gallery-26.jpg', imgW: 1280, imgH: 1600, rating: '9.8',
+    img: 'assets/apt-vm-gallery-26.jpg', imgW: 1280, imgH: 1600, rating: null,
     meta: ['6 + bebé', '2 hab.', 'Piscina', 'Mascotas · petición'] },
   { id: 'vt', num: '02', name: 'Hestía Thalassa', slug: 'thalassa', license: 'VFT/AL/05535', concept: 'apt_02_concept',
-    img: 'assets/apt-vt-gallery-33.jpg', imgW: 1280, imgH: 1600, rating: '10',
+    img: 'assets/apt-vt-gallery-33.jpg', imgW: 1280, imgH: 1600, rating: null,
     meta: ['6 + bebé', '2 hab.', 'Ático', 'SPA'] },
   { id: 'vs', num: '03', name: 'Hestía Salinas',  slug: 'salinas',  license: 'VFT/AL/07056', concept: 'apt_03_concept',
-    img: 'assets/apt-vs-gallery-33.jpg', imgW: 1280, imgH: 1600, rating: '9.9',
+    img: 'assets/apt-vs-gallery-33.jpg', imgW: 1280, imgH: 1600, rating: null,
     meta: ['6 + bebé', '2 hab.', '3 piscinas', 'Salinas'] },
 ];
+// Nota de cada Hestía: fuente única (ratingScore/fmtRating, shared.jsx),
+// 'global' porque es la cifra que se presenta como LA nota de ese Hestía,
+// igual que en el TrustStrip de su propia página, para que nunca se
+// desincronicen. Se recalcula aquí, una vez, en vez de hardcodear un número
+// que haya que acordarse de actualizar a mano.
+(() => {
+  const all = (window.REVIEWS && Array.isArray(window.REVIEWS.items)) ? window.REVIEWS.items : [];
+  APARTMENTS.forEach(a => {
+    const own = all.filter(r => r.status === 'published' && (r.apt === a.id || r.apt === 'all') && typeof r.rating === 'number');
+    a.rating = fmtRating(ratingScore(own, 'global'));
+  });
+})();
 
 const _aptNextFree = (data, aptId) => {
   if (!data) return null;
@@ -598,6 +610,9 @@ const Apartments = ({ lang }) => {
 
 // --- COMPARADOR ---
 const Compare = ({ lang }) => {
+  // Misma nota que la miniatura del hero y el TrustStrip de cada ficha
+  // (APARTMENTS.rating, patchado una única vez desde ratingScore/fmtRating).
+  const _apRating = Object.fromEntries(APARTMENTS.map(a => [a.id, a.rating]));
   const rows = lang === 'es' ? [
     { label: 'Concepto',      vm: 'Entre el mar y el desierto', vt: 'Ático · mar y Salar de los Canos', vs: 'Amanecer cerca de las salinas' },
     { label: 'Carácter',      vm: 'El más cercano a la playa · un agradable paseo', vt: 'El más alto · dominas toda la vista', vs: 'El más grande · desconexión · base para explorar la zona' },
@@ -611,7 +626,7 @@ const Compare = ({ lang }) => {
     { label: 'Ideal para',    vm: 'Practicidad · todo a mano', vt: 'Las mejores vistas', vs: 'Paz · jardines · naturaleza' },
     { label: 'Superguía',     vm: '✓ Incluida', vt: '✓ Incluida', vs: '✓ Incluida' },
     { label: 'Trato',         vm: '✓ Personalizado', vt: '✓ Personalizado', vs: '✓ Personalizado' },
-    { label: 'Valoración',    vm: <>9.8 <span className="rate-sub">/10</span></>, vt: <>10 <span className="rate-sub">/10</span></>, vs: <>9.9 <span className="rate-sub">/10</span></>, rate: true },
+    { label: 'Valoración',    vm: <>{_apRating.vm} <span className="rate-sub">/10</span></>, vt: <>{_apRating.vt} <span className="rate-sub">/10</span></>, vs: <>{_apRating.vs} <span className="rate-sub">/10</span></>, rate: true },
   ] : [
     { label: 'Concept',       vm: 'Between the sea and the desert', vt: 'Penthouse · sea & Salar de los Canos', vs: 'Sunrise near the salt flats' },
     { label: 'Character',     vm: 'Closest to the beach · a short, pleasant walk', vt: 'The highest · you command the whole view', vs: 'The largest · disconnection · a base to explore the area' },
@@ -625,7 +640,7 @@ const Compare = ({ lang }) => {
     { label: 'Ideal for',     vm: 'Practicality · everything close', vt: 'Best views in the complex', vs: 'Peace · gardens · nature' },
     { label: 'Guide',         vm: '✓ Included', vt: '✓ Included', vs: '✓ Included' },
     { label: 'Care',          vm: '✓ Personal service', vt: '✓ Personal service', vs: '✓ Personal service' },
-    { label: 'Rating',        vm: <>9.8 <span className="rate-sub">/10</span></>, vt: <>10 <span className="rate-sub">/10</span></>, vs: <>9.9 <span className="rate-sub">/10</span></>, rate: true },
+    { label: 'Rating',        vm: <>{_apRating.vm} <span className="rate-sub">/10</span></>, vt: <>{_apRating.vt} <span className="rate-sub">/10</span></>, vs: <>{_apRating.vs} <span className="rate-sub">/10</span></>, rate: true },
   ];
   const t = COPY[lang];
 

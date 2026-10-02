@@ -272,6 +272,10 @@ const Ratings = ({
   lang
 }) => {
   const t = COPY[lang];
+  // Desglose por plataforma ('partial'), fuente única: platformScore (shared.jsx).
+  const booking = platformScore('booking');
+  const airbnb = platformScore('airbnb');
+  const google = platformScore('google');
   return /*#__PURE__*/React.createElement("section", {
     className: "ratings",
     id: "opiniones",
@@ -293,9 +297,9 @@ const Ratings = ({
     className: "platform"
   }, "Booking.com"), /*#__PURE__*/React.createElement("div", {
     className: "score"
-  }, "9", /*#__PURE__*/React.createElement("span", {
+  }, booking.int, /*#__PURE__*/React.createElement("span", {
     className: "dec"
-  }, ".8"), /*#__PURE__*/React.createElement("span", {
+  }, ".", booking.dec), /*#__PURE__*/React.createElement("span", {
     className: "score-max"
   }, "/10")), /*#__PURE__*/React.createElement("div", {
     className: "desc"
@@ -310,9 +314,9 @@ const Ratings = ({
     className: "platform"
   }, "Airbnb · Superhost"), /*#__PURE__*/React.createElement("div", {
     className: "score"
-  }, "10", /*#__PURE__*/React.createElement("span", {
+  }, airbnb.int, /*#__PURE__*/React.createElement("span", {
     className: "dec"
-  }, ".0"), /*#__PURE__*/React.createElement("span", {
+  }, ".", airbnb.dec), /*#__PURE__*/React.createElement("span", {
     className: "score-max"
   }, "/10")), /*#__PURE__*/React.createElement("div", {
     className: "desc"
@@ -327,9 +331,9 @@ const Ratings = ({
     className: "platform"
   }, "Google Maps"), /*#__PURE__*/React.createElement("div", {
     className: "score"
-  }, "9", /*#__PURE__*/React.createElement("span", {
+  }, google.int, /*#__PURE__*/React.createElement("span", {
     className: "dec"
-  }, ".8"), /*#__PURE__*/React.createElement("span", {
+  }, ".", google.dec), /*#__PURE__*/React.createElement("span", {
     className: "score-max"
   }, "/10")), /*#__PURE__*/React.createElement("div", {
     className: "desc"
@@ -344,7 +348,11 @@ const Ratings = ({
 const RatingsMarquee = ({
   lang
 }) => {
-  const items = lang === 'es' ? ['★ 9.8/10 · Booking.com', '★ 10.0/10 · Airbnb Superhost', '★ 9.8/10 · Google Maps', '630+ familias desde 2016', 'Sin comisiones · reserva directa', '10 años en Vera Playa', 'Mejor precio garantizado', 'Te responde Alex o Fran, normalmente en minutos'] : ['★ 9.8/10 · Booking.com', '★ 10.0/10 · Airbnb Superhost', '★ 9.8/10 · Google Maps', '630+ families since 2016', 'No commissions · direct booking', '10 years in Vera Playa', 'Best price guaranteed', 'Alex or Fran reply, usually in minutes'];
+  // Desglose por plataforma ('partial'), fuente única: platformScore (shared.jsx).
+  const booking = platformScore('booking');
+  const airbnb = platformScore('airbnb');
+  const google = platformScore('google');
+  const items = lang === 'es' ? [`★ ${booking.int}.${booking.dec}/10 · Booking.com`, `★ ${airbnb.int}.${airbnb.dec}/10 · Airbnb Superhost`, `★ ${google.int}.${google.dec}/10 · Google Maps`, '630+ familias desde 2016', 'Sin comisiones · reserva directa', '10 años en Vera Playa', 'Mejor precio garantizado', 'Te responde Alex o Fran, normalmente en minutos'] : [`★ ${booking.int}.${booking.dec}/10 · Booking.com`, `★ ${airbnb.int}.${airbnb.dec}/10 · Airbnb Superhost`, `★ ${google.int}.${google.dec}/10 · Google Maps`, '630+ families since 2016', 'No commissions · direct booking', '10 years in Vera Playa', 'Best price guaranteed', 'Alex or Fran reply, usually in minutes'];
   // Duplicamos el array para que el loop sea continuo (translateX -50%).
   const doubled = [...items, ...items];
   // La animación CSS (28s linear infinite) seguía calculando el transform
