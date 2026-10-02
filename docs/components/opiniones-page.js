@@ -64,7 +64,9 @@ const SOURCE_META = {
     color: '#3D1A35'
   }
 };
-// Convierte rating a 5 estrellas (Booking usa /10, Airbnb/Google /5).
+// Convierte rating a 5 estrellas (icono unitario, sin escala expuesta).
+// Booking usa /10, Airbnb/Google/web /5: aquí solo se cuentan iconos de
+// estrella (visual, sin número al lado), así que basta con llevarlos a /5.
 const ratingToStars = (rating, source) => {
   if (rating == null) return 5;
   if (source === 'booking') return Math.round(rating / 2);
@@ -171,11 +173,11 @@ const OpinionesRatings = ({
     className: "platform"
   }, "Airbnb · Superhost"), /*#__PURE__*/React.createElement("div", {
     className: "score"
-  }, "5", /*#__PURE__*/React.createElement("span", {
+  }, "10", /*#__PURE__*/React.createElement("span", {
     className: "dec"
   }, ".0"), /*#__PURE__*/React.createElement("span", {
     className: "score-max"
-  }, "/5")), /*#__PURE__*/React.createElement("div", {
+  }, "/10")), /*#__PURE__*/React.createElement("div", {
     className: "desc"
   }, t.rating_airbnb_desc), /*#__PURE__*/React.createElement("a", {
     href: "https://www.airbnb.com",
@@ -191,11 +193,11 @@ const OpinionesRatings = ({
     className: "platform"
   }, "Google Maps"), /*#__PURE__*/React.createElement("div", {
     className: "score"
-  }, "4", /*#__PURE__*/React.createElement("span", {
+  }, "9", /*#__PURE__*/React.createElement("span", {
     className: "dec"
-  }, ".9"), /*#__PURE__*/React.createElement("span", {
+  }, ".8"), /*#__PURE__*/React.createElement("span", {
     className: "score-max"
-  }, "/5")), /*#__PURE__*/React.createElement("div", {
+  }, "/10")), /*#__PURE__*/React.createElement("div", {
     className: "desc"
   }, t.rating_google_desc), /*#__PURE__*/React.createElement("a", {
     href: "https://maps.google.com",
@@ -338,16 +340,17 @@ const ORDENES = [{
   en: 'Most detailed'
 }];
 
-// Booking puntúa sobre 10 y el resto sobre 5: sin normalizar, ordenar por nota
-// pondría siempre Booking arriba.
-const _nota5 = r => (r.source === 'booking' ? r.rating / 2 : r.rating) || 0;
+// Booking puntúa sobre 10 y el resto sobre 5: normalizamos todo a /10 (igual
+// que el resto del sitio), si no, ordenar por nota pondría siempre Booking
+// artificialmente abajo.
+const _nota10 = r => (r.source === 'booking' ? r.rating : r.rating * 2) || 0;
 const _fecha = r => r.date || '';
 
 // ============================================================
 // Desglose por categoría, calculado de verdad a partir del texto real
 // de las reseñas (no son sub-notas que den las plataformas: Booking/Airbnb/
 // Google no nos entregan eso). Para cada categoría, la nota es la media de
-// _nota5 SOLO entre las reseñas que mencionan esas palabras — un huésped que
+// _nota10 SOLO entre las reseñas que mencionan esas palabras — un huésped que
 // dice "la cocina estaba genial" cuenta para "Equipamiento" con su nota real,
 // no con un número inventado. Si hay pocas menciones bajo el filtro activo
 // (< CAT_MIN_N), se rellena con la media general de ese filtro para no
@@ -358,7 +361,7 @@ const _normTxt = s => (s || '').toLowerCase().normalize('NFD').replace(/[̀-ͯ]/
 // pequeña pega puntual ("todo genial, aunque el wifi flojeaba a veces").
 // Si aparecen cerca de la mención de la categoría, esa reseña puntúa algo
 // más bajo PARA ESA CATEGORÍA (no para el resto), en vez de la nota
-// redonda de 5 que puso el huésped en la plataforma.
+// redonda de 10 que puso el huésped en la plataforma.
 const QUALIFIER_KW = ['aunque', 'eche en falta', 'echamos en falta', 'podria mejorar', 'podria ser', 'un poco', 'algo mejorable', 'mejorable', 'anticuad', 'falta de'];
 const CATEGORY_DEFS = [{
   id: 'anfitriones',
@@ -379,12 +382,12 @@ const CATEGORY_DEFS = [{
 // excelente (el huésped más satisfecho igual matiza "podría tener algo
 // más de menaje" o "el precio está bien, no es el más barato de la
 // zona"). Sin sub-notas propias en nuestros datos, este ajuste evita
-// que las 5 barras salgan indistinguibles en 5.0.
+// que las 5 barras salgan indistinguibles en 10.0.
 {
   id: 'equipamiento',
   es: 'Equipamiento',
   en: 'Amenities',
-  bias: -0.15,
+  bias: -0.30,
   kw: ['cocina', 'piscina', 'equipad', 'terraza', 'wifi', 'aire acondicionado', 'cama', 'colchon', 'ducha', 'jacuzzi', 'spa', 'gimnasio', 'electrodomestic', 'smart tv']
 }, {
   id: 'limpieza',
@@ -396,11 +399,11 @@ const CATEGORY_DEFS = [{
   id: 'valor',
   es: 'Relación calidad-precio',
   en: 'Value for money',
-  bias: -0.05,
+  bias: -0.10,
   kw: ['precio', 'vale la pena', 'merece', 'calidad precio', 'barato', 'relacion calidad']
 }];
 const categoryScores = reviews => {
-  const overall = reviews.length ? reviews.reduce((a, r) => a + _nota5(r), 0) / reviews.length : null;
+  const overall = reviews.length ? reviews.reduce((a, r) => a + _nota10(r), 0) / reviews.length : null;
   return CATEGORY_DEFS.map(cat => {
     const matches = reviews.filter(r => {
       const txt = _normTxt(r.text);
@@ -412,19 +415,19 @@ const categoryScores = reviews => {
       const sum = matches.reduce((a, r) => {
         const txt = _normTxt(r.text);
         const hasQualifier = QUALIFIER_KW.some(k => txt.includes(k));
-        return a + Math.max(0, _nota5(r) + cat.bias - (hasQualifier ? 0.4 : 0));
+        return a + Math.max(0, _nota10(r) + cat.bias - (hasQualifier ? 0.8 : 0));
       }, 0);
       avg = sum / n;
     } else {
       avg = overall != null ? Math.max(0, overall + cat.bias) : null;
     }
-    // Suelo editorial: ninguna categoría baja de 4.80, y "Relación
-    // calidad-precio" nunca baja de 4.92 (algo más exigente ahí porque es
+    // Suelo editorial: ninguna categoría baja de 9.60, y "Relación
+    // calidad-precio" nunca baja de 9.84 (algo más exigente ahí porque es
     // la categoría más sensible a percepción). Sigue calculándose
     // proporcionalmente del texto real de las reseñas, el suelo solo actúa
     // cuando el cálculo cae por debajo.
     if (avg != null) {
-      avg = Math.max(cat.id === 'valor' ? 4.92 : 4.80, avg);
+      avg = Math.max(cat.id === 'valor' ? 9.84 : 9.60, avg);
     }
     return {
       ...cat,
@@ -437,7 +440,7 @@ const categoryScores = reviews => {
 const ordenar = (lista, modo) => {
   const l = [...lista];
   if (modo === 'recientes') return l.sort((a, b) => _fecha(b).localeCompare(_fecha(a)));
-  if (modo === 'mejores') return l.sort((a, b) => _nota5(b) - _nota5(a) || _fecha(b).localeCompare(_fecha(a)));
+  if (modo === 'mejores') return l.sort((a, b) => _nota10(b) - _nota10(a) || _fecha(b).localeCompare(_fecha(a)));
   if (modo === 'largas') return l.sort((a, b) => (b.text || '').length - (a.text || '').length);
   return [...l.filter(r => r.highlight).sort((a, b) => _fecha(b).localeCompare(_fecha(a))), ...l.filter(r => !r.highlight).sort((a, b) => (b.text || '').length - (a.text || '').length || _fecha(b).localeCompare(_fecha(a)))];
 };
@@ -467,11 +470,11 @@ const CategoryBars = ({
   }, /*#__PURE__*/React.createElement("div", {
     className: "opi-cat-fill",
     style: {
-      width: `${Math.min(100, cat.avg / 5 * 100)}%`
+      width: `${Math.min(100, cat.avg / 10 * 100)}%`
     }
   })), /*#__PURE__*/React.createElement("div", {
     className: "opi-cat-val"
-  }, cat.avg.toFixed(2))))), /*#__PURE__*/React.createElement("p", {
+  }, cat.avg.toFixed(1))))), /*#__PURE__*/React.createElement("p", {
     className: "opi-cat-note"
   }, lang === 'es' ? 'Calculado a partir de lo que cuentan las reseñas reales de este filtro, no son sub-notas que den las plataformas.' : "Calculated from what this filter's real reviews actually say, not category sub-scores provided by the platforms."));
 };
@@ -522,11 +525,11 @@ const OpinionesTestimonials = ({
   // Resumen de lo que hay bajo el filtro activo: da escala antes de leer.
   const resumen = (() => {
     if (!filtered.length) return null;
-    const media = filtered.reduce((a, r) => a + _nota5(r), 0) / filtered.length;
-    const cinco = filtered.filter(r => _nota5(r) >= 4.9).length;
+    const media = filtered.reduce((a, r) => a + _nota10(r), 0) / filtered.length;
+    const cinco = filtered.filter(r => _nota10(r) >= 9.8).length;
     const anios = filtered.map(_fecha).filter(Boolean).sort();
     return {
-      media: media.toFixed(2),
+      media: media.toFixed(1),
       cinco: Math.round(cinco / filtered.length * 100),
       desde: anios.length ? anios[0].slice(0, 4) : null,
       total: filtered.length
@@ -645,7 +648,7 @@ const OpinionesTestimonials = ({
     className: "opi-resumen reveal"
   }, /*#__PURE__*/React.createElement("div", {
     className: "opi-res-datos"
-  }, /*#__PURE__*/React.createElement("div", null, /*#__PURE__*/React.createElement("b", null, resumen.media), /*#__PURE__*/React.createElement("span", null, lang === 'es' ? 'sobre 5' : 'out of 5')), /*#__PURE__*/React.createElement("div", null, /*#__PURE__*/React.createElement("b", null, resumen.total), /*#__PURE__*/React.createElement("span", null, lang === 'es' ? 'opiniones' : 'reviews')), /*#__PURE__*/React.createElement("div", null, /*#__PURE__*/React.createElement("b", null, resumen.cinco, "%"), /*#__PURE__*/React.createElement("span", null, lang === 'es' ? 'de sobresaliente' : 'top marks')), resumen.desde && /*#__PURE__*/React.createElement("div", null, /*#__PURE__*/React.createElement("b", null, resumen.desde), /*#__PURE__*/React.createElement("span", null, lang === 'es' ? 'desde' : 'since'))), /*#__PURE__*/React.createElement("div", {
+  }, /*#__PURE__*/React.createElement("div", null, /*#__PURE__*/React.createElement("b", null, resumen.media), /*#__PURE__*/React.createElement("span", null, lang === 'es' ? 'sobre 10' : 'out of 10')), /*#__PURE__*/React.createElement("div", null, /*#__PURE__*/React.createElement("b", null, resumen.total), /*#__PURE__*/React.createElement("span", null, lang === 'es' ? 'opiniones' : 'reviews')), /*#__PURE__*/React.createElement("div", null, /*#__PURE__*/React.createElement("b", null, resumen.cinco, "%"), /*#__PURE__*/React.createElement("span", null, lang === 'es' ? 'de sobresaliente' : 'top marks')), resumen.desde && /*#__PURE__*/React.createElement("div", null, /*#__PURE__*/React.createElement("b", null, resumen.desde), /*#__PURE__*/React.createElement("span", null, lang === 'es' ? 'desde' : 'since'))), /*#__PURE__*/React.createElement("div", {
     className: "opi-orden"
   }, /*#__PURE__*/React.createElement("label", {
     htmlFor: "opi-orden-sel"

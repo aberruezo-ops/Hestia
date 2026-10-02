@@ -565,8 +565,8 @@ const TrustStrip = ({ apt, lang }) => {
   const own = all.filter(r =>
     r.status === 'published' && (r.apt === apt.id || r.apt === 'all'));
   const total = own.length;
-  // Booking usa /10, otros /5, normalizamos todo a /5
-  const ratings = own.map(r => r.source === 'booking' ? r.rating / 2 : r.rating)
+  // Booking usa /10, otros /5, normalizamos todo a /10
+  const ratings = own.map(r => r.source === 'booking' ? r.rating : r.rating * 2)
     .filter(n => typeof n === 'number' && !isNaN(n));
   const avg = ratings.length
     ? Math.round((ratings.reduce((s, n) => s + n, 0) / ratings.length) * 10) / 10
@@ -579,7 +579,7 @@ const TrustStrip = ({ apt, lang }) => {
       l: lang === 'es' ? 'desde 2016' : 'since 2016' },
     { v: total.toString(),
       l: lang === 'es' ? (total === 1 ? 'reseña verificada' : 'reseñas verificadas') : (total === 1 ? 'verified review' : 'verified reviews') },
-    avg ? { v: `${avg}★`,
+    avg ? { v: `${avg}/10`,
             l: lang === 'es' ? 'valoración media' : 'avg rating' } : null,
     countries.size > 1 ? { v: countries.size.toString(),
             l: lang === 'es' ? 'países de origen' : 'guest countries' } : null,
@@ -1245,8 +1245,8 @@ const ApartmentPageApp = () => {
       'reviewBody': r.text,
       'reviewRating': {
         '@type': 'Rating',
-        'ratingValue': r.source === 'booking' ? r.rating / 2 : r.rating,
-        'bestRating': 5,
+        'ratingValue': r.source === 'booking' ? r.rating : r.rating * 2,
+        'bestRating': 10,
         'worstRating': 1,
       },
       'itemReviewed': { '@type': ['Accommodation', 'LodgingBusiness'], '@id': `${pageUrl}#accommodation` },

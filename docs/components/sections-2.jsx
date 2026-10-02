@@ -195,7 +195,7 @@ const Ratings = ({ lang }) => {
           </div>
           <div className="rating-card" style={{borderTopColor: 'var(--vt)'}}>
             <div className="platform">Airbnb · Superhost</div>
-            <div className="score">5<span className="dec">.0</span><span className="score-max">/5</span></div>
+            <div className="score">10<span className="dec">.0</span><span className="score-max">/10</span></div>
             <div className="desc">{t.rating_airbnb_desc}</div>
             <blockquote className="rating-quote">
               {lang === 'es'
@@ -206,7 +206,7 @@ const Ratings = ({ lang }) => {
           </div>
           <div className="rating-card" style={{borderTopColor: 'var(--vs)'}}>
             <div className="platform">Google Maps</div>
-            <div className="score">4<span className="dec">.9</span><span className="score-max">/5</span></div>
+            <div className="score">9<span className="dec">.8</span><span className="score-max">/10</span></div>
             <div className="desc">{t.rating_google_desc}</div>
             <blockquote className="rating-quote">
               {lang === 'es'
@@ -226,18 +226,18 @@ const Ratings = ({ lang }) => {
 // eggplant #2A0F2E (ratio ~11:1). Track duplicado para loop continuo.
 const RatingsMarquee = ({ lang }) => {
   const items = lang === 'es' ? [
-    '★ 9.8 · Booking.com',
-    '★ 5.0 · Airbnb Superhost',
-    '★ 4.9 · Google Maps',
+    '★ 9.8/10 · Booking.com',
+    '★ 10.0/10 · Airbnb Superhost',
+    '★ 9.8/10 · Google Maps',
     '630+ familias desde 2016',
     'Sin comisiones · reserva directa',
     '10 años en Vera Playa',
     'Mejor precio garantizado',
     'Te responde Alex o Fran, normalmente en minutos',
   ] : [
-    '★ 9.8 · Booking.com',
-    '★ 5.0 · Airbnb Superhost',
-    '★ 4.9 · Google Maps',
+    '★ 9.8/10 · Booking.com',
+    '★ 10.0/10 · Airbnb Superhost',
+    '★ 9.8/10 · Google Maps',
     '630+ families since 2016',
     'No commissions · direct booking',
     '10 years in Vera Playa',
