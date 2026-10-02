@@ -1,6 +1,51 @@
 {
   "drafts": [
     {
+      "id": "voz-2026-10",
+      "createdAt": "2026-10-02T14:26:26.182Z",
+      "status": "pending",
+      "source": "voz",
+      "format": "image",
+      "apt": "vm",
+      "image": "assets/apt-vm-gallery-1.jpg",
+      "networks": [
+        "ig",
+        "fb"
+      ],
+      "caption": "Hestía Mar, octubre 2026\n\nOctubre suaviza el termómetro sin apagar el verano: las máximas rondan los 25°C y el mar sigue tibio, sobre los 21-22°C, porque el Mediterráneo tarda semanas en enfriarse. Desde la terraza esquinera de Hestía Mar, el atardecer llega antes cada día (el cambio de hora es el último domingo de octubre) y el eucaliptal se enciende de ocre nada más ponerse el sol.\n\nEl paseo marítimo de Vera Playa está en su mejor momento: temperatura perfecta para caminar a cualquier hora, sin la multitud de agosto. Aprovecha para subir hasta Puerto Rey en bici o a pie, la ruta va en paralelo al mar casi todo el camino.\n\nOctober softens the thermometer without switching off summer: highs sit around 25°C and the sea stays mild, around 21-22°C, because the Mediterranean takes weeks to cool down.\n\nReserva directa con nosotros: 0% comisiones, respuesta humana en minutos y mascotas bienvenidas.\n📍 Vera Playa, Almería\n🔗 https://www.hestiayourhome.com/mar.html?utm_source=redes&utm_medium=social&utm_campaign=voz-2026-10\n\n#VeraPlaya #Almeria #CaboDeGata #HestiaYourHome",
+      "link": "https://www.hestiayourhome.com/mar.html?utm_source=redes&utm_medium=social&utm_campaign=voz-2026-10"
+    },
+    {
+      "id": "agenda-2026-10",
+      "createdAt": "2026-10-02T14:26:26.182Z",
+      "status": "pending",
+      "source": "agenda",
+      "format": "image",
+      "apt": "vm",
+      "image": "assets/hero-terrace-night.jpg",
+      "networks": [
+        "ig",
+        "fb"
+      ],
+      "caption": "Feria y Fiestas patronales de Huércal-Overa, del 16 al 20 de octubre\n\nA 30 minutos de Hestía, Huércal-Overa celebra su feria mayor con caseta municipal, conciertos y procesión del 16 al 20 de octubre. Es la cabecera del valle del Almanzora y merece la visita también fuera de fiestas: casco histórico, Teatro Rapallo y buena gastronomía de comarca. Confirma el programa exacto en el ayuntamiento antes de ir, las fechas y actividades pueden variar.\n\nHuércal-Overa's patron saint fair, 16 to 20 October\n\nToda la agenda de octubre en el blog de Hestía, con lo que pasa en Vera Playa, Almería y Murcia.\n🔗 https://www.hestiayourhome.com/noticias.html?utm_source=redes&utm_medium=social&utm_campaign=agenda-2026-10\n\n#VeraPlaya #Almeria #CaboDeGata #HestiaYourHome #Fiestasdepuebloscercanos",
+      "link": "https://www.hestiayourhome.com/noticias.html?utm_source=redes&utm_medium=social&utm_campaign=agenda-2026-10"
+    },
+    {
+      "id": "guion-2026-10",
+      "createdAt": "2026-10-02T14:26:26.182Z",
+      "status": "pending",
+      "source": "guion",
+      "format": "guion",
+      "apt": "vm",
+      "image": "assets/apt-vm-gallery-1.jpg",
+      "networks": [
+        "ig",
+        "fb"
+      ],
+      "caption": "GUION · reel de 30 segundos · Hestía Mar · octubre 2026\n\nDónde: Hestía Mar, luz natural, móvil en vertical, sin música alta (las redes ya la ponen).\n\n0-5 s · Gancho, a cámara, en la terraza:\n\"Octubre suaviza el termómetro sin apagar el verano: las máximas rondan los 25°C y el mar sigue tibio, sobre los 21-22°C, porque el Mediterráneo tarda semanas en enfriarse.\"\n\n5-15 s · Plano del apartamento o de la vista mientras dices, en tus palabras:\n\"El paseo marítimo de Vera Playa está en su mejor momento: temperatura perfecta para caminar a cualquier hora, sin la multitud de agosto. Aprovecha para subir hasta Puerto Rey en bici o a pie, la ruta va en paralelo al mar casi todo el camino.\"\n\n15-25 s · Un plano del sitio que recomiendas o del mar, con esta idea:\n\"Feria y Fiestas patronales de Huércal-Overa, del 16 al 20 de octubre\"\n\n25-30 s · Cierre, a cámara:\n\"Reserva directo con nosotros y te lo enseñamos en persona. Hestía Your Home, Vera Playa.\"\n\nTexto del post al publicar el reel: usa el borrador \"voz-2026-10\" tal cual.\nNo hace falta que salga perfecto. Hace falta que salgas tú.",
+      "link": "https://www.hestiayourhome.com/mar.html?utm_source=redes&utm_medium=social&utm_campaign=voz-2026-10"
+    },
+    {
       "id": "voz-2026-09",
       "createdAt": "2026-09-03T06:51:04.125Z",
       "status": "pending",
@@ -659,5 +704,5 @@
       "link": "https://www.hestiayourhome.com/noticias.html"
     }
   ],
-  "updatedAt": "2026-09-03T06:51:04.125Z"
+  "updatedAt": "2026-10-02T14:26:26.182Z"
 }
