@@ -21,7 +21,7 @@
 <meta property="og:locale" content="en_GB"/>
 <link rel="preconnect" href="https://fonts.googleapis.com"/>
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
-<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400..600&family=Hanken+Grotesk:wght@400;500;600&display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400..600&family=Hanken+Grotesk:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet"/>
 <style>
 :root{
   --ber:#3D1A35; --ber-dk:#2A0F2E; --ber-deep:#1E0722;
@@ -31,11 +31,16 @@
   --rule:#E6DCDF; --vm:#6B7A3A; --vt:#B86A3C; --vs:#B08A24;
   --r:10px 0 10px 0; --r-lg:16px 0 16px 0;
   --serif:'Fraunces',Georgia,serif; --sans:'Hanken Grotesk',system-ui,sans-serif;
+  --mono:'IBM Plex Mono','SF Mono',ui-monospace,monospace;
   --ease:cubic-bezier(.23,1,.32,1);
 }
 *{box-sizing:border-box;margin:0;padding:0;}
 html{scroll-behavior:smooth;}
-body{background:var(--crema);color:var(--ink);font-family:var(--sans);line-height:1.6;
+/* Cuerpo de la página = la vitrina oscura que rodea el "libro"; el propio
+   libro (.wrap.libro) es la única superficie clara, y declara su color de
+   texto propio (regla de contraste del proyecto: ninguna superficie clara
+   anidada hereda el claro-sobre-oscuro de aquí). */
+body{background:var(--ber-deep);color:var(--crema);font-family:var(--sans);line-height:1.6;
   -webkit-font-smoothing:antialiased;overflow-x:hidden;}
 .wrap{max-width:1120px;margin:0 auto;padding:0 24px;}
 
@@ -87,34 +92,64 @@ body{background:var(--crema);color:var(--ink);font-family:var(--sans);line-heigh
 .hero::after{content:'';position:absolute;inset:0;
   background:linear-gradient(180deg,rgba(30,7,34,.74) 0%,rgba(30,7,34,.30) 42%,rgba(30,7,34,.95) 100%);}
 .hero .wrap{position:relative;z-index:2;padding-top:132px;padding-bottom:54px;width:100%;}
-.eyebrow{font-size:11px;letter-spacing:.3em;text-transform:uppercase;color:var(--sol-lt);
-  font-weight:600;margin-bottom:18px;animation:up .7s var(--ease) both;}
+.eyebrow{font-family:var(--mono);font-size:11px;letter-spacing:.22em;text-transform:uppercase;
+  color:var(--sol-lt);font-weight:500;margin-bottom:18px;animation:up .7s var(--ease) both;}
 .hero h1{font-family:var(--serif);font-weight:400;color:var(--crema);
   font-size:clamp(36px,6.4vw,72px);line-height:1.03;letter-spacing:-.025em;
   max-width:17ch;margin-bottom:22px;animation:up .8s var(--ease) .08s both;}
 .hero .intro{color:rgba(240,232,213,.86);font-size:clamp(16px,1.9vw,19px);max-width:56ch;
   animation:up .8s var(--ease) .18s both;}
+.hero .intro::first-letter{font-family:var(--serif);font-size:2.5em;line-height:.74;
+  float:left;padding:.03em .08em 0 0;color:var(--sol-lt);}
 .cifras{display:flex;flex-wrap:wrap;gap:16px 44px;margin-top:36px;
   animation:up .8s var(--ease) .28s both;}
 .cifra b{display:block;font-family:var(--serif);font-size:clamp(28px,3.6vw,40px);
   color:var(--crema);line-height:1;font-variant-numeric:tabular-nums;}
-.cifra span{display:block;font-size:11px;letter-spacing:.16em;text-transform:uppercase;
-  color:rgba(240,232,213,.6);margin-top:8px;}
+.cifra span{display:block;font-family:var(--mono);font-size:10.5px;letter-spacing:.1em;
+  text-transform:uppercase;color:rgba(240,232,213,.6);margin-top:8px;}
 @keyframes up{from{opacity:0;transform:translateY(22px);}to{opacity:1;transform:none;}}
 
-.indice{position:sticky;top:0;z-index:4;background:rgba(250,246,240,.94);
-  backdrop-filter:blur(10px);border-bottom:1px solid var(--rule);}
+/* Riel de índice del catálogo: vive en la vitrina oscura, no en la página
+   de papel. Mono + versalitas trackeadas, como una guía de archivo. */
+.indice{position:sticky;top:0;z-index:4;background:rgba(30,7,34,.92);
+  backdrop-filter:blur(10px);border-bottom:1px solid rgba(240,232,213,.12);}
 .indice .wrap{display:flex;gap:8px;overflow-x:auto;padding-top:14px;padding-bottom:14px;
   scrollbar-width:none;}
 .indice .wrap::-webkit-scrollbar{display:none;}
-.indice a{flex:0 0 auto;font-size:13px;color:var(--ink-soft);text-decoration:none;
-  padding:7px 15px;border:1px solid var(--rule);border-radius:var(--r);white-space:nowrap;
-  transition:all .2s var(--ease);}
-.indice a:hover{color:var(--crema);background:var(--ber-dk);border-color:var(--ber-dk);}
+.indice a{flex:0 0 auto;font-family:var(--mono);font-size:11px;letter-spacing:.1em;
+  text-transform:uppercase;color:rgba(240,232,213,.6);text-decoration:none;
+  padding:8px 14px;border:1px solid rgba(240,232,213,.16);border-radius:var(--r);
+  white-space:nowrap;transition:all .2s var(--ease);}
+.indice a:hover{color:var(--crema);background:rgba(240,232,213,.08);border-color:rgba(240,232,213,.32);}
 
-.aviso{margin:30px 0 -18px;padding:16px 20px;background:var(--arena);
+/* La página de papel: la única superficie clara, suspendida dentro de la
+   vitrina oscura. Sombra y pliegue sutil de lomo en el centro para que
+   lea como un pliego abierto, no como una tarjeta plana. Superficie clara
+   anidada → declara su propio color de texto (regla de contraste). */
+.wrap.libro{
+  position:relative;
+  color:var(--ink);
+  background:
+    radial-gradient(1100px 260px at 50% -8%, rgba(255,255,255,.55), transparent 62%),
+    linear-gradient(180deg, #FDFAF3 0%, var(--crema) 7%, var(--crema) 100%);
+  padding-top:52px;
+  border-radius:0 0 var(--r-lg) var(--r-lg);
+  box-shadow:0 56px 100px -40px rgba(10,2,12,.62), 0 1px 0 rgba(255,255,255,.5) inset;
+}
+.wrap.libro::before{
+  content:'';position:absolute;inset:0;pointer-events:none;z-index:0;
+  background:linear-gradient(90deg,
+    transparent 0%, rgba(42,15,46,.05) 49.3%, rgba(42,15,46,.09) 50%,
+    rgba(42,15,46,.05) 50.7%, transparent 100%);
+}
+.wrap.libro>*{position:relative;z-index:1;}
+/* Nota al margen, estilo marginalia: regla fina a la izquierda, cuerpo
+   reducido, como una anotación manuscrita junto al texto principal. */
+.aviso{margin:30px 0 -18px;padding:14px 20px;background:var(--arena);
   border-left:3px solid var(--vs);border-radius:var(--r);
-  font-size:14.5px;color:var(--ink-soft);max-width:74ch;}
+  font-size:14px;color:var(--ink-soft);max-width:70ch;}
+.aviso b{color:var(--ink);font-family:var(--mono);font-weight:500;
+  letter-spacing:.01em;}
 .aviso b{color:var(--ink);font-weight:600;}
 .aviso ul{margin:10px 0 2px;padding-left:20px;}
 .aviso li{margin:4px 0;}
@@ -149,10 +184,12 @@ body{background:var(--crema);color:var(--ink);font-family:var(--sans);line-heigh
 .ficha p{font-size:15.5px;color:var(--ink-soft);margin-bottom:12px;max-width:62ch;}
 .ficha .best{color:var(--ink);border-left:2px solid var(--vs);padding-left:12px;
   font-size:14px;margin-bottom:12px;}
-.ficha .best b{font-weight:600;font-size:10.5px;letter-spacing:.14em;text-transform:uppercase;
-  display:block;color:var(--ink-faint);margin-bottom:3px;}
+.ficha .best b{font-family:var(--mono);font-weight:500;font-size:10px;letter-spacing:.14em;
+  text-transform:uppercase;display:block;color:var(--ink-faint);margin-bottom:3px;}
 .chips{display:flex;flex-wrap:wrap;align-items:center;gap:7px 11px;}
-.chip{font-size:11.5px;color:var(--ink-soft);background:var(--arena);padding:3px 9px;
+/* Etiquetas como fichas de catálogo: mono, borde fino, sin relleno sólido. */
+.chip{font-family:var(--mono);font-size:10.5px;letter-spacing:.02em;color:var(--ink-soft);
+  background:transparent;border:1px solid var(--rule);padding:3px 9px;
   border-radius:6px 0 6px 0;}
 .chip.nota{background:#EDF1E2;color:#4A5628;font-weight:600;}
 .chips a{font-size:11.5px;color:var(--sol-txt);text-decoration:none;
@@ -179,13 +216,15 @@ body{background:var(--crema);color:var(--ink);font-family:var(--sans);line-heigh
 .cta h2{font-family:var(--serif);font-weight:400;font-size:clamp(26px,3.7vw,40px);
   line-height:1.1;letter-spacing:-.02em;margin-bottom:22px;max-width:17ch;}
 .cta p{color:rgba(240,232,213,.84);font-size:16px;max-width:62ch;margin-bottom:15px;}
+.cta p:first-of-type::first-letter{font-family:var(--serif);font-size:2.3em;line-height:.74;
+  float:left;padding:.03em .07em 0 0;color:var(--sol-lt);}
 .cta .num{color:var(--sol-lt);font-weight:600;}
 .cta-datos{display:flex;flex-wrap:wrap;gap:16px 36px;margin:28px 0 30px;
   padding-top:26px;border-top:1px solid rgba(240,232,213,.18);}
 .cta-datos div b{display:block;font-family:var(--serif);font-size:30px;line-height:1;
   color:var(--crema);font-variant-numeric:tabular-nums;}
-.cta-datos div span{display:block;font-size:10.5px;letter-spacing:.14em;text-transform:uppercase;
-  color:rgba(240,232,213,.55);margin-top:7px;}
+.cta-datos div span{display:block;font-family:var(--mono);font-size:10px;letter-spacing:.1em;
+  text-transform:uppercase;color:rgba(240,232,213,.55);margin-top:7px;}
 .apts{display:flex;flex-wrap:wrap;gap:12px;margin-top:26px;}
 .apts a{flex:1 1 200px;text-decoration:none;padding:17px 22px;border-radius:var(--r);
   border:1px solid rgba(240,232,213,.2);background:rgba(240,232,213,.05);
@@ -195,17 +234,20 @@ body{background:var(--crema);color:var(--ink);font-family:var(--sans);line-heigh
 .apts a span{font-size:12.5px;color:rgba(240,232,213,.62);}
 .apts .vm b{color:#9DAF62;} .apts .vt b{color:#D89467;} .apts .vs b{color:#E0BC5E;}
 
-.pie{margin-top:66px;padding:34px 0 70px;border-top:1px solid var(--rule);
+/* Pie como colofón de archivo: borde de puntos y la última línea en mono,
+   igual que una referencia de catálogo al cierre del volumen. */
+.pie{margin-top:66px;padding:34px 0 70px;border-top:1px dashed var(--rule);
   font-size:13.5px;color:var(--ink-faint);}
 .pie a{color:var(--sol-txt);}
 .pie p+p{margin-top:9px;}
+.pie p:last-of-type{font-family:var(--mono);font-size:11px;letter-spacing:.03em;}
 
 a:focus-visible{outline:2px solid var(--sol);outline-offset:3px;}
 
 /* ---- barra de progreso de lectura ---- */
-.progreso{position:fixed;top:0;left:0;height:3px;width:100%;z-index:10;
+.progreso{position:fixed;top:0;left:0;height:3px;width:0%;z-index:10;
   background:linear-gradient(90deg,var(--vm),var(--sol),var(--vs));
-  transform-origin:left;transform:scaleX(0);transition:transform .1s linear;}
+  transition:width .1s linear;}
 
 /* ---- revelado al hacer scroll ----
    Esta página vive de que Google lea el contenido sin ejecutar JS: el
@@ -243,7 +285,7 @@ html.js .reveal.is-in{opacity:1;transform:none;}
   50%{box-shadow:0 0 70px 4px rgba(58,170,187,.12);}
 }
 .cta-ribbon{display:inline-flex;align-items:center;gap:8px;
-  font-size:11px;font-weight:700;letter-spacing:.18em;text-transform:uppercase;
+  font-family:var(--mono);font-size:11px;font-weight:500;letter-spacing:.14em;text-transform:uppercase;
   color:var(--ber-dk);background:var(--sol-lt);padding:7px 16px;
   border-radius:var(--r);margin-bottom:22px;}
 .cta-rating{display:flex;align-items:center;gap:10px;margin:6px 0 24px;}
@@ -279,7 +321,7 @@ html.js .reveal.is-in{opacity:1;transform:none;}
 @media(max-width:560px){.cta-float{right:16px;bottom:16px;padding:12px 18px;font-size:12px;}}
 
 /* ---- índice activo al hacer scroll ---- */
-.indice a.is-active{color:var(--crema);background:var(--ber-dk);border-color:var(--ber-dk);}
+.indice a.is-active{color:var(--ber-deep);background:var(--sol-lt);border-color:var(--sol-lt);}
 
 @media (prefers-reduced-motion:reduce){
   *{animation:none!important;transition:none!important;}
@@ -388,15 +430,15 @@ html.js .reveal.is-in{opacity:1;transform:none;}
   <div class="wrap">
     <p class="eyebrow">Our guide</p>
     <h1>The Almería that does not make it into other guides</h1>
-    <p class="intro">131 places across the Almería Levante visited by Alex and Fran, lifelong Almería people with three apartments in Vera Playa since 2016. This is not a list copied from other websites: it is what we recommend to our own guests, sorted by distance from the apartments.</p>
+    <p class="intro">We have visited 131 places across the Almería Levante: Alex and Fran, lifelong Almería people with three apartments in Vera Playa since 2016. This is not a list copied from other websites: it is what we recommend to our own guests, sorted by distance from the apartments.</p>
     <div class="cifras"><div class="cifra"><b>131</b><span>places</span></div><div class="cifra"><b>5</b><span>sections</span></div><div class="cifra"><b>2016</b><span>with a home here</span></div></div>
     <div class="hero-rating">
       <span class="stars" aria-hidden="true">★★★★★</span>
       <b>9.93/10</b>
-      <span>412 from real guest reviews</span>
+      <span>414 from real guest reviews</span>
     </div>
   </div>
-</header><div class="wrap">
+</header><div class="wrap libro">
 <div class="aviso">This is <b>an extract</b> of our guide. The full guide, with
 30 chapters and the area map, is <b>exclusive to guests staying
 with us</b>: it is handed over a few days before you arrive, as a PDF you
@@ -463,7 +505,7 @@ can use without signal. It includes:
   <div class="cta-rating">
     <span class="stars" aria-hidden="true">★★★★★</span>
     <b>9.93/10</b>
-    <span>412 from real guest reviews</span>
+    <span>414 from real guest reviews</span>
   </div>
   <p>What you see here anyone can read: what each place is, what is good about it and how far it is. It is the part that can be put in writing.</p>
   <p>The rest is not learned by reading: it is learned by coming back, year after
@@ -494,7 +536,7 @@ can use without signal. It includes:
   var onScroll = function(){
     var h = document.documentElement;
     var alto = h.scrollHeight - h.clientHeight;
-    if (barra) barra.style.transform = 'scaleX(' + (alto > 0 ? (h.scrollTop / alto) : 0) + ')';
+    if (barra) barra.style.width = (alto > 0 ? (h.scrollTop / alto * 100) : 0) + '%';
     if (flot) flot.classList.toggle('is-visible', h.scrollTop > window.innerHeight * 0.6);
   };
   document.addEventListener('scroll', onScroll, { passive: true });
