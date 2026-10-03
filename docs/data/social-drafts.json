@@ -1,6 +1,21 @@
 {
   "drafts": [
     {
+      "id": "photo-vs-dormitorio2-2026-10-03",
+      "createdAt": "2026-10-03T00:00:00.000Z",
+      "status": "pending",
+      "source": "escaparate",
+      "format": "photo",
+      "apt": "vs",
+      "image": "assets/apt-vs-gallery-34.jpg",
+      "networks": [
+        "ig",
+        "fb"
+      ],
+      "caption": "El dormitorio secundario de Hestía Salinas se viste de otoño: dos camas individuales, cabeceros en verde salvia, espejos redondos a juego y una manta de terciopelo en terracota que invita a quedarse dentro.\n\nPerfecto para hermanos, amigas o cualquier grupo que viaja junto sin compartir cama.\n\nMira las fechas libres o escríbenos.\n🔗 https://www.hestiayourhome.com/salinas.html\n\n#VeraPlaya #Almeria #HestiaYourHome #HestiaSalinas",
+      "link": "https://www.hestiayourhome.com/salinas.html"
+    },
+    {
       "id": "voz-2026-09",
       "createdAt": "2026-09-03T06:51:04.125Z",
       "status": "pending",
@@ -659,5 +674,5 @@
       "link": "https://www.hestiayourhome.com/noticias.html"
     }
   ],
-  "updatedAt": "2026-09-03T06:51:04.125Z"
+  "updatedAt": "2026-10-03T00:00:00.000Z"
 }
