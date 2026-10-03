@@ -295,7 +295,12 @@ const Ratings = ({
     }
   }, /*#__PURE__*/React.createElement("div", {
     className: "platform"
-  }, "Booking.com"), /*#__PURE__*/React.createElement("div", {
+  }, /*#__PURE__*/React.createElement(HiIcon, {
+    name: "booking",
+    size: 20,
+    className: "platform-logo",
+    title: "Booking.com"
+  })), /*#__PURE__*/React.createElement("div", {
     className: "score"
   }, booking.int, /*#__PURE__*/React.createElement("span", {
     className: "dec"
@@ -312,7 +317,14 @@ const Ratings = ({
     }
   }, /*#__PURE__*/React.createElement("div", {
     className: "platform"
-  }, "Airbnb · Superhost"), /*#__PURE__*/React.createElement("div", {
+  }, /*#__PURE__*/React.createElement(HiIcon, {
+    name: "airbnb",
+    size: 20,
+    className: "platform-logo",
+    title: "Airbnb"
+  }), /*#__PURE__*/React.createElement("span", {
+    className: "platform-qualifier"
+  }, "Superhost")), /*#__PURE__*/React.createElement("div", {
     className: "score"
   }, airbnb.int, /*#__PURE__*/React.createElement("span", {
     className: "dec"
@@ -329,7 +341,14 @@ const Ratings = ({
     }
   }, /*#__PURE__*/React.createElement("div", {
     className: "platform"
-  }, "Google Maps"), /*#__PURE__*/React.createElement("div", {
+  }, /*#__PURE__*/React.createElement(HiIcon, {
+    name: "google",
+    size: 20,
+    className: "platform-logo",
+    title: "Google"
+  }), /*#__PURE__*/React.createElement("span", {
+    className: "platform-qualifier"
+  }, "Maps")), /*#__PURE__*/React.createElement("div", {
     className: "score"
   }, google.int, /*#__PURE__*/React.createElement("span", {
     className: "dec"

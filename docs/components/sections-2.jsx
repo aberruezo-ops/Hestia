@@ -187,7 +187,7 @@ const Ratings = ({ lang }) => {
         <p className="ratings-sub">{t.ratings_sub}</p>
         <div className="ratings-grid">
           <div className="rating-card" style={{borderTopColor: 'var(--vm)'}}>
-            <div className="platform">Booking.com</div>
+            <div className="platform"><HiIcon name="booking" size={20} className="platform-logo" title="Booking.com"/></div>
             <div className="score">{booking.int}<span className="dec">.{booking.dec}</span><span className="score-max">/10</span></div>
             <div className="desc">{t.rating_booking_desc}</div>
             <blockquote className="rating-quote">
@@ -198,7 +198,7 @@ const Ratings = ({ lang }) => {
             </blockquote>
           </div>
           <div className="rating-card" style={{borderTopColor: 'var(--vt)'}}>
-            <div className="platform">Airbnb · Superhost</div>
+            <div className="platform"><HiIcon name="airbnb" size={20} className="platform-logo" title="Airbnb"/><span className="platform-qualifier">Superhost</span></div>
             <div className="score">{airbnb.int}<span className="dec">.{airbnb.dec}</span><span className="score-max">/10</span></div>
             <div className="desc">{t.rating_airbnb_desc}</div>
             <blockquote className="rating-quote">
@@ -209,7 +209,7 @@ const Ratings = ({ lang }) => {
             </blockquote>
           </div>
           <div className="rating-card" style={{borderTopColor: 'var(--vs)'}}>
-            <div className="platform">Google Maps</div>
+            <div className="platform"><HiIcon name="google" size={20} className="platform-logo" title="Google"/><span className="platform-qualifier">Maps</span></div>
             <div className="score">{google.int}<span className="dec">.{google.dec}</span><span className="score-max">/10</span></div>
             <div className="desc">{t.rating_google_desc}</div>
             <blockquote className="rating-quote">
