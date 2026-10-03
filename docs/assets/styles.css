@@ -3412,10 +3412,15 @@ body.apt-bar-shown .cookies {
 }
 .rating-card:active { transform: translateY(0) scale(0.98) translateZ(0); }
 .rating-card .platform {
+  display: flex; align-items: center; gap: 8px;
   font-family: var(--sans); font-weight: 500; font-size: 12px;
   letter-spacing: 0.24em; text-transform: uppercase; opacity: 0.75;
   margin-bottom: 20px;
 }
+/* Logo real de la plataforma (Simple Icons, monocromo vía currentColor) en
+   vez del nombre escrito: más reconocible de un vistazo. */
+.rating-card .platform-logo { flex-shrink: 0; }
+.rating-card .platform-qualifier { letter-spacing: 0.24em; }
 .rating-card .score {
   font-family: var(--serif);
   font-size: clamp(54px, 6vw, 80px);
