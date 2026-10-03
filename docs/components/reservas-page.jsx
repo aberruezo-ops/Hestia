@@ -545,13 +545,18 @@ const ReservasForm = ({ lang }) => {
   const [avail, setAvail]       = React.useState(null);
   const [availLoaded, setAvailLoaded] = React.useState(false);
 
-  React.useEffect(() => {
-    fetch('assets/availability.json?t=' + Date.now(), { cache: 'no-store' })
-      .then(r => r.ok ? r.json() : null)
-      .then(j => setAvail(j))
-      .catch(() => {})
-      .finally(() => setAvailLoaded(true));
-  }, []);
+  // Se extrae para poder volver a llamarla: la disponibilidad cargada al
+  // abrir la página se queda obsoleta si el huésped tarda en rellenar el
+  // formulario (otra solicitud puede confirmarse mientras tanto). Nunca
+  // debe decir "disponible" con datos viejos justo en el paso que se llama
+  // "Disponibilidad y precio".
+  const fetchAvail = () => fetch('assets/availability.json?t=' + Date.now(), { cache: 'no-store' })
+    .then(r => r.ok ? r.json() : null)
+    .then(j => { if (j) setAvail(j); })
+    .catch(() => {})
+    .finally(() => setAvailLoaded(true));
+
+  React.useEffect(() => { fetchAvail(); }, []);
 
   // Prefill desde URL: /reservas.html?apt=vm&checkin=YYYY-MM-DD&...
   // Llamado desde home-search o desde el calendar de cada apt page.
@@ -809,6 +814,7 @@ const ReservasForm = ({ lang }) => {
   const goToStep2 = () => {
     if (!step1Ready) return;
     setStep(2);
+    fetchAvail(); // revalida justo antes de mostrar "Disponibilidad y precio"
     if (typeof _hestiaTrack === 'function') _hestiaTrack('booking_step2', { apt: apt || 'all', checkin, checkout });
     setTimeout(() => {
       document.getElementById('rf-step-2')?.scrollIntoView({ behavior: 'smooth', block: 'start' });
