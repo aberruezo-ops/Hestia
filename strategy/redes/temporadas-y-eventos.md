@@ -35,7 +35,10 @@
 - **Septiembre:** Feria de Vera (San Cleofás, 24-29), Cristo de la Salud,
   Feria de Lorca. Fin de verano, buen clima, menos gente.
 - **Octubre:** Festival Drácula en el castillo (última semana, muy visual),
-  Festival de Flamenco, Alfarería de Sorbas. Otoño suave.
+  Festival de Flamenco, Almerijazz (finales de octubre a principios de
+  noviembre, Teatro Apolo y Plaza Vieja de Almería capital), Festival de la
+  Gamba Roja en Garrucha (último fin de semana, degustaciones y showcookings
+  junto al puerto, a 10 min de Hestía), Alfarería de Sorbas. Otoño suave.
 - **Noviembre:** San Diego (12-13). Empieza el ángulo teletrabajo/invierno.
 - **Diciembre:** Navidad tranquila junto al mar.
 
