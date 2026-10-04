@@ -294,7 +294,6 @@ const Header = ({ mode, scrolled, lang }) => {
           <NavLink href={NAV_PAGES.thalassa}>{t.nav[2]}</NavLink>
           <NavLink href={NAV_PAGES.salinas}>{t.nav[3]}</NavLink>
           <NavLink href={NAV_PAGES.estanciasLargas}>{t.nav[9]}</NavLink>
-          <NavLink href={NAV_PAGES.empresas}>{lang === 'es' ? 'Para empresas' : 'For business'}</NavLink>
         </nav>
         <div className="brand-center">
           <a href="/" className="brand-lockup" aria-label="Hestía, Inicio">
@@ -315,8 +314,6 @@ const Header = ({ mode, scrolled, lang }) => {
           <nav className="desktop-nav nav-right">
             <NavLink href={NAV_PAGES.nosotros}>{t.nav[4]}</NavLink>
             <NavLink href={NAV_PAGES.opiniones}>{t.nav[5]}</NavLink>
-            <NavLink href={NAV_PAGES.noticias}>{t.nav[7]}</NavLink>
-            <NavLink href={lang === 'es' ? NAV_PAGES.guiaZona : '/guia-vera/en/'}>{lang === 'es' ? 'Extracto Guía' : 'Guide extract'}</NavLink>
             <NavLink href={NAV_PAGES.reservas} className="cta"><span className="cta-border" aria-hidden="true"/><span className="cta-text">{t.cta_nav}</span></NavLink>
           </nav>
           <button
