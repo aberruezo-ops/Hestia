@@ -136,41 +136,44 @@ demanda.
 
 ---
 
-## `nuevo-portal-de-hestia/` — rediseño completo nunca implementado
+## `nuevo-portal-de-hestia/` — resuelto, carpeta eliminada (octubre 2026)
 
 **Surgió:** añadido por un commit automático (`0c31323`, 2026-09-22) como
 paquete de entrega de Claude Design (claude.ai/design); revisión de limbo
-(octubre 2026).
+y decisión (octubre 2026).
 
-**Estado actual:** carpeta completa (`project/Home.html` + `index.html`,
-`opiniones.html`, `contacto.html`, `nosotros.html`, componentes y assets
-propios) con un sistema de diseño alternativo, "Noche Mediterránea":
-tipografía Lora/Poppins (ninguna coincide con Fraunces/Hanken Grotesk, la
-que usa de verdad el sitio en producción), pero mantiene los mismos
-tokens de color de marca (`--ber`, `--sol`, `--vm/--vt/--vs`). Nunca se ha
-tocado, referenciado ni implementado desde que se añadió. Su propio
-`README.md` pide explícitamente: leer `project/Home.html` primero (dice
-que "casi con toda seguridad es el diseño principal"), no copiar la
-estructura interna del prototipo sino recrear pixel-perfect con la
-tecnología del sitio destino, y **"si algo es ambiguo, pedir confirmación
-al usuario antes de empezar a implementar"**.
+**Qué era:** un rediseño completo del Home ("Noche Mediterránea", Lora +
+Poppins) con mucho más peso narrativo que el sitio actual: manifiesto,
+tabla comparativa de los tres apartamentos y una sección de guía de marca
+embebida en el propio Home. Usaba datos reales de Hestía (licencias VFT,
+teléfonos, direcciones, email), no inventados.
 
-**Por qué no se hizo ya:** es un cambio de identidad visual completo (otra
-tipografía, otro lenguaje de diseño), no un parche. Implementarlo a medias
-o sin decisión explícita del usuario contradice la propia instrucción del
-paquete y arriesgaría mezclar dos sistemas de diseño en el sitio en vivo.
+**Decisión del usuario:** no lo reconocía como algo pedido a propósito
+(llegó solo por el commit automático), y además no comparte el enfoque:
+el Home debe priorizar conversión (visita → solicitud de reserva), y el
+contenido narrativo, que solo interesa a una minoría de visitantes, debe
+vivir en otro sitio, no competir por espacio ahí. Se pidió rescatar lo
+aprovechable y borrar el resto.
 
-**Qué hace falta para hacerlo:** el usuario decide primero si quiere
-explorar este rediseño en serio (es una decisión de marca, no técnica:
-¿Lora/Poppins + "Noche Mediterránea" sustituye a Fraunces/Hanken Grotesk?).
-Si la respuesta es sí: revisar `project/Home.html` completo y el resto de
-páginas del paquete, y planificar la migración como proyecto propio (no
-de paso). Si la respuesta es no: documentar la decisión y, en algún
-momento, borrar la carpeta para que no quede un diseño fantasma sin dueño
-en el repo.
+**Resultado de la revisión de "lo rescatable":** no había nada nuevo que
+rescatar. Se comprobó punto por punto contra el sitio en producción:
+- El manifiesto ("esto no se alquila, se comparte") ya existe en
+  `/nosotros.html` (`shared.jsx` `manifest_p1`-`manifest_p4`), con una
+  redacción más alineada con `VOZ-DE-MARCA.md` que la del paquete (invita
+  en vez de ordenar: "agradecemos que repongas lo que uses" en vez de "si
+  lo usas, lo repones").
+- La tabla comparativa de los tres apartamentos ya existe (`const
+  Compare` en `docs/components/sections-1.jsx`).
+- La sección de equipo (Alex y Fran) ya existe en `/nosotros.html`.
+- Los contadores animados y las valoraciones de plataformas (Booking,
+  Airbnb, Google) ya existen en el home actual.
+- Los datos reales del paquete (licencias, teléfonos, dirección, email)
+  coinciden con los que ya usa la producción: no faltaba nada que
+  trasladar.
 
-**Cuándo tiene sentido retomarlo:** cuando el usuario quiera decidir sobre
-esto explícitamente. No se debe implementar nada de aquí sin esa decisión.
+En resumen: el paquete repackaging contenido y datos que ya estaban en
+producción, con otra tipografía y más peso narrativo en el sitio
+equivocado. Por eso se eliminó la carpeta entera en vez de extraer nada.
 
 ---
 
