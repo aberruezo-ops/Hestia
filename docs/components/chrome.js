@@ -382,9 +382,7 @@ const Header = ({
     href: NAV_PAGES.salinas
   }, t.nav[3]), /*#__PURE__*/React.createElement(NavLink, {
     href: NAV_PAGES.estanciasLargas
-  }, t.nav[9]), /*#__PURE__*/React.createElement(NavLink, {
-    href: NAV_PAGES.empresas
-  }, lang === 'es' ? 'Para empresas' : 'For business')), /*#__PURE__*/React.createElement("div", {
+  }, t.nav[9])), /*#__PURE__*/React.createElement("div", {
     className: "brand-center"
   }, /*#__PURE__*/React.createElement("a", {
     href: "/",
@@ -418,10 +416,6 @@ const Header = ({
   }, t.nav[4]), /*#__PURE__*/React.createElement(NavLink, {
     href: NAV_PAGES.opiniones
   }, t.nav[5]), /*#__PURE__*/React.createElement(NavLink, {
-    href: NAV_PAGES.noticias
-  }, t.nav[7]), /*#__PURE__*/React.createElement(NavLink, {
-    href: lang === 'es' ? NAV_PAGES.guiaZona : '/guia-vera/en/'
-  }, lang === 'es' ? 'Extracto Guía' : 'Guide extract'), /*#__PURE__*/React.createElement(NavLink, {
     href: NAV_PAGES.reservas,
     className: "cta"
   }, /*#__PURE__*/React.createElement("span", {
