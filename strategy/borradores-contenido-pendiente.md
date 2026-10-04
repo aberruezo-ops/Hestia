@@ -312,6 +312,69 @@ Alex (Hestía Your Home)
 
 ---
 
+## 3bis · Objetivos concretos de backlink (más allá de visitingalmeria.com)
+
+Buscados y verificados por búsqueda web (octubre 2026), categorizados por
+tipo de acción. Antes de escribir a cada uno, personaliza el email de la
+plantilla §3 con el detalle real de lo que publica cada sitio (ya anotado
+abajo). Ningún enlace está garantizado: esto es la lista de a quién
+merece la pena pedírselo, no una promesa de resultado.
+
+### A. Blogs y guías editoriales de la zona (pedir backlink, email directo)
+
+- **visitingalmeria.com**: ya lo usamos como fuente de eventos para la guía
+  y el blog (ver PENDIENTES.md/Rutina mensual). Enfoque natural: avisarles
+  de que les citamos como fuente y preguntar si les interesa un enlace
+  recíproco a `/guia-vera/` o a la ficha de Vera Playa.
+- **blog.felicesvacaciones.es**: tiene un artículo específico "¿Qué ver en
+  la zona de Vera Almería?". Coincidencia temática exacta con nuestra guía.
+- **andalucia.com** (guía privada de viajes, no el `.org` oficial): tiene
+  páginas propias de Almería/Vera con contenido editorial real.
+- **freakingnomads.com/places/almeria**: guía para nómadas digitales con
+  ficha de Almería. Encaja con el ángulo de estancias largas/teletrabajo
+  de Hestía (WiFi de fibra 600 Mbps, mesa de trabajo bajo petición).
+
+### B. Directorios oficiales de turismo (no se "pide", se verifica inclusión/registro)
+
+- **andalucia.org** (portal oficial de turismo de Andalucía): confirmado
+  que SÍ lista apartamentos turísticos privados de Vera (ej. Apartamentos
+  Veramar, Vacacionesenvera.com aparecen en su directorio de alojamiento).
+  La vía es el Registro de Turismo de Andalucía (RTA): si los tres Hestía
+  ya tienen licencia VFT (confirmado que la tienen, números reales en el
+  código del sitio), probablemente ya están en el RTA. Lo que falta
+  verificar es si eso se traduce automáticamente en aparecer en el
+  directorio público de andalucia.org o si hay que solicitarlo aparte.
+  Acción: comprobar si Hestía ya aparece buscando "Hestía Vera Mar"/
+  "Hestía Thalassa"/"Hestía Salinas" en andalucia.org; si no, contactar con
+  el Patronato de Turismo de Andalucía para pedir la inclusión.
+- **turismodealmeria.org** (turismo provincial, ya enlazado desde la guía
+  de Hestía): comprobar si tienen directorio de alojamiento propio y cómo
+  solicitar aparecer en él.
+- **Oficina de Turismo del Ayuntamiento de Vera** (Plaza Mayor, 1, Vera):
+  oficina física de gestión y promoción turística. Vale la pena una visita
+  o llamada para que incluyan Hestía en sus listados/folletos de
+  alojamiento recomendado del municipio, aparte de cualquier presencia web.
+
+### C. Directorios de nicho (apalancan diferenciadores reales de Hestía)
+
+- **BringFido.com**: directorio de alojamiento pet-friendly con más de
+  14.000 propiedades listadas a nivel internacional, muy usado por
+  viajeros que buscan específicamente alojamiento que admite mascotas. No
+  se encontró un proceso de alta público y claro por búsqueda: contactar
+  directamente para preguntar cómo añadir una propiedad.
+
+### D. Prensa de mayor autoridad (más difícil, sin garantía, igualmente vale la pena intentarlo)
+
+- **Forbes España**: ya publicaron un artículo editorial sobre Vera
+  ("Vera, un paraíso soleado en el corazón del Levante almeriense",
+  forbes.es/turismo/477244). No es un objetivo de backlink fácil ni
+  rápido, pero confirma que la zona ya interesa a medios de autoridad alta:
+  vale la pena tenerlo vigilado y, si surge la ocasión (una actualización
+  del artículo, un redactor que cubra la zona), ofrecer a Hestía como
+  fuente para una futura pieza.
+
+---
+
 ## 4 · Ejemplo de tanda de posts (Instagram), usando el kit de `strategy/redes/`
 
 Tres ejemplos generados siguiendo `strategy/redes/system-prompt.md` y
