@@ -5,4 +5,30 @@ Disallow: /data/prereservas.json
 Disallow: /data/dashboard-historico.json
 Disallow: /data/social-drafts.json
 
+# Rastreadores de IA: permitidos explícitamente a propósito (queremos que
+# ChatGPT, Claude, Perplexity y Gemini puedan citar Hestía en sus respuestas).
+User-agent: GPTBot
+Allow: /
+
+User-agent: OAI-SearchBot
+Allow: /
+
+User-agent: ChatGPT-User
+Allow: /
+
+User-agent: ClaudeBot
+Allow: /
+
+User-agent: Claude-User
+Allow: /
+
+User-agent: PerplexityBot
+Allow: /
+
+User-agent: Perplexity-User
+Allow: /
+
+User-agent: Google-Extended
+Allow: /
+
 Sitemap: https://www.hestiayourhome.com/sitemap.xml
