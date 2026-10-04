@@ -3431,6 +3431,10 @@ const PLACES = [
     name: 'Fiestas de San Joaquín',
     when: '20-22 de agosto',
     d: 'Feria con conciertos en el paseo marítimo y fuegos artificiales sobre el mar.'
+  }, {
+    name: 'Festival de la Gamba Roja',
+    when: 'último fin de semana de octubre',
+    d: 'Degustaciones y showcookings de gamba roja junto al puerto, con cocineros de la provincia y vino de la zona.'
   }],
   cat: 'town',
   lat: 37.1815,
@@ -3473,6 +3477,10 @@ const PLACES = [
     name: 'Festival de Flamenco y Música Tradicional',
     when: 'octubre',
     d: 'En diferentes localizaciones del casco histórico.'
+  }, {
+    name: 'Almerijazz',
+    when: 'finales de octubre a principios de noviembre',
+    d: 'Festival de jazz de referencia en Andalucía, con conciertos en el Teatro Apolo y la Plaza Vieja del casco histórico.'
   }],
   cat: 'town',
   lat: 36.8350,
