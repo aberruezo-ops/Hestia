@@ -8,26 +8,37 @@ ideas, es solo lo que se decidió dejar para después.
 
 ## Actualizar React 18 → 19
 
-**Surgió:** revisión de versiones de lo que usa la web en vivo (octubre 2026).
+**Surgió:** revisión de versiones de lo que usa la web en vivo (octubre
+2026). **Actualizado:** intento real de hacerlo (octubre 2026) descubrió
+un bloqueo de arquitectura, no solo de versión.
 
 **Estado actual:** React 18.3.1 + ReactDOM 18.3.1 (última versión de la
 rama 18.x, cargadas por CDN desde unpkg con fallback local en
 `docs/assets/react.development.js` / `react-dom.development.js`).
 
-**Por qué no se hizo ya:** es un cambio de versión mayor, no un parche.
-Puede alterar comportamientos sutiles (manejo de refs, warnings de act,
-APIs retiradas) y este sitio no tiene tests automáticos que lo detecten
-solos: build-jsx.js solo compila, no verifica comportamiento. Un bump
-silencioso se descubriría con bugs en producción, no antes.
+**Por qué no se hizo ya, y por qué ya no es un simple cambio de pin:**
+desde React 19 (confirmado con `19.3.0`, la versión estable real),
+**el propio equipo de React dejó de publicar builds UMD**
+(`unpkg.com/react@19/umd/...` da 404; el tarball de npm no tiene carpeta
+`umd/`). El sitio entero depende de ese formato: cada HTML carga React
+por `<script src="unpkg.com/react@18.3.1/umd/...">` con fallback local en
+el mismo formato, y todo el JSX compilado usa el global `React.createElement`
+sin imports. Sin build UMD, cambiar solo el número de versión deja
+`window.React`/`window.ReactDOM` sin definir y pone en blanco **todo el
+sitio** (home, los 3 apartamentos, reservas, admin). No es un bug a
+arreglar sobre la marcha: es una decisión de arquitectura.
 
-**Qué hace falta para hacerlo:**
-1. Subir el pin de versión en el `<script src="https://unpkg.com/react@...">` / `react-dom@...` de cada HTML.
-2. Sustituir `docs/assets/react.development.js` y `react-dom.development.js` (los fallback locales) por las copias de React 19.
-3. Repasar visualmente las páginas clave (home, los 3 apartamentos, /reservas, /p-edit) en desktop y móvil tras el cambio, con el smoke test (`node scripts/smoke-test.cjs`) como mínimo, no como único control.
-4. Vigilar especialmente: el calendario de reservas (mucho uso de refs y estado), el panel de admin (formularios complejos) y cualquier sitio que use `ReactDOM.createPortal` (lightbox, modales).
+**Qué hace falta para hacerlo (elegir una vía primero, no solo ejecutar):**
+1. **Migrar a ESM vía CDN** (ej. `esm.sh/react@19` + `esm.sh/react-dom@19/client`, `<script type="module">` + import maps) y adaptar `scripts/build-jsx.js` para que el JSX compile a imports en vez de depender del global `React` (cambia el preset de Babel de `runtime: 'classic'` a `runtime: 'automatic'`). Es la vía que React 19 sí soporta oficialmente, pero toca el pipeline de build y las ~25 páginas HTML, no solo un número de versión.
+2. **Quedarse en React 18.3.1** (sigue soportada, con builds UMD) hasta que haya tiempo para decidir y ejecutar la migración a ESM como proyecto propio.
+3. Descartado por riesgo: fabricar un wrapper UMD casero a partir del build CJS de React 19. No es un build oficial, no está probado por el equipo de React, y firmarlo como "la copia de React 19" en un sitio en producción sería un apaño poco fiable, no una solución.
+4. Una vez migrado (vía 1): repasar visualmente las páginas clave (home, los 3 apartamentos, /reservas, /p-edit) en desktop y móvil, con el smoke test (`node scripts/smoke-test.cjs`) como mínimo, no como único control. Vigilar especialmente el calendario de reservas, el panel de admin y cualquier uso de `ReactDOM.createPortal` (lightbox, modales).
 
-**Cuándo tiene sentido retomarlo:** cuando haya tiempo para hacerlo como
-tarea dedicada con revisión completa, no de pasada junto a otra cosa.
+**Cuándo tiene sentido retomarlo:** cuando el usuario decida explícitamente
+entre migrar a ESM (opción 1) o quedarse en React 18 por ahora (opción 2).
+No tiene sentido reintentarlo como "bump de versión" suelto: la próxima
+vez que se toque, ya hay que entrar sabiendo que es un cambio de pipeline
+de build, no solo de dependencia.
 
 ---
 
