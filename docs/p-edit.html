@@ -6,6 +6,13 @@
   <meta name="theme-color" content="#2A0F2E"/>
   <meta name="robots" content="noindex,nofollow,noarchive"/>
   <meta name="referrer" content="no-referrer"/>
+  <!-- GitHub Pages no deja fijar cabeceras HTTP reales; estas etiquetas son
+       lo único disponible para pedirle al navegador que no cachee este
+       shell de forma agresiva (el problema de fondo que causó la pantalla
+       de "Error loading components" con un hash de archivo ya borrado). -->
+  <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate"/>
+  <meta http-equiv="Pragma" content="no-cache"/>
+  <meta http-equiv="Expires" content="0"/>
   <meta name="apple-mobile-web-app-capable" content="yes"/>
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent"/>
   <meta name="apple-mobile-web-app-title" content="Hestía Admin"/>
