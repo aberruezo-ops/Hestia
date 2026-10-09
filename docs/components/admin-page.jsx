@@ -3063,7 +3063,7 @@ ${bodyInner}
 
     async function shot(elToShoot) {
       return await html2canvas(elToShoot, {
-        scale: SCALE, useCORS: true, allowTaint: true, backgroundColor: '#ffffff', logging: false
+        scale: SCALE, useCORS: true, backgroundColor: '#ffffff', logging: false
       });
     }
 
@@ -3084,13 +3084,27 @@ ${bodyInner}
 
     // El hero es el primer bloque, siempre en la página 1, altura fija (65mm
     // por CSS): medirlo aquí, en vez de darlo por hecho, calibra pxPerMm.
-    var heroCanvas = await shot(heroEl);
-    pxPerMm = (heroCanvas.height / SCALE) / 65;
-    placeCanvas(heroCanvas, 65);
+    // Si falla (p.ej. la foto no se pudo rasterizar en este navegador), el
+    // contrato sigue generándose sin cabecera en vez de no generarse nada:
+    // pxPerMm cae a un valor de referencia (96dpi ≈ 3.78 px/mm × SCALE).
+    try {
+      var heroCanvas = await shot(heroEl);
+      pxPerMm = (heroCanvas.height / SCALE) / 65;
+      placeCanvas(heroCanvas, 65);
+    } catch (heroErr) {
+      console.error('Cabecera omitida (no se pudo convertir a imagen):', heroErr);
+      pxPerMm = 3.78;
+      cursorY = MARG_TOP + 65;
+    }
 
     for (var bi = 0; bi < blocks.length; bi++) {
       var block = blocks[bi];
       if (!block || block.offsetHeight === 0) continue; // bloques vacíos (p ?? '' : '')
+      // Un bloque que falle al convertirse a imagen (p.ej. un canvas que el
+      // navegador se niega a exportar) no debe tirar todo el contrato: se
+      // salta ESE bloque y se sigue con el resto, en vez de dejar al
+      // huésped sin PDF por un único párrafo problemático.
+      try {
       var canvas = await shot(block);
       var hMm = (canvas.height / SCALE) / pxPerMm;
       var remaining = PAGE_H - MARG_BOT - cursorY;
@@ -3143,6 +3157,9 @@ ${bodyInner}
         placeCanvas(sliceCanvas, sliceHpx / pxPerMmScaled);
         offsetPx += sliceHpx;
         if (offsetPx < totalPx) newPage();
+      }
+      } catch (blockErr) {
+        console.error('Bloque ' + bi + ' omitido (no se pudo convertir a imagen):', blockErr);
       }
     }
 
