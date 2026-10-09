@@ -2935,6 +2935,7 @@ ${clausulaSegunda}
 <body>
 <div id="gen-bar">
   <span id="gen-status">${isEn ? 'Generating PDF…' : 'Generando PDF…'}</span>
+  <button id="gen-share" onclick="window.__hestiaExportPdf && window.__hestiaExportPdf()" style="display:none">${isEn ? '📤 Share / save PDF' : '📤 Compartir / guardar PDF'}</button>
   <button id="gen-fallback" onclick="window.print()" style="display:none">${isEn ? 'Save as PDF (Ctrl+P alternative)' : 'Guardar como PDF (alternativa Ctrl+P)'}</button>
 </div>
 
@@ -2967,6 +2968,33 @@ ${bodyInner}
   var APT   = ${JSON.stringify('Vera ' + a.shortName)};
   var META  = ${JSON.stringify(noches + ' noches · ' + huespedes + ' huéspedes')};
   var DATES = ${JSON.stringify(fechaEntradaStr + ' - ' + fechaSalidaStr)};
+  var pdf = null;
+
+  // En iOS/Android, pdf.save() de jsPDF a menudo no "descarga" nada visible
+  // (Safari abre el blob: en la propia pestaña sin indicar nada, o no hace
+  // nada perceptible): de ahí la queja de "veo el contrato pero no hay forma
+  // de exportarlo" en móvil. Si el navegador soporta compartir archivos
+  // (Web Share API, iOS/Android modernos), se abre la hoja nativa de
+  // compartir con el PDF ya adjunto, lista para WhatsApp/Mail/Mensajes.
+  // Si no, cae al guardado normal (funciona bien en escritorio).
+  async function exportPdf() {
+    if (!pdf) { window.print(); return; }
+    var blob = pdf.output('blob');
+    var file = null;
+    try { file = new File([blob], FILE, { type: 'application/pdf' }); } catch(e) {}
+    var canShareFile = file && navigator.canShare && navigator.canShare({ files: [file] });
+    if (canShareFile) {
+      try {
+        await navigator.share({ files: [file], title: FILE, text: APT + ' · ' + DATES });
+        document.getElementById('gen-status').textContent = ${JSON.stringify(isEn ? 'Shared.' : 'Compartido.')};
+        return;
+      } catch (e) {
+        // Usuario cancela la hoja de compartir, o falla: cae al guardado normal.
+      }
+    }
+    pdf.save(FILE);
+  }
+  window.__hestiaExportPdf = exportPdf;
 
   async function generate() {
     try { await document.fonts.ready; } catch(e) {}
@@ -3020,7 +3048,7 @@ ${bodyInner}
     // fija, más nítida que la anterior, igual en cualquier dispositivo.
     var SCALE = IS_MOBILE ? 2 : 2.5;
 
-    var pdf = new jspdf.jsPDF({ unit: 'mm', format: 'a4', orientation: 'portrait' });
+    pdf = new jspdf.jsPDF({ unit: 'mm', format: 'a4', orientation: 'portrait' });
     var cursorY = MARG_TOP;
     // Autocalibrado: el <meta viewport width=794> hace que 210mm equivalgan
     // a 794px CSS en cualquier dispositivo, pero medir la relación real a
@@ -3167,8 +3195,9 @@ ${bodyInner}
       pdf.text('${isEn ? 'Page' : 'Página'} ' + i + ' ${isEn ? 'of' : 'de'} ' + n, pW - 5, footY, { align: 'right' });
     }
 
-    pdf.save(FILE);
-    document.getElementById('gen-status').textContent = ${JSON.stringify(isEn ? 'PDF downloaded. You can close this tab or use Ctrl+P if you need to print it.' : 'PDF descargado, puedes cerrar esta pestaña o usar Ctrl+P si necesitas imprimirlo.')};
+    document.getElementById('gen-share').style.display = '';
+    await exportPdf();
+    document.getElementById('gen-status').textContent = ${JSON.stringify(isEn ? 'PDF ready. Use the "Share / save PDF" button above if nothing opened automatically.' : 'PDF listo. Usa el botón "Compartir / guardar PDF" de arriba si no se ha abierto nada automáticamente.')};
   }
 
   document.addEventListener('DOMContentLoaded', function() {
