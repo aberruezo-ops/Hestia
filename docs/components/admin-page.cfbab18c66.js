@@ -4059,11 +4059,18 @@ info@hestiayourhome.com · +34 620 316 370`;
     const [heroRaw, logoDataUrl, wmDataUrl] = await Promise.all([fetchDataUrl(aptInfo.heroPhoto), fetchDataUrl('assets/logo-hestia-brand.png'), fetchDataUrl('assets/logo-teal-transparent.png')]);
     const heroDataUrl = await cropHero(heroRaw, aptInfo.heroFocusY ?? 0.5);
 
-    // Write contract HTML to the already-opened window.
+    // Navega la ventana ya abierta a un Blob con el HTML, en vez de
+    // document.write(). document.write() deja la página en un estado "a
+    // medio cargar" sin navegación real, y en iOS Safari eso puede hacer
+    // que window.print() (el botón "Save as PDF") no haga absolutamente
+    // nada al pulsarlo. Con una navegación real a blob: la página se
+    // carga como cualquier otra, con su propio contexto de impresión.
     const html = buildContractHTML(heroDataUrl, logoDataUrl, wmDataUrl);
-    w.document.open();
-    w.document.write(html);
-    w.document.close();
+    const blob = new Blob([html], {
+      type: 'text/html'
+    });
+    const blobUrl = URL.createObjectURL(blob);
+    w.location.href = blobUrl;
     w.focus();
 
     // Guarda los datos del huésped editados aquí de vuelta en la reserva.
