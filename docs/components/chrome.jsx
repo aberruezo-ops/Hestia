@@ -6,21 +6,21 @@ const Topbar = ({ lang, setLang }) => (
   <>
     <div className="topbar on-dark">
       <div className="contacts">
-        <a href="https://wa.me/34620316370" className={`topbar-link${lang === 'es' ? ' tl-active' : ''}`} target="_blank" rel="noopener" aria-label="WhatsApp Alex">
+        <a href="https://wa.me/34620316370" className={`topbar-link${lang === 'es' ? ' tl-active' : ''}`} target="_blank" rel="noopener" aria-label="Alex, Español, WhatsApp +34 620 316 370">
           <span className={`tl-dot${lang === 'es' ? ' tl-dot--on' : ''}`}/>
           <span className="tl-who hide-mobile">Alex</span>
           <span className="tl-mode hide-mobile">🇪🇸 Español</span>
           <span className="tl-num">+34 620 316 370</span>
         </a>
         <span className="sep">·</span>
-        <a href="https://wa.me/34654138251" className={`topbar-link${lang === 'en' ? ' tl-active' : ''}`} target="_blank" rel="noopener" aria-label="WhatsApp Fran">
+        <a href="https://wa.me/34654138251" className={`topbar-link${lang === 'en' ? ' tl-active' : ''}`} target="_blank" rel="noopener" aria-label="Fran, English, WhatsApp +34 654 138 251">
           <span className={`tl-dot${lang === 'en' ? ' tl-dot--on' : ''}`}/>
           <span className="tl-who hide-mobile">Fran</span>
           <span className="tl-mode hide-mobile">🇬🇧 English</span>
           <span className="tl-num">+34 654 138 251</span>
         </a>
         <span className="sep hide-mobile">·</span>
-        <a href="mailto:info@hestiayourhome.com" className="topbar-link email hide-mobile" aria-label="Email">
+        <a href="mailto:info@hestiayourhome.com" className="topbar-link email hide-mobile">
           info@hestiayourhome.com
         </a>
       </div>
@@ -296,7 +296,7 @@ const Header = ({ mode, scrolled, lang }) => {
           <NavLink href={NAV_PAGES.estanciasLargas}>{t.nav[9]}</NavLink>
         </nav>
         <div className="brand-center">
-          <a href="/" className="brand-lockup" aria-label="Hestía, Inicio">
+          <a href="/" className="brand-lockup" aria-label={lang === 'es' ? 'Hestía, your home, inicio' : 'Hestía, your home, homepage'}>
             <span className="hestia-logo-mark" aria-hidden="true">
               <img decoding="async" src="assets/logo-teal-transparent.png" alt="" className="hestia-logo" width="600" height="600"/>
             </span>
@@ -589,7 +589,7 @@ const Cookies = ({ lang }) => {
   };
   return (
     <div className={`cookies ${visible ? 'show' : ''}`}>
-      <h5>{lang === 'es' ? 'Cookies necesarias' : 'Essential cookies'}</h5>
+      <p className="cookies-title">{lang === 'es' ? 'Cookies necesarias' : 'Essential cookies'}</p>
       <p>
         {lang === 'es'
           ? <>Usamos una cookie de preferencia (idioma). Las visitas se miden de forma anónima y sin cookies. <a href="cookies.html">Más info</a>.</>

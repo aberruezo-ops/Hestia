@@ -8208,7 +8208,16 @@ const WidgetStack = ({
   const hidden = !pastHero || searchActive || guideOpen;
   const bookHidden = hidden || checkerInView;
   const onReservas = typeof window !== 'undefined' && window.location.pathname.includes('reservas');
+
+  // React 18 no reconoce `inert` como prop de atributo (llega al JSX pero
+  // nunca se escribe en el DOM); se fuerza como propiedad IDL directamente,
+  // si no el panel queda invisible pero tabulable con el teclado.
+  const stackRef = React.useRef(null);
+  React.useEffect(() => {
+    if (stackRef.current) stackRef.current.inert = hidden;
+  }, [hidden]);
   return /*#__PURE__*/React.createElement(React.Fragment, null, /*#__PURE__*/React.createElement("div", {
+    ref: stackRef,
     className: `widget-stack ${hidden ? 'is-hidden' : ''}`,
     "aria-hidden": hidden
   }, /*#__PURE__*/React.createElement(WidgetWeather, {

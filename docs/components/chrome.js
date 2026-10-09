@@ -16,7 +16,7 @@ const Topbar = ({
   className: `topbar-link${lang === 'es' ? ' tl-active' : ''}`,
   target: "_blank",
   rel: "noopener",
-  "aria-label": "WhatsApp Alex"
+  "aria-label": "Alex, Español, WhatsApp +34 620 316 370"
 }, /*#__PURE__*/React.createElement("span", {
   className: `tl-dot${lang === 'es' ? ' tl-dot--on' : ''}`
 }), /*#__PURE__*/React.createElement("span", {
@@ -32,7 +32,7 @@ const Topbar = ({
   className: `topbar-link${lang === 'en' ? ' tl-active' : ''}`,
   target: "_blank",
   rel: "noopener",
-  "aria-label": "WhatsApp Fran"
+  "aria-label": "Fran, English, WhatsApp +34 654 138 251"
 }, /*#__PURE__*/React.createElement("span", {
   className: `tl-dot${lang === 'en' ? ' tl-dot--on' : ''}`
 }), /*#__PURE__*/React.createElement("span", {
@@ -45,8 +45,7 @@ const Topbar = ({
   className: "sep hide-mobile"
 }, "·"), /*#__PURE__*/React.createElement("a", {
   href: "mailto:info@hestiayourhome.com",
-  className: "topbar-link email hide-mobile",
-  "aria-label": "Email"
+  className: "topbar-link email hide-mobile"
 }, "info@hestiayourhome.com")), /*#__PURE__*/React.createElement("div", {
   className: "lang",
   role: "group",
@@ -387,7 +386,7 @@ const Header = ({
   }, /*#__PURE__*/React.createElement("a", {
     href: "/",
     className: "brand-lockup",
-    "aria-label": "Hestía, Inicio"
+    "aria-label": lang === 'es' ? 'Hestía, your home, inicio' : 'Hestía, your home, homepage'
   }, /*#__PURE__*/React.createElement("span", {
     className: "hestia-logo-mark",
     "aria-hidden": "true"
@@ -772,7 +771,9 @@ const Cookies = ({
   };
   return /*#__PURE__*/React.createElement("div", {
     className: `cookies ${visible ? 'show' : ''}`
-  }, /*#__PURE__*/React.createElement("h5", null, lang === 'es' ? 'Cookies necesarias' : 'Essential cookies'), /*#__PURE__*/React.createElement("p", null, lang === 'es' ? /*#__PURE__*/React.createElement(React.Fragment, null, "Usamos una cookie de preferencia (idioma). Las visitas se miden de forma anónima y sin cookies. ", /*#__PURE__*/React.createElement("a", {
+  }, /*#__PURE__*/React.createElement("p", {
+    className: "cookies-title"
+  }, lang === 'es' ? 'Cookies necesarias' : 'Essential cookies'), /*#__PURE__*/React.createElement("p", null, lang === 'es' ? /*#__PURE__*/React.createElement(React.Fragment, null, "Usamos una cookie de preferencia (idioma). Las visitas se miden de forma anónima y sin cookies. ", /*#__PURE__*/React.createElement("a", {
     href: "cookies.html"
   }, "Más info"), ".") : /*#__PURE__*/React.createElement(React.Fragment, null, "We use a preference cookie (language). Visits are measured anonymously and without cookies. ", /*#__PURE__*/React.createElement("a", {
     href: "cookies.html"
