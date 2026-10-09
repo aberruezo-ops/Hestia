@@ -60,14 +60,36 @@
     }
   }
 
+  // Si falla la carga de un componente, casi siempre es porque ESTA MISMA
+  // página (p-edit.html) se sirvió desde una caché vieja del dispositivo,
+  // con nombres de archivo con hash que ya no existen (se renombran en
+  // cada build). Muy frecuente en el acceso "Añadir a pantalla de inicio"
+  // de iOS, que cachea el shell de forma más agresiva que Safari normal y
+  // no tiene botón de recargar. En vez de dejar una pantalla roja muerta,
+  // se intenta UNA vez recargar el propio documento con un parámetro que
+  // rompe la caché; si sigue fallando tras ese reintento, ahí sí se
+  // muestra el error (evita el bucle infinito si el fallo es de verdad).
   loadComponents().catch(err => {
+    console.error(err);
+    const RELOAD_KEY = 'hestia-admin-reload-once';
+    if (!sessionStorage.getItem(RELOAD_KEY)) {
+      sessionStorage.setItem(RELOAD_KEY, '1');
+      location.replace(location.pathname + '?_r=' + Date.now());
+      return;
+    }
+    sessionStorage.removeItem(RELOAD_KEY);
     const _errRoot = document.getElementById('root');
     const _errDiv = document.createElement('div');
     _errDiv.style.cssText = 'padding:40px;font-family:sans-serif;color:#c00';
     _errDiv.innerHTML = '<b>Error loading components:</b><br>';
     _errDiv.appendChild(document.createTextNode(err.message));
+    const _retryBtn = document.createElement('button');
+    _retryBtn.textContent = 'Reintentar';
+    _retryBtn.style.cssText = 'margin-top:16px;padding:8px 18px;font-size:14px;cursor:pointer';
+    _retryBtn.onclick = () => location.replace(location.pathname + '?_r=' + Date.now());
+    _errDiv.appendChild(document.createElement('br'));
+    _errDiv.appendChild(_retryBtn);
     _errRoot.replaceChildren(_errDiv);
-    console.error(err);
   });
 </script>
 
