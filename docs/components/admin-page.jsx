@@ -3290,6 +3290,18 @@ info@hestiayourhome.com · +34 620 316 370`;
 
       <div className="ct-form">
         <fieldset>
+          <legend>Idioma del contrato</legend>
+          <div className="pe-grid">
+            {[['es', '🇪🇸 Español'], ['en', '🇬🇧 English']].map(([id, label]) => (
+              <label key={id} className={`ct-radio ${lang === id ? 'is-active' : ''}`}>
+                <input type="radio" name="ct-lang" value={id} checked={lang === id} onChange={() => setLang(id)} />
+                <span className="ct-radio-name">{label}</span>
+              </label>
+            ))}
+          </div>
+        </fieldset>
+
+        <fieldset>
           <legend>Apartamento</legend>
           <div className="pe-grid">
             {Object.entries(APT_CONTRACT_DATA).map(([id, info]) => (
@@ -3297,18 +3309,6 @@ info@hestiayourhome.com · +34 620 316 370`;
                 <input type="radio" name="apt" value={id} checked={apt === id} onChange={() => setApt(id)} />
                 <span className="ct-radio-name">{info.name}</span>
                 <span className="ct-radio-meta">Plaza {info.plazaGaraje}</span>
-              </label>
-            ))}
-          </div>
-        </fieldset>
-
-        <fieldset>
-          <legend>Idioma del contrato</legend>
-          <div className="pe-grid">
-            {[['es', '🇪🇸 Español'], ['en', '🇬🇧 English']].map(([id, label]) => (
-              <label key={id} className={`ct-radio ${lang === id ? 'is-active' : ''}`}>
-                <input type="radio" name="ct-lang" value={id} checked={lang === id} onChange={() => setLang(id)} />
-                <span className="ct-radio-name">{label}</span>
               </label>
             ))}
           </div>
@@ -3361,7 +3361,7 @@ info@hestiayourhome.com · +34 620 316 370`;
 
         <div className="ct-actions">
           <button type="button" className="pe-btn pe-btn-primary" onClick={onGenerar} disabled={!formOk()}>
-            📨 Generar contrato y abrir correo
+            📨 Generar contrato en {lang === 'en' ? 'inglés' : 'español'} y abrir correo
           </button>
           {canSaveToReserva && (
             <button type="button" className="pe-btn pe-btn-ghost" onClick={saveToReserva} title="Guarda los datos del huésped en la reserva sin generar el contrato">
