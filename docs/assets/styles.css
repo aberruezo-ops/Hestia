@@ -361,7 +361,7 @@ p  { line-height: 1.65; font-weight: 300; }
   88.89% { background: #2A0F2E; box-shadow: 0 0 6px rgba(123,59,107,.8); }
 }
 .topbar-link.email .tl-dot { animation: none; background: var(--sol-h); }
-.tl-num { opacity: 0.65; font-size: 11px; white-space: nowrap; }
+.tl-num { font-size: 11px; white-space: nowrap; }
 .topbar-link:focus-visible {
   opacity: 1;
   color: var(--sol-lt);
@@ -1849,7 +1849,7 @@ body.apt-bar-shown .cookies {
   font-weight: 600;
   flex-shrink: 0;
 }
-.cookies h5 {
+.cookies .cookies-title {
   font-family: var(--serif);
   font-size: 16px;
   font-weight: 500;
@@ -3461,7 +3461,6 @@ body.apt-bar-shown .cookies {
   font-size: 11px;
   letter-spacing: .12em;
   text-transform: uppercase;
-  opacity: 0.75;
 }
 
 /* ============================================================
