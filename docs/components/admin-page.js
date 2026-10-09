@@ -3920,7 +3920,10 @@ ${bodyInner}
   document.addEventListener('DOMContentLoaded', function() {
     generate().catch(function(err) {
       console.error('PDF generation error:', err);
-      document.getElementById('gen-status').textContent = ${JSON.stringify(isEn ? 'Error generating the PDF. Use Ctrl+P as an alternative.' : 'Error al generar el PDF. Usa Ctrl+P como alternativa.')};
+      // Se muestra el error real (no un mensaje genérico): en móvil no hay
+      // forma fácil de abrir la consola para ver qué ha fallado de verdad.
+      var detail = (err && (err.name || err.message)) ? ((err.name || 'Error') + ': ' + (err.message || '')) : String(err);
+      document.getElementById('gen-status').textContent = ${JSON.stringify(isEn ? 'Error generating the PDF: ' : 'Error al generar el PDF: ')} + detail + ${JSON.stringify(isEn ? '. Use Ctrl+P as an alternative.' : '. Usa Ctrl+P como alternativa.')};
       document.getElementById('gen-fallback').style.display = '';
     });
   });
