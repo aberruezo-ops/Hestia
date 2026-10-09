@@ -3402,8 +3402,10 @@ ${clausulaSegunda}
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400&family=Lora:ital,wght@0,400;0,500;0,600;1,400&display=swap" rel="stylesheet">
-<script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"><\/script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.2/jspdf.umd.min.js"><\/script>
+<!-- html2canvas y jsPDF se cargan con reintento por código (ver el primer
+     bloque de <script> del body): si cdnjs falla (red del huésped, algún
+     bloqueador de contenido en Safari...), se reintenta desde jsDelivr en
+     vez de fallar con un "Can't find variable: jspdf" sin explicación. -->
 <style>
   * { box-sizing: border-box; -webkit-print-color-adjust: exact !important; print-color-adjust: exact !important; }
   @page { size: A4; margin: 0; }
@@ -3687,6 +3689,42 @@ ${bodyInner}
   var DATES = ${JSON.stringify(fechaEntradaStr + ' - ' + fechaSalidaStr)};
   var pdf = null;
 
+  // Carga con reintento desde un CDN alternativo (jsDelivr) si el primero
+  // (cdnjs) falla: red del huésped, un bloqueador de contenido en Safari,
+  // o cualquier corte puntual. Antes, un fallo aquí se traducía en un
+  // "ReferenceError: Can't find variable: jspdf" sin ninguna pista de qué
+  // había pasado de verdad.
+  function loadScriptFallback(urls) {
+    return new Promise(function(resolve, reject) {
+      var i = 0;
+      function tryNext() {
+        if (i >= urls.length) { reject(new Error('No se pudo cargar ' + urls[0] + ' (ni su alternativa)')); return; }
+        var s = document.createElement('script');
+        s.src = urls[i++];
+        s.onload = resolve;
+        s.onerror = tryNext;
+        document.head.appendChild(s);
+      }
+      tryNext();
+    });
+  }
+  function ensureLibs() {
+    var jobs = [];
+    if (typeof window.html2canvas === 'undefined') {
+      jobs.push(loadScriptFallback([
+        'https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js',
+        'https://cdn.jsdelivr.net/npm/html2canvas@1.4.1/dist/html2canvas.min.js'
+      ]));
+    }
+    if (typeof window.jspdf === 'undefined') {
+      jobs.push(loadScriptFallback([
+        'https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.2/jspdf.umd.min.js',
+        'https://cdn.jsdelivr.net/npm/jspdf@2.5.2/dist/jspdf.umd.min.js'
+      ]));
+    }
+    return Promise.all(jobs);
+  }
+
   // En iOS/Android, pdf.save() de jsPDF a menudo no "descarga" nada visible
   // (Safari abre el blob: en la propia pestaña sin indicar nada, o no hace
   // nada perceptible): de ahí la queja de "veo el contrato pero no hay forma
@@ -3714,6 +3752,7 @@ ${bodyInner}
   window.__hestiaExportPdf = exportPdf;
 
   async function generate() {
+    await ensureLibs();
     try { await document.fonts.ready; } catch(e) {}
     var pdfContentEl = document.getElementById('pdf-content');
     // Espera a que TODAS las imágenes (sobre todo el hero de la primera página)
