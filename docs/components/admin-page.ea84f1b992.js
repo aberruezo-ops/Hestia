@@ -4000,7 +4000,20 @@ info@hestiayourhome.com · +34 620 316 370`;
     }
   }, "No se han cargado los datos de los titulares desde ", /*#__PURE__*/React.createElement("code", null, "hestia-data/titulares.json"), ". El contrato saldría con huecos marcados en rojo donde van el nombre, el DNI, el domicilio y el IBAN. Comprueba que el token tiene acceso al repositorio privado y que el fichero existe."), /*#__PURE__*/React.createElement("div", {
     className: "ct-form"
-  }, /*#__PURE__*/React.createElement("fieldset", null, /*#__PURE__*/React.createElement("legend", null, "Apartamento"), /*#__PURE__*/React.createElement("div", {
+  }, /*#__PURE__*/React.createElement("fieldset", null, /*#__PURE__*/React.createElement("legend", null, "Idioma del contrato"), /*#__PURE__*/React.createElement("div", {
+    className: "pe-grid"
+  }, [['es', '🇪🇸 Español'], ['en', '🇬🇧 English']].map(([id, label]) => /*#__PURE__*/React.createElement("label", {
+    key: id,
+    className: `ct-radio ${lang === id ? 'is-active' : ''}`
+  }, /*#__PURE__*/React.createElement("input", {
+    type: "radio",
+    name: "ct-lang",
+    value: id,
+    checked: lang === id,
+    onChange: () => setLang(id)
+  }), /*#__PURE__*/React.createElement("span", {
+    className: "ct-radio-name"
+  }, label))))), /*#__PURE__*/React.createElement("fieldset", null, /*#__PURE__*/React.createElement("legend", null, "Apartamento"), /*#__PURE__*/React.createElement("div", {
     className: "pe-grid"
   }, Object.entries(APT_CONTRACT_DATA).map(([id, info]) => /*#__PURE__*/React.createElement("label", {
     key: id,
@@ -4015,20 +4028,7 @@ info@hestiayourhome.com · +34 620 316 370`;
     className: "ct-radio-name"
   }, info.name), /*#__PURE__*/React.createElement("span", {
     className: "ct-radio-meta"
-  }, "Plaza ", info.plazaGaraje))))), /*#__PURE__*/React.createElement("fieldset", null, /*#__PURE__*/React.createElement("legend", null, "Idioma del contrato"), /*#__PURE__*/React.createElement("div", {
-    className: "pe-grid"
-  }, [['es', '🇪🇸 Español'], ['en', '🇬🇧 English']].map(([id, label]) => /*#__PURE__*/React.createElement("label", {
-    key: id,
-    className: `ct-radio ${lang === id ? 'is-active' : ''}`
-  }, /*#__PURE__*/React.createElement("input", {
-    type: "radio",
-    name: "ct-lang",
-    value: id,
-    checked: lang === id,
-    onChange: () => setLang(id)
-  }), /*#__PURE__*/React.createElement("span", {
-    className: "ct-radio-name"
-  }, label))))), /*#__PURE__*/React.createElement("fieldset", null, /*#__PURE__*/React.createElement("legend", null, "Datos del huésped"), /*#__PURE__*/React.createElement("div", {
+  }, "Plaza ", info.plazaGaraje))))), /*#__PURE__*/React.createElement("fieldset", null, /*#__PURE__*/React.createElement("legend", null, "Datos del huésped"), /*#__PURE__*/React.createElement("div", {
     className: "pe-grid"
   }, /*#__PURE__*/React.createElement("div", {
     className: "pe-field"
@@ -4171,7 +4171,7 @@ info@hestiayourhome.com · +34 620 316 370`;
     className: "pe-btn pe-btn-primary",
     onClick: onGenerar,
     disabled: !formOk()
-  }, "📨 Generar contrato y abrir correo"), canSaveToReserva && /*#__PURE__*/React.createElement("button", {
+  }, "📨 Generar contrato en ", lang === 'en' ? 'inglés' : 'español', " y abrir correo"), canSaveToReserva && /*#__PURE__*/React.createElement("button", {
     type: "button",
     className: "pe-btn pe-btn-ghost",
     onClick: saveToReserva,
