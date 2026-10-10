@@ -8423,6 +8423,14 @@ const TravelerRegistryTab = () => {
   };
 
   const fmtWhen = (iso) => { try { return new Date(iso).toLocaleString('es-ES', { dateStyle: 'medium', timeStyle: 'short' }); } catch (_) { return iso; } };
+  // El token lleva la fecha de entrada codificada (<apt>-<YYYYMMDD>-<random>),
+  // pero en crudo ("vm-20271001-ab3f9") no se identifica a simple vista: se
+  // extrae para mostrarla formateada y para saber si la estancia ya pasó.
+  const _tokenEntradaIso = (token) => {
+    const m = /-(\d{4})(\d{2})(\d{2})-/.exec(token || '');
+    return m ? `${m[1]}-${m[2]}-${m[3]}` : null;
+  };
+  const todayIso = new Date().toISOString().slice(0, 10);
 
   return (
     <div className="pe-card">
@@ -8459,20 +8467,28 @@ const TravelerRegistryTab = () => {
 
       {/* El token lleva la fecha de entrada codificada (<apt>-<YYYYMMDD>-<random>,
           ver AccessLinkButton más arriba): orden por fecha de estancia, más reciente primero. */}
-      {regs && [...regs].sort((a, b) => ((b.token || '').split('-')[1] || '').localeCompare((a.token || '').split('-')[1] || '')).map((reg, i) => {
-        const isOpen = open[reg.token] ?? (i === 0);
+      {regs && [...regs].sort((a, b) => ((b.token || '').split('-')[1] || '').localeCompare((a.token || '').split('-')[1] || '')).map((reg) => {
         const aptId = (reg.token || '').split('-')[0];
         const aptName = APT_NAMES[aptId];
         const holder = reg.travelers && reg.travelers[0];
         const holderName = holder ? [holder.nombre, holder.apellido1, holder.apellido2].filter(Boolean).join(' ') : '';
+        const entradaIso = _tokenEntradaIso(reg.token);
+        const isPast = !!entradaIso && entradaIso < todayIso;
+        // Las ya pasadas van plegadas por defecto (se identifican igual por
+        // la fecha y el chip "Pasada" en la cabecera, sin ocupar sitio).
+        const isOpen = open[reg.token] ?? !isPast;
         return (
-          <div key={reg.token} className="reg-admin-card">
+          <div key={reg.token} className={`reg-admin-card${isPast ? ' is-past' : ''}`}>
             <button type="button" className="reg-admin-head" onClick={() => setOpen(p => ({ ...p, [reg.token]: !isOpen }))}>
               <span className="reg-admin-who">
                 {aptName && <span className="reg-admin-apt-chip" style={{ background: APT_COLOR[aptId], color: APT_TEXT[aptId] }}>{aptName}</span>}
                 <strong className="reg-admin-holder">{holderName || 'Sin titular aún'}</strong>
               </span>
-              <span className="reg-admin-token">{reg.token}</span>
+              <span className="reg-admin-date">
+                {entradaIso ? `Entrada ${fmtDate(entradaIso)}` : reg.token}
+                {isPast && <span className="reg-admin-past-chip">Pasada</span>}
+              </span>
+              {entradaIso && <span className="reg-admin-token" title="Token del enlace de registro">{reg.token}</span>}
               <span className="reg-admin-meta">{(reg.travelers || []).length} viajero(s) · {fmtWhen(reg.submittedAt)}</span>
               <span aria-hidden="true">{isOpen ? '▾' : '▸'}</span>
             </button>
