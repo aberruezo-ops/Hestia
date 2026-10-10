@@ -2360,8 +2360,9 @@ const buildContractHTML = (heroDataUrl, logoDataUrl, wmDataUrl) => {
       ? (u === 'noche' ? 'per night' : u === 'estancia' ? 'per stay' : u === 'hora' ? 'per hour' : 'per ' + u)
       : (u === 'noche' ? 'por noche' : u === 'estancia' ? 'por estancia' : u === 'hora' ? 'por hora' : 'por ' + u);
     const tablaExtras = extras.map(e => {
-      const labelClean = (e.label_es || '').split(' · ')[0];
-      const detail = (e.label_es || '').split(' · ').slice(1).join(' · ');
+      const label = isEn ? (e.label_en || e.label_es) : e.label_es;
+      const labelClean = (label || '').split(' · ')[0];
+      const detail = (label || '').split(' · ').slice(1).join(' · ');
       return `<tr>
         <td>${labelClean}${detail ? ` <span class="ed">· ${detail}</span>` : ''}</td>
         <td class="num">${e.price} €</td>

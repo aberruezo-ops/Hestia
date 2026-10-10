@@ -3100,8 +3100,9 @@ const ContractTab = ({
     const bloqueAccesibilidad = a.bloqueAccesibilidad ? isEn ? `\n      <p>Hestía allows access to the dwelling from the garage with almost no steps (no more than two), but not from the main entrance, where there are approximately 6 steps. Inside Hestía, access to the terrace has a raised window frame, and the shower and bathtub are not adapted for people with reduced mobility, so assistance would be required.</p>` : `\n      <p>Hestía permite acceder a la vivienda desde el garaje sin apenas escalones (no más de dos), pero no desde el portal desde donde existen unos 6 escalones aproximadamente. Dentro de Hestía, el acceso a la terraza tiene el marco de la ventana y la ducha y la bañera no están preparadas para personas con movilidad reducida, por lo que requerirían ayuda.</p>` : '';
     const _extraUnit = u => isEn ? u === 'noche' ? 'per night' : u === 'estancia' ? 'per stay' : u === 'hora' ? 'per hour' : 'per ' + u : u === 'noche' ? 'por noche' : u === 'estancia' ? 'por estancia' : u === 'hora' ? 'por hora' : 'por ' + u;
     const tablaExtras = extras.map(e => {
-      const labelClean = (e.label_es || '').split(' · ')[0];
-      const detail = (e.label_es || '').split(' · ').slice(1).join(' · ');
+      const label = isEn ? e.label_en || e.label_es : e.label_es;
+      const labelClean = (label || '').split(' · ')[0];
+      const detail = (label || '').split(' · ').slice(1).join(' · ');
       return `<tr>
         <td>${labelClean}${detail ? ` <span class="ed">· ${detail}</span>` : ''}</td>
         <td class="num">${e.price} €</td>
