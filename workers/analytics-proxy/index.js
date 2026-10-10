@@ -22,6 +22,22 @@
 //                              Requiere READ_SECRET. Cacheado 10 min en KV;
 //                              &fresh=1 lo salta.
 //
+// Esquema de claves en KV (importante para no reintroducir el bug de abajo):
+//   day:{YYYY-MM-DD}      → UN json por día con TODO lo de ese día (eventos
+//                           del embudo, visitas, páginas vistas por ruta,
+//                           visitas por canal). /stats con days=30 solo
+//                           necesita leer 30 claves (una por día), no una
+//                           por cada combinación de evento/ruta/canal × día.
+//   evsrc:{event}         → json { canal: contador }, acumulado histórico
+//                           (no por día) para los eventos de SRC_TRACKED_EVENTS.
+//   camp:{YYYY-MM}:{slug} → contador simple por campaña y mes.
+//   rl:{ip}               → rate limit de POST /e y /pv.
+// NUNCA vuelvas a una clave por evento+día ni por canal+día: con 30 días de
+// rango, el propio /stats dispara cientos de subpeticiones a KV en una sola
+// petición y Cloudflare la mata (límite de subpeticiones por invocación,
+// 50 en el plan Bundled/gratuito), con un error interno que no lleva CORS:
+// el navegador lo ve como "Load failed" sin ninguna pista de qué ha pasado.
+//
 // KV namespace requerido (wrangler kv namespace create EVENTS_KV):
 //   EVENTS_KV
 // Secreto requerido para leer /stats (wrangler secret put READ_SECRET):
@@ -66,6 +82,24 @@ const monthKey = (d = new Date()) => d.toISOString().slice(0, 7);
 const prevMonthKey = () => { const d = new Date(); d.setUTCDate(1); d.setUTCMonth(d.getUTCMonth() - 1); return monthKey(d); };
 const inc = (kv, key, ttl = 400 * 86400) =>
   kv.get(key).then(cur => kv.put(key, String((parseInt(cur || '0', 10) || 0) + 1), { expirationTtl: ttl }));
+
+// Objeto vacío de un día en la clave consolidada day:{YYYY-MM-DD} (ver
+// comentario de cabecera). ev/pv/vsrc son mapas nombre→contador.
+const emptyDay = () => ({ ev: {}, vis: 0, pvday: 0, pv: {}, vsrc: {} });
+
+// Lee-modifica-escribe UNA clave JSON. `mutate` recibe el objeto actual (o
+// `fallback()` si no existía) y lo modifica in-place. Como con `inc`, no es
+// atómico entre peticiones simultáneas (dos visitas al mismo tiempo pueden
+// perder un incremento), aceptable para contadores de analítica, no para
+// datos que tengan que cuadrar exactos. Por eso cada ruta hace UNA sola
+// llamada a esto por clave y request: dos llamadas en paralelo a la misma
+// clave dentro de la misma petición sí se pisarían entre sí con seguridad.
+async function updateJson(kv, key, mutate, fallback, ttl = 400 * 86400) {
+  const cur = (await kv.get(key, 'json')) || fallback();
+  mutate(cur);
+  await kv.put(key, JSON.stringify(cur), { expirationTtl: ttl });
+}
+
 async function listAll(kv, prefix) {
   const names = [];
   let cursor;
@@ -217,20 +251,20 @@ export default {
       try { d = await request.json(); } catch (_) {}
       const name = String(d.name || '');
       if (FUNNEL_EVENTS.includes(name)) {
-        const evKey = `ev:${todayKey()}:${name}`;
         const writes = [
-          env.EVENTS_KV.get(evKey).then(cur =>
-            env.EVENTS_KV.put(evKey, String((parseInt(cur || '0', 10)) + 1), { expirationTtl: 400 * 86400 })),
+          updateJson(env.EVENTS_KV, `day:${todayKey()}`, day => {
+            day.ev[name] = (day.ev[name] || 0) + 1;
+          }, emptyDay),
         ];
         // Contador acumulado por canal de origen (sin fecha, todo el histórico):
         // solo para los eventos que responden a "qué canal trae tráfico que
-        // convierte", y sin desglose diario para no disparar el número de
-        // lecturas/escrituras a KV que hace falta luego en /stats.
+        // convierte", y en una sola clave por evento (no una por canal) para
+        // no disparar el número de lecturas que hace falta luego en /stats.
         if (SRC_TRACKED_EVENTS.includes(name)) {
           const src = SOURCES.includes(d.src) ? d.src : 'other';
-          const srcKey = `evsrc:${name}:${src}`;
-          writes.push(env.EVENTS_KV.get(srcKey).then(cur =>
-            env.EVENTS_KV.put(srcKey, String((parseInt(cur || '0', 10)) + 1), { expirationTtl: 400 * 86400 })));
+          writes.push(updateJson(env.EVENTS_KV, `evsrc:${name}`, obj => {
+            obj[src] = (obj[src] || 0) + 1;
+          }, () => ({})));
         }
         await Promise.all(writes);
       }
@@ -259,11 +293,24 @@ export default {
       if (path === '/index.html') path = '/';
       if (!PV_PATH_RE.test(path)) return new Response(null, { status: 204, headers: CORS });
 
-      const day = todayKey();
-      const writes = [inc(env.EVENTS_KV, `pv:${day}:${path}`), inc(env.EVENTS_KV, `pvday:${day}`)];
-      if (d.first === true) {
-        const src = SOURCES.includes(d.src) ? d.src : 'other';
-        writes.push(inc(env.EVENTS_KV, `vis:${day}`), inc(env.EVENTS_KV, `vsrc:${day}:${src}`));
+      const dayKeyStr = todayKey();
+      const isFirst = d.first === true;
+      const src = SOURCES.includes(d.src) ? d.src : 'other';
+      // Una sola lectura-modificación-escritura de la clave del día (ver
+      // updateJson): meter aquí el pageview Y, si aplica, la visita evita que
+      // dos llamadas en paralelo a la MISMA clave dentro de esta petición se
+      // pisen entre sí.
+      const writes = [
+        updateJson(env.EVENTS_KV, `day:${dayKeyStr}`, day => {
+          day.pv[path] = (day.pv[path] || 0) + 1;
+          day.pvday += 1;
+          if (isFirst) {
+            day.vis += 1;
+            day.vsrc[src] = (day.vsrc[src] || 0) + 1;
+          }
+        }, emptyDay),
+      ];
+      if (isFirst) {
         const camp = String(d.campaign || '').toLowerCase();
         if (CAMPAIGN_RE.test(camp)) writes.push(inc(env.EVENTS_KV, `camp:${monthKey()}:${camp}`));
       }
@@ -287,51 +334,53 @@ export default {
       const dates = Array.from({ length: days }, (_, i) =>
         new Date(Date.now() - i * 86400000).toISOString().slice(0, 10));
 
+      // UNA lectura por día (clave day:{fecha}), no una por cada combinación
+      // de evento/ruta/canal × día: con days=30 eso eran 500+ subpeticiones a
+      // KV en una sola invocación, por encima del límite de Cloudflare
+      // (quedaba un "Load failed" en el navegador sin ninguna pista). Ver
+      // comentario de cabecera del archivo.
+      const dayBlobs = await Promise.all(dates.map(d => env.EVENTS_KV.get(`day:${d}`, 'json')));
+
       const totals = {};
       const byDay = {};
-      await Promise.all(FUNNEL_EVENTS.map(async name => {
-        totals[name] = 0;
-        const perDay = await Promise.all(dates.map(d => env.EVENTS_KV.get(`ev:${d}:${name}`)));
-        perDay.forEach((v, i) => {
-          const n = parseInt(v || '0', 10) || 0;
+      FUNNEL_EVENTS.forEach(name => { totals[name] = 0; });
+      dates.forEach((d, i) => {
+        const day = dayBlobs[i] || emptyDay();
+        byDay[d] = {};
+        FUNNEL_EVENTS.forEach(name => {
+          const n = day.ev[name] || 0;
           totals[name] += n;
-          (byDay[dates[i]] ||= {})[name] = n;
+          byDay[d][name] = n;
         });
-      }));
+      });
 
       // Desglose por canal de origen: acumulado histórico, no filtrable por
-      // rango de días (ver comentario en SRC_TRACKED_EVENTS). Pocas claves
-      // fijas (3 eventos × 6 canales), no crece con `days`.
+      // rango de días (ver comentario en SRC_TRACKED_EVENTS). Una clave por
+      // evento (3 lecturas fijas), no crece con `days` ni con el nº de canales.
       const bySource = {};
       await Promise.all(SRC_TRACKED_EVENTS.map(async name => {
+        const obj = (await env.EVENTS_KV.get(`evsrc:${name}`, 'json')) || {};
         bySource[name] = {};
-        await Promise.all(SOURCES.map(async src => {
-          const v = await env.EVENTS_KV.get(`evsrc:${name}:${src}`);
-          bySource[name][src] = parseInt(v || '0', 10) || 0;
-        }));
+        SOURCES.forEach(src => { bySource[name][src] = obj[src] || 0; });
       }));
 
       // Visitas y páginas vistas por día, top de páginas, visitas por canal y
-      // por campaña (mes actual y anterior). Una lista de KV por día para las
-      // rutas; por eso el resultado se cachea STATS_CACHE_TTL segundos.
+      // por campaña (mes actual y anterior); todo sale ya del mismo dayBlobs
+      // leído arriba, sin peticiones adicionales por día. El resultado se
+      // cachea STATS_CACHE_TTL segundos de todas formas.
       const traffic = { visits: { total: 0, byDay: {} }, pageviews: { total: 0, byDay: {} }, pages: [], visitsBySource: {}, campaigns: {} };
       const pageSum = {};
-      await Promise.all(dates.map(async d => {
-        const [vis, pvd, names] = await Promise.all([
-          env.EVENTS_KV.get(`vis:${d}`), env.EVENTS_KV.get(`pvday:${d}`), listAll(env.EVENTS_KV, `pv:${d}:`),
-        ]);
-        traffic.visits.byDay[d] = parseInt(vis || '0', 10) || 0;
-        traffic.pageviews.byDay[d] = parseInt(pvd || '0', 10) || 0;
-        const vals = await Promise.all(names.map(n => env.EVENTS_KV.get(n)));
-        names.forEach((n, i) => { const p = n.slice(`pv:${d}:`.length); pageSum[p] = (pageSum[p] || 0) + (parseInt(vals[i] || '0', 10) || 0); });
-      }));
+      SOURCES.forEach(src => { traffic.visitsBySource[src] = 0; });
+      dates.forEach((d, i) => {
+        const day = dayBlobs[i] || emptyDay();
+        traffic.visits.byDay[d] = day.vis || 0;
+        traffic.pageviews.byDay[d] = day.pvday || 0;
+        Object.entries(day.pv || {}).forEach(([p, n]) => { pageSum[p] = (pageSum[p] || 0) + n; });
+        SOURCES.forEach(src => { traffic.visitsBySource[src] += (day.vsrc || {})[src] || 0; });
+      });
       traffic.visits.total = Object.values(traffic.visits.byDay).reduce((a, b) => a + b, 0);
       traffic.pageviews.total = Object.values(traffic.pageviews.byDay).reduce((a, b) => a + b, 0);
       traffic.pages = Object.entries(pageSum).sort((a, b) => b[1] - a[1]).slice(0, TOP_PAGES).map(([path, n]) => ({ path, n }));
-      await Promise.all(SOURCES.map(async src => {
-        const vals = await Promise.all(dates.map(d => env.EVENTS_KV.get(`vsrc:${d}:${src}`)));
-        traffic.visitsBySource[src] = vals.reduce((a, v) => a + (parseInt(v || '0', 10) || 0), 0);
-      }));
       await Promise.all([monthKey(), prevMonthKey()].map(async mk => {
         const names = await listAll(env.EVENTS_KV, `camp:${mk}:`);
         const vals = await Promise.all(names.map(n => env.EVENTS_KV.get(n)));
