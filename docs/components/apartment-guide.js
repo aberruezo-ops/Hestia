@@ -5624,7 +5624,11 @@ const GUIDE_BY_APT = {
         title: 'Tu urbanización',
         body: 'Tu urbanización es textil. Tu plaza subterránea es la nº 160, en la planta -2. También dispones de zona de parking exterior y portal de acceso peatonal (nº 14, 1.A) en planta 0. En la planta -2 tienes además piscina y jacuzzi, con un atajo peatonal de salida hacia la playa y zonas verdes.',
         recs: ['Para ir a la piscina o playa baja en el ascensor a la planta -2, atraviesa el parking y baja hasta la planta a nivel del suelo del bloque de enfrente. Allí encontrarás la zona de aguas.', 'Junto a la piscina tienes un atajo para ir y volver de la playa.', 'Respeta las zonas comunes y las normas de la urbanización.', 'Respeta a los vecinos.', 'No utilices en la piscina las toallas de casa.']
-      }]
+      }],
+      wifi: {
+        ssidValue: 'Acaciopohone_1DAC',
+        passValue: 'pEF7jRCE'
+      }
     },
     en: {
       cover_tagline: 'Where the olive grove meets the sea. Rest, with its roots in place.',
@@ -5658,7 +5662,11 @@ const GUIDE_BY_APT = {
         title: 'Your complex',
         body: 'Your complex is textile-only. Your underground parking space is nº 160, on floor -2. You also have outdoor parking and a pedestrian entrance (nº 14, 1.A) on ground floor. Floor -2 also has the pool and jacuzzi, with a pedestrian shortcut out to the beach and green areas.',
         recs: ['To reach the pool or beach: take the elevator down to floor -2, cross the car park, then go down to the ground level of the block opposite. Pool area is in the middle of the complex.', 'Next to the pool you have a shortcut to and from the beach.', 'Respect the common areas and the complex rules.', 'Respect the neighbours.', 'Do not take house towels to the pool.']
-      }]
+      }],
+      wifi: {
+        ssidValue: 'Acaciopohone_1DAC',
+        passValue: 'pEF7jRCE'
+      }
     }
   },
   // Hestía Vera Thalassa
@@ -11167,6 +11175,10 @@ const AptGuideView = ({
     cleaning: {
       ..._gs.cleaning,
       ...(a.cleaning || {})
+    },
+    wifi: {
+      ..._gs.wifi,
+      ...(a.wifi || {})
     }
   };
   const aptInfo = GUIDE_BY_APT[apt.id];

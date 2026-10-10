@@ -1888,8 +1888,8 @@ function renderEventsCalendar(PLACES, lang) {
     </div>`;
 }
 
-function renderWifi(shared, aptData, lang) {
-  const w = shared.wifi;
+function renderWifi(shared, aptData, aptGuide, lang) {
+  const w = { ...shared.wifi, ...((aptGuide && aptGuide[lang] && aptGuide[lang].wifi) || {}) };
   return `
   <section class="compact">
     ${sectionMark(aptData, lang)}
@@ -2474,7 +2474,7 @@ ${renderRegistro(shared, apt, aptId, lang)}
 ${renderPretrip(shared, apt, lang)}
 ${renderExpectativas(shared, apt, lang)}
 ${renderCheckin(shared, apt, guide, lang)}
-${renderWifi(shared, apt, lang)}
+${renderWifi(shared, apt, guide, lang)}
 ${renderNameAndWhy(shared, apt, lang)}
 ${renderCleaning(shared, apt, lang)}
 ${renderRules(shared, apt, lang)}
