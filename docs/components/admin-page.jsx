@@ -8423,14 +8423,20 @@ const TravelerRegistryTab = () => {
   };
 
   const fmtWhen = (iso) => { try { return new Date(iso).toLocaleString('es-ES', { dateStyle: 'medium', timeStyle: 'short' }); } catch (_) { return iso; } };
-  // El token lleva la fecha de entrada codificada (<apt>-<YYYYMMDD>-<random>),
-  // pero en crudo ("vm-20271001-ab3f9") no se identifica a simple vista: se
-  // extrae para mostrarla formateada y para saber si la estancia ya pasó.
+  // El token lleva la fecha de entrada codificada SOLO cuando lo genera el
+  // admin (buildRegistroLink / AccessLinkButton, <apt>-<YYYYMMDD>-<random>).
+  // Si el huésped llega directo a /registro.html?apt=vm desde la guía, sin
+  // enlace prerrellenado, registro-page.jsx genera el token con
+  // Date.now().toString(36): no hay fecha de entrada que extraer. Para esas
+  // fichas usamos la fecha de envío como alternativa, tanto para identificar
+  // como para decidir si plegarla por antigua.
   const _tokenEntradaIso = (token) => {
     const m = /-(\d{4})(\d{2})(\d{2})-/.exec(token || '');
     return m ? `${m[1]}-${m[2]}-${m[3]}` : null;
   };
   const todayIso = new Date().toISOString().slice(0, 10);
+  const SUBMIT_STALE_DAYS = 14;
+  const submitStaleBefore = addDaysIso(todayIso, -SUBMIT_STALE_DAYS);
 
   return (
     <div className="pe-card">
@@ -8465,17 +8471,29 @@ const TravelerRegistryTab = () => {
 
       {regs && regs.length === 0 && <p className="pe-help" style={{ marginTop: 12 }}>Aún no hay fichas enviadas.</p>}
 
-      {/* El token lleva la fecha de entrada codificada (<apt>-<YYYYMMDD>-<random>,
-          ver AccessLinkButton más arriba): orden por fecha de estancia, más reciente primero. */}
-      {regs && [...regs].sort((a, b) => ((b.token || '').split('-')[1] || '').localeCompare((a.token || '').split('-')[1] || '')).map((reg) => {
+      {/* Fecha de referencia de cada ficha: la de entrada si el token la trae
+          (enlaces generados desde el admin), si no la de envío (fichas
+          rellenadas por el huésped desde la guía, sin enlace prerrellenado).
+          Orden por esa fecha, más reciente primero: antes se ordenaba por el
+          propio token, que para las fichas sin fecha de entrada no es una
+          fecha real (Date.now().toString(36)) y las desordenaba. */}
+      {regs && [...regs]
+        .map(reg => {
+          const entradaIso = _tokenEntradaIso(reg.token);
+          const submittedIso = reg.submittedAt ? reg.submittedAt.slice(0, 10) : null;
+          return { reg, entradaIso, submittedIso, sortKey: entradaIso || submittedIso || '' };
+        })
+        .sort((a, b) => b.sortKey.localeCompare(a.sortKey))
+        .map(({ reg, entradaIso, submittedIso }) => {
         const aptId = (reg.token || '').split('-')[0];
         const aptName = APT_NAMES[aptId];
         const holder = reg.travelers && reg.travelers[0];
         const holderName = holder ? [holder.nombre, holder.apellido1, holder.apellido2].filter(Boolean).join(' ') : '';
-        const entradaIso = _tokenEntradaIso(reg.token);
-        const isPast = !!entradaIso && entradaIso < todayIso;
+        const isPast = entradaIso
+          ? entradaIso < todayIso
+          : (!!submittedIso && submittedIso < submitStaleBefore);
         // Las ya pasadas van plegadas por defecto (se identifican igual por
-        // la fecha y el chip "Pasada" en la cabecera, sin ocupar sitio).
+        // la fecha y el chip de la cabecera, sin ocupar sitio).
         const isOpen = open[reg.token] ?? !isPast;
         return (
           <div key={reg.token} className={`reg-admin-card${isPast ? ' is-past' : ''}`}>
@@ -8485,10 +8503,10 @@ const TravelerRegistryTab = () => {
                 <strong className="reg-admin-holder">{holderName || 'Sin titular aún'}</strong>
               </span>
               <span className="reg-admin-date">
-                {entradaIso ? `Entrada ${fmtDate(entradaIso)}` : reg.token}
-                {isPast && <span className="reg-admin-past-chip">Pasada</span>}
+                {entradaIso ? `Entrada ${fmtDate(entradaIso)}` : submittedIso ? `Enviado ${fmtDate(submittedIso)}` : 'Sin fecha'}
+                {isPast && <span className="reg-admin-past-chip">{entradaIso ? 'Pasada' : 'Antigua'}</span>}
               </span>
-              {entradaIso && <span className="reg-admin-token" title="Token del enlace de registro">{reg.token}</span>}
+              <span className="reg-admin-token" title="Token del enlace de registro">{reg.token}</span>
               <span className="reg-admin-meta">{(reg.travelers || []).length} viajero(s) · {fmtWhen(reg.submittedAt)}</span>
               <span aria-hidden="true">{isOpen ? '▾' : '▸'}</span>
             </button>
