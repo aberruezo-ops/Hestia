@@ -4,9 +4,15 @@ Decisiones y tareas que se han aplazado a propósito, con el motivo por el
 que no se hicieron en el momento en que surgieron. No es un backlog de
 ideas, es solo lo que se decidió dejar para después.
 
+Dos secciones: **Pendiente** (sigue esperando una acción o decisión) y
+**Resuelto / decisiones** (ya se cerró; se deja constancia del motivo para
+no reabrirlo sin razón ni repetir la investigación).
+
 ---
 
-## Actualizar React 18 → 19
+## Pendiente
+
+### Actualizar React 18 → 19
 
 **Surgió:** revisión de versiones de lo que usa la web en vivo (octubre
 2026). **Actualizado:** intento real de hacerlo (octubre 2026) descubrió
@@ -42,7 +48,7 @@ de build, no solo de dependencia.
 
 ---
 
-## Google Analytics 4 (GA4)
+### Google Analytics 4 (GA4)
 
 **Surgió:** `strategy/01-estrategia-marca-y-flujo-recurrente.md` §13 (bloqueo
 de lanzamiento, mayo 2026); revisión de limbo (octubre 2026).
@@ -69,7 +75,7 @@ completa del sitio, no solo de esas dos.
 
 ---
 
-## CSV de huéspedes anteriores (para email de lanzamiento y CRM)
+### CSV de huéspedes anteriores (para email de lanzamiento y CRM)
 
 **Surgió:** `strategy/01-estrategia-marca-y-flujo-recurrente.md` §6 y §8
 (mayo 2026).
@@ -98,7 +104,7 @@ activar el canal de email, que la propia estrategia marca como pilar de
 
 ---
 
-## Plan de redes sociales (cadencia, Pinterest, lanzamiento coordinado)
+### Plan de redes sociales (cadencia, Pinterest, lanzamiento coordinado)
 
 **Surgió:** `strategy/01-estrategia-marca-y-flujo-recurrente.md` §7-8
 (mayo 2026); kit instalado en `strategy/redes/` (sistema para generar
@@ -136,48 +142,7 @@ demanda.
 
 ---
 
-## `nuevo-portal-de-hestia/` — resuelto, carpeta eliminada (octubre 2026)
-
-**Surgió:** añadido por un commit automático (`0c31323`, 2026-09-22) como
-paquete de entrega de Claude Design (claude.ai/design); revisión de limbo
-y decisión (octubre 2026).
-
-**Qué era:** un rediseño completo del Home ("Noche Mediterránea", Lora +
-Poppins) con mucho más peso narrativo que el sitio actual: manifiesto,
-tabla comparativa de los tres apartamentos y una sección de guía de marca
-embebida en el propio Home. Usaba datos reales de Hestía (licencias VFT,
-teléfonos, direcciones, email), no inventados.
-
-**Decisión del usuario:** no lo reconocía como algo pedido a propósito
-(llegó solo por el commit automático), y además no comparte el enfoque:
-el Home debe priorizar conversión (visita → solicitud de reserva), y el
-contenido narrativo, que solo interesa a una minoría de visitantes, debe
-vivir en otro sitio, no competir por espacio ahí. Se pidió rescatar lo
-aprovechable y borrar el resto.
-
-**Resultado de la revisión de "lo rescatable":** no había nada nuevo que
-rescatar. Se comprobó punto por punto contra el sitio en producción:
-- El manifiesto ("esto no se alquila, se comparte") ya existe en
-  `/nosotros.html` (`shared.jsx` `manifest_p1`-`manifest_p4`), con una
-  redacción más alineada con `VOZ-DE-MARCA.md` que la del paquete (invita
-  en vez de ordenar: "agradecemos que repongas lo que uses" en vez de "si
-  lo usas, lo repones").
-- La tabla comparativa de los tres apartamentos ya existe (`const
-  Compare` en `docs/components/sections-1.jsx`).
-- La sección de equipo (Alex y Fran) ya existe en `/nosotros.html`.
-- Los contadores animados y las valoraciones de plataformas (Booking,
-  Airbnb, Google) ya existen en el home actual.
-- Los datos reales del paquete (licencias, teléfonos, dirección, email)
-  coinciden con los que ya usa la producción: no faltaba nada que
-  trasladar.
-
-En resumen: el paquete repackaging contenido y datos que ya estaban en
-producción, con otra tipografía y más peso narrativo en el sitio
-equivocado. Por eso se eliminó la carpeta entera en vez de extraer nada.
-
----
-
-## Auditoría de diseño (`$impeccable` · `.impeccable/critique/`)
+### Auditoría de diseño (`$impeccable` · `.impeccable/critique/`)
 
 **Surgió:** dos auditorías de diseño guardadas (2026-09-21 y 2026-09-25)
 sobre `docs/index.html` y páginas clave; revisión de limbo (octubre 2026).
@@ -216,7 +181,7 @@ si estos ítems de pulido siguen aplicando.
 
 ---
 
-## Backlinks y plantillas de respuesta a reseñas de Google
+### Backlinks y plantillas de respuesta a reseñas de Google
 
 **Surgió:** pregunta del usuario "¿Cómo se controla?" sobre palancas de
 SEO fuera del repo (octubre 2026); ofrecido entonces, no solicitado.
@@ -234,3 +199,50 @@ contacto a guías y blogs locales de la zona pidiendo enlaces hacia la web.
 
 **Cuándo tiene sentido retomarlo:** si el usuario decide que quiere
 trabajar activamente el off-page SEO.
+
+---
+
+## Resuelto / decisiones
+
+### `nuevo-portal-de-hestia/` — carpeta eliminada (octubre 2026)
+
+**Surgió:** añadido por un commit automático (`0c31323`, 2026-09-22) como
+paquete de entrega de Claude Design (claude.ai/design); revisión de limbo
+y decisión (octubre 2026).
+
+**Qué era:** un rediseño completo del Home ("Noche Mediterránea", Lora +
+Poppins) con mucho más peso narrativo que el sitio actual: manifiesto,
+tabla comparativa de los tres apartamentos y una sección de guía de marca
+embebida en el propio Home. Usaba datos reales de Hestía (licencias VFT,
+teléfonos, direcciones, email), no inventados.
+
+**Decisión del usuario:** no lo reconocía como algo pedido a propósito
+(llegó solo por el commit automático), y además no comparte el enfoque:
+el Home debe priorizar conversión (visita → solicitud de reserva), y el
+contenido narrativo, que solo interesa a una minoría de visitantes, debe
+vivir en otro sitio, no competir por espacio ahí. Se pidió rescatar lo
+aprovechable y borrar el resto.
+
+**Resultado de la revisión de "lo rescatable":** no había nada nuevo que
+rescatar. Se comprobó punto por punto contra el sitio en producción:
+- El manifiesto ("esto no se alquila, se comparte") ya existe en
+  `/nosotros.html` (`shared.jsx` `manifest_p1`-`manifest_p4`), con una
+  redacción más alineada con `VOZ-DE-MARCA.md` que la del paquete (invita
+  en vez de ordenar: "agradecemos que repongas lo que uses" en vez de "si
+  lo usas, lo repones").
+- La tabla comparativa de los tres apartamentos ya existe (`const
+  Compare` en `docs/components/sections-1.jsx`).
+- La sección de equipo (Alex y Fran) ya existe en `/nosotros.html`.
+- Los contadores animados y las valoraciones de plataformas (Booking,
+  Airbnb, Google) ya existen en el home actual.
+- Los datos reales del paquete (licencias, teléfonos, dirección, email)
+  coinciden con los que ya usa la producción: no faltaba nada que
+  trasladar.
+
+En resumen: el paquete repackaging contenido y datos que ya estaban en
+producción, con otra tipografía y más peso narrativo en el sitio
+equivocado. Por eso se eliminó la carpeta entera en vez de extraer nada.
+
+**Revisitar si:** alguna vez se decide que el Home sí debe llevar más peso
+narrativo a propósito (no por un commit automático); en ese caso partir de
+esta entrada para no repetir la comparación punto por punto.
