@@ -202,6 +202,43 @@ trabajar activamente el off-page SEO.
 
 ---
 
+### Skills de redes sociales sin instalar (rutas de crecimiento y Pinterest)
+
+**Surgió:** auditoría de instalado vs. no instalado en el catálogo
+`social-media-skills/skills` (mismo repo MIT de donde salieron los 9
+skills de Instagram ya instalados: `instagram-growth`, `instagram-seo`,
+`instagram-reels-publishing`, `reels-script`, `carousel-writer`,
+`story-writer`, `caption-writer`, `hook-writer`, `scheduling-and-queue`),
+octubre 2026.
+
+**Estado actual:** no instalados. Dos grupos, con uso distinto:
+1. **Rutas de crecimiento:** `profile-optimization`, `content-calendar`,
+   `hashtag-strategy`, `trend-jacking`. `instagram-growth` remite
+   explícitamente a ellos cuando el diagnóstico apunta a perfil o cadencia
+   en vez de a contenido de Reels; hoy esas rutas no tendrían skill al que
+   ir si el diagnóstico apuntara ahí.
+2. **Pinterest:** `pinterest-growth`, `pinterest-seo`,
+   `pinterest-pin-design`. Atado al pendiente "Plan de redes sociales" de
+   más arriba (objetivo 20 pins/semana, canal sin empezar).
+
+**Por qué no se hizo ya:** se instalaron solo las piezas con un hueco
+funcional inmediato y verificable (referenciadas por nombre desde skills
+ya instalados). Estos dos grupos son uso especulativo: instalarlos sin un
+caso de uso concreto habría sido ampliar el catálogo "por si acaso".
+
+**Qué hace falta para hacerlo:** para el grupo 1, que un futuro
+diagnóstico de `instagram-growth` señale perfil/cadencia como cuello de
+botella (hoy el diagnóstico real de @hestiayourhome señaló Reach/Reels,
+ya cubierto). Para Pinterest, que el usuario decida arrancar ese canal de
+verdad (ver "Plan de redes sociales" arriba).
+
+**Cuándo tiene sentido retomarlo:** cuando aparezca el caso de uso
+concreto en cualquiera de los dos grupos; la instalación es trivial
+(clonar `social-media-skills/skills`, copiar la carpeta a
+`.agents/skills/`, symlink en `.claude/skills/`).
+
+---
+
 ## Resuelto / decisiones
 
 ### `nuevo-portal-de-hestia/` — carpeta eliminada (octubre 2026)
