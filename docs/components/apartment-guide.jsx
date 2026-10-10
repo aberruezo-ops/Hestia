@@ -2179,6 +2179,7 @@ const GUIDE_BY_APT = {
           'No utilices en la piscina las toallas de casa.',
         ]},
       ],
+      wifi: { ssidValue: 'Acaciopohone_1DAC', passValue: 'pEF7jRCE' },
     },
     en: {
       cover_tagline: 'Where the olive grove meets the sea. Rest, with its roots in place.',
@@ -2219,6 +2220,7 @@ const GUIDE_BY_APT = {
           'Do not take house towels to the pool.',
         ]},
       ],
+      wifi: { ssidValue: 'Acaciopohone_1DAC', passValue: 'pEF7jRCE' },
     },
   },
 
@@ -5426,6 +5428,7 @@ const AptGuideView = ({ apt, lang, onClose }) => {
   const s         = { ..._gs,
     checkin:  { ..._gs.checkin,  ...(a.checkin  || {}) },
     cleaning: { ..._gs.cleaning, ...(a.cleaning || {}) },
+    wifi:     { ..._gs.wifi,     ...(a.wifi     || {}) },
   };
   const aptInfo   = GUIDE_BY_APT[apt.id];
   const aptName   = apt[lang].name;
