@@ -3270,7 +3270,7 @@ ${clausulaSegunda}
 <h3>Ten · Hestía house rules</h3>
 <p>Hestía provides consumable products. Please be cooperative: if you use or consume something, replace it (except the welcome kit, which is a small gift from us).</p>
 </div>
-<p>Respect the environment and try not to waste electricity and water. In your own home you would not leave the air conditioning on with the windows open or when you are out. So please, feel at home.</p>
+<p>Respect the environment and try not to waste electricity and water. Because of local water scarcity, we ask for responsible use and filling bathtubs is not allowed. In your own home you would not leave the air conditioning on with the windows open or when you are out. So please, feel at home.</p>
 <p>Likewise, if you go out, bring in the cushions, the awning and the terrace plants, especially if it is windy, rainy or bad weather is forecast.</p>
 <p>Respect and do not remove from Hestía any equipment, contents, furniture or details. After your stay an inventory and inspection of Hestía will be carried out, so any deterioration or removal will be your responsibility.</p>
 <p>Our greatest wish is that you rest and that you equally respect our neighbours' rest, avoiding noise, music and commotion at unsociable hours. Hestía is exclusively for your use and enjoyment, not for others'.</p>
@@ -3373,7 +3373,7 @@ ${clausulaSegunda}
 <h3>Décima · Normas de Hestía</h3>
 <p>Hestía dispone de productos consumibles. Por favor, sed colaborativos: si gastáis o consumís, reponed (salvo el kit que es un pequeño regalo por nuestra parte).</p>
 </div>
-<p>Respetad el medio ambiente e intentad no malgastar la luz y el agua. En vuestro hogar no dejaríais el aire acondicionado encendido con las ventanas abiertas o cuando no estáis en casa. Pues eso, sentíos como en vuestro hogar.</p>
+<p>Respetad el medio ambiente e intentad no malgastar la luz y el agua. Por la escasez de agua de la zona, agradecemos un uso responsable y queda prohibido llenar las bañeras. En vuestro hogar no dejaríais el aire acondicionado encendido con las ventanas abiertas o cuando no estáis en casa. Pues eso, sentíos como en vuestro hogar.</p>
 <p>Asimismo, si salís, recoged los cojines, el toldo, las plantas de la terraza, especialmente si hay viento, lluvia o predicción de mal tiempo.</p>
 <p>Respetad y no extraigáis de Hestía el equipamiento, el contenido, el mobiliario y los detalles. Tras vuestra estancia se realizará un inventario e inspección de Hestía, con lo que cualquier deterioro o sustracción será vuestra responsabilidad.</p>
 <p>Nuestro máximo deseo es que descanséis y que respetéis igualmente el descanso de nuestros vecinos, evitando los ruidos, la música y el jaleo a deshoras. Hestía es exclusivamente para vuestro uso y disfrute, no para el de otros.</p>

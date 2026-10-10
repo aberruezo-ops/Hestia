@@ -6096,7 +6096,7 @@ const HESTIA_RULES = {
       icon: '🌿',
       hi: 'olive',
       t: 'Cuidad el medio ambiente',
-      d: 'No malgastéis la luz ni el agua. No dejéis el aire acondicionado con las ventanas abiertas o cuando salgáis. Sentíos como en vuestro hogar.'
+      d: 'No malgastéis la luz ni el agua. Por la escasez de agua de la zona, agradecemos un uso responsable y queda prohibido llenar las bañeras. No dejéis el aire acondicionado con las ventanas abiertas o cuando salgáis. Sentíos como en vuestro hogar.'
     }, {
       icon: '🪑',
       hi: 'chair',
@@ -6191,7 +6191,7 @@ const HESTIA_RULES = {
       icon: '🌿',
       hi: 'olive',
       t: 'Look after the environment',
-      d: 'Do not waste water or electricity. Never run the AC with windows open or when you leave. Treat it as your own home.'
+      d: 'Do not waste water or electricity. Because of local water scarcity, we ask for responsible use and filling bathtubs is not allowed. Never run the AC with windows open or when you leave. Treat it as your own home.'
     }, {
       icon: '🪑',
       hi: 'chair',
