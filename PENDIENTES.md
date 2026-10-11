@@ -239,6 +239,36 @@ concreto en cualquiera de los dos grupos; la instalación es trivial
 
 ---
 
+### Blog de noviembre: el Salar de los Canos y su luz
+
+**Surgió:** el usuario pasó 6 fotos reales del Salar de los Canos (mismo
+encuadre, atardeceres distintos) pidiendo "algo con estas fotos en
+diferentes momentos" (octubre 2026). Se probó primero como sección nueva
+en la página de Hestía Thalassa; el usuario decidió que ahí "no queda
+bien" y prefiere guardarlo para el blog de noviembre.
+
+**Estado actual:** las 6 fotos ya están procesadas y en el repo, listas
+para usar en cualquier formato (post de blog, carrusel, lo que se decida):
+`docs/assets/apt-vt-salar-1.jpg` a `-6.jpg` (+ `.webp`), 900×600,
+recortadas del collage original que mandó el usuario. La sección de
+Thalassa que las usaba se revirtió por completo (componente
+`AptSalarMoments`, campo `salar_imgs`, CSS `.apt-salar*`): no queda
+ningún rastro en `apartment-page.jsx` ni `styles.css`.
+
+**Por qué no se hizo ya:** decisión explícita del usuario de guardarlo
+para el blog en vez de la página de Thalassa.
+
+**Qué hace falta para hacerlo:** cuando llegue el momento de montar el
+contenido de noviembre en `noticias-page.jsx` (sigue el patrón de
+`docs/components/noticias-page.jsx`, que ya tiene un apunte sobre el
+Salar de los Canos y los flamencos en octubre, línea ~38), escribir el
+post sobre "el salar y su luz" usando estas 6 fotos. Hablar con el
+usuario sobre el enfoque del texto antes de escribirlo.
+
+**Cuándo tiene sentido retomarlo:** al montar el blog de noviembre 2026.
+
+---
+
 ## Resuelto / decisiones
 
 ### `nuevo-portal-de-hestia/` — carpeta eliminada (octubre 2026)
