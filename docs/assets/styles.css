@@ -15861,6 +15861,17 @@ body[data-apt="salinas"] .widget-cta:hover {
   opacity: 1;
   margin-left: 8px;
 }
+/* Sin ratón no hay hover que revele la etiqueta: en touch (tablets anchas,
+   donde esta pila SÍ se muestra, ver umbral de 900px en WidgetStack) se
+   queda siempre visible, para no obligar a tocar un icono a ciegas para
+   saber qué hace. */
+@media (hover: none) {
+  .widget-mini-label {
+    max-width: 200px;
+    opacity: 1;
+    margin-left: 8px;
+  }
+}
 @media (prefers-reduced-motion: reduce) {
   .widget-mini-label { transition: none; }
 }
