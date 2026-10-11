@@ -94,6 +94,17 @@ const APT_DATA = {
     hero_img: 'assets/apt-vt-gallery-33.jpg',
     bedroom_img: 'assets/apt-vt-gallery-33.jpg',
     reveal_img: 'assets/apt-vt-gallery-20.jpg',
+    // El Salar de los Canos visto desde Thalassa, mismo encuadre a horas
+    // distintas: ilustra "cambia con la luz del día" (ver desc más abajo)
+    // con fotos reales, no una promesa sin más.
+    salar_imgs: [
+      'assets/apt-vt-salar-1.jpg',
+      'assets/apt-vt-salar-2.jpg',
+      'assets/apt-vt-salar-3.jpg',
+      'assets/apt-vt-salar-4.jpg',
+      'assets/apt-vt-salar-5.jpg',
+      'assets/apt-vt-salar-6.jpg',
+    ],
     floorplan_img: 'assets/apt-vt-plano.png',
     floorplan_subtitle_es: 'distribución del ático.',
     floorplan_subtitle_en: 'penthouse layout.',
@@ -552,6 +563,34 @@ const AptCinematicReveal = ({ apt, lang }) => {
       <div className="apt-reveal-tint"/>
       <div className="apt-reveal-content">
         <p className="apt-reveal-quote">« {d.concept} »</p>
+      </div>
+    </section>
+  );
+};
+
+// --- Salar de los Canos, momentos ---
+// Mismo encuadre desde Thalassa, horas distintas: prueba fotográfica real
+// de "un paisaje que cambia con la luz del día" (ver desc del apartamento),
+// no una promesa sin más. Solo aparece si el apartamento trae salar_imgs
+// (hoy solo Thalassa).
+const AptSalarMoments = ({ apt, lang }) => {
+  if (!apt.salar_imgs || !apt.salar_imgs.length) return null;
+  const t = lang === 'es'
+    ? { eyebrow: 'El Salar de los Canos', title: 'El mismo paisaje, seis momentos distintos.' }
+    : { eyebrow: 'The Salar de los Canos', title: 'The same view, six different moments.' };
+  return (
+    <section className="apt-salar" style={{ '--apt-accent': apt.accent }}>
+      <div className="apt-salar-inner">
+        <span className="apt-salar-eyebrow">{t.eyebrow}</span>
+        <h2 className="apt-salar-title">{t.title}</h2>
+        <div className="apt-salar-grid">
+          {apt.salar_imgs.map((src, i) => (
+            <picture key={i} className="apt-salar-frame">
+              <source srcSet={src.replace(/\.jpg$/i, '.webp')} type="image/webp"/>
+              <img src={src} alt="" loading="lazy" decoding="async"/>
+            </picture>
+          ))}
+        </div>
       </div>
     </section>
   );
@@ -1374,6 +1413,7 @@ const ApartmentPageApp = () => {
             <AptCinematicReveal apt={apt} lang={lang} />
             <AptPageGallery apt={apt} lang={lang} />
             <AptVideoDesc apt={apt} lang={lang} />
+            <AptSalarMoments apt={apt} lang={lang} />
             <TrustStrip apt={apt} lang={lang} />
             <AptMiniReviews apt={apt} lang={lang} />
             <AptPriceTeaser apt={apt} lang={lang} />

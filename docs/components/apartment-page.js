@@ -104,6 +104,10 @@ const APT_DATA = {
     hero_img: 'assets/apt-vt-gallery-33.jpg',
     bedroom_img: 'assets/apt-vt-gallery-33.jpg',
     reveal_img: 'assets/apt-vt-gallery-20.jpg',
+    // El Salar de los Canos visto desde Thalassa, mismo encuadre a horas
+    // distintas: ilustra "cambia con la luz del día" (ver desc más abajo)
+    // con fotos reales, no una promesa sin más.
+    salar_imgs: ['assets/apt-vt-salar-1.jpg', 'assets/apt-vt-salar-2.jpg', 'assets/apt-vt-salar-3.jpg', 'assets/apt-vt-salar-4.jpg', 'assets/apt-vt-salar-5.jpg', 'assets/apt-vt-salar-6.jpg'],
     floorplan_img: 'assets/apt-vt-plano.png',
     floorplan_subtitle_es: 'distribución del ático.',
     floorplan_subtitle_en: 'penthouse layout.',
@@ -577,6 +581,50 @@ const AptCinematicReveal = ({
   }, /*#__PURE__*/React.createElement("p", {
     className: "apt-reveal-quote"
   }, "« ", d.concept, " »")));
+};
+
+// --- Salar de los Canos, momentos ---
+// Mismo encuadre desde Thalassa, horas distintas: prueba fotográfica real
+// de "un paisaje que cambia con la luz del día" (ver desc del apartamento),
+// no una promesa sin más. Solo aparece si el apartamento trae salar_imgs
+// (hoy solo Thalassa).
+const AptSalarMoments = ({
+  apt,
+  lang
+}) => {
+  if (!apt.salar_imgs || !apt.salar_imgs.length) return null;
+  const t = lang === 'es' ? {
+    eyebrow: 'El Salar de los Canos',
+    title: 'El mismo paisaje, seis momentos distintos.'
+  } : {
+    eyebrow: 'The Salar de los Canos',
+    title: 'The same view, six different moments.'
+  };
+  return /*#__PURE__*/React.createElement("section", {
+    className: "apt-salar",
+    style: {
+      '--apt-accent': apt.accent
+    }
+  }, /*#__PURE__*/React.createElement("div", {
+    className: "apt-salar-inner"
+  }, /*#__PURE__*/React.createElement("span", {
+    className: "apt-salar-eyebrow"
+  }, t.eyebrow), /*#__PURE__*/React.createElement("h2", {
+    className: "apt-salar-title"
+  }, t.title), /*#__PURE__*/React.createElement("div", {
+    className: "apt-salar-grid"
+  }, apt.salar_imgs.map((src, i) => /*#__PURE__*/React.createElement("picture", {
+    key: i,
+    className: "apt-salar-frame"
+  }, /*#__PURE__*/React.createElement("source", {
+    srcSet: src.replace(/\.jpg$/i, '.webp'),
+    type: "image/webp"
+  }), /*#__PURE__*/React.createElement("img", {
+    src: src,
+    alt: "",
+    loading: "lazy",
+    decoding: "async"
+  }))))));
 };
 
 // --- TrustStrip ---
@@ -1587,6 +1635,9 @@ const ApartmentPageApp = () => {
     apt: apt,
     lang: lang
   }), /*#__PURE__*/React.createElement(AptVideoDesc, {
+    apt: apt,
+    lang: lang
+  }), /*#__PURE__*/React.createElement(AptSalarMoments, {
     apt: apt,
     lang: lang
   }), /*#__PURE__*/React.createElement(TrustStrip, {
