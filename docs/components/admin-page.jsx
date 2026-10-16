@@ -252,6 +252,32 @@ function nightsByMonth(entrada, salida) {
   return out;
 }
 
+// Desde 2026 una estancia que cruza de año se reparte por noches entre los
+// años en que se pernocta (p. ej. 1 dic 2026 → 28 feb 2027: 31 noches en 2026
+// y 58 en 2027). Las anteriores conservan su año guardado, que es como cuadran
+// con el histórico contable. Devuelve { 'YYYY': noches }.
+const PRORRATEO_ANUAL_DESDE = 2026;
+function nightsByYear(r, fallbackYear) {
+  const ey = Number((r.entrada || '').slice(0, 4));
+  if (r.entrada && r.salida && ey >= PRORRATEO_ANUAL_DESDE) {
+    const out = {};
+    Object.entries(nightsByMonth(r.entrada, r.salida)).forEach(([k, n]) => {
+      const y = k.slice(0, 4);
+      out[y] = (out[y] || 0) + n;
+    });
+    if (Object.keys(out).length) return out;
+  }
+  return fallbackYear ? { [fallbackYear]: Number(r.noches) || 0 } : {};
+}
+
+// Parte de una reserva imputable al año y: fracción del importe y noches.
+function yearShare(r, y, fallbackYear) {
+  const nby = nightsByYear(r, fallbackYear);
+  if (!(y in nby)) return { frac: 0, noches: 0 };
+  const total = Object.values(nby).reduce((a, b) => a + b, 0);
+  return total > 0 ? { frac: nby[y] / total, noches: nby[y] } : { frac: 1, noches: Number(r.noches) || 0 };
+}
+
 // base64 ↔ utf-8 (atob/btoa no manejan UTF-8 directamente)
 const utf8ToB64 = (s) => btoa(unescape(encodeURIComponent(s)));
 const b64ToUtf8 = (s) => decodeURIComponent(escape(atob(s.replace(/\n/g, ''))));
@@ -1064,16 +1090,16 @@ const CANAL_COLORS = {
 // Agrega estadísticas (ingresos, noches, canales…) de un array de reservas.
 // No es específico de ningún año: el llamante le pasa solo las reservas de
 // UN año y guarda el resultado bajo esa clave (ver fetchBiz).
-function computeYearStats(reservas) {
+function computeYearStats(reservas, shareOf = r => ({ frac: 1, noches: r.noches || 0 })) {
   const active = reservas.filter(r => {
     if (r.cancelada === true) return false;
     const c = (r.cancelacion || '').trim().toUpperCase();
     return c !== 'CANCELADA';
   });
   const cancelled = reservas.length - active.length;
-  const noches    = active.reduce((s, r) => s + (r.noches || 0), 0);
-  const ingresos  = active.reduce((s, r) => s + (r.ingreso_total || 0), 0);
-  const bai       = active.reduce((s, r) => s + (r.bai || 0), 0);
+  const noches    = active.reduce((s, r) => s + shareOf(r).noches, 0);
+  const ingresos  = active.reduce((s, r) => s + (r.ingreso_total || 0) * shareOf(r).frac, 0);
+  const bai       = active.reduce((s, r) => s + (r.bai || 0) * shareOf(r).frac, 0);
   const rents     = active.filter(r => r.rent_pct != null).map(r => r.rent_pct);
   const rent_pct  = rents.length ? rents.reduce((a, b) => a + b, 0) / rents.length : 0;
   const precios   = active.filter(r => r.precio_bruto_noche != null).map(r => r.precio_bruto_noche);
@@ -1406,12 +1432,15 @@ const IntelligenciaTab = ({ token, onNavigate }) => {
         // de cualquier otro año) inflaba las cifras de 2026 en vez de tener
         // las suyas propias.
         const byYear = {};
+        const entradaYear = r => (r.entrada || r.salida || '').slice(0, 4);
         reservasLive.forEach(r => {
-          const y = (r.entrada || r.salida || '').slice(0, 4);
-          if (!y) return;
-          (byYear[y] = byYear[y] || []).push(r);
+          Object.keys(nightsByYear(r, entradaYear(r))).forEach(y => {
+            (byYear[y] = byYear[y] || []).push(r);
+          });
         });
-        Object.entries(byYear).forEach(([y, rs]) => { combined[y] = computeYearStats(rs); });
+        Object.entries(byYear).forEach(([y, rs]) => {
+          combined[y] = computeYearStats(rs, r => yearShare(r, y, entradaYear(r)));
+        });
       }
       setYearData(combined);
       if (availRes.ok) setAvail(await availRes.json());
@@ -5407,9 +5436,9 @@ const ReservasTab = ({ token, refreshKey, onOpenContract }) => {
   const currentYear = String(new Date().getFullYear());
   const byYear      = {};
   reservas.forEach(r => {
-    const y = yearOf(r);
-    if (!y) return;
-    (byYear[y] = byYear[y] || []).push(r);
+    Object.keys(nightsByYear(r, yearOf(r))).forEach(y => {
+      (byYear[y] = byYear[y] || []).push(r);
+    });
   });
   const historicYears = histData ? Object.keys(histData.years || {}).filter(y => !byYear[y]) : [];
   const allYears = [...Object.keys(byYear), ...historicYears].sort();
@@ -5451,7 +5480,8 @@ const ReservasTab = ({ token, refreshKey, onOpenContract }) => {
     const c = (r.cancelacion || '').trim().toUpperCase();
     return c === 'CANCELADA' || c === 'CANCELADO';
   };
-  const sum = (list, key) => list.reduce((a, r) => a + (Number(r[key]) || 0), 0);
+  const shareInFocus = r => yearShare(r, focusYear, yearOf(r));
+  const sum = (list, key) => list.reduce((a, r) => a + (Number(r[key]) || 0) * shareInFocus(r).frac, 0);
   const yearMetrics = (list) => {
     const active = list.filter(r => !_rxlCxl(r));
     const bruto    = sum(active, 'ingreso_total');
@@ -5459,7 +5489,7 @@ const ReservasTab = ({ token, refreshKey, onOpenContract }) => {
     const limpieza = sum(active, 'gasto_limpieza');
     const neto     = sum(active, 'bai');
     const renta    = sum(active, 'renta');
-    const noches   = sum(active, 'noches');
+    const noches   = active.reduce((a, r) => a + shareInFocus(r).noches, 0);
     const preciosNoche = active
       .map(r => Number(r.precio_bruto_noche))
       .filter(p => p > 0 && Number.isFinite(p));
@@ -5499,9 +5529,10 @@ const ReservasTab = ({ token, refreshKey, onOpenContract }) => {
   focusList.filter(r => !_rxlCxl(r)).forEach(r => {
     const c = getCanalKey(r.canal);
     if (!byCanal[c]) byCanal[c] = { count: 0, sum: 0, bai: 0 };
+    const { frac } = shareInFocus(r);
     byCanal[c].count++;
-    byCanal[c].sum += Number(r.ingreso_total) || 0;
-    byCanal[c].bai += Number(r.bai)           || 0;
+    byCanal[c].sum += (Number(r.ingreso_total) || 0) * frac;
+    byCanal[c].bai += (Number(r.bai)           || 0) * frac;
   });
 
   // --- Próximas (en todos los años, son atemporales) ---
