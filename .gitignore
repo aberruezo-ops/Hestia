@@ -22,10 +22,7 @@ fresh_*.png
 # Do NOT add react.development.js, react-dom.development.js, babel.min.js here
 node_modules/
 package-lock.json
-package.json
-!remotion-video/package.json
 !remotion-video/package-lock.json
-!videos/*/package.json
 
 # Datos privados de huéspedes — nunca commitear
 data-private/

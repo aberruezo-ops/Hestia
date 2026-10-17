@@ -27,7 +27,7 @@ jobs:
           node-version: '20'
       - name: Instalar Playwright
         run: |
-          npm install --no-save playwright
+          npm install
           npx playwright install --with-deps chromium
       - name: Servir docs
         run: |

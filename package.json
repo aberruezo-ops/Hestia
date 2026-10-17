@@ -1,0 +1,22 @@
+{
+  "name": "hestia-your-home",
+  "private": true,
+  "description": "Web estática de Hestía Your Home (GitHub Pages desde docs/). Dependencias de desarrollo: compilar JSX y verificar.",
+  "engines": {
+    "node": ">=20"
+  },
+  "scripts": {
+    "build": "node scripts/build-jsx.js",
+    "test:pricing": "node scripts/test-pricing.mjs && node scripts/price-consistency.mjs",
+    "test:smoke": "node scripts/smoke-test.cjs",
+    "test:contrast": "node scripts/contrast-audit.cjs",
+    "lqip": "python3 scripts/build-lqip.py",
+    "pdf": "node scripts/build-pdf.mjs"
+  },
+  "devDependencies": {
+    "@babel/core": "8.0.1",
+    "@babel/preset-react": "8.0.1",
+    "axe-core": "4.14.0",
+    "playwright": "1.64.0"
+  }
+}

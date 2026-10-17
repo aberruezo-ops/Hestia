@@ -56,8 +56,8 @@ jobs:
       - uses: actions/setup-node@v4
         with:
           node-version: '22'
-      - name: Instalar Babel (versión fijada = la del build local)
-        run: npm install --no-save @babel/core@8.0.1 @babel/preset-react@8.0.1
+      - name: Instalar dependencias (versiones fijadas en package.json = las del build local)
+        run: npm install
       - name: Recompilar JSX
         run: node scripts/build-jsx.js
       - name: Avisar si el .js quedó desincronizado (reporte, no bloquea)
@@ -76,9 +76,9 @@ jobs:
       - uses: actions/setup-node@v4
         with:
           node-version: '20'
-      - name: Instalar Playwright + axe-core
+      - name: Instalar Playwright + axe-core (versiones fijadas en package.json)
         run: |
-          npm install --no-save axe-core playwright
+          npm install
           npx playwright install --with-deps chromium
       - name: Servir docs
         run: |

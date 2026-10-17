@@ -211,6 +211,15 @@ guía no reflejaba la práctica real del código y quedó corregida aquí.
 
 ---
 
+## Iconografía — gramática "Sello"
+
+Todos los iconos salen del sprite de `shared.jsx` con `<HiIcon name="…"/>`: trazo
+fino en color de texto, esquina asimétrica de marca y placa de color desplazada.
+**El color de marca va en la placa, nunca en el trazo.** Nada de emojis ni glifos
+(`✓ ✦ ★`) como iconos. Reglas completas en `CLAUDE.md` ("Iconografía").
+
+---
+
 ## Motion tokens
 
 ```css
@@ -238,7 +247,7 @@ docs/
     availability.json — bloques de fechas no disponibles
     reviews.json      — reseñas de plataformas
 
-data-private/         — fuera de docs/, NO servido por Pages
+(datos de huéspedes: repo privado aberruezo-ops/hestia-data, nunca aquí)
 scripts/
   build-jsx.js        — compila todos los .jsx a .js
   build-pdf.mjs       — genera PDFs desde componentes
@@ -291,32 +300,25 @@ grep -oE "styles\.css\?v=[0-9]+" docs/index.html | head -1
 sed -i "s/styles\.css?v=520/styles.css?v=521/g" docs/*.html
 ```
 
-**Rama de trabajo:**
-- Branch actual: `claude/organize-events-by-month-PW7JG`
-- Siempre preguntar al usuario si trabajar en `main` o en feature branch.
+Los hooks solo ven ediciones hechas con Edit/Write: si cambias JSX o CSS por
+script, compila y sube la versión del CSS a mano (comandos de arriba).
 
-**Push:**
-```bash
-git push -u origin <branch-name>
-```
+**Publicación:** commit en la rama de trabajo de la sesión, push y **fusión
+directa en `main` sin preguntar** (decisión del propietario). La skill
+`/publicar` hace el ritual completo.
 
 ---
 
 ## Modelo de negocio — Estancias largas
 
-Estancias >28 noches, Sep–Jun (no Jul ni Ago).
+Mínimo **29 noches**, con entrada de septiembre a junio (nunca julio ni agosto).
 
-**Tarifas mensuales (€/mes):**
-| Meses | Tarifa |
-|---|---|
-| Nov, Dic, Ene, Feb, Mar, Abr | 1.450 € |
-| Oct, May | 1.590 € |
-| Sep, Jun | 1.790 € |
-| Jul, Ago | No disponible para estancia larga |
+Las tarifas mensuales y la tarifa plana de noches especiales (Navidad 23 dic–6 ene,
+Semana Santa) salen SIEMPRE de `docs/data/prices.json` → `longStayConfig`. No las
+copies aquí ni en el código: se quedan viejas. Las invariantes completas están en
+`CLAUDE.md` (sección "Estancias largas").
 
-**Noches especiales (Navidad: 23 dic – 6 ene / Semana Santa):** 80 €/noche fijo.
-
-**Lógica de precio:** suma proporcional por días en cada mes del período + noches especiales a tarifa plana.
+**Lógica de precio:** suma proporcional por días en cada mes del período + noches especiales a tarifa plana (`_calcLsTotal` en `shared.jsx`).
 
 ---
 
@@ -325,7 +327,7 @@ Estancias >28 noches, Sep–Jun (no Jul ni Ago).
 1. **Nunca** escribas API keys, tokens o secretos en código que vaya a `docs/` (es público).
 2. **PATs de GitHub** solo en memoria del navegador durante sesión de `/p-edit.html`. Nunca en `localStorage`, cookies, ni enviados a otro endpoint que no sea `api.github.com`.
 3. **Nunca** `dangerouslySetInnerHTML` con contenido de usuario sin sanitizar. React escapa por defecto — mantenlo.
-4. **Datos de huéspedes** (nombre, teléfono, DNI, importes) solo en `data-private/` (fuera de `docs/`).
+4. **Datos de huéspedes** (nombre, teléfono, DNI, importes) solo en el repo privado `aberruezo-ops/hestia-data`, nunca en este repo.
 5. Workers de Cloudflare: secretos vía `wrangler secret put`, rate limiting (100 req/IP/15min general, 10 req/IP/15min sensibles), headers de seguridad.
 6. Nunca datos personales en `docs/` ni en mensajes de commit.
 
