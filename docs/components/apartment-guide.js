@@ -978,6 +978,7 @@ const GUIDE_EMOJI_HI = {
   '🏘': 'buildings',
   '📚': 'book',
   '🏪': 'shop',
+  '🛍': 'bag',
   '⛽': 'fuel',
   '🔌': 'plug',
   '💻': 'laptop',

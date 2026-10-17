@@ -137,26 +137,6 @@ if (typeof document !== 'undefined' && typeof document.addEventListener === 'fun
   }, true);
 }
 
-const HestiaLogoMark = ({ size = 40, color = '#3AAABB' }) => (
-  <svg viewBox="0 0 120 120" width={size} height={size} aria-hidden="true">
-    {/* Dos columnas H serif */}
-    <g fill={color}>
-      <path d="M18 22 L32 22 L32 50 L32 56 L30 62 L30 98 L18 98 Z" />
-      <path d="M88 22 L102 22 L102 98 L90 98 L90 62 L88 56 L88 50 Z" />
-      {/* Remate superior (serif) */}
-      <rect x="14" y="20" width="22" height="4" rx="1" />
-      <rect x="84" y="20" width="22" height="4" rx="1" />
-      <rect x="14" y="96" width="22" height="4" rx="1" />
-      <rect x="84" y="96" width="22" height="4" rx="1" />
-    </g>
-    {/* Dos olas orgánicas (tejado + mediterráneo) */}
-    <path d="M32 58 C 44 42, 60 42, 60 56 C 60 46, 78 46, 90 62"
-          fill="none" stroke={color} strokeWidth="5" strokeLinecap="round"/>
-    <path d="M32 66 C 46 52, 60 52, 60 64 C 60 54, 76 54, 90 70"
-          fill="none" stroke={color} strokeWidth="3" strokeLinecap="round" opacity="0.7"/>
-  </svg>
-);
-
 // ── Iconos propios de Hestía · gramática "Sello" ─────────────────────────
 // Rejilla 24, trazo fino (grosor y remates en .hi, styles.css) y la esquina
 // asimétrica de la marca (sup-izq e inf-der redondeadas) en toda forma
@@ -226,6 +206,7 @@ const IconSprite = () => (
     <symbol id="hi-buildings" viewBox="0 0 24 24"><path class="hi-plate" transform="translate(2 2)" d="M5 21V9l5-3 5 3v12z"/><g class="hi-ln"><path d="M3 21h18M5 21V9l5-3 5 3v12M15 21V12h4v9M8.5 13h3M8.5 17h3"/></g></symbol>
     <symbol id="hi-book" viewBox="0 0 24 24"><path class="hi-plate" transform="translate(2 2)" d="M5 4h11a2 2 0 0 1 2 2v13H7a2 2 0 0 0-2 2z"/><g class="hi-ln"><path d="M5 4h11a2 2 0 0 1 2 2v13H7a2 2 0 0 0-2 2z"/><path d="M5 4v15a2 2 0 0 1 2-2h11"/><path d="M9 8h5"/></g></symbol>
     <symbol id="hi-shop" viewBox="0 0 24 24"><path class="hi-plate" transform="translate(2 2)" d="M3 5h18l1 4H2z"/><g class="hi-ln"><path d="M3 5h18l1 4H2zM4 9v11h16V9M9.5 20v-6h5v6"/></g></symbol>
+    <symbol id="hi-bag" viewBox="0 0 24 24"><path class="hi-plate" transform="translate(2 2)" d="M4.5 11a3 3 0 0 1 3-3h12v9.5a3 3 0 0 1-3 3h-12z"/><g class="hi-ln"><path d="M4.5 11a3 3 0 0 1 3-3h12v9.5a3 3 0 0 1-3 3h-12z"/><path d="M9 8V6.5a3 3 0 0 1 6 0V8"/><path class="hi-fi" d="M9 11.2a.9.9 0 1 0 0 1.8.9.9 0 1 0 0-1.8zM15 11.2a.9.9 0 1 0 0 1.8.9.9 0 1 0 0-1.8z"/></g></symbol>
     <symbol id="hi-basket" viewBox="0 0 24 24"><path class="hi-plate-ln" transform="translate(2 2)" d="M5 9h14l-1.4 10H6.4zM9 9 11 4M15 9 13 4"/><g class="hi-ln"><path d="M5 9h14l-1.4 10H6.4zM9 9 11 4M15 9 13 4"/><path d="M8.5 12v4M12 12v4M15.5 12v4"/></g></symbol>
     <symbol id="hi-fuel" viewBox="0 0 24 24"><path class="hi-plate" transform="translate(2 2)" d="M5 5h8v5H5z"/><g class="hi-ln"><path d="M4 21V5a2 2 0 0 1 2-2h5a2 2 0 0 1 2 2v16M3 21h12M5 5h8v5H5z"/><path d="M13 9h3a2 2 0 0 1 2 2v5a1.5 1.5 0 0 0 3 0V9.5l-2-2"/></g></symbol>
     <symbol id="hi-plug" viewBox="0 0 24 24"><path class="hi-plate" transform="translate(2 2)" d="M10 6.5 7.3 11H9.5l-1 5L13 10h-2.2z"/><g class="hi-ln"><path d="M5.0 4.5a1.5 1.5 0 0 1 1.5-1.5H14.0V19.5a1.5 1.5 0 0 1-1.5 1.5H5.0z"/><path d="M14 8h2a1.6 1.6 0 0 1 1.6 1.6V15a1.6 1.6 0 0 0 3.2 0v-5"/><path d="M10 6.5 7.3 11H9.5l-1 5L13 10h-2.2z"/></g></symbol>
@@ -317,7 +298,7 @@ const BRAND_EMOJI_HI = {
   '📤': 'upload', '📎': 'clip', '🔔': 'bell', '🔑': 'key', '📋': 'clipboard', '⏳': 'hourglass',
   '🗑': 'trash', '✅': 'check', '📄': 'doc', '🧾': 'receipt', '📊': 'chart', '📈': 'chart',
   '📷': 'camera', '⏱': 'clock', '🧳': 'luggage', '✈': 'plane', '🚌': 'bus', '🚆': 'train',
-  '🚗': 'car', '🚶': 'walk', '🏘': 'buildings', '🍷': 'wine', '🐟': 'fish', '🦩': 'salt',
+  '🚗': 'car', '🚶': 'walk', '🏘': 'buildings', '🛍': 'bag', '🍷': 'wine', '🐟': 'fish', '🦩': 'salt',
   '✓': 'check', '✗': 'ban',
 };
 const emojiHi = (emoji) => BRAND_EMOJI_HI[(emoji || '').replace(/️/g, '')];
@@ -3114,7 +3095,7 @@ if (typeof window !== 'undefined' && typeof window.addEventListener === 'functio
   });
 }
 
-Object.assign(window, { HestiaLogoMark, IconSprite, HiIcon, emojiHi, EmojiIcon, AnimatedPrice, lqipFor, BlurImg, WatermarkBadge, IndaloWatermark, IndaloLoader, IndaloShape, Wordmark, COPY, useScrollMode, useReveal, useSectionGlow, QuickFAQ, SabiasQue, FraseHogar, StickyFacts, _HOME_FACTS_POOL, HESTIA_PRICES, STAY_DISCOUNTS, PET_SUPP_FLAT, _dayPrice, _calcStay, _regularStayTotal, _dayPriceV2, _v2SeasonForDate, _v2BumpedSeasonForDate, _vt, DateRangePicker, _drAvail, _drAdj, _drDiff, _drFmtDate, _calcLsTotal, _allAptsBlocked, _hestiaFindAlternatives, _hestiaSendLead, _hestiaSendLeadFd, _hestiaFlushLeads });
+Object.assign(window, { IconSprite, HiIcon, emojiHi, EmojiIcon, AnimatedPrice, lqipFor, BlurImg, WatermarkBadge, IndaloWatermark, IndaloLoader, IndaloShape, Wordmark, COPY, useScrollMode, useReveal, useSectionGlow, QuickFAQ, SabiasQue, FraseHogar, StickyFacts, _HOME_FACTS_POOL, HESTIA_PRICES, STAY_DISCOUNTS, PET_SUPP_FLAT, _dayPrice, _calcStay, _regularStayTotal, _dayPriceV2, _v2SeasonForDate, _v2BumpedSeasonForDate, _vt, DateRangePicker, _drAvail, _drAdj, _drDiff, _drFmtDate, _calcLsTotal, _allAptsBlocked, _hestiaFindAlternatives, _hestiaSendLead, _hestiaSendLeadFd, _hestiaFlushLeads });
 
 // Ficha de Google Maps de cada Hestía (mismas que el sameAs del JSON-LD de
 // mar.html / thalassa.html / salinas.html). Abren la ficha donde el huésped

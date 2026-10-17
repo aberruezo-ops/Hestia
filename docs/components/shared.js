@@ -157,58 +157,6 @@ if (typeof document !== 'undefined' && typeof document.addEventListener === 'fun
     if (a) _hestiaTrack('whatsapp_click');
   }, true);
 }
-const HestiaLogoMark = ({
-  size = 40,
-  color = '#3AAABB'
-}) => /*#__PURE__*/React.createElement("svg", {
-  viewBox: "0 0 120 120",
-  width: size,
-  height: size,
-  "aria-hidden": "true"
-}, /*#__PURE__*/React.createElement("g", {
-  fill: color
-}, /*#__PURE__*/React.createElement("path", {
-  d: "M18 22 L32 22 L32 50 L32 56 L30 62 L30 98 L18 98 Z"
-}), /*#__PURE__*/React.createElement("path", {
-  d: "M88 22 L102 22 L102 98 L90 98 L90 62 L88 56 L88 50 Z"
-}), /*#__PURE__*/React.createElement("rect", {
-  x: "14",
-  y: "20",
-  width: "22",
-  height: "4",
-  rx: "1"
-}), /*#__PURE__*/React.createElement("rect", {
-  x: "84",
-  y: "20",
-  width: "22",
-  height: "4",
-  rx: "1"
-}), /*#__PURE__*/React.createElement("rect", {
-  x: "14",
-  y: "96",
-  width: "22",
-  height: "4",
-  rx: "1"
-}), /*#__PURE__*/React.createElement("rect", {
-  x: "84",
-  y: "96",
-  width: "22",
-  height: "4",
-  rx: "1"
-})), /*#__PURE__*/React.createElement("path", {
-  d: "M32 58 C 44 42, 60 42, 60 56 C 60 46, 78 46, 90 62",
-  fill: "none",
-  stroke: color,
-  strokeWidth: "5",
-  strokeLinecap: "round"
-}), /*#__PURE__*/React.createElement("path", {
-  d: "M32 66 C 46 52, 60 52, 60 64 C 60 54, 76 54, 90 70",
-  fill: "none",
-  stroke: color,
-  strokeWidth: "3",
-  strokeLinecap: "round",
-  opacity: "0.7"
-}));
 
 // ── Iconos propios de Hestía · gramática "Sello" ─────────────────────────
 // Rejilla 24, trazo fino (grosor y remates en .hi, styles.css) y la esquina
@@ -1064,6 +1012,22 @@ const IconSprite = () => /*#__PURE__*/React.createElement("svg", {
   class: "hi-ln"
 }, /*#__PURE__*/React.createElement("path", {
   d: "M3 5h18l1 4H2zM4 9v11h16V9M9.5 20v-6h5v6"
+}))), /*#__PURE__*/React.createElement("symbol", {
+  id: "hi-bag",
+  viewBox: "0 0 24 24"
+}, /*#__PURE__*/React.createElement("path", {
+  class: "hi-plate",
+  transform: "translate(2 2)",
+  d: "M4.5 11a3 3 0 0 1 3-3h12v9.5a3 3 0 0 1-3 3h-12z"
+}), /*#__PURE__*/React.createElement("g", {
+  class: "hi-ln"
+}, /*#__PURE__*/React.createElement("path", {
+  d: "M4.5 11a3 3 0 0 1 3-3h12v9.5a3 3 0 0 1-3 3h-12z"
+}), /*#__PURE__*/React.createElement("path", {
+  d: "M9 8V6.5a3 3 0 0 1 6 0V8"
+}), /*#__PURE__*/React.createElement("path", {
+  class: "hi-fi",
+  d: "M9 11.2a.9.9 0 1 0 0 1.8.9.9 0 1 0 0-1.8zM15 11.2a.9.9 0 1 0 0 1.8.9.9 0 1 0 0-1.8z"
 }))), /*#__PURE__*/React.createElement("symbol", {
   id: "hi-basket",
   viewBox: "0 0 24 24"
@@ -1935,6 +1899,7 @@ const BRAND_EMOJI_HI = {
   '🚗': 'car',
   '🚶': 'walk',
   '🏘': 'buildings',
+  '🛍': 'bag',
   '🍷': 'wine',
   '🐟': 'fish',
   '🦩': 'salt',
@@ -5781,7 +5746,6 @@ if (typeof window !== 'undefined' && typeof window.addEventListener === 'functio
   });
 }
 Object.assign(window, {
-  HestiaLogoMark,
   IconSprite,
   HiIcon,
   emojiHi,
