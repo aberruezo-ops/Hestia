@@ -1,23 +1,45 @@
 {
+  "env": {
+    "GATEGUARD_BASH_ROUTINE_DISABLED": "1",
+    "GATEGUARD_EXEMPT_GLOBS": "/tmp/**"
+  },
+  "permissions": {
+    "allow": [
+      "Bash(node scripts/build-jsx.js)",
+      "Bash(node scripts/test-pricing.mjs)",
+      "Bash(node scripts/price-consistency.mjs)",
+      "Bash(node scripts/smoke-test.cjs)",
+      "Bash(node scripts/contrast-audit.cjs)",
+      "Bash(python3 scripts/build-lqip.py)",
+      "Bash(git status:*)",
+      "Bash(git diff:*)",
+      "Bash(git log:*)",
+      "Bash(git show:*)",
+      "Bash(git branch:*)"
+    ]
+  },
   "hooks": {
-    "PostToolUse": [
+    "PreToolUse": [
       {
-        "matcher": "Edit|Write",
+        "matcher": "Edit|Write|MultiEdit",
         "hooks": [
           {
             "type": "command",
-            "command": "jq -r '.tool_input.file_path // \"\"' | grep -q '\\.jsx$' && cd /home/user/Hestia && node scripts/build-jsx.js 2>&1 || true",
-            "statusMessage": "Compilando JSX…"
+            "command": "node \"$CLAUDE_PROJECT_DIR/scripts/claude-hooks/pre-edit-secrets.mjs\"",
+            "statusMessage": "Comprobando secretos…"
           }
         ]
-      },
+      }
+    ],
+    "PostToolUse": [
       {
-        "matcher": "Edit|Write",
+        "matcher": "Edit|Write|MultiEdit",
         "hooks": [
           {
             "type": "command",
-            "command": "jq -r '.tool_input.file_path // \"\"' | grep -q 'styles\\.css' && { CURR=$(grep -oE 'styles\\.css\\?v=[0-9]+' /home/user/Hestia/docs/index.html | grep -oE '[0-9]+$' | head -1); NEXT=$((CURR + 1)); find /home/user/Hestia/docs -maxdepth 1 -name '*.html' -exec sed -i \"s/styles\\.css?v=$CURR/styles.css?v=$NEXT/g\" {} \\;; echo \"CSS v$CURR → v$NEXT en $(find /home/user/Hestia/docs -maxdepth 1 -name '*.html' | wc -l) HTMLs\"; } || true",
-            "statusMessage": "Subiendo versión CSS…"
+            "command": "node \"$CLAUDE_PROJECT_DIR/scripts/claude-hooks/post-edit.mjs\"",
+            "statusMessage": "Compilando y revisando…",
+            "timeout": 120
           }
         ]
       }

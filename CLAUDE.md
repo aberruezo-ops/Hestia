@@ -9,11 +9,11 @@ Instrucciones de proyecto para Claude. Léelas al inicio de cada sesión y aplí
 Hestía es un sitio estático (GitHub Pages, sirviendo desde `docs/`) con:
 
 - **Frontend público**: HTML + JSX compilado a JS, sin bundler ni framework runtime. Los `.jsx` viven en `docs/components/` y se compilan a `.js` con `node scripts/build-jsx.js`.
-- **Datos**: JSON en `docs/data/` (precios, reseñas) editables vía `/p-edit.html` con un PAT de GitHub (zona pública del repo). Datos sensibles (reservas con datos de huéspedes) en `data-private/` — fuera de `docs/`, no servidos por Pages.
+- **Datos**: JSON en `docs/data/` (precios, reseñas) editables vía `/p-edit.html` con un PAT de GitHub (zona pública del repo). Datos sensibles (reservas y prereservas con datos de huéspedes) en el **repo privado `aberruezo-ops/hestia-data`** (`reservas.json`, `prereservas.json`), que `/p-edit` lee y escribe por la API de GitHub. `data-private/` sigue en `.gitignore` como salvaguarda local.
 - **PDFs**: generados con `node scripts/build-pdf.mjs` desde el mismo árbol de componentes.
-- **Backend**: hay UN Cloudflare Worker (analytics) — el resto es estático.
+- **Backend**: 8 Cloudflare Workers en `workers/` (`agent-content`, `analytics-proxy`, `guide-access`, `pago`, `reviews-submit`, `sheets-sync`, `social-publish`, `traveler-registry`), cada uno con su `wrangler.toml`. El resto es estático.
 
-**No hay backend con base de datos.** No hay endpoints. No hay autenticación de usuarios finales. Las reglas de seguridad clásicas de apps fullstack se aplican parcialmente.
+**No hay backend con base de datos propia** (los Workers que guardan datos usan KV de Cloudflare). Los Workers son los únicos endpoints. No hay autenticación de usuarios finales. Las reglas de seguridad clásicas de apps fullstack se aplican parcialmente.
 
 ---
 
@@ -91,8 +91,8 @@ Aplica estas medidas a TODO el código nuevo y revisa lo existente cuando lo toq
 
 ### 5. Datos sensibles · zona privada
 
-- Los datos con info de huéspedes (nombre, teléfono, DNI, importes) viven en `data-private/` (fuera de `docs/`).
-- Si el repo es **público en GitHub**, los archivos de `data-private/` siguen siendo visibles para cualquiera que clone. **El repo debe ser privado** para que esa carpeta proteja realmente los datos.
+- Los datos con info de huéspedes (nombre, teléfono, DNI, importes) viven en el **repo privado `aberruezo-ops/hestia-data`**, nunca en este repo (que sirve `docs/` en público). Las fichas de viajeros (registro SES) van cifradas en el KV del Worker `traveler-registry`.
+- `data-private/` está en `.gitignore`: si alguna vez se usa como copia local, no se commitea.
 - Nunca añadas datos personales en `docs/` ni en commits que se publiquen (incluido en mensajes de commit o nombres de archivo).
 - Si tienes que mover datos privados a otro sitio (Supabase, Firestore, etc.), documenta la migración aquí.
 
@@ -170,10 +170,23 @@ Todos los iconos de la web salen del sprite propio (`IconSprite` en `shared.jsx`
 
 ## Tests y verificación
 
-- No hay suite de tests automatizada aún. Cuando toques algo crítico:
-  - **Compila**: `node scripts/build-jsx.js`
-  - **Build PDFs si tocas la guía**: `node scripts/build-pdf.mjs`
-  - **Verifica localmente** abriendo `docs/index.html` o `docs/p-edit.html` antes de pushear.
+- Dependencias de desarrollo fijadas en `package.json` (`npm install`). Comandos: `npm run build` (JSX → JS), `npm run test:pricing` (invariantes de precio + consistencia), `npm run test:smoke` y `npm run test:contrast` (requieren `docs/` servido en local), `npm run pdf`.
+- La CI (`.github/workflows/checks.yml`) en cada push/PR: **bloquea** si fallan las invariantes de precio (`test-pricing.mjs`) o el smoke test (errores JS, pantalla en blanco, enlaces internos rotos); **reporta** sin bloquear la consistencia de precio, el desfase JSX/JS y el contraste WCAG.
+- Cuando toques algo crítico, además: compila, construye los PDFs si tocas la guía y **verifica en el navegador** antes de pushear (Playwright MCP, ver abajo).
+
+
+---
+
+## Claude Code en este proyecto
+
+- **Publicación**: tras cada cambio, commit en la rama de trabajo, push y **fusión directa en `main` sin preguntar** (decisión del propietario). La skill `/publicar` hace el ritual completo.
+- **Hooks** (`.claude/settings.json`, scripts en `scripts/claude-hooks/`):
+  - Antes de editar: `pre-edit-secrets.mjs` bloquea ficheros de secretos (`.env`, `.dev.vars`, `.pem`/`.key`) y tokens (GitHub, Anthropic, AWS, claves privadas).
+  - Después de editar: `post-edit.mjs` compila el JSX (y avisa si falla), sube `styles.css?v=` en los HTML y avisa si el texto nuevo de `docs/` trae un guion largo.
+  - Los hooks solo ven ediciones hechas con Edit/Write: si cambias JSX o CSS por script, compila y sube la versión del CSS a mano.
+- **Subagente `revisor-marca`** (`.claude/agents/`): revisa voz, color por apartamento, iconografía "Sello" y contraste antes de publicar cambios visibles.
+- **MCP** (`.mcp.json`): Playwright para verificar en el navegador; Cloudflare (observabilidad y bindings) para logs y KV de los Workers, con login de Cloudflare.
+- **GateGuard** (plugin ECC): exime `/tmp/**` y no frena el Bash rutinario; el control de comandos destructivos sigue activo.
 
 ---
 

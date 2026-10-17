@@ -46,7 +46,7 @@ jobs:
 
       - name: Babel (misma versión que checks.yml)
         if: steps.when.outputs.run == 'true'
-        run: npm install --no-save @babel/core@8.0.1 @babel/preset-react@8.0.1
+        run: npm install
 
       - name: Preparar edición
         if: steps.when.outputs.run == 'true'
