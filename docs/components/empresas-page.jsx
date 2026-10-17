@@ -275,7 +275,7 @@ const EmpresasForm = ({ lang }) => {
       <section className="emp-success" role="status" aria-live="polite">
         <div className="container">
           <div className="emp-success-card">
-            <span className="emp-success-icon" aria-hidden="true">✓</span>
+            <span className="emp-success-icon" aria-hidden="true"><HiIcon name="check" size="1em" /></span>
             <h2 className="emp-success-title">{t.success_title}</h2>
             <p className="emp-success-text">{t.success_text}</p>
             <a href={cmWaHref} target="_blank" rel="noopener" className="btn btn-primary emp-wa-btn">{t.success_wa}</a>
@@ -476,7 +476,7 @@ const EmpresasPageApp = () => {
           <ul className="emp-trust-track">
             {[...t.trust, ...t.trust].map((item, i) => (
               <li key={i} className="emp-trust-item" aria-hidden={i >= t.trust.length ? 'true' : undefined}>
-                <span className="emp-trust-check" aria-hidden="true">✓</span>{item}
+                <span className="emp-trust-check" aria-hidden="true"><HiIcon name="check" size="1em" /></span>{item}
               </li>
             ))}
           </ul>
@@ -504,7 +504,7 @@ const EmpresasPageApp = () => {
             <ul className="emp-services-list">
               {t.services.map((s, i) => (
                 <li key={i} className="emp-service-item">
-                  <span className="emp-service-check" aria-hidden="true">✓</span>{s}
+                  <span className="emp-service-check" aria-hidden="true"><HiIcon name="check" size="1em" /></span>{s}
                 </li>
               ))}
             </ul>

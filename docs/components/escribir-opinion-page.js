@@ -242,7 +242,10 @@ const EscribirOpinionForm = ({
     }, /*#__PURE__*/React.createElement("span", {
       className: "eo-success-icon",
       "aria-hidden": "true"
-    }, "✓"), /*#__PURE__*/React.createElement("h2", {
+    }, /*#__PURE__*/React.createElement(HiIcon, {
+      name: "check",
+      size: "1em"
+    })), /*#__PURE__*/React.createElement("h2", {
       className: "eo-success-title"
     }, t.success_title), /*#__PURE__*/React.createElement("p", {
       className: "eo-success-text"

@@ -277,7 +277,7 @@ const RatingsMarquee = ({ lang }) => {
             <span className="rm-item">{it.startsWith('★ ')
               ? <><HiIcon name="star-fill" size={13} className="rm-star" /> {it.slice(2)}</>
               : it}</span>
-            <span className="rm-dot" aria-hidden="true">✦</span>
+            <span className="rm-dot" aria-hidden="true"><HiIcon name="spark" size={11} /></span>
           </React.Fragment>
         ))}
       </div>

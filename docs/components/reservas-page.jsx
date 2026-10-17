@@ -173,7 +173,7 @@ const LsPriceSummary = ({ ls, extras = [], guests, pets, lang }) => {
         </div>
         <div className="price-right-col">
           <div className="price-guarantee-badge">
-            {es ? '✓ Mejor precio garantizado' : '✓ Best price guaranteed'}
+            <HiIcon name="check" size="1em" /> {es ? 'Mejor precio garantizado' : 'Best price guaranteed'}
           </div>
           <div className="price-guarantee-sub">
             {es ? 'Sin comisiones de plataformas.' : 'No platform commissions.'}
@@ -269,7 +269,7 @@ const PricePreview = ({ apt, checkin, checkout, pets, guests, lang, extras = [],
         </div>
         <div className="price-right-col">
           <div className="price-guarantee-badge">
-            {lang === 'es' ? '✓ Mejor precio garantizado' : '✓ Best price guaranteed'}
+            <HiIcon name="check" size="1em" /> {lang === 'es' ? 'Mejor precio garantizado' : 'Best price guaranteed'}
           </div>
           <div className="price-guarantee-sub">
             {lang === 'es'
@@ -1344,7 +1344,7 @@ const ReservasForm = ({ lang }) => {
             {/* Status badge, sólo si hay apt elegido */}
             {apt && isAvailable === true && (
               <div className="rf-status rf-status-ok">
-                <span className="rf-status-icon" aria-hidden="true">✓</span>
+                <span className="rf-status-icon" aria-hidden="true"><HiIcon name="check" size="1em" /></span>
                 <span>{t.status_avail}</span>
               </div>
             )}
@@ -1506,7 +1506,7 @@ const ReservasForm = ({ lang }) => {
             )}
             {sent ? (
               <div className="rf-sent" role="status" aria-live="polite">
-                <div className="rf-sent-icon" aria-hidden="true">✓</div>
+                <div className="rf-sent-icon" aria-hidden="true"><HiIcon name="check" size="1em" /></div>
                 <h4 className="rf-sent-title">{lang === 'es' ? 'Solicitud preparada' : 'Request ready'}</h4>
                 <p className="rf-sent-text">
                   {sent.channel === 'whatsapp'
@@ -1528,7 +1528,7 @@ const ReservasForm = ({ lang }) => {
                 </p>
                 <div className="rf-sent-actions">
                   <button type="button" className="btn btn-ghost" onClick={copyMsg}>
-                    {copied ? (lang === 'es' ? 'Copiado ✓' : 'Copied ✓') : (lang === 'es' ? 'Copiar mensaje' : 'Copy message')}
+                    {copied ? <>{lang === 'es' ? 'Copiado' : 'Copied'} <HiIcon name="check" size="1em" /></> : (lang === 'es' ? 'Copiar mensaje' : 'Copy message')}
                   </button>
                   <button type="button" className="btn btn-ghost" onClick={() => setSent(null)}>
                     {lang === 'es' ? 'Volver' : 'Back'}

@@ -402,9 +402,10 @@ const HsResultCard = ({ apt, available, lang, checkin, checkout, guests }) => {
             </div>
           </div>
           <div className={`hs-rc-status ${available ? 'ok' : 'no'}`}>
+            <HiIcon name={available ? 'check' : 'ban'} size="1em" />{' '}
             {available
-              ? (lang === 'es' ? '✓ Disponible' : '✓ Available')
-              : (lang === 'es' ? '✗ Reservado' : '✗ Booked')}
+              ? (lang === 'es' ? 'Disponible' : 'Available')
+              : (lang === 'es' ? 'Reservado' : 'Booked')}
           </div>
         </div>
 
@@ -429,7 +430,7 @@ const HsResultCard = ({ apt, available, lang, checkin, checkout, guests }) => {
                   </div>
                   <div className="hs-pb-right">
                     <div className="price-guarantee-badge">
-                      {lang === 'es' ? '✓ Mejor precio garantizado' : '✓ Best price guaranteed'}
+                      <HiIcon name="check" size="1em" /> {lang === 'es' ? 'Mejor precio garantizado' : 'Best price guaranteed'}
                     </div>
                     <div className="price-guarantee-sub">
                       {lang === 'es'
@@ -776,7 +777,7 @@ const HomeSearch = ({ lang, b2b = false }) => {
           <div className="hs-trust">
             <span><HiIcon name="lock" size={14} style={{ verticalAlign: '-2px', marginRight: 3 }} />{lang === 'es' ? 'Sin comisiones' : 'No fees'}</span>
             <span className="hs-trust-dot"/>
-            <span>{lang === 'es' ? '✓ Te contestamos en minutos' : '✓ We reply in minutes'}</span>
+            <span><HiIcon name="check" size="1em" /> {lang === 'es' ? 'Te contestamos en minutos' : 'We reply in minutes'}</span>
             <span className="hs-trust-dot"/>
             <span>{lang === 'es' ? 'Solo 3 Hestías' : 'Only 3 Hestías'}</span>
           </div>

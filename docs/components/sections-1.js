@@ -722,7 +722,10 @@ const Apartments = ({
       className: "apb-per"
     }, lang === 'es' ? '/noche · precio directo orientativo' : '/night · guide direct price'), /*#__PURE__*/React.createElement("span", {
       className: "apb-match"
-    }, lang === 'es' ? '✓ Hasta un 10% aprox. más barato que en Booking o Airbnb*' : '✓ Up to ~10% cheaper than Booking or Airbnb*')), (() => {
+    }, /*#__PURE__*/React.createElement(HiIcon, {
+      name: "check",
+      size: "1em"
+    }), ' ', lang === 'es' ? 'Hasta un 10% aprox. más barato que en Booking o Airbnb*' : 'Up to ~10% cheaper than Booking or Airbnb*')), (() => {
       const av = aptAvail[a.id];
       if (!av) return null;
       const today = new Date().toISOString().slice(0, 10);
@@ -914,6 +917,11 @@ const Compare = ({
     }, "/10")),
     rate: true
   }];
+  // '✓ Incluida' en los datos de la tabla se pinta con el icono de marca.
+  const cmpCell = v => typeof v === 'string' && v.startsWith('✓ ') ? /*#__PURE__*/React.createElement(React.Fragment, null, /*#__PURE__*/React.createElement(HiIcon, {
+    name: "check",
+    size: "1em"
+  }), " ", v.slice(2)) : v;
   const t = COPY[lang];
   return /*#__PURE__*/React.createElement("section", {
     className: "compare section-cream",
@@ -971,13 +979,13 @@ const Compare = ({
   }, r.label), /*#__PURE__*/React.createElement("div", {
     className: `cell ${r.rate ? 'rate' : ''}`,
     role: "cell"
-  }, r.vm), /*#__PURE__*/React.createElement("div", {
+  }, cmpCell(r.vm)), /*#__PURE__*/React.createElement("div", {
     className: `cell ${r.rate ? 'rate' : ''}`,
     role: "cell"
-  }, r.vt), /*#__PURE__*/React.createElement("div", {
+  }, cmpCell(r.vt)), /*#__PURE__*/React.createElement("div", {
     className: `cell ${r.rate ? 'rate' : ''}`,
     role: "cell"
-  }, r.vs)))), /*#__PURE__*/React.createElement("div", {
+  }, cmpCell(r.vs))))), /*#__PURE__*/React.createElement("div", {
     className: "compare-cards-mobile"
   }, [{
     key: 'vm',

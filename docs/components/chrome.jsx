@@ -362,7 +362,7 @@ const Header = ({ mode, scrolled, lang }) => {
             <NavLink href={lang === 'es' ? NAV_PAGES.guiaZona : '/guia-vera/en/'} className="mn-link">{lang === 'es' ? 'Extracto Guía' : 'Guide extract'}</NavLink>
             <NavLink href={NAV_PAGES.estanciasLargas} className="mn-link">{t.nav[9]}</NavLink>
             <NavLink href={NAV_PAGES.empresas} className="mn-link">{lang === 'es' ? 'Para empresas' : 'For business'}</NavLink>
-            <NavLink href={NAV_PAGES.ventajas} className="mn-link">✓ {lang === 'es' ? 'Ventajas reserva directa' : 'Direct booking perks'}</NavLink>
+            <NavLink href={NAV_PAGES.ventajas} className="mn-link"><HiIcon name="check" size="1em" /> {lang === 'es' ? 'Ventajas reserva directa' : 'Direct booking perks'}</NavLink>
           </div>
           <div className="mn-actions">
             <NavLink href={NAV_PAGES.reservas} className="mn-cta-primary">{t.cta_nav} →</NavLink>
@@ -371,7 +371,7 @@ const Header = ({ mode, scrolled, lang }) => {
               className="mn-cta-secondary"
               onClick={() => { close(); setAccessOpen(true); }}
             >
-              <span className="mn-cta-ico" aria-hidden="true">✦</span>
+              <span className="mn-cta-ico" aria-hidden="true"><HiIcon name="spark" size="1em" /></span>
               {lang === 'es' ? 'Rincón del huésped' : 'Guest corner'}
             </button>
           </div>
@@ -405,9 +405,7 @@ const FloatingChat = ({ lang }) => {
     </svg>
   );
   const TelIcon = () => (
-    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
-      <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.13.96.37 1.9.72 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.91.35 1.85.59 2.81.72A2 2 0 0 1 22 16.92z"/>
-    </svg>
+    <HiIcon name="phone" size={15} />
   );
   const page = (window.location.pathname.split('/').pop() || 'index.html');
   const WA_MSGS = {

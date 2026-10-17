@@ -223,7 +223,7 @@ const EscribirOpinionForm = ({ lang }) => {
       <section className="eo-success" role="status" aria-live="polite">
         <div className="container">
           <div className="eo-success-card">
-            <span className="eo-success-icon" aria-hidden="true">✓</span>
+            <span className="eo-success-icon" aria-hidden="true"><HiIcon name="check" size="1em" /></span>
             <h2 className="eo-success-title">{t.success_title}</h2>
             <p className="eo-success-text">{t.success_text}</p>
             <p className="eo-success-extra">{t.success_extra}</p>

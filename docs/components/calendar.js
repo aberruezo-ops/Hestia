@@ -162,7 +162,10 @@ const RequestPanel = ({
     className: "price-right-col"
   }, /*#__PURE__*/React.createElement("div", {
     className: "price-guarantee-badge"
-  }, lang === 'es' ? '★ Mejor precio garantizado' : '★ Best price guaranteed'), /*#__PURE__*/React.createElement("div", {
+  }, /*#__PURE__*/React.createElement(HiIcon, {
+    name: "check",
+    size: "1em"
+  }), " ", lang === 'es' ? 'Mejor precio garantizado' : 'Best price guaranteed'), /*#__PURE__*/React.createElement("div", {
     className: "price-guarantee-sub"
   }, lang === 'es' ? '¿Lo encuentras más barato en Booking o Airbnb? Tráenoslo: no solo te lo igualamos, te lo mejoramos.' : 'Found it cheaper on Booking or Airbnb? Bring it to us, we don\'t just match it, we beat it.'))), /*#__PURE__*/React.createElement("div", {
     className: "price-breakdown"
@@ -220,29 +223,10 @@ const RequestPanel = ({
     }
   }), lang === 'es' ? 'Bebé' : 'Baby'))), /*#__PURE__*/React.createElement("div", {
     className: "req-disclaimer"
-  }, /*#__PURE__*/React.createElement("svg", {
-    width: "13",
-    height: "13",
-    viewBox: "0 0 24 24",
-    fill: "none",
-    stroke: "currentColor",
-    strokeWidth: "2",
-    "aria-hidden": "true"
-  }, /*#__PURE__*/React.createElement("circle", {
-    cx: "12",
-    cy: "12",
-    r: "10"
-  }), /*#__PURE__*/React.createElement("line", {
-    x1: "12",
-    y1: "8",
-    x2: "12",
-    y2: "12"
-  }), /*#__PURE__*/React.createElement("line", {
-    x1: "12",
-    y1: "16",
-    x2: "12.01",
-    y2: "16"
-  })), /*#__PURE__*/React.createElement("p", null, lang === 'es' ? /*#__PURE__*/React.createElement(React.Fragment, null, /*#__PURE__*/React.createElement("strong", null, "Precio máximo orientativo."), " El precio de la web es el directo, sin comisiones de plataforma. Las plataformas a veces hacen promociones puntuales que no controlamos; si encuentras este apartamento más barato, tráenoslo: no solo te lo igualamos, te lo mejoramos. En la siguiente pantalla puedes añadir extras (cuna, trona, sábanas, mascota…). Normalmente te contestamos en minutos.") : /*#__PURE__*/React.createElement(React.Fragment, null, /*#__PURE__*/React.createElement("strong", null, "Maximum indicative price."), " The website price is the direct one, with no platform commission. Platforms sometimes run promos we don't control; if you find this apartment cheaper, bring it to us: we don't just match it, we beat it. On the next screen you can add extras (cot, high chair, linen, pet…). We usually reply in minutes."))), /*#__PURE__*/React.createElement("div", {
+  }, /*#__PURE__*/React.createElement(HiIcon, {
+    name: "tag",
+    size: 16
+  }), /*#__PURE__*/React.createElement("p", null, lang === 'es' ? /*#__PURE__*/React.createElement(React.Fragment, null, /*#__PURE__*/React.createElement("strong", null, "Precio máximo orientativo."), " El precio de la web es el directo, sin comisiones de plataforma. Las plataformas a veces hacen promociones puntuales que no controlamos; si encuentras este apartamento más barato, tráenoslo: no solo te lo igualamos, te lo mejoramos. En la siguiente pantalla puedes añadir extras (cuna, trona, sábanas, mascota…). Normalmente te contestamos en minutos.") : /*#__PURE__*/React.createElement(React.Fragment, null, /*#__PURE__*/React.createElement("strong", null, "Maximum indicative price."), " The website price is the direct one, with no platform commission. Platforms sometimes run promos we don't control; if you find this apartment cheaper, bring it to us: we don't just match it, we beat it. On the next screen you can add extras (cot, high chair, linen, pet…). We usually reply in minutes."))), /*#__PURE__*/React.createElement("div", {
     className: "req-actions req-actions-forward"
   }, /*#__PURE__*/React.createElement("a", {
     href: reservasHref,

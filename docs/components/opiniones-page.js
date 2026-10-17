@@ -278,7 +278,10 @@ const OpinionesQuotesMarquee = ({
   }, ", ", q.name)), /*#__PURE__*/React.createElement("span", {
     className: "oqm-dot",
     "aria-hidden": "true"
-  }, "✦")))));
+  }, /*#__PURE__*/React.createElement(HiIcon, {
+    name: "spark",
+    size: 11
+  }))))));
 };
 const REVIEW_WORDS = 25; // palabras visibles antes del "leer más"
 

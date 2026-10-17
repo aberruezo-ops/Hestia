@@ -14166,10 +14166,6 @@ footer,
   50%  { background-position: 60% 0%, 0 0; }
   100% { background-position: 40% 0%, 0 0; }
 }
-@keyframes dbt-spark-float {
-  0%, 100% { transform: translateY(0) rotate(0deg);   opacity: .55; }
-  50%      { transform: translateY(-14px) rotate(180deg); opacity: 1; }
-}
 @keyframes dbt-pulse-dot {
   0%, 100% { transform: scale(1);   opacity: 1; }
   50%      { transform: scale(1.6); opacity: .35; }
@@ -14191,21 +14187,6 @@ footer,
   background-repeat: no-repeat, no-repeat;
   animation: dbt-bg-sweep 9s ease-in-out infinite;
 }
-.dbt-spark {
-  position: absolute;
-  font-family: var(--serif);
-  font-size: 18px;
-  color: color-mix(in srgb, var(--sol) 70%, var(--ber-dk));
-  opacity: .55;
-  pointer-events: none;
-  will-change: transform, opacity;
-  z-index: 0;
-}
-.dbt-spark-1 { top: 18%; left: 8%;  font-size: 22px; animation: dbt-spark-float 5.0s ease-in-out infinite; }
-.dbt-spark-2 { top: 68%; left: 14%; font-size: 14px; animation: dbt-spark-float 6.4s ease-in-out -1.2s infinite; color: color-mix(in srgb, var(--ber) 60%, var(--ber-dk)); }
-.dbt-spark-3 { top: 26%; right: 12%; font-size: 16px; animation: dbt-spark-float 5.8s ease-in-out -2.6s infinite; }
-.dbt-spark-4 { top: 74%; right: 9%;  font-size: 20px; animation: dbt-spark-float 7.2s ease-in-out -3.4s infinite; color: color-mix(in srgb, var(--sol) 80%, transparent); }
-.dbt-spark-5 { top: 50%; left: 50%; transform: translateX(-50%); font-size: 12px; animation: dbt-spark-float 4.6s ease-in-out -0.6s infinite; opacity: .35; }
 
 .dbt-eyebrow {
   position: relative;
@@ -14249,12 +14230,10 @@ footer,
 
 @media (prefers-reduced-motion: reduce) {
   .dbt-band-animated { animation: none; }
-  .dbt-spark,
   .dbt-eyebrow-dot,
   .dbt-title em::after,
   .dbt-btn-pulse { animation: none; }
   .dbt-title em::after { transform: scaleX(1); opacity: .5; }
-  .dbt-spark { display: none; }
 }
 .dbt-inner { max-width: 720px; margin: 0 auto; }
 .dbt-eyebrow {
@@ -23925,7 +23904,7 @@ img[src$="photo-alex.jpg"]:not(.avatar-img):hover {
   font-size: 14px;
   color: var(--ink, #3D1A35);
 }
-.lsl-includes-item svg { flex-shrink: 0; color: var(--accent, #3AAABB); }
+.lsl-includes-item svg { flex-shrink: 0; color: var(--ber, #3D1A35); }
 
 /* Prices */
 .lsl-prices-note { font-size: 13px; color: var(--ink-soft, #7A5A72); margin-bottom: 20px; line-height: 1.55; }
@@ -25018,6 +24997,25 @@ img[src$="photo-alex.jpg"]:not(.avatar-img):hover {
 .hi-ln       { fill: none; stroke: currentColor; }
 .hi-fi       { fill: currentColor; stroke: none; }
 .hi-gold     { fill: var(--vs, #D4A84A); stroke: none; }
+
+/* Contenedores que antes pintaban un glifo (✓ ✦) sobre un círculo de
+   color: el icono ya es su propio sello, así que el círculo sobra y el
+   icono crece. El trazo va en tinta o crema; el color de marca, en la placa. */
+.emp-success-icon, .eo-success-icon, .rf-sent-icon,
+.emp-trust-check, .emp-service-check {
+  background: none;
+  border-radius: 0;
+  color: var(--ber-dk, #2A0F2E);
+}
+.emp-success-icon .hi, .eo-success-icon .hi { width: 52px; height: 52px; }
+.rf-sent-icon .hi { width: 44px; height: 44px; }
+.emp-trust-check { color: var(--arena, #F0E8D5); }
+.emp-trust-check .hi { width: 18px; height: 18px; }
+.apb-match .hi { --hi-tint: var(--arena-dk, #E4D9BE); }
+.emp-service-check .hi { width: 20px; height: 20px; }
+.ga-apt-star { background: none; --hi-tint: var(--ga-accent); color: var(--crema, #FAF6F0); }
+.ga-apt-star .hi { width: 22px; height: 22px; }
+.rm-dot, .oqm-dot, .asb-perks-icon, .ads-mini-star { color: rgba(240, 232, 213, .85); }
 
 /* Iconos propios en cabeceras del admin (h2/h3 de pestañas) */
 .pe-h-ic { vertical-align: -0.14em; margin-right: 3px; opacity: .92; }

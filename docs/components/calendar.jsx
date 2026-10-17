@@ -150,7 +150,7 @@ const RequestPanel = ({ aptId, lang, accent, selStart, selEnd, onReset }) => {
             </div>
             <div className="price-right-col">
               <div className="price-guarantee-badge">
-                {lang === 'es' ? '★ Mejor precio garantizado' : '★ Best price guaranteed'}
+                <HiIcon name="check" size="1em" /> {lang === 'es' ? 'Mejor precio garantizado' : 'Best price guaranteed'}
               </div>
               <div className="price-guarantee-sub">
                 {lang === 'es'
@@ -213,7 +213,7 @@ const RequestPanel = ({ aptId, lang, accent, selStart, selEnd, onReset }) => {
 
       {/* Disclaimer, precio orientativo + garantía de mejora */}
       <div className="req-disclaimer">
-        <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" aria-hidden="true"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
+        <HiIcon name="tag" size={16} />
         <p>{lang === 'es'
           ? <><strong>Precio máximo orientativo.</strong> El precio de la web es el directo, sin comisiones de plataforma. Las plataformas a veces hacen promociones puntuales que no controlamos; si encuentras este apartamento más barato, tráenoslo: no solo te lo igualamos, te lo mejoramos. En la siguiente pantalla puedes añadir extras (cuna, trona, sábanas, mascota…). Normalmente te contestamos en minutos.</>
           : <><strong>Maximum indicative price.</strong> The website price is the direct one, with no platform commission. Platforms sometimes run promos we don't control; if you find this apartment cheaper, bring it to us: we don't just match it, we beat it. On the next screen you can add extras (cot, high chair, linen, pet…). We usually reply in minutes.</>}</p>

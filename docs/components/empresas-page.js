@@ -329,7 +329,10 @@ const EmpresasForm = ({
     }, /*#__PURE__*/React.createElement("span", {
       className: "emp-success-icon",
       "aria-hidden": "true"
-    }, "✓"), /*#__PURE__*/React.createElement("h2", {
+    }, /*#__PURE__*/React.createElement(HiIcon, {
+      name: "check",
+      size: "1em"
+    })), /*#__PURE__*/React.createElement("h2", {
       className: "emp-success-title"
     }, t.success_title), /*#__PURE__*/React.createElement("p", {
       className: "emp-success-text"
@@ -684,7 +687,10 @@ const EmpresasPageApp = () => {
   }, /*#__PURE__*/React.createElement("span", {
     className: "emp-trust-check",
     "aria-hidden": "true"
-  }, "✓"), item)))), /*#__PURE__*/React.createElement("section", {
+  }, /*#__PURE__*/React.createElement(HiIcon, {
+    name: "check",
+    size: "1em"
+  })), item)))), /*#__PURE__*/React.createElement("section", {
     className: "emp-perks-sec"
   }, /*#__PURE__*/React.createElement("div", {
     className: "container"
@@ -721,7 +727,10 @@ const EmpresasPageApp = () => {
   }, /*#__PURE__*/React.createElement("span", {
     className: "emp-service-check",
     "aria-hidden": "true"
-  }, "✓"), s))), /*#__PURE__*/React.createElement("p", {
+  }, /*#__PURE__*/React.createElement(HiIcon, {
+    name: "check",
+    size: "1em"
+  })), s))), /*#__PURE__*/React.createElement("p", {
     className: "emp-services-foot"
   }, t.servicesFoot))), /*#__PURE__*/React.createElement("section", {
     className: "emp-packages-sec"

@@ -406,7 +406,10 @@ const RatingsMarquee = ({
   }), " ", it.slice(2)) : it), /*#__PURE__*/React.createElement("span", {
     className: "rm-dot",
     "aria-hidden": "true"
-  }, "✦")))));
+  }, /*#__PURE__*/React.createElement(HiIcon, {
+    name: "spark",
+    size: 11
+  }))))));
 };
 
 // --- CONTACT CTA ---

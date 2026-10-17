@@ -175,7 +175,10 @@ const LsPriceSummary = ({
     className: "price-right-col"
   }, /*#__PURE__*/React.createElement("div", {
     className: "price-guarantee-badge"
-  }, es ? '✓ Mejor precio garantizado' : '✓ Best price guaranteed'), /*#__PURE__*/React.createElement("div", {
+  }, /*#__PURE__*/React.createElement(HiIcon, {
+    name: "check",
+    size: "1em"
+  }), " ", es ? 'Mejor precio garantizado' : 'Best price guaranteed'), /*#__PURE__*/React.createElement("div", {
     className: "price-guarantee-sub"
   }, es ? 'Sin comisiones de plataformas.' : 'No platform commissions.'))), /*#__PURE__*/React.createElement("div", {
     className: "price-breakdown"
@@ -260,7 +263,10 @@ const PricePreview = ({
     className: "price-right-col"
   }, /*#__PURE__*/React.createElement("div", {
     className: "price-guarantee-badge"
-  }, lang === 'es' ? '✓ Mejor precio garantizado' : '✓ Best price guaranteed'), /*#__PURE__*/React.createElement("div", {
+  }, /*#__PURE__*/React.createElement(HiIcon, {
+    name: "check",
+    size: "1em"
+  }), " ", lang === 'es' ? 'Mejor precio garantizado' : 'Best price guaranteed'), /*#__PURE__*/React.createElement("div", {
     className: "price-guarantee-sub"
   }, lang === 'es' ? 'Reserva directa, sin comisiones de plataformas.' : 'Book direct, no platform commissions.'))), /*#__PURE__*/React.createElement("div", {
     className: "price-breakdown"
@@ -1390,7 +1396,10 @@ const ReservasForm = ({
   }, /*#__PURE__*/React.createElement("span", {
     className: "rf-status-icon",
     "aria-hidden": "true"
-  }, "✓"), /*#__PURE__*/React.createElement("span", null, t.status_avail)), apt && isAvailable === false && /*#__PURE__*/React.createElement("div", {
+  }, /*#__PURE__*/React.createElement(HiIcon, {
+    name: "check",
+    size: "1em"
+  })), /*#__PURE__*/React.createElement("span", null, t.status_avail)), apt && isAvailable === false && /*#__PURE__*/React.createElement("div", {
     className: "rf-status rf-status-taken"
   }, /*#__PURE__*/React.createElement("span", {
     className: "rf-status-icon",
@@ -1555,7 +1564,10 @@ const ReservasForm = ({
   }, /*#__PURE__*/React.createElement("div", {
     className: "rf-sent-icon",
     "aria-hidden": "true"
-  }, "✓"), /*#__PURE__*/React.createElement("h4", {
+  }, /*#__PURE__*/React.createElement(HiIcon, {
+    name: "check",
+    size: "1em"
+  })), /*#__PURE__*/React.createElement("h4", {
     className: "rf-sent-title"
   }, lang === 'es' ? 'Solicitud preparada' : 'Request ready'), /*#__PURE__*/React.createElement("p", {
     className: "rf-sent-text"
@@ -1573,7 +1585,10 @@ const ReservasForm = ({
     type: "button",
     className: "btn btn-ghost",
     onClick: copyMsg
-  }, copied ? lang === 'es' ? 'Copiado ✓' : 'Copied ✓' : lang === 'es' ? 'Copiar mensaje' : 'Copy message'), /*#__PURE__*/React.createElement("button", {
+  }, copied ? /*#__PURE__*/React.createElement(React.Fragment, null, lang === 'es' ? 'Copiado' : 'Copied', " ", /*#__PURE__*/React.createElement(HiIcon, {
+    name: "check",
+    size: "1em"
+  })) : lang === 'es' ? 'Copiar mensaje' : 'Copy message'), /*#__PURE__*/React.createElement("button", {
     type: "button",
     className: "btn btn-ghost",
     onClick: () => setSent(null)

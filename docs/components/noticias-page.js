@@ -374,7 +374,10 @@ const ShareSection = ({
     type: "button",
     className: "noticias-share-btn",
     onClick: handleShare
-  }, shared ? lang === 'es' ? 'Compartido ✓' : 'Shared ✓' : lang === 'es' ? 'Compartir' : 'Share'), /*#__PURE__*/React.createElement("a", {
+  }, shared ? /*#__PURE__*/React.createElement(React.Fragment, null, lang === 'es' ? 'Compartido' : 'Shared', " ", /*#__PURE__*/React.createElement(HiIcon, {
+    name: "check",
+    size: "1em"
+  })) : lang === 'es' ? 'Compartir' : 'Share'), /*#__PURE__*/React.createElement("a", {
     href: waHref,
     className: "noticias-share-btn noticias-share-wa",
     target: "_blank",
@@ -426,7 +429,10 @@ const VozCard = ({
   className: "voz-block"
 }, /*#__PURE__*/React.createElement("div", {
   className: "voz-block-label"
-}, lang === 'es' ? '★ Recomendación Hestía' : '★ Hestía recommends'), /*#__PURE__*/React.createElement("p", {
+}, /*#__PURE__*/React.createElement(HiIcon, {
+  name: "star-fill",
+  size: "1em"
+}), " ", lang === 'es' ? 'Recomendación Hestía' : 'Hestía recommends'), /*#__PURE__*/React.createElement("p", {
   className: "voz-block-text"
 }, item.reco[lang])), /*#__PURE__*/React.createElement("a", {
   href: item.slug,

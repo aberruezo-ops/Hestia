@@ -553,9 +553,10 @@ const Apartments = ({ lang }) => {
                       <span className="apb-price"><AnimatedPrice value={minPrice} from={0} duration={900} format={v => v.toLocaleString('es-ES')} />€</span>
                       <span className="apb-per">{lang === 'es' ? '/noche · precio directo orientativo' : '/night · guide direct price'}</span>
                       <span className="apb-match">
+                        <HiIcon name="check" size="1em" />{' '}
                         {lang === 'es'
-                          ? '✓ Hasta un 10% aprox. más barato que en Booking o Airbnb*'
-                          : '✓ Up to ~10% cheaper than Booking or Airbnb*'}
+                          ? 'Hasta un 10% aprox. más barato que en Booking o Airbnb*'
+                          : 'Up to ~10% cheaper than Booking or Airbnb*'}
                       </span>
                     </div>
                   )}
@@ -642,6 +643,8 @@ const Compare = ({ lang }) => {
     { label: 'Care',          vm: '✓ Personal service', vt: '✓ Personal service', vs: '✓ Personal service' },
     { label: 'Rating',        vm: <>{_apRating.vm} <span className="rate-sub">/10</span></>, vt: <>{_apRating.vt} <span className="rate-sub">/10</span></>, vs: <>{_apRating.vs} <span className="rate-sub">/10</span></>, rate: true },
   ];
+  // '✓ Incluida' en los datos de la tabla se pinta con el icono de marca.
+  const cmpCell = v => typeof v === 'string' && v.startsWith('✓ ') ? <><HiIcon name="check" size="1em" /> {v.slice(2)}</> : v;
   const t = COPY[lang];
 
   return (
@@ -671,9 +674,9 @@ const Compare = ({ lang }) => {
           {rows.map((r, i) => (
             <div key={i} role="row" style={{ display: 'contents' }}>
               <div className="label" role="rowheader">{r.label}</div>
-              <div className={`cell ${r.rate ? 'rate' : ''}`} role="cell">{r.vm}</div>
-              <div className={`cell ${r.rate ? 'rate' : ''}`} role="cell">{r.vt}</div>
-              <div className={`cell ${r.rate ? 'rate' : ''}`} role="cell">{r.vs}</div>
+              <div className={`cell ${r.rate ? 'rate' : ''}`} role="cell">{cmpCell(r.vm)}</div>
+              <div className={`cell ${r.rate ? 'rate' : ''}`} role="cell">{cmpCell(r.vt)}</div>
+              <div className={`cell ${r.rate ? 'rate' : ''}`} role="cell">{cmpCell(r.vs)}</div>
             </div>
           ))}
         </div>
