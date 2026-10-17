@@ -256,27 +256,10 @@ const LsIncludes = ({
   }, t.includes.map(item => /*#__PURE__*/React.createElement("li", {
     key: item,
     className: "lsl-includes-item"
-  }, /*#__PURE__*/React.createElement("svg", {
-    width: "16",
-    height: "16",
-    viewBox: "0 0 16 16",
-    fill: "none",
-    "aria-hidden": "true"
-  }, /*#__PURE__*/React.createElement("circle", {
-    cx: "8",
-    cy: "8",
-    r: "7.5",
-    fill: "none",
-    stroke: "currentColor",
-    strokeWidth: "1.2",
-    opacity: ".4"
-  }), /*#__PURE__*/React.createElement("path", {
-    d: "M5 8l2 2 4-4",
-    stroke: "currentColor",
-    strokeWidth: "1.5",
-    strokeLinecap: "round",
-    strokeLinejoin: "round"
-  })), item)))));
+  }, /*#__PURE__*/React.createElement(HiIcon, {
+    name: "check",
+    size: 18
+  }), item)))));
 };
 const LsPrices = ({
   lang

@@ -193,10 +193,7 @@ const LsIncludes = ({ lang }) => {
         <ul className="lsl-includes-list">
           {t.includes.map(item => (
             <li key={item} className="lsl-includes-item">
-              <svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true">
-                <circle cx="8" cy="8" r="7.5" fill="none" stroke="currentColor" strokeWidth="1.2" opacity=".4"/>
-                <path d="M5 8l2 2 4-4" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
-              </svg>
+              <HiIcon name="check" size={18} />
               {item}
             </li>
           ))}

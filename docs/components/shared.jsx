@@ -184,7 +184,7 @@ const IconSprite = () => (
     <symbol id="hi-shield" viewBox="0 0 24 24"><path class="hi-plate" transform="translate(2 2)" d="M12 3.5l7 2.6v5.1c0 4.4-2.9 7.7-7 9.3-4.1-1.6-7-4.9-7-9.3V6.1z"/><g class="hi-ln"><path d="M12 3.5l7 2.6v5.1c0 4.4-2.9 7.7-7 9.3-4.1-1.6-7-4.9-7-9.3V6.1z"/><path d="M9 11.8l2.2 2.2 3.9-4"/></g></symbol>
     <symbol id="hi-mic" viewBox="0 0 24 24"><path class="hi-plate" transform="translate(2 2)" d="M9.0 6.0a3.0 3.0 0 0 1 3.0-3.0H15.0V11.0a3.0 3.0 0 0 1-3.0 3.0H9.0z"/><g class="hi-ln"><path d="M6 11a6 6 0 0 0 12 0M12 17v4M9 21h6"/><path d="M9.0 6.0a3.0 3.0 0 0 1 3.0-3.0H15.0V11.0a3.0 3.0 0 0 1-3.0 3.0H9.0z"/></g></symbol>
     <symbol id="hi-boat" viewBox="0 0 24 24"><path class="hi-plate" transform="translate(2 2)" d="M12 5l6 9H12z"/><g class="hi-ln"><path d="M12 3v11"/><path d="M4 17h16l-2.5 4h-11z"/><path d="M12 5l6 9H12z"/></g></symbol>
-    <symbol id="hi-spark" viewBox="0 0 24 24"><path class="hi-plate" transform="translate(2 2)" d="M12 3c.7 4.5 1.8 5.6 6 6.3-4.2.7-5.3 1.8-6 6.3-.7-4.5-1.8-5.6-6-6.3 4.2-.7 5.3-1.8 6-6.3z"/><g class="hi-ln"><path d="M18.5 15c.3 1.6.6 1.9 2.2 2.2-1.6.3-1.9.6-2.2 2.2-.3-1.6-.6-1.9-2.2-2.2 1.6-.3 1.9-.6 2.2-2.2z"/><path d="M12 3c.7 4.5 1.8 5.6 6 6.3-4.2.7-5.3 1.8-6 6.3-.7-4.5-1.8-5.6-6-6.3 4.2-.7 5.3-1.8 6-6.3z"/></g></symbol>
+    <symbol id="hi-spark" viewBox="0 0 24 24"><path class="hi-plate" transform="translate(2 2)" d="M11 5a1.4 1.4 0 0 1 2 0l7 7-7 7a1.4 1.4 0 0 1-2 0l-7-7z"/><g class="hi-ln"><path d="M11 5a1.4 1.4 0 0 1 2 0l7 7-7 7a1.4 1.4 0 0 1-2 0l-7-7z"/><path class="hi-fi" d="M12 10.6a1.4 1.4 0 1 0 0 2.8 1.4 1.4 0 1 0 0-2.8z"/></g></symbol>
     <symbol id="hi-news" viewBox="0 0 24 24"><path class="hi-plate" transform="translate(2 2)" d="M4 5h13v14H6a2 2 0 0 1-2-2z"/><g class="hi-ln"><path d="M4 5h13v14H6a2 2 0 0 1-2-2z"/><path d="M17 8h3v9a2 2 0 0 1-2 2"/><path d="M7 8h7M7 11h7M7 14h4"/></g></symbol>
     <symbol id="hi-indalo" viewBox="0 0 24 24"><path class="hi-plate-ln" transform="translate(2 2)" d="M4.5 13C4.5 5.5 19.5 5.5 19.5 13"/><g class="hi-ln"><path d="M4.5 13C4.5 5.5 19.5 5.5 19.5 13"/><path d="M12 6.8V15"/><path d="M12 11 4.5 13M12 11 19.5 13"/><path d="M12 15l-3.2 5M12 15l3.2 5"/></g></symbol>
     <symbol id="hi-bed" viewBox="0 0 24 24"><path class="hi-plate" transform="translate(2 2)" d="M3.5 15h17v5h-17zM10.5 15v-4.5h7a3 3 0 0 1 3 3V15z"/><g class="hi-ln"><path d="M3.5 7v13M3.5 15h17v5M10.5 15v-4.5h7a3 3 0 0 1 3 3V15"/><path class="hi-fi" d="M5.2 12.1a1.1 1.1 0 0 1 1.1-1.1H9.0V12.700000000000001a1.1 1.1 0 0 1-1.1 1.1H5.2z"/></g></symbol>
@@ -300,6 +300,9 @@ const HiIcon = ({ name, size = 24, className = '', style, title }) => (
     <use href={`#hi-${name}`} />
   </svg>
 );
+// Las cifras de ventajas usan '✓' como valor ("✓ mejor precio"): se pinta
+// como icono de marca al tamaño del texto en vez del glifo tipográfico.
+const statMark = (v) => v === '✓' ? <HiIcon name="check" size="0.9em" /> : v;
 
 // Mapa global emoji→icono de marca para textos sueltos de páginas (tarjetas,
 // canales de contacto, listas de ventajas). Clave normalizada sin variation
@@ -3372,7 +3375,7 @@ const DirectBookingModal = ({ lang, onClose }) => {
         <div className="dbm-ribbon">
           {ribbon.map((s, i) => (
             <div key={i} className="dbm-stat" style={{ '--stagger': `${i * 80}ms` }}>
-              <span className="dbm-num">{s.num}</span>
+              <span className="dbm-num">{statMark(s.num)}</span>
               <span className="dbm-stat-label">{s.label}</span>
             </div>
           ))}
@@ -3388,7 +3391,7 @@ const DirectBookingModal = ({ lang, onClose }) => {
           >
             <div className="dbm-card-head">
               <span className="dbm-icon" aria-hidden="true">{PERK_HI[cur.id] ? <HiIcon name={PERK_HI[cur.id]} size={26} /> : cur.icon}</span>
-              <span className="dbm-card-stat">{cur.stat}</span>
+              <span className="dbm-card-stat">{statMark(cur.stat)}</span>
             </div>
             <h4 className="dbm-card-t">{cur.t}</h4>
             <p className="dbm-card-d">{cur.d}</p>
@@ -3434,11 +3437,6 @@ const DirectBookingPerks = ({ lang }) => {
   return (
     <>
       <section className="dbt-band dbt-band-animated">
-        <span className="dbt-spark dbt-spark-1" aria-hidden="true">✦</span>
-        <span className="dbt-spark dbt-spark-2" aria-hidden="true">✦</span>
-        <span className="dbt-spark dbt-spark-3" aria-hidden="true">✦</span>
-        <span className="dbt-spark dbt-spark-4" aria-hidden="true">✦</span>
-        <span className="dbt-spark dbt-spark-5" aria-hidden="true">✦</span>
         <div className="container dbt-inner">
           <span className="eyebrow dbt-eyebrow">
             <span className="dbt-eyebrow-dot" aria-hidden="true"></span>
@@ -3484,7 +3482,7 @@ const AptDesktopSidebar = ({ lang, onGuideClick }) => {
         aria-label={lang === 'es' ? 'Restaurar widget de reserva directa' : 'Restore direct-booking widget'}
         title={lang === 'es' ? 'Reserva directa' : 'Direct booking'}
       >
-        <span className="ads-mini-star" aria-hidden="true">✦</span>
+        <span className="ads-mini-star" aria-hidden="true"><HiIcon name="spark" size="1em" /></span>
         <span className="ads-mini-label">
           {lang === 'es' ? 'Reserva directa' : 'Direct booking'}
         </span>
@@ -3510,7 +3508,7 @@ const AptDesktopSidebar = ({ lang, onGuideClick }) => {
         <ul className="ads-stats">
           {ribbon.map((s, i) => (
             <li key={i} className="ads-stat">
-              <strong>{s.num}</strong>
+              <strong>{statMark(s.num)}</strong>
               <span>{s.label}</span>
             </li>
           ))}
@@ -3610,7 +3608,7 @@ Object.assign(window, { _useExclusiveOpen });
 // Pastilla corporativa de minimizado, reutilizada por los 3 widgets.
 // Borde redondeado a la izquierda + recta a la derecha (pegada al borde
 // del viewport). Estrella sol + label en caps + tinte ber-dk corporativo.
-const WidgetMiniPill = ({ icon = '✦', label, onClick, ariaLabel, className = '' }) => (
+const WidgetMiniPill = ({ icon = <HiIcon name="spark" size={20} />, label, onClick, ariaLabel, className = '' }) => (
   <button
     type="button"
     className={`widget-mini ${className}`}
@@ -3655,7 +3653,7 @@ const WidgetDirectBooking = ({ lang }) => {
       <ul className="widget-stats">
         {ribbon.map((s, i) => (
           <li key={i} className="widget-stat">
-            <strong>{s.num}</strong>
+            <strong>{statMark(s.num)}</strong>
             <span>{s.label}</span>
           </li>
         ))}
@@ -3740,7 +3738,7 @@ const WidgetGuidePin = ({ lang, onGuideClick }) => {
   if (min) {
     return (
       <WidgetMiniPill
-        icon="✦"
+        icon={<HiIcon name="spark" size={20} />}
         label={lang === 'es' ? 'Guía para huéspedes' : 'Guests\' guidebook'}
         ariaLabel={lang === 'es' ? 'Restaurar guía para huéspedes' : 'Restore guests\' guidebook'}
         onClick={() => setMin(false)}
@@ -3879,7 +3877,7 @@ const WidgetTopRecs = ({ lang }) => {
   if (min) {
     return (
       <WidgetMiniPill
-        icon="★"
+        icon={<HiIcon name="star" size={20} />}
         label={lang === 'es' ? 'Imprescindibles' : 'Must-see'}
         ariaLabel={lang === 'es' ? 'Restaurar recomendaciones' : 'Restore recommendations'}
         onClick={() => setMin(false)}
@@ -4108,7 +4106,7 @@ const GuestAccessModal = ({ lang, onClose }) => {
                     onClick={() => pickApt(id)}
                     style={{ '--ga-accent': m.accent }}
                   >
-                    <span className="ga-apt-star" aria-hidden="true">✦</span>
+                    <span className="ga-apt-star" aria-hidden="true"><HiIcon name="spark" size="1em" /></span>
                     <span className="ga-apt-name">{m.name}</span>
                     <span className="ga-apt-concept">{m[`concept_${lang}`]}</span>
                     <span className="ga-apt-arrow" aria-hidden="true">→</span>

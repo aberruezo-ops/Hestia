@@ -147,6 +147,18 @@ Cómo aplicarlo, según el fondo (respeta la regla de contraste):
 
 Siempre que añadas una zona que liste, enlace o compare los tres (footer, tabla, selector, alternativas, guía), cada uno lleva su color. Fuente única de los tokens: `styles.css` (`--vm/--vt/--vs`) y `_ALT_APTS` en `shared.jsx`.
 
+### Iconografía · gramática "Sello" (regla siempre)
+
+Todos los iconos de la web salen del sprite propio (`IconSprite` en `shared.jsx`) y se pintan con `<HiIcon name="…"/>`. Gramática única:
+
+- **Trazo fino (1,5)** en `currentColor` y **esquina asimétrica de la marca** (sup-izq e inf-der redondeadas) en toda forma rectangular.
+- **Segunda tinta**: la masa principal del icono en color plano, desplazada 2 px (`.hi-plate`), como un sello impreso fuera de registro. En iconos de solo trazo abierto, el trazo desplazado (`.hi-plate-ln`).
+- **El color de marca vive en la placa, nunca en el trazo.** La placa usa `--hi-accent`, que sigue al apartamento si el contenedor define `--apt-accent`; para forzarlo en un sitio, `--hi-tint`. El trazo va en color de texto (tinta sobre claro, crema sobre oscuro). Trazo y placa del mismo tono = mancha: es un bug.
+- **Sin fichas ni círculos de fondo** detrás del icono: el sello ya es su soporte.
+- **Nada de emojis ni glifos (`✓ ✦ ★ ✗`) haciendo de icono** en la interfaz: usa `check`, `spark` (tesela), `star-fill`, `ban`… Solo quedan como texto donde no se puede pintar un icono (mensajes de WhatsApp, asuntos de email) y en controles tipográficos (`✕` de cerrar).
+- Dentro del `<symbol>`, estilos solo por clase sin selector de ancestro (`.hi-plate`, `.hi-ln`, `.hi-fi`): los selectores anidados no alcanzan el contenido de un `<use>`.
+- Excepciones: logos de plataformas (Booking, Airbnb, Google, WhatsApp, redes) y piezas de marca (logo, Indalo), que conservan su dibujo.
+
 ### Contraste · regla preventiva (fondos oscuros)
 
 > El contraste oscuro-sobre-oscuro ha sido un fallo recurrente. Para que no vuelva a pasar:

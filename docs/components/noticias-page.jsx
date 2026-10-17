@@ -350,7 +350,7 @@ const ShareSection = ({ lang }) => {
         <div className="noticias-share-btns">
           <button type="button" className="noticias-share-btn" onClick={handleShare}>
             {shared
-              ? (lang === 'es' ? 'Compartido ✓' : 'Shared ✓')
+              ? <>{lang === 'es' ? 'Compartido' : 'Shared'} <HiIcon name="check" size="1em" /></>
               : (lang === 'es' ? 'Compartir' : 'Share')}
           </button>
           <a href={waHref} className="noticias-share-btn noticias-share-wa" target="_blank" rel="noopener noreferrer">
@@ -382,7 +382,7 @@ const VozCard = ({ item, lang }) => (
     </div>
     <div className="voz-block">
       <div className="voz-block-label">
-        {lang === 'es' ? '★ Recomendación Hestía' : '★ Hestía recommends'}
+        <HiIcon name="star-fill" size="1em" /> {lang === 'es' ? 'Recomendación Hestía' : 'Hestía recommends'}
       </div>
       <p className="voz-block-text">{item.reco[lang]}</p>
     </div>

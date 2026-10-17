@@ -478,7 +478,10 @@ const HsResultCard = ({
     className: "hs-rc-concept"
   }, "«\u2009", lang === 'es' ? apt.concept_es : apt.concept_en, "\u2009»"))), /*#__PURE__*/React.createElement("div", {
     className: `hs-rc-status ${available ? 'ok' : 'no'}`
-  }, available ? lang === 'es' ? '✓ Disponible' : '✓ Available' : lang === 'es' ? '✗ Reservado' : '✗ Booked')), available ? /*#__PURE__*/React.createElement(React.Fragment, null, calc && /*#__PURE__*/React.createElement("div", {
+  }, /*#__PURE__*/React.createElement(HiIcon, {
+    name: available ? 'check' : 'ban',
+    size: "1em"
+  }), ' ', available ? lang === 'es' ? 'Disponible' : 'Available' : lang === 'es' ? 'Reservado' : 'Booked')), available ? /*#__PURE__*/React.createElement(React.Fragment, null, calc && /*#__PURE__*/React.createElement("div", {
     className: "hs-price-block"
   }, /*#__PURE__*/React.createElement("div", {
     className: "hs-pb-main"
@@ -496,7 +499,10 @@ const HsResultCard = ({
     className: "hs-pb-right"
   }, /*#__PURE__*/React.createElement("div", {
     className: "price-guarantee-badge"
-  }, lang === 'es' ? '✓ Mejor precio garantizado' : '✓ Best price guaranteed'), /*#__PURE__*/React.createElement("div", {
+  }, /*#__PURE__*/React.createElement(HiIcon, {
+    name: "check",
+    size: "1em"
+  }), " ", lang === 'es' ? 'Mejor precio garantizado' : 'Best price guaranteed'), /*#__PURE__*/React.createElement("div", {
     className: "price-guarantee-sub"
   }, lang === 'es' ? '¿Lo encuentras más barato en Booking o Airbnb? No solo te lo igualamos: te lo mejoramos.' : 'Found it cheaper on Booking or Airbnb? We don\'t just match it, we beat it.'))), /*#__PURE__*/React.createElement("div", {
     className: "hs-pb-breakdown"
@@ -803,7 +809,10 @@ const HomeSearch = ({
     }
   }), lang === 'es' ? 'Sin comisiones' : 'No fees'), /*#__PURE__*/React.createElement("span", {
     className: "hs-trust-dot"
-  }), /*#__PURE__*/React.createElement("span", null, lang === 'es' ? '✓ Te contestamos en minutos' : '✓ We reply in minutes'), /*#__PURE__*/React.createElement("span", {
+  }), /*#__PURE__*/React.createElement("span", null, /*#__PURE__*/React.createElement(HiIcon, {
+    name: "check",
+    size: "1em"
+  }), " ", lang === 'es' ? 'Te contestamos en minutos' : 'We reply in minutes'), /*#__PURE__*/React.createElement("span", {
     className: "hs-trust-dot"
   }), /*#__PURE__*/React.createElement("span", null, lang === 'es' ? 'Solo 3 Hestías' : 'Only 3 Hestías'))), results && /*#__PURE__*/React.createElement("div", {
     className: "hs-results",

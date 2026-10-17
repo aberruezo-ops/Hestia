@@ -582,7 +582,7 @@ const AptPageHero = ({ apt, lang, scrolled, mode }) => {
           </a>
         </div>
         <p className="apt-page-cancel">
-          {lang === 'es' ? '✓ Política de cancelación sin competencia' : '✓ Unmatched cancellation policy'}
+          <HiIcon name="check" size="1em" /> {lang === 'es' ? 'Política de cancelación sin competencia' : 'Unmatched cancellation policy'}
         </p>
       </div>
     </section>
@@ -1028,7 +1028,7 @@ const AmrCard = ({ r, lang }) => {
   return (
     <div className="amr-card">
       <div className="amr-top">
-        <span className="amr-stars" aria-label={lang === 'en' ? `${stars} stars` : `${stars} estrellas`}>{'★'.repeat(stars)}</span>
+        <span className="amr-stars" aria-label={lang === 'en' ? `${stars} stars` : `${stars} estrellas`}>{Array.from({ length: stars }, (_, i) => <HiIcon key={i} name="star-fill" size="1em" />)}</span>
         <span className="amr-src-lbl">{_amrSrc[r.source] || r.source}</span>
       </div>
       <p className="amr-text" id={textId}>"{text}"</p>
@@ -1214,7 +1214,7 @@ const AptStickyBar = ({ apt, lang, scrolled }) => {
           <span className="asb-price">
             {lang === 'es' ? `desde ${minP}€/noche` : `from ${minP}€/night`}
             <span className="asb-match" aria-hidden="true">
-              {lang === 'es' ? '✓ mejor precio garantizado' : '✓ best price guaranteed'}
+              <HiIcon name="check" size="1em" /> {lang === 'es' ? 'mejor precio garantizado' : 'best price guaranteed'}
             </span>
           </span>
         )}
@@ -1228,7 +1228,7 @@ const AptStickyBar = ({ apt, lang, scrolled }) => {
         onClick={() => window.dispatchEvent(new Event('hestia:open-direct-perks'))}
         aria-label={lang === 'es' ? 'Ver ventajas de la reserva directa' : 'See direct booking perks'}
       >
-        <span className="asb-perks-icon" aria-hidden="true">✦</span>
+        <span className="asb-perks-icon" aria-hidden="true"><HiIcon name="spark" size="1em" /></span>
         <span className="asb-perks-text">{lang === 'es' ? 'Ver ventajas' : 'See perks'}</span>
       </button>
     </div>

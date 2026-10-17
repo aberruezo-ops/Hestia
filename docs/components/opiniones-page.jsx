@@ -163,7 +163,7 @@ const OpinionesQuotesMarquee = ({ lang }) => {
               <span className="oqm-mark">»</span>
               <span className="oqm-attr">, {q.name}</span>
             </span>
-            <span className="oqm-dot" aria-hidden="true">✦</span>
+            <span className="oqm-dot" aria-hidden="true"><HiIcon name="spark" size={11} /></span>
           </React.Fragment>
         ))}
       </div>

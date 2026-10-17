@@ -593,7 +593,10 @@ const AptPageHero = ({
     className: "btn btn-ghost-light"
   }, lang === 'es' ? 'Ver disponibilidad' : 'Check availability')), /*#__PURE__*/React.createElement("p", {
     className: "apt-page-cancel"
-  }, lang === 'es' ? '✓ Política de cancelación sin competencia' : '✓ Unmatched cancellation policy')));
+  }, /*#__PURE__*/React.createElement(HiIcon, {
+    name: "check",
+    size: "1em"
+  }), " ", lang === 'es' ? 'Política de cancelación sin competencia' : 'Unmatched cancellation policy')));
 };
 
 // --- Reveal cinematográfico ---
@@ -1193,7 +1196,13 @@ const AmrCard = ({
   }, /*#__PURE__*/React.createElement("span", {
     className: "amr-stars",
     "aria-label": lang === 'en' ? `${stars} stars` : `${stars} estrellas`
-  }, '★'.repeat(stars)), /*#__PURE__*/React.createElement("span", {
+  }, Array.from({
+    length: stars
+  }, (_, i) => /*#__PURE__*/React.createElement(HiIcon, {
+    key: i,
+    name: "star-fill",
+    size: "1em"
+  }))), /*#__PURE__*/React.createElement("span", {
     className: "amr-src-lbl"
   }, _amrSrc[r.source] || r.source)), /*#__PURE__*/React.createElement("p", {
     className: "amr-text",
@@ -1413,7 +1422,10 @@ const AptStickyBar = ({
   }, lang === 'es' ? `desde ${minP}€/noche` : `from ${minP}€/night`, /*#__PURE__*/React.createElement("span", {
     className: "asb-match",
     "aria-hidden": "true"
-  }, lang === 'es' ? '✓ mejor precio garantizado' : '✓ best price guaranteed'))), /*#__PURE__*/React.createElement("a", {
+  }, /*#__PURE__*/React.createElement(HiIcon, {
+    name: "check",
+    size: "1em"
+  }), " ", lang === 'es' ? 'mejor precio garantizado' : 'best price guaranteed'))), /*#__PURE__*/React.createElement("a", {
     href: reservasHref,
     className: "btn btn-primary asb-cta"
   }, lang === 'es' ? 'Reservar' : 'Book', " ", /*#__PURE__*/React.createElement("span", {
@@ -1426,7 +1438,10 @@ const AptStickyBar = ({
   }, /*#__PURE__*/React.createElement("span", {
     className: "asb-perks-icon",
     "aria-hidden": "true"
-  }, "✦"), /*#__PURE__*/React.createElement("span", {
+  }, /*#__PURE__*/React.createElement(HiIcon, {
+    name: "spark",
+    size: "1em"
+  })), /*#__PURE__*/React.createElement("span", {
     className: "asb-perks-text"
   }, lang === 'es' ? 'Ver ventajas' : 'See perks')));
 };

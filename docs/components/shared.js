@@ -467,13 +467,14 @@ const IconSprite = () => /*#__PURE__*/React.createElement("svg", {
 }, /*#__PURE__*/React.createElement("path", {
   class: "hi-plate",
   transform: "translate(2 2)",
-  d: "M12 3c.7 4.5 1.8 5.6 6 6.3-4.2.7-5.3 1.8-6 6.3-.7-4.5-1.8-5.6-6-6.3 4.2-.7 5.3-1.8 6-6.3z"
+  d: "M11 5a1.4 1.4 0 0 1 2 0l7 7-7 7a1.4 1.4 0 0 1-2 0l-7-7z"
 }), /*#__PURE__*/React.createElement("g", {
   class: "hi-ln"
 }, /*#__PURE__*/React.createElement("path", {
-  d: "M18.5 15c.3 1.6.6 1.9 2.2 2.2-1.6.3-1.9.6-2.2 2.2-.3-1.6-.6-1.9-2.2-2.2 1.6-.3 1.9-.6 2.2-2.2z"
+  d: "M11 5a1.4 1.4 0 0 1 2 0l7 7-7 7a1.4 1.4 0 0 1-2 0l-7-7z"
 }), /*#__PURE__*/React.createElement("path", {
-  d: "M12 3c.7 4.5 1.8 5.6 6 6.3-4.2.7-5.3 1.8-6 6.3-.7-4.5-1.8-5.6-6-6.3 4.2-.7 5.3-1.8 6-6.3z"
+  class: "hi-fi",
+  d: "M12 10.6a1.4 1.4 0 1 0 0 2.8 1.4 1.4 0 1 0 0-2.8z"
 }))), /*#__PURE__*/React.createElement("symbol", {
   id: "hi-news",
   viewBox: "0 0 24 24"
@@ -1867,6 +1868,12 @@ const HiIcon = ({
 }, title ? /*#__PURE__*/React.createElement("title", null, title) : null, /*#__PURE__*/React.createElement("use", {
   href: `#hi-${name}`
 }));
+// Las cifras de ventajas usan '✓' como valor ("✓ mejor precio"): se pinta
+// como icono de marca al tamaño del texto en vez del glifo tipográfico.
+const statMark = v => v === '✓' ? /*#__PURE__*/React.createElement(HiIcon, {
+  name: "check",
+  size: "0.9em"
+}) : v;
 
 // Mapa global emoji→icono de marca para textos sueltos de páginas (tarjetas,
 // canales de contacto, listas de ventajas). Clave normalizada sin variation
@@ -6374,7 +6381,7 @@ const DirectBookingModal = ({
     }
   }, /*#__PURE__*/React.createElement("span", {
     className: "dbm-num"
-  }, s.num), /*#__PURE__*/React.createElement("span", {
+  }, statMark(s.num)), /*#__PURE__*/React.createElement("span", {
     className: "dbm-stat-label"
   }, s.label)))), /*#__PURE__*/React.createElement("div", {
     className: "dbm-carousel"
@@ -6397,7 +6404,7 @@ const DirectBookingModal = ({
     size: 26
   }) : cur.icon), /*#__PURE__*/React.createElement("span", {
     className: "dbm-card-stat"
-  }, cur.stat)), /*#__PURE__*/React.createElement("h4", {
+  }, statMark(cur.stat))), /*#__PURE__*/React.createElement("h4", {
     className: "dbm-card-t"
   }, cur.t), /*#__PURE__*/React.createElement("p", {
     className: "dbm-card-d"
@@ -6443,22 +6450,7 @@ const DirectBookingPerks = ({
   // cerrar uno el otro quedaba bloqueando la página.
   return /*#__PURE__*/React.createElement(React.Fragment, null, /*#__PURE__*/React.createElement("section", {
     className: "dbt-band dbt-band-animated"
-  }, /*#__PURE__*/React.createElement("span", {
-    className: "dbt-spark dbt-spark-1",
-    "aria-hidden": "true"
-  }, "✦"), /*#__PURE__*/React.createElement("span", {
-    className: "dbt-spark dbt-spark-2",
-    "aria-hidden": "true"
-  }, "✦"), /*#__PURE__*/React.createElement("span", {
-    className: "dbt-spark dbt-spark-3",
-    "aria-hidden": "true"
-  }, "✦"), /*#__PURE__*/React.createElement("span", {
-    className: "dbt-spark dbt-spark-4",
-    "aria-hidden": "true"
-  }, "✦"), /*#__PURE__*/React.createElement("span", {
-    className: "dbt-spark dbt-spark-5",
-    "aria-hidden": "true"
-  }, "✦"), /*#__PURE__*/React.createElement("div", {
+  }, /*#__PURE__*/React.createElement("div", {
     className: "container dbt-inner"
   }, /*#__PURE__*/React.createElement("span", {
     className: "eyebrow dbt-eyebrow"
@@ -6506,7 +6498,10 @@ const AptDesktopSidebar = ({
     }, /*#__PURE__*/React.createElement("span", {
       className: "ads-mini-star",
       "aria-hidden": "true"
-    }, "✦"), /*#__PURE__*/React.createElement("span", {
+    }, /*#__PURE__*/React.createElement(HiIcon, {
+      name: "spark",
+      size: "1em"
+    })), /*#__PURE__*/React.createElement("span", {
       className: "ads-mini-label"
     }, lang === 'es' ? 'Reserva directa' : 'Direct booking'));
   }
@@ -6530,7 +6525,7 @@ const AptDesktopSidebar = ({
   }, ribbon.map((s, i) => /*#__PURE__*/React.createElement("li", {
     key: i,
     className: "ads-stat"
-  }, /*#__PURE__*/React.createElement("strong", null, s.num), /*#__PURE__*/React.createElement("span", null, s.label)))), /*#__PURE__*/React.createElement("button", {
+  }, /*#__PURE__*/React.createElement("strong", null, statMark(s.num)), /*#__PURE__*/React.createElement("span", null, s.label)))), /*#__PURE__*/React.createElement("button", {
     type: "button",
     className: "ads-btn",
     onClick: () => window.dispatchEvent(new Event('hestia:open-direct-perks'))
@@ -6645,7 +6640,10 @@ Object.assign(window, {
 // Borde redondeado a la izquierda + recta a la derecha (pegada al borde
 // del viewport). Estrella sol + label en caps + tinte ber-dk corporativo.
 const WidgetMiniPill = ({
-  icon = '✦',
+  icon = /*#__PURE__*/React.createElement(HiIcon, {
+    name: "spark",
+    size: 20
+  }),
   label,
   onClick,
   ariaLabel,
@@ -6697,7 +6695,7 @@ const WidgetDirectBooking = ({
   }, ribbon.map((s, i) => /*#__PURE__*/React.createElement("li", {
     key: i,
     className: "widget-stat"
-  }, /*#__PURE__*/React.createElement("strong", null, s.num), /*#__PURE__*/React.createElement("span", null, s.label)))), /*#__PURE__*/React.createElement("button", {
+  }, /*#__PURE__*/React.createElement("strong", null, statMark(s.num)), /*#__PURE__*/React.createElement("span", null, s.label)))), /*#__PURE__*/React.createElement("button", {
     type: "button",
     className: "widget-cta",
     onClick: () => window.dispatchEvent(new Event('hestia:open-direct-perks'))
@@ -6790,7 +6788,10 @@ const WidgetGuidePin = ({
   const [min, setMin] = _useLocalMin('guide');
   if (min) {
     return /*#__PURE__*/React.createElement(WidgetMiniPill, {
-      icon: "✦",
+      icon: /*#__PURE__*/React.createElement(HiIcon, {
+        name: "spark",
+        size: 20
+      }),
       label: lang === 'es' ? 'Guía para huéspedes' : 'Guests\' guidebook',
       ariaLabel: lang === 'es' ? 'Restaurar guía para huéspedes' : 'Restore guests\' guidebook',
       onClick: () => setMin(false),
@@ -6920,7 +6921,10 @@ const WidgetTopRecs = ({
   }, [min, total]);
   if (min) {
     return /*#__PURE__*/React.createElement(WidgetMiniPill, {
-      icon: "★",
+      icon: /*#__PURE__*/React.createElement(HiIcon, {
+        name: "star",
+        size: 20
+      }),
       label: lang === 'es' ? 'Imprescindibles' : 'Must-see',
       ariaLabel: lang === 'es' ? 'Restaurar recomendaciones' : 'Restore recommendations',
       onClick: () => setMin(false),
@@ -7227,7 +7231,10 @@ const GuestAccessModal = ({
     }, /*#__PURE__*/React.createElement("span", {
       className: "ga-apt-star",
       "aria-hidden": "true"
-    }, "✦"), /*#__PURE__*/React.createElement("span", {
+    }, /*#__PURE__*/React.createElement(HiIcon, {
+      name: "spark",
+      size: "1em"
+    })), /*#__PURE__*/React.createElement("span", {
       className: "ga-apt-name"
     }, m.name), /*#__PURE__*/React.createElement("span", {
       className: "ga-apt-concept"
