@@ -6419,7 +6419,7 @@ body[data-apt="salinas"] a.apt-page-reserve-btn:hover {
   gap: 10px;
   padding: 6px 4px;
 }
-.aei-icon { font-size: 17px; flex-shrink: 0; line-height: 1; color: var(--apt-accent-dk, var(--ber)); display: inline-flex; align-items: center; }
+.aei-icon { font-size: 17px; flex-shrink: 0; line-height: 1; color: var(--ber, #3D1A35); display: inline-flex; align-items: center; }
 .aei-label {
   font-family: var(--sans);
   font-size: 13px;
@@ -15875,9 +15875,9 @@ body[data-apt="salinas"] .widget-cta:hover {
   justify-content: center;
   flex: none;
   width: 22px; height: 22px;
-  border-radius: 50%;
-  background: rgba(42, 15, 46, 0.22);         /* eggplant tinte sobre sol */
+  background: transparent;
   color: #2A0F2E;
+  --hi-tint: rgba(240, 232, 213, .9);         /* sello crema sobre el sol del widget */
   font-size: 14px;
   font-weight: 700;
   line-height: 1;
@@ -15885,9 +15885,10 @@ body[data-apt="salinas"] .widget-cta:hover {
 }
 .widget-mini:hover .widget-mini-icon,
 .widget-mini:focus-visible .widget-mini-icon {
-  background: rgba(240,232,213,.18);
   color: #2A0F2E;
 }
+.widget-mini-icon { width: 24px; height: 24px; }
+.widget-mini-icon .hi { width: 20px; height: 20px; }
 .widget-mini-label {
   display: inline-block;
   line-height: 1;
@@ -15939,8 +15940,9 @@ body[data-apt="mar"] .widget-mini .widget-mini-label {
 }
 [data-apt="mar"] .widget-mini-icon,
 body[data-apt="mar"] .widget-mini-icon {
-  background: rgba(139, 154, 82, 0.30) !important;
+  background: transparent !important;
   color: #B5C77A !important;
+  --hi-tint: #2A0F2E;
 }
 [data-apt="mar"] .widget-mini:hover,
 body[data-apt="mar"] .widget-mini:hover {
@@ -15980,8 +15982,9 @@ body[data-apt="thalassa"] .widget-mini .widget-mini-label {
 }
 [data-apt="thalassa"] .widget-mini-icon,
 body[data-apt="thalassa"] .widget-mini-icon {
-  background: rgba(184, 106, 60, 0.30) !important;
+  background: transparent !important;
   color: #E69875 !important;
+  --hi-tint: #2A0F2E;
 }
 [data-apt="thalassa"] .widget-mini:hover,
 body[data-apt="thalassa"] .widget-mini:hover {
@@ -16021,8 +16024,9 @@ body[data-apt="salinas"] .widget-mini .widget-mini-label {
 }
 [data-apt="salinas"] .widget-mini-icon,
 body[data-apt="salinas"] .widget-mini-icon {
-  background: rgba(212, 168, 74, 0.30) !important;
+  background: transparent !important;
   color: #F0CE7A !important;
+  --hi-tint: #2A0F2E;
 }
 [data-apt="salinas"] .widget-mini:hover,
 body[data-apt="salinas"] .widget-mini:hover {
@@ -24992,18 +24996,28 @@ img[src$="photo-alex.jpg"]:not(.avatar-img):hover {
 }
 
 /* ============================================================
-   ICONOS PROPIOS HESTÍA (.hi): line, color heredado (currentColor)
-   El grosor y los remates se fijan aquí y se heredan dentro del <use>.
-   El tamaño lo controla el prop size de <HiIcon>; el color, el texto padre.
+   ICONOS PROPIOS HESTÍA (.hi) · gramática "Sello"
+   Trazo en currentColor (el color del texto padre) + segunda tinta plana
+   desplazada (--hi-accent). El acento sigue al apartamento si el contenedor
+   define --apt-accent; para forzarlo en un sitio concreto, --hi-tint.
+   Las clases internas (.hi-plate, .hi-ln...) no llevan selector de
+   ancestro: es la única forma de que alcancen el contenido del <symbol>.
    ============================================================ */
 .hi {
+  --hi-accent: var(--hi-tint, var(--apt-accent, var(--sol, #3AAABB)));
   display: inline-block;
   vertical-align: -0.15em;
-  stroke-width: 1.7;
+  stroke-width: 1.5;
   stroke-linecap: round;
   stroke-linejoin: round;
   flex-shrink: 0;
+  overflow: visible;
 }
+.hi-plate    { fill: var(--hi-accent); stroke: none; }
+.hi-plate-ln { fill: none; stroke: var(--hi-accent); stroke-width: 1.6; }
+.hi-ln       { fill: none; stroke: currentColor; }
+.hi-fi       { fill: currentColor; stroke: none; }
+.hi-gold     { fill: var(--vs, #D4A84A); stroke: none; }
 
 /* Iconos propios en cabeceras del admin (h2/h3 de pestañas) */
 .pe-h-ic { vertical-align: -0.14em; margin-right: 3px; opacity: .92; }
@@ -25172,7 +25186,7 @@ img[src$="photo-alex.jpg"]:not(.avatar-img):hover {
 .reg-title { font-family: var(--serif); font-weight: 400; font-size: clamp(24px, 5vw, 34px); margin: 6px 0 12px; color: var(--crema); }
 .reg-legal { display: flex; gap: 9px; align-items: flex-start; font-size: 13px; line-height: 1.5; color: rgba(240,232,213,.82);
   background: rgba(58,170,187,.10); border-radius: 10px 0 10px 0; padding: 11px 13px; margin: 0 0 22px; }
-.reg-legal-ic { color: var(--sol-lt, #6FC4D1); flex-shrink: 0; margin-top: 1px; }
+.reg-legal-ic { color: var(--arena, #F0E8D5); flex-shrink: 0; margin-top: 1px; }
 .reg-topmsg { background: rgba(184,36,110,.16); border: 1px solid rgba(184,36,110,.5); color: #ffd7e6; border-radius: 10px 0 10px 0; padding: 10px 13px; margin: 0 0 16px; font-size: 13px; }
 
 /* Tarjeta clara sobre fondo oscuro: declara su propio color de texto oscuro */
