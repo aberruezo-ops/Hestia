@@ -272,10 +272,10 @@ export default {
     }
 
     // ── POST /pv — 1 página vista (y visita, si es la primera de la sesión)
-    // Body: { path, src?, campaign?, first? }. Contadores del día por ruta
-    // (pv:), total de páginas vistas (pvday:), visitas (vis:), visitas por
-    // canal (vsrc:) y visitas por campaña del mes (camp:). Nada ligado al
-    // visitante. Ruta o campaña fuera de la gramática: se ignora en silencio.
+    // Body: { path, src?, campaign?, first? }. En la clave del día
+    // (day:{fecha}): páginas vistas por ruta (pv), total (pvday), visitas (vis)
+    // y visitas por canal (vsrc); aparte, visitas por campaña del mes (camp:).
+    // Nada ligado al visitante. Ruta o campaña fuera de la gramática: se ignora.
     if (pathname === '/pv' && request.method === 'POST') {
       if (!env.EVENTS_KV) return new Response(null, { status: 204, headers: CORS });
 

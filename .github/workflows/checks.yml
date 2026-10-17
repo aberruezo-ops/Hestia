@@ -40,6 +40,24 @@ jobs:
         continue-on-error: true
         run: node scripts/price-consistency.mjs
 
+  # BLOQUEA si falla el test de algún Worker. Simulan KV y Cloudflare en local
+  # (sin red ni despliegue). Sin este job, el test de analytics-proxy estuvo
+  # roto una semana tras cambiar el esquema de claves y nadie se enteró.
+  workers:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Tests de Workers
+        run: |
+          for t in workers/*/test.mjs; do
+            echo "::group::$t"
+            node "$t"
+            echo "::endgroup::"
+          done
+
   # BLOQUEA si el .js compilado no cuadra con su .jsx fuente (el footgun del
   # build: editar .jsx y olvidar `node scripts/build-jsx.js` sirve código viejo).
   build-drift:
