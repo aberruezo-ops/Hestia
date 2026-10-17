@@ -1835,15 +1835,14 @@ body.apt-bar-shown .cookies {
 @media (min-width: 1024px) {
   .cookies { width: min(320px, calc(100% - 40px)); }
 }
-/* ✦ corporativo al inicio. */
+/* Tesela de marca (sello) al inicio. */
 .cookies::before {
-  content: '✦';
+  content: '';
+  background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath transform='translate(2 2)' fill='%233AAABB' d='M11 5a1.4 1.4 0 0 1 2 0l7 7-7 7a1.4 1.4 0 0 1-2 0l-7-7z'/%3E%3Cpath fill='none' stroke='%23F0E8D5' stroke-width='1.7' stroke-linejoin='round' d='M11 5a1.4 1.4 0 0 1 2 0l7 7-7 7a1.4 1.4 0 0 1-2 0l-7-7z'/%3E%3Ccircle cx='12' cy='12' r='1.5' fill='%23F0E8D5'/%3E%3C/svg%3E") center / 22px 22px no-repeat;
   display: inline-flex;
   align-items: center;
   justify-content: center;
   width: 24px; height: 24px;
-  border-radius: 50%;
-  background: rgba(240,232,213,.08);
   color: var(--sol);
   font-size: 14px;
   font-weight: 600;
@@ -9323,21 +9322,6 @@ body[data-apt="salinas"] a.apt-page-reserve-btn:hover {
   flex-direction: column;
   gap: 6px;
 }
-.reservas-guarantee li {
-  font-size: 13px;
-  font-weight: 300;
-  color: rgba(240,232,213,.78);
-  display: flex;
-  align-items: flex-start;
-  gap: 8px;
-}
-.reservas-guarantee li::before {
-  content: '✓';
-  color: var(--sol-lt);
-  flex-shrink: 0;
-  font-size: 11px;
-  margin-top: 2px;
-}
 
 /* ============================================================
    FRASE HOGAR — franja crema tras el hero
@@ -11532,13 +11516,24 @@ footer,
   padding-left: 22px;
   position: relative;
 }
-.apt-guide-gate-stats li::before {
-  content: "✦";
+/* Tesela de marca en CSS puro: rombo con la esquina asimétrica (::after)
+   sobre su placa desplazada en el color del apartamento (::before). */
+.apt-guide-gate-stats li::before,
+.apt-guide-gate-stats li::after {
+  content: "";
   position: absolute;
-  left: 0;
-  color: var(--apt-accent, var(--sol));
-  font-size: 12px;
-  top: 3px;
+  left: 2px;
+  top: 7px;
+  width: 8px; height: 8px;
+  border-radius: 3px 0 3px 0;
+  transform: rotate(45deg);
+}
+.apt-guide-gate-stats li::before {
+  background: var(--apt-accent, var(--sol));
+  translate: 2px 2px;
+}
+.apt-guide-gate-stats li::after {
+  border: 1.5px solid var(--ink, #2A0F2E);
 }
 .apt-guide-gate-stats li strong {
   color: var(--ink);
@@ -23749,12 +23744,12 @@ img[src$="photo-alex.jpg"]:not(.avatar-img):hover {
   position: relative;
 }
 .rf-ls-conditions li::before {
-  content: '✓';
+  content: '';
   position: absolute;
   left: 0;
-  color: var(--ber, #3D1A35);
-  font-size: 11px;
-  font-weight: 700;
+  top: 2px;
+  width: 12px; height: 12px;
+  background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Ccircle cx='14' cy='14' r='8.5' fill='%233AAABB'/%3E%3Cg fill='none' stroke='%233D1A35' stroke-width='1.9' stroke-linecap='round' stroke-linejoin='round'%3E%3Ccircle cx='12' cy='12' r='8.5'/%3E%3Cpath d='M8 12.3l2.7 2.7 5.3-5.6'/%3E%3C/g%3E%3C/svg%3E") center / contain no-repeat;
 }
 .rf-ls-info-link {
   font-family: var(--sans);

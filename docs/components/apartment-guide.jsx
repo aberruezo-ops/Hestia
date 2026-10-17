@@ -493,7 +493,7 @@ const GUIDE_EMOJI_HI = {
   '📜': 'doc', '📝': 'doc', '✦': 'spark', '⛰': 'mountain', '☕': 'coffee', '🏖': 'umbrella', '🛒': 'cart',
   '🐾': 'paw', '🐕': 'paw', '🧺': 'basket', '🐟': 'fish', '🎭': 'ticket', '🏰': 'shield', '🏯': 'shield',
   '🌊': 'wave', '🌾': 'wheat', '💊': 'pill', '🏥': 'cross', '🩺': 'stethoscope', '💆': 'heart',
-  '🗺': 'pin', '⚡': 'spark', '🍷': 'wine', '🏘': 'buildings', '📚': 'book', '🏪': 'shop', '⛽': 'fuel',
+  '🗺': 'pin', '⚡': 'spark', '🍷': 'wine', '🏘': 'buildings', '📚': 'book', '🏪': 'shop', '🛍': 'bag', '⛽': 'fuel',
   '🔌': 'plug', '💻': 'laptop', '👕': 'shirt', '🏧': 'card', '🌞': 'sun', '🌅': 'sun', '☀': 'sun',
   '🍝': 'fork', '🍲': 'fork', '🥘': 'fork', '🦐': 'fish', '🍤': 'fish', '🍋': 'fork', '🥖': 'fork',
   '🥧': 'fork', '🍞': 'fork', '🌶': 'fork', '🥬': 'fork', '🥣': 'fork', '🍵': 'coffee', '🐐': 'fork',
