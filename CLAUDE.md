@@ -171,7 +171,7 @@ Todos los iconos de la web salen del sprite propio (`IconSprite` en `shared.jsx`
 ## Tests y verificación
 
 - Dependencias de desarrollo fijadas en `package.json` (`npm install`). Comandos: `npm run build` (JSX → JS), `npm run test:pricing` (invariantes de precio + consistencia), `npm run test:smoke` y `npm run test:contrast` (requieren `docs/` servido en local), `npm run pdf`.
-- La CI (`.github/workflows/checks.yml`) en cada push/PR: **bloquea** si fallan las invariantes de precio (`test-pricing.mjs`) o el smoke test (errores JS, pantalla en blanco, enlaces internos rotos); **reporta** sin bloquear la consistencia de precio, el desfase JSX/JS y el contraste WCAG.
+- La CI (`.github/workflows/checks.yml`) en cada push/PR: **bloquea** si fallan las invariantes de precio (`test-pricing.mjs`), los tests de los Workers (`workers/*/test.mjs`, con KV simulado) o el smoke test (errores JS, pantalla en blanco, enlaces internos rotos); **reporta** sin bloquear la consistencia de precio, el desfase JSX/JS y el contraste WCAG.
 - Cuando toques algo crítico, además: compila, construye los PDFs si tocas la guía y **verifica en el navegador** antes de pushear (Playwright MCP, ver abajo).
 
 

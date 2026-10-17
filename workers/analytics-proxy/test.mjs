@@ -14,7 +14,12 @@ function fakeKV() {
   const store = new Map();
   return {
     store,
-    async get(k) { return store.has(k) ? store.get(k) : null; },
+    // Como el KV real: get(k, 'json') o get(k, { type: 'json' }) devuelve el objeto.
+    async get(k, type) {
+      if (!store.has(k)) return null;
+      const v = store.get(k);
+      return (type === 'json' || type?.type === 'json') ? JSON.parse(v) : v;
+    },
     async put(k, v) { store.set(k, String(v)); },
     async list({ prefix = '', cursor } = {}) {
       const keys = [...store.keys()].filter(k => k.startsWith(prefix)).sort().map(name => ({ name }));
@@ -34,16 +39,18 @@ let pass = 0, fail = 0;
 const check = (name, cond) => { if (cond) { pass++; console.log('OK  ', name); } else { fail++; console.log('FAIL', name); } };
 
 const kv = fakeKV();
+// Todo lo del día vive en UNA clave day:{fecha} (ver esquema en index.js).
+const day = () => JSON.parse(kv.store.get(`day:${today}`) || '{}');
 const env = { EVENTS_KV: kv, READ_SECRET: 'secreto-de-prueba' };
 
 // 1. Dos páginas vistas en la misma sesión: 2 pv, 1 visita, canal social, campaña válida.
 await worker.fetch(post('/pv', { path: '/', src: 'social', campaign: 'voz-2026-09', first: true }), env);
 await worker.fetch(post('/pv', { path: '/salinas.html', src: 'social', campaign: 'voz-2026-09', first: false }), env);
-check('1a pv por ruta (/)', kv.store.get(`pv:${today}:/`) === '1');
-check('1b pv por ruta (/salinas.html)', kv.store.get(`pv:${today}:/salinas.html`) === '1');
-check('1c páginas vistas del día', kv.store.get(`pvday:${today}`) === '2');
-check('1d una sola visita', kv.store.get(`vis:${today}`) === '1');
-check('1e visita por canal social', kv.store.get(`vsrc:${today}:social`) === '1');
+check('1a pv por ruta (/)', day().pv?.['/'] === 1);
+check('1b pv por ruta (/salinas.html)', day().pv?.['/salinas.html'] === 1);
+check('1c páginas vistas del día', day().pvday === 2);
+check('1d una sola visita', day().vis === 1);
+check('1e visita por canal social', day().vsrc?.social === 1);
 check('1f campaña del mes', kv.store.get(`camp:${month}:voz-2026-09`) === '1');
 
 // 2. Rutas fuera de la gramática no crean claves; /index.html se normaliza a /.
@@ -53,13 +60,13 @@ await worker.fetch(post('/pv', { path: '/x'.repeat(50) + '.html', first: true })
 await worker.fetch(post('/pv', { path: '/mar.html?x=<script>', first: true }), env);
 check('2a rutas inválidas ignoradas (sin claves nuevas salvo rate limit)', kv.store.size === before);
 await worker.fetch(post('/pv', { path: '/index.html', src: 'direct', first: true }), env);
-check('2b /index.html cuenta como /', kv.store.get(`pv:${today}:/`) === '2');
-check('2c visita directa', kv.store.get(`vsrc:${today}:direct`) === '1');
+check('2b /index.html cuenta como /', day().pv?.['/'] === 2);
+check('2c visita directa', day().vsrc?.direct === 1);
 
 // 3. Campaña inválida (mayúsculas/espacios) se ignora; canal desconocido cae en other.
 await worker.fetch(post('/pv', { path: '/noticias.html', src: 'marte', campaign: 'Mal Formada!', first: true }), env);
 check('3a campaña inválida ignorada', ![...kv.store.keys()].some(k => k.startsWith('camp:') && /mal/i.test(k)));
-check('3b canal desconocido → other', kv.store.get(`vsrc:${today}:other`) === '1');
+check('3b canal desconocido → other', day().vsrc?.other === 1);
 
 // 4. /stats agrega y cachea.
 const stats = (u) => worker.fetch(new Request(`${ORIGIN}${u}`, { headers: { Origin: ORIGIN } }), env);
