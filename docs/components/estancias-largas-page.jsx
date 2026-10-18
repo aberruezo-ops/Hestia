@@ -27,15 +27,9 @@ const LS_COPY = {
       'Señal de ~20% al firmar el contrato, resto a la llegada',
       'Te respondemos en menos de una hora',
     ],
-    prices_title: 'Tarifas mensuales',
-    prices_note:  'Precio por apartamento completo. Las noches de Navidad (23 dic–6 ene) y Semana Santa tienen tarifa plana de {FLAT} €/noche.',
-    months_label: 'Meses',
-    rate_label:   '€ / mes',
-    price_rows: [
-      { period: 'Nov · Dic · Ene · Feb · Mar · Abr', months: 'T. baja' },
-      { period: 'Oct · May',                          months: '' },
-      { period: 'Jun · Sep',                          months: '' },
-    ],
+    prices_title: 'Tarifa mensual',
+    prices_note:  'Precio por apartamento completo. El importe exacto depende de las fechas y del Hestía: pregúntanos y te lo cerramos.',
+    prices_ask:   'Pregúntanos por tus fechas',
     min_note:    'Estancia mínima: 29 noches. Sin disponibilidad en julio y agosto.',
     apts_title:  'Los tres Hestías',
     apts_cta:    'Ver apartamento',
@@ -79,15 +73,9 @@ const LS_COPY = {
       '~20% deposit on signing, the rest on arrival',
       'We reply within an hour',
     ],
-    prices_title: 'Monthly rates',
-    prices_note:  'Full apartment price. Christmas nights (Dec 23–Jan 6) and Easter are charged at a flat {FLAT} €/night.',
-    months_label: 'Months',
-    rate_label:   '€ / month',
-    price_rows: [
-      { period: 'Nov · Dec · Jan · Feb · Mar · Apr', months: 'Low season' },
-      { period: 'Oct · May',                          months: '' },
-      { period: 'Jun · Sep',                          months: '' },
-    ],
+    prices_title: 'Monthly rate',
+    prices_note:  'Full apartment price. The exact amount depends on your dates and the Hestía: ask us and we will confirm it.',
+    prices_ask:   'Ask us about your dates',
     min_note:    'Minimum stay: 29 nights. July and August not available.',
     apts_title:  'The three Hestías',
     apts_cta:    'View apartment',
@@ -116,9 +104,6 @@ const LS_APTS = [
 
 // Tarifas de estancia larga: SIEMPRE desde prices.json (window.PRICES_V2),
 // para que coincidan con el panel admin. Sin números hardcodeados en la web.
-const _lsCfgPub = () => (window.PRICES_V2 && window.PRICES_V2.longStayConfig) || {};
-const _lsRates  = () => _lsCfgPub().monthlyRates || null;
-const _lsFlat   = () => _lsCfgPub().specialNightFlat ?? null;
 const _fmtRate  = (n, lang) => String(Math.round(Number(n) || 0)).replace(/\B(?=(\d{3})+(?!\d))/g, lang === 'es' ? '.' : ',');
 
 const LsHero = ({ lang }) => {
@@ -205,35 +190,20 @@ const LsIncludes = ({ lang }) => {
 
 const LsPrices = ({ lang }) => {
   const t = LS_COPY[lang];
-  const rates = _lsRates();
-  const flat = _lsFlat();
-  if (!rates || flat == null) return null;
-  // "Desde" = base + el suplemento de apartamento más bajo: el mismo mínimo que _lsMinMonthly (hero y portada).
-  const supps = Object.values(_lsCfgPub().aptSupplement || {});
-  const minSupp = supps.length ? Math.min(...supps) : 0;
-  const rateByIdx = [rates.baja, rates.media, rates.alta].map(r => r + minSupp);
-  const note = t.prices_note.replace('{FLAT}', String(flat));
+  const min = _lsMinMonthly();
+  if (min == null) return null;
   return (
     <section className="lsl-section lsl-prices">
       <div className="lsl-inner">
         <h2 className="lsl-h2">{t.prices_title}</h2>
-        <p className="lsl-prices-note">{note}</p>
         <div className="lsl-prices-table">
-          {t.price_rows.map((r, i) => (
-            <div key={r.period} className="lsl-pt-row">
-              <span className="lsl-pt-period">{r.period}</span>
-              {r.months && <span className="lsl-pt-tag">{r.months}</span>}
-              <span className="lsl-pt-rate"><span className="lsl-pt-desde">{lang === 'es' ? 'desde ' : 'from '}</span>{_fmtRate(rateByIdx[i], lang)}<span className="lsl-pt-unit">€/mes</span></span>
-            </div>
-          ))}
-          <div className="lsl-pt-row lsl-pt-special">
-            <span className="lsl-pt-period">
-              {lang === 'es' ? 'Navidad (23 dic–6 ene) · Semana Santa' : 'Christmas (Dec 23–Jan 6) · Easter'}
-            </span>
-            <span className="lsl-pt-tag">{lang === 'es' ? 'tarifa especial' : 'special rate'}</span>
-            <span className="lsl-pt-rate">{flat}<span className="lsl-pt-unit">€/noche</span></span>
+          <div className="lsl-pt-row">
+            <span className="lsl-pt-period">{lang === 'es' ? 'Septiembre a junio' : 'September to June'}</span>
+            <span className="lsl-pt-rate"><span className="lsl-pt-desde">{lang === 'es' ? 'desde ' : 'from '}</span>{_fmtRate(min, lang)}<span className="lsl-pt-unit">{lang === 'es' ? '€/mes' : '€/month'}</span></span>
           </div>
         </div>
+        <p className="lsl-prices-note">{t.prices_note}</p>
+        <a href="https://wa.me/34620316370" className="lsl-btn-primary" target="_blank" rel="noopener">{t.prices_ask} →</a>
         <p className="lsl-prices-min">{t.min_note}</p>
       </div>
     </section>

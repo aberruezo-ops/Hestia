@@ -23901,7 +23901,7 @@ img[src$="photo-alex.jpg"]:not(.avatar-img):hover {
 .lsl-includes-item svg { flex-shrink: 0; color: var(--ber, #3D1A35); }
 
 /* Prices */
-.lsl-prices-note { font-size: 13px; color: var(--ink-soft, #7A5A72); margin-bottom: 20px; line-height: 1.55; }
+.lsl-prices-note { font-size: 13px; color: var(--ink-soft, #7A5A72); margin: 14px 0 18px; line-height: 1.55; max-width: 560px; }
 .lsl-prices-table { display: flex; flex-direction: column; gap: 4px; max-width: 560px; }
 .lsl-pt-row {
   display: flex;
