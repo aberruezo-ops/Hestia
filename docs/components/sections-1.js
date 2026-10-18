@@ -796,7 +796,7 @@ const Compare = ({
     label: 'Piscina',
     vm: 'Comunitaria + jacuzzi',
     vt: '2 exteriores + climatizada',
-    vs: 'Comunitaria + pistas de tenis'
+    vs: 'Comunitaria + pistas de pádel y tenis'
   }, {
     label: 'Streaming',
     vm: 'SkyShowtime · HBO Max · Prime · Disney+',
@@ -805,7 +805,7 @@ const Compare = ({
   }, {
     label: 'Extra',
     vm: 'Parque infantil',
-    vt: 'SPA comunitario · sauna · gimnasio · tenis',
+    vt: 'SPA comunitario · sauna · gimnasio · pádel y tenis',
     vs: 'Grandes jardines con riachuelos · Parque Natural Salinas'
   }, {
     label: 'Playa',
@@ -868,7 +868,7 @@ const Compare = ({
     label: 'Pool',
     vm: 'Shared + jacuzzi',
     vt: '2 outdoor + heated',
-    vs: 'Shared + tennis courts'
+    vs: 'Shared + padel and tennis courts'
   }, {
     label: 'Streaming',
     vm: 'SkyShowtime · HBO Max · Prime · Disney+',
@@ -877,7 +877,7 @@ const Compare = ({
   }, {
     label: 'Extra',
     vm: 'Playground',
-    vt: 'Shared spa · sauna · gym · tennis',
+    vt: 'Shared spa · sauna · gym · padel and tennis',
     vs: 'Large gardens with streams · salt-flat nature park'
   }, {
     label: 'Beach',

@@ -666,7 +666,7 @@ const QUICK_FAQ = {
   vt: {
     es: [
       { q: '¿Por qué elegiría Hestía Thalassa sobre los otros dos?',
-        a: <>Thalassa es el ático, el piso más alto de la urbanización. La terraza panorámica tiene vistas al Mediterráneo y al Salar de los Canos, el paisaje más abierto y luminoso de los tres. Además, la urbanización tiene dos piscinas exteriores, jardines, parques, pistas de tenis y SPA comunitario.</> },
+        a: <>Thalassa es el ático, el piso más alto de la urbanización. La terraza panorámica tiene vistas al Mediterráneo y al Salar de los Canos, el paisaje más abierto y luminoso de los tres. Además, la urbanización tiene dos piscinas exteriores, jardines, parques, pistas de pádel y tenis y SPA comunitario.</> },
       { q: '¿Cómo funciona el SPA de la urbanización?',
         a: <>El SPA es comunitario y está abierto en otoño, invierno y primavera: piscina climatizada, jacuzzi, sauna, pediluvio y zona de relax. En verano permanece cerrado, aunque el gimnasio sigue abierto todo el año.</> },
       { q: '¿Qué vistas tiene la terraza del ático?',
@@ -676,7 +676,7 @@ const QUICK_FAQ = {
     ],
     en: [
       { q: 'Why would I choose Hestía Thalassa over the other two?',
-        a: <>Thalassa is the penthouse, the highest floor in the complex. The panoramic terrace looks out over the Mediterranean and the Salar de los Canos: the most open and light-filled view of the three. The complex also has two outdoor pools, gardens, parks, tennis courts and a shared SPA.</> },
+        a: <>Thalassa is the penthouse, the highest floor in the complex. The panoramic terrace looks out over the Mediterranean and the Salar de los Canos: the most open and light-filled view of the three. The complex also has two outdoor pools, gardens, parks, padel and tennis courts and a shared SPA.</> },
       { q: 'How does the shared SPA work?',
         a: <>The SPA is a communal facility, open in autumn, winter and spring: heated pool, jacuzzi, sauna, footbath and relaxation area. It closes during the summer, although the gym stays open all year round.</> },
       { q: 'What can you see from the penthouse terrace?',
@@ -688,21 +688,21 @@ const QUICK_FAQ = {
   vs: {
     es: [
       { q: '¿Por qué elegiría Hestía Salinas sobre los otros dos?',
-        a: <>Salinas es el más espacioso de los tres, con 87 m². Dos terrazas, piscina y pistas de tenis comunitarias, grandes jardines con riachuelos y el Parque Natural de las Salinas de Puerto Rey a un paseo corto. La luz dorada de Almería llena cada habitación, con la naturaleza siempre cerca.</> },
+        a: <>Salinas es el más espacioso de los tres, con 87 m². Dos terrazas, piscina y pistas de pádel y tenis comunitarias, grandes jardines con riachuelos y el Parque Natural de las Salinas de Puerto Rey a un paseo corto. La luz dorada de Almería llena cada habitación, con la naturaleza siempre cerca.</> },
       { q: '¿Qué son las Salinas de Puerto Rey?',
         a: <>Un Parque Natural cercano, a un paseo corto, con flamencos, aves migratorias y una luz dorada al amanecer única en Europa. Una de las razones por las que Salinas tiene algo que los demás no tienen.</> },
       { q: '¿Qué tiene la urbanización de Salinas?',
-        a: <>Piscina comunitaria, pistas de tenis y unos jardines muy grandes, con riachuelos, aves y senderos para pasear. Y a un paseo corto, el Parque Natural de las Salinas de Puerto Rey.</> },
+        a: <>Piscina comunitaria, pistas de pádel y tenis y unos jardines muy grandes, con riachuelos, aves y senderos para pasear. Y a un paseo corto, el Parque Natural de las Salinas de Puerto Rey.</> },
       { q: '¿Puedo traer mascotas?',
         a: <>Sí, en los tres. Siempre bajo petición previa y con suplemento, respetando unas condiciones básicas dentro de Hestía, en las zonas comunes y en los espacios públicos.</> },
     ],
     en: [
       { q: 'Why would I choose Hestía Salinas over the other two?',
-        a: <>Salinas is the most spacious of the three, at 87 m². Two terraces, a shared pool and tennis courts, large gardens with streams and the Puerto Rey Salt-flat Nature Park a short walk away. Almería's golden afternoon light fills every room, with nature always close by.</> },
+        a: <>Salinas is the most spacious of the three, at 87 m². Two terraces, a shared pool and padel and tennis courts, large gardens with streams and the Puerto Rey Salt-flat Nature Park a short walk away. Almería's golden afternoon light fills every room, with nature always close by.</> },
       { q: 'What is the Puerto Rey Nature Park?',
         a: <>A nearby natural park, a short walk away, with flamingos, migratory birds and a golden light at sunrise unique in Europe. One of the reasons Salinas has something the others don't.</> },
       { q: 'What does the Salinas complex have?',
-        a: <>A shared pool, tennis courts and very large gardens with streams, birds and paths to wander. And a short walk away, the Puerto Rey Salt-flat Nature Park.</> },
+        a: <>A shared pool, padel and tennis courts and very large gardens with streams, birds and paths to wander. And a short walk away, the Puerto Rey Salt-flat Nature Park.</> },
       { q: 'Can I bring pets?',
         a: <>Yes, in all three Hestías. Always on request and with a supplement, as long as basic conditions are respected inside the Hestía, in the communal areas and in public spaces.</> },
     ],

@@ -62,7 +62,7 @@
     "occupancy": {"@type": "QuantitativeValue", "maxValue": 7},
     "amenityFeature": [
       {"@type": "LocationFeatureSpecification", "name": "Piscina comunitaria", "value": true},
-      {"@type": "LocationFeatureSpecification", "name": "Pistas de tenis", "value": true},
+      {"@type": "LocationFeatureSpecification", "name": "Pistas de pádel y tenis", "value": true},
       {"@type": "LocationFeatureSpecification", "name": "Jardines con riachuelos", "value": true},
       {"@type": "LocationFeatureSpecification", "name": "Bañera", "value": true},
       {"@type": "LocationFeatureSpecification", "name": "Dos terrazas", "value": true},
@@ -107,7 +107,7 @@
       "name": "¿Por qué elegiría Hestía Salinas sobre los otros dos?",
       "acceptedAnswer": {
         "@type": "Answer",
-        "text": "Salinas es el más luminoso de los tres. Está en la urbanización Pueblo Salinas y tiene 87 m², dos terrazas, piscina y pistas de tenis comunitarias, grandes jardines con riachuelos y el Parque Natural de las Salinas de Puerto Rey a un paseo corto."
+        "text": "Salinas es el más luminoso de los tres. Está en la urbanización Pueblo Salinas y tiene 87 m², dos terrazas, piscina y pistas de pádel y tenis comunitarias, grandes jardines con riachuelos y el Parque Natural de las Salinas de Puerto Rey a un paseo corto."
       }
     },
     {
@@ -123,7 +123,7 @@
       "name": "¿Qué tiene la urbanización de Salinas?",
       "acceptedAnswer": {
         "@type": "Answer",
-        "text": "Piscina comunitaria, pistas de tenis y unos jardines muy grandes, con riachuelos, aves y senderos para pasear. Y a un paseo corto, el Parque Natural de las Salinas de Puerto Rey."
+        "text": "Piscina comunitaria, pistas de pádel y tenis y unos jardines muy grandes, con riachuelos, aves y senderos para pasear. Y a un paseo corto, el Parque Natural de las Salinas de Puerto Rey."
       }
     },
     {
@@ -176,7 +176,7 @@
   <p>Está junto a las Salinas de Puerto Rey, único humedal protegido de la zona, a un paseo corto. La playa queda a 900 metros.</p>
   <p>Dos habitaciones y capacidad para 6 personas más bebé. Bañera con hidromasaje y cabina de ducha con hidromasaje. Cocina completa con lavavajillas y lavadora, aire acondicionado frío y calor, y WiFi de fibra.</p>
   <p>Smart TV de 55 pulgadas con Ambilight y streaming incluido: SkyShowtime, HBO Max, Prime Video y Disney+.</p>
-  <p>La urbanización tiene piscina, pistas de tenis y grandes jardines con riachuelos. En el dormitorio principal hay nórdico de plumas y alternativa antialérgica.</p>
+  <p>La urbanización tiene piscina, pistas de pádel y tenis y grandes jardines con riachuelos. En el dormitorio principal hay nórdico de plumas y alternativa antialérgica.</p>
   <p>Mascotas bienvenidas con petición previa y un suplemento moderado por noche. Hay una estancia mínima, algo más alta en temporada crítica.</p>
   <p>Licencia turística VFT/AL/07056.</p>
   <nav aria-label="Hestía"><a href="/">Inicio</a> · <a href="/mar.html">Hestía Mar</a> · <a href="/thalassa.html">Hestía Thalassa</a> · <a href="/salinas.html">Hestía Salinas</a> · <a href="/reservas.html">Reservas</a> · <a href="/estancias-largas.html">Estancias largas</a> · <a href="/opiniones.html">Opiniones</a> · <a href="/nosotros.html">Nosotros</a> · <a href="/contacto.html">Contacto</a> · <a href="/guia-vera/">Extracto Guía</a></nav>
@@ -233,7 +233,7 @@
     } catch (e) { console.warn('photo-positions.json fetch failed', e); }
 
     for (const file of COMPONENT_FILES) {
-      const res = await fetch(file + '?cv=06d07d3364');
+      const res = await fetch(file + '?cv=231ccbbe9a');
       if (!res.ok) throw new Error(`Failed to load ${file}: ${res.status}`);
       const code = await res.text();
       // eslint-disable-next-line no-eval
