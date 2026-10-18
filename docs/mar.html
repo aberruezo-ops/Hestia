@@ -80,10 +80,10 @@
     },
     "aggregateRating": {
       "@type": "AggregateRating",
-      "ratingValue": "9.95",
+      "ratingValue": "9.94",
       "bestRating": "10",
       "worstRating": "1",
-      "reviewCount": "110"
+      "reviewCount": "126"
     },
     "@id": "https://www.hestiayourhome.com/mar.html#accommodation",
   "checkInTime": "15:00",
@@ -231,7 +231,7 @@
     } catch (e) { console.warn('photo-positions.json fetch failed', e); }
 
     for (const file of COMPONENT_FILES) {
-      const res = await fetch(file + '?cv=d15acdc2c6');
+      const res = await fetch(file + '?cv=2db26b884c');
       if (!res.ok) throw new Error(`Failed to load ${file}: ${res.status}`);
       const code = await res.text();
       // eslint-disable-next-line no-eval
