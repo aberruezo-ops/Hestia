@@ -192,8 +192,8 @@ const Ratings = ({ lang }) => {
             <div className="desc">{t.rating_booking_desc}</div>
             <blockquote className="rating-quote">
               {lang === 'es'
-                ? '«Todo impecable. La ubicación, Hestía y sobre todo el trato de Alex. Volvemos seguro.»'
-                : '«Everything perfect. The location, the Hestía, and above all Alex\'s care. We\'ll definitely be back.»'}
+                ? '«La terraza esquinera al amanecer vale cada euro. Vistas al mar entre los pinos, piscina tranquila y Alex disponible en minutos.»'
+                : '«The corner terrace at sunrise is worth every euro. Sea views through the pines, a quiet pool and Alex available within minutes.»'}
               <cite>– María G. · Hestía Mar · 2024</cite>
             </blockquote>
           </div>
@@ -203,8 +203,8 @@ const Ratings = ({ lang }) => {
             <div className="desc">{t.rating_airbnb_desc}</div>
             <blockquote className="rating-quote">
               {lang === 'es'
-                ? '«Llevamos diez años viajando y nunca habíamos visto unas vistas así desde un alojamiento. El SPA es otro nivel.»'
-                : '«Ten years travelling and we\'ve never had views like these from a holiday rental. The SPA is something else entirely.»'}
+                ? '«Llevamos diez años viajando y nunca habíamos visto unas vistas así desde un alojamiento. El SPA y el ático juntos, difícil de superar.»'
+                : '«Ten years travelling and we\'ve never had views like these from a holiday rental. The SPA and penthouse together, hard to beat.»'}
               <cite>– James & Sophie · Hestía Thalassa · 2024</cite>
             </blockquote>
           </div>
@@ -214,7 +214,7 @@ const Ratings = ({ lang }) => {
             <div className="desc">{t.rating_google_desc}</div>
             <blockquote className="rating-quote">
               {lang === 'es'
-                ? '«Hestía tiene algo que no se puede comprar: la sensación de que alguien ha pensado en cada detalle para que te sientas en casa.»'
+                ? '«Hestía tiene algo que no se puede comprar: la sensación de que alguien ha pensado en cada detalle para que te sientas en casa, no en un alquiler.»'
                 : '«Hestía has something money can\'t buy: the feeling that someone thought of every detail so you feel at home, not in a rental.»'}
               <cite>– Carlos M. · Hestía Salinas · 2024</cite>
             </blockquote>

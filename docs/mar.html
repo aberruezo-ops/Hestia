@@ -64,6 +64,8 @@
       {"@type": "LocationFeatureSpecification", "name": "Vistas al mar", "value": true},
       {"@type": "LocationFeatureSpecification", "name": "Piscina comunitaria", "value": true},
       {"@type": "LocationFeatureSpecification", "name": "Jacuzzi comunitario", "value": true},
+      {"@type": "LocationFeatureSpecification", "name": "Parque infantil comunitario", "value": true},
+      {"@type": "LocationFeatureSpecification", "name": "Bañera", "value": true},
       {"@type": "LocationFeatureSpecification", "name": "Mascotas permitidas", "value": true},
       {"@type": "LocationFeatureSpecification", "name": "WiFi", "value": true},
       {"@type": "LocationFeatureSpecification", "name": "Aire acondicionado", "value": true}
@@ -78,10 +80,10 @@
     },
     "aggregateRating": {
       "@type": "AggregateRating",
-      "ratingValue": "9.92",
+      "ratingValue": "9.95",
       "bestRating": "10",
       "worstRating": "1",
-      "reviewCount": "165"
+      "reviewCount": "110"
     },
     "@id": "https://www.hestiayourhome.com/mar.html#accommodation",
   "checkInTime": "15:00",
@@ -170,7 +172,7 @@
 <div id="root"><div class="container seo-fallback">
   <h1>Hestía Mar · Apartamento en Vera Playa, Almería</h1>
   <p>Hestía Mar es un apartamento de alquiler vacacional en Vera Playa (Almería), a 300 metros de la playa, el más cercano al mar de los tres Hestía. Se llega andando, sin coger el coche.</p>
-  <p>Su terraza esquinera de 20 m² mira al Mediterráneo entre los pinos y es el sitio donde empieza el día. En el jardín de la urbanización hay piscina comunitaria y jacuzzi.</p>
+  <p>Su terraza esquinera de 20 m² mira al Mediterráneo entre los pinos y es el sitio donde empieza el día. En el jardín de la urbanización hay piscina, jacuzzi y parque infantil comunitarios.</p>
   <p>Dos habitaciones y capacidad para 6 personas más bebé, con cuna y trona bajo petición. Dos baños: uno con columna de hidroterapia y espejo de cromoterapia, otro con ducha. Cocina completa con lavavajillas y lavadora, aire acondicionado por conductos, WiFi de fibra y garaje cubierto.</p>
   <p>Smart TV de 55 pulgadas con SkyShowtime, HBO Max, Prime Video y Disney+ activas desde el primer minuto de la estancia.</p>
   <p>Mascotas bienvenidas con petición previa y un suplemento moderado por noche. Hay una estancia mínima, algo más alta en temporada crítica, y el huésped adicional tiene un pequeño suplemento.</p>
@@ -229,7 +231,7 @@
     } catch (e) { console.warn('photo-positions.json fetch failed', e); }
 
     for (const file of COMPONENT_FILES) {
-      const res = await fetch(file + '?cv=9e48a24053');
+      const res = await fetch(file + '?cv=06d07d3364');
       if (!res.ok) throw new Error(`Failed to load ${file}: ${res.status}`);
       const code = await res.text();
       // eslint-disable-next-line no-eval

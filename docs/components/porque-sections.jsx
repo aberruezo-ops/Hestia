@@ -10,7 +10,7 @@ const PORQUE_COPY = {
     origin_title: (<>Empezó en 2016,<br/><em>con dos personas y tres llaves.</em></>),
     origin_p1: 'Alex y Fran tenían tres viviendas en Vera Playa. Podían ponerlas en una plataforma, cobrar la comisión y desconectar el teléfono. Hicieron lo contrario.',
     origin_p2: 'El nombre lo tomaron de la diosa griega del hogar. La idea era simple: que una casa de vacaciones se sintiera de verdad como una casa, con alguien al otro lado del teléfono que supiera tu nombre.',
-    origin_p3: 'Alex es ingeniero informático. Fran, filólogo clásico. Llevan décadas en Vera Playa. El uno observa y construye, el otro nombra y cuida, y entre los dos convirtieron tres viviendas en tres hogares. No tienen oficina ni recepción: solo un teléfono que siempre cogen.',
+    origin_p3: 'Alex es ingeniero informático. Fran, filólogo clásico. Llevan diez años con Hestía Mar, ocho con Thalassa y seis con Salinas. El uno observa y construye, el otro nombra y cuida, y entre los dos convirtieron tres viviendas en tres hogares. No tienen oficina ni recepción: solo un teléfono que siempre cogen.',
     origin_quote: '«Lo difícil no fue montar Hestía, fue convencernos de hacerlo a nuestra manera.»',
     origin_quote_attr: '– Alex Berruezo',
 
@@ -42,7 +42,7 @@ const PORQUE_COPY = {
       { letter: 'S', name: 'Sencillez',    desc: 'Sin oficina ni recepción: tres llaves, tres casas y dos personas al otro lado del teléfono.' },
       { letter: 'T', name: 'Transparencia', desc: 'Precios claros, fotos reales y distancias medidas en metros. Si algo no está, lo decimos; si algo se rompe, lo arreglamos.' },
       { letter: 'I', name: 'Integridad',   desc: 'Diseñamos cada Hestía como si fuera nuestra propia casa, porque en cierto modo lo es: el cojín bien puesto, el café listo, la toalla doblada antes de que llegues.' },
-      { letter: 'A', name: 'Arraigo',      desc: 'Décadas en Vera Playa. Hestía huele a sal, a olivar y a calima del Sahara porque el sitio es real, no un decorado.' },
+      { letter: 'A', name: 'Arraigo',      desc: 'Diez años en Vera Playa. Hestía huele a sal, a olivar y a calima del Sahara porque el sitio es real, no un decorado.' },
     ],
     values_closing: (<>Seis valores, <em>una sola confianza.</em></>),
 
@@ -68,7 +68,7 @@ const PORQUE_COPY = {
     origin_title: (<>It started in 2016,<br/><em>with two people and three keys.</em></>),
     origin_p1: 'Alex and Fran had three properties in Vera Playa. They could have listed them on a platform, collected the commission and switched the phone off. They did the opposite.',
     origin_p2: 'The name comes from the Greek goddess of the hearth. The idea was simple: a holiday rental that actually felt like a home, with someone on the other end of the phone who knew your name.',
-    origin_p3: 'Alex is a computer engineer. Fran, a classical philologist. Both have spent decades in Vera Playa. One observes and builds, the other names and cares, and together they turned three properties into three homes. No office, no reception desk: just a phone they always pick up.',
+    origin_p3: 'Alex is a computer engineer. Fran, a classical philologist. Ten years with Hestía Mar, eight with Thalassa and six with Salinas. One observes and builds, the other names and cares, and together they turned three properties into three homes. No office, no reception desk: just a phone they always pick up.',
     origin_quote: '"The hard part was not building Hestía. It was convincing ourselves to do it our own way."',
     origin_quote_attr: '– Alex Berruezo',
 
@@ -100,7 +100,7 @@ const PORQUE_COPY = {
       { letter: 'S', name: 'Simplicity',   desc: 'No office, no reception desk: three keys, three homes, two people on the other end of the phone.' },
       { letter: 'T', name: 'Transparency', desc: 'Clear prices, real photos, distances measured in metres. If something is missing, we say so; if something breaks, we fix it.' },
       { letter: 'I', name: 'Integrity',    desc: 'We design every Hestía as if it were our own home, because in a way it is: the cushion in place, the coffee ready, the towel folded before you arrive.' },
-      { letter: 'A', name: 'Authenticity', desc: 'Decades in Vera Playa. Hestía smells of salt, olive grove and Saharan calima, because the place is real, not a stage set.' },
+      { letter: 'A', name: 'Authenticity', desc: 'Ten years in Vera Playa. Hestía smells of salt, olive grove and Saharan calima, because the place is real, not a stage set.' },
     ],
     values_closing: (<>Six values, <em>one trust.</em></>),
 

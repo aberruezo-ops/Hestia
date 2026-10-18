@@ -89,7 +89,7 @@
   <p>Publicamos por ediciones, con lo que de verdad merece la pena de cada temporada: mercadillos semanales, fiestas patronales, temporada de playas, agenda cultural y avisos prácticos para quien viene de visita.</p>
   <p>Vera celebra sus fiestas en septiembre y tiene mercadillo semanal. Garrucha mantiene su lonja de pescado, con subasta de la gamba roja. Mojácar concentra buena parte de la agenda cultural de la comarca.</p>
   <p>También contamos las novedades de los tres apartamentos: mejoras, servicios nuevos y cambios de temporada.</p>
-  <p>Escrito por Alex y Fran, que viven aquí y no copian la información de otras webs.</p>
+  <p>Escrito por Alex y Fran, que conocen la zona de primera mano y no copian la información de otras webs.</p>
   <nav aria-label="Hestía"><a href="/">Inicio</a> · <a href="/mar.html">Hestía Mar</a> · <a href="/thalassa.html">Hestía Thalassa</a> · <a href="/salinas.html">Hestía Salinas</a> · <a href="/reservas.html">Reservas</a> · <a href="/estancias-largas.html">Estancias largas</a> · <a href="/opiniones.html">Opiniones</a> · <a href="/nosotros.html">Nosotros</a> · <a href="/contacto.html">Contacto</a> · <a href="/guia-vera/">Extracto Guía</a></nav>
 </div></div>
 
@@ -131,7 +131,7 @@
     } catch (e) { console.warn('prices.json fetch failed; using fallback', e); }
 
     for (const file of COMPONENT_FILES) {
-      const res = await fetch(file + '?cv=9e48a24053');
+      const res = await fetch(file + '?cv=06d07d3364');
       if (!res.ok) throw new Error(`Failed to load ${file}: ${res.status}`);
       const code = await res.text();
       // eslint-disable-next-line no-eval

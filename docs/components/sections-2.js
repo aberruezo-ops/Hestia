@@ -310,7 +310,7 @@ const Ratings = ({
     className: "desc"
   }, t.rating_booking_desc), /*#__PURE__*/React.createElement("blockquote", {
     className: "rating-quote"
-  }, lang === 'es' ? '«Todo impecable. La ubicación, Hestía y sobre todo el trato de Alex. Volvemos seguro.»' : '«Everything perfect. The location, the Hestía, and above all Alex\'s care. We\'ll definitely be back.»', /*#__PURE__*/React.createElement("cite", null, "– María G. · Hestía Mar · 2024"))), /*#__PURE__*/React.createElement("div", {
+  }, lang === 'es' ? '«La terraza esquinera al amanecer vale cada euro. Vistas al mar entre los pinos, piscina tranquila y Alex disponible en minutos.»' : '«The corner terrace at sunrise is worth every euro. Sea views through the pines, a quiet pool and Alex available within minutes.»', /*#__PURE__*/React.createElement("cite", null, "– María G. · Hestía Mar · 2024"))), /*#__PURE__*/React.createElement("div", {
     className: "rating-card",
     style: {
       borderTopColor: 'var(--vt)'
@@ -334,7 +334,7 @@ const Ratings = ({
     className: "desc"
   }, t.rating_airbnb_desc), /*#__PURE__*/React.createElement("blockquote", {
     className: "rating-quote"
-  }, lang === 'es' ? '«Llevamos diez años viajando y nunca habíamos visto unas vistas así desde un alojamiento. El SPA es otro nivel.»' : '«Ten years travelling and we\'ve never had views like these from a holiday rental. The SPA is something else entirely.»', /*#__PURE__*/React.createElement("cite", null, "– James & Sophie · Hestía Thalassa · 2024"))), /*#__PURE__*/React.createElement("div", {
+  }, lang === 'es' ? '«Llevamos diez años viajando y nunca habíamos visto unas vistas así desde un alojamiento. El SPA y el ático juntos, difícil de superar.»' : '«Ten years travelling and we\'ve never had views like these from a holiday rental. The SPA and penthouse together, hard to beat.»', /*#__PURE__*/React.createElement("cite", null, "– James & Sophie · Hestía Thalassa · 2024"))), /*#__PURE__*/React.createElement("div", {
     className: "rating-card",
     style: {
       borderTopColor: 'var(--vs)'
@@ -358,7 +358,7 @@ const Ratings = ({
     className: "desc"
   }, t.rating_google_desc), /*#__PURE__*/React.createElement("blockquote", {
     className: "rating-quote"
-  }, lang === 'es' ? '«Hestía tiene algo que no se puede comprar: la sensación de que alguien ha pensado en cada detalle para que te sientas en casa.»' : '«Hestía has something money can\'t buy: the feeling that someone thought of every detail so you feel at home, not in a rental.»', /*#__PURE__*/React.createElement("cite", null, "– Carlos M. · Hestía Salinas · 2024"))))));
+  }, lang === 'es' ? '«Hestía tiene algo que no se puede comprar: la sensación de que alguien ha pensado en cada detalle para que te sientas en casa, no en un alquiler.»' : '«Hestía has something money can\'t buy: the feeling that someone thought of every detail so you feel at home, not in a rental.»', /*#__PURE__*/React.createElement("cite", null, "– Carlos M. · Hestía Salinas · 2024"))))));
 };
 
 // --- RATINGS MARQUEE, cinta de plataformas/métricas bajo Ratings ---

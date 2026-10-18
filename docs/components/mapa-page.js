@@ -30,7 +30,7 @@ const MAPA_COPY = {
       }, {
         href: 'salinas.html',
         label: 'Hestía Salinas',
-        desc: 'Dorado · tres piscinas y Parque Natural a un paseo corto.',
+        desc: 'Dorado · el más grande, jardines con riachuelos y Parque Natural a un paseo corto.',
         apt: 'vs'
       }]
     }, {
@@ -115,7 +115,7 @@ const MAPA_COPY = {
       }, {
         href: 'salinas.html',
         label: 'Hestía Salinas',
-        desc: 'Gold · three pools and the Nature Park a short walk away.',
+        desc: 'Gold · the largest, gardens with streams and the Nature Park a short walk away.',
         apt: 'vs'
       }]
     }, {

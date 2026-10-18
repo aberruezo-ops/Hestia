@@ -5701,7 +5701,7 @@ const GUIDE_BY_APT = {
       }, {
         id: 'banos',
         title: 'Tus baños',
-        body: 'Tus dos baños con aromaterapia y duchas hidromasaje. Productos básicos para tus primeros días: secador, botiquín y más.',
+        body: 'Tus dos baños, con bañera, aromaterapia y duchas de hidromasaje. Productos básicos para tus primeros días: secador, botiquín y más.',
         recs: ['Haz un uso prudente y responsable del agua. El agua es vida.', 'Las toallas del baño no son para la playa ni para la piscina.', 'Cuidado con las cremas y maquillaje. Estropean los textiles del hogar.']
       }, {
         id: 'terraza',
@@ -5711,8 +5711,8 @@ const GUIDE_BY_APT = {
       }, {
         id: 'urbanizacion',
         title: 'Tu urbanización',
-        body: 'Tu urbanización, Al Andalus Thalassa, tiene SPA comunitario (sauna y gimnasio), piscina y pistas de pádel. El SPA está abierto en otoño, invierno y primavera; en verano solo el gimnasio. Tu plaza subterránea te espera junto a las escaleras.',
-        recs: ['El SPA es comunitario y de uso por turnos, pregúntanos por la disponibilidad.', 'Las pistas de pádel se reservan a través de la conserjería de la urbanización. Si las necesitas, pídenos el teléfono y te lo pasamos al momento.', 'Respeta las zonas comunes y las normas de la urbanización.', 'No utilices en la piscina las toallas de casa.']
+        body: 'Tu urbanización, Al Andalus Thalassa, tiene dos piscinas exteriores (norte y sur), jardines, parques, pistas de tenis y un SPA comunitario con piscina climatizada, jacuzzi, sauna, pediluvio, gimnasio y zona de relax. El SPA está abierto en otoño, invierno y primavera; en verano solo el gimnasio. Tu plaza subterránea te espera junto a las escaleras.',
+        recs: ['El SPA es comunitario y de uso por turnos, pregúntanos por la disponibilidad.', 'Las pistas de tenis se reservan a través de la conserjería de la urbanización. Si las necesitas, pídenos el teléfono y te lo pasamos al momento.', 'Respeta las zonas comunes y las normas de la urbanización.', 'No utilices en la piscina las toallas de casa.']
       }],
       checkin: {
         carText: 'Si conduces, llegas directamente a la puerta de Hestía. Te enviamos la mejor ruta según tu origen y la plaza de garaje cubierta exacta. No improvisas nada.',
@@ -5746,7 +5746,7 @@ const GUIDE_BY_APT = {
       }, {
         id: 'banos',
         title: 'Your bathrooms',
-        body: 'Your two bathrooms with aromatherapy and hydromassage showers. Basic products for your first days: hairdryer, first-aid kit and more.',
+        body: 'Your two bathrooms, with a bathtub, aromatherapy and hydromassage showers. Basic products for your first days: hairdryer, first-aid kit and more.',
         recs: ['Use water responsibly. Water is life.', 'Bathroom towels are not for the beach or the pool.', 'Be careful with creams and make-up, they damage textiles.']
       }, {
         id: 'terraza',
@@ -5756,8 +5756,8 @@ const GUIDE_BY_APT = {
       }, {
         id: 'urbanizacion',
         title: 'Your complex',
-        body: 'Your complex, Al Andalus Thalassa, has a shared SPA (sauna and gym), pool and padel courts. The SPA opens in autumn, winter and spring; only the gym stays open in summer. Your underground parking space is next to the stairs.',
-        recs: ['The SPA is shared and works in time slots, ask us for availability.', 'Padel courts are booked through the complex concierge desk. If you need one, ask us and we will pass you the phone number right away.', 'Respect the common areas and the complex rules.', 'Do not take house towels to the pool.']
+        body: 'Your complex, Al Andalus Thalassa, has two outdoor pools (north and south), gardens, parks, tennis courts and a shared SPA with heated pool, jacuzzi, sauna, footbath, gym and relaxation area. The SPA opens in autumn, winter and spring; only the gym stays open in summer. Your underground parking space is next to the stairs.',
+        recs: ['The SPA is shared and works in time slots, ask us for availability.', 'Tennis courts are booked through the complex concierge desk. If you need one, ask us and we will pass you the phone number right away.', 'Respect the common areas and the complex rules.', 'Do not take house towels to the pool.']
       }],
       checkin: {
         carText: 'If you drive, you arrive straight at Hestía\'s door. We send you the best route from your starting point and the exact covered garage spot. Nothing left to chance.',
@@ -5806,9 +5806,9 @@ const GUIDE_BY_APT = {
       }, {
         id: 'urbanizacion',
         title: 'Tu urbanización',
-        body: 'Tu urbanización, Pueblo Salinas, es textil, por lo que está prohibido el nudismo. Tu plaza de garaje es la nº 290. Tienes entrada y salida controladas por código, acceso/barrera a la zona 2 (donde está Hestía), acceso peatonal desde la urbanización, piscina y pistas deportivas. Hestía Vera Salinas está en el bloque 22, planta 1, puerta 7.',
-        points: ['Entrada y salida a la urbanización controlada por código.', 'Acceso/barrera a la zona 2, donde está Hestía.', 'Plaza de garaje de Hestía. Número 290.', 'Acceso peatonal a Hestía desde la urbanización.', 'Hestía Vera Salinas. Bloque 22, planta 1, apartamento 7.', 'Piscina.', 'Pistas deportivas.'],
-        recs: ['Merece la pena recorrer la urbanización: jardines, riachuelos, aves y otros pequeños animales, con el desierto alrededor. Y toda la tranquilidad de un recinto cerrado, sobre todo si vas con niños.', 'Cuida las plantas y la limpieza de la urbanización.', 'Respeta las zonas comunes y las normas de la urbanización.', 'Respeta a los vecinos.', 'Las pistas deportivas (pádel y demás) se reservan a través de la conserjería de la urbanización. Si las necesitas, pídenos el teléfono y te lo pasamos al momento.', 'Llama a Conserjería para reservar cualquier espacio común.']
+        body: 'Tu urbanización, Pueblo Salinas, es textil, por lo que está prohibido el nudismo. Tu plaza de garaje es la nº 290. Tienes entrada y salida controladas por código, acceso/barrera a la zona 2 (donde está Hestía), acceso peatonal desde la urbanización, piscina y pistas de tenis. Hestía Vera Salinas está en el bloque 22, planta 1, puerta 7.',
+        points: ['Entrada y salida a la urbanización controlada por código.', 'Acceso/barrera a la zona 2, donde está Hestía.', 'Plaza de garaje de Hestía. Número 290.', 'Acceso peatonal a Hestía desde la urbanización.', 'Hestía Vera Salinas. Bloque 22, planta 1, apartamento 7.', 'Piscina.', 'Pistas de tenis.'],
+        recs: ['Merece la pena recorrer la urbanización: jardines, riachuelos, aves y otros pequeños animales, con el desierto alrededor. Y toda la tranquilidad de un recinto cerrado, sobre todo si vas con niños.', 'Cuida las plantas y la limpieza de la urbanización.', 'Respeta las zonas comunes y las normas de la urbanización.', 'Respeta a los vecinos.', 'Las pistas de tenis se reservan a través de la conserjería de la urbanización. Si las necesitas, pídenos el teléfono y te lo pasamos al momento.', 'Llama a Conserjería para reservar cualquier espacio común.']
       }],
       checkin: {
         carText: 'Si conduces, llegas directamente a la puerta de Hestía. Te enviamos la mejor ruta según tu origen y la plaza de garaje cubierta exacta. No improvisas nada.',
@@ -5852,9 +5852,9 @@ const GUIDE_BY_APT = {
       }, {
         id: 'urbanizacion',
         title: 'Your complex',
-        body: 'Your complex, Pueblo Salinas, is textile-only, so nudism is not permitted. Your garage space is nº 290. Code-controlled entrance, barrier to zone 2 (where Hestía is), pedestrian access from the complex, swimming pool and sports courts. Hestía Vera Salinas is at block 22, floor 1, unit 7.',
-        points: ['Entrance and exit to the complex controlled by code.', 'Access/barrier to zone 2, where Hestía is.', 'Hestía parking space. Number 290.', 'Pedestrian access to Hestía from the complex.', 'Hestía Vera Salinas. Block 22, floor 1, apartment 7.', 'Swimming pool.', 'Sports courts.'],
-        recs: ['The complex is worth exploring: gardens, streams, birds and small animals, with the desert all around. And all the calm of a gated community, especially if you come with children.', 'Take care of the plants and the cleanliness of the complex.', 'Respect the common areas and the complex rules.', 'Respect the neighbours.', 'Sports courts (padel and others) are booked through the complex concierge desk. If you need one, ask us and we will pass you the phone number right away.', 'Call the concierge to reserve any common space.']
+        body: 'Your complex, Pueblo Salinas, is textile-only, so nudism is not permitted. Your garage space is nº 290. Code-controlled entrance, barrier to zone 2 (where Hestía is), pedestrian access from the complex, swimming pool and tennis courts. Hestía Vera Salinas is at block 22, floor 1, unit 7.',
+        points: ['Entrance and exit to the complex controlled by code.', 'Access/barrier to zone 2, where Hestía is.', 'Hestía parking space. Number 290.', 'Pedestrian access to Hestía from the complex.', 'Hestía Vera Salinas. Block 22, floor 1, apartment 7.', 'Swimming pool.', 'Tennis courts.'],
+        recs: ['The complex is worth exploring: gardens, streams, birds and small animals, with the desert all around. And all the calm of a gated community, especially if you come with children.', 'Take care of the plants and the cleanliness of the complex.', 'Respect the common areas and the complex rules.', 'Respect the neighbours.', 'Tennis courts are booked through the complex concierge desk. If you need one, ask us and we will pass you the phone number right away.', 'Call the concierge to reserve any common space.']
       }],
       checkin: {
         carText: 'If you drive, you arrive straight at Hestía\'s door. We send you the best route from your starting point and the exact covered garage spot. Nothing left to chance.',

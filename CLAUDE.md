@@ -41,6 +41,15 @@ Hestía es un sitio estático (GitHub Pages, sirviendo desde `docs/`) con:
 - **Mascotas: permitidas en los 3 Hestías**, con petición previa y suplemento (hoy 10 €/noche, máx 50 €). Nunca vetos ni tarifas abusivas. [prices.json `petPerNight`/`petMax`]
 - No exceder la **capacidad de cada apartamento** (huésped extra: `extraGuestPerNight`, hoy 5 €/noche). Todos los huéspedes que pernoctan van en el contrato (parte SES).
 
+### Datos de cada Hestía (fuente: propietario, oct 2026)
+- **Mar** (desde 2016, 10 años): piscina, jacuzzi y parque infantil comunitarios. El más cercano a la playa.
+- **Thalassa** (8 años): ático. Dos piscinas exteriores (norte y sur), jardines, parques, pistas de tenis y **SPA comunitario** (nunca "privado"): piscina climatizada, jacuzzi, sauna, pediluvio, gimnasio y zona de relax.
+- **Salinas** (6 años): **el más grande, 87 m²** (`apartment-page.jsx` `area`). Piscina, pistas de tenis y grandes jardines con riachuelos. Sin gimnasio, sin sauna, sin "tres piscinas".
+- **Bañera en los tres.** Ninguno es "el único con bañera".
+- **No hay pádel** en el copy propio (algunas reseñas reales de Google lo citan: son palabras del huésped, no se tocan).
+- Alex y Fran **no viven en Vera Playa** (están unidos a Almería). No escribir "vivimos aquí".
+- **Reseñas**: nunca inventar ni reatribuir. Una cita destacada debe ser el texto literal de una reseña de `reviews.json` con su autor.
+
 ### Reserva directa (copy comercial — debe ser coherente en TODA la web)
 - Ahorro: **"hasta un 10% aprox."** (no un número fijo distinto). [shared `DIRECT_PERKS`/`DIRECT_RIBBON`]
 - Promesa de precio: **"no solo igualamos, mejoramos"** + **0% comisiones**. No prometer otra cosa.

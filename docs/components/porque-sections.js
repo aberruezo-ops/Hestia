@@ -11,7 +11,7 @@ const PORQUE_COPY = {
     origin_title: /*#__PURE__*/React.createElement(React.Fragment, null, "Empezó en 2016,", /*#__PURE__*/React.createElement("br", null), /*#__PURE__*/React.createElement("em", null, "con dos personas y tres llaves.")),
     origin_p1: 'Alex y Fran tenían tres viviendas en Vera Playa. Podían ponerlas en una plataforma, cobrar la comisión y desconectar el teléfono. Hicieron lo contrario.',
     origin_p2: 'El nombre lo tomaron de la diosa griega del hogar. La idea era simple: que una casa de vacaciones se sintiera de verdad como una casa, con alguien al otro lado del teléfono que supiera tu nombre.',
-    origin_p3: 'Alex es ingeniero informático. Fran, filólogo clásico. Llevan décadas en Vera Playa. El uno observa y construye, el otro nombra y cuida, y entre los dos convirtieron tres viviendas en tres hogares. No tienen oficina ni recepción: solo un teléfono que siempre cogen.',
+    origin_p3: 'Alex es ingeniero informático. Fran, filólogo clásico. Llevan diez años con Hestía Mar, ocho con Thalassa y seis con Salinas. El uno observa y construye, el otro nombra y cuida, y entre los dos convirtieron tres viviendas en tres hogares. No tienen oficina ni recepción: solo un teléfono que siempre cogen.',
     origin_quote: '«Lo difícil no fue montar Hestía, fue convencernos de hacerlo a nuestra manera.»',
     origin_quote_attr: '– Alex Berruezo',
     logo_eyebrow: 'El símbolo',
@@ -57,7 +57,7 @@ const PORQUE_COPY = {
     }, {
       letter: 'A',
       name: 'Arraigo',
-      desc: 'Décadas en Vera Playa. Hestía huele a sal, a olivar y a calima del Sahara porque el sitio es real, no un decorado.'
+      desc: 'Diez años en Vera Playa. Hestía huele a sal, a olivar y a calima del Sahara porque el sitio es real, no un decorado.'
     }],
     values_closing: /*#__PURE__*/React.createElement(React.Fragment, null, "Seis valores, ", /*#__PURE__*/React.createElement("em", null, "una sola confianza.")),
     traveler_eyebrow: 'El huésped que nos elige',
@@ -87,7 +87,7 @@ const PORQUE_COPY = {
     origin_title: /*#__PURE__*/React.createElement(React.Fragment, null, "It started in 2016,", /*#__PURE__*/React.createElement("br", null), /*#__PURE__*/React.createElement("em", null, "with two people and three keys.")),
     origin_p1: 'Alex and Fran had three properties in Vera Playa. They could have listed them on a platform, collected the commission and switched the phone off. They did the opposite.',
     origin_p2: 'The name comes from the Greek goddess of the hearth. The idea was simple: a holiday rental that actually felt like a home, with someone on the other end of the phone who knew your name.',
-    origin_p3: 'Alex is a computer engineer. Fran, a classical philologist. Both have spent decades in Vera Playa. One observes and builds, the other names and cares, and together they turned three properties into three homes. No office, no reception desk: just a phone they always pick up.',
+    origin_p3: 'Alex is a computer engineer. Fran, a classical philologist. Ten years with Hestía Mar, eight with Thalassa and six with Salinas. One observes and builds, the other names and cares, and together they turned three properties into three homes. No office, no reception desk: just a phone they always pick up.',
     origin_quote: '"The hard part was not building Hestía. It was convincing ourselves to do it our own way."',
     origin_quote_attr: '– Alex Berruezo',
     logo_eyebrow: 'The symbol',
@@ -133,7 +133,7 @@ const PORQUE_COPY = {
     }, {
       letter: 'A',
       name: 'Authenticity',
-      desc: 'Decades in Vera Playa. Hestía smells of salt, olive grove and Saharan calima, because the place is real, not a stage set.'
+      desc: 'Ten years in Vera Playa. Hestía smells of salt, olive grove and Saharan calima, because the place is real, not a stage set.'
     }],
     values_closing: /*#__PURE__*/React.createElement(React.Fragment, null, "Six values, ", /*#__PURE__*/React.createElement("em", null, "one trust.")),
     traveler_eyebrow: 'The guest who chooses us',
