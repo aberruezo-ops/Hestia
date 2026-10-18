@@ -46,7 +46,7 @@ const LS_COPY = {
       { q: '¿Cómo se reserva?', a: 'Escríbenos por WhatsApp o email con las fechas y el apartamento que te interesa. Te respondemos en menos de una hora (normalmente en minutos) para confirmar disponibilidad y enviarte el contrato.' },
       { q: '¿Hay que pagar todo al reservar?', a: 'Una señal de ~20% al firmar el contrato; el resto, a la llegada.' },
       { q: '¿Está disponible en verano?', a: 'No. Los apartamentos están en máxima demanda en julio y agosto. La larga estancia está disponible de septiembre a junio.' },
-      { q: '¿Se pueden registrar varias personas?', a: 'Sí, hasta la capacidad del apartamento (2–4 personas según el Hestía elegido). Todos los huéspedes que pernocten deben estar en el contrato y se registran en el parte de entrada del SES.' },
+      { q: '¿Se pueden registrar varias personas?', a: 'Sí, hasta 6 personas más bebé en cualquiera de los tres Hestías. Todos los huéspedes que pernocten deben estar en el contrato y se registran en el parte de entrada del SES.' },
       { q: '¿Puedo pedir servicios extra durante la estancia?', a: 'Sí, bajo un pequeño cargo: limpieza a mitad de mes, recepción de paquetería o renovar mes a mes. Si teletrabajas, te llevamos una mesa de trabajo al apartamento. Dinos qué necesitas y lo organizamos.' },
     ],
     cta_title:   '¿Listo para instalarte?',
@@ -98,7 +98,7 @@ const LS_COPY = {
       { q: 'How do I book?', a: 'Message us on WhatsApp or email with your dates and chosen apartment. We reply within an hour (usually within minutes) to confirm availability and send the contract.' },
       { q: 'Do I pay everything upfront?', a: 'A ~20% deposit on signing the contract; the rest on arrival.' },
       { q: 'Available in summer?', a: 'No. The apartments are in peak demand in July and August. Long stays are available September to June.' },
-      { q: 'Can several people stay?', a: 'Yes, up to the apartment capacity (2–4 people depending on the Hestía). All overnight guests must appear on the contract and be registered on the SES entry form.' },
+      { q: 'Can several people stay?', a: 'Yes, up to 6 people plus a baby in any of the three Hestías. All overnight guests must appear on the contract and be registered on the SES entry form.' },
       { q: 'Can I request extra services during my stay?', a: 'Yes, for a small charge: mid-month cleaning, parcel reception or month-to-month renewal. If you work remotely, we bring a work table to your apartment. Tell us what you need and we sort it out.' },
     ],
     cta_title:   'Ready to settle in?',
@@ -208,7 +208,10 @@ const LsPrices = ({ lang }) => {
   const rates = _lsRates();
   const flat = _lsFlat();
   if (!rates || flat == null) return null;
-  const rateByIdx = [rates.baja, rates.media, rates.alta];
+  // "Desde" = base + el suplemento de apartamento más bajo: el mismo mínimo que _lsMinMonthly (hero y portada).
+  const supps = Object.values(_lsCfgPub().aptSupplement || {});
+  const minSupp = supps.length ? Math.min(...supps) : 0;
+  const rateByIdx = [rates.baja, rates.media, rates.alta].map(r => r + minSupp);
   const note = t.prices_note.replace('{FLAT}', String(flat));
   return (
     <section className="lsl-section lsl-prices">

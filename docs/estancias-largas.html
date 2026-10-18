@@ -81,7 +81,7 @@
       {
         "@type": "Question",
         "name": "¿Se pueden registrar varias personas en una estancia larga?",
-        "acceptedAnswer": { "@type": "Answer", "text": "Sí, hasta la capacidad del apartamento (2 a 4 personas según el Hestía elegido). Todos los huéspedes que pernocten deben estar en el contrato y se registran en el parte de entrada del SES." }
+        "acceptedAnswer": { "@type": "Answer", "text": "Sí, hasta 6 personas más bebé en cualquiera de los tres Hestías. Todos los huéspedes que pernocten deben estar en el contrato y se registran en el parte de entrada del SES." }
       },
       {
         "@type": "Question",
@@ -157,7 +157,7 @@
     } catch (e) { console.warn('prices.json fetch failed', e); }
 
     for (const file of COMPONENT_FILES) {
-      const res = await fetch(file + '?cv=231ccbbe9a');
+      const res = await fetch(file + '?cv=48ab77607b');
       if (!res.ok) throw new Error(`Failed to load ${file}: ${res.status}`);
       eval(await res.text());
     }
