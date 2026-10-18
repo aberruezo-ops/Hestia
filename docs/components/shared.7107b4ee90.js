@@ -181,11 +181,11 @@ const IconSprite = () => /*#__PURE__*/React.createElement("svg", {
   id: "hi-home",
   viewBox: "0 0 24 24"
 }, /*#__PURE__*/React.createElement("path", {
-  class: "hi-plate",
+  className: "hi-plate",
   transform: "translate(2 2)",
   d: "M4.5 10.6 12 4.2l7.5 6.4V17a3 3 0 0 1-3 3h-12z"
 }), /*#__PURE__*/React.createElement("g", {
-  class: "hi-ln"
+  className: "hi-ln"
 }, /*#__PURE__*/React.createElement("path", {
   d: "M4.5 10.6 12 4.2l7.5 6.4V17a3 3 0 0 1-3 3h-12z"
 }), /*#__PURE__*/React.createElement("path", {
@@ -194,11 +194,11 @@ const IconSprite = () => /*#__PURE__*/React.createElement("svg", {
   id: "hi-wave",
   viewBox: "0 0 24 24"
 }, /*#__PURE__*/React.createElement("path", {
-  class: "hi-plate",
+  className: "hi-plate",
   transform: "translate(2 2)",
   d: "M3 14.5c1.4-1.9 3.1-1.9 4.5 0c1.4-1.9 3.1-1.9 4.5 0c1.4-1.9 3.1-1.9 4.5 0c1.4-1.9 3.1-1.9 4.5 0V20.5H3z"
 }), /*#__PURE__*/React.createElement("g", {
-  class: "hi-ln"
+  className: "hi-ln"
 }, /*#__PURE__*/React.createElement("path", {
   d: "M3 9.5c1.4-1.9 3.1-1.9 4.5 0c1.4-1.9 3.1-1.9 4.5 0c1.4-1.9 3.1-1.9 4.5 0c1.4-1.9 3.1-1.9 4.5 0"
 }), /*#__PURE__*/React.createElement("path", {
@@ -207,11 +207,11 @@ const IconSprite = () => /*#__PURE__*/React.createElement("svg", {
   id: "hi-olive",
   viewBox: "0 0 24 24"
 }, /*#__PURE__*/React.createElement("path", {
-  class: "hi-plate",
+  className: "hi-plate",
   transform: "translate(2 2)",
   d: "M8.6 12.8a2.6 2.6 0 1 0 0 5.2 2.6 2.6 0 1 0 0-5.2z"
 }), /*#__PURE__*/React.createElement("g", {
-  class: "hi-ln"
+  className: "hi-ln"
 }, /*#__PURE__*/React.createElement("path", {
   d: "M5.5 19.5C9 13.5 13 9.5 19.5 6"
 }), /*#__PURE__*/React.createElement("path", {
@@ -219,17 +219,17 @@ const IconSprite = () => /*#__PURE__*/React.createElement("svg", {
 }), /*#__PURE__*/React.createElement("path", {
   d: "M15.4 8.8c-.2-2.1 1-3.3 3.1-3.1.2 2.1-1 3.3-3.1 3.1z"
 }), /*#__PURE__*/React.createElement("path", {
-  class: "hi-fi",
+  className: "hi-fi",
   d: "M8.6 13.8a1.6 1.6 0 1 0 0 3.2a1.6 1.6 0 1 0 0-3.2z"
 }))), /*#__PURE__*/React.createElement("symbol", {
   id: "hi-sun",
   viewBox: "0 0 24 24"
 }, /*#__PURE__*/React.createElement("path", {
-  class: "hi-plate",
+  className: "hi-plate",
   transform: "translate(2 2)",
   d: "M12.0 8.6a3.4 3.4 0 1 0 0 6.8a3.4 3.4 0 1 0 0-6.8z"
 }), /*#__PURE__*/React.createElement("g", {
-  class: "hi-ln"
+  className: "hi-ln"
 }, /*#__PURE__*/React.createElement("path", {
   d: "M12.0 8.0a4.0 4.0 0 1 0 0 8.0a4.0 4.0 0 1 0 0-8.0z"
 }), /*#__PURE__*/React.createElement("path", {
@@ -240,11 +240,11 @@ const IconSprite = () => /*#__PURE__*/React.createElement("svg", {
   id: "hi-salt",
   viewBox: "0 0 24 24"
 }, /*#__PURE__*/React.createElement("path", {
-  class: "hi-plate",
+  className: "hi-plate",
   transform: "translate(2 2)",
   d: "M12 3l5 6-5 12-5-12z"
 }), /*#__PURE__*/React.createElement("g", {
-  class: "hi-ln"
+  className: "hi-ln"
 }, /*#__PURE__*/React.createElement("path", {
   d: "M12 3l5 6-5 12-5-12z"
 }), /*#__PURE__*/React.createElement("path", {
@@ -253,11 +253,11 @@ const IconSprite = () => /*#__PURE__*/React.createElement("svg", {
   id: "hi-key",
   viewBox: "0 0 24 24"
 }, /*#__PURE__*/React.createElement("path", {
-  class: "hi-plate",
+  className: "hi-plate",
   transform: "translate(2 2)",
   d: "M8 3.7a4.3 4.3 0 1 0 0 8.6 4.3 4.3 0 1 0 0-8.6z"
 }), /*#__PURE__*/React.createElement("g", {
-  class: "hi-ln"
+  className: "hi-ln"
 }, /*#__PURE__*/React.createElement("circle", {
   cx: "8",
   cy: "8",
@@ -270,11 +270,11 @@ const IconSprite = () => /*#__PURE__*/React.createElement("svg", {
   id: "hi-paw",
   viewBox: "0 0 24 24"
 }, /*#__PURE__*/React.createElement("path", {
-  class: "hi-plate",
+  className: "hi-plate",
   transform: "translate(2 2)",
   d: "M12 12.2c-2.8 0-4.9 2.2-4.9 4.4 0 1.7 1.7 2.6 4.9 2.6s4.9-.9 4.9-2.6c0-2.2-2.1-4.4-4.9-4.4z"
 }), /*#__PURE__*/React.createElement("g", {
-  class: "hi-ln"
+  className: "hi-ln"
 }, /*#__PURE__*/React.createElement("ellipse", {
   cx: "7.4",
   cy: "9.4",
@@ -291,47 +291,47 @@ const IconSprite = () => /*#__PURE__*/React.createElement("svg", {
   rx: "1.6",
   ry: "2.1"
 }), /*#__PURE__*/React.createElement("path", {
-  class: "hi-fi",
+  className: "hi-fi",
   d: "M12 12.2c-2.8 0-4.9 2.2-4.9 4.4 0 1.7 1.7 2.6 4.9 2.6s4.9-.9 4.9-2.6c0-2.2-2.1-4.4-4.9-4.4z"
 }))), /*#__PURE__*/React.createElement("symbol", {
   id: "hi-cal",
   viewBox: "0 0 24 24"
 }, /*#__PURE__*/React.createElement("path", {
-  class: "hi-plate",
+  className: "hi-plate",
   transform: "translate(2 2)",
   d: "M4 8.5a3 3 0 0 1 3-3H20V17.0a3 3 0 0 1-3 3H4z"
 }), /*#__PURE__*/React.createElement("g", {
-  class: "hi-ln"
+  className: "hi-ln"
 }, /*#__PURE__*/React.createElement("path", {
   d: "M4 8.5a3 3 0 0 1 3-3H20V17.0a3 3 0 0 1-3 3H4z"
 }), /*#__PURE__*/React.createElement("path", {
   d: "M8.5 3.5v4M15.5 3.5v4M4 10h16"
 }), /*#__PURE__*/React.createElement("path", {
-  class: "hi-fi",
+  className: "hi-fi",
   d: "M13 14.5a1 1 0 0 1 1-1H16.5V16.0a1 1 0 0 1-1 1H13z"
 }))), /*#__PURE__*/React.createElement("symbol", {
   id: "hi-chat",
   viewBox: "0 0 24 24"
 }, /*#__PURE__*/React.createElement("path", {
-  class: "hi-plate",
+  className: "hi-plate",
   transform: "translate(2 2)",
   d: "M3.5 7.5a3 3 0 0 1 3-3h14v9a3 3 0 0 1-3 3H8.2l-4.7 4z"
 }), /*#__PURE__*/React.createElement("g", {
-  class: "hi-ln"
+  className: "hi-ln"
 }, /*#__PURE__*/React.createElement("path", {
   d: "M3.5 7.5a3 3 0 0 1 3-3h14v9a3 3 0 0 1-3 3H8.2l-4.7 4z"
 }), /*#__PURE__*/React.createElement("circle", {
-  class: "hi-fi",
+  className: "hi-fi",
   cx: "8.5",
   cy: "10.5",
   r: "1"
 }), /*#__PURE__*/React.createElement("circle", {
-  class: "hi-fi",
+  className: "hi-fi",
   cx: "12",
   cy: "10.5",
   r: "1"
 }), /*#__PURE__*/React.createElement("circle", {
-  class: "hi-fi",
+  className: "hi-fi",
   cx: "15.5",
   cy: "10.5",
   r: "1"
@@ -339,32 +339,32 @@ const IconSprite = () => /*#__PURE__*/React.createElement("svg", {
   id: "hi-star",
   viewBox: "0 0 24 24"
 }, /*#__PURE__*/React.createElement("path", {
-  class: "hi-plate",
+  className: "hi-plate",
   transform: "translate(2 2)",
   d: "M12 4l2.3 4.9 5.2.7-3.8 3.6 1 5.3L12 16.4 7.3 18.5l1-5.3L4.5 9.6l5.2-.7z"
 }), /*#__PURE__*/React.createElement("g", {
-  class: "hi-ln"
+  className: "hi-ln"
 }, /*#__PURE__*/React.createElement("path", {
   d: "M12 4l2.3 4.9 5.2.7-3.8 3.6 1 5.3L12 16.4 7.3 18.5l1-5.3L4.5 9.6l5.2-.7z"
 }))), /*#__PURE__*/React.createElement("symbol", {
   id: "hi-star-fill",
   viewBox: "0 0 24 24"
 }, /*#__PURE__*/React.createElement("path", {
-  class: "hi-gold",
+  className: "hi-gold",
   d: "M12 3.8l2.4 5 5.4.8-3.9 3.8.9 5.4L12 16.3l-4.8 2.5.9-5.4-3.9-3.8 5.4-.8z"
 })), /*#__PURE__*/React.createElement("symbol", {
   id: "hi-pin",
   viewBox: "0 0 24 24"
 }, /*#__PURE__*/React.createElement("path", {
-  class: "hi-plate",
+  className: "hi-plate",
   transform: "translate(2 2)",
   d: "M12 21.2c4.2-4.6 6.5-8 6.5-11a6.5 6.5 0 0 0-13 0c0 3 2.3 6.4 6.5 11z"
 }), /*#__PURE__*/React.createElement("g", {
-  class: "hi-ln"
+  className: "hi-ln"
 }, /*#__PURE__*/React.createElement("path", {
   d: "M12 21.2c4.2-4.6 6.5-8 6.5-11a6.5 6.5 0 0 0-13 0c0 3 2.3 6.4 6.5 11z"
 }), /*#__PURE__*/React.createElement("circle", {
-  class: "hi-fi",
+  className: "hi-fi",
   cx: "12",
   cy: "10.2",
   r: "2.3"
@@ -372,11 +372,11 @@ const IconSprite = () => /*#__PURE__*/React.createElement("svg", {
   id: "hi-shield",
   viewBox: "0 0 24 24"
 }, /*#__PURE__*/React.createElement("path", {
-  class: "hi-plate",
+  className: "hi-plate",
   transform: "translate(2 2)",
   d: "M12 3.5l7 2.6v5.1c0 4.4-2.9 7.7-7 9.3-4.1-1.6-7-4.9-7-9.3V6.1z"
 }), /*#__PURE__*/React.createElement("g", {
-  class: "hi-ln"
+  className: "hi-ln"
 }, /*#__PURE__*/React.createElement("path", {
   d: "M12 3.5l7 2.6v5.1c0 4.4-2.9 7.7-7 9.3-4.1-1.6-7-4.9-7-9.3V6.1z"
 }), /*#__PURE__*/React.createElement("path", {
@@ -385,11 +385,11 @@ const IconSprite = () => /*#__PURE__*/React.createElement("svg", {
   id: "hi-mic",
   viewBox: "0 0 24 24"
 }, /*#__PURE__*/React.createElement("path", {
-  class: "hi-plate",
+  className: "hi-plate",
   transform: "translate(2 2)",
   d: "M9.0 6.0a3.0 3.0 0 0 1 3.0-3.0H15.0V11.0a3.0 3.0 0 0 1-3.0 3.0H9.0z"
 }), /*#__PURE__*/React.createElement("g", {
-  class: "hi-ln"
+  className: "hi-ln"
 }, /*#__PURE__*/React.createElement("path", {
   d: "M6 11a6 6 0 0 0 12 0M12 17v4M9 21h6"
 }), /*#__PURE__*/React.createElement("path", {
@@ -398,11 +398,11 @@ const IconSprite = () => /*#__PURE__*/React.createElement("svg", {
   id: "hi-boat",
   viewBox: "0 0 24 24"
 }, /*#__PURE__*/React.createElement("path", {
-  class: "hi-plate",
+  className: "hi-plate",
   transform: "translate(2 2)",
   d: "M12 5l6 9H12z"
 }), /*#__PURE__*/React.createElement("g", {
-  class: "hi-ln"
+  className: "hi-ln"
 }, /*#__PURE__*/React.createElement("path", {
   d: "M12 3v11"
 }), /*#__PURE__*/React.createElement("path", {
@@ -413,25 +413,25 @@ const IconSprite = () => /*#__PURE__*/React.createElement("svg", {
   id: "hi-spark",
   viewBox: "0 0 24 24"
 }, /*#__PURE__*/React.createElement("path", {
-  class: "hi-plate",
+  className: "hi-plate",
   transform: "translate(2 2)",
   d: "M11 5a1.4 1.4 0 0 1 2 0l7 7-7 7a1.4 1.4 0 0 1-2 0l-7-7z"
 }), /*#__PURE__*/React.createElement("g", {
-  class: "hi-ln"
+  className: "hi-ln"
 }, /*#__PURE__*/React.createElement("path", {
   d: "M11 5a1.4 1.4 0 0 1 2 0l7 7-7 7a1.4 1.4 0 0 1-2 0l-7-7z"
 }), /*#__PURE__*/React.createElement("path", {
-  class: "hi-fi",
+  className: "hi-fi",
   d: "M12 10.6a1.4 1.4 0 1 0 0 2.8 1.4 1.4 0 1 0 0-2.8z"
 }))), /*#__PURE__*/React.createElement("symbol", {
   id: "hi-news",
   viewBox: "0 0 24 24"
 }, /*#__PURE__*/React.createElement("path", {
-  class: "hi-plate",
+  className: "hi-plate",
   transform: "translate(2 2)",
   d: "M4 5h13v14H6a2 2 0 0 1-2-2z"
 }), /*#__PURE__*/React.createElement("g", {
-  class: "hi-ln"
+  className: "hi-ln"
 }, /*#__PURE__*/React.createElement("path", {
   d: "M4 5h13v14H6a2 2 0 0 1-2-2z"
 }), /*#__PURE__*/React.createElement("path", {
@@ -442,11 +442,11 @@ const IconSprite = () => /*#__PURE__*/React.createElement("svg", {
   id: "hi-indalo",
   viewBox: "0 0 24 24"
 }, /*#__PURE__*/React.createElement("path", {
-  class: "hi-plate-ln",
+  className: "hi-plate-ln",
   transform: "translate(2 2)",
   d: "M4.5 13C4.5 5.5 19.5 5.5 19.5 13"
 }), /*#__PURE__*/React.createElement("g", {
-  class: "hi-ln"
+  className: "hi-ln"
 }, /*#__PURE__*/React.createElement("path", {
   d: "M4.5 13C4.5 5.5 19.5 5.5 19.5 13"
 }), /*#__PURE__*/React.createElement("path", {
@@ -459,29 +459,29 @@ const IconSprite = () => /*#__PURE__*/React.createElement("svg", {
   id: "hi-bed",
   viewBox: "0 0 24 24"
 }, /*#__PURE__*/React.createElement("path", {
-  class: "hi-plate",
+  className: "hi-plate",
   transform: "translate(2 2)",
   d: "M3.5 15h17v5h-17zM10.5 15v-4.5h7a3 3 0 0 1 3 3V15z"
 }), /*#__PURE__*/React.createElement("g", {
-  class: "hi-ln"
+  className: "hi-ln"
 }, /*#__PURE__*/React.createElement("path", {
   d: "M3.5 7v13M3.5 15h17v5M10.5 15v-4.5h7a3 3 0 0 1 3 3V15"
 }), /*#__PURE__*/React.createElement("path", {
-  class: "hi-fi",
+  className: "hi-fi",
   d: "M5.2 12.1a1.1 1.1 0 0 1 1.1-1.1H9.0V12.700000000000001a1.1 1.1 0 0 1-1.1 1.1H5.2z"
 }))), /*#__PURE__*/React.createElement("symbol", {
   id: "hi-wifi",
   viewBox: "0 0 24 24"
 }, /*#__PURE__*/React.createElement("path", {
-  class: "hi-plate",
+  className: "hi-plate",
   transform: "translate(2 2)",
   d: "M12 19 4.6 9.6a10.5 10.5 0 0 1 14.8 0z"
 }), /*#__PURE__*/React.createElement("g", {
-  class: "hi-ln"
+  className: "hi-ln"
 }, /*#__PURE__*/React.createElement("path", {
   d: "M4.6 9.6a10.5 10.5 0 0 1 14.8 0M7.4 12.6a6.5 6.5 0 0 1 9.2 0M10.2 15.6a2.6 2.6 0 0 1 3.6 0"
 }), /*#__PURE__*/React.createElement("circle", {
-  class: "hi-fi",
+  className: "hi-fi",
   cx: "12",
   cy: "18.6",
   r: "1.3"
@@ -489,11 +489,11 @@ const IconSprite = () => /*#__PURE__*/React.createElement("svg", {
   id: "hi-fork",
   viewBox: "0 0 24 24"
 }, /*#__PURE__*/React.createElement("path", {
-  class: "hi-plate-ln",
+  className: "hi-plate-ln",
   transform: "translate(2 2)",
   d: "M7 3v6a2 2 0 0 0 4 0V3M9 9v12"
 }), /*#__PURE__*/React.createElement("g", {
-  class: "hi-ln"
+  className: "hi-ln"
 }, /*#__PURE__*/React.createElement("path", {
   d: "M7 3v6a2 2 0 0 0 4 0V3M9 9v12"
 }), /*#__PURE__*/React.createElement("path", {
@@ -502,11 +502,11 @@ const IconSprite = () => /*#__PURE__*/React.createElement("svg", {
   id: "hi-car",
   viewBox: "0 0 24 24"
 }, /*#__PURE__*/React.createElement("path", {
-  class: "hi-plate",
+  className: "hi-plate",
   transform: "translate(2 2)",
   d: "M3.5 16.5V13l2.2-1 2.1-3.7a2 2 0 0 1 1.7-1h5a2 2 0 0 1 1.7 1l2.1 3.7 2.2 1v3.5z"
 }), /*#__PURE__*/React.createElement("g", {
-  class: "hi-ln"
+  className: "hi-ln"
 }, /*#__PURE__*/React.createElement("path", {
   d: "M3.5 16.5V13l2.2-1 2.1-3.7a2 2 0 0 1 1.7-1h5a2 2 0 0 1 1.7 1l2.1 3.7 2.2 1v3.5z"
 }), /*#__PURE__*/React.createElement("path", {
@@ -523,15 +523,15 @@ const IconSprite = () => /*#__PURE__*/React.createElement("svg", {
   id: "hi-tag",
   viewBox: "0 0 24 24"
 }, /*#__PURE__*/React.createElement("path", {
-  class: "hi-plate",
+  className: "hi-plate",
   transform: "translate(2 2)",
   d: "M3.8 12.4 11.4 4.8a3 3 0 0 1 2.1-.9h6.6v6.6a3 3 0 0 1-.9 2.1l-7.6 7.6a1.5 1.5 0 0 1-2.1 0l-5.7-5.7a1.5 1.5 0 0 1 0-2.1z"
 }), /*#__PURE__*/React.createElement("g", {
-  class: "hi-ln"
+  className: "hi-ln"
 }, /*#__PURE__*/React.createElement("path", {
   d: "M3.8 12.4 11.4 4.8a3 3 0 0 1 2.1-.9h6.6v6.6a3 3 0 0 1-.9 2.1l-7.6 7.6a1.5 1.5 0 0 1-2.1 0l-5.7-5.7a1.5 1.5 0 0 1 0-2.1z"
 }), /*#__PURE__*/React.createElement("circle", {
-  class: "hi-fi",
+  className: "hi-fi",
   cx: "16",
   cy: "8",
   r: "1.4"
@@ -539,11 +539,11 @@ const IconSprite = () => /*#__PURE__*/React.createElement("svg", {
   id: "hi-ban",
   viewBox: "0 0 24 24"
 }, /*#__PURE__*/React.createElement("path", {
-  class: "hi-plate",
+  className: "hi-plate",
   transform: "translate(2 2)",
   d: "M12.0 3.5a8.5 8.5 0 1 0 0 17.0a8.5 8.5 0 1 0 0-17.0z"
 }), /*#__PURE__*/React.createElement("g", {
-  class: "hi-ln"
+  className: "hi-ln"
 }, /*#__PURE__*/React.createElement("path", {
   d: "M12.0 3.5a8.5 8.5 0 1 0 0 17.0a8.5 8.5 0 1 0 0-17.0z"
 }), /*#__PURE__*/React.createElement("path", {
@@ -552,11 +552,11 @@ const IconSprite = () => /*#__PURE__*/React.createElement("svg", {
   id: "hi-clock",
   viewBox: "0 0 24 24"
 }, /*#__PURE__*/React.createElement("path", {
-  class: "hi-plate",
+  className: "hi-plate",
   transform: "translate(2 2)",
   d: "M12 3.5a8.5 8.5 0 1 0 0 17 8.5 8.5 0 1 0 0-17z"
 }), /*#__PURE__*/React.createElement("g", {
-  class: "hi-ln"
+  className: "hi-ln"
 }, /*#__PURE__*/React.createElement("circle", {
   cx: "12",
   cy: "12",
@@ -567,11 +567,11 @@ const IconSprite = () => /*#__PURE__*/React.createElement("svg", {
   id: "hi-unlock",
   viewBox: "0 0 24 24"
 }, /*#__PURE__*/React.createElement("path", {
-  class: "hi-plate",
+  className: "hi-plate",
   transform: "translate(2 2)",
   d: "M5.0 13.0a2.0 2.0 0 0 1 2.0-2.0H19.0V18.0a2.0 2.0 0 0 1-2.0 2.0H5.0z"
 }), /*#__PURE__*/React.createElement("g", {
-  class: "hi-ln"
+  className: "hi-ln"
 }, /*#__PURE__*/React.createElement("path", {
   d: "M5.0 13.0a2.0 2.0 0 0 1 2.0-2.0H19.0V18.0a2.0 2.0 0 0 1-2.0 2.0H5.0z"
 }), /*#__PURE__*/React.createElement("path", {
@@ -582,11 +582,11 @@ const IconSprite = () => /*#__PURE__*/React.createElement("svg", {
   id: "hi-card",
   viewBox: "0 0 24 24"
 }, /*#__PURE__*/React.createElement("path", {
-  class: "hi-plate",
+  className: "hi-plate",
   transform: "translate(2 2)",
   d: "M3 8.5a3 3 0 0 1 3-3H21V15.5a3 3 0 0 1-3 3H3z"
 }), /*#__PURE__*/React.createElement("g", {
-  class: "hi-ln"
+  className: "hi-ln"
 }, /*#__PURE__*/React.createElement("path", {
   d: "M3 8.5a3 3 0 0 1 3-3H21V15.5a3 3 0 0 1-3 3H3z"
 }), /*#__PURE__*/React.createElement("path", {
@@ -597,11 +597,11 @@ const IconSprite = () => /*#__PURE__*/React.createElement("svg", {
   id: "hi-gift",
   viewBox: "0 0 24 24"
 }, /*#__PURE__*/React.createElement("path", {
-  class: "hi-plate",
+  className: "hi-plate",
   transform: "translate(2 2)",
   d: "M4 12.0a2.5 2.5 0 0 1 2.5-2.5H20V17.5a2.5 2.5 0 0 1-2.5 2.5H4z"
 }), /*#__PURE__*/React.createElement("g", {
-  class: "hi-ln"
+  className: "hi-ln"
 }, /*#__PURE__*/React.createElement("path", {
   d: "M4 12.0a2.5 2.5 0 0 1 2.5-2.5H20V17.5a2.5 2.5 0 0 1-2.5 2.5H4z"
 }), /*#__PURE__*/React.createElement("path", {
@@ -612,11 +612,11 @@ const IconSprite = () => /*#__PURE__*/React.createElement("svg", {
   id: "hi-sound",
   viewBox: "0 0 24 24"
 }, /*#__PURE__*/React.createElement("path", {
-  class: "hi-plate",
+  className: "hi-plate",
   transform: "translate(2 2)",
   d: "M11 5 6 9H2v6h4l5 4z"
 }), /*#__PURE__*/React.createElement("g", {
-  class: "hi-ln"
+  className: "hi-ln"
 }, /*#__PURE__*/React.createElement("path", {
   d: "M11 5 6 9H2v6h4l5 4z"
 }), /*#__PURE__*/React.createElement("path", {
@@ -627,11 +627,11 @@ const IconSprite = () => /*#__PURE__*/React.createElement("svg", {
   id: "hi-mute",
   viewBox: "0 0 24 24"
 }, /*#__PURE__*/React.createElement("path", {
-  class: "hi-plate",
+  className: "hi-plate",
   transform: "translate(2 2)",
   d: "M11 5 6 9H2v6h4l5 4z"
 }), /*#__PURE__*/React.createElement("g", {
-  class: "hi-ln"
+  className: "hi-ln"
 }, /*#__PURE__*/React.createElement("path", {
   d: "M11 5 6 9H2v6h4l5 4z"
 }), /*#__PURE__*/React.createElement("path", {
@@ -640,27 +640,27 @@ const IconSprite = () => /*#__PURE__*/React.createElement("svg", {
   id: "hi-lock",
   viewBox: "0 0 24 24"
 }, /*#__PURE__*/React.createElement("path", {
-  class: "hi-plate",
+  className: "hi-plate",
   transform: "translate(2 2)",
   d: "M5.0 13.0a2.0 2.0 0 0 1 2.0-2.0H19.0V18.0a2.0 2.0 0 0 1-2.0 2.0H5.0z"
 }), /*#__PURE__*/React.createElement("g", {
-  class: "hi-ln"
+  className: "hi-ln"
 }, /*#__PURE__*/React.createElement("path", {
   d: "M5.0 13.0a2.0 2.0 0 0 1 2.0-2.0H19.0V18.0a2.0 2.0 0 0 1-2.0 2.0H5.0z"
 }), /*#__PURE__*/React.createElement("path", {
   d: "M8 11V8a4 4 0 0 1 8 0v3"
 }), /*#__PURE__*/React.createElement("path", {
-  class: "hi-fi",
+  className: "hi-fi",
   d: "M12.0 14.0a1.3 1.3 0 1 0 0 2.6a1.3 1.3 0 1 0 0-2.6z"
 }))), /*#__PURE__*/React.createElement("symbol", {
   id: "hi-doc",
   viewBox: "0 0 24 24"
 }, /*#__PURE__*/React.createElement("path", {
-  class: "hi-plate",
+  className: "hi-plate",
   transform: "translate(2 2)",
   d: "M5 6.5a3 3 0 0 1 3-3h6.5L19 8v9.5a3 3 0 0 1-3 3H5z"
 }), /*#__PURE__*/React.createElement("g", {
-  class: "hi-ln"
+  className: "hi-ln"
 }, /*#__PURE__*/React.createElement("path", {
   d: "M5 6.5a3 3 0 0 1 3-3h6.5L19 8v9.5a3 3 0 0 1-3 3H5z"
 }), /*#__PURE__*/React.createElement("path", {
@@ -671,11 +671,11 @@ const IconSprite = () => /*#__PURE__*/React.createElement("svg", {
   id: "hi-receipt",
   viewBox: "0 0 24 24"
 }, /*#__PURE__*/React.createElement("path", {
-  class: "hi-plate",
+  className: "hi-plate",
   transform: "translate(2 2)",
   d: "M5 3h14v18l-2.3-1.5L14.3 21 12 19.5 9.7 21 7.3 19.5 5 21z"
 }), /*#__PURE__*/React.createElement("g", {
-  class: "hi-ln"
+  className: "hi-ln"
 }, /*#__PURE__*/React.createElement("path", {
   d: "M5 3h14v18l-2.3-1.5L14.3 21 12 19.5 9.7 21 7.3 19.5 5 21z"
 }), /*#__PURE__*/React.createElement("path", {
@@ -684,11 +684,11 @@ const IconSprite = () => /*#__PURE__*/React.createElement("svg", {
   id: "hi-clipboard",
   viewBox: "0 0 24 24"
 }, /*#__PURE__*/React.createElement("path", {
-  class: "hi-plate",
+  className: "hi-plate",
   transform: "translate(2 2)",
   d: "M5.0 7.0a2.0 2.0 0 0 1 2.0-2.0H19.0V19.0a2.0 2.0 0 0 1-2.0 2.0H5.0z"
 }), /*#__PURE__*/React.createElement("g", {
-  class: "hi-ln"
+  className: "hi-ln"
 }, /*#__PURE__*/React.createElement("path", {
   d: "M5.0 7.0a2.0 2.0 0 0 1 2.0-2.0H19.0V19.0a2.0 2.0 0 0 1-2.0 2.0H5.0z"
 }), /*#__PURE__*/React.createElement("path", {
@@ -699,31 +699,31 @@ const IconSprite = () => /*#__PURE__*/React.createElement("svg", {
   id: "hi-chart",
   viewBox: "0 0 24 24"
 }, /*#__PURE__*/React.createElement("path", {
-  class: "hi-plate-ln",
+  className: "hi-plate-ln",
   transform: "translate(2 2)",
   d: "M4 4v16h16"
 }), /*#__PURE__*/React.createElement("g", {
-  class: "hi-ln"
+  className: "hi-ln"
 }, /*#__PURE__*/React.createElement("path", {
   d: "M4 4v16h16"
 }), /*#__PURE__*/React.createElement("path", {
-  class: "hi-fi",
+  className: "hi-fi",
   d: "M7.0 12.0h3.0v5.0h-3.0z"
 }), /*#__PURE__*/React.createElement("path", {
-  class: "hi-fi",
+  className: "hi-fi",
   d: "M12.0 8.0h3.0v9.0h-3.0z"
 }), /*#__PURE__*/React.createElement("path", {
-  class: "hi-fi",
+  className: "hi-fi",
   d: "M17.0 10.0h3.0v7.0h-3.0z"
 }))), /*#__PURE__*/React.createElement("symbol", {
   id: "hi-euro",
   viewBox: "0 0 24 24"
 }, /*#__PURE__*/React.createElement("path", {
-  class: "hi-plate",
+  className: "hi-plate",
   transform: "translate(2 2)",
   d: "M12.0 3.5a8.5 8.5 0 1 0 0 17.0a8.5 8.5 0 1 0 0-17.0z"
 }), /*#__PURE__*/React.createElement("g", {
-  class: "hi-ln"
+  className: "hi-ln"
 }, /*#__PURE__*/React.createElement("path", {
   d: "M12.0 3.5a8.5 8.5 0 1 0 0 17.0a8.5 8.5 0 1 0 0-17.0z"
 }), /*#__PURE__*/React.createElement("path", {
@@ -732,11 +732,11 @@ const IconSprite = () => /*#__PURE__*/React.createElement("svg", {
   id: "hi-megaphone",
   viewBox: "0 0 24 24"
 }, /*#__PURE__*/React.createElement("path", {
-  class: "hi-plate",
+  className: "hi-plate",
   transform: "translate(2 2)",
   d: "M4 9.5v5h3l9 4.5v-14L7 9.5z"
 }), /*#__PURE__*/React.createElement("g", {
-  class: "hi-ln"
+  className: "hi-ln"
 }, /*#__PURE__*/React.createElement("path", {
   d: "M4 9.5v5h3l9 4.5v-14L7 9.5z"
 }), /*#__PURE__*/React.createElement("path", {
@@ -747,17 +747,17 @@ const IconSprite = () => /*#__PURE__*/React.createElement("svg", {
   id: "hi-alert",
   viewBox: "0 0 24 24"
 }, /*#__PURE__*/React.createElement("path", {
-  class: "hi-plate",
+  className: "hi-plate",
   transform: "translate(2 2)",
   d: "M12 4 21 19.5H3z"
 }), /*#__PURE__*/React.createElement("g", {
-  class: "hi-ln"
+  className: "hi-ln"
 }, /*#__PURE__*/React.createElement("path", {
   d: "M12 4 21 19.5H3z"
 }), /*#__PURE__*/React.createElement("path", {
   d: "M12 10v4.2"
 }), /*#__PURE__*/React.createElement("circle", {
-  class: "hi-fi",
+  className: "hi-fi",
   cx: "12",
   cy: "16.9",
   r: "0.95"
@@ -765,11 +765,11 @@ const IconSprite = () => /*#__PURE__*/React.createElement("svg", {
   id: "hi-award",
   viewBox: "0 0 24 24"
 }, /*#__PURE__*/React.createElement("path", {
-  class: "hi-plate",
+  className: "hi-plate",
   transform: "translate(2 2)",
   d: "M12 3.5a5.5 5.5 0 1 0 0 11 5.5 5.5 0 1 0 0-11z"
 }), /*#__PURE__*/React.createElement("g", {
-  class: "hi-ln"
+  className: "hi-ln"
 }, /*#__PURE__*/React.createElement("path", {
   d: "M12.0 3.5a5.5 5.5 0 1 0 0 11.0a5.5 5.5 0 1 0 0-11.0z"
 }), /*#__PURE__*/React.createElement("path", {
@@ -780,11 +780,11 @@ const IconSprite = () => /*#__PURE__*/React.createElement("svg", {
   id: "hi-wheat",
   viewBox: "0 0 24 24"
 }, /*#__PURE__*/React.createElement("path", {
-  class: "hi-plate",
+  className: "hi-plate",
   transform: "translate(2 2)",
   d: "M12 9c0-2 1.6-3.2 3.2-3.2C15.2 7.8 13.6 9 12 9zM12 9c0-2-1.6-3.2-3.2-3.2C8.8 7.8 10.4 9 12 9zM12 13c0-2 1.6-3.2 3.2-3.2C15.2 11.8 13.6 13 12 13zM12 13c0-2-1.6-3.2-3.2-3.2C8.8 11.8 10.4 13 12 13z"
 }), /*#__PURE__*/React.createElement("g", {
-  class: "hi-ln"
+  className: "hi-ln"
 }, /*#__PURE__*/React.createElement("path", {
   d: "M12 21V7"
 }), /*#__PURE__*/React.createElement("path", {
@@ -793,36 +793,36 @@ const IconSprite = () => /*#__PURE__*/React.createElement("svg", {
   id: "hi-cocktail",
   viewBox: "0 0 24 24"
 }, /*#__PURE__*/React.createElement("path", {
-  class: "hi-plate",
+  className: "hi-plate",
   transform: "translate(2 2)",
   d: "M6 7h12l-6 6z"
 }), /*#__PURE__*/React.createElement("g", {
-  class: "hi-ln"
+  className: "hi-ln"
 }, /*#__PURE__*/React.createElement("path", {
   d: "M4 5h16l-8 8zM12 13v6M8 19h8"
 }), /*#__PURE__*/React.createElement("path", {
-  class: "hi-fi",
+  className: "hi-fi",
   d: "M16.5 3.7a1.3 1.3 0 1 0 0 2.6a1.3 1.3 0 1 0 0-2.6z"
 }))), /*#__PURE__*/React.createElement("symbol", {
   id: "hi-umbrella",
   viewBox: "0 0 24 24"
 }, /*#__PURE__*/React.createElement("path", {
-  class: "hi-plate",
+  className: "hi-plate",
   transform: "translate(2 2)",
   d: "M12 4a8 8 0 0 1 8 8H4a8 8 0 0 1 8-8z"
 }), /*#__PURE__*/React.createElement("g", {
-  class: "hi-ln"
+  className: "hi-ln"
 }, /*#__PURE__*/React.createElement("path", {
   d: "M4 12a8 8 0 0 1 16 0zM12 12v7M12 19a2 2 0 0 0 2.2-1.8"
 }))), /*#__PURE__*/React.createElement("symbol", {
   id: "hi-lifebuoy",
   viewBox: "0 0 24 24"
 }, /*#__PURE__*/React.createElement("path", {
-  class: "hi-plate",
+  className: "hi-plate",
   transform: "translate(2 2)",
   d: "M12.0 3.5a8.5 8.5 0 1 0 0 17.0a8.5 8.5 0 1 0 0-17.0z"
 }), /*#__PURE__*/React.createElement("g", {
-  class: "hi-ln"
+  className: "hi-ln"
 }, /*#__PURE__*/React.createElement("path", {
   d: "M12.0 3.5a8.5 8.5 0 1 0 0 17.0a8.5 8.5 0 1 0 0-17.0z"
 }), /*#__PURE__*/React.createElement("path", {
@@ -833,11 +833,11 @@ const IconSprite = () => /*#__PURE__*/React.createElement("svg", {
   id: "hi-mountain",
   viewBox: "0 0 24 24"
 }, /*#__PURE__*/React.createElement("path", {
-  class: "hi-plate",
+  className: "hi-plate",
   transform: "translate(2 2)",
   d: "M3 19 9.5 8l3.3 5.4L16 9l5 10z"
 }), /*#__PURE__*/React.createElement("g", {
-  class: "hi-ln"
+  className: "hi-ln"
 }, /*#__PURE__*/React.createElement("path", {
   d: "M3 19 9.5 8l3.3 5.4L16 9l5 10z"
 }), /*#__PURE__*/React.createElement("path", {
@@ -846,44 +846,44 @@ const IconSprite = () => /*#__PURE__*/React.createElement("svg", {
   id: "hi-cart",
   viewBox: "0 0 24 24"
 }, /*#__PURE__*/React.createElement("path", {
-  class: "hi-plate-ln",
+  className: "hi-plate-ln",
   transform: "translate(2 2)",
   d: "M3 4h2l2.4 11h10l2-7.5H6.2"
 }), /*#__PURE__*/React.createElement("g", {
-  class: "hi-ln"
+  className: "hi-ln"
 }, /*#__PURE__*/React.createElement("path", {
   d: "M3 4h2l2.4 11h10l2-7.5H6.2"
 }), /*#__PURE__*/React.createElement("path", {
-  class: "hi-fi",
+  className: "hi-fi",
   d: "M9.0 17.7a1.3 1.3 0 1 0 0 2.6a1.3 1.3 0 1 0 0-2.6z"
 }), /*#__PURE__*/React.createElement("path", {
-  class: "hi-fi",
+  className: "hi-fi",
   d: "M16.5 17.7a1.3 1.3 0 1 0 0 2.6a1.3 1.3 0 1 0 0-2.6z"
 }))), /*#__PURE__*/React.createElement("symbol", {
   id: "hi-fish",
   viewBox: "0 0 24 24"
 }, /*#__PURE__*/React.createElement("path", {
-  class: "hi-plate",
+  className: "hi-plate",
   transform: "translate(2 2)",
   d: "M3 12c4-5 11-5 15 0-4 5-11 5-15 0z"
 }), /*#__PURE__*/React.createElement("g", {
-  class: "hi-ln"
+  className: "hi-ln"
 }, /*#__PURE__*/React.createElement("path", {
   d: "M3 12c4-5 11-5 15 0-4 5-11 5-15 0z"
 }), /*#__PURE__*/React.createElement("path", {
   d: "M18 12c1.4-1.4 3-2 3-2v4s-1.6-.6-3-2z"
 }), /*#__PURE__*/React.createElement("path", {
-  class: "hi-fi",
+  className: "hi-fi",
   d: "M8.0 10.3a0.7 0.7 0 1 0 0 1.4a0.7 0.7 0 1 0 0-1.4z"
 }))), /*#__PURE__*/React.createElement("symbol", {
   id: "hi-pill",
   viewBox: "0 0 24 24"
 }, /*#__PURE__*/React.createElement("path", {
-  class: "hi-plate",
+  className: "hi-plate",
   transform: "translate(2 2)",
   d: "M14.5 3.5 20.5 9.5l-5.5 5.5-6-6z"
 }), /*#__PURE__*/React.createElement("g", {
-  class: "hi-ln"
+  className: "hi-ln"
 }, /*#__PURE__*/React.createElement("path", {
   d: "M14.5 3.5 3.5 14.5a4 4 0 0 0 6 6l11-11a4 4 0 0 0-6-6z"
 }), /*#__PURE__*/React.createElement("path", {
@@ -892,22 +892,22 @@ const IconSprite = () => /*#__PURE__*/React.createElement("svg", {
   id: "hi-cross",
   viewBox: "0 0 24 24"
 }, /*#__PURE__*/React.createElement("path", {
-  class: "hi-plate",
+  className: "hi-plate",
   transform: "translate(2 2)",
   d: "M9.5 3h5v5.5H20v5h-5.5V19h-5v-5.5H4v-5h5.5z"
 }), /*#__PURE__*/React.createElement("g", {
-  class: "hi-ln"
+  className: "hi-ln"
 }, /*#__PURE__*/React.createElement("path", {
   d: "M9.5 3h5v5.5H20v5h-5.5V19h-5v-5.5H4v-5h5.5z"
 }))), /*#__PURE__*/React.createElement("symbol", {
   id: "hi-stethoscope",
   viewBox: "0 0 24 24"
 }, /*#__PURE__*/React.createElement("path", {
-  class: "hi-plate",
+  className: "hi-plate",
   transform: "translate(2 2)",
   d: "M18.0 10.0a2.0 2.0 0 1 0 0 4.0a2.0 2.0 0 1 0 0-4.0z"
 }), /*#__PURE__*/React.createElement("g", {
-  class: "hi-ln"
+  className: "hi-ln"
 }, /*#__PURE__*/React.createElement("path", {
   d: "M6 3v6a4 4 0 0 0 8 0V3"
 }), /*#__PURE__*/React.createElement("path", {
@@ -918,22 +918,22 @@ const IconSprite = () => /*#__PURE__*/React.createElement("svg", {
   id: "hi-heart",
   viewBox: "0 0 24 24"
 }, /*#__PURE__*/React.createElement("path", {
-  class: "hi-plate",
+  className: "hi-plate",
   transform: "translate(2 2)",
   d: "M12 20s-7-4.5-7-9.5a4 4 0 0 1 7-2.6 4 4 0 0 1 7 2.6c0 5-7 9.5-7 9.5z"
 }), /*#__PURE__*/React.createElement("g", {
-  class: "hi-ln"
+  className: "hi-ln"
 }, /*#__PURE__*/React.createElement("path", {
   d: "M12 20s-7-4.5-7-9.5a4 4 0 0 1 7-2.6 4 4 0 0 1 7 2.6c0 5-7 9.5-7 9.5z"
 }))), /*#__PURE__*/React.createElement("symbol", {
   id: "hi-gem",
   viewBox: "0 0 24 24"
 }, /*#__PURE__*/React.createElement("path", {
-  class: "hi-plate",
+  className: "hi-plate",
   transform: "translate(2 2)",
   d: "M6 4h12l3 5-9 11L3 9z"
 }), /*#__PURE__*/React.createElement("g", {
-  class: "hi-ln"
+  className: "hi-ln"
 }, /*#__PURE__*/React.createElement("path", {
   d: "M6 4h12l3 5-9 11L3 9z"
 }), /*#__PURE__*/React.createElement("path", {
@@ -942,11 +942,11 @@ const IconSprite = () => /*#__PURE__*/React.createElement("svg", {
   id: "hi-boot",
   viewBox: "0 0 24 24"
 }, /*#__PURE__*/React.createElement("path", {
-  class: "hi-plate",
+  className: "hi-plate",
   transform: "translate(2 2)",
   d: "M8 3v8H6.5c-1.6 0-2.8 1-2.8 3v3h16.6v-1.6c0-2-1.4-2.8-3.6-3.3l-4.2-1V3z"
 }), /*#__PURE__*/React.createElement("g", {
-  class: "hi-ln"
+  className: "hi-ln"
 }, /*#__PURE__*/React.createElement("path", {
   d: "M8 3v8H6.5c-1.6 0-2.8 1-2.8 3v3h16.6v-1.6c0-2-1.4-2.8-3.6-3.3l-4.2-1V3z"
 }), /*#__PURE__*/React.createElement("path", {
@@ -955,11 +955,11 @@ const IconSprite = () => /*#__PURE__*/React.createElement("svg", {
   id: "hi-ticket",
   viewBox: "0 0 24 24"
 }, /*#__PURE__*/React.createElement("path", {
-  class: "hi-plate",
+  className: "hi-plate",
   transform: "translate(2 2)",
   d: "M3 8a2 2 0 0 0 0 4v3h18v-3a2 2 0 0 1 0-4V5H3z"
 }), /*#__PURE__*/React.createElement("g", {
-  class: "hi-ln"
+  className: "hi-ln"
 }, /*#__PURE__*/React.createElement("path", {
   d: "M3 8a2 2 0 0 0 0 4v3h18v-3a2 2 0 0 1 0-4V5H3z"
 }), /*#__PURE__*/React.createElement("path", {
@@ -968,33 +968,33 @@ const IconSprite = () => /*#__PURE__*/React.createElement("svg", {
   id: "hi-wine",
   viewBox: "0 0 24 24"
 }, /*#__PURE__*/React.createElement("path", {
-  class: "hi-plate",
+  className: "hi-plate",
   transform: "translate(2 2)",
   d: "M7.3 5h9.4c-.4 3-2 5-4.7 5S7.7 8 7.3 5z"
 }), /*#__PURE__*/React.createElement("g", {
-  class: "hi-ln"
+  className: "hi-ln"
 }, /*#__PURE__*/React.createElement("path", {
   d: "M7 3h10c0 4-2 7-5 7s-5-3-5-7zM12 10v8M8.5 21h7"
 }))), /*#__PURE__*/React.createElement("symbol", {
   id: "hi-buildings",
   viewBox: "0 0 24 24"
 }, /*#__PURE__*/React.createElement("path", {
-  class: "hi-plate",
+  className: "hi-plate",
   transform: "translate(2 2)",
   d: "M5 21V9l5-3 5 3v12z"
 }), /*#__PURE__*/React.createElement("g", {
-  class: "hi-ln"
+  className: "hi-ln"
 }, /*#__PURE__*/React.createElement("path", {
   d: "M3 21h18M5 21V9l5-3 5 3v12M15 21V12h4v9M8.5 13h3M8.5 17h3"
 }))), /*#__PURE__*/React.createElement("symbol", {
   id: "hi-book",
   viewBox: "0 0 24 24"
 }, /*#__PURE__*/React.createElement("path", {
-  class: "hi-plate",
+  className: "hi-plate",
   transform: "translate(2 2)",
   d: "M5 4h11a2 2 0 0 1 2 2v13H7a2 2 0 0 0-2 2z"
 }), /*#__PURE__*/React.createElement("g", {
-  class: "hi-ln"
+  className: "hi-ln"
 }, /*#__PURE__*/React.createElement("path", {
   d: "M5 4h11a2 2 0 0 1 2 2v13H7a2 2 0 0 0-2 2z"
 }), /*#__PURE__*/React.createElement("path", {
@@ -1005,38 +1005,38 @@ const IconSprite = () => /*#__PURE__*/React.createElement("svg", {
   id: "hi-shop",
   viewBox: "0 0 24 24"
 }, /*#__PURE__*/React.createElement("path", {
-  class: "hi-plate",
+  className: "hi-plate",
   transform: "translate(2 2)",
   d: "M3 5h18l1 4H2z"
 }), /*#__PURE__*/React.createElement("g", {
-  class: "hi-ln"
+  className: "hi-ln"
 }, /*#__PURE__*/React.createElement("path", {
   d: "M3 5h18l1 4H2zM4 9v11h16V9M9.5 20v-6h5v6"
 }))), /*#__PURE__*/React.createElement("symbol", {
   id: "hi-bag",
   viewBox: "0 0 24 24"
 }, /*#__PURE__*/React.createElement("path", {
-  class: "hi-plate",
+  className: "hi-plate",
   transform: "translate(2 2)",
   d: "M4.5 11a3 3 0 0 1 3-3h12v9.5a3 3 0 0 1-3 3h-12z"
 }), /*#__PURE__*/React.createElement("g", {
-  class: "hi-ln"
+  className: "hi-ln"
 }, /*#__PURE__*/React.createElement("path", {
   d: "M4.5 11a3 3 0 0 1 3-3h12v9.5a3 3 0 0 1-3 3h-12z"
 }), /*#__PURE__*/React.createElement("path", {
   d: "M9 8V6.5a3 3 0 0 1 6 0V8"
 }), /*#__PURE__*/React.createElement("path", {
-  class: "hi-fi",
+  className: "hi-fi",
   d: "M9 11.2a.9.9 0 1 0 0 1.8.9.9 0 1 0 0-1.8zM15 11.2a.9.9 0 1 0 0 1.8.9.9 0 1 0 0-1.8z"
 }))), /*#__PURE__*/React.createElement("symbol", {
   id: "hi-basket",
   viewBox: "0 0 24 24"
 }, /*#__PURE__*/React.createElement("path", {
-  class: "hi-plate-ln",
+  className: "hi-plate-ln",
   transform: "translate(2 2)",
   d: "M5 9h14l-1.4 10H6.4zM9 9 11 4M15 9 13 4"
 }), /*#__PURE__*/React.createElement("g", {
-  class: "hi-ln"
+  className: "hi-ln"
 }, /*#__PURE__*/React.createElement("path", {
   d: "M5 9h14l-1.4 10H6.4zM9 9 11 4M15 9 13 4"
 }), /*#__PURE__*/React.createElement("path", {
@@ -1045,11 +1045,11 @@ const IconSprite = () => /*#__PURE__*/React.createElement("svg", {
   id: "hi-fuel",
   viewBox: "0 0 24 24"
 }, /*#__PURE__*/React.createElement("path", {
-  class: "hi-plate",
+  className: "hi-plate",
   transform: "translate(2 2)",
   d: "M5 5h8v5H5z"
 }), /*#__PURE__*/React.createElement("g", {
-  class: "hi-ln"
+  className: "hi-ln"
 }, /*#__PURE__*/React.createElement("path", {
   d: "M4 21V5a2 2 0 0 1 2-2h5a2 2 0 0 1 2 2v16M3 21h12M5 5h8v5H5z"
 }), /*#__PURE__*/React.createElement("path", {
@@ -1058,11 +1058,11 @@ const IconSprite = () => /*#__PURE__*/React.createElement("svg", {
   id: "hi-plug",
   viewBox: "0 0 24 24"
 }, /*#__PURE__*/React.createElement("path", {
-  class: "hi-plate",
+  className: "hi-plate",
   transform: "translate(2 2)",
   d: "M10 6.5 7.3 11H9.5l-1 5L13 10h-2.2z"
 }), /*#__PURE__*/React.createElement("g", {
-  class: "hi-ln"
+  className: "hi-ln"
 }, /*#__PURE__*/React.createElement("path", {
   d: "M5.0 4.5a1.5 1.5 0 0 1 1.5-1.5H14.0V19.5a1.5 1.5 0 0 1-1.5 1.5H5.0z"
 }), /*#__PURE__*/React.createElement("path", {
@@ -1073,33 +1073,33 @@ const IconSprite = () => /*#__PURE__*/React.createElement("svg", {
   id: "hi-laptop",
   viewBox: "0 0 24 24"
 }, /*#__PURE__*/React.createElement("path", {
-  class: "hi-plate",
+  className: "hi-plate",
   transform: "translate(2 2)",
   d: "M6.5 6.5h11v7h-11z"
 }), /*#__PURE__*/React.createElement("g", {
-  class: "hi-ln"
+  className: "hi-ln"
 }, /*#__PURE__*/React.createElement("path", {
   d: "M5 5h14v10H5zM3 18h18l-1.2 1.6H4.2z"
 }))), /*#__PURE__*/React.createElement("symbol", {
   id: "hi-shirt",
   viewBox: "0 0 24 24"
 }, /*#__PURE__*/React.createElement("path", {
-  class: "hi-plate",
+  className: "hi-plate",
   transform: "translate(2 2)",
   d: "M8 8 6 9 4 6l4-3a3 3 0 0 0 6 0l4 3-2 3-2-1z"
 }), /*#__PURE__*/React.createElement("g", {
-  class: "hi-ln"
+  className: "hi-ln"
 }, /*#__PURE__*/React.createElement("path", {
   d: "M8 3 4 6l2 3 2-1v10h8V8l2 1 2-3-4-3a3 3 0 0 1-6 0z"
 }))), /*#__PURE__*/React.createElement("symbol", {
   id: "hi-pool",
   viewBox: "0 0 24 24"
 }, /*#__PURE__*/React.createElement("path", {
-  class: "hi-plate-ln",
+  className: "hi-plate-ln",
   transform: "translate(2 2)",
   d: "M3 14c2 0 2 1.4 4.5 1.4S10 14 12 14s2 1.4 4.5 1.4S19 14 21 14M3 18c2 0 2 1.4 4.5 1.4S10 18 12 18s2 1.4 4.5 1.4S19 18 21 18"
 }), /*#__PURE__*/React.createElement("g", {
-  class: "hi-ln"
+  className: "hi-ln"
 }, /*#__PURE__*/React.createElement("path", {
   d: "M3 14c2 0 2 1.4 4.5 1.4S10 14 12 14s2 1.4 4.5 1.4S19 14 21 14M3 18c2 0 2 1.4 4.5 1.4S10 18 12 18s2 1.4 4.5 1.4S19 18 21 18"
 }), /*#__PURE__*/React.createElement("path", {
@@ -1108,22 +1108,22 @@ const IconSprite = () => /*#__PURE__*/React.createElement("svg", {
   id: "hi-sofa",
   viewBox: "0 0 24 24"
 }, /*#__PURE__*/React.createElement("path", {
-  class: "hi-plate",
+  className: "hi-plate",
   transform: "translate(2 2)",
   d: "M5 12h14v5H5z"
 }), /*#__PURE__*/React.createElement("g", {
-  class: "hi-ln"
+  className: "hi-ln"
 }, /*#__PURE__*/React.createElement("path", {
   d: "M5 12V9a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2v3M3 12.5A1.8 1.8 0 0 1 5 14v3h14v-3a1.8 1.8 0 0 1 3.6 0M6 17v2.5M18 17v2.5"
 }))), /*#__PURE__*/React.createElement("symbol", {
   id: "hi-lift",
   viewBox: "0 0 24 24"
 }, /*#__PURE__*/React.createElement("path", {
-  class: "hi-plate",
+  className: "hi-plate",
   transform: "translate(2 2)",
   d: "M12 6 9.6 9.2h4.8zM12 18 9.6 14.8h4.8z"
 }), /*#__PURE__*/React.createElement("g", {
-  class: "hi-ln"
+  className: "hi-ln"
 }, /*#__PURE__*/React.createElement("path", {
   d: "M5.0 4.5a1.5 1.5 0 0 1 1.5-1.5H19.0V19.5a1.5 1.5 0 0 1-1.5 1.5H5.0z"
 }), /*#__PURE__*/React.createElement("path", {
@@ -1132,11 +1132,11 @@ const IconSprite = () => /*#__PURE__*/React.createElement("svg", {
   id: "hi-tv",
   viewBox: "0 0 24 24"
 }, /*#__PURE__*/React.createElement("path", {
-  class: "hi-plate",
+  className: "hi-plate",
   transform: "translate(2 2)",
   d: "M5 7h14v8H5z"
 }), /*#__PURE__*/React.createElement("g", {
-  class: "hi-ln"
+  className: "hi-ln"
 }, /*#__PURE__*/React.createElement("path", {
   d: "M3.0 6.5a1.5 1.5 0 0 1 1.5-1.5H21.0V15.5a1.5 1.5 0 0 1-1.5 1.5H3.0z"
 }), /*#__PURE__*/React.createElement("path", {
@@ -1145,11 +1145,11 @@ const IconSprite = () => /*#__PURE__*/React.createElement("svg", {
   id: "hi-film",
   viewBox: "0 0 24 24"
 }, /*#__PURE__*/React.createElement("path", {
-  class: "hi-plate",
+  className: "hi-plate",
   transform: "translate(2 2)",
   d: "M10.5 9.5 15 12l-4.5 2.5z"
 }), /*#__PURE__*/React.createElement("g", {
-  class: "hi-ln"
+  className: "hi-ln"
 }, /*#__PURE__*/React.createElement("path", {
   d: "M3.0 6.5a1.5 1.5 0 0 1 1.5-1.5H21.0V17.5a1.5 1.5 0 0 1-1.5 1.5H3.0z"
 }), /*#__PURE__*/React.createElement("path", {
@@ -1160,11 +1160,11 @@ const IconSprite = () => /*#__PURE__*/React.createElement("svg", {
   id: "hi-snow",
   viewBox: "0 0 24 24"
 }, /*#__PURE__*/React.createElement("path", {
-  class: "hi-plate-ln",
+  className: "hi-plate-ln",
   transform: "translate(2 2)",
   d: "M12 2v20M3.3 7l17.4 10M20.7 7 3.3 17"
 }), /*#__PURE__*/React.createElement("g", {
-  class: "hi-ln"
+  className: "hi-ln"
 }, /*#__PURE__*/React.createElement("path", {
   d: "M12 2v20M3.3 7l17.4 10M20.7 7 3.3 17"
 }), /*#__PURE__*/React.createElement("path", {
@@ -1173,11 +1173,11 @@ const IconSprite = () => /*#__PURE__*/React.createElement("svg", {
   id: "hi-cooktop",
   viewBox: "0 0 24 24"
 }, /*#__PURE__*/React.createElement("path", {
-  class: "hi-plate",
+  className: "hi-plate",
   transform: "translate(2 2)",
   d: "M10 7a6 6 0 1 0 0 12 6 6 0 1 0 0-12z"
 }), /*#__PURE__*/React.createElement("g", {
-  class: "hi-ln"
+  className: "hi-ln"
 }, /*#__PURE__*/React.createElement("path", {
   d: "M10.0 7.0a6.0 6.0 0 1 0 0 12.0a6.0 6.0 0 1 0 0-12.0z"
 }), /*#__PURE__*/React.createElement("path", {
@@ -1186,11 +1186,11 @@ const IconSprite = () => /*#__PURE__*/React.createElement("svg", {
   id: "hi-washer",
   viewBox: "0 0 24 24"
 }, /*#__PURE__*/React.createElement("path", {
-  class: "hi-plate",
+  className: "hi-plate",
   transform: "translate(2 2)",
   d: "M12.0 10.6a2.4 2.4 0 1 0 0 4.8a2.4 2.4 0 1 0 0-4.8z"
 }), /*#__PURE__*/React.createElement("g", {
-  class: "hi-ln"
+  className: "hi-ln"
 }, /*#__PURE__*/React.createElement("path", {
   d: "M4.0 5.0a2.0 2.0 0 0 1 2.0-2.0H20.0V19.0a2.0 2.0 0 0 1-2.0 2.0H4.0z"
 }), /*#__PURE__*/React.createElement("path", {
@@ -1201,22 +1201,22 @@ const IconSprite = () => /*#__PURE__*/React.createElement("svg", {
   id: "hi-bath",
   viewBox: "0 0 24 24"
 }, /*#__PURE__*/React.createElement("path", {
-  class: "hi-plate",
+  className: "hi-plate",
   transform: "translate(2 2)",
   d: "M4 13h16v3a3 3 0 0 1-3 3H7a3 3 0 0 1-3-3z"
 }), /*#__PURE__*/React.createElement("g", {
-  class: "hi-ln"
+  className: "hi-ln"
 }, /*#__PURE__*/React.createElement("path", {
   d: "M3 13h18v3a4 4 0 0 1-4 4H7a4 4 0 0 1-4-4zM6 13V6a2 2 0 0 1 4 0M6.5 20l-1 1.5M17.5 20l1 1.5"
 }))), /*#__PURE__*/React.createElement("symbol", {
   id: "hi-shower",
   viewBox: "0 0 24 24"
 }, /*#__PURE__*/React.createElement("path", {
-  class: "hi-plate-ln",
+  className: "hi-plate-ln",
   transform: "translate(2 2)",
   d: "M6 13V7a3 3 0 0 1 6 0M12 4.5a2 2 0 0 1 4 0V6M2.5 13h8"
 }), /*#__PURE__*/React.createElement("g", {
-  class: "hi-ln"
+  className: "hi-ln"
 }, /*#__PURE__*/React.createElement("path", {
   d: "M6 13V7a3 3 0 0 1 6 0M12 4.5a2 2 0 0 1 4 0V6M2.5 13h8"
 }), /*#__PURE__*/React.createElement("path", {
@@ -1225,11 +1225,11 @@ const IconSprite = () => /*#__PURE__*/React.createElement("svg", {
   id: "hi-baby",
   viewBox: "0 0 24 24"
 }, /*#__PURE__*/React.createElement("path", {
-  class: "hi-plate",
+  className: "hi-plate",
   transform: "translate(2 2)",
   d: "M12 4.6a3.6 3.6 0 1 0 0 7.2 3.6 3.6 0 1 0 0-7.2zM5.8 20.5v-1.2a6.2 6.2 0 0 1 12.4 0v1.2z"
 }), /*#__PURE__*/React.createElement("g", {
-  class: "hi-ln"
+  className: "hi-ln"
 }, /*#__PURE__*/React.createElement("circle", {
   cx: "12",
   cy: "8.2",
@@ -1242,22 +1242,22 @@ const IconSprite = () => /*#__PURE__*/React.createElement("svg", {
   id: "hi-bottle",
   viewBox: "0 0 24 24"
 }, /*#__PURE__*/React.createElement("path", {
-  class: "hi-plate",
+  className: "hi-plate",
   transform: "translate(2 2)",
   d: "M9 13h6v6a2 2 0 0 1-2 2h-2a2 2 0 0 1-2-2z"
 }), /*#__PURE__*/React.createElement("g", {
-  class: "hi-ln"
+  className: "hi-ln"
 }, /*#__PURE__*/React.createElement("path", {
   d: "M9 8h6v11a2 2 0 0 1-2 2h-2a2 2 0 0 1-2-2zM10 8V5h4v3M10 12h4"
 }))), /*#__PURE__*/React.createElement("symbol", {
   id: "hi-flower",
   viewBox: "0 0 24 24"
 }, /*#__PURE__*/React.createElement("path", {
-  class: "hi-plate",
+  className: "hi-plate",
   transform: "translate(2 2)",
   d: "M12 6.5a5.5 5.5 0 1 0 0 11 5.5 5.5 0 1 0 0-11z"
 }), /*#__PURE__*/React.createElement("g", {
-  class: "hi-ln"
+  className: "hi-ln"
 }, /*#__PURE__*/React.createElement("path", {
   d: "M12.0 3.4a2.0 3.0 0 1 0 0 6.0a2.0 3.0 0 1 0 0-6.0z"
 }), /*#__PURE__*/React.createElement("path", {
@@ -1272,11 +1272,11 @@ const IconSprite = () => /*#__PURE__*/React.createElement("svg", {
   id: "hi-aroma",
   viewBox: "0 0 24 24"
 }, /*#__PURE__*/React.createElement("path", {
-  class: "hi-plate",
+  className: "hi-plate",
   transform: "translate(2 2)",
   d: "M7.5 14h9a4.5 4.5 0 0 1-9 0z"
 }), /*#__PURE__*/React.createElement("g", {
-  class: "hi-ln"
+  className: "hi-ln"
 }, /*#__PURE__*/React.createElement("path", {
   d: "M6.5 13.5a5.5 5.5 0 0 0 11 0z"
 }), /*#__PURE__*/React.createElement("path", {
@@ -1285,11 +1285,11 @@ const IconSprite = () => /*#__PURE__*/React.createElement("svg", {
   id: "hi-dryrack",
   viewBox: "0 0 24 24"
 }, /*#__PURE__*/React.createElement("path", {
-  class: "hi-plate-ln",
+  className: "hi-plate-ln",
   transform: "translate(2 2)",
   d: "M5 4v16M19 4v16M5 20h14"
 }), /*#__PURE__*/React.createElement("g", {
-  class: "hi-ln"
+  className: "hi-ln"
 }, /*#__PURE__*/React.createElement("path", {
   d: "M5 4v16M19 4v16M5 20h14"
 }), /*#__PURE__*/React.createElement("path", {
@@ -1298,11 +1298,11 @@ const IconSprite = () => /*#__PURE__*/React.createElement("svg", {
   id: "hi-thermometer",
   viewBox: "0 0 24 24"
 }, /*#__PURE__*/React.createElement("path", {
-  class: "hi-plate",
+  className: "hi-plate",
   transform: "translate(2 2)",
   d: "M12 4a2 2 0 0 1 2 2v8.6a4 4 0 1 1-4 0V6a2 2 0 0 1 2-2z"
 }), /*#__PURE__*/React.createElement("g", {
-  class: "hi-ln"
+  className: "hi-ln"
 }, /*#__PURE__*/React.createElement("path", {
   d: "M12 4a2 2 0 0 1 2 2v8.6a4 4 0 1 1-4 0V6a2 2 0 0 1 2-2z"
 }), /*#__PURE__*/React.createElement("path", {
@@ -1313,11 +1313,11 @@ const IconSprite = () => /*#__PURE__*/React.createElement("svg", {
   id: "hi-jacuzzi",
   viewBox: "0 0 24 24"
 }, /*#__PURE__*/React.createElement("path", {
-  class: "hi-plate",
+  className: "hi-plate",
   transform: "translate(2 2)",
   d: "M5 13h14v3a3 3 0 0 1-3 3H8a3 3 0 0 1-3-3z"
 }), /*#__PURE__*/React.createElement("g", {
-  class: "hi-ln"
+  className: "hi-ln"
 }, /*#__PURE__*/React.createElement("path", {
   d: "M4 12.5h16v3.5a4 4 0 0 1-4 4H8a4 4 0 0 1-4-4z"
 }), /*#__PURE__*/React.createElement("path", {
@@ -1326,11 +1326,11 @@ const IconSprite = () => /*#__PURE__*/React.createElement("svg", {
   id: "hi-dumbbell",
   viewBox: "0 0 24 24"
 }, /*#__PURE__*/React.createElement("path", {
-  class: "hi-plate-ln",
+  className: "hi-plate-ln",
   transform: "translate(2 2)",
   d: "M3 9v6M6 6.5v11M18 6.5v11M21 9v6"
 }), /*#__PURE__*/React.createElement("g", {
-  class: "hi-ln"
+  className: "hi-ln"
 }, /*#__PURE__*/React.createElement("path", {
   d: "M3 9v6M6 6.5v11M18 6.5v11M21 9v6"
 }), /*#__PURE__*/React.createElement("path", {
@@ -1339,11 +1339,11 @@ const IconSprite = () => /*#__PURE__*/React.createElement("svg", {
   id: "hi-sauna",
   viewBox: "0 0 24 24"
 }, /*#__PURE__*/React.createElement("path", {
-  class: "hi-plate",
+  className: "hi-plate",
   transform: "translate(2 2)",
   d: "M12.0 14.0a7.0 2.0 0 1 0 0 4.0a7.0 2.0 0 1 0 0-4.0z"
 }), /*#__PURE__*/React.createElement("g", {
-  class: "hi-ln"
+  className: "hi-ln"
 }, /*#__PURE__*/React.createElement("path", {
   d: "M4 16h16v1.5a2.5 2.5 0 0 1-2.5 2.5h-11A2.5 2.5 0 0 1 4 17.5zM6 16c1.5-1 4.5-1 6 0s4.5 1 6 0"
 }), /*#__PURE__*/React.createElement("path", {
@@ -1352,11 +1352,11 @@ const IconSprite = () => /*#__PURE__*/React.createElement("svg", {
   id: "hi-tennis",
   viewBox: "0 0 24 24"
 }, /*#__PURE__*/React.createElement("path", {
-  class: "hi-plate",
+  className: "hi-plate",
   transform: "translate(2 2)",
   d: "M12.0 3.5a8.5 8.5 0 1 0 0 17.0a8.5 8.5 0 1 0 0-17.0z"
 }), /*#__PURE__*/React.createElement("g", {
-  class: "hi-ln"
+  className: "hi-ln"
 }, /*#__PURE__*/React.createElement("path", {
   d: "M12.0 3.5a8.5 8.5 0 1 0 0 17.0a8.5 8.5 0 1 0 0-17.0z"
 }), /*#__PURE__*/React.createElement("path", {
@@ -1365,11 +1365,11 @@ const IconSprite = () => /*#__PURE__*/React.createElement("svg", {
   id: "hi-coffee",
   viewBox: "0 0 24 24"
 }, /*#__PURE__*/React.createElement("path", {
-  class: "hi-plate",
+  className: "hi-plate",
   transform: "translate(2 2)",
   d: "M5 9h11v4a4 4 0 0 1-4 4H9a4 4 0 0 1-4-4z"
 }), /*#__PURE__*/React.createElement("g", {
-  class: "hi-ln"
+  className: "hi-ln"
 }, /*#__PURE__*/React.createElement("path", {
   d: "M4 8h13v5a5 5 0 0 1-5 5H9a5 5 0 0 1-5-5zM17 9.5h2.5a2.5 2.5 0 0 1 0 5H17"
 }), /*#__PURE__*/React.createElement("path", {
@@ -1378,11 +1378,11 @@ const IconSprite = () => /*#__PURE__*/React.createElement("svg", {
   id: "hi-briefcase",
   viewBox: "0 0 24 24"
 }, /*#__PURE__*/React.createElement("path", {
-  class: "hi-plate",
+  className: "hi-plate",
   transform: "translate(2 2)",
   d: "M3 11h18v4H3z"
 }), /*#__PURE__*/React.createElement("g", {
-  class: "hi-ln"
+  className: "hi-ln"
 }, /*#__PURE__*/React.createElement("path", {
   d: "M3.0 9.0a2.0 2.0 0 0 1 2.0-2.0H21.0V18.0a2.0 2.0 0 0 1-2.0 2.0H3.0z"
 }), /*#__PURE__*/React.createElement("path", {
@@ -1391,79 +1391,79 @@ const IconSprite = () => /*#__PURE__*/React.createElement("svg", {
   id: "hi-toilet",
   viewBox: "0 0 24 24"
 }, /*#__PURE__*/React.createElement("path", {
-  class: "hi-plate",
+  className: "hi-plate",
   transform: "translate(2 2)",
   d: "M14 7.5h3l1.4 5h-1.2L17 19h-3l.2-6.5H13z"
 }), /*#__PURE__*/React.createElement("g", {
-  class: "hi-ln"
+  className: "hi-ln"
 }, /*#__PURE__*/React.createElement("path", {
   d: "M8.5 7c-1 0-1.6.6-1.8 1.6L6 13h1.2l.4 6h1.8l.4-6H11l-.7-4.4C10.1 7.6 9.5 7 8.5 7z"
 }), /*#__PURE__*/React.createElement("path", {
   d: "M14 7.5h3l1.4 5h-1.2L17 19h-3l.2-6.5H13z"
 }), /*#__PURE__*/React.createElement("path", {
-  class: "hi-fi",
+  className: "hi-fi",
   d: "M8.5 3.1a1.5 1.5 0 1 0 0 3.0a1.5 1.5 0 1 0 0-3.0z"
 }), /*#__PURE__*/React.createElement("path", {
-  class: "hi-fi",
+  className: "hi-fi",
   d: "M15.5 3.1a1.5 1.5 0 1 0 0 3.0a1.5 1.5 0 1 0 0-3.0z"
 }))), /*#__PURE__*/React.createElement("symbol", {
   id: "hi-walk",
   viewBox: "0 0 24 24"
 }, /*#__PURE__*/React.createElement("path", {
-  class: "hi-plate-ln",
+  className: "hi-plate-ln",
   transform: "translate(2 2)",
   d: "M13 7c-1 0-1.7.6-2 1.6L9 13l2.2 1.2.6-2.2.2 3L10 21M13.2 11.2 16.5 13l1.8 3"
 }), /*#__PURE__*/React.createElement("g", {
-  class: "hi-ln"
+  className: "hi-ln"
 }, /*#__PURE__*/React.createElement("path", {
   d: "M13 7c-1 0-1.7.6-2 1.6L9 13l2.2 1.2.6-2.2.2 3L10 21M13.2 11.2 16.5 13l1.8 3"
 }), /*#__PURE__*/React.createElement("path", {
-  class: "hi-fi",
+  className: "hi-fi",
   d: "M13.0 2.8a1.6 1.6 0 1 0 0 3.2a1.6 1.6 0 1 0 0-3.2z"
 }))), /*#__PURE__*/React.createElement("symbol", {
   id: "hi-bus",
   viewBox: "0 0 24 24"
 }, /*#__PURE__*/React.createElement("path", {
-  class: "hi-plate",
+  className: "hi-plate",
   transform: "translate(2 2)",
   d: "M5 6h14v5H5z"
 }), /*#__PURE__*/React.createElement("g", {
-  class: "hi-ln"
+  className: "hi-ln"
 }, /*#__PURE__*/React.createElement("path", {
   d: "M4.0 6.0a2.0 2.0 0 0 1 2.0-2.0H20.0V15.0a2.0 2.0 0 0 1-2.0 2.0H4.0z"
 }), /*#__PURE__*/React.createElement("path", {
   d: "M4 11h16M12 4v7"
 }), /*#__PURE__*/React.createElement("path", {
-  class: "hi-fi",
+  className: "hi-fi",
   d: "M8.0 17.6a1.4 1.4 0 1 0 0 2.8a1.4 1.4 0 1 0 0-2.8z"
 }), /*#__PURE__*/React.createElement("path", {
-  class: "hi-fi",
+  className: "hi-fi",
   d: "M16.0 17.6a1.4 1.4 0 1 0 0 2.8a1.4 1.4 0 1 0 0-2.8z"
 }))), /*#__PURE__*/React.createElement("symbol", {
   id: "hi-accessible",
   viewBox: "0 0 24 24"
 }, /*#__PURE__*/React.createElement("path", {
-  class: "hi-plate",
+  className: "hi-plate",
   transform: "translate(2 2)",
   d: "M11.5 9.5a5.5 5.5 0 1 0 0 11 5.5 5.5 0 1 0 0-11z"
 }), /*#__PURE__*/React.createElement("g", {
-  class: "hi-ln"
+  className: "hi-ln"
 }, /*#__PURE__*/React.createElement("path", {
   d: "M11.5 9.5a5.5 5.5 0 1 0 0 11.0a5.5 5.5 0 1 0 0-11.0z"
 }), /*#__PURE__*/React.createElement("path", {
   d: "M9 8h4.2l.6 4H17l1.8 6"
 }), /*#__PURE__*/React.createElement("path", {
-  class: "hi-fi",
+  className: "hi-fi",
   d: "M11.0 2.7a1.7 1.7 0 1 0 0 3.4a1.7 1.7 0 1 0 0-3.4z"
 }))), /*#__PURE__*/React.createElement("symbol", {
   id: "hi-bike",
   viewBox: "0 0 24 24"
 }, /*#__PURE__*/React.createElement("path", {
-  class: "hi-plate",
+  className: "hi-plate",
   transform: "translate(2 2)",
   d: "M6.0 12.6a3.4 3.4 0 1 0 0 6.8a3.4 3.4 0 1 0 0-6.8z"
 }), /*#__PURE__*/React.createElement("g", {
-  class: "hi-ln"
+  className: "hi-ln"
 }, /*#__PURE__*/React.createElement("path", {
   d: "M6.0 12.6a3.4 3.4 0 1 0 0 6.8a3.4 3.4 0 1 0 0-6.8z"
 }), /*#__PURE__*/React.createElement("path", {
@@ -1471,17 +1471,17 @@ const IconSprite = () => /*#__PURE__*/React.createElement("svg", {
 }), /*#__PURE__*/React.createElement("path", {
   d: "M6 16 10 9h5l3 7M10 9h5M9 9 7.6 6.2H6"
 }), /*#__PURE__*/React.createElement("path", {
-  class: "hi-fi",
+  className: "hi-fi",
   d: "M15.0 5.2a1.0 1.0 0 1 0 0 2.0a1.0 1.0 0 1 0 0-2.0z"
 }))), /*#__PURE__*/React.createElement("symbol", {
   id: "hi-train",
   viewBox: "0 0 24 24"
 }, /*#__PURE__*/React.createElement("path", {
-  class: "hi-plate",
+  className: "hi-plate",
   transform: "translate(2 2)",
   d: "M7 6h10v4H7z"
 }), /*#__PURE__*/React.createElement("g", {
-  class: "hi-ln"
+  className: "hi-ln"
 }, /*#__PURE__*/React.createElement("path", {
   d: "M6.0 6.0a3.0 3.0 0 0 1 3.0-3.0H18.0V13.0a3.0 3.0 0 0 1-3.0 3.0H6.0z"
 }), /*#__PURE__*/React.createElement("path", {
@@ -1489,20 +1489,20 @@ const IconSprite = () => /*#__PURE__*/React.createElement("svg", {
 }), /*#__PURE__*/React.createElement("path", {
   d: "M8.5 16 6.5 20M15.5 16l2 4M9 20h6"
 }), /*#__PURE__*/React.createElement("path", {
-  class: "hi-fi",
+  className: "hi-fi",
   d: "M9.0 12.1a0.9 0.9 0 1 0 0 1.8a0.9 0.9 0 1 0 0-1.8z"
 }), /*#__PURE__*/React.createElement("path", {
-  class: "hi-fi",
+  className: "hi-fi",
   d: "M15.0 12.1a0.9 0.9 0 1 0 0 1.8a0.9 0.9 0 1 0 0-1.8z"
 }))), /*#__PURE__*/React.createElement("symbol", {
   id: "hi-plane",
   viewBox: "0 0 24 24"
 }, /*#__PURE__*/React.createElement("path", {
-  class: "hi-plate",
+  className: "hi-plate",
   transform: "translate(2 2)",
   d: "M21 6 15 20l-3-5z"
 }), /*#__PURE__*/React.createElement("g", {
-  class: "hi-ln"
+  className: "hi-ln"
 }, /*#__PURE__*/React.createElement("path", {
   d: "M2.5 13 21 6l-6 14-3-5z"
 }), /*#__PURE__*/React.createElement("path", {
@@ -1511,36 +1511,36 @@ const IconSprite = () => /*#__PURE__*/React.createElement("svg", {
   id: "hi-door",
   viewBox: "0 0 24 24"
 }, /*#__PURE__*/React.createElement("path", {
-  class: "hi-plate",
+  className: "hi-plate",
   transform: "translate(2 2)",
   d: "M7 4h10v16H7z"
 }), /*#__PURE__*/React.createElement("g", {
-  class: "hi-ln"
+  className: "hi-ln"
 }, /*#__PURE__*/React.createElement("path", {
   d: "M6 21h12M7 21V4a1 1 0 0 1 1-1h8a1 1 0 0 1 1 1v17"
 }), /*#__PURE__*/React.createElement("path", {
-  class: "hi-fi",
+  className: "hi-fi",
   d: "M14.3 11.0a1.0 1.0 0 1 0 0 2.0a1.0 1.0 0 1 0 0-2.0z"
 }))), /*#__PURE__*/React.createElement("symbol", {
   id: "hi-bell",
   viewBox: "0 0 24 24"
 }, /*#__PURE__*/React.createElement("path", {
-  class: "hi-plate",
+  className: "hi-plate",
   transform: "translate(2 2)",
   d: "M7 16v-5a5 5 0 0 1 10 0v5z"
 }), /*#__PURE__*/React.createElement("g", {
-  class: "hi-ln"
+  className: "hi-ln"
 }, /*#__PURE__*/React.createElement("path", {
   d: "M6 16v-5a6 6 0 0 1 12 0v5l1.5 2.5h-15zM10 18.5a2 2 0 0 0 4 0"
 }))), /*#__PURE__*/React.createElement("symbol", {
   id: "hi-nosmoking",
   viewBox: "0 0 24 24"
 }, /*#__PURE__*/React.createElement("path", {
-  class: "hi-plate",
+  className: "hi-plate",
   transform: "translate(2 2)",
   d: "M12.0 3.0a9.0 9.0 0 1 0 0 18.0a9.0 9.0 0 1 0 0-18.0z"
 }), /*#__PURE__*/React.createElement("g", {
-  class: "hi-ln"
+  className: "hi-ln"
 }, /*#__PURE__*/React.createElement("path", {
   d: "M12.0 3.0a9.0 9.0 0 1 0 0 18.0a9.0 9.0 0 1 0 0-18.0z"
 }), /*#__PURE__*/React.createElement("path", {
@@ -1551,33 +1551,33 @@ const IconSprite = () => /*#__PURE__*/React.createElement("svg", {
   id: "hi-broom",
   viewBox: "0 0 24 24"
 }, /*#__PURE__*/React.createElement("path", {
-  class: "hi-plate",
+  className: "hi-plate",
   transform: "translate(2 2)",
   d: "m8 11 5 5-3 4.5L4.5 16z"
 }), /*#__PURE__*/React.createElement("g", {
-  class: "hi-ln"
+  className: "hi-ln"
 }, /*#__PURE__*/React.createElement("path", {
   d: "M16 3 9 10M8 11l5 5-3 4.5L4.5 16zM7 13.5l4 3M9.5 11.5l4 3"
 }))), /*#__PURE__*/React.createElement("symbol", {
   id: "hi-chair",
   viewBox: "0 0 24 24"
 }, /*#__PURE__*/React.createElement("path", {
-  class: "hi-plate",
+  className: "hi-plate",
   transform: "translate(2 2)",
   d: "M8 4h6v7H8z"
 }), /*#__PURE__*/React.createElement("g", {
-  class: "hi-ln"
+  className: "hi-ln"
 }, /*#__PURE__*/React.createElement("path", {
   d: "M7 3v9h9V5a2 2 0 0 0-2-2zM7 12l-1.5 8M16 12l1.5 8M5.5 16h13"
 }))), /*#__PURE__*/React.createElement("symbol", {
   id: "hi-luggage",
   viewBox: "0 0 24 24"
 }, /*#__PURE__*/React.createElement("path", {
-  class: "hi-plate",
+  className: "hi-plate",
   transform: "translate(2 2)",
   d: "M7 8h10v11H7z"
 }), /*#__PURE__*/React.createElement("g", {
-  class: "hi-ln"
+  className: "hi-ln"
 }, /*#__PURE__*/React.createElement("path", {
   d: "M6.0 9.0a2.0 2.0 0 0 1 2.0-2.0H18.0V18.0a2.0 2.0 0 0 1-2.0 2.0H6.0z"
 }), /*#__PURE__*/React.createElement("path", {
@@ -1586,22 +1586,22 @@ const IconSprite = () => /*#__PURE__*/React.createElement("svg", {
   id: "hi-phone",
   viewBox: "0 0 24 24"
 }, /*#__PURE__*/React.createElement("path", {
-  class: "hi-plate",
+  className: "hi-plate",
   transform: "translate(2 2)",
   d: "M5 5h3l1.3 3.4-2 1.5a12 12 0 0 0 6.3 6.3l1.5-2L18.5 19v.5C11 20 4.5 13.5 5 5z"
 }), /*#__PURE__*/React.createElement("g", {
-  class: "hi-ln"
+  className: "hi-ln"
 }, /*#__PURE__*/React.createElement("path", {
   d: "M5 4h3.2l1.5 4-2 1.5a11 11 0 0 0 5 5l1.5-2 4 1.5v3.3a1.5 1.5 0 0 1-1.7 1.5C11.5 23.5 3.6 15.6 3.5 6.2A1.5 1.5 0 0 1 5 4z"
 }))), /*#__PURE__*/React.createElement("symbol", {
   id: "hi-mail",
   viewBox: "0 0 24 24"
 }, /*#__PURE__*/React.createElement("path", {
-  class: "hi-plate",
+  className: "hi-plate",
   transform: "translate(2 2)",
   d: "M4 6h16l-8 6z"
 }), /*#__PURE__*/React.createElement("g", {
-  class: "hi-ln"
+  className: "hi-ln"
 }, /*#__PURE__*/React.createElement("path", {
   d: "M3.0 7.0a2.0 2.0 0 0 1 2.0-2.0H21.0V17.0a2.0 2.0 0 0 1-2.0 2.0H3.0z"
 }), /*#__PURE__*/React.createElement("path", {
@@ -1610,22 +1610,22 @@ const IconSprite = () => /*#__PURE__*/React.createElement("svg", {
   id: "hi-handshake",
   viewBox: "0 0 24 24"
 }, /*#__PURE__*/React.createElement("path", {
-  class: "hi-plate",
+  className: "hi-plate",
   transform: "translate(2 2)",
   d: "M3 9h6l3 2 3-2h6v5l-3 2-3-2-3 2-3-2-3-1z"
 }), /*#__PURE__*/React.createElement("g", {
-  class: "hi-ln"
+  className: "hi-ln"
 }, /*#__PURE__*/React.createElement("path", {
   d: "M3 8.5h4.5L10 10.5M21 8.5h-4.5L14 10.5M12 11l-1.6 1.4a1.4 1.4 0 0 0 1.9 2l.7-.6.7.6a1.4 1.4 0 0 0 1.9-2L16 11M3 8.5V14l3 2 2.3-1.6M21 8.5V14l-3 2-2.3-1.6"
 }))), /*#__PURE__*/React.createElement("symbol", {
   id: "hi-refresh",
   viewBox: "0 0 24 24"
 }, /*#__PURE__*/React.createElement("path", {
-  class: "hi-plate-ln",
+  className: "hi-plate-ln",
   transform: "translate(2 2)",
   d: "M20 11a8 8 0 0 0-13.7-5L4 8M4 3.5V8h4.5"
 }), /*#__PURE__*/React.createElement("g", {
-  class: "hi-ln"
+  className: "hi-ln"
 }, /*#__PURE__*/React.createElement("path", {
   d: "M20 11a8 8 0 0 0-13.7-5L4 8M4 3.5V8h4.5"
 }), /*#__PURE__*/React.createElement("path", {
@@ -1634,72 +1634,72 @@ const IconSprite = () => /*#__PURE__*/React.createElement("svg", {
   id: "hi-bulb",
   viewBox: "0 0 24 24"
 }, /*#__PURE__*/React.createElement("path", {
-  class: "hi-plate",
+  className: "hi-plate",
   transform: "translate(2 2)",
   d: "M9 14a5 5 0 1 1 6 0l-.6 2h-4.8z"
 }), /*#__PURE__*/React.createElement("g", {
-  class: "hi-ln"
+  className: "hi-ln"
 }, /*#__PURE__*/React.createElement("path", {
   d: "M9 14.5a5 5 0 1 1 6 0l-.6 2.5h-4.8zM9.7 19.5h4.6M10.7 22h2.6"
 }))), /*#__PURE__*/React.createElement("symbol", {
   id: "hi-star-rate",
   viewBox: "0 0 24 24"
 }, /*#__PURE__*/React.createElement("path", {
-  class: "hi-fi",
+  className: "hi-fi",
   d: "M12 4l2.3 4.9 5.2.7-3.8 3.6 1 5.3L12 16.4 7.3 18.5l1-5.3L4.5 9.6l5.2-.7z"
 })), /*#__PURE__*/React.createElement("symbol", {
   id: "hi-clip",
   viewBox: "0 0 24 24"
 }, /*#__PURE__*/React.createElement("path", {
-  class: "hi-plate-ln",
+  className: "hi-plate-ln",
   transform: "translate(2 2)",
   d: "M19 10.5 11 18.5a4.2 4.2 0 0 1-6-6l8.2-8.2a2.7 2.7 0 0 1 3.8 3.8l-8.1 8.1a1.3 1.3 0 0 1-1.8-1.8l7.2-7.2"
 }), /*#__PURE__*/React.createElement("g", {
-  class: "hi-ln"
+  className: "hi-ln"
 }, /*#__PURE__*/React.createElement("path", {
   d: "M19 10.5 11 18.5a4.2 4.2 0 0 1-6-6l8.2-8.2a2.7 2.7 0 0 1 3.8 3.8l-8.1 8.1a1.3 1.3 0 0 1-1.8-1.8l7.2-7.2"
 }))), /*#__PURE__*/React.createElement("symbol", {
   id: "hi-hourglass",
   viewBox: "0 0 24 24"
 }, /*#__PURE__*/React.createElement("path", {
-  class: "hi-plate",
+  className: "hi-plate",
   transform: "translate(2 2)",
   d: "M9 5.5h6c0 2.5-1.3 3.6-3 5-1.7-1.4-3-2.5-3-5z"
 }), /*#__PURE__*/React.createElement("g", {
-  class: "hi-ln"
+  className: "hi-ln"
 }, /*#__PURE__*/React.createElement("path", {
   d: "M6.5 3h11M6.5 21h11M8 3c0 4.2 2 5.2 4 7.2M16 3c0 4.2-2 5.2-4 7.2M8 21c0-4.2 2-5.2 4-7.2M16 21c0-4.2-2-5.2-4-7.2"
 }))), /*#__PURE__*/React.createElement("symbol", {
   id: "hi-trash",
   viewBox: "0 0 24 24"
 }, /*#__PURE__*/React.createElement("path", {
-  class: "hi-plate",
+  className: "hi-plate",
   transform: "translate(2 2)",
   d: "M6 6h12l-1 14H7z"
 }), /*#__PURE__*/React.createElement("g", {
-  class: "hi-ln"
+  className: "hi-ln"
 }, /*#__PURE__*/React.createElement("path", {
   d: "M4 6h16M9.5 6V3.8h5V6M6.5 6l1 14h9l1-14M10 10v6M14 10v6"
 }))), /*#__PURE__*/React.createElement("symbol", {
   id: "hi-upload",
   viewBox: "0 0 24 24"
 }, /*#__PURE__*/React.createElement("path", {
-  class: "hi-plate",
+  className: "hi-plate",
   transform: "translate(2 2)",
   d: "M7 8.5 12 3.5l5 5z"
 }), /*#__PURE__*/React.createElement("g", {
-  class: "hi-ln"
+  className: "hi-ln"
 }, /*#__PURE__*/React.createElement("path", {
   d: "M12 15.5V4M7 8.5l5-5 5 5M5 20h14"
 }))), /*#__PURE__*/React.createElement("symbol", {
   id: "hi-check",
   viewBox: "0 0 24 24"
 }, /*#__PURE__*/React.createElement("path", {
-  class: "hi-plate",
+  className: "hi-plate",
   transform: "translate(2 2)",
   d: "M12 3.5a8.5 8.5 0 1 0 0 17 8.5 8.5 0 1 0 0-17z"
 }), /*#__PURE__*/React.createElement("g", {
-  class: "hi-ln"
+  className: "hi-ln"
 }, /*#__PURE__*/React.createElement("circle", {
   cx: "12",
   cy: "12",
@@ -1710,11 +1710,11 @@ const IconSprite = () => /*#__PURE__*/React.createElement("svg", {
   id: "hi-camera",
   viewBox: "0 0 24 24"
 }, /*#__PURE__*/React.createElement("path", {
-  class: "hi-plate",
+  className: "hi-plate",
   transform: "translate(2 2)",
   d: "M3.0 9.0a2.0 2.0 0 0 1 2.0-2.0H21.0V18.0a2.0 2.0 0 0 1-2.0 2.0H3.0z"
 }), /*#__PURE__*/React.createElement("g", {
-  class: "hi-ln"
+  className: "hi-ln"
 }, /*#__PURE__*/React.createElement("path", {
   d: "M3.0 9.0a2.0 2.0 0 0 1 2.0-2.0H21.0V18.0a2.0 2.0 0 0 1-2.0 2.0H3.0z"
 }), /*#__PURE__*/React.createElement("path", {
@@ -1725,33 +1725,33 @@ const IconSprite = () => /*#__PURE__*/React.createElement("svg", {
   id: "hi-cloud",
   viewBox: "0 0 24 24"
 }, /*#__PURE__*/React.createElement("path", {
-  class: "hi-plate",
+  className: "hi-plate",
   transform: "translate(2 2)",
   d: "M18 10h-1.26A8 8 0 1 0 9 20h9a5 5 0 0 0 0-10z"
 }), /*#__PURE__*/React.createElement("g", {
-  class: "hi-ln"
+  className: "hi-ln"
 }, /*#__PURE__*/React.createElement("path", {
   d: "M18 10h-1.26A8 8 0 1 0 9 20h9a5 5 0 0 0 0-10z"
 }))), /*#__PURE__*/React.createElement("symbol", {
   id: "hi-moon",
   viewBox: "0 0 24 24"
 }, /*#__PURE__*/React.createElement("path", {
-  class: "hi-plate",
+  className: "hi-plate",
   transform: "translate(2 2)",
   d: "M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"
 }), /*#__PURE__*/React.createElement("g", {
-  class: "hi-ln"
+  className: "hi-ln"
 }, /*#__PURE__*/React.createElement("path", {
   d: "M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"
 }))), /*#__PURE__*/React.createElement("symbol", {
   id: "hi-thermo",
   viewBox: "0 0 24 24"
 }, /*#__PURE__*/React.createElement("path", {
-  class: "hi-plate",
+  className: "hi-plate",
   transform: "translate(2 2)",
   d: "M12 4a2 2 0 0 1 2 2v8.6a4 4 0 1 1-4 0V6a2 2 0 0 1 2-2z"
 }), /*#__PURE__*/React.createElement("g", {
-  class: "hi-ln"
+  className: "hi-ln"
 }, /*#__PURE__*/React.createElement("path", {
   d: "M12 4a2 2 0 0 1 2 2v8.5a4 4 0 1 1-4 0V6a2 2 0 0 1 2-2z"
 }), /*#__PURE__*/React.createElement("path", {
@@ -1762,22 +1762,22 @@ const IconSprite = () => /*#__PURE__*/React.createElement("svg", {
   id: "hi-drop",
   viewBox: "0 0 24 24"
 }, /*#__PURE__*/React.createElement("path", {
-  class: "hi-plate",
+  className: "hi-plate",
   transform: "translate(2 2)",
   d: "M12 3.5c3 3.8 6 7.4 6 10.8a6 6 0 1 1-12 0c0-3.4 3-7 6-10.8z"
 }), /*#__PURE__*/React.createElement("g", {
-  class: "hi-ln"
+  className: "hi-ln"
 }, /*#__PURE__*/React.createElement("path", {
   d: "M12 3.5c3 3.8 6 7.4 6 10.8a6 6 0 1 1-12 0c0-3.4 3-7 6-10.8z"
 }))), /*#__PURE__*/React.createElement("symbol", {
   id: "hi-wind",
   viewBox: "0 0 24 24"
 }, /*#__PURE__*/React.createElement("path", {
-  class: "hi-plate-ln",
+  className: "hi-plate-ln",
   transform: "translate(2 2)",
   d: "M3 8h10.2a2.4 2.4 0 1 0-2-3.7"
 }), /*#__PURE__*/React.createElement("g", {
-  class: "hi-ln"
+  className: "hi-ln"
 }, /*#__PURE__*/React.createElement("path", {
   d: "M3 8h10.2a2.4 2.4 0 1 0-2-3.7"
 }), /*#__PURE__*/React.createElement("path", {
