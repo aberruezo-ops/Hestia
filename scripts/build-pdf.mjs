@@ -44,7 +44,9 @@ function loadGuideData() {
   // lee prices.json: se extrae también ese bloque para no duplicar el importe.
   const petMatch = sharedFull.match(/const PET_RULES = [\s\S]*?\nconst petSuppLabel = [\s\S]*?\n\};\n/);
   if (!petMatch) throw new Error('No se encontró petSuppLabel en shared.jsx');
-  const sharedSrc = petMatch[0] + 'window.petSuppLabel = petSuppLabel;\n' + rulesMatch[0];
+  const arrivalMatch = sharedFull.match(/const _arrivalPolicy = [\s\S]*?\n\};\n/);
+  if (!arrivalMatch) throw new Error('No se encontró _arrivalPolicy en shared.jsx');
+  const sharedSrc = petMatch[0] + 'window.petSuppLabel = petSuppLabel;\n' + arrivalMatch[0] + rulesMatch[0];
   const guideSrc = readFileSync(join(DOCS, 'components/apartment-guide.jsx'), 'utf8');
   const aptSrc   = readFileSync(join(DOCS, 'components/apartment-page.jsx'),  'utf8');
   // Expone los consts/lets top-level como globalThis para que sobrevivan

@@ -47,6 +47,7 @@ Hestía es un sitio estático (GitHub Pages, sirviendo desde `docs/`) con:
 - **Salinas** (6 años): **el más grande, 87 m²** (`apartment-page.jsx` `area`). Piscina, pistas de pádel y tenis y grandes jardines con riachuelos. Sin gimnasio, sin sauna, sin "tres piscinas".
 - **Bañera en los tres.** Ninguno es "el único con bañera".
 - **Pádel y tenis** en Thalassa y Salinas (siempre juntos: "pistas de pádel y tenis"). Mar no tiene pistas.
+- **Llegada**: autónoma por defecto. Presencial sin coste de 15:00 a 19:00; fuera de ese horario con coste (`rules.extras` `lateCheckin23`/`lateCheckin00`, hoy 20 € de 19:00 a 23:00 y 40 € de 23:00 a 00:00) y sujeta a disponibilidad. Texto único: `_arrivalPolicy` (shared), usado en normas, guía PDF y contratos.
 - Alex y Fran **no viven en Vera Playa** (están unidos a Almería). No escribir "vivimos aquí".
 - **Reseñas**: nunca inventar ni reatribuir. Una cita destacada debe ser el texto literal de una reseña de `reviews.json` con su autor.
 

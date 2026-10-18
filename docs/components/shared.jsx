@@ -2168,6 +2168,19 @@ const petSuppLabel = (lang) => {
   if (PET_PER_NIGHT === null || PET_MAX === null) return null;
   return lang === 'es' ? `${PET_PER_NIGHT} €/noche · máx. ${PET_MAX} €` : `${PET_PER_NIGHT} €/night · max ${PET_MAX} €`;
 };
+// Política de llegada (propietario, oct 2026): autónoma por defecto; presencial sin coste
+// de 15:00 a 19:00; fuera de ese horario con coste (rules.extras de prices.json) y según disponibilidad.
+const _arrivalPolicy = (lang, extrasArg) => {
+  const ex = extrasArg || (window.PRICES_V2 && window.PRICES_V2.rules && window.PRICES_V2.rules.extras) || [];
+  const fee = id => { const e = ex.find(x => x.id === id); return e ? e.price : null; };
+  const p23 = fee('lateCheckin23'), p00 = fee('lateCheckin00');
+  const fees = p23 != null && p00 != null
+    ? (lang === 'es' ? ` (${p23} € de 19:00 a 23:00; ${p00} € de 23:00 a 00:00)` : ` (${p23} € from 19:00 to 23:00; ${p00} € from 23:00 to 00:00)`)
+    : '';
+  return lang === 'es'
+    ? `La llegada es autónoma por defecto. Si preferís que os recibamos, la llegada presencial es sin coste entre las 15:00 y las 19:00; fuera de ese horario tiene un coste${fees} y está sujeta a disponibilidad.`
+    : `Arrival is self check-in by default. If you would like to be greeted in person, it is free between 15:00 and 19:00; outside those hours it has a fee${fees} and is subject to availability.`;
+};
 const _petCost = (nights) => {
   if (PET_PER_NIGHT !== null && PET_MAX !== null) {
     return Math.min(nights * PET_PER_NIGHT, PET_MAX);
@@ -3103,7 +3116,7 @@ if (typeof window !== 'undefined' && typeof window.addEventListener === 'functio
   });
 }
 
-Object.assign(window, { IconSprite, HiIcon, emojiHi, EmojiIcon, AnimatedPrice, lqipFor, BlurImg, WatermarkBadge, IndaloWatermark, IndaloLoader, IndaloShape, Wordmark, COPY, useScrollMode, useReveal, useSectionGlow, QuickFAQ, SabiasQue, FraseHogar, StickyFacts, _HOME_FACTS_POOL, HESTIA_PRICES, STAY_DISCOUNTS, PET_SUPP_FLAT, petSuppLabel, _dayPrice, _calcStay, _regularStayTotal, _dayPriceV2, _v2SeasonForDate, _v2BumpedSeasonForDate, _vt, DateRangePicker, _drAvail, _drAdj, _drDiff, _drFmtDate, _calcLsTotal, _allAptsBlocked, _hestiaFindAlternatives, _hestiaSendLead, _hestiaSendLeadFd, _hestiaFlushLeads });
+Object.assign(window, { _arrivalPolicy, IconSprite, HiIcon, emojiHi, EmojiIcon, AnimatedPrice, lqipFor, BlurImg, WatermarkBadge, IndaloWatermark, IndaloLoader, IndaloShape, Wordmark, COPY, useScrollMode, useReveal, useSectionGlow, QuickFAQ, SabiasQue, FraseHogar, StickyFacts, _HOME_FACTS_POOL, HESTIA_PRICES, STAY_DISCOUNTS, PET_SUPP_FLAT, petSuppLabel, _dayPrice, _calcStay, _regularStayTotal, _dayPriceV2, _v2SeasonForDate, _v2BumpedSeasonForDate, _vt, DateRangePicker, _drAvail, _drAdj, _drDiff, _drFmtDate, _calcLsTotal, _allAptsBlocked, _hestiaFindAlternatives, _hestiaSendLead, _hestiaSendLeadFd, _hestiaFlushLeads });
 
 // Ficha de Google Maps de cada Hestía (mismas que el sameAs del JSON-LD de
 // mar.html / thalassa.html / salinas.html). Abren la ficha donde el huésped
@@ -3142,7 +3155,7 @@ const HESTIA_RULES = {
       { icon: '🚪', hi: 'door', t: 'Hestía es solo para vosotros',
         d: 'No para terceros que no figuren en la reserva.' },
       { icon: '🕒', hi: 'clock', t: 'Check-in 15:00 · Check-out 11:00',
-        d: 'Necesitamos un margen considerable para dejar Hestía a punto para la siguiente llegada. Late check-out y early check-in sujetos a disponibilidad.' },
+        d: `Necesitamos un margen considerable para dejar Hestía a punto para la siguiente llegada. Late check-out y early check-in sujetos a disponibilidad. ${_arrivalPolicy('es')}` },
       { icon: '🐾', hi: 'paw', t: 'Mascotas, solo con petición previa',
         d: `Son bienvenidas en los tres Hestías si nos lo pedís antes y lo aprobamos, con un suplemento${petSuppLabel('es') ? ` (${petSuppLabel('es')})` : ''}. En zonas comunes, siempre atadas.` },
       { icon: '🚭', hi: 'nosmoking', t: 'No se fuma dentro de Hestía',
@@ -3186,7 +3199,7 @@ const HESTIA_RULES = {
       { icon: '🚪', hi: 'door', t: 'Hestía is only for you',
         d: 'Not for third parties who are not on the booking.' },
       { icon: '🕒', hi: 'clock', t: 'Check-in 15:00 · Check-out 11:00',
-        d: 'We need a considerable window to prepare Hestía for the next arrival. Late check-out and early check-in are subject to availability.' },
+        d: `We need a considerable window to prepare Hestía for the next arrival. Late check-out and early check-in are subject to availability. ${_arrivalPolicy('en')}` },
       { icon: '🐾', hi: 'paw', t: 'Pets, on request only',
         d: `Welcome at all three Hestías if you ask us first and we approve it, with a supplement${petSuppLabel('en') ? ` (${petSuppLabel('en')})` : ''}. Always on a leash in shared areas.` },
       { icon: '🚭', hi: 'nosmoking', t: 'No smoking inside Hestía',

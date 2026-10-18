@@ -140,8 +140,8 @@ Los siguientes servicios pueden añadirse a la reserva. Los precios son los publ
 | Cuna *(sábanas incluidas)* | 20 € | por estancia |
 | Early check-in · 10 €/h antes de 15:00 (o 40 € desde 10:00) | 10 € | por hora |
 | Late check-out · 10 €/h después de 11:00 (o 40 € hasta 18:00) | 10 € | por hora |
-| Late check-in presencial · 21:00 → 23:00 | 20 € | por estancia |
-| Late check-in presencial · 23:00 → 00:00 | 40 € | por estancia |
+| Llegada presencial fuera de horario · 19:00 → 23:00 · sujeta a disponibilidad | 20 € | por estancia |
+| Llegada presencial fuera de horario · 23:00 → 00:00 · sujeta a disponibilidad | 40 € | por estancia |
 | Suplemento mascota | 10 € / noche | máx. 50 €/estancia |
 
 #### DÉCIMA · NORMAS DE HESTÍA
@@ -158,7 +158,7 @@ Nuestro máximo deseo es que descanséis y que respetéis igualmente el descanso
 
 Hestía es exclusivamente para vuestro uso y disfrute, no para el de otros.
 
-Respetad las horas de check-in (a partir de las 15:00) y check-out (hasta las 11:00), pues se necesita un tiempo considerable para poner Hestía a punto para la siguiente llegada.
+Respetad las horas de check-in (a partir de las 15:00) y check-out (hasta las 11:00), pues se necesita un tiempo considerable para poner Hestía a punto para la siguiente llegada. La llegada es autónoma por defecto. Si preferís que os recibamos, la llegada presencial es sin coste entre las 15:00 y las 19:00; fuera de ese horario tiene un coste (20 € de 19:00 a 23:00; 40 € de 23:00 a 00:00) y está sujeta a disponibilidad.
 
 No están permitidas las mascotas, salvo aprobación explícita.
 No fuméis. En Hestía está prohibido. Vuestra salud es lo primero.
@@ -260,7 +260,7 @@ Contrato de reserva · Hestía Vera {{APARTAMENTO_CORTO}} · {{FECHA_ENTRADA}} �
 >
 > El remanente de **{{REMANENTE_NUM}} €** se abona en efectivo el día de la llegada, en el momento del check-in.
 >
-> Recibida toda la documentación, tu reserva quedará confirmada y te escribiremos unos días antes de tu llegada para coordinar el check-in (autónomo o presencial, lo que te encaje mejor).
+> Recibida toda la documentación, tu reserva quedará confirmada y te escribiremos unos días antes de tu llegada para coordinarla. La llegada es autónoma por defecto; la presencial es sin coste entre las 15:00 y las 19:00 y, fuera de ese horario, tiene coste y está sujeta a disponibilidad.
 >
 > Si tienes cualquier duda, escríbenos sin problema.
 >

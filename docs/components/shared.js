@@ -4646,6 +4646,19 @@ const petSuppLabel = lang => {
   if (PET_PER_NIGHT === null || PET_MAX === null) return null;
   return lang === 'es' ? `${PET_PER_NIGHT} €/noche · máx. ${PET_MAX} €` : `${PET_PER_NIGHT} €/night · max ${PET_MAX} €`;
 };
+// Política de llegada (propietario, oct 2026): autónoma por defecto; presencial sin coste
+// de 15:00 a 19:00; fuera de ese horario con coste (rules.extras de prices.json) y según disponibilidad.
+const _arrivalPolicy = (lang, extrasArg) => {
+  const ex = extrasArg || window.PRICES_V2 && window.PRICES_V2.rules && window.PRICES_V2.rules.extras || [];
+  const fee = id => {
+    const e = ex.find(x => x.id === id);
+    return e ? e.price : null;
+  };
+  const p23 = fee('lateCheckin23'),
+    p00 = fee('lateCheckin00');
+  const fees = p23 != null && p00 != null ? lang === 'es' ? ` (${p23} € de 19:00 a 23:00; ${p00} € de 23:00 a 00:00)` : ` (${p23} € from 19:00 to 23:00; ${p00} € from 23:00 to 00:00)` : '';
+  return lang === 'es' ? `La llegada es autónoma por defecto. Si preferís que os recibamos, la llegada presencial es sin coste entre las 15:00 y las 19:00; fuera de ese horario tiene un coste${fees} y está sujeta a disponibilidad.` : `Arrival is self check-in by default. If you would like to be greeted in person, it is free between 15:00 and 19:00; outside those hours it has a fee${fees} and is subject to availability.`;
+};
 const _petCost = nights => {
   if (PET_PER_NIGHT !== null && PET_MAX !== null) {
     return Math.min(nights * PET_PER_NIGHT, PET_MAX);
@@ -5747,6 +5760,7 @@ if (typeof window !== 'undefined' && typeof window.addEventListener === 'functio
   });
 }
 Object.assign(window, {
+  _arrivalPolicy,
   IconSprite,
   HiIcon,
   emojiHi,
@@ -5849,7 +5863,7 @@ const HESTIA_RULES = {
       icon: '🕒',
       hi: 'clock',
       t: 'Check-in 15:00 · Check-out 11:00',
-      d: 'Necesitamos un margen considerable para dejar Hestía a punto para la siguiente llegada. Late check-out y early check-in sujetos a disponibilidad.'
+      d: `Necesitamos un margen considerable para dejar Hestía a punto para la siguiente llegada. Late check-out y early check-in sujetos a disponibilidad. ${_arrivalPolicy('es')}`
     }, {
       icon: '🐾',
       hi: 'paw',
@@ -5949,7 +5963,7 @@ const HESTIA_RULES = {
       icon: '🕒',
       hi: 'clock',
       t: 'Check-in 15:00 · Check-out 11:00',
-      d: 'We need a considerable window to prepare Hestía for the next arrival. Late check-out and early check-in are subject to availability.'
+      d: `We need a considerable window to prepare Hestía for the next arrival. Late check-out and early check-in are subject to availability. ${_arrivalPolicy('en')}`
     }, {
       icon: '🐾',
       hi: 'paw',
