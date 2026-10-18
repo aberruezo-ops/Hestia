@@ -82,10 +82,10 @@
     },
     "aggregateRating": {
       "@type": "AggregateRating",
-      "ratingValue": "9.98",
+      "ratingValue": "9.95",
       "bestRating": "10",
       "worstRating": "1",
-      "reviewCount": "102"
+      "reviewCount": "117"
     },
     "@id": "https://www.hestiayourhome.com/thalassa.html#accommodation",
   "checkInTime": "15:00",
@@ -233,7 +233,7 @@
     } catch (e) { console.warn('photo-positions.json fetch failed', e); }
 
     for (const file of COMPONENT_FILES) {
-      const res = await fetch(file + '?cv=d15acdc2c6');
+      const res = await fetch(file + '?cv=2db26b884c');
       if (!res.ok) throw new Error(`Failed to load ${file}: ${res.status}`);
       const code = await res.text();
       // eslint-disable-next-line no-eval
