@@ -142,7 +142,7 @@ const ContactoHero = ({
     return () => document.removeEventListener('visibilitychange', onVisible);
   }, [prefersReducedMotion]);
   return /*#__PURE__*/React.createElement("section", {
-    className: "page-hero contacto-hero"
+    className: "page-hero contacto-hero on-dark"
   }, /*#__PURE__*/React.createElement("video", {
     ref: videoRef,
     className: "contacto-hero-video",
@@ -248,7 +248,7 @@ const ContactoPersons = ({
     waLink: "https://wa.me/34654138251",
     quote: t.fran_quote,
     initial: "F",
-    accent: "var(--vt)",
+    accent: "var(--ber-lt)",
     imgSrc: "assets/photo-fran.jpg"
   })), /*#__PURE__*/React.createElement("div", {
     className: "contacto-email-row"

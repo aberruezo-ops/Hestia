@@ -312,8 +312,8 @@ const Hero = ({ lang, onScrollDown }) => {
           return (
             <div className="hero-price-line">
               {lang === 'es'
-                ? <><span className="hpl-from">desde </span><strong className="hpl-price">{from}€</strong><span className="hpl-per">/noche · precio directo garantizado</span></>
-                : <><span className="hpl-from">from </span><strong className="hpl-price">{from}€</strong><span className="hpl-per">/night · guaranteed direct price</span></>}
+                ? <><span className="hpl-from">desde </span><strong className="hpl-price">{from}€</strong><span className="hpl-per">/noche · precio directo</span></>
+                : <><span className="hpl-from">from </span><strong className="hpl-price">{from}€</strong><span className="hpl-per">/night · direct price</span></>}
             </div>
           );
         })()}
@@ -621,7 +621,7 @@ const Compare = ({ lang }) => {
     { label: 'Terraza',       vm: 'Esquina 20m² · mar', vt: 'Panorámica · mar + salar', vs: 'Dos terrazas' },
     { label: 'Piscina',       vm: 'Comunitaria', vt: '2 ext. + jacuzzi', vs: 'Comunitaria + pistas de pádel' },
     { label: 'Streaming',     vm: 'SkyShowtime · HBO Max · Prime · Disney+', vt: 'SkyShowtime · HBO Max · Prime · Movistar Plus · Disney+', vs: 'SkyShowtime · HBO Max · Prime · Disney+' },
-    { label: 'Extra ⭑',       vm: 'Jacuzzi comunitario', vt: 'Minigim · piscina climatizada + minispa (otoño-primavera)', vs: 'Gimnasio · sauna · Parque Natural Salinas' },
+    { label: 'Extra',       vm: 'Jacuzzi comunitario', vt: 'Minigim · piscina climatizada + minispa (otoño-primavera)', vs: 'Gimnasio · sauna · Parque Natural Salinas' },
     { label: 'Playa',         vm: '300 m', vt: '1,5 km', vs: '900 m' },
     { label: 'Mascotas',      vm: 'Sí · petición + suplem.', vt: 'Sí · petición + suplem.', vs: 'Sí · petición + suplem.' },
     { label: 'Ideal para',    vm: 'Practicidad · todo a mano', vt: 'Las mejores vistas', vs: 'Paz · jardines · naturaleza' },
@@ -635,7 +635,7 @@ const Compare = ({ lang }) => {
     { label: 'Terrace',       vm: 'Corner 20m² · sea', vt: 'Panoramic · sea + salt flats', vs: 'Two terraces' },
     { label: 'Pool',          vm: 'Shared', vt: '2 outdoor + jacuzzi', vs: 'Shared + padel courts' },
     { label: 'Streaming',     vm: 'SkyShowtime · HBO Max · Prime · Disney+', vt: 'SkyShowtime · HBO Max · Prime · Movistar Plus · Disney+', vs: 'SkyShowtime · HBO Max · Prime · Disney+' },
-    { label: 'Extra ⭑',       vm: 'Shared jacuzzi', vt: 'Mini-gym · heated pool + mini-spa (autumn–spring)', vs: 'Gym · sauna · salt-flat nature park' },
+    { label: 'Extra',       vm: 'Shared jacuzzi', vt: 'Mini-gym · heated pool + mini-spa (autumn–spring)', vs: 'Gym · sauna · salt-flat nature park' },
     { label: 'Beach',         vm: '300 m', vt: '1.5 km', vs: '900 m' },
     { label: 'Pets',          vm: 'Yes · request + suppl.', vt: 'Yes · request + suppl.', vs: 'Yes · request + suppl.' },
     { label: 'Ideal for',     vm: 'Practicality · everything close', vt: 'Best views in the complex', vs: 'Peace · gardens · nature' },
@@ -697,7 +697,7 @@ const Compare = ({ lang }) => {
               {rows.map((row, i) => (
                 <div key={i} className="cc-row">
                   <span className="cc-lbl">{row.label}</span>
-                  <span className={`cc-val${row.rate ? ' rate' : ''}`}>{row[a.key]}</span>
+                  <span className={`cc-val${row.rate ? ' rate' : ''}`}>{cmpCell(row[a.key])}</span>
                 </div>
               ))}
             </div>
@@ -916,8 +916,7 @@ const LastMinuteStrip = ({ lang, embedded = false }) => {
   };
 
   const renderLongStayCard = (key) => {
-    const ls = window.PRICES_V2?.longStayConfig;
-    const minRate = ls?.monthlyRates ? Math.min(...Object.values(ls.monthlyRates)) : 1490;
+    const minRate = _lsMinMonthly();
     return (
       <a key={key} href="estancias-largas.html" className="lm-card lm-card--longstay">
         <span className="lm-card-apt lm-card-apt--longstay">
@@ -925,7 +924,7 @@ const LastMinuteStrip = ({ lang, embedded = false }) => {
         </span>
         <span className="lm-card-meta">
           {lang === 'es' ? '29+ noches · descuento especial' : '29+ nights · special discount'}
-          <span className="lm-card-ppn"> · desde {minRate.toLocaleString('es-ES')}€/mes</span>
+          {minRate != null && <span className="lm-card-ppn"> · {lang === 'es' ? `desde ${minRate.toLocaleString('es-ES')}€/mes` : `from €${minRate.toLocaleString('en-US')}/mo`}</span>}
         </span>
         <span className="lm-card-total lm-longstay-cta">
           {lang === 'es' ? 'Ver condiciones →' : 'See conditions →'}
@@ -964,13 +963,10 @@ const LongStayStrip = ({ lang }) => {
   const es = lang === 'es';
   const v2 = window.PRICES_V2;
   const bases = v2?.apts ? Object.values(v2.apts).map(a => a.base).filter(Boolean) : [];
-  const minBase = bases.length ? Math.min(...bases) : 83;
-  const nightlyMonthly = minBase * 30;
-  const lsCfg = v2?.longStayConfig || {};
-  const lsRates = lsCfg.monthlyRates || { baja: 1490, media: 1590, alta: 1850 };
-  const supps = Object.values(lsCfg.aptSupplement || {});
-  const lsRate = Math.min(lsRates.baja, lsRates.media, lsRates.alta) + (supps.length ? Math.min(...supps) : 0);
-  const savings = Math.round((1 - lsRate / nightlyMonthly) * 100);
+  // Misma cifra "desde" que el modal de ventajas y la tarjeta de huecos: _lsMinMonthly (shared).
+  const nightlyMonthly = bases.length ? Math.min(...bases) * 30 : null;
+  const lsRate = _lsMinMonthly();
+  const savings = _lsSavingsPct();
   return (
     <section className="lss-strip on-dark" aria-label={es ? 'Estancias largas' : 'Long stays'}>
       <div className="lss-inner">
@@ -988,12 +984,12 @@ const LongStayStrip = ({ lang }) => {
         <div className="lss-right">
           <div className="lss-pills">
             <span className="lss-pill">{es ? '29+ noches' : '29+ nights'}</span>
-            <span className="lss-pill lss-pill-compare">
+            {lsRate != null && savings != null && nightlyMonthly != null && <span className="lss-pill lss-pill-compare">
               <span className="lss-pill-reg">~{nightlyMonthly.toLocaleString('es-ES')}€/mes</span>
               <span className="lss-pill-arrow">→</span>
               <span className="lss-pill-ls">{es ? `desde ${lsRate.toLocaleString('es-ES')}€/mes` : `from €${lsRate.toLocaleString('en-US')}/mo`}</span>
               <span className="lss-pill-save">−{savings}%</span>
-            </span>
+            </span>}
             <span className="lss-pill">WiFi fibra</span>
             <span className="lss-pill">{es ? 'Contrato formal' : 'Formal contract'}</span>
           </div>

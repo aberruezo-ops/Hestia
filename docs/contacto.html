@@ -37,7 +37,7 @@
   <link rel="dns-prefetch" href="//unpkg.com"/>
   <link rel="preload" href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400..700;1,9..144,400..700&family=Hanken+Grotesk:wght@400;500;600;700&display=swap" as="style"/>
   <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400..700;1,9..144,400..700&family=Hanken+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet"/>
-<link rel="stylesheet" href="assets/styles.css?v=1175"/>          <script type="application/ld+json">  {
+<link rel="stylesheet" href="assets/styles.css?v=1187"/>          <script type="application/ld+json">  {
   "@context": "https://schema.org",
   "@type": "BreadcrumbList",
   "itemListElement": [
@@ -76,7 +76,7 @@
   <p>Correo: info@hestiayourhome.com. Teléfono y WhatsApp: +34 620 316 370.</p>
   <p>Escríbenos para consultar disponibilidad y precio, resolver dudas antes de reservar, pedir cuna, trona o plaza de garaje, avisar de que viajas con mascota, o preguntar cualquier cosa sobre la zona.</p>
   <p>Estamos en Vera, Almería (04621), en la costa del Levante almeriense, entre Garrucha y Villaricos.</p>
-  <p>También puedes escribirnos por el formulario de esta página, y consultar nuestras licencias turísticas VFT/AL/01580, VFT/AL/05535 y VFT/AL/07056 o nuestra política de privacidad antes de reservar.</p>
+  <p>Puedes consultar nuestras licencias turísticas VFT/AL/01580, VFT/AL/05535 y VFT/AL/07056 o nuestra política de privacidad antes de reservar.</p>
   <nav aria-label="Hestía"><a href="/">Inicio</a> · <a href="/mar.html">Hestía Mar</a> · <a href="/thalassa.html">Hestía Thalassa</a> · <a href="/salinas.html">Hestía Salinas</a> · <a href="/reservas.html">Reservas</a> · <a href="/estancias-largas.html">Estancias largas</a> · <a href="/opiniones.html">Opiniones</a> · <a href="/nosotros.html">Nosotros</a> · <a href="/contacto.html">Contacto</a> · <a href="/privacidad.html">Privacidad</a> · <a href="/guia-vera/">Extracto Guía</a></nav>
 </div></div>
 
@@ -118,7 +118,7 @@
     } catch (e) { console.warn('prices.json fetch failed; using fallback', e); }
 
     for (const file of COMPONENT_FILES) {
-      const res = await fetch(file + '?cv=7107b4ee90');
+      const res = await fetch(file + '?cv=9e48a24053');
       if (!res.ok) throw new Error(`Failed to load ${file}: ${res.status}`);
       const code = await res.text();
       // eslint-disable-next-line no-eval

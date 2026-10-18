@@ -405,13 +405,13 @@ const Hero = ({
       className: "hpl-price"
     }, from, "€"), /*#__PURE__*/React.createElement("span", {
       className: "hpl-per"
-    }, "/noche · precio directo garantizado")) : /*#__PURE__*/React.createElement(React.Fragment, null, /*#__PURE__*/React.createElement("span", {
+    }, "/noche · precio directo")) : /*#__PURE__*/React.createElement(React.Fragment, null, /*#__PURE__*/React.createElement("span", {
       className: "hpl-from"
     }, "from "), /*#__PURE__*/React.createElement("strong", {
       className: "hpl-price"
     }, from, "€"), /*#__PURE__*/React.createElement("span", {
       className: "hpl-per"
-    }, "/night · guaranteed direct price")));
+    }, "/night · direct price")));
   })()), /*#__PURE__*/React.createElement("div", {
     className: "hero-meta"
   }, /*#__PURE__*/React.createElement("span", {
@@ -803,7 +803,7 @@ const Compare = ({
     vt: 'SkyShowtime · HBO Max · Prime · Movistar Plus · Disney+',
     vs: 'SkyShowtime · HBO Max · Prime · Disney+'
   }, {
-    label: 'Extra ⭑',
+    label: 'Extra',
     vm: 'Jacuzzi comunitario',
     vt: 'Minigim · piscina climatizada + minispa (otoño-primavera)',
     vs: 'Gimnasio · sauna · Parque Natural Salinas'
@@ -875,7 +875,7 @@ const Compare = ({
     vt: 'SkyShowtime · HBO Max · Prime · Movistar Plus · Disney+',
     vs: 'SkyShowtime · HBO Max · Prime · Disney+'
   }, {
-    label: 'Extra ⭑',
+    label: 'Extra',
     vm: 'Shared jacuzzi',
     vt: 'Mini-gym · heated pool + mini-spa (autumn–spring)',
     vs: 'Gym · sauna · salt-flat nature park'
@@ -1020,7 +1020,7 @@ const Compare = ({
     className: "cc-lbl"
   }, row.label), /*#__PURE__*/React.createElement("span", {
     className: `cc-val${row.rate ? ' rate' : ''}`
-  }, row[a.key]))))))));
+  }, cmpCell(row[a.key])))))))));
 };
 
 // ================================================================
@@ -1305,8 +1305,7 @@ const LastMinuteStrip = ({
     }, "~", price.total.toLocaleString('es-ES'), "€"));
   };
   const renderLongStayCard = key => {
-    const ls = window.PRICES_V2?.longStayConfig;
-    const minRate = ls?.monthlyRates ? Math.min(...Object.values(ls.monthlyRates)) : 1490;
+    const minRate = _lsMinMonthly();
     return /*#__PURE__*/React.createElement("a", {
       key: key,
       href: "estancias-largas.html",
@@ -1315,9 +1314,9 @@ const LastMinuteStrip = ({
       className: "lm-card-apt lm-card-apt--longstay"
     }, lang === 'es' ? 'ESTANCIA LARGA' : 'LONG STAY'), /*#__PURE__*/React.createElement("span", {
       className: "lm-card-meta"
-    }, lang === 'es' ? '29+ noches · descuento especial' : '29+ nights · special discount', /*#__PURE__*/React.createElement("span", {
+    }, lang === 'es' ? '29+ noches · descuento especial' : '29+ nights · special discount', minRate != null && /*#__PURE__*/React.createElement("span", {
       className: "lm-card-ppn"
-    }, " · desde ", minRate.toLocaleString('es-ES'), "€/mes")), /*#__PURE__*/React.createElement("span", {
+    }, " · ", lang === 'es' ? `desde ${minRate.toLocaleString('es-ES')}€/mes` : `from €${minRate.toLocaleString('en-US')}/mo`)), /*#__PURE__*/React.createElement("span", {
       className: "lm-card-total lm-longstay-cta"
     }, lang === 'es' ? 'Ver condiciones →' : 'See conditions →'));
   };
@@ -1345,17 +1344,10 @@ const LongStayStrip = ({
   const es = lang === 'es';
   const v2 = window.PRICES_V2;
   const bases = v2?.apts ? Object.values(v2.apts).map(a => a.base).filter(Boolean) : [];
-  const minBase = bases.length ? Math.min(...bases) : 83;
-  const nightlyMonthly = minBase * 30;
-  const lsCfg = v2?.longStayConfig || {};
-  const lsRates = lsCfg.monthlyRates || {
-    baja: 1490,
-    media: 1590,
-    alta: 1850
-  };
-  const supps = Object.values(lsCfg.aptSupplement || {});
-  const lsRate = Math.min(lsRates.baja, lsRates.media, lsRates.alta) + (supps.length ? Math.min(...supps) : 0);
-  const savings = Math.round((1 - lsRate / nightlyMonthly) * 100);
+  // Misma cifra "desde" que el modal de ventajas y la tarjeta de huecos: _lsMinMonthly (shared).
+  const nightlyMonthly = bases.length ? Math.min(...bases) * 30 : null;
+  const lsRate = _lsMinMonthly();
+  const savings = _lsSavingsPct();
   return /*#__PURE__*/React.createElement("section", {
     className: "lss-strip on-dark",
     "aria-label": es ? 'Estancias largas' : 'Long stays'
@@ -1375,7 +1367,7 @@ const LongStayStrip = ({
     className: "lss-pills"
   }, /*#__PURE__*/React.createElement("span", {
     className: "lss-pill"
-  }, es ? '29+ noches' : '29+ nights'), /*#__PURE__*/React.createElement("span", {
+  }, es ? '29+ noches' : '29+ nights'), lsRate != null && savings != null && nightlyMonthly != null && /*#__PURE__*/React.createElement("span", {
     className: "lss-pill lss-pill-compare"
   }, /*#__PURE__*/React.createElement("span", {
     className: "lss-pill-reg"

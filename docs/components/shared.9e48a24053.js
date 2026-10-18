@@ -4640,6 +4640,12 @@ const PET_RULES = window.PRICES_V2 && window.PRICES_V2.rules || {};
 const PET_PER_NIGHT = typeof PET_RULES.petPerNight === 'number' ? PET_RULES.petPerNight : null;
 const PET_MAX = typeof PET_RULES.petMax === 'number' ? PET_RULES.petMax : null;
 const PET_SUPP_FLAT = typeof PET_RULES.petFlatFee === 'number' ? PET_RULES.petFlatFee : 50;
+// Etiqueta del suplemento, montada desde prices.json: la misma regla que cobra _petCost.
+// Sin prices.json devuelve null: mejor no citar importe que citar uno inventado.
+const petSuppLabel = lang => {
+  if (PET_PER_NIGHT === null || PET_MAX === null) return null;
+  return lang === 'es' ? `${PET_PER_NIGHT} €/noche · máx. ${PET_MAX} €` : `${PET_PER_NIGHT} €/night · max ${PET_MAX} €`;
+};
 const _petCost = nights => {
   if (PET_PER_NIGHT !== null && PET_MAX !== null) {
     return Math.min(nights * PET_PER_NIGHT, PET_MAX);
@@ -5590,21 +5596,16 @@ const useSectionGlow = () => {
 // Noches de Navidad y Semana Santa: tarifa especial plana.
 const _calcLsTotal = (start, end, guests, withPets, aptId) => {
   if (!start || !end || start >= end) return null;
-  const lsCfg = window.PRICES_V2 && window.PRICES_V2.longStayConfig || {
-    specialNightFlat: 80,
-    easterRanges: []
-  };
-  const flat = lsCfg.specialNightFlat || 80;
+  // Sin configuración de prices.json no se cotiza: mejor sin precio que con tarifas viejas escritas a mano.
+  const lsCfg = window.PRICES_V2 && window.PRICES_V2.longStayConfig;
+  if (!lsCfg || !lsCfg.monthlyRates || lsCfg.specialNightFlat == null) return null;
+  const flat = lsCfg.specialNightFlat;
   const easter = lsCfg.easterRanges || [];
   const extraGuestPerMo = lsCfg.extraGuestPerMonth || 0;
   const petPerMo = lsCfg.petPerMonth || 0;
   const aptSupp = (lsCfg.aptSupplement || {})[aptId] || 0;
   const extraGuests = Math.max(0, (guests || 1) - 2);
-  const rates = lsCfg.monthlyRates || {
-    baja: 1490,
-    media: 1590,
-    alta: 1850
-  };
+  const rates = lsCfg.monthlyRates;
   const isXmas = ds => {
     const m = +ds.slice(5, 7),
       d = +ds.slice(8, 10);
@@ -5770,6 +5771,7 @@ Object.assign(window, {
   HESTIA_PRICES,
   STAY_DISCOUNTS,
   PET_SUPP_FLAT,
+  petSuppLabel,
   _dayPrice,
   _calcStay,
   _regularStayTotal,
@@ -5848,6 +5850,11 @@ const HESTIA_RULES = {
       hi: 'clock',
       t: 'Check-in 15:00 · Check-out 11:00',
       d: 'Necesitamos un margen considerable para dejar Hestía a punto para la siguiente llegada. Late check-out y early check-in sujetos a disponibilidad.'
+    }, {
+      icon: '🐾',
+      hi: 'paw',
+      t: 'Mascotas, solo con petición previa',
+      d: `Son bienvenidas en los tres Hestías si nos lo pedís antes y lo aprobamos, con un suplemento${petSuppLabel('es') ? ` (${petSuppLabel('es')})` : ''}. En zonas comunes, siempre atadas.`
     }, {
       icon: '🚭',
       hi: 'nosmoking',
@@ -5943,6 +5950,11 @@ const HESTIA_RULES = {
       hi: 'clock',
       t: 'Check-in 15:00 · Check-out 11:00',
       d: 'We need a considerable window to prepare Hestía for the next arrival. Late check-out and early check-in are subject to availability.'
+    }, {
+      icon: '🐾',
+      hi: 'paw',
+      t: 'Pets, on request only',
+      d: `Welcome at all three Hestías if you ask us first and we approve it, with a supplement${petSuppLabel('en') ? ` (${petSuppLabel('en')})` : ''}. Always on a leash in shared areas.`
     }, {
       icon: '🚭',
       hi: 'nosmoking',
@@ -6232,12 +6244,9 @@ const _PERK_HUES = {
 // Tarifa mensual de estancia larga mínima ("desde"), SIEMPRE desde prices.json:
 // base más barata + suplemento de apartamento más bajo. Nunca hardcodeada.
 const _lsMinMonthly = () => {
-  const c = window.PRICES_V2 && window.PRICES_V2.longStayConfig || {};
-  const r = c.monthlyRates || {
-    baja: 1490,
-    media: 1590,
-    alta: 1850
-  };
+  const c = window.PRICES_V2 && window.PRICES_V2.longStayConfig;
+  const r = c && c.monthlyRates;
+  if (!r) return null;
   const supps = Object.values(c.aptSupplement || {});
   return Math.min(r.baja, r.media, r.alta) + (supps.length ? Math.min(...supps) : 0);
 };
@@ -6247,13 +6256,17 @@ const _lsMinMonthly = () => {
 const _lsSavingsPct = () => {
   const v2 = window.PRICES_V2 || {};
   const bases = v2.apts ? Object.values(v2.apts).map(a => a.base).filter(Boolean) : [];
-  const minBase = bases.length ? Math.min(...bases) : 83;
-  const nightlyMonthly = minBase * 30;
-  return Math.round((1 - _lsMinMonthly() / nightlyMonthly) * 100);
+  const min = _lsMinMonthly();
+  if (min == null || !bases.length) return null;
+  return Math.round((1 - min / (Math.min(...bases) * 30)) * 100);
 };
 const getDirectPerks = lang => {
-  const fmt = _lsMinMonthly().toLocaleString(lang === 'es' ? 'es-ES' : 'en-US');
-  const pct = String(_lsSavingsPct());
+  const min = _lsMinMonthly(),
+    savings = _lsSavingsPct();
+  // Sin prices.json no se inventa la cifra: la ventaja de estancia larga no se muestra.
+  if (min == null || savings == null) return DIRECT_PERKS[lang].filter(p => p.id !== 'descuento');
+  const fmt = min.toLocaleString(lang === 'es' ? 'es-ES' : 'en-US');
+  const pct = String(savings);
   return DIRECT_PERKS[lang].map(p => p.id === 'descuento' ? {
     ...p,
     stat: p.stat.replace('{PCT}', pct),
@@ -6516,7 +6529,9 @@ Object.assign(window, {
   DirectBookingModal,
   AptDesktopSidebar,
   DIRECT_PERKS,
-  DIRECT_RIBBON
+  DIRECT_RIBBON,
+  _lsMinMonthly,
+  _lsSavingsPct
 });
 
 // ================================================================

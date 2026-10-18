@@ -66,12 +66,12 @@
       {
         "@type": "Question",
         "name": "¿Cómo se reserva una estancia larga?",
-        "acceptedAnswer": { "@type": "Answer", "text": "Escríbenos por WhatsApp o email con las fechas y el apartamento que te interesa. Te respondemos en menos de 2 horas para confirmar disponibilidad y enviarte el contrato." }
+        "acceptedAnswer": { "@type": "Answer", "text": "Escríbenos por WhatsApp o email con las fechas y el apartamento que te interesa. Te respondemos en menos de una hora (normalmente en minutos) para confirmar disponibilidad y enviarte el contrato." }
       },
       {
         "@type": "Question",
         "name": "¿Hay que pagar todo al reservar una estancia larga?",
-        "acceptedAnswer": { "@type": "Answer", "text": "Solo el 20% como señal para confirmar la reserva. El resto se abona a la llegada, a convenir." }
+        "acceptedAnswer": { "@type": "Answer", "text": "Una señal de ~20% al firmar el contrato; el resto, a la llegada." }
       },
       {
         "@type": "Question",
@@ -95,7 +95,7 @@
   <link rel="preconnect" href="https://unpkg.com" crossorigin/>
   <link rel="dns-prefetch" href="//unpkg.com"/>
   <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400..700;1,9..144,400..700&family=Hanken+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet"/>
-  <link rel="stylesheet" href="assets/styles.css?v=1175"/>
+  <link rel="stylesheet" href="assets/styles.css?v=1187"/>
   <!-- GA4: cuando tengas el Measurement ID, descomenta y reemplaza G-XXXXXXXXXX
        Google Analytics → Admin → Propiedad → Flujos de datos → tu dominio → Measurement ID
   <script async src="https://www.googletagmanager.com/gtag/js?id=G-XXXXXXXXXX"></script>
@@ -157,7 +157,7 @@
     } catch (e) { console.warn('prices.json fetch failed', e); }
 
     for (const file of COMPONENT_FILES) {
-      const res = await fetch(file + '?cv=7107b4ee90');
+      const res = await fetch(file + '?cv=9e48a24053');
       if (!res.ok) throw new Error(`Failed to load ${file}: ${res.status}`);
       eval(await res.text());
     }

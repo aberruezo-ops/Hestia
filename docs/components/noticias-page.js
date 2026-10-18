@@ -256,7 +256,8 @@ const CAT_ICON = {
   '⛵': 'boat',
   '🔥': 'sun',
   '🌿': 'olive',
-  '🎶': 'mic'
+  '🎶': 'mic',
+  '🌸': 'flower'
 };
 const catIcon = e => CAT_ICON[e] ? /*#__PURE__*/React.createElement(HiIcon, {
   name: CAT_ICON[e],
@@ -281,7 +282,7 @@ const NoticiasArchivo = ({
   if (!data || !data.length) return null;
   const toggle = key => setOpen(k => k === key ? null : key);
   return /*#__PURE__*/React.createElement("section", {
-    className: "noticias-archivo"
+    className: "noticias-archivo on-dark"
   }, /*#__PURE__*/React.createElement("div", {
     className: "container"
   }, /*#__PURE__*/React.createElement("div", {
@@ -392,6 +393,8 @@ const ShareSection = ({
 
 // ── Componentes ───────────────────────────────────────────────────
 
+// El accent de cada edición es var(--vm|--vt|--vs): de ahí sale el marcador de color.
+const _vozAptCode = accent => ((accent || '').match(/--(vm|vt|vs)\b/) || [])[1];
 const VozCard = ({
   item,
   lang
@@ -412,7 +415,10 @@ const VozCard = ({
 }, item.num), /*#__PURE__*/React.createElement("a", {
   href: item.slug,
   className: "voz-apt-name"
-}, item.apt)), /*#__PURE__*/React.createElement("div", {
+}, /*#__PURE__*/React.createElement("span", {
+  className: "apt-dot",
+  "data-apt": _vozAptCode(item.accent)
+}), item.apt)), /*#__PURE__*/React.createElement("div", {
   className: "voz-block"
 }, /*#__PURE__*/React.createElement("div", {
   className: "voz-block-label"
@@ -751,7 +757,7 @@ const NoticiasPage = ({
     href: "reservas.html",
     className: "btn btn-ghost-light"
   }, lang === 'es' ? 'Reservar Hestía →' : 'Book a Hestía →')))), /*#__PURE__*/React.createElement("section", {
-    className: "noticias-voz"
+    className: "noticias-voz on-dark"
   }, /*#__PURE__*/React.createElement("div", {
     className: "container"
   }, /*#__PURE__*/React.createElement("div", {

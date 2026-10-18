@@ -371,7 +371,7 @@ const RatingsMarquee = ({
   const booking = platformScore('booking');
   const airbnb = platformScore('airbnb');
   const google = platformScore('google');
-  const items = lang === 'es' ? [`★ ${booking.int}.${booking.dec}/10 · Booking.com`, `★ ${airbnb.int}.${airbnb.dec}/10 · Airbnb Superhost`, `★ ${google.int}.${google.dec}/10 · Google Maps`, '630+ familias desde 2016', 'Sin comisiones · reserva directa', '10 años en Vera Playa', 'Mejor precio garantizado', 'Te responde Alex o Fran, normalmente en minutos'] : [`★ ${booking.int}.${booking.dec}/10 · Booking.com`, `★ ${airbnb.int}.${airbnb.dec}/10 · Airbnb Superhost`, `★ ${google.int}.${google.dec}/10 · Google Maps`, '630+ families since 2016', 'No commissions · direct booking', '10 years in Vera Playa', 'Best price guaranteed', 'Alex or Fran reply, usually in minutes'];
+  const items = lang === 'es' ? [`★ ${booking.int}.${booking.dec}/10 · Booking.com`, `★ ${airbnb.int}.${airbnb.dec}/10 · Airbnb Superhost`, `★ ${google.int}.${google.dec}/10 · Google Maps`, '630+ familias desde 2016', 'Sin comisiones · reserva directa', '10 años en Vera Playa', 'No solo igualamos, mejoramos', 'Te responde Alex o Fran, normalmente en minutos'] : [`★ ${booking.int}.${booking.dec}/10 · Booking.com`, `★ ${airbnb.int}.${airbnb.dec}/10 · Airbnb Superhost`, `★ ${google.int}.${google.dec}/10 · Google Maps`, '630+ families since 2016', 'No commissions · direct booking', '10 years in Vera Playa', 'We don\'t just match, we beat it', 'Alex or Fran reply, usually in minutes'];
   // Duplicamos el array para que el loop sea continuo (translateX -50%).
   const doubled = [...items, ...items];
   // La animación CSS (28s linear infinite) seguía calculando el transform

@@ -103,7 +103,7 @@ const ContactoHero = ({ lang }) => {
   }, [prefersReducedMotion]);
 
   return (
-    <section className="page-hero contacto-hero">
+    <section className="page-hero contacto-hero on-dark">
       <video ref={videoRef} className="contacto-hero-video" autoPlay={!prefersReducedMotion} muted loop={!prefersReducedMotion} playsInline preload="auto">
         <source src="assets/contacto-hero.mp4" type="video/mp4"/>
       </video>
@@ -170,7 +170,7 @@ const ContactoPersons = ({ lang }) => {
             waLink="https://wa.me/34654138251"
             quote={t.fran_quote}
             initial="F"
-            accent="var(--vt)"
+            accent="var(--ber-lt)"
             imgSrc="assets/photo-fran.jpg"
           />
         </div>

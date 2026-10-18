@@ -25,12 +25,12 @@ const MAPA_COPY = {
       }, {
         href: 'thalassa.html',
         label: 'Hestía Thalassa',
-        desc: 'Siena · ático con SPA comunitario y vistas panorámicas.',
+        desc: 'Cobre · ático con SPA comunitario y vistas panorámicas.',
         apt: 'vt'
       }, {
         href: 'salinas.html',
         label: 'Hestía Salinas',
-        desc: 'Albero · tres piscinas y Parque Natural a un paseo corto.',
+        desc: 'Dorado · tres piscinas y Parque Natural a un paseo corto.',
         apt: 'vs'
       }]
     }, {
@@ -110,12 +110,12 @@ const MAPA_COPY = {
       }, {
         href: 'thalassa.html',
         label: 'Hestía Thalassa',
-        desc: 'Sienna · penthouse with shared SPA and panoramic views.',
+        desc: 'Copper · penthouse with shared SPA and panoramic views.',
         apt: 'vt'
       }, {
         href: 'salinas.html',
         label: 'Hestía Salinas',
-        desc: 'Ochre · three pools and the Nature Park a short walk away.',
+        desc: 'Gold · three pools and the Nature Park a short walk away.',
         apt: 'vs'
       }]
     }, {

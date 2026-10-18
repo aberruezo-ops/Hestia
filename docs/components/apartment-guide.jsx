@@ -1615,6 +1615,8 @@ const PLACES = [
 ];
 
 // Contenido COMPARTIDO entre las 3 guías (carta de bienvenida, marca, etc.)
+const _petLsMonth = (((window.PRICES_V2 || {}).longStayConfig) || {}).petPerMonth;
+
 const GUIDE_SHARED = {
   es: {
     pretrip: {
@@ -1628,7 +1630,7 @@ const GUIDE_SHARED = {
         { icon: '☀', t: 'Calor húmedo de costa, paisaje de desierto',
           d: 'En la costa, junto al mar, el clima es húmedo: mucho sol, calor húmedo en verano, inviernos suaves. La provincia sí es de las más secas de Europa, y el paisaje del interior lo demuestra: ramblas, cárcavas y tonos ocres muy distintos al verde que se suele asociar a unas vacaciones de costa, la misma estampa que hizo célebres los spaghetti western rodados en el cercano desierto de Tabernas, el único desierto de Europa continental. Es un paisaje precioso y pintoresco, pero poco convencional: mejor saberlo antes de venir que llevarte una sorpresa al llegar. Más detalle, mes a mes, en el capítulo Alrededores.' },
         { icon: '🍹', t: 'Hay ambiente, sobre todo en verano',
-          d: 'Vera Playa tiene ocio y ambiente, especialmente en temporada estival. Si buscas más marcha, Garrucha, Mójacar y Vera pueblo están a un paseo, y Almería o Murcia a poco más. Lo que de verdad destaca la zona es la buena gastronomía y las playas de los alrededores: más detalle en los capítulos Sabores y Mar y playas.' },
+          d: 'Vera Playa tiene ocio y ambiente, especialmente en temporada estival. Si buscas más marcha, Garrucha, Mojácar y Vera pueblo están a un paseo, y Almería o Murcia a poco más. Lo que de verdad destaca la zona es la buena gastronomía y las playas de los alrededores: más detalle en los capítulos Sabores y Mar y playas.' },
         { icon: '📍', t: 'Dónde está exactamente',
           d: 'Los tres Hestía están en Vera Playa (Almería), a menos de 2 km entre sí. El aeropuerto más cercano es Almería, a una hora en coche; hay otros cuatro en un radio razonable. Todos los detalles en el capítulo Comienza tu viaje hasta Hestía.' },
       ],
@@ -1737,8 +1739,8 @@ const GUIDE_SHARED = {
       items: [
         { icon: '📝', t: 'Avisad antes de llegar, o al reservar',
           d: 'Las mascotas solo están permitidas si nos lo pedís explícitamente y lo aprobamos. Escribidnos por WhatsApp con el tipo de mascota, tamaño y cuántas venís.' },
-        { icon: '💶', t: 'Suplemento: 10 €/noche, máximo 50 €',
-          d: 'A partir de la quinta noche no sube más. En estancias largas, tarifa plana de 50 € al mes.' },
+        { icon: '💶', t: window.petSuppLabel('es') ? `Suplemento: ${window.petSuppLabel('es')}` : 'Suplemento por mascota',
+          d: `Al llegar al tope no sube más.${_petLsMonth != null ? ` En estancias largas, tarifa plana de ${_petLsMonth} € al mes.` : ''}` },
         { icon: '🧹', t: 'No sueltos en zonas comunes',
           d: 'En jardines, pasillos, ascensor y demás zonas comunes, la mascota no puede ir suelta. Limpiad lo que ensucie y, ante cualquier deterioro, la responsabilidad es del huésped (ver Normas de Hestía).' },
         { icon: '🐕', t: 'Playas para perros cerca',
@@ -1886,7 +1888,7 @@ const GUIDE_SHARED = {
         { icon: '☀', t: 'Humid coastal heat, desert landscape',
           d: 'Right on the coast, by the sea, the climate is humid: plenty of sun, humid heat in summer, mild winters. The province itself is among the driest in Europe, and the inland landscape shows it: ravines, badlands and ochre tones far from the green most people picture for a coastal holiday, the same backdrop that made the spaghetti westerns filmed in the nearby Tabernas desert famous, continental Europe\'s only desert. It is a beautiful, picturesque landscape, but an unconventional one: better to know that before you arrive than be surprised once you do. More detail, month by month, in the Surroundings chapter.' },
         { icon: '🍹', t: 'There is a scene, especially in summer',
-          d: 'Vera Playa does have leisure and nightlife, especially in high season. If you want more of a scene, Garrucha, Mójacar and Vera village are a short drive away, and Almería or Murcia a little further. What the area really stands out for is great food and the beaches nearby: more detail in the Tastes and Sea & beaches chapters.' },
+          d: 'Vera Playa does have leisure and nightlife, especially in high season. If you want more of a scene, Garrucha, Mojácar and Vera village are a short drive away, and Almería or Murcia a little further. What the area really stands out for is great food and the beaches nearby: more detail in the Tastes and Sea & beaches chapters.' },
         { icon: '📍', t: 'Exactly where it is',
           d: 'All three Hestías are in Vera Playa (Almería), less than 2 km apart. The nearest airport is Almería, about an hour by car; four more are within a reasonable range. Full details in the Your journey to Hestía begins chapter.' },
       ],
@@ -1995,8 +1997,8 @@ const GUIDE_SHARED = {
       items: [
         { icon: '📝', t: 'Tell us before you arrive, or when booking',
           d: 'Pets are only allowed if you ask us explicitly and we approve it. Message us on WhatsApp with the type of pet, size and how many are coming.' },
-        { icon: '💶', t: 'Supplement: €10/night, €50 maximum',
-          d: 'From the fifth night on it does not go up further. For long stays, a flat €50/month.' },
+        { icon: '💶', t: window.petSuppLabel('en') ? `Supplement: ${window.petSuppLabel('en')}` : 'Pet supplement',
+          d: `Once it reaches the cap it does not go up further.${_petLsMonth != null ? ` For long stays, a flat €${_petLsMonth}/month.` : ''}` },
         { icon: '🧹', t: 'Keep them leashed in shared areas',
           d: 'In gardens, corridors, the lift and other shared areas, pets must not be left off the leash. Clean up after them, and for any damage, responsibility lies with the guest (see Hestía house rules).' },
         { icon: '🐕', t: 'Dog-friendly beaches nearby',
@@ -2180,6 +2182,7 @@ const GUIDE_BY_APT = {
         ]},
       ],
       wifi: { ssidValue: 'Acaciopohone_1DAC', passValue: 'pEF7jRCE' },
+      checkin: { garageIntro: 'Tu plaza de garaje en Hestía Mar es:' },
     },
     en: {
       cover_tagline: 'Where the olive grove meets the sea. Rest, with its roots in place.',
@@ -2221,6 +2224,7 @@ const GUIDE_BY_APT = {
         ]},
       ],
       wifi: { ssidValue: 'Acaciopohone_1DAC', passValue: 'pEF7jRCE' },
+      checkin: { garageIntro: 'Your garage spot at Hestía Mar is:' },
     },
   },
 
@@ -3421,7 +3425,7 @@ const PlacesOfInterestAtlas = ({ lang }) => {
         return (
           <div key={sc.id} className="ag-poi-cat">
             <h3 className="ag-poi-cat-title">
-              <span className="ag-poi-cat-icon" aria-hidden="true" style={{ color: 'var(--sol-text, #176E80)' }}><HiIcon name={sc.hi} size={18} /></span>
+              <span className="ag-poi-cat-icon" aria-hidden="true"><HiIcon name={sc.hi} size={18} /></span>
               <span>{lang === 'es' ? sc.es : sc.en}</span>
               <span className="ag-poi-cat-count">{items.length}</span>
             </h3>
@@ -3470,7 +3474,7 @@ const CatGroup = ({ cat, places, lang }) => {
     return (
       <li key={p.id} className={`ag-place${p.featured ? ' is-featured' : ''}`}>
         <div className="ag-place-main">
-          {p.featured && <span className="ag-place-star" title={lang === 'es' ? 'Imperdible' : 'Must-see'} aria-hidden="true">✦</span>}
+          {p.featured && <span className="ag-place-star" title={lang === 'es' ? 'Imperdible' : 'Must-see'} aria-hidden="true"><HiIcon name="spark" size="1em" /></span>}
           <span className="ag-place-name">{p.name}</span>
           {p.tier && <span className="ag-place-tier">{p.tier}</span>}
           {typeof p.rating === 'number' && (
@@ -3570,7 +3574,7 @@ const CatGroup = ({ cat, places, lang }) => {
           {featured.length > 0 && (
             <>
               <div className="ag-cat-sub-h">
-                <span className="ag-cat-sub-star" aria-hidden="true">✦</span>
+                <span className="ag-cat-sub-star" aria-hidden="true"><HiIcon name="spark" size="1em" /></span>
                 {lang === 'es' ? 'Imperdibles' : 'Must-see'}
               </div>
               <ul className="ag-places ag-places-featured">
@@ -3617,7 +3621,7 @@ const GuestDiscounts = ({ lang }) => {
         return (
           <li key={p.id} className="ag-place is-featured">
             <div className="ag-place-main">
-              <span className="ag-place-star" aria-hidden="true">✦</span>
+              <span className="ag-place-star" aria-hidden="true"><HiIcon name="spark" size="1em" /></span>
               <span className="ag-place-name">{p.name}</span>
               {typeof p.rating === 'number' && (
                 <span className="ag-place-rating" title={lang === 'es' ? 'Valoración Google' : 'Google rating'}>
@@ -5255,11 +5259,11 @@ const DayPlanCard = ({ plan, lang }) => {
                 {(s.km != null || s.gmaps || s.rating) && (
                   <div className="dp-step-extra">
                     {s.km != null && s.km > 0 && (
-                      <span className="dp-step-km">📍 {s.km < 1 ? `${Math.round(s.km*1000)} m` : `${s.km} km`}</span>
+                      <span className="dp-step-km"><HiIcon name="pin" size="1em" /> {s.km < 1 ? `${Math.round(s.km*1000)} m` : `${s.km} km`}</span>
                     )}
                     {s.rating && (
                       <span className="dp-step-rating" title={`Fuente: ${s.rating.src}`}>
-                        ★ {s.rating.v} <small>· {s.rating.src}</small>
+                        <HiIcon name="star-fill" size="1em" /> {s.rating.v} <small>· {s.rating.src}</small>
                       </span>
                     )}
                     {s.gmaps && (
@@ -5948,7 +5952,7 @@ const AptGuideView = ({ apt, lang, onClose }) => {
               <h4 className="ag-arrmode-h"><span className="ag-arrmode-icon" aria-hidden="true"><HiIcon name="car" size={20} /></span>{lang === 'es' ? 'En coche' : 'By car'}</h4>
               {s.checkin.carText && <p className="ag-para">{s.checkin.carText}</p>}
               {s.checkin.carAccompany && (
-                <p className="ag-para ag-car-accompany"><span className="ag-car-icon" aria-hidden="true">✦</span>{s.checkin.carAccompany}</p>
+                <p className="ag-para ag-car-accompany"><span className="ag-car-icon" aria-hidden="true"><HiIcon name="spark" size="1em" /></span>{s.checkin.carAccompany}</p>
               )}
             </div>
 

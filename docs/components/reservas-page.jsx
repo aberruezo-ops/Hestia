@@ -4,7 +4,7 @@
 
 const RESERVAS_COPY = {
   es: {
-    eyebrow: 'Mejor precio garantizado: te lo igualamos y lo mejoramos · Sin comisiones',
+    eyebrow: 'No solo igualamos, mejoramos · Sin comisiones',
     title: (<>Reserva tu<br/><em>hogar en Vera.</em></>),
     sub: 'Escríbenos directamente. Alex o Fran te responden normalmente en minutos.',
     form_title: 'Solicitar reserva',
@@ -59,7 +59,7 @@ const RESERVAS_COPY = {
     aside_title: 'Tu solicitud llega a:',
     guarantee_title: 'Reserva directa',
     guarantee_items: [
-      'Mejor precio garantizado: te lo igualamos y lo mejoramos',
+      'Si lo ves más barato, no solo te lo igualamos: te lo mejoramos',
       'Reservando directo te ahorras hasta un 10 % aprox.',
       'Alex o Fran responden personalmente',
       'Te respondemos normalmente en minutos',
@@ -67,7 +67,7 @@ const RESERVAS_COPY = {
     ],
   },
   en: {
-    eyebrow: 'Best price guaranteed: we match it and beat it · No commissions',
+    eyebrow: 'We don\'t just match, we beat it · No commissions',
     title: (<>Book your<br/><em>home in Vera.</em></>),
     sub: 'Write to us directly. Alex or Fran usually reply in minutes.',
     form_title: 'Request a booking',
@@ -122,7 +122,7 @@ const RESERVAS_COPY = {
     aside_title: 'Your request goes to:',
     guarantee_title: 'Direct booking',
     guarantee_items: [
-      'Best price guaranteed: we match it and beat it',
+      'Find it cheaper and we don\'t just match it: we beat it',
       'Book direct and save up to ~10%',
       'Alex or Fran reply personally',
       'We usually reply in minutes',
@@ -173,7 +173,7 @@ const LsPriceSummary = ({ ls, extras = [], guests, pets, lang }) => {
         </div>
         <div className="price-right-col">
           <div className="price-guarantee-badge">
-            <HiIcon name="check" size="1em" /> {es ? 'Mejor precio garantizado' : 'Best price guaranteed'}
+            <HiIcon name="check" size="1em" /> {es ? 'No solo igualamos, mejoramos' : 'We don\'t just match, we beat it'}
           </div>
           <div className="price-guarantee-sub">
             {es ? 'Sin comisiones de plataformas.' : 'No platform commissions.'}
@@ -224,7 +224,7 @@ const LsInfoBlock = ({ calc, lang }) => {
   return (
     <div className="rf-ls-info">
       <div className="rf-ls-info-head">
-        <span className="rf-ls-info-badge">{es ? 'Estancia larga · +28 noches' : 'Long stay · 28+ nights'}</span>
+        <span className="rf-ls-info-badge">{es ? 'Estancia larga · 29+ noches' : 'Long stay · 29+ nights'}</span>
         <span className="rf-ls-info-title">{es ? 'Se aplica tarifa mensual especial' : 'Special monthly rate applies'}</span>
       </div>
       <ul className="rf-ls-conditions">
@@ -269,7 +269,7 @@ const PricePreview = ({ apt, checkin, checkout, pets, guests, lang, extras = [],
         </div>
         <div className="price-right-col">
           <div className="price-guarantee-badge">
-            <HiIcon name="check" size="1em" /> {lang === 'es' ? 'Mejor precio garantizado' : 'Best price guaranteed'}
+            <HiIcon name="check" size="1em" /> {lang === 'es' ? 'No solo igualamos, mejoramos' : 'We don\'t just match, we beat it'}
           </div>
           <div className="price-guarantee-sub">
             {lang === 'es'
@@ -304,7 +304,7 @@ const PricePreview = ({ apt, checkin, checkout, pets, guests, lang, extras = [],
         )}
         {calc.petAmt > 0 && (
           <div className="price-line">
-            <span>{lang === 'es' ? `Suplemento mascota (10 €/noche · máx. 50 €)` : `Pet supplement (10 €/night · max 50 €)`}</span>
+            <span>{lang === 'es' ? 'Suplemento mascota' : 'Pet supplement'}{petSuppLabel(lang) ? ` (${petSuppLabel(lang)})` : ''}</span>
             <span>+{fmt(calc.petAmt)}</span>
           </div>
         )}
@@ -426,7 +426,7 @@ const ReservasHero = ({ lang }) => {
   }, [prefersReducedMotion]);
 
   return (
-    <section className="page-hero reservas-hero">
+    <section className="page-hero reservas-hero on-dark">
       <video
         ref={videoRef}
         className="reservas-hero-video"
@@ -894,17 +894,17 @@ const ReservasForm = ({ lang }) => {
                 (calc.isGapOffer ? `   🏷 Oferta: ${fmt(calc.gapPerNight)}/noche (precio cerrado)\n` : '') +
                 (calc.stayD ? `   🏷 ${calc.stayD.es}: −${fmt(calc.stayDiscAmt)}\n` : '') +
                 (calc.guestSuppAmt > 0 ? `   👥 ${calc.guests} huéspedes: +${fmt(calc.guestSuppAmt)}\n` : '') +
-                (calc.petAmt > 0 ? `   🐾 Mascota: Sí (+${calc.petAmt}€ · 10€/noche, máx 50€)\n` : '') +
+                (calc.petAmt > 0 ? `   🐾 Mascota: Sí (+${calc.petAmt}€${petSuppLabel('es') ? ' · ' + petSuppLabel('es') : ''})\n` : '') +
                 (extrasTotal > 0 ? `   ✚ Extras: +${fmt(extrasTotal)}\n` : '') +
-                `   ✓ Mejor precio garantizado: te lo igualamos y lo mejoramos\n`
+                `   ✓ Si lo ves más barato, no solo te lo igualamos: te lo mejoramos\n`
               : `\n💰 ${calc.isGapOffer ? 'DIRECT OFFER PRICE' : 'ESTIMATED DIRECT PRICE'}\n` +
                 `   ${fmt(grandTotal)} total (${calc.nights} nights × ~${fmt(grandAvg)}/night)\n` +
                 (calc.isGapOffer ? `   🏷 Offer: ${fmt(calc.gapPerNight)}/night (locked price)\n` : '') +
                 (calc.stayD ? `   🏷 ${calc.stayD.en}: −${fmt(calc.stayDiscAmt)}\n` : '') +
                 (calc.guestSuppAmt > 0 ? `   👥 ${calc.guests} guests: +${fmt(calc.guestSuppAmt)}\n` : '') +
-                (calc.petAmt > 0 ? `   🐾 Pet: Yes (+${calc.petAmt}€ · 10€/night, max 50€)\n` : '') +
+                (calc.petAmt > 0 ? `   🐾 Pet: Yes (+${calc.petAmt}€${petSuppLabel('en') ? ' · ' + petSuppLabel('en') : ''})\n` : '') +
                 (extrasTotal > 0 ? `   ✚ Extras: +${fmt(extrasTotal)}\n` : '') +
-                `   ✓ Best price guaranteed: we match it and beat it\n`)
+                `   ✓ Find it cheaper and we don't just match it: we beat it\n`)
           : '');
     const lines = lang === 'es'
       ? [
@@ -1230,8 +1230,8 @@ const ReservasForm = ({ lang }) => {
         </header>
         {step >= 2 && (
           <div className="rf-step-body">
-            {/* Long-stay info block, shown when nights > 28 and month is Sep–Jun */}
-            {isLsStay && (
+            {/* Solo si hay precio de estancia larga: una estancia que llega a julio no lo tiene */}
+            {isLsStay && lsCalc && (
               <LsInfoBlock calc={calc} lang={lang} />
             )}
             <ReviewQuote apt={apt} lang={lang} />
@@ -1350,14 +1350,14 @@ const ReservasForm = ({ lang }) => {
             )}
             {apt && isAvailable === false && (
               <div className="rf-status rf-status-taken">
-                <span className="rf-status-icon" aria-hidden="true">×</span>
+                <span className="rf-status-icon" aria-hidden="true"><HiIcon name="ban" size="1em" /></span>
                 <span className="rf-status-main">{t.status_taken}</span>
                 <span className="rf-status-sub">{t.status_taken_sub}</span>
               </div>
             )}
             {apt && isAvailable === null && availLoaded && (
               <div className="rf-status rf-status-unknown">
-                <span className="rf-status-icon" aria-hidden="true">·</span>
+                <span className="rf-status-icon" aria-hidden="true"><HiIcon name="clock" size="1em" /></span>
                 <span className="rf-status-main">{t.status_no_data}</span>
                 <span className="rf-status-sub">{t.status_no_data_sub}</span>
               </div>
@@ -1675,13 +1675,13 @@ const ReservasAside = ({ lang }) => {
           <a href="tel:+34620316370" className="btn btn-ghost-dark">+34 620 316 370</a>
         </div>
       </div>
-      <div className="reservas-person-card" style={{ '--card-accent': 'var(--vt)' }}>
-        <div className="r-avatar" style={{ background: 'var(--vt)' }}>
+      <div className="reservas-person-card" style={{ '--card-accent': 'var(--ber-lt)' }}>
+        <div className="r-avatar">
           <img decoding="async" src="assets/photo-fran.jpg" alt="Fran Moral" width="711" height="1600" loading="lazy" onError={e => { e.currentTarget.style.display='none'; }}/>
         </div>
         <div>
           <div className="r-name">Fran Moral</div>
-          <div className="r-lang" style={{ color: 'var(--vt-dk)' }}>🇬🇧 English</div>
+          <div className="r-lang">🇬🇧 English</div>
           <div className="r-role">{lang === 'es' ? 'Estancia · Mientras estás aquí' : 'Stay · While you are here'}</div>
         </div>
         <div className="r-actions">

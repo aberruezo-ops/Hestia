@@ -152,8 +152,8 @@ const HsDateRange = ({ checkin, checkout, setCheckin, setCheckout, avail, apt, l
     if (nights === 1) {
       setDrMsg({
         type: 'error',
-        es: 'No se permiten reservas de 1 noche. La estancia mínima es 2 noches.',
-        en: 'One-night bookings are not allowed. Minimum stay is 2 nights.',
+        es: `No se permiten reservas de 1 noche. Para estas fechas la estancia mínima es de ${effMin} noches.`,
+        en: `One-night bookings are not allowed. For these dates the minimum stay is ${effMin} nights.`,
       });
       return;
     }
@@ -430,7 +430,7 @@ const HsResultCard = ({ apt, available, lang, checkin, checkout, guests }) => {
                   </div>
                   <div className="hs-pb-right">
                     <div className="price-guarantee-badge">
-                      <HiIcon name="check" size="1em" /> {lang === 'es' ? 'Mejor precio garantizado' : 'Best price guaranteed'}
+                      <HiIcon name="check" size="1em" /> {lang === 'es' ? 'No solo igualamos, mejoramos' : 'We don\'t just match, we beat it'}
                     </div>
                     <div className="price-guarantee-sub">
                       {lang === 'es'
@@ -452,7 +452,7 @@ const HsResultCard = ({ apt, available, lang, checkin, checkout, guests }) => {
                   )}
                   {calc.petAmt > 0 && (
                     <div className="hs-pb-line">
-                      <span>{lang === 'es' ? `Suplemento mascota (${PET_SUPP_FLAT}€ tarifa plana)` : `Pet supplement (${PET_SUPP_FLAT}€ flat fee)`}</span>
+                      <span>{lang === 'es' ? 'Suplemento mascota' : 'Pet supplement'}{petSuppLabel(lang) ? ` (${petSuppLabel(lang)})` : ''}</span>
                       <span>+{fmt(calc.petAmt)}</span>
                     </div>
                   )}
@@ -603,8 +603,8 @@ const HomeSearch = ({ lang, b2b = false }) => {
                  : baseMinN;
     if (nights === 1) {
       setFormErr(lang === 'es'
-        ? 'No se permiten reservas de 1 noche. La estancia mínima es 2 noches.'
-        : 'One-night bookings are not allowed. Minimum stay is 2 nights.');
+        ? `No se permiten reservas de 1 noche. Para estas fechas la estancia mínima es de ${effMin} noches.`
+        : `One-night bookings are not allowed. For these dates the minimum stay is ${effMin} nights.`);
       return;
     }
     if (nights < effMin) {
