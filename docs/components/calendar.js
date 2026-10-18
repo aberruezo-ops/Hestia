@@ -165,7 +165,7 @@ const RequestPanel = ({
   }, /*#__PURE__*/React.createElement(HiIcon, {
     name: "check",
     size: "1em"
-  }), " ", lang === 'es' ? 'Mejor precio garantizado' : 'Best price guaranteed'), /*#__PURE__*/React.createElement("div", {
+  }), " ", lang === 'es' ? 'No solo igualamos, mejoramos' : 'We don\'t just match, we beat it'), /*#__PURE__*/React.createElement("div", {
     className: "price-guarantee-sub"
   }, lang === 'es' ? '¿Lo encuentras más barato en Booking o Airbnb? Tráenoslo: no solo te lo igualamos, te lo mejoramos.' : 'Found it cheaper on Booking or Airbnb? Bring it to us, we don\'t just match it, we beat it.'))), /*#__PURE__*/React.createElement("div", {
     className: "price-breakdown"
@@ -177,7 +177,7 @@ const RequestPanel = ({
     className: "price-line"
   }, /*#__PURE__*/React.createElement("span", null, lang === 'es' ? `${calc.guests} huéspedes · +${calc.guestSuppPerNight} €/noche` : `${calc.guests} guests · +${calc.guestSuppPerNight} €/night`), /*#__PURE__*/React.createElement("span", null, "+", fmt(calc.guestSuppAmt))), calc.petAmt > 0 && /*#__PURE__*/React.createElement("div", {
     className: "price-line"
-  }, /*#__PURE__*/React.createElement("span", null, lang === 'es' ? 'Suplemento mascota (10 €/noche · máx. 50 €)' : 'Pet supplement (10 €/night · max 50 €)'), /*#__PURE__*/React.createElement("span", null, "+", fmt(calc.petAmt))), /*#__PURE__*/React.createElement("div", {
+  }, /*#__PURE__*/React.createElement("span", null, lang === 'es' ? 'Suplemento mascota' : 'Pet supplement', petSuppLabel(lang) ? ` (${petSuppLabel(lang)})` : ''), /*#__PURE__*/React.createElement("span", null, "+", fmt(calc.petAmt))), /*#__PURE__*/React.createElement("div", {
     className: "price-line price-line-total"
   }, /*#__PURE__*/React.createElement("span", null, lang === 'es' ? 'Total estimado' : 'Estimated total'), /*#__PURE__*/React.createElement("span", null, fmt(calc.directTotal))))), /*#__PURE__*/React.createElement("div", {
     className: "req-guests"
@@ -520,8 +520,8 @@ const AptCalendar = ({
     if (nights === 1) {
       setSelMsg({
         type: 'error',
-        es: 'No se permiten reservas de 1 noche. La estancia mínima es 2 noches.',
-        en: 'One-night bookings are not allowed. Minimum stay is 2 nights.'
+        es: `No se permiten reservas de 1 noche. Para estas fechas la estancia mínima es de ${effMin} noches.`,
+        en: `One-night bookings are not allowed. For these dates the minimum stay is ${effMin} nights.`
       });
       return;
     }

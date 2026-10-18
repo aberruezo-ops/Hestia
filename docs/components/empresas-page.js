@@ -676,7 +676,7 @@ const EmpresasPageApp = () => {
   }, /*#__PURE__*/React.createElement("span", {
     "aria-hidden": "true"
   }, "↓"), " ", t.dlDossier))), /*#__PURE__*/React.createElement("div", {
-    className: "emp-trust",
+    className: "emp-trust on-dark",
     "aria-label": lang === 'es' ? 'Lo que nos diferencia' : 'What sets us apart'
   }, /*#__PURE__*/React.createElement("ul", {
     className: "emp-trust-track"

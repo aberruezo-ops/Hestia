@@ -258,7 +258,7 @@ const OpinionesQuotesMarquee = ({
   if (quotes.length === 0) return null;
   const doubled = [...quotes, ...quotes];
   return /*#__PURE__*/React.createElement("section", {
-    className: "opiniones-quotes-marquee",
+    className: "opiniones-quotes-marquee on-dark",
     "aria-label": lang === 'es' ? 'Frases destacadas' : 'Featured quotes'
   }, /*#__PURE__*/React.createElement("div", {
     className: "oqm-track",
@@ -749,7 +749,7 @@ const OpinionesPageApp = () => {
   }), /*#__PURE__*/React.createElement(OpinionesTestimonials, {
     lang: lang
   }), /*#__PURE__*/React.createElement("section", {
-    className: "opiniones-share-cta"
+    className: "opiniones-share-cta on-dark"
   }, /*#__PURE__*/React.createElement("div", {
     className: "container"
   }, /*#__PURE__*/React.createElement("div", {

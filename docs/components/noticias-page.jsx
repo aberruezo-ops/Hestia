@@ -245,7 +245,7 @@ const MONTH_NAMES = {
 };
 
 // Mapea el emoji de categoría a un icono propio Hestía (si existe).
-const CAT_ICON = { '🌊': 'wave', '🎉': 'spark', '🎤': 'mic', '✨': 'sun', '⛵': 'boat', '🔥': 'sun', '🌿': 'olive', '🎶': 'mic' };
+const CAT_ICON = { '🌊': 'wave', '🎉': 'spark', '🎤': 'mic', '✨': 'sun', '⛵': 'boat', '🔥': 'sun', '🌿': 'olive', '🎶': 'mic', '🌸': 'flower' };
 const catIcon = (e) => CAT_ICON[e] ? <HiIcon name={CAT_ICON[e]} size={22} /> : e;
 
 // ── Histórico de ediciones ────────────────────────────────────────
@@ -266,7 +266,7 @@ const NoticiasArchivo = ({ lang }) => {
   const toggle = (key) => setOpen(k => k === key ? null : key);
 
   return (
-    <section className="noticias-archivo">
+    <section className="noticias-archivo on-dark">
       <div className="container">
         <div className="eyebrow noticias-archivo-eyebrow">
           {lang === 'es' ? 'Ediciones anteriores' : 'Previous editions'}
@@ -367,12 +367,15 @@ const ShareSection = ({ lang }) => {
 
 // ── Componentes ───────────────────────────────────────────────────
 
+// El accent de cada edición es var(--vm|--vt|--vs): de ahí sale el marcador de color.
+const _vozAptCode = (accent) => ((accent || '').match(/--(vm|vt|vs)\b/) || [])[1];
+
 const VozCard = ({ item, lang }) => (
   <div className="voz-card" style={{ '--voz-accent': item.accent }}>
     {item.img && <img className="voz-card-img" src={item.img} alt={item.apt} loading="lazy" />}
     <div className="voz-card-head">
       <span className="voz-num">{item.num}</span>
-      <a href={item.slug} className="voz-apt-name">{item.apt}</a>
+      <a href={item.slug} className="voz-apt-name"><span className="apt-dot" data-apt={_vozAptCode(item.accent)} />{item.apt}</a>
     </div>
     <div className="voz-block">
       <div className="voz-block-label">
@@ -648,7 +651,7 @@ const NoticiasPage = ({ lang }) => {
       </section>
 
       {/* ── La Voz de Hestía ── */}
-      <section className="noticias-voz">
+      <section className="noticias-voz on-dark">
         <div className="container">
           <div className="eyebrow noticias-voz-eyebrow">
             {lang === 'es' ? 'La Voz de Hestía' : 'The Voice of Hestía'}

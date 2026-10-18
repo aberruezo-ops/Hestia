@@ -40,7 +40,11 @@ function loadGuideData() {
   const sharedFull = readFileSync(join(DOCS, 'components/shared.jsx'), 'utf8');
   const rulesMatch = sharedFull.match(/const HESTIA_RULES = \{[\s\S]*?\nwindow\.HESTIA_RULES = HESTIA_RULES;\n/);
   if (!rulesMatch) throw new Error('No se encontró HESTIA_RULES en shared.jsx');
-  const sharedSrc = rulesMatch[0];
+  // Las normas y la guía citan el suplemento de mascota con petSuppLabel, que
+  // lee prices.json: se extrae también ese bloque para no duplicar el importe.
+  const petMatch = sharedFull.match(/const PET_RULES = [\s\S]*?\nconst petSuppLabel = [\s\S]*?\n\};\n/);
+  if (!petMatch) throw new Error('No se encontró petSuppLabel en shared.jsx');
+  const sharedSrc = petMatch[0] + 'window.petSuppLabel = petSuppLabel;\n' + rulesMatch[0];
   const guideSrc = readFileSync(join(DOCS, 'components/apartment-guide.jsx'), 'utf8');
   const aptSrc   = readFileSync(join(DOCS, 'components/apartment-page.jsx'),  'utf8');
   // Expone los consts/lets top-level como globalThis para que sobrevivan
@@ -70,7 +74,7 @@ function loadGuideData() {
   const sandbox = {
     React: ReactStub,
     ReactDOM: { createRoot: () => ({ render: () => {} }), render: () => {} },
-    window: {},
+    window: { PRICES_V2: JSON.parse(readFileSync(join(DOCS, 'data/prices.json'), 'utf8')) },
     document: {
       addEventListener: () => {},
       createElement: () => ({}),
@@ -2449,7 +2453,14 @@ function renderBackCover(aptData, lang) {
 function buildHTML(aptId, lang, data) {
   const apt = data.APT_DATA[aptId];
   const guide = data.GUIDE_BY_APT[aptId];
-  const shared = { ...data.GUIDE_SHARED[lang], __lang: lang, __arrivalEats: (data.ARRIVAL_EATS || {})[lang] };
+  // Igual que AptGuideView: lo propio de cada Hestía (check-in, limpieza, wifi) pisa lo común.
+  const gs = data.GUIDE_SHARED[lang];
+  const own = (guide && guide[lang]) || {};
+  const shared = { ...gs,
+    checkin:  { ...gs.checkin,  ...(own.checkin  || {}) },
+    cleaning: { ...gs.cleaning, ...(own.cleaning || {}) },
+    wifi:     { ...gs.wifi,     ...(own.wifi     || {}) },
+    __lang: lang, __arrivalEats: (data.ARRIVAL_EATS || {})[lang] };
   const aptName = apt[lang].name;
   const aptAccent = apt.accent_dk || apt.accent || '#3D1A35';
   const aptAccentLight = apt.accent || '#4E2446';

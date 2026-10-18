@@ -581,7 +581,7 @@ const AptPageHero = ({
     className: "app-per"
   }, lang === 'es' ? ' / noche · precio directo' : ' / night · direct price'), /*#__PURE__*/React.createElement("span", {
     className: "app-match"
-  }, lang === 'es' ? '· Mejor precio garantizado: si lo ves más barato, no solo te lo igualamos, te lo mejoramos.' : '· Best price guaranteed: find it cheaper and we don\'t just match it, we beat it.')), /*#__PURE__*/React.createElement("div", {
+  }, lang === 'es' ? '· Si lo ves más barato, no solo te lo igualamos: te lo mejoramos.' : '· Find it cheaper and we don\'t just match it: we beat it.')), /*#__PURE__*/React.createElement("div", {
     className: "apt-page-ctas"
   }, /*#__PURE__*/React.createElement("a", {
     href: `reservas.html?apt=${apt.id}`,
@@ -596,7 +596,7 @@ const AptPageHero = ({
   }, /*#__PURE__*/React.createElement(HiIcon, {
     name: "check",
     size: "1em"
-  }), " ", lang === 'es' ? 'Política de cancelación sin competencia' : 'Unmatched cancellation policy')));
+  }), " ", lang === 'es' ? 'Mejoramos las condiciones de cancelación' : 'We improve cancellation terms')));
 };
 
 // --- Reveal cinematográfico ---
@@ -1315,11 +1315,8 @@ const AptPriceTeaser = ({
   }, lang === 'es' ? '/noche' : '/night')))), (() => {
     const nightlyMonthly = base * 30;
     const lsCfg = v2.longStayConfig || {};
-    const lsRates = lsCfg.monthlyRates || {
-      baja: 1490,
-      media: 1590,
-      alta: 1850
-    };
+    const lsRates = lsCfg.monthlyRates;
+    if (!lsRates) return null;
     const supp = (lsCfg.aptSupplement || {})[apt.id] || 0;
     const lsRate = Math.min(lsRates.baja, lsRates.media, lsRates.alta) + supp;
     const savings = Math.round((1 - lsRate / nightlyMonthly) * 100);
@@ -1425,7 +1422,7 @@ const AptStickyBar = ({
   }, /*#__PURE__*/React.createElement(HiIcon, {
     name: "check",
     size: "1em"
-  }), " ", lang === 'es' ? 'mejor precio garantizado' : 'best price guaranteed'))), /*#__PURE__*/React.createElement("a", {
+  }), " ", lang === 'es' ? 'si lo ves más barato, lo mejoramos' : 'find it cheaper and we beat it'))), /*#__PURE__*/React.createElement("a", {
     href: reservasHref,
     className: "btn btn-primary asb-cta"
   }, lang === 'es' ? 'Reservar' : 'Book', " ", /*#__PURE__*/React.createElement("span", {

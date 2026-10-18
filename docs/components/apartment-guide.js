@@ -4894,6 +4894,7 @@ const PLACES = [
 }];
 
 // Contenido COMPARTIDO entre las 3 guías (carta de bienvenida, marca, etc.)
+const _petLsMonth = ((window.PRICES_V2 || {}).longStayConfig || {}).petPerMonth;
 const GUIDE_SHARED = {
   es: {
     pretrip: {
@@ -4914,7 +4915,7 @@ const GUIDE_SHARED = {
       }, {
         icon: '🍹',
         t: 'Hay ambiente, sobre todo en verano',
-        d: 'Vera Playa tiene ocio y ambiente, especialmente en temporada estival. Si buscas más marcha, Garrucha, Mójacar y Vera pueblo están a un paseo, y Almería o Murcia a poco más. Lo que de verdad destaca la zona es la buena gastronomía y las playas de los alrededores: más detalle en los capítulos Sabores y Mar y playas.'
+        d: 'Vera Playa tiene ocio y ambiente, especialmente en temporada estival. Si buscas más marcha, Garrucha, Mojácar y Vera pueblo están a un paseo, y Almería o Murcia a poco más. Lo que de verdad destaca la zona es la buena gastronomía y las playas de los alrededores: más detalle en los capítulos Sabores y Mar y playas.'
       }, {
         icon: '📍',
         t: 'Dónde está exactamente',
@@ -5069,8 +5070,8 @@ const GUIDE_SHARED = {
         d: 'Las mascotas solo están permitidas si nos lo pedís explícitamente y lo aprobamos. Escribidnos por WhatsApp con el tipo de mascota, tamaño y cuántas venís.'
       }, {
         icon: '💶',
-        t: 'Suplemento: 10 €/noche, máximo 50 €',
-        d: 'A partir de la quinta noche no sube más. En estancias largas, tarifa plana de 50 € al mes.'
+        t: window.petSuppLabel('es') ? `Suplemento: ${window.petSuppLabel('es')}` : 'Suplemento por mascota',
+        d: `Al llegar al tope no sube más.${_petLsMonth != null ? ` En estancias largas, tarifa plana de ${_petLsMonth} € al mes.` : ''}`
       }, {
         icon: '🧹',
         t: 'No sueltos en zonas comunes',
@@ -5259,7 +5260,7 @@ const GUIDE_SHARED = {
       }, {
         icon: '🍹',
         t: 'There is a scene, especially in summer',
-        d: 'Vera Playa does have leisure and nightlife, especially in high season. If you want more of a scene, Garrucha, Mójacar and Vera village are a short drive away, and Almería or Murcia a little further. What the area really stands out for is great food and the beaches nearby: more detail in the Tastes and Sea & beaches chapters.'
+        d: 'Vera Playa does have leisure and nightlife, especially in high season. If you want more of a scene, Garrucha, Mojácar and Vera village are a short drive away, and Almería or Murcia a little further. What the area really stands out for is great food and the beaches nearby: more detail in the Tastes and Sea & beaches chapters.'
       }, {
         icon: '📍',
         t: 'Exactly where it is',
@@ -5414,8 +5415,8 @@ const GUIDE_SHARED = {
         d: 'Pets are only allowed if you ask us explicitly and we approve it. Message us on WhatsApp with the type of pet, size and how many are coming.'
       }, {
         icon: '💶',
-        t: 'Supplement: €10/night, €50 maximum',
-        d: 'From the fifth night on it does not go up further. For long stays, a flat €50/month.'
+        t: window.petSuppLabel('en') ? `Supplement: ${window.petSuppLabel('en')}` : 'Pet supplement',
+        d: `Once it reaches the cap it does not go up further.${_petLsMonth != null ? ` For long stays, a flat €${_petLsMonth}/month.` : ''}`
       }, {
         icon: '🧹',
         t: 'Keep them leashed in shared areas',
@@ -5629,6 +5630,9 @@ const GUIDE_BY_APT = {
       wifi: {
         ssidValue: 'Acaciopohone_1DAC',
         passValue: 'pEF7jRCE'
+      },
+      checkin: {
+        garageIntro: 'Tu plaza de garaje en Hestía Mar es:'
       }
     },
     en: {
@@ -5667,6 +5671,9 @@ const GUIDE_BY_APT = {
       wifi: {
         ssidValue: 'Acaciopohone_1DAC',
         passValue: 'pEF7jRCE'
+      },
+      checkin: {
+        garageIntro: 'Your garage spot at Hestía Mar is:'
       }
     }
   },
@@ -7414,10 +7421,7 @@ const PlacesOfInterestAtlas = ({
       className: "ag-poi-cat-title"
     }, /*#__PURE__*/React.createElement("span", {
       className: "ag-poi-cat-icon",
-      "aria-hidden": "true",
-      style: {
-        color: 'var(--sol-text, #176E80)'
-      }
+      "aria-hidden": "true"
     }, /*#__PURE__*/React.createElement(HiIcon, {
       name: sc.hi,
       size: 18
@@ -7477,7 +7481,10 @@ const CatGroup = ({
       className: "ag-place-star",
       title: lang === 'es' ? 'Imperdible' : 'Must-see',
       "aria-hidden": "true"
-    }, "✦"), /*#__PURE__*/React.createElement("span", {
+    }, /*#__PURE__*/React.createElement(HiIcon, {
+      name: "spark",
+      size: "1em"
+    })), /*#__PURE__*/React.createElement("span", {
       className: "ag-place-name"
     }, p.name), p.tier && /*#__PURE__*/React.createElement("span", {
       className: "ag-place-tier"
@@ -7594,7 +7601,10 @@ const CatGroup = ({
   }, /*#__PURE__*/React.createElement("span", {
     className: "ag-cat-sub-star",
     "aria-hidden": "true"
-  }, "✦"), lang === 'es' ? 'Imperdibles' : 'Must-see'), /*#__PURE__*/React.createElement("ul", {
+  }, /*#__PURE__*/React.createElement(HiIcon, {
+    name: "spark",
+    size: "1em"
+  })), lang === 'es' ? 'Imperdibles' : 'Must-see'), /*#__PURE__*/React.createElement("ul", {
     className: "ag-places ag-places-featured"
   }, featured.map(renderPlace))), rest.length > 0 && /*#__PURE__*/React.createElement(React.Fragment, null, featured.length > 0 && /*#__PURE__*/React.createElement("div", {
     className: "ag-cat-sub-h ag-cat-sub-h-rest"
@@ -7632,7 +7642,10 @@ const GuestDiscounts = ({
     }, /*#__PURE__*/React.createElement("span", {
       className: "ag-place-star",
       "aria-hidden": "true"
-    }, "✦"), /*#__PURE__*/React.createElement("span", {
+    }, /*#__PURE__*/React.createElement(HiIcon, {
+      name: "spark",
+      size: "1em"
+    })), /*#__PURE__*/React.createElement("span", {
       className: "ag-place-name"
     }, p.name), typeof p.rating === 'number' && /*#__PURE__*/React.createElement("span", {
       className: "ag-place-rating",
@@ -11017,10 +11030,16 @@ const DayPlanCard = ({
     className: "dp-step-extra"
   }, s.km != null && s.km > 0 && /*#__PURE__*/React.createElement("span", {
     className: "dp-step-km"
-  }, "📍 ", s.km < 1 ? `${Math.round(s.km * 1000)} m` : `${s.km} km`), s.rating && /*#__PURE__*/React.createElement("span", {
+  }, /*#__PURE__*/React.createElement(HiIcon, {
+    name: "pin",
+    size: "1em"
+  }), " ", s.km < 1 ? `${Math.round(s.km * 1000)} m` : `${s.km} km`), s.rating && /*#__PURE__*/React.createElement("span", {
     className: "dp-step-rating",
     title: `Fuente: ${s.rating.src}`
-  }, "★ ", s.rating.v, " ", /*#__PURE__*/React.createElement("small", null, "· ", s.rating.src)), s.gmaps && /*#__PURE__*/React.createElement("a", {
+  }, /*#__PURE__*/React.createElement(HiIcon, {
+    name: "star-fill",
+    size: "1em"
+  }), " ", s.rating.v, " ", /*#__PURE__*/React.createElement("small", null, "· ", s.rating.src)), s.gmaps && /*#__PURE__*/React.createElement("a", {
     className: "dp-step-gmaps",
     href: s.gmaps,
     target: "_blank",
@@ -11859,7 +11878,10 @@ const AptGuideView = ({
   }, /*#__PURE__*/React.createElement("span", {
     className: "ag-car-icon",
     "aria-hidden": "true"
-  }, "✦"), s.checkin.carAccompany))), /*#__PURE__*/React.createElement("div", {
+  }, /*#__PURE__*/React.createElement(HiIcon, {
+    name: "spark",
+    size: "1em"
+  })), s.checkin.carAccompany))), /*#__PURE__*/React.createElement("div", {
     className: "ag-arrival-eats-block"
   }, /*#__PURE__*/React.createElement("h3", {
     className: "ag-h3"

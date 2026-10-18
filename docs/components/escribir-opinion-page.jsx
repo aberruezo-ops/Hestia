@@ -29,7 +29,7 @@ const ESCRIBIR_COPY = {
     apt_vt: 'Hestía Thalassa',
     apt_vs: 'Hestía Salinas',
     pin_label: 'PIN de tu reserva',
-    pin_ph: 'Ej. HVM2016',
+    pin_ph: 'Ej. HVM1234',
     pin_help: 'El mismo PIN que te dimos para acceder a la guía de tu Hestía. Imprescindible: sin PIN no podemos validar que la opinión es de un huésped real.',
     rating_label: 'Tu valoración',
     name_label: 'Tu nombre o cómo quieres firmar',
@@ -65,7 +65,7 @@ const ESCRIBIR_COPY = {
     apt_vt: 'Hestía Thalassa',
     apt_vs: 'Hestía Salinas',
     pin_label: 'Your booking PIN',
-    pin_ph: 'e.g. HVM2016',
+    pin_ph: 'e.g. HVM1234',
     pin_help: 'The same PIN we gave you to access your Hestía guide. Required: without a PIN we cannot verify the review is from a real guest.',
     rating_label: 'Your rating',
     name_label: 'Your name or how to sign',
@@ -412,7 +412,7 @@ const EscribirOpinionPageApp = () => {
       <Topbar lang={lang} setLang={setLang} />
       <Header mode={mode} scrolled={scrolled} lang={lang} />
       <main id="main-content" tabIndex={-1}>
-        <section className="page-hero eo-hero">
+        <section className="page-hero eo-hero on-dark">
           <div className="page-hero-content">
             <div className="eyebrow">{t.eyebrow}</div>
             <h1>{t.title}</h1>

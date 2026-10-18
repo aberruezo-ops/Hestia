@@ -153,7 +153,7 @@ const OpinionesQuotesMarquee = ({ lang }) => {
   if (quotes.length === 0) return null;
   const doubled = [...quotes, ...quotes];
   return (
-    <section className="opiniones-quotes-marquee" aria-label={lang === 'es' ? 'Frases destacadas' : 'Featured quotes'}>
+    <section className="opiniones-quotes-marquee on-dark" aria-label={lang === 'es' ? 'Frases destacadas' : 'Featured quotes'}>
       <div className="oqm-track" aria-hidden="true">
         {doubled.map((q, i) => (
           <React.Fragment key={i}>
@@ -559,7 +559,7 @@ const OpinionesPageApp = () => {
         <OpinionesRatings lang={lang} />
         <OpinionesQuotesMarquee lang={lang} />
         <OpinionesTestimonials lang={lang} />
-        <section className="opiniones-share-cta">
+        <section className="opiniones-share-cta on-dark">
           <div className="container">
             <div className="osc-eyebrow">{lang === 'es' ? '¿Has dormido en Hestía?' : 'Have you stayed at Hestía?'}</div>
             <h2 className="osc-title">

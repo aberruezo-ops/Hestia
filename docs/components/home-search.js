@@ -191,8 +191,8 @@ const HsDateRange = ({
     if (nights === 1) {
       setDrMsg({
         type: 'error',
-        es: 'No se permiten reservas de 1 noche. La estancia mínima es 2 noches.',
-        en: 'One-night bookings are not allowed. Minimum stay is 2 nights.'
+        es: `No se permiten reservas de 1 noche. Para estas fechas la estancia mínima es de ${effMin} noches.`,
+        en: `One-night bookings are not allowed. For these dates the minimum stay is ${effMin} nights.`
       });
       return;
     }
@@ -502,7 +502,7 @@ const HsResultCard = ({
   }, /*#__PURE__*/React.createElement(HiIcon, {
     name: "check",
     size: "1em"
-  }), " ", lang === 'es' ? 'Mejor precio garantizado' : 'Best price guaranteed'), /*#__PURE__*/React.createElement("div", {
+  }), " ", lang === 'es' ? 'No solo igualamos, mejoramos' : 'We don\'t just match, we beat it'), /*#__PURE__*/React.createElement("div", {
     className: "price-guarantee-sub"
   }, lang === 'es' ? '¿Lo encuentras más barato en Booking o Airbnb? No solo te lo igualamos: te lo mejoramos.' : 'Found it cheaper on Booking or Airbnb? We don\'t just match it, we beat it.'))), /*#__PURE__*/React.createElement("div", {
     className: "hs-pb-breakdown"
@@ -512,7 +512,7 @@ const HsResultCard = ({
     className: "hs-pb-line hs-pb-disc"
   }, /*#__PURE__*/React.createElement("span", null, lang === 'es' ? calc.stayD.es : calc.stayD.en), /*#__PURE__*/React.createElement("span", null, "−", fmt(calc.stayDiscAmt))), calc.petAmt > 0 && /*#__PURE__*/React.createElement("div", {
     className: "hs-pb-line"
-  }, /*#__PURE__*/React.createElement("span", null, lang === 'es' ? `Suplemento mascota (${PET_SUPP_FLAT}€ tarifa plana)` : `Pet supplement (${PET_SUPP_FLAT}€ flat fee)`), /*#__PURE__*/React.createElement("span", null, "+", fmt(calc.petAmt))), /*#__PURE__*/React.createElement("div", {
+  }, /*#__PURE__*/React.createElement("span", null, lang === 'es' ? 'Suplemento mascota' : 'Pet supplement', petSuppLabel(lang) ? ` (${petSuppLabel(lang)})` : ''), /*#__PURE__*/React.createElement("span", null, "+", fmt(calc.petAmt))), /*#__PURE__*/React.createElement("div", {
     className: `hs-pb-line hs-pb-total-line${isLsStay && lsCalc ? ' is-striked' : ''}`
   }, /*#__PURE__*/React.createElement("span", null, lang === 'es' ? 'Total estimado noche a noche' : 'Estimated nightly total'), /*#__PURE__*/React.createElement("span", null, fmt(calc.directTotal))), isLsStay && lsCalc && /*#__PURE__*/React.createElement(React.Fragment, null, /*#__PURE__*/React.createElement("div", {
     className: "price-line-ls-hl"
@@ -626,7 +626,7 @@ const HomeSearch = ({
     const isGapFill = _isGap(checkin, checkout);
     const effMin = isImminent || isGapFill ? twoNightFloor : _isCrit(checkin) ? criticalMinN : baseMinN;
     if (nights === 1) {
-      setFormErr(lang === 'es' ? 'No se permiten reservas de 1 noche. La estancia mínima es 2 noches.' : 'One-night bookings are not allowed. Minimum stay is 2 nights.');
+      setFormErr(lang === 'es' ? `No se permiten reservas de 1 noche. Para estas fechas la estancia mínima es de ${effMin} noches.` : `One-night bookings are not allowed. For these dates the minimum stay is ${effMin} nights.`);
       return;
     }
     if (nights < effMin) {

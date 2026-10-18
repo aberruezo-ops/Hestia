@@ -568,8 +568,8 @@ const AptPageHero = ({ apt, lang, scrolled, mode }) => {
             <span className="app-per">{lang === 'es' ? ' / noche · precio directo' : ' / night · direct price'}</span>
             <span className="app-match">
               {lang === 'es'
-                ? '· Mejor precio garantizado: si lo ves más barato, no solo te lo igualamos, te lo mejoramos.'
-                : '· Best price guaranteed: find it cheaper and we don\'t just match it, we beat it.'}
+                ? '· Si lo ves más barato, no solo te lo igualamos: te lo mejoramos.'
+                : '· Find it cheaper and we don\'t just match it: we beat it.'}
             </span>
           </p>
         )}
@@ -582,7 +582,7 @@ const AptPageHero = ({ apt, lang, scrolled, mode }) => {
           </a>
         </div>
         <p className="apt-page-cancel">
-          <HiIcon name="check" size="1em" /> {lang === 'es' ? 'Política de cancelación sin competencia' : 'Unmatched cancellation policy'}
+          <HiIcon name="check" size="1em" /> {lang === 'es' ? 'Mejoramos las condiciones de cancelación' : 'We improve cancellation terms'}
         </p>
       </div>
     </section>
@@ -1122,7 +1122,8 @@ const AptPriceTeaser = ({ apt, lang }) => {
           {(() => {
             const nightlyMonthly = base * 30;
             const lsCfg   = v2.longStayConfig || {};
-            const lsRates = lsCfg.monthlyRates || { baja: 1490, media: 1590, alta: 1850 };
+            const lsRates = lsCfg.monthlyRates;
+            if (!lsRates) return null;
             const supp    = (lsCfg.aptSupplement || {})[apt.id] || 0;
             const lsRate  = Math.min(lsRates.baja, lsRates.media, lsRates.alta) + supp;
             const savings = Math.round((1 - lsRate / nightlyMonthly) * 100);
@@ -1214,7 +1215,7 @@ const AptStickyBar = ({ apt, lang, scrolled }) => {
           <span className="asb-price">
             {lang === 'es' ? `desde ${minP}€/noche` : `from ${minP}€/night`}
             <span className="asb-match" aria-hidden="true">
-              <HiIcon name="check" size="1em" /> {lang === 'es' ? 'mejor precio garantizado' : 'best price guaranteed'}
+              <HiIcon name="check" size="1em" /> {lang === 'es' ? 'si lo ves más barato, lo mejoramos' : 'find it cheaper and we beat it'}
             </span>
           </span>
         )}

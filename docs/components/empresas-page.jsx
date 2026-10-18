@@ -472,7 +472,7 @@ const EmpresasPageApp = () => {
           </div>
         </section>
 
-        <div className="emp-trust" aria-label={lang === 'es' ? 'Lo que nos diferencia' : 'What sets us apart'}>
+        <div className="emp-trust on-dark" aria-label={lang === 'es' ? 'Lo que nos diferencia' : 'What sets us apart'}>
           <ul className="emp-trust-track">
             {[...t.trust, ...t.trust].map((item, i) => (
               <li key={i} className="emp-trust-item" aria-hidden={i >= t.trust.length ? 'true' : undefined}>
