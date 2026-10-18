@@ -163,15 +163,15 @@
       },
       {
         "id": "lateCheckin23",
-        "label_es": "Late check-in presencial · 21:00 → 23:00",
-        "label_en": "Late check-in (in person) · 21:00 → 23:00",
+        "label_es": "Llegada presencial fuera de horario · 19:00 → 23:00 · sujeta a disponibilidad",
+        "label_en": "In-person arrival outside hours · 19:00 → 23:00 · subject to availability",
         "price": 20,
         "unit": "estancia"
       },
       {
         "id": "lateCheckin00",
-        "label_es": "Late check-in presencial · 23:00 → 00:00",
-        "label_en": "Late check-in (in person) · 23:00 → 00:00",
+        "label_es": "Llegada presencial fuera de horario · 23:00 → 00:00 · sujeta a disponibilidad",
+        "label_en": "In-person arrival outside hours · 23:00 → 00:00 · subject to availability",
         "price": 40,
         "unit": "estancia"
       }

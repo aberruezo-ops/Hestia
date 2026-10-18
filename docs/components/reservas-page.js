@@ -650,7 +650,7 @@ const ReservasForm = ({
       [id]: n
     }));
   };
-  // Máximo qty por extra. Items "estancia" (cuna, trona, late check-in)
+  // Máximo qty por extra. Items "estancia" (cuna, trona)
   // son binarios → max 1. "hora" (early check-in, late check-out) hasta
   // 8 horas. Resto (set/noche) escala con huéspedes, default 6.
   const guestCap = Math.max(1, parseInt(guests, 10) || 6);

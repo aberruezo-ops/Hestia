@@ -52,7 +52,7 @@ const LS_COPY = {
       a: 'No. Los apartamentos están en máxima demanda en julio y agosto. La larga estancia está disponible de septiembre a junio.'
     }, {
       q: '¿Se pueden registrar varias personas?',
-      a: 'Sí, hasta la capacidad del apartamento (2–4 personas según el Hestía elegido). Todos los huéspedes que pernocten deben estar en el contrato y se registran en el parte de entrada del SES.'
+      a: 'Sí, hasta 6 personas más bebé en cualquiera de los tres Hestías. Todos los huéspedes que pernocten deben estar en el contrato y se registran en el parte de entrada del SES.'
     }, {
       q: '¿Puedo pedir servicios extra durante la estancia?',
       a: 'Sí, bajo un pequeño cargo: limpieza a mitad de mes, recepción de paquetería o renovar mes a mes. Si teletrabajas, te llevamos una mesa de trabajo al apartamento. Dinos qué necesitas y lo organizamos.'
@@ -110,7 +110,7 @@ const LS_COPY = {
       a: 'No. The apartments are in peak demand in July and August. Long stays are available September to June.'
     }, {
       q: 'Can several people stay?',
-      a: 'Yes, up to the apartment capacity (2–4 people depending on the Hestía). All overnight guests must appear on the contract and be registered on the SES entry form.'
+      a: 'Yes, up to 6 people plus a baby in any of the three Hestías. All overnight guests must appear on the contract and be registered on the SES entry form.'
     }, {
       q: 'Can I request extra services during my stay?',
       a: 'Yes, for a small charge: mid-month cleaning, parcel reception or month-to-month renewal. If you work remotely, we bring a work table to your apartment. Tell us what you need and we sort it out.'
@@ -267,7 +267,10 @@ const LsPrices = ({
   const rates = _lsRates();
   const flat = _lsFlat();
   if (!rates || flat == null) return null;
-  const rateByIdx = [rates.baja, rates.media, rates.alta];
+  // "Desde" = base + el suplemento de apartamento más bajo: el mismo mínimo que _lsMinMonthly (hero y portada).
+  const supps = Object.values(_lsCfgPub().aptSupplement || {});
+  const minSupp = supps.length ? Math.min(...supps) : 0;
+  const rateByIdx = [rates.baja, rates.media, rates.alta].map(r => r + minSupp);
   const note = t.prices_note.replace('{FLAT}', String(flat));
   return /*#__PURE__*/React.createElement("section", {
     className: "lsl-section lsl-prices"
