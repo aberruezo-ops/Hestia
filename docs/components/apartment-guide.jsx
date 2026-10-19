@@ -629,23 +629,23 @@ const PLACES = [
     desc: 'Agua Amarga, Níjar. Villa con varios comedores mediterráneos y terraza con piscina. Carta de gusto actual con protagonismo de la brasa.', desc_en: 'Agua Amarga, Níjar. A villa with several Mediterranean dining rooms and a terrace with a pool. Contemporary menu built around the grill.',
     specialty: 'platos a la brasa con producto de la zona costera.' },
   { id: 'mich-barra-jose', name: 'Barra de José Álvarez',           cat: 'michelin', tier: '€€€',  rating: 4.7, lat: 36.8393, lng: -2.4643, featured: true,
-    desc: 'Almería capital. Comparte cocina y bodega con La Costa (⭐ Estrella Michelin). Barra + mesas sin mantel, platos actuales en medias raciones.', desc_en: 'Almería city. Shares kitchen and cellar with La Costa (⭐ Michelin Star). Bar plus tableclothless tables, contemporary dishes in half portions.',
+    desc: 'Almería capital. Comparte cocina y bodega con La Costa (Estrella Michelin). Barra + mesas sin mantel, platos actuales en medias raciones.', desc_en: 'Almería city. Shares kitchen and cellar with La Costa (Michelin Star). Bar plus tableclothless tables, contemporary dishes in half portions.',
     specialty: 'buenos pescados, mariscos y carnes. Postre icónico: el Nuestro Flan, super cremoso de vainilla.' },
 
   // ── Guía Michelin 2025 ── Murcia ───────────────────────────────
   { id: 'mich-cabana-buenavista', name: 'Cabaña Buenavista',         cat: 'michelin', tier: '€€€€', rating: 4.9, lat: 37.9425, lng: -1.0705, featured: true,
-    desc: 'El Palmar (Murcia). ⭐⭐ Dos Estrellas Michelin, única en la región. Chef Pablo González-Conejero.', desc_en: 'El Palmar (Murcia). ⭐⭐ Two Michelin Stars, the only one in the region. Chef Pablo González-Conejero.',
+    desc: 'El Palmar (Murcia). Dos Estrellas Michelin, única en la región. Chef Pablo González-Conejero.', desc_en: 'El Palmar (Murcia). Two Michelin Stars, the only one in the region. Chef Pablo González-Conejero.',
     specialty: 'variedades autóctonas de frutas y verduras murcianas en vías de extinción. Menús Olivo y Experience. Varios platos terminados en mesa.',
     url: 'https://restaurantecabanabuenavista.com' },
   { id: 'mich-almo',             name: 'Almo',                       cat: 'michelin', tier: '€€€€', rating: 4.8, lat: 37.9838, lng: -1.1305, featured: true,
-    desc: 'Murcia capital. ⭐ Estrella Michelin. Chef Juan Guillamón. Cocina mediterránea de mercado en dos plantas con ventanales de suelo a techo.', desc_en: 'Murcia city. ⭐ Michelin Star. Chef Juan Guillamón. Mediterranean market cooking over two floors with floor-to-ceiling windows.',
+    desc: 'Murcia capital. Estrella Michelin. Chef Juan Guillamón. Cocina mediterránea de mercado en dos plantas con ventanales de suelo a techo.', desc_en: 'Murcia city. Michelin Star. Chef Juan Guillamón. Mediterranean market cooking over two floors with floor-to-ceiling windows.',
     specialty: 'carpaccio de vaca madurada con alioli negro, parpatana de atún rojo. Menú degustación disponible.',
     url: 'https://almorestaurante.com' },
   { id: 'mich-frases',           name: 'Frases',                     cat: 'michelin', tier: '€€€€', rating: 4.8, lat: 37.9843, lng: -1.1285, featured: true,
-    desc: 'Murcia capital. ⭐ Estrella Michelin (nueva en 2025). Chefs Marco Antonio Iniesta y María Egea. Cada plato es una "frase" que narra una historia local.', desc_en: 'Murcia city. ⭐ Michelin Star (new in 2025). Chefs Marco Antonio Iniesta and María Egea. Every dish is a "sentence" telling a local story.',
+    desc: 'Murcia capital. Estrella Michelin (nueva en 2025). Chefs Marco Antonio Iniesta y María Egea. Cada plato es una "frase" que narra una historia local.', desc_en: 'Murcia city. Michelin Star (new in 2025). Chefs Marco Antonio Iniesta and María Egea. Every dish is a "sentence" telling a local story.',
     specialty: 'menús Origen y Tierra. Plato icónico "El Jamón" (sabores de cocido) y "Chato murciano" (terrina de carrillera y papada).' },
   { id: 'mich-barahonda',        name: 'Barahonda',                  cat: 'michelin', tier: '€€€€', rating: 4.8, lat: 38.6199, lng: -1.1168, featured: true,
-    desc: 'Yecla. ⭐ Estrella Michelin (nueva en 2025, primera para Yecla). Chef Alejandro Ibáñez. Cocina de terruño en viñedos de Señorío de Barahonda.', desc_en: 'Yecla. ⭐ Michelin Star (new in 2025, Yecla\'s first). Chef Alejandro Ibáñez. Terroir cooking amid the Señorío de Barahonda vineyards.',
+    desc: 'Yecla. Estrella Michelin (nueva en 2025, primera para Yecla). Chef Alejandro Ibáñez. Cocina de terruño en viñedos de Señorío de Barahonda.', desc_en: 'Yecla. Michelin Star (new in 2025, Yecla\'s first). Chef Alejandro Ibáñez. Terroir cooking amid the Señorío de Barahonda vineyards.',
     specialty: 'menús Caliza y Arcilla con ingredientes del entorno: huerta propia, carne, aceite, quesos y vinos de la finca.',
     url: 'https://barahonda.com/en/restaurant/' },
   { id: 'mich-tandem',           name: 'Tándem',                     cat: 'michelin', tier: '€€€',  rating: 4.6, lat: 37.9832, lng: -1.1313,
@@ -657,10 +657,10 @@ const PLACES = [
 
   // ── Guía Michelin 2025 ── Granada ──────────────────────────────
   { id: 'mich-la-finca',         name: 'La Finca (Loja)',            cat: 'michelin', tier: '€€€€', rating: 4.8, lat: 37.1668, lng: -4.1493, featured: true,
-    desc: 'Loja (Granada/Málaga). ⭐ Estrella Michelin. Chef Fernando Arjona. Resort Barceló La Bobadilla, en plena sierra.', desc_en: 'Loja (Granada/Málaga). ⭐ Michelin Star. Chef Fernando Arjona. Barceló La Bobadilla resort, deep in the mountains.',
+    desc: 'Loja (Granada/Málaga). Estrella Michelin. Chef Fernando Arjona. Resort Barceló La Bobadilla, en plena sierra.', desc_en: 'Loja (Granada/Málaga). Michelin Star. Chef Fernando Arjona. Barceló La Bobadilla resort, deep in the mountains.',
     specialty: 'cocina andaluza con toques modernos: aceite de oliva local, caviar de Riofrío, productos ibéricos. Comedor de estilo masía rural.' },
   { id: 'mich-farala',           name: 'Faralá',                     cat: 'michelin', tier: '€€€',  rating: 4.8, lat: 37.1752, lng: -3.5900, featured: true,
-    desc: 'Granada capital, Cuesta de Gomérez (a los pies de la Alhambra). Recomendado 2025 · ⭐ Estrella Michelin 2026. Chef Cristina Jiménez.', desc_en: 'Granada city, Cuesta de Gomérez (at the foot of the Alhambra). Recommended 2025 · ⭐ Michelin Star 2026. Chef Cristina Jiménez.',
+    desc: 'Granada capital, Cuesta de Gomérez (a los pies de la Alhambra). Recomendado 2025 · Estrella Michelin 2026. Chef Cristina Jiménez.', desc_en: 'Granada city, Cuesta de Gomérez (at the foot of the Alhambra). Recommended 2025 · Michelin Star 2026. Chef Cristina Jiménez.',
     specialty: 'tres menús degustación de cocina granadina actualizada. El edificio combina restaurante, wine bar y exhibiciones de flamenco.',
     url: 'https://restaurantefarala.com' },
   { id: 'mich-maria-de-la-o',    name: 'María de la O',              cat: 'michelin', tier: '€€€',  rating: 4.7, lat: 37.1803, lng: -3.5912, featured: true,
@@ -704,7 +704,7 @@ const PLACES = [
   { id: 'torreluz-med',   name: 'Torreluz Mediterráneo (Almería capital)', desc: 'En Plaza Flores. Cocina mediterránea con producto de mercado.', specialty: 'arroces marineros, atún rojo y carrillera de ternera.', tier: '€€€', rating: 4.5, cat: 'restaurant', lat: 36.8392, lng: -2.4625 },
   { id: 'salmantice',     name: 'Salmantice (Almería capital)', desc: 'Asador castellano-leonés. Carnes a la brasa de primera.', specialty: 'chuletón de buey, lechazo asado y embutidos ibéricos.', tier: '€€€', rating: 4.5, cat: 'restaurant', lat: 36.8378, lng: -2.4602 },
   // Murcia · Cartagena, Lorca, Águilas
-  { id: 'magoga',         name: 'Magoga (Cartagena)', desc: 'Cartagena. ⭐ Estrella Michelin. Cocina murciana de alta gama.', desc_en: 'Cartagena. ⭐ Michelin Star. High-end Murcian cooking.', specialty: 'menú degustación con producto del Mar Menor y huerta murciana.', tip: 'Reserva con 3-4 semanas, es de lo mejor del Sureste.', tier: '€€€€', rating: 4.7, cat: 'restaurant', lat: 37.6017, lng: -0.9886, featured: true },
+  { id: 'magoga',         name: 'Magoga (Cartagena)', desc: 'Cartagena. Estrella Michelin. Cocina murciana de alta gama.', desc_en: 'Cartagena. Michelin Star. High-end Murcian cooking.', specialty: 'menú degustación con producto del Mar Menor y huerta murciana.', tip: 'Reserva con 3-4 semanas, es de lo mejor del Sureste.', tier: '€€€€', rating: 4.7, cat: 'restaurant', lat: 37.6017, lng: -0.9886, featured: true },
   { id: 'marquesita',     name: 'La Marquesita (Cartagena)', desc: 'Cartagena. Clásico imprescindible junto al teatro romano.', specialty: 'caldero del Mar Menor, dorada a la sal y arroz con bogavante.', tier: '€€€', rating: 4.5, cat: 'restaurant', lat: 37.6030, lng: -0.9870 },
   { id: 'san-roque',      name: 'El Barrio de San Roque (Cartagena)', desc: 'Cartagena. Cocina tradicional con producto de la lonja.', specialty: 'michirones, marineras y arroz caldero.', tier: '€€', rating: 4.5, cat: 'restaurant', lat: 37.6042, lng: -0.9905 },
   { id: 'el-faro-aguilas',name: 'El Faro (Águilas)', desc: 'Águilas. A pie de puerto. Famoso por el arroz caldero murciano.', desc_en: 'Águilas. Right by the harbour. Famous for Murcian caldero rice.', specialty: 'arroz caldero, salmonete y dorada a la sal.', tier: '€€€', rating: 4.6, cat: 'restaurant', lat: 37.4070, lng: -1.5790, featured: true },
@@ -1759,7 +1759,7 @@ const GUIDE_SHARED = {
       disclaimer: [
         'Distancias y tiempos en coche calculados desde Vera Playa, punto común a las tres Hestías (a menos de 2 km entre sí). Comprueba la ruta exacta en Google Maps antes de salir, especialmente en verano cuando el tráfico se carga.',
         'Los horarios de bares, restaurantes y comercios cambian con la temporada y pueden alterarse sin previo aviso: llama o consulta su web antes de ir.',
-        'Las valoraciones (⭐) y los "best" que destacamos son recomendaciones personales que dependen del momento: un sitio brillante en mayo puede estar saturado en agosto, y el aforo o el tiempo cambian la experiencia. Tómalo como guía de salida, no como verdad absoluta.',
+        'Las valoraciones (estrellas) y los "best" que destacamos son recomendaciones personales que dependen del momento: un sitio brillante en mayo puede estar saturado en agosto, y el aforo o el tiempo cambian la experiencia. Tómalo como guía de salida, no como verdad absoluta.',
       ],
       sources: [
         'Pregúntanos. Te ayudaremos con mucho gusto según nuestra experiencia y la de huéspedes como tú. A continuación tienes una pequeña muestra…',
@@ -2017,7 +2017,7 @@ const GUIDE_SHARED = {
       disclaimer: [
         'All distances and drive times are approximate and measured from the Vera Playa complex as a common reference for the three Hestías (which sit within 2 km of each other). Check the exact route on Google Maps before heading out, especially in summer when traffic builds up.',
         'Opening hours for bars, restaurants and shops change with the season and may be altered without notice: when in doubt, phone ahead or check their website.',
-        'Star ratings (⭐) and "best" picks are personal recommendations and depend on the moment: a place that shines in May can be saturated in August, an impeccable beach shack in season may close in winter, and crowd or weather change the experience. Take this as a starting guide, not gospel.',
+        'Star ratings and "best" picks are personal recommendations and depend on the moment: a place that shines in May can be saturated in August, an impeccable beach shack in season may close in winter, and crowd or weather change the experience. Take this as a starting guide, not gospel.',
       ],
       sources: [
         'Just ask us. We are happy to help based on our experience and that of guests like you. A small sample below…',
@@ -2681,7 +2681,7 @@ const CompactPlaceItem = ({ p, lang }) => {
           )}
           {p.phone && (
             <a className="ag-place-phone" href={`tel:${p.phone.replace(/\s/g,'')}`}>
-              📞 {p.phone}
+              <HiIcon name="phone" size="1em" /> {p.phone}
             </a>
           )}
           <a className="ag-place-link" href={mapHref} target="_blank" rel="noopener">

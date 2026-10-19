@@ -1647,8 +1647,8 @@ const PLACES = [
   lat: 36.8393,
   lng: -2.4643,
   featured: true,
-  desc: 'Almería capital. Comparte cocina y bodega con La Costa (⭐ Estrella Michelin). Barra + mesas sin mantel, platos actuales en medias raciones.',
-  desc_en: 'Almería city. Shares kitchen and cellar with La Costa (⭐ Michelin Star). Bar plus tableclothless tables, contemporary dishes in half portions.',
+  desc: 'Almería capital. Comparte cocina y bodega con La Costa (Estrella Michelin). Barra + mesas sin mantel, platos actuales en medias raciones.',
+  desc_en: 'Almería city. Shares kitchen and cellar with La Costa (Michelin Star). Bar plus tableclothless tables, contemporary dishes in half portions.',
   specialty: 'buenos pescados, mariscos y carnes. Postre icónico: el Nuestro Flan, super cremoso de vainilla.'
 },
 // ── Guía Michelin 2025 ── Murcia ───────────────────────────────
@@ -1661,8 +1661,8 @@ const PLACES = [
   lat: 37.9425,
   lng: -1.0705,
   featured: true,
-  desc: 'El Palmar (Murcia). ⭐⭐ Dos Estrellas Michelin, única en la región. Chef Pablo González-Conejero.',
-  desc_en: 'El Palmar (Murcia). ⭐⭐ Two Michelin Stars, the only one in the region. Chef Pablo González-Conejero.',
+  desc: 'El Palmar (Murcia). Dos Estrellas Michelin, única en la región. Chef Pablo González-Conejero.',
+  desc_en: 'El Palmar (Murcia). Two Michelin Stars, the only one in the region. Chef Pablo González-Conejero.',
   specialty: 'variedades autóctonas de frutas y verduras murcianas en vías de extinción. Menús Olivo y Experience. Varios platos terminados en mesa.',
   url: 'https://restaurantecabanabuenavista.com'
 }, {
@@ -1674,8 +1674,8 @@ const PLACES = [
   lat: 37.9838,
   lng: -1.1305,
   featured: true,
-  desc: 'Murcia capital. ⭐ Estrella Michelin. Chef Juan Guillamón. Cocina mediterránea de mercado en dos plantas con ventanales de suelo a techo.',
-  desc_en: 'Murcia city. ⭐ Michelin Star. Chef Juan Guillamón. Mediterranean market cooking over two floors with floor-to-ceiling windows.',
+  desc: 'Murcia capital. Estrella Michelin. Chef Juan Guillamón. Cocina mediterránea de mercado en dos plantas con ventanales de suelo a techo.',
+  desc_en: 'Murcia city. Michelin Star. Chef Juan Guillamón. Mediterranean market cooking over two floors with floor-to-ceiling windows.',
   specialty: 'carpaccio de vaca madurada con alioli negro, parpatana de atún rojo. Menú degustación disponible.',
   url: 'https://almorestaurante.com'
 }, {
@@ -1687,8 +1687,8 @@ const PLACES = [
   lat: 37.9843,
   lng: -1.1285,
   featured: true,
-  desc: 'Murcia capital. ⭐ Estrella Michelin (nueva en 2025). Chefs Marco Antonio Iniesta y María Egea. Cada plato es una "frase" que narra una historia local.',
-  desc_en: 'Murcia city. ⭐ Michelin Star (new in 2025). Chefs Marco Antonio Iniesta and María Egea. Every dish is a "sentence" telling a local story.',
+  desc: 'Murcia capital. Estrella Michelin (nueva en 2025). Chefs Marco Antonio Iniesta y María Egea. Cada plato es una "frase" que narra una historia local.',
+  desc_en: 'Murcia city. Michelin Star (new in 2025). Chefs Marco Antonio Iniesta and María Egea. Every dish is a "sentence" telling a local story.',
   specialty: 'menús Origen y Tierra. Plato icónico "El Jamón" (sabores de cocido) y "Chato murciano" (terrina de carrillera y papada).'
 }, {
   id: 'mich-barahonda',
@@ -1699,8 +1699,8 @@ const PLACES = [
   lat: 38.6199,
   lng: -1.1168,
   featured: true,
-  desc: 'Yecla. ⭐ Estrella Michelin (nueva en 2025, primera para Yecla). Chef Alejandro Ibáñez. Cocina de terruño en viñedos de Señorío de Barahonda.',
-  desc_en: 'Yecla. ⭐ Michelin Star (new in 2025, Yecla\'s first). Chef Alejandro Ibáñez. Terroir cooking amid the Señorío de Barahonda vineyards.',
+  desc: 'Yecla. Estrella Michelin (nueva en 2025, primera para Yecla). Chef Alejandro Ibáñez. Cocina de terruño en viñedos de Señorío de Barahonda.',
+  desc_en: 'Yecla. Michelin Star (new in 2025, Yecla\'s first). Chef Alejandro Ibáñez. Terroir cooking amid the Señorío de Barahonda vineyards.',
   specialty: 'menús Caliza y Arcilla con ingredientes del entorno: huerta propia, carne, aceite, quesos y vinos de la finca.',
   url: 'https://barahonda.com/en/restaurant/'
 }, {
@@ -1734,8 +1734,8 @@ const PLACES = [
   lat: 37.1668,
   lng: -4.1493,
   featured: true,
-  desc: 'Loja (Granada/Málaga). ⭐ Estrella Michelin. Chef Fernando Arjona. Resort Barceló La Bobadilla, en plena sierra.',
-  desc_en: 'Loja (Granada/Málaga). ⭐ Michelin Star. Chef Fernando Arjona. Barceló La Bobadilla resort, deep in the mountains.',
+  desc: 'Loja (Granada/Málaga). Estrella Michelin. Chef Fernando Arjona. Resort Barceló La Bobadilla, en plena sierra.',
+  desc_en: 'Loja (Granada/Málaga). Michelin Star. Chef Fernando Arjona. Barceló La Bobadilla resort, deep in the mountains.',
   specialty: 'cocina andaluza con toques modernos: aceite de oliva local, caviar de Riofrío, productos ibéricos. Comedor de estilo masía rural.'
 }, {
   id: 'mich-farala',
@@ -1746,8 +1746,8 @@ const PLACES = [
   lat: 37.1752,
   lng: -3.5900,
   featured: true,
-  desc: 'Granada capital, Cuesta de Gomérez (a los pies de la Alhambra). Recomendado 2025 · ⭐ Estrella Michelin 2026. Chef Cristina Jiménez.',
-  desc_en: 'Granada city, Cuesta de Gomérez (at the foot of the Alhambra). Recommended 2025 · ⭐ Michelin Star 2026. Chef Cristina Jiménez.',
+  desc: 'Granada capital, Cuesta de Gomérez (a los pies de la Alhambra). Recomendado 2025 · Estrella Michelin 2026. Chef Cristina Jiménez.',
+  desc_en: 'Granada city, Cuesta de Gomérez (at the foot of the Alhambra). Recommended 2025 · Michelin Star 2026. Chef Cristina Jiménez.',
   specialty: 'tres menús degustación de cocina granadina actualizada. El edificio combina restaurante, wine bar y exhibiciones de flamenco.',
   url: 'https://restaurantefarala.com'
 }, {
@@ -1903,8 +1903,8 @@ const PLACES = [
 {
   id: 'magoga',
   name: 'Magoga (Cartagena)',
-  desc: 'Cartagena. ⭐ Estrella Michelin. Cocina murciana de alta gama.',
-  desc_en: 'Cartagena. ⭐ Michelin Star. High-end Murcian cooking.',
+  desc: 'Cartagena. Estrella Michelin. Cocina murciana de alta gama.',
+  desc_en: 'Cartagena. Michelin Star. High-end Murcian cooking.',
   specialty: 'menú degustación con producto del Mar Menor y huerta murciana.',
   tip: 'Reserva con 3-4 semanas, es de lo mejor del Sureste.',
   tier: '€€€€',
@@ -5095,7 +5095,7 @@ const GUIDE_SHARED = {
       title: 'Alrededores y recomendaciones',
       intro: 'Un catálogo completo de recomendaciones de los alrededores de Hestía sería infinito. Para empezar a explorar te recomendamos estas fuentes:',
       disclaimer_title: 'Sobre lo que leerás a continuación',
-      disclaimer: ['Distancias y tiempos en coche calculados desde Vera Playa, punto común a las tres Hestías (a menos de 2 km entre sí). Comprueba la ruta exacta en Google Maps antes de salir, especialmente en verano cuando el tráfico se carga.', 'Los horarios de bares, restaurantes y comercios cambian con la temporada y pueden alterarse sin previo aviso: llama o consulta su web antes de ir.', 'Las valoraciones (⭐) y los "best" que destacamos son recomendaciones personales que dependen del momento: un sitio brillante en mayo puede estar saturado en agosto, y el aforo o el tiempo cambian la experiencia. Tómalo como guía de salida, no como verdad absoluta.'],
+      disclaimer: ['Distancias y tiempos en coche calculados desde Vera Playa, punto común a las tres Hestías (a menos de 2 km entre sí). Comprueba la ruta exacta en Google Maps antes de salir, especialmente en verano cuando el tráfico se carga.', 'Los horarios de bares, restaurantes y comercios cambian con la temporada y pueden alterarse sin previo aviso: llama o consulta su web antes de ir.', 'Las valoraciones (estrellas) y los "best" que destacamos son recomendaciones personales que dependen del momento: un sitio brillante en mayo puede estar saturado en agosto, y el aforo o el tiempo cambian la experiencia. Tómalo como guía de salida, no como verdad absoluta.'],
       sources: ['Pregúntanos. Te ayudaremos con mucho gusto según nuestra experiencia y la de huéspedes como tú. A continuación tienes una pequeña muestra…'],
       sites: {
         title: 'Sitios web de recomendación turística',
@@ -5440,7 +5440,7 @@ const GUIDE_SHARED = {
       title: 'Surroundings and recommendations',
       intro: 'A complete catalogue of recommendations for the area around Hestía would be endless. To start exploring, we suggest these sources:',
       disclaimer_title: 'About what you are about to read',
-      disclaimer: ['All distances and drive times are approximate and measured from the Vera Playa complex as a common reference for the three Hestías (which sit within 2 km of each other). Check the exact route on Google Maps before heading out, especially in summer when traffic builds up.', 'Opening hours for bars, restaurants and shops change with the season and may be altered without notice: when in doubt, phone ahead or check their website.', 'Star ratings (⭐) and "best" picks are personal recommendations and depend on the moment: a place that shines in May can be saturated in August, an impeccable beach shack in season may close in winter, and crowd or weather change the experience. Take this as a starting guide, not gospel.'],
+      disclaimer: ['All distances and drive times are approximate and measured from the Vera Playa complex as a common reference for the three Hestías (which sit within 2 km of each other). Check the exact route on Google Maps before heading out, especially in summer when traffic builds up.', 'Opening hours for bars, restaurants and shops change with the season and may be altered without notice: when in doubt, phone ahead or check their website.', 'Star ratings and "best" picks are personal recommendations and depend on the moment: a place that shines in May can be saturated in August, an impeccable beach shack in season may close in winter, and crowd or weather change the experience. Take this as a starting guide, not gospel.'],
       sources: ['Just ask us. We are happy to help based on our experience and that of guests like you. A small sample below…'],
       sites: {
         title: 'Tourist information websites',
@@ -6224,7 +6224,10 @@ const CompactPlaceItem = ({
   }, lang === 'es' ? 'Dificultad:' : 'Level:'), ' ', p.level), p.phone && /*#__PURE__*/React.createElement("a", {
     className: "ag-place-phone",
     href: `tel:${p.phone.replace(/\s/g, '')}`
-  }, "📞 ", p.phone), /*#__PURE__*/React.createElement("a", {
+  }, /*#__PURE__*/React.createElement(HiIcon, {
+    name: "phone",
+    size: "1em"
+  }), " ", p.phone), /*#__PURE__*/React.createElement("a", {
     className: "ag-place-link",
     href: mapHref,
     target: "_blank",

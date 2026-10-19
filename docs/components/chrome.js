@@ -23,7 +23,7 @@ const Topbar = ({
   className: "tl-who hide-mobile"
 }, "Alex"), /*#__PURE__*/React.createElement("span", {
   className: "tl-mode hide-mobile"
-}, "🇪🇸 Español"), /*#__PURE__*/React.createElement("span", {
+}, "Español"), /*#__PURE__*/React.createElement("span", {
   className: "tl-num"
 }, "+34 620 316 370")), /*#__PURE__*/React.createElement("span", {
   className: "sep"
@@ -39,7 +39,7 @@ const Topbar = ({
   className: "tl-who hide-mobile"
 }, "Fran"), /*#__PURE__*/React.createElement("span", {
   className: "tl-mode hide-mobile"
-}, "🇬🇧 English"), /*#__PURE__*/React.createElement("span", {
+}, "English"), /*#__PURE__*/React.createElement("span", {
   className: "tl-num"
 }, "+34 654 138 251")), /*#__PURE__*/React.createElement("span", {
   className: "sep hide-mobile"
@@ -58,7 +58,7 @@ const Topbar = ({
 }, /*#__PURE__*/React.createElement("span", {
   className: "lang-full",
   "aria-hidden": "true"
-}, "🇪🇸 Español"), /*#__PURE__*/React.createElement("span", {
+}, "Español"), /*#__PURE__*/React.createElement("span", {
   className: "lang-abbr",
   "aria-hidden": "true"
 }, "ES")), /*#__PURE__*/React.createElement("span", {
@@ -72,7 +72,7 @@ const Topbar = ({
 }, /*#__PURE__*/React.createElement("span", {
   className: "lang-full",
   "aria-hidden": "true"
-}, "🇬🇧 English"), /*#__PURE__*/React.createElement("span", {
+}, "English"), /*#__PURE__*/React.createElement("span", {
   className: "lang-abbr",
   "aria-hidden": "true"
 }, "EN")))), /*#__PURE__*/React.createElement("div", {
@@ -1537,9 +1537,9 @@ const Footer = ({
     href: "contacto.html"
   }, t.nav[6])), /*#__PURE__*/React.createElement("li", null, /*#__PURE__*/React.createElement("a", {
     href: "https://wa.me/34620316370"
-  }, "🇪🇸 Alex · WhatsApp")), /*#__PURE__*/React.createElement("li", null, /*#__PURE__*/React.createElement("a", {
+  }, "Alex · WhatsApp")), /*#__PURE__*/React.createElement("li", null, /*#__PURE__*/React.createElement("a", {
     href: "https://wa.me/34654138251"
-  }, "🇬🇧 Fran · WhatsApp")), /*#__PURE__*/React.createElement("li", null, /*#__PURE__*/React.createElement("a", {
+  }, "Fran · WhatsApp")), /*#__PURE__*/React.createElement("li", null, /*#__PURE__*/React.createElement("a", {
     href: "mailto:info@hestiayourhome.com"
   }, "info@hestiayourhome.com"))))), /*#__PURE__*/React.createElement(IndaloGallery, {
     lang: lang

@@ -118,7 +118,7 @@ const BrandGuide = ({ lang }) => {
       role: lang === 'es' ? 'Color primario · noche' : 'Primary · night',
       why: lang === 'es' ? 'El cielo violeta de Vera a la 1:00 AM. Estructura, calma, profundidad.' : 'Vera\'s violet sky at 1 AM. Structure, calm, depth.',
       vals: ['HEX #3D1A35', 'RGB 61·26·53'],
-      photo: 'assets/photo-night-terrace.jpg',
+      photo: 'assets/hero-terrace-night.jpg',
       bg: '#3D1A35',
     },
     {
@@ -170,7 +170,7 @@ const BrandGuide = ({ lang }) => {
       name: 'Hestía Mar',
       concept: lang === 'es' ? '« El campo de olivos llega al mar »' : '« Where the olive grove meets the sea »',
       why: lang === 'es' ? 'Verde olivo profundo extraído del campo almeriense. Hestía más sereno y mineral, con el detalle marino del cabecero. La paleta neutraliza para que el mar pintado del cabecero sea siempre el protagonista.' : 'Deep olive green from the Almerían countryside. The most serene and mineral Hestía, with a marine touch in the headboard. The palette neutralises so the painted sea remains the lead.',
-      photo: 'assets/photo-vm-bedroom.jpg',
+      photo: 'assets/apt-vm-gallery-26.jpg',
       colors: [
         { hex: '#4A5628', name: 'Olivo' },
         { hex: '#6B7A3A', name: 'Olivo claro' },
@@ -183,7 +183,7 @@ const BrandGuide = ({ lang }) => {
       name: 'Hestía Thalassa',
       concept: lang === 'es' ? '« El naranja del Desierto de Tabernas »' : '« Orange from the Tabernas desert »',
       why: lang === 'es' ? 'Naranja tostado del único desierto de Europa, a 30 min en coche. Es la atmósfera más cálida y dramática: el ático, el SPA, las puestas de sol panorámicas. Una nota que enciende sin gritar.' : 'Toasted orange from Europe\'s only desert, 30 min by car. The warmest and most dramatic mood: the penthouse, the SPA, panoramic sunsets. A note that lights without shouting.',
-      photo: 'assets/photo-vt-bedroom.jpg',
+      photo: 'assets/apt-vt-gallery-24.jpg',
       colors: [
         { hex: '#8A4A24', name: 'Tabernas' },
         { hex: '#B86A3C', name: 'Tostado' },
@@ -196,7 +196,7 @@ const BrandGuide = ({ lang }) => {
       name: 'Hestía Salinas',
       concept: lang === 'es' ? '« El amarillo albero del amanecer »' : '« The ochre yellow of sunrise »',
       why: lang === 'es' ? 'Amarillo albero del Parque Natural de las Salinas a las 7:14 AM. La luz dorada que da nombre a Hestía. Tiene la textura del polvo de plaza, del adobe del Sur.' : 'Ochre yellow from the Salt Flats Natural Park at 7:14 AM. The golden light that names the Hestía. It carries the texture of square dust, the adobe of the South.',
-      photo: 'assets/photo-vs-bedroom.jpg',
+      photo: 'assets/apt-vs-gallery-33.jpg',
       colors: [
         { hex: '#9E7A2C', name: 'Albero' },
         { hex: '#D4A84A', name: 'Sol bajo' },

@@ -212,8 +212,8 @@ const LsPriceSummary = ({ ls, extras = [], guests, pets, lang }) => {
         </div>
       </div>
       <p className="price-note">{es
-        ? '* Señal del 20% para confirmar. Resto a la llegada, a convenir.'
-        : '* 20% deposit to confirm. Balance on arrival, to be agreed.'}</p>
+        ? '* Señal de ~20% para confirmar. Resto a la llegada.'
+        : '* ~20% deposit to confirm. Balance on arrival.'}</p>
     </div>
   );
 };
@@ -348,8 +348,8 @@ const PricePreview = ({ apt, checkin, checkout, pets, guests, lang, extras = [],
       </div>
       <p className="price-note">{lsCalc
         ? (lang === 'es'
-            ? '* Señal del 20% para confirmar. Resto a la llegada, a convenir.'
-            : '* 20% deposit to confirm. Balance on arrival, to be agreed.')
+            ? '* Señal de ~20% para confirmar. Resto a la llegada.'
+            : '* ~20% deposit to confirm. Balance on arrival.')
         : (lang === 'es'
             ? '* Precio orientativo. ¿Lo encuentras más barato en una plataforma? No solo te lo igualamos: te lo mejoramos.'
             : '* Indicative price. Found it cheaper on a platform? We don\'t just match it, we beat it.')
@@ -886,7 +886,7 @@ const ReservasForm = ({ lang }) => {
             `   ${fmt(grandTotal)} total\n` +
             (lsCalc.specialNights > 0 ? `   🎄 ${lsCalc.specialNights} special nights included\n` : '') +
             (extrasTotal > 0 ? `   ✚ Extras: +${fmt(extrasTotal)}\n` : '') +
-            `   Deposit 20% = ${fmt(Math.round(grandTotal * 0.2))} · balance on arrival, to be agreed\n`)
+            `   Deposit 20% = ${fmt(Math.round(grandTotal * 0.2))} · balance on arrival\n`)
       : (calc
           ? (lang === 'es'
               ? `\n💰 ${calc.isGapOffer ? 'PRECIO DE OFERTA DIRECTA' : 'PRECIO ESTIMADO DIRECTO'}\n` +
@@ -1054,7 +1054,7 @@ const ReservasForm = ({ lang }) => {
         ].map((s, i) => (
           <React.Fragment key={s.n}>
             <div className={`rf-ps${step === s.n ? ' rps-act' : step > s.n ? ' rps-done' : ' rps-pend'}`}>
-              <span className="rf-ps-n" aria-current={step === s.n ? 'step' : undefined}>{step > s.n ? '✓' : s.n}</span>
+              <span className="rf-ps-n" aria-current={step === s.n ? 'step' : undefined}>{step > s.n ? <HiIcon name="check" size="1em" /> : s.n}</span>
               <span className="rf-ps-lbl">{s.label}</span>
             </div>
             {i < 2 && <span className={`rf-ps-line${step > s.n ? ' rps-done' : ''}`} aria-hidden="true"/>}
@@ -1427,7 +1427,7 @@ const ReservasForm = ({ lang }) => {
                           onClick={() => (checked ? null : incExtra(ex.id))}
                           aria-label={checked ? label : (lang === 'es' ? `Añadir ${label}` : `Add ${label}`)}
                         >
-                          <span className="rf-extra-chip-mark" aria-hidden="true">{checked ? '✓' : '＋'}</span>
+                          <span className="rf-extra-chip-mark" aria-hidden="true">{checked ? <HiIcon name="check" size="1em" /> : '＋'}</span>
                           <span className="rf-extra-chip-text">
                             <span className="rf-extra-chip-label">{label}</span>
                             {ex.price > 0 && (
@@ -1665,7 +1665,7 @@ const ReservasAside = ({ lang }) => {
         </div>
         <div>
           <div className="r-name">Alex Berruezo</div>
-          <div className="r-lang">🇪🇸 Español</div>
+          <div className="r-lang">Español</div>
           <div className="r-role">{lang === 'es' ? 'Reserva · Antes de tu llegada' : 'Booking · Before you arrive'}</div>
         </div>
         <div className="r-actions">
@@ -1681,7 +1681,7 @@ const ReservasAside = ({ lang }) => {
         </div>
         <div>
           <div className="r-name">Fran Moral</div>
-          <div className="r-lang">🇬🇧 English</div>
+          <div className="r-lang">English</div>
           <div className="r-role">{lang === 'es' ? 'Estancia · Mientras estás aquí' : 'Stay · While you are here'}</div>
         </div>
         <div className="r-actions">

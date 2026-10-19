@@ -12,11 +12,11 @@ const CONTACTO_COPY = {
     intro: 'No somos una empresa con centralita. Somos Alex y Fran, y respondemos nosotros personalmente. Alex atiende en español, Fran en inglés.',
     alex_title: 'Alex Berruezo',
     alex_role: 'Reserva · Antes de tu llegada',
-    alex_lang: '🇪🇸 Español',
+    alex_lang: 'Español',
     alex_quote: '«A ti, antes de que llegues, te lo cuento todo. Después, cuando te vayas, seguiremos en contacto si tú quieres…»',
     fran_title: 'Fran Moral',
     fran_role: 'Estancia · Mientras estás aquí',
-    fran_lang: '🇬🇧 English',
+    fran_lang: 'English',
     fran_quote: '«If anything breaks, calls, or changes, I am here. Your stay, my job.»',
     wa_label: 'WhatsApp',
     tel_label: 'Teléfono',
@@ -40,7 +40,7 @@ const CONTACTO_COPY = {
       }, "página de reservas"), " o escríbenos directamente por WhatsApp con las fechas y qué Hestía te interesa.")
     }, {
       q: '¿Cómo es el proceso de reserva directa?',
-      a: /*#__PURE__*/React.createElement(React.Fragment, null, "Te enviamos un ", /*#__PURE__*/React.createElement("strong", null, "borrador de contrato"), " con derechos y obligaciones de ambas partes (precios, pagos, condiciones de cancelación y normas). Lo revisas, lo rellenas, lo firmas y nos lo devuelves. Una ", /*#__PURE__*/React.createElement("strong", null, "pequeña prereserva a convenir"), ", normalmente el ", /*#__PURE__*/React.createElement("strong", null, "20 % de la reserva total"), ", se paga al formalizar el contrato; el resto, también ", /*#__PURE__*/React.createElement("strong", null, "a convenir"), ", se abona al llegar a Hestía. Acusamos recibo de todo (contrato y prereserva) para que tengas ", /*#__PURE__*/React.createElement("strong", null, "confianza, garantía y seguridad"), " en cada paso.")
+      a: /*#__PURE__*/React.createElement(React.Fragment, null, "Te enviamos un ", /*#__PURE__*/React.createElement("strong", null, "borrador de contrato"), " con derechos y obligaciones de ambas partes (precios, pagos, condiciones de cancelación y normas). Lo revisas, lo rellenas, lo firmas y nos lo devuelves. Al firmarlo se paga una ", /*#__PURE__*/React.createElement("strong", null, "señal de ~20% del total"), "; el resto se abona ", /*#__PURE__*/React.createElement("strong", null, "a la llegada"), " a Hestía. Acusamos recibo de todo (contrato y prereserva) para que tengas ", /*#__PURE__*/React.createElement("strong", null, "confianza, garantía y seguridad"), " en cada paso.")
     }, {
       q: '¿Qué Hestías tenéis?',
       a: /*#__PURE__*/React.createElement(React.Fragment, null, "Tenemos tres: ", /*#__PURE__*/React.createElement("a", {
@@ -69,11 +69,11 @@ const CONTACTO_COPY = {
     intro: "We are not a company with a call centre. We are Alex and Fran, and we respond personally. Alex handles Spanish, Fran handles English.",
     alex_title: 'Alex Berruezo',
     alex_role: 'Booking · Before you arrive',
-    alex_lang: '🇪🇸 Español',
+    alex_lang: 'Español',
     alex_quote: '«Before you arrive, I will tell you everything. After you leave, we will stay in touch if you like…»',
     fran_title: 'Fran Moral',
     fran_role: 'Stay · While you are here',
-    fran_lang: '🇬🇧 English',
+    fran_lang: 'English',
     fran_quote: '«If anything breaks, calls, or changes, I am here. Your stay, my job.»',
     wa_label: 'WhatsApp',
     tel_label: 'Phone',
@@ -97,7 +97,7 @@ const CONTACTO_COPY = {
       }, "reservations page"), " or write to us directly on WhatsApp with your dates and the Hestía you are interested in.")
     }, {
       q: 'How does the direct booking process work?',
-      a: /*#__PURE__*/React.createElement(React.Fragment, null, "We send you a ", /*#__PURE__*/React.createElement("strong", null, "draft contract"), " with the rights and obligations of both sides (prices, payments, cancellation terms and house rules). You review it, fill it in, sign and return it. A ", /*#__PURE__*/React.createElement("strong", null, "small deposit to agree"), ", usually ", /*#__PURE__*/React.createElement("strong", null, "20 % of the total booking"), ", is paid when the contract is signed; the rest, also ", /*#__PURE__*/React.createElement("strong", null, "to be agreed"), ", is paid on arrival at Hestía. We acknowledge everything (contract and deposit) so you have ", /*#__PURE__*/React.createElement("strong", null, "trust, guarantee and security"), " at every step.")
+      a: /*#__PURE__*/React.createElement(React.Fragment, null, "We send you a ", /*#__PURE__*/React.createElement("strong", null, "draft contract"), " with the rights and obligations of both sides (prices, payments, cancellation terms and house rules). You review it, fill it in, sign and return it. A ", /*#__PURE__*/React.createElement("strong", null, "~20% deposit"), " is paid when you sign it; the rest is paid ", /*#__PURE__*/React.createElement("strong", null, "on arrival"), " at Hestía. We acknowledge everything (contract and deposit) so you have ", /*#__PURE__*/React.createElement("strong", null, "trust, guarantee and security"), " at every step.")
     }, {
       q: 'Which Hestías do you have?',
       a: /*#__PURE__*/React.createElement(React.Fragment, null, "We have three: ", /*#__PURE__*/React.createElement("a", {

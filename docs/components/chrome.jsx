@@ -9,14 +9,14 @@ const Topbar = ({ lang, setLang }) => (
         <a href="https://wa.me/34620316370" className={`topbar-link${lang === 'es' ? ' tl-active' : ''}`} target="_blank" rel="noopener" aria-label="Alex, Español, WhatsApp +34 620 316 370">
           <span className={`tl-dot${lang === 'es' ? ' tl-dot--on' : ''}`}/>
           <span className="tl-who hide-mobile">Alex</span>
-          <span className="tl-mode hide-mobile">🇪🇸 Español</span>
+          <span className="tl-mode hide-mobile">Español</span>
           <span className="tl-num">+34 620 316 370</span>
         </a>
         <span className="sep">·</span>
         <a href="https://wa.me/34654138251" className={`topbar-link${lang === 'en' ? ' tl-active' : ''}`} target="_blank" rel="noopener" aria-label="Fran, English, WhatsApp +34 654 138 251">
           <span className={`tl-dot${lang === 'en' ? ' tl-dot--on' : ''}`}/>
           <span className="tl-who hide-mobile">Fran</span>
-          <span className="tl-mode hide-mobile">🇬🇧 English</span>
+          <span className="tl-mode hide-mobile">English</span>
           <span className="tl-num">+34 654 138 251</span>
         </a>
         <span className="sep hide-mobile">·</span>
@@ -31,7 +31,7 @@ const Topbar = ({ lang, setLang }) => (
           aria-pressed={lang === 'es'}
           aria-label="Español"
         >
-          <span className="lang-full" aria-hidden="true">🇪🇸 Español</span>
+          <span className="lang-full" aria-hidden="true">Español</span>
           <span className="lang-abbr" aria-hidden="true">ES</span>
         </button>
         <span className="divider" aria-hidden="true">/</span>
@@ -41,7 +41,7 @@ const Topbar = ({ lang, setLang }) => (
           aria-pressed={lang === 'en'}
           aria-label="English"
         >
-          <span className="lang-full" aria-hidden="true">🇬🇧 English</span>
+          <span className="lang-full" aria-hidden="true">English</span>
           <span className="lang-abbr" aria-hidden="true">EN</span>
         </button>
       </div>
@@ -935,8 +935,8 @@ const Footer = ({ lang }) => {
           <h3>{t.footer_contacto}</h3>
           <ul>
             <li><a href="contacto.html">{t.nav[6]}</a></li>
-            <li><a href="https://wa.me/34620316370">🇪🇸 Alex · WhatsApp</a></li>
-            <li><a href="https://wa.me/34654138251">🇬🇧 Fran · WhatsApp</a></li>
+            <li><a href="https://wa.me/34620316370">Alex · WhatsApp</a></li>
+            <li><a href="https://wa.me/34654138251">Fran · WhatsApp</a></li>
             <li><a href="mailto:info@hestiayourhome.com">info@hestiayourhome.com</a></li>
           </ul>
         </div>

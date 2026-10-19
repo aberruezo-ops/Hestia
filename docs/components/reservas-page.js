@@ -197,7 +197,7 @@ const LsPriceSummary = ({
     className: "price-line price-line-total"
   }, /*#__PURE__*/React.createElement("span", null, es ? 'Total estimado' : 'Estimated total'), /*#__PURE__*/React.createElement("span", null, fmt(grandTotal)))), /*#__PURE__*/React.createElement("p", {
     className: "price-note"
-  }, es ? '* Señal del 20% para confirmar. Resto a la llegada, a convenir.' : '* 20% deposit to confirm. Balance on arrival, to be agreed.'));
+  }, es ? '* Señal de ~20% para confirmar. Resto a la llegada.' : '* ~20% deposit to confirm. Balance on arrival.'));
 };
 const LsInfoBlock = ({
   calc,
@@ -306,7 +306,7 @@ const PricePreview = ({
     className: "prl-saving-val"
   }, "−", fmt(savings))))), /*#__PURE__*/React.createElement("p", {
     className: "price-note"
-  }, lsCalc ? lang === 'es' ? '* Señal del 20% para confirmar. Resto a la llegada, a convenir.' : '* 20% deposit to confirm. Balance on arrival, to be agreed.' : lang === 'es' ? '* Precio orientativo. ¿Lo encuentras más barato en una plataforma? No solo te lo igualamos: te lo mejoramos.' : '* Indicative price. Found it cheaper on a platform? We don\'t just match it, we beat it.'));
+  }, lsCalc ? lang === 'es' ? '* Señal de ~20% para confirmar. Resto a la llegada.' : '* ~20% deposit to confirm. Balance on arrival.' : lang === 'es' ? '* Precio orientativo. ¿Lo encuentras más barato en una plataforma? No solo te lo igualamos: te lo mejoramos.' : '* Indicative price. Found it cheaper on a platform? We don\'t just match it, we beat it.'));
 };
 
 // ReviewQuote, cita rotando de una reseña real verificada en el
@@ -961,7 +961,7 @@ const ReservasForm = ({
     const babyText = baby === 'yes' ? lang === 'es' ? 'Sí' : 'Yes' : 'No';
     const grandTotal = isLsStay && lsCalc ? lsCalc.total + extrasTotal : calc ? calc.directTotal + extrasTotal : 0;
     const grandAvg = calc ? Math.round(grandTotal / calc.nights) : 0;
-    const priceBlock = isLsStay && lsCalc ? lang === 'es' ? `\n💰 PRECIO ESTANCIA LARGA (TARIFA MENSUAL)\n` + `   ${fmt(grandTotal)} total\n` + (lsCalc.specialNights > 0 ? `   🎄 ${lsCalc.specialNights} noches especiales incluidas\n` : '') + (extrasTotal > 0 ? `   ✚ Extras: +${fmt(extrasTotal)}\n` : '') + `   Señal 20% = ${fmt(Math.round(grandTotal * 0.2))} · resto a la llegada\n` : `\n💰 LONG-STAY PRICE (MONTHLY RATE)\n` + `   ${fmt(grandTotal)} total\n` + (lsCalc.specialNights > 0 ? `   🎄 ${lsCalc.specialNights} special nights included\n` : '') + (extrasTotal > 0 ? `   ✚ Extras: +${fmt(extrasTotal)}\n` : '') + `   Deposit 20% = ${fmt(Math.round(grandTotal * 0.2))} · balance on arrival, to be agreed\n` : calc ? lang === 'es' ? `\n💰 ${calc.isGapOffer ? 'PRECIO DE OFERTA DIRECTA' : 'PRECIO ESTIMADO DIRECTO'}\n` + `   ${fmt(grandTotal)} total (${calc.nights} noches × ~${fmt(grandAvg)}/noche)\n` + (calc.isGapOffer ? `   🏷 Oferta: ${fmt(calc.gapPerNight)}/noche (precio cerrado)\n` : '') + (calc.stayD ? `   🏷 ${calc.stayD.es}: −${fmt(calc.stayDiscAmt)}\n` : '') + (calc.guestSuppAmt > 0 ? `   👥 ${calc.guests} huéspedes: +${fmt(calc.guestSuppAmt)}\n` : '') + (calc.petAmt > 0 ? `   🐾 Mascota: Sí (+${calc.petAmt}€${petSuppLabel('es') ? ' · ' + petSuppLabel('es') : ''})\n` : '') + (extrasTotal > 0 ? `   ✚ Extras: +${fmt(extrasTotal)}\n` : '') + `   ✓ Si lo ves más barato, no solo te lo igualamos: te lo mejoramos\n` : `\n💰 ${calc.isGapOffer ? 'DIRECT OFFER PRICE' : 'ESTIMATED DIRECT PRICE'}\n` + `   ${fmt(grandTotal)} total (${calc.nights} nights × ~${fmt(grandAvg)}/night)\n` + (calc.isGapOffer ? `   🏷 Offer: ${fmt(calc.gapPerNight)}/night (locked price)\n` : '') + (calc.stayD ? `   🏷 ${calc.stayD.en}: −${fmt(calc.stayDiscAmt)}\n` : '') + (calc.guestSuppAmt > 0 ? `   👥 ${calc.guests} guests: +${fmt(calc.guestSuppAmt)}\n` : '') + (calc.petAmt > 0 ? `   🐾 Pet: Yes (+${calc.petAmt}€${petSuppLabel('en') ? ' · ' + petSuppLabel('en') : ''})\n` : '') + (extrasTotal > 0 ? `   ✚ Extras: +${fmt(extrasTotal)}\n` : '') + `   ✓ Find it cheaper and we don't just match it: we beat it\n` : '';
+    const priceBlock = isLsStay && lsCalc ? lang === 'es' ? `\n💰 PRECIO ESTANCIA LARGA (TARIFA MENSUAL)\n` + `   ${fmt(grandTotal)} total\n` + (lsCalc.specialNights > 0 ? `   🎄 ${lsCalc.specialNights} noches especiales incluidas\n` : '') + (extrasTotal > 0 ? `   ✚ Extras: +${fmt(extrasTotal)}\n` : '') + `   Señal 20% = ${fmt(Math.round(grandTotal * 0.2))} · resto a la llegada\n` : `\n💰 LONG-STAY PRICE (MONTHLY RATE)\n` + `   ${fmt(grandTotal)} total\n` + (lsCalc.specialNights > 0 ? `   🎄 ${lsCalc.specialNights} special nights included\n` : '') + (extrasTotal > 0 ? `   ✚ Extras: +${fmt(extrasTotal)}\n` : '') + `   Deposit 20% = ${fmt(Math.round(grandTotal * 0.2))} · balance on arrival\n` : calc ? lang === 'es' ? `\n💰 ${calc.isGapOffer ? 'PRECIO DE OFERTA DIRECTA' : 'PRECIO ESTIMADO DIRECTO'}\n` + `   ${fmt(grandTotal)} total (${calc.nights} noches × ~${fmt(grandAvg)}/noche)\n` + (calc.isGapOffer ? `   🏷 Oferta: ${fmt(calc.gapPerNight)}/noche (precio cerrado)\n` : '') + (calc.stayD ? `   🏷 ${calc.stayD.es}: −${fmt(calc.stayDiscAmt)}\n` : '') + (calc.guestSuppAmt > 0 ? `   👥 ${calc.guests} huéspedes: +${fmt(calc.guestSuppAmt)}\n` : '') + (calc.petAmt > 0 ? `   🐾 Mascota: Sí (+${calc.petAmt}€${petSuppLabel('es') ? ' · ' + petSuppLabel('es') : ''})\n` : '') + (extrasTotal > 0 ? `   ✚ Extras: +${fmt(extrasTotal)}\n` : '') + `   ✓ Si lo ves más barato, no solo te lo igualamos: te lo mejoramos\n` : `\n💰 ${calc.isGapOffer ? 'DIRECT OFFER PRICE' : 'ESTIMATED DIRECT PRICE'}\n` + `   ${fmt(grandTotal)} total (${calc.nights} nights × ~${fmt(grandAvg)}/night)\n` + (calc.isGapOffer ? `   🏷 Offer: ${fmt(calc.gapPerNight)}/night (locked price)\n` : '') + (calc.stayD ? `   🏷 ${calc.stayD.en}: −${fmt(calc.stayDiscAmt)}\n` : '') + (calc.guestSuppAmt > 0 ? `   👥 ${calc.guests} guests: +${fmt(calc.guestSuppAmt)}\n` : '') + (calc.petAmt > 0 ? `   🐾 Pet: Yes (+${calc.petAmt}€${petSuppLabel('en') ? ' · ' + petSuppLabel('en') : ''})\n` : '') + (extrasTotal > 0 ? `   ✚ Extras: +${fmt(extrasTotal)}\n` : '') + `   ✓ Find it cheaper and we don't just match it: we beat it\n` : '';
     const lines = lang === 'es' ? [`¡Hola! Quiero hacer una consulta de reserva.\n`, `Hestía: ${aptNames[apt] || apt || '–'}`, `Nombre: ${name}`, channel === 'whatsapp' ? `Teléfono: ${tel}` : `Email: ${email}`, `Entrada: ${checkin}`, `Salida: ${checkout}`, `Huéspedes: ${guests}`, `Mascota: ${petsText}`, `Bebé: ${babyText}${extrasText}${priceBlock}`, `Comentarios: ${comments || '–'}`] : [`Hello! I'd like to enquire about a booking.\n`, `Hestía: ${aptNames[apt] || apt || '–'}`, `Name: ${name}`, channel === 'whatsapp' ? `Phone: ${tel}` : `Email: ${email}`, `Check-in: ${checkin}`, `Check-out: ${checkout}`, `Guests: ${guests}`, `Pet: ${petsText}`, `Baby: ${babyText}${extrasText}${priceBlock}`, `Comments: ${comments || '–'}`];
     return lines.join('\n');
   };
@@ -1101,7 +1101,10 @@ const ReservasForm = ({
   }, /*#__PURE__*/React.createElement("span", {
     className: "rf-ps-n",
     "aria-current": step === s.n ? 'step' : undefined
-  }, step > s.n ? '✓' : s.n), /*#__PURE__*/React.createElement("span", {
+  }, step > s.n ? /*#__PURE__*/React.createElement(HiIcon, {
+    name: "check",
+    size: "1em"
+  }) : s.n), /*#__PURE__*/React.createElement("span", {
     className: "rf-ps-lbl"
   }, s.label)), i < 2 && /*#__PURE__*/React.createElement("span", {
     className: `rf-ps-line${step > s.n ? ' rps-done' : ''}`,
@@ -1506,7 +1509,10 @@ const ReservasForm = ({
     }, /*#__PURE__*/React.createElement("span", {
       className: "rf-extra-chip-mark",
       "aria-hidden": "true"
-    }, checked ? '✓' : '＋'), /*#__PURE__*/React.createElement("span", {
+    }, checked ? /*#__PURE__*/React.createElement(HiIcon, {
+      name: "check",
+      size: "1em"
+    }) : '＋'), /*#__PURE__*/React.createElement("span", {
       className: "rf-extra-chip-text"
     }, /*#__PURE__*/React.createElement("span", {
       className: "rf-extra-chip-label"
@@ -1750,7 +1756,7 @@ const ReservasAside = ({
     className: "r-name"
   }, "Alex Berruezo"), /*#__PURE__*/React.createElement("div", {
     className: "r-lang"
-  }, "🇪🇸 Español"), /*#__PURE__*/React.createElement("div", {
+  }, "Español"), /*#__PURE__*/React.createElement("div", {
     className: "r-role"
   }, lang === 'es' ? 'Reserva · Antes de tu llegada' : 'Booking · Before you arrive')), /*#__PURE__*/React.createElement("div", {
     className: "r-actions"
@@ -1785,7 +1791,7 @@ const ReservasAside = ({
     className: "r-name"
   }, "Fran Moral"), /*#__PURE__*/React.createElement("div", {
     className: "r-lang"
-  }, "🇬🇧 English"), /*#__PURE__*/React.createElement("div", {
+  }, "English"), /*#__PURE__*/React.createElement("div", {
     className: "r-role"
   }, lang === 'es' ? 'Estancia · Mientras estás aquí' : 'Stay · While you are here')), /*#__PURE__*/React.createElement("div", {
     className: "r-actions"
