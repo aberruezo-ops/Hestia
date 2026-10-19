@@ -448,6 +448,8 @@ const AptShowcaseMedia = ({ apt, lang }) => {
 const Apartments = ({ lang }) => {
   const t = COPY[lang];
   const [aptAvail, setAptAvail] = React.useState({});
+  const gridRef = React.useRef(null);
+  const [cardIdx, setCardIdx] = React.useState(0);
 
   React.useEffect(() => {
     fetch('assets/availability.json?t=' + Date.now(), { cache: 'no-store' })
@@ -460,6 +462,21 @@ const Apartments = ({ lang }) => {
       })
       .catch(() => {});
   }, []);
+
+  // Fila deslizable en móvil: qué tarjeta se ve y salto a otra desde el indicador.
+  const onGridScroll = () => {
+    const el = gridRef.current;
+    if (!el) return;
+    const cards = [...el.children];
+    let best = 0, bestD = Infinity;
+    cards.forEach((c, i) => { const d = Math.abs(c.offsetLeft - el.scrollLeft - el.offsetLeft); if (d < bestD) { bestD = d; best = i; } });
+    setCardIdx(best);
+  };
+  const goCard = (i) => {
+    const el = gridRef.current;
+    const c = el && el.children[i];
+    if (c) el.scrollTo({ left: c.offsetLeft - el.offsetLeft - (parseFloat(getComputedStyle(el).scrollPaddingLeft) || 0), behavior: 'smooth' });
+  };
 
   // "Desde" = base más baja de prices.json (lo que el admin ve en /p-edit),
   // sin el directDiscount: ese descuento vive en el desglose de /reservas.
@@ -483,7 +500,7 @@ const Apartments = ({ lang }) => {
         <h2>{t.apts_title}</h2>
         <p>{t.apts_sub}</p>
       </div>
-      <div className="as-grid">
+      <div className="as-grid" ref={gridRef} onScroll={onGridScroll}>
         {APARTMENTS.map(a => {
           const minPrice = aptMinPrice(a.id);
           // "Reservar" lleva a /reservas con el apartamento, 2 huéspedes y el
@@ -546,6 +563,14 @@ const Apartments = ({ lang }) => {
             </article>
           );
         })}
+      </div>
+      <div className="as-pager">
+        {APARTMENTS.map((a, i) => (
+          <button key={a.id} type="button" className={`as-pager-btn${i === cardIdx ? ' on' : ''}`} onClick={() => goCard(i)}
+                  aria-label={a.name} aria-current={i === cardIdx ? 'true' : undefined}>
+            <span className="apt-dot" data-apt={a.id} aria-hidden="true"/>{a.name.replace('Hestía ', '')}
+          </button>
+        ))}
       </div>
       <p className="as-pets"><HiIcon name="paw" size={16} /> {t.apts_pets}</p>
     </section>
