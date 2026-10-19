@@ -644,6 +644,16 @@
       "value": 5,
       "lastMinute": true,
       "auto": true
+    },
+    "vm|2026-10-20": {
+      "apt": "vm",
+      "start": "2026-10-20",
+      "end": "2026-10-24",
+      "nights": 4,
+      "type": "discount",
+      "value": 5,
+      "lastMinute": true,
+      "auto": true
     }
   },
   "gapSplits": {
