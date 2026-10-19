@@ -70,7 +70,7 @@ const NOTICIAS = {
         "es": "Playa",
         "en": "Beach"
       },
-      "img": "assets/noticias-oct2026-playa.jpg",
+      "icon": "umbrella",
       "titulo": {
         "es": "Octubre en Vera Playa: el mar sigue templado, el ambiente se relaja",
         "en": "October in Vera Playa: the sea stays mild, the mood relaxes"
@@ -85,7 +85,7 @@ const NOTICIAS = {
         "es": "Mercado",
         "en": "Market"
       },
-      "img": "assets/noticias-oct2026-mercado.jpg",
+      "icon": "basket",
       "titulo": {
         "es": "El mercado de abastos de Vera pueblo, en su mejor sábado de otoño",
         "en": "Vera village's covered market, on its best autumn Saturday"
@@ -108,7 +108,7 @@ const NOTICIAS = {
         "es": "Feria",
         "en": "Fair"
       },
-      "img": "assets/noticias-oct2026-feria-huercal.jpg",
+      "icon": "spark",
       "titulo": {
         "es": "Feria y Fiestas patronales de Huércal-Overa, del 16 al 20 de octubre",
         "en": "Huércal-Overa's patron saint fair, 16 to 20 October"
@@ -131,7 +131,7 @@ const NOTICIAS = {
         "es": "Restaurante",
         "en": "Restaurant"
       },
-      "img": "assets/noticias-oct2026-chumbera.jpg",
+      "icon": "fork",
       "titulo": {
         "es": "Asador La Chumbera, en Sopalmo: brasa y vistas al mar entre Mojácar y Agua Amarga",
         "en": "Asador La Chumbera, in Sopalmo: fire-grilled food and sea views between Mojácar and Agua Amarga"
@@ -146,7 +146,7 @@ const NOTICIAS = {
         "es": "Mirador",
         "en": "Viewpoint"
       },
-      "img": "assets/noticias-oct2026-mesa-roldan.jpg",
+      "icon": "mountain",
       "titulo": {
         "es": "Mesa Roldán, en Carboneras: el mirador 360° que sale en Juego de Tronos",
         "en": "Mesa Roldán, in Carboneras: the 360° lookout from Game of Thrones"
@@ -169,7 +169,7 @@ const NOTICIAS = {
         "es": "Restaurante",
         "en": "Restaurant"
       },
-      "img": "assets/noticias-oct2026-el-faro.jpg",
+      "icon": "fish",
       "titulo": {
         "es": "El Faro, en Águilas: el arroz caldero murciano a pie de puerto",
         "en": "El Faro, in Águilas: Murcian caldero rice right by the harbour"
@@ -184,7 +184,7 @@ const NOTICIAS = {
         "es": "Playa",
         "en": "Beach"
       },
-      "img": "assets/noticias-oct2026-bolnuevo.jpg",
+      "icon": "wave",
       "titulo": {
         "es": "Las Gredas de Bolnuevo, en Mazarrón: formaciones únicas con la luz de octubre",
         "en": "Las Gredas de Bolnuevo, in Mazarrón: unique formations in October light"
@@ -444,6 +444,27 @@ const VozCard = ({
   href: item.slug,
   className: "voz-apt-link"
 }, lang === 'es' ? `Ver ${item.apt} →` : `See ${item.apt} →`));
+
+// Placa Sello en lugar de foto: un icono propio no finge ser el sitio real
+// (las fotos generadas de lugares y negocios con nombre engañaban).
+const ArticleVisual = ({
+  article
+}) => {
+  if (article.icon) return /*#__PURE__*/React.createElement("span", {
+    className: "noticias-article-plate",
+    "aria-hidden": "true"
+  }, /*#__PURE__*/React.createElement(HiIcon, {
+    name: article.icon,
+    size: 50
+  }));
+  if (article.img) return /*#__PURE__*/React.createElement("img", {
+    className: "noticias-article-img",
+    src: article.img,
+    alt: "",
+    loading: "lazy"
+  });
+  return null;
+};
 const ArticleCard = ({
   article,
   lang,
@@ -451,11 +472,8 @@ const ArticleCard = ({
 }) => /*#__PURE__*/React.createElement("div", {
   className: "noticias-article",
   id: id
-}, article.img && /*#__PURE__*/React.createElement("img", {
-  className: "noticias-article-img",
-  src: article.img,
-  alt: "",
-  loading: "lazy"
+}, /*#__PURE__*/React.createElement(ArticleVisual, {
+  article: article
 }), /*#__PURE__*/React.createElement("div", {
   className: "noticias-article-body"
 }, /*#__PURE__*/React.createElement("span", {
@@ -476,11 +494,8 @@ const ArticleCardWithZone = ({
   style: {
     '--cat-accent': cat.accent
   }
-}, article.img && /*#__PURE__*/React.createElement("img", {
-  className: "noticias-article-img",
-  src: article.img,
-  alt: "",
-  loading: "lazy"
+}, /*#__PURE__*/React.createElement(ArticleVisual, {
+  article: article
 }), /*#__PURE__*/React.createElement("div", {
   className: "noticias-article-body"
 }, /*#__PURE__*/React.createElement("div", {

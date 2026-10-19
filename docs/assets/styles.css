@@ -10601,6 +10601,23 @@ body[data-apt="salinas"] a.apt-page-reserve-btn:hover {
   border-radius: 10px 0 10px 0;
   flex-shrink: 0;
 }
+/* Placa Sello de cada noticia: superficie clara (también dentro del archivo oscuro),
+   trazo en tinta y la segunda tinta del icono en el color de la zona. */
+.noticias-article-plate {
+  width: 92px;
+  height: 92px;
+  min-width: 92px;
+  flex-shrink: 0;
+  display: grid;
+  place-items: center;
+  border-radius: 10px 0 10px 0;
+  background:
+    repeating-linear-gradient(135deg, transparent 0 7px, color-mix(in srgb, var(--cat-accent, var(--sol)) 9%, transparent) 7px 8px),
+    color-mix(in srgb, var(--cat-accent, var(--sol)) 13%, var(--crema));
+  box-shadow: inset 0 0 0 1px color-mix(in srgb, var(--cat-accent, var(--sol)) 28%, transparent);
+  color: var(--ink);
+  --hi-tint: var(--cat-accent, var(--sol));
+}
 .noticias-article-body { flex: 1; min-width: 0; }
 .noticias-tag {
   display: inline-block;

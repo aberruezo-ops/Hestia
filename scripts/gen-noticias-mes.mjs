@@ -49,6 +49,8 @@ const APTS = [
   { num: '03', apt: 'Hestía Salinas',  slug: 'salinas.html',  accent: 'var(--vs-dk)' },
 ];
 const ICONS = new Set(['🌊', '🎉', '🎤', '✨', '⛵', '🔥', '🌿', '🎶', '🌸']);
+// Icono del sprite para la placa de cada artículo (nunca fotos generadas de sitios reales).
+const ARTICLE_ICONS = new Set(['umbrella', 'wave', 'basket', 'spark', 'fork', 'fish', 'mountain', 'wine', 'coffee', 'boat', 'sun', 'ticket', 'camera', 'walk', 'bike', 'book', 'mic', 'olive', 'flower', 'cart', 'buildings']);
 const MIN_ARTICLES = 4;
 
 // Reglas de CLAUDE.md y del kit de redes, aplicadas a cada texto.
@@ -215,6 +217,8 @@ function validate(e) {
       const w = `territorio[${i}].articles[${j}]`;
       if (!Array.isArray(a.months) || !a.months.includes(mon)) errs.push(`${w}.months debe incluir ${mon}`);
       bi(a.tag, `${w}.tag`); bi(a.titulo, `${w}.titulo`); bi(a.cuerpo, `${w}.cuerpo`);
+      if (!ARTICLE_ICONS.has(a.icon)) errs.push(`${w}.icon "${a.icon}" no es uno de ${[...ARTICLE_ICONS].join(' ')}`);
+      if (a.img) errs.push(`${w}.img no se admite: usa icon`);
     });
   });
   if (Array.isArray(e.territorio) && countArticles(e) < MIN_ARTICLES) errs.push(`menos de ${MIN_ARTICLES} artículos`);
@@ -235,7 +239,7 @@ async function generateWithClaude() {
   ].join('');
   const user = [
     `Escribe la edición "${es} ${year}" del blog mensual (Noticias & Blog) de Hestía.`,
-    `Devuelve SOLO un JSON válido con esta forma exacta (mismo esquema que los ejemplos): {"edition":{"es":"${es} ${year}","en":"${en} ${year}"},"voz":[...3 entradas, una por apartamento en este orden y con estos campos fijos: ${JSON.stringify(APTS)}; cada una con "curiosidad":{"es","en"} y "reco":{"es","en"}],"territorio":[{"cat":{"es","en"},"icon":"uno de ${[...ICONS].join(' ')}","accent":"var(--sol)|var(--vs)|var(--vm)|var(--vt)|var(--vs-dk)","articles":[{"months":[${mon}],"tag":{"es","en"},"titulo":{"es","en"},"cuerpo":{"es","en"}}]}]}.`,
+    `Devuelve SOLO un JSON válido con esta forma exacta (mismo esquema que los ejemplos): {"edition":{"es":"${es} ${year}","en":"${en} ${year}"},"voz":[...3 entradas, una por apartamento en este orden y con estos campos fijos: ${JSON.stringify(APTS)}; cada una con "curiosidad":{"es","en"} y "reco":{"es","en"}],"territorio":[{"cat":{"es","en"},"icon":"uno de ${[...ICONS].join(' ')}","accent":"var(--sol)|var(--vs)|var(--vm)|var(--vt)|var(--vs-dk)","articles":[{"months":[${mon}],"icon":"uno de ${[...ARTICLE_ICONS].join(' ')}","tag":{"es","en"},"titulo":{"es","en"},"cuerpo":{"es","en"}}]}]}.`,
     `Entre ${MIN_ARTICLES} y 10 artículos en total. Usa únicamente hechos de los archivos de abajo y de las ediciones anteriores; si un evento no tiene fecha confirmada, dilo ("confirmar programa"). Nada de precios ni de "desde". Sin guion largo. Inglés natural, no traducción literal.`,
     `\n# Calendario del mes (strategy/redes/temporadas-y-eventos.md)\n${read(STRATEGY.eventos)}`,
     clim ? `\n# Clima orientativo de ${es}: media ${clim.avg}°C, mínima ${clim.min}°C, máxima ${clim.max}°C (${climate.note || ''})` : '',
