@@ -123,7 +123,7 @@ const OpinionesHero = ({
     playsInline: true,
     preload: "auto"
   }, /*#__PURE__*/React.createElement("source", {
-    src: "assets/mp_.mp4",
+    src: "assets/opiniones-hero-hestia.mp4",
     type: "video/mp4"
   })), /*#__PURE__*/React.createElement("div", {
     className: "opiniones-hero-wash"

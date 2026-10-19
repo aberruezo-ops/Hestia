@@ -152,7 +152,7 @@ const ContactoHero = ({
     playsInline: true,
     preload: "auto"
   }, /*#__PURE__*/React.createElement("source", {
-    src: "assets/contacto-hero.mp4",
+    src: "assets/contacto-hero-hestia.mp4",
     type: "video/mp4"
   })), /*#__PURE__*/React.createElement("div", {
     className: "contacto-hero-wash"

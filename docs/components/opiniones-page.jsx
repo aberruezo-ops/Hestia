@@ -77,7 +77,7 @@ const OpinionesHero = ({ lang }) => {
   return (
     <section className="page-hero opiniones-hero">
       <video ref={videoRef} className="opiniones-hero-video" autoPlay={!prefersReducedMotion} muted loop={!prefersReducedMotion} playsInline preload="auto">
-        <source src="assets/mp_.mp4" type="video/mp4"/>
+        <source src="assets/opiniones-hero-hestia.mp4" type="video/mp4"/>
       </video>
       <div className="opiniones-hero-wash"/>
       <div className="stars"/>

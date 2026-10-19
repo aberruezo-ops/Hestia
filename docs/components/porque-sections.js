@@ -356,7 +356,7 @@ const PorqueEvolucion = ({
     className: "porque-logo-video reveal"
   }, /*#__PURE__*/React.createElement("video", {
     ref: vidRef,
-    src: "assets/gemini_generated_video_7C740615.mp4",
+    src: "assets/hestia-logo-evolucion.mp4",
     muted: true,
     loop: true,
     playsInline: true,

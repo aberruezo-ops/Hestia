@@ -647,9 +647,9 @@ const EmpresasPageApp = () => {
     loop: !prefersReducedMotion,
     playsInline: true,
     preload: "auto",
-    poster: "assets/empresas-hero-poster.jpg"
+    poster: "assets/empresas-hero-poster-hestia.jpg"
   }, /*#__PURE__*/React.createElement("source", {
-    src: "assets/empresas-hero.mp4",
+    src: "assets/empresas-hero-hestia.mp4",
     type: "video/mp4"
   })), /*#__PURE__*/React.createElement("div", {
     className: "emp-hero-wash"

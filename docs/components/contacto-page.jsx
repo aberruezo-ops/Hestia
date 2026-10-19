@@ -105,7 +105,7 @@ const ContactoHero = ({ lang }) => {
   return (
     <section className="page-hero contacto-hero on-dark">
       <video ref={videoRef} className="contacto-hero-video" autoPlay={!prefersReducedMotion} muted loop={!prefersReducedMotion} playsInline preload="auto">
-        <source src="assets/contacto-hero.mp4" type="video/mp4"/>
+        <source src="assets/contacto-hero-hestia.mp4" type="video/mp4"/>
       </video>
       <div className="contacto-hero-wash"/>
       <div className="page-hero-content">

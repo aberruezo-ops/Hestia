@@ -44,15 +44,15 @@ const HERO_VIDEOS = [{
   mood: 'night',
   alt: 'Cala rocosa con agua cristalina · cenital'
 }, {
-  src: 'assets/Videoshome/hero-playa-aerea-turquesa.mp4',
-  poster: 'assets/hero-poster-playa-aerea-turquesa.jpg',
+  src: 'assets/Videoshome/hero-playa-aerea-hestia.mp4',
+  poster: 'assets/hero-poster-playa-aerea-hestia.jpg',
   mood: 'teal',
   alt: 'Playa aérea · arena dorada y agua turquesa'
 }, {
-  src: 'assets/Videoshome/hero-atardecer-logo.mp4',
-  poster: 'assets/hero-poster-atardecer-logo.jpg',
+  src: 'assets/Videoshome/hero-atardecer-cielo.mp4',
+  poster: 'assets/hero-poster-atardecer-cielo.jpg',
   mood: 'warm',
-  alt: 'Atardecer cinematográfico con logo Hestía'
+  alt: 'Atardecer sobre el mar · cielo encendido y espuma'
 }, {
   src: 'assets/Videoshome/hero-olas-acantilado.mp4',
   poster: 'assets/hero-poster-olas-acantilado.jpg',
@@ -74,8 +74,8 @@ const HERO_VIDEOS = [{
   mood: 'warm',
   alt: 'Atardecer en la orilla · olas y reflejo dorado en la arena'
 }, {
-  src: 'assets/Videoshome/hero-atardecer-morado.mp4',
-  poster: 'assets/hero-poster-atardecer-morado.jpg',
+  src: 'assets/Videoshome/hero-atardecer-morado-hestia.mp4',
+  poster: 'assets/hero-poster-atardecer-morado-hestia.jpg',
   mood: 'violet',
   // Vertical: en escritorio el recorte centrado dejaba el sol fuera de cuadro.
   pos: 'center 8%',

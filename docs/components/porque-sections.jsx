@@ -243,7 +243,7 @@ const PorqueEvolucion = ({ lang }) => {
         <h2 className="reveal">{t.evol_title}</h2>
         <div className="porque-logo-inner">
           <div className="porque-logo-video reveal">
-            <video ref={vidRef} src="assets/gemini_generated_video_7C740615.mp4"
+            <video ref={vidRef} src="assets/hestia-logo-evolucion.mp4"
               muted loop playsInline preload="auto" aria-hidden="true"/>
           </div>
           <div className="porque-logo-text">

@@ -454,8 +454,8 @@ const EmpresasPageApp = () => {
       <Header mode={mode} scrolled={scrolled} lang={lang} />
       <main id="main-content" tabIndex={-1}>
         <section className="page-hero emp-hero on-dark">
-          <video ref={heroVid} className="emp-hero-video" autoPlay={!prefersReducedMotion} muted loop={!prefersReducedMotion} playsInline preload="auto" poster="assets/empresas-hero-poster.jpg">
-            <source src="assets/empresas-hero.mp4" type="video/mp4"/>
+          <video ref={heroVid} className="emp-hero-video" autoPlay={!prefersReducedMotion} muted loop={!prefersReducedMotion} playsInline preload="auto" poster="assets/empresas-hero-poster-hestia.jpg">
+            <source src="assets/empresas-hero-hestia.mp4" type="video/mp4"/>
           </video>
           <div className="emp-hero-wash"/>
           <div className="page-hero-content">

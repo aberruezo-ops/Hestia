@@ -846,8 +846,8 @@ const Footer = ({ lang }) => {
   }, []);
   return (
     <footer className="on-dark">
-      <video ref={ftVid} className="footer-bg-video" muted loop playsInline preload="none" poster="assets/footer-bg-poster.jpg" aria-hidden="true">
-        <source src="assets/footer-bg.mp4" type="video/mp4"/>
+      <video ref={ftVid} className="footer-bg-video" muted loop playsInline preload="none" poster="assets/footer-bg-poster-hestia.jpg" aria-hidden="true">
+        <source src="assets/footer-bg-hestia.mp4" type="video/mp4"/>
       </video>
       <div className="footer-bg-wash" aria-hidden="true"/>
       <IndaloWatermark className="footer-indalo-wm" />

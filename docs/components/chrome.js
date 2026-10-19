@@ -1393,10 +1393,10 @@ const Footer = ({
     loop: true,
     playsInline: true,
     preload: "none",
-    poster: "assets/footer-bg-poster.jpg",
+    poster: "assets/footer-bg-poster-hestia.jpg",
     "aria-hidden": "true"
   }, /*#__PURE__*/React.createElement("source", {
-    src: "assets/footer-bg.mp4",
+    src: "assets/footer-bg-hestia.mp4",
     type: "video/mp4"
   })), /*#__PURE__*/React.createElement("div", {
     className: "footer-bg-wash",
