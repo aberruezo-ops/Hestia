@@ -15,6 +15,8 @@
 //       : warm:   bermellón cálido (atardecer, dorado)
 //       : night:  azul profundo (noche cerrada, estrellas)
 // Para crear un mood nuevo: añade ::before override en styles.css.
+// Todos llevan el look Hestía (sufijo -hestia: saturación contenida, baño
+// berenjena/crema, negros mate, grano y viñeta); los originales se conservan.
 // Los .mp4 viven en docs/assets/Videoshome/ y todos vienen procesados
 // con grading + sharpening y loop circular (xfade end→start) para que
 // el bucle sea imperceptible.
@@ -22,20 +24,20 @@
 // re-grading o re-encode: bump cuando cambies los .mp4.
 const VIDEO_V = '2026-06-20';
 const HERO_VIDEOS = [
-  { src: 'assets/Videoshome/hero-playa-almeria.mp4',
-    poster: 'assets/hero-poster-playa-almeria.jpg',
+  { src: 'assets/Videoshome/hero-playa-almeria-hestia.mp4',
+    poster: 'assets/hero-poster-playa-almeria-hestia.jpg',
     mood: 'violet',
     alt: 'Costa aérea · turquesa' },
-  { src: 'assets/Videoshome/hero-cabo-gata-mediodia.mp4',
-    poster: 'assets/hero-poster-cabo-gata-mediodia.jpg',
+  { src: 'assets/Videoshome/hero-cabo-gata-mediodia-hestia.mp4',
+    poster: 'assets/hero-poster-cabo-gata-mediodia-hestia.jpg',
     mood: 'teal',
     alt: 'Cabo de Gata · mediodía' },
-  { src: 'assets/Videoshome/hero-atardecer-aereo.mp4',
-    poster: 'assets/hero-poster-atardecer-aereo.jpg',
+  { src: 'assets/Videoshome/hero-atardecer-aereo-hestia.mp4',
+    poster: 'assets/hero-poster-atardecer-aereo-hestia.jpg',
     mood: 'warm',
     alt: 'Atardecer aéreo sobre la playa' },
-  { src: 'assets/Videoshome/hero-cala-rocosa.mp4',
-    poster: 'assets/hero-poster-cala-rocosa.jpg',
+  { src: 'assets/Videoshome/hero-cala-rocosa-hestia.mp4',
+    poster: 'assets/hero-poster-cala-rocosa-hestia.jpg',
     mood: 'night',
     alt: 'Cala rocosa con agua cristalina · cenital' },
   { src: 'assets/Videoshome/hero-playa-aerea-hestia.mp4',
@@ -46,20 +48,20 @@ const HERO_VIDEOS = [
     poster: 'assets/hero-poster-atardecer-cielo.jpg',
     mood: 'warm',
     alt: 'Atardecer sobre el mar · cielo encendido y espuma' },
-  { src: 'assets/Videoshome/hero-olas-acantilado.mp4',
-    poster: 'assets/hero-poster-olas-acantilado.jpg',
+  { src: 'assets/Videoshome/hero-olas-acantilado-hestia.mp4',
+    poster: 'assets/hero-poster-olas-acantilado-hestia.jpg',
     mood: 'night',
     alt: 'Olas rompiendo en acantilado rocoso' },
-  { src: 'assets/Videoshome/hero-cala-aerea.mp4',
-    poster: 'assets/hero-poster-cala-aerea.jpg',
+  { src: 'assets/Videoshome/hero-cala-aerea-hestia.mp4',
+    poster: 'assets/hero-poster-cala-aerea-hestia.jpg',
     mood: 'teal',
     alt: 'Cala aérea · arena dorada y agua azul intenso' },
-  { src: 'assets/Videoshome/hero-rompeolas.mp4',
-    poster: 'assets/hero-poster-rompeolas.jpg',
+  { src: 'assets/Videoshome/hero-rompeolas-hestia.mp4',
+    poster: 'assets/hero-poster-rompeolas-hestia.jpg',
     mood: 'night',
     alt: 'Olas rompiendo en el rompeolas · espuma y mar abierto' },
-  { src: 'assets/Videoshome/hero-atardecer-orilla.mp4',
-    poster: 'assets/hero-poster-atardecer-orilla.jpg',
+  { src: 'assets/Videoshome/hero-atardecer-orilla-hestia.mp4',
+    poster: 'assets/hero-poster-atardecer-orilla-hestia.jpg',
     mood: 'warm',
     alt: 'Atardecer en la orilla · olas y reflejo dorado en la arena' },
   { src: 'assets/Videoshome/hero-atardecer-morado-hestia.mp4',
