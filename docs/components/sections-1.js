@@ -9,7 +9,8 @@
 // clase `mood-*` modula el "velo" (gradientes de .hero::before) para
 // que combine con la luz del clip. Para añadir uno nuevo basta con:
 //   1. Subir el .mp4 a docs/assets/
-//   2. Añadir aquí un objeto { src, poster, mood, alt }
+//   2. Añadir aquí un objeto { src, poster, mood, alt } (+ pos opcional:
+//      object-position del recorte, p. ej. 'center 15%' en clips verticales)
 //      · mood ∈ 'violet' | 'teal' | 'warm' | 'night'
 //       : violet: velo morado (atmósfera nocturna, marina suave)
 //       : teal:   azul mediterráneo (día, agua clara)
@@ -72,6 +73,13 @@ const HERO_VIDEOS = [{
   poster: 'assets/hero-poster-atardecer-orilla.jpg',
   mood: 'warm',
   alt: 'Atardecer en la orilla · olas y reflejo dorado en la arena'
+}, {
+  src: 'assets/Videoshome/hero-atardecer-morado.mp4',
+  poster: 'assets/hero-poster-atardecer-morado.jpg',
+  mood: 'violet',
+  // Vertical: en escritorio el recorte centrado dejaba el sol fuera de cuadro.
+  pos: 'center 8%',
+  alt: 'Atardecer morado en la orilla · espuma y reflejo del sol'
 }
 // Para añadir un vídeo: súbelo a docs/assets/Videoshome/ y añade
 // una entrada con la misma forma. El poster es un fotograma propio del
@@ -293,6 +301,9 @@ const Hero = ({
     poster: pick.poster,
     "aria-label": pick.alt,
     key: pick.src,
+    style: pick.pos ? {
+      objectPosition: pick.pos
+    } : undefined,
     onEnded: () => setVidIdx(i => (i + 1) % playlist.length)
   }, /*#__PURE__*/React.createElement("source", {
     src: `${pick.src}?v=${VIDEO_V}`,
