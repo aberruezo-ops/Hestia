@@ -346,14 +346,11 @@ const Hero = ({ lang, onScrollDown }) => {
 // --- APARTAMENTOS (scroll horizontal) ---
 const APARTMENTS = [
   { id: 'vm', num: '01', name: 'Hestía Mar',      slug: 'mar',      license: 'VFT/AL/01580', concept: 'apt_01_concept',
-    img: 'assets/apt-vm-gallery-26.jpg', imgW: 1280, imgH: 1600, rating: null,
-    meta: ['6 + bebé', '2 hab.', 'Piscina', 'Mascotas · petición'] },
+    img: 'assets/apt-vm-gallery-26.jpg', imgW: 1280, imgH: 1600, rating: null },
   { id: 'vt', num: '02', name: 'Hestía Thalassa', slug: 'thalassa', license: 'VFT/AL/05535', concept: 'apt_02_concept',
-    img: 'assets/apt-vt-gallery-33.jpg', imgW: 1280, imgH: 1600, rating: null,
-    meta: ['6 + bebé', '2 hab.', 'Ático', 'SPA'] },
+    img: 'assets/apt-vt-gallery-33.jpg', imgW: 1280, imgH: 1600, rating: null },
   { id: 'vs', num: '03', name: 'Hestía Salinas',  slug: 'salinas',  license: 'VFT/AL/07056', concept: 'apt_03_concept',
-    img: 'assets/apt-vs-gallery-33.jpg', imgW: 1280, imgH: 1600, rating: null,
-    meta: ['6 + bebé', '2 hab.', '3 piscinas', 'Salinas'] },
+    img: 'assets/apt-vs-gallery-33.jpg', imgW: 1280, imgH: 1600, rating: null },
 ];
 // Nota de cada Hestía: fuente única (ratingScore/fmtRating, shared.jsx),
 // 'global' porque es la cifra que se presenta como LA nota de ese Hestía,
@@ -391,11 +388,65 @@ const _aptNextFree = (data, aptId) => {
   return { checkin: cursor, checkout: null, nights: null };
 };
 
+// Fotos de cada tarjeta de la portada (la primera es la portada de la tarjeta).
+// Elegidas de la galería de cada ficha: un dormitorio, terraza, salón y piscina.
+const APT_SHOWCASE = {
+  vm: ['apt-vm-gallery-26', 'apt-vm-gallery-14', 'apt-vm-gallery-1', 'apt-vm-gallery-4', 'apt-vm-gallery-9'],
+  vt: ['apt-vt-gallery-34', 'apt-vt-gallery-01', 'apt-vt-gallery-17', 'apt-vt-gallery-33', 'apt-vt-gallery-30'],
+  vs: ['apt-vs-gallery-33', 'apt-vs-gallery-20', 'apt-vs-gallery-4', 'apt-vs-gallery-32', 'apt-vs-gallery-13'],
+};
+const APT_HIGHLIGHTS = {
+  vm: { es: [['wave', 'Playa a 300 m'], ['bed', '6 + bebé · 2 hab.'], ['pool', 'Piscina y jacuzzi'], ['paw', 'Mascotas']],
+        en: [['wave', 'Beach 300 m'], ['bed', '6 + baby · 2 bed.'], ['pool', 'Pool & jacuzzi'], ['paw', 'Pets']] },
+  vt: { es: [['sun', 'Ático con vistas'], ['bed', '6 + bebé · 2 hab.'], ['sauna', 'SPA comunitario'], ['tennis', 'Pádel y tenis']],
+        en: [['sun', 'Penthouse views'], ['bed', '6 + baby · 2 bed.'], ['sauna', 'Shared spa'], ['tennis', 'Padel & tennis']] },
+  vs: { es: [['home', '87 m² · el mayor'], ['bed', '6 + bebé · 2 hab.'], ['olive', 'Grandes jardines'], ['tennis', 'Pádel y tenis']],
+        en: [['home', '87 m² · the largest'], ['bed', '6 + baby · 2 bed.'], ['olive', 'Large gardens'], ['tennis', 'Padel & tennis']] },
+};
+
+// Fotos deslizables de una tarjeta. En móvil se arrastra; en escritorio,
+// flechas al pasar el ratón. El contador sigue al scroll real.
+const AptShowcaseMedia = ({ apt, lang }) => {
+  const ref = React.useRef(null);
+  const [idx, setIdx] = React.useState(0);
+  const photos = APT_SHOWCASE[apt.id] || [];
+  const onScroll = () => {
+    const el = ref.current;
+    if (el) setIdx(Math.round(el.scrollLeft / el.clientWidth));
+  };
+  const go = (d) => {
+    const el = ref.current;
+    if (!el) return;
+    const n = Math.max(0, Math.min(photos.length - 1, idx + d));
+    el.scrollTo({ left: n * el.clientWidth, behavior: 'smooth' });
+  };
+  return (
+    <div className="as-media">
+      <div className="as-track" ref={ref} onScroll={onScroll}>
+        {photos.map((f, i) => (
+          <a key={f} className="as-slide" href={`${apt.slug}.html`} tabIndex={i === 0 ? 0 : -1}
+             aria-label={i === 0 ? (lang === 'es' ? `Ver ${apt.name}` : `See ${apt.name}`) : undefined}>
+            <picture>
+              <source srcSet={`assets/${f}.webp`} type="image/webp"/>
+              <img src={`assets/${f}.jpg`} alt={i === 0 ? apt.name : ''} decoding="async"
+                   loading={i === 0 ? 'eager' : 'lazy'} draggable="false"/>
+            </picture>
+          </a>
+        ))}
+      </div>
+      <button type="button" className="as-nav as-prev" onClick={() => go(-1)} disabled={idx === 0}
+              aria-label={lang === 'es' ? 'Foto anterior' : 'Previous photo'}>‹</button>
+      <button type="button" className="as-nav as-next" onClick={() => go(1)} disabled={idx >= photos.length - 1}
+              aria-label={lang === 'es' ? 'Foto siguiente' : 'Next photo'}>›</button>
+      <div className="as-dots" aria-hidden="true">
+        {photos.map((f, i) => <span key={f} className={i === idx ? 'on' : ''}/>)}
+      </div>
+    </div>
+  );
+};
+
 const Apartments = ({ lang }) => {
   const t = COPY[lang];
-  const trackRef = React.useRef(null);
-  const [activeIdx,  setActiveIdx ] = React.useState(0);
-  const [hasScrolled, setHasScrolled] = React.useState(false);
   const [aptAvail, setAptAvail] = React.useState({});
 
   React.useEffect(() => {
@@ -410,212 +461,94 @@ const Apartments = ({ lang }) => {
       .catch(() => {});
   }, []);
 
-  // Precios "desde / hasta" mostrados son el base de prices.json
-  // (lo que el admin ve en /p-edit.html). Sin aplicar directDiscount –
-  // ese descuento es para el ahorro vs plataformas dentro del desglose.
-  const aptMaxPrice = (aptId) => {
-    const tbl = HESTIA_PRICES[aptId];
-    if (!tbl) return null;
-    const maxBase = Math.max(...tbl.base.slice(1));
-    const maxPeak = tbl.peaks && tbl.peaks.length ? Math.max(...tbl.peaks.map(p => p.pn)) : 0;
-    return Math.max(maxBase, maxPeak);
-  };
-
+  // "Desde" = base más baja de prices.json (lo que el admin ve en /p-edit),
+  // sin el directDiscount: ese descuento vive en el desglose de /reservas.
   const aptMinPrice = (aptId) => {
     const tbl = HESTIA_PRICES[aptId];
     if (!tbl) return null;
     return Math.min(...tbl.base.slice(1));
   };
 
-  const handleScroll = () => {
-    const track = trackRef.current;
-    if (!track) return;
-    setHasScrolled(true);
-    const children = track.querySelectorAll('.apt-card');
-    const trackRect = track.getBoundingClientRect();
-    const center = trackRect.left + trackRect.width / 2;
-    let closestIdx = 0;
-    let closestDist = Infinity;
-    children.forEach((child, i) => {
-      const r = child.getBoundingClientRect();
-      const c = r.left + r.width / 2;
-      const d = Math.abs(c - center);
-      if (d < closestDist) { closestDist = d; closestIdx = i; }
-    });
-    setActiveIdx(closestIdx);
-  };
-
-  const goTo = (i) => {
-    const track = trackRef.current;
-    if (!track) return;
-    const child = track.querySelectorAll('.apt-card')[i];
-    if (child) {
-      track.scrollTo({ left: child.offsetLeft - (track.clientWidth - child.clientWidth) / 2, behavior: 'smooth' });
-    }
-  };
-
-  // Tilt 3D al pasar el cursor sobre cada apt-card. Solo en desktop con
-  // hover real (excluye táctil). Máx ±6° en X/Y. Se desactiva si el
-  // usuario prefiere reduced-motion. CSS lee --tilt-rx / --tilt-ry.
-  React.useEffect(() => {
-    if (typeof window === 'undefined') return;
-    const m = window.matchMedia('(hover: hover) and (pointer: fine)');
-    const rm = window.matchMedia('(prefers-reduced-motion: reduce)');
-    if (!m.matches || rm.matches) return;
-    const track = trackRef.current;
-    if (!track) return;
-    const cards = Array.from(track.querySelectorAll('.apt-card'));
-    const cleanup = [];
-    cards.forEach(card => {
-      let raf = 0;
-      const onMove = (e) => {
-        const r = card.getBoundingClientRect();
-        const x = (e.clientX - r.left) / r.width;
-        const y = (e.clientY - r.top) / r.height;
-        const rx = (0.5 - y) * 6;
-        const ry = (x - 0.5) * 6;
-        cancelAnimationFrame(raf);
-        raf = requestAnimationFrame(() => {
-          card.style.setProperty('--tilt-rx', `${rx.toFixed(2)}deg`);
-          card.style.setProperty('--tilt-ry', `${ry.toFixed(2)}deg`);
-        });
-      };
-      const onLeave = () => {
-        cancelAnimationFrame(raf);
-        card.style.setProperty('--tilt-rx', '0deg');
-        card.style.setProperty('--tilt-ry', '0deg');
-      };
-      card.addEventListener('mousemove', onMove);
-      card.addEventListener('mouseleave', onLeave);
-      cleanup.push(() => {
-        card.removeEventListener('mousemove', onMove);
-        card.removeEventListener('mouseleave', onLeave);
-      });
-    });
-    return () => cleanup.forEach(fn => fn());
-  }, []);
+  const months = lang === 'es'
+    ? ['ene','feb','mar','abr','may','jun','jul','ago','sep','oct','nov','dic']
+    : ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
+  const fmtDay = d => { const [, mm, dd] = d.split('-'); return `${parseInt(dd)} ${months[parseInt(mm) - 1]}`; };
+  const addD = (ds, n) => { const d = new Date(ds + 'T12:00:00Z'); d.setUTCDate(d.getUTCDate() + n); return d.toISOString().slice(0, 10); };
+  const today = new Date().toISOString().slice(0, 10);
 
   return (
-    <>
-      <section className="apartments-intro" id="apartamentos" data-screen-label="03 Hestías">
+    <section className="apt-showcase" id="apartamentos" data-screen-label="03 Hestías">
+      <div className="apartments-intro">
         <div className="eyebrow">{t.apts_eyebrow}</div>
         <h2>{t.apts_title}</h2>
         <p>{t.apts_sub}</p>
-        <div className="apts-pets">
-          <HiIcon name="paw" size={16} style={{ verticalAlign: '-3px', marginRight: 6 }} />
-          {t.apts_pets}
-        </div>
-      </section>
-      <div className={`apartments-scroll${hasScrolled ? ' scrolled' : ''}`}>
-        <div className="apartments-track" ref={trackRef} onScroll={handleScroll}>
-          {APARTMENTS.map((a, i) => {
-            const minPrice = aptMinPrice(a.id);
-            // "Reservar" lleva a /reservas con el apartamento, 2 huéspedes y el
-            // primer hueco libre preseleccionado (todo modificable allí). Para
-            // huecos abiertos o largos, una semana por defecto desde la entrada.
-            const av = aptAvail[a.id];
-            let bookUrl = `reservas.html?apt=${a.id}&guests=2`;
-            if (av && av.checkin) {
-              const addD = (ds, n) => { const d = new Date(ds + 'T12:00:00Z'); d.setUTCDate(d.getUTCDate() + n); return d.toISOString().slice(0, 10); };
-              const co = (av.checkout && av.nights && av.nights <= 14) ? av.checkout : addD(av.checkin, 7);
-              bookUrl = `reservas.html?apt=${a.id}&checkin=${av.checkin}&checkout=${co}&guests=2`;
-            }
-            return (
-              <div key={a.id} id={`apt-${a.id}`} className={`apt-card ${a.id}`}>
-                {/* Área de clic de toda la tarjeta: enlace invisible que cubre
-                    toda la superficie. Va oculto a lectores de pantalla y
-                    fuera del tabulador (aria-hidden + tabIndex -1): el enlace
-                    visible "Ver Hestía →" es el que se anuncia y se enfoca.
-                    El botón "Reservar" y ese enlace quedan por encima
-                    (apt-content, z-index superior) y siguen recibiendo el
-                    clic directo sin activar esta navegación. */}
-                <a
-                  className="apt-card-hit"
-                  href={`${a.slug}.html`}
-                  aria-hidden="true"
-                  tabIndex={-1}
-                />
-                <picture>
-                  <source srcSet={a.img.replace(/\.(jpg|jpeg|png)$/i, '.webp')} type="image/webp"/>
-                  <img decoding="async" src={a.img} alt={a.name} className="apt-photo" loading="eager" width={a.imgW} height={a.imgH}/>
-                </picture>
-                <WatermarkBadge size={32} pos={{ bottom: 72, right: 16 }}/>
-                <div className="apt-wash"/>
-                <div className="pattern"/>
-                <div className="apt-corner"><span className="bar"/>{a.license}</div>
-                <div className="apt-content">
-                  <div className="apt-num">{a.num}</div>
-                  <div className="apt-name">
-                    <span className="small">HESTÍA</span><br/>{a.name.replace('Hestía ', '')}
-                  </div>
-                  <div className="apt-tag">« {t[a.concept]} »</div>
-                  <div className="apt-meta">
-                    {a.meta.map((m, j) => (
-                      <React.Fragment key={j}>
-                        {j > 0 && <span className="dot"/>}
-                        <span>{m}</span>
-                      </React.Fragment>
-                    ))}
-                  </div>
+      </div>
+      <div className="as-grid">
+        {APARTMENTS.map(a => {
+          const minPrice = aptMinPrice(a.id);
+          // "Reservar" lleva a /reservas con el apartamento, 2 huéspedes y el
+          // primer hueco libre preseleccionado (todo modificable allí). Para
+          // huecos abiertos o largos, una semana por defecto desde la entrada.
+          const av = aptAvail[a.id];
+          let bookUrl = `reservas.html?apt=${a.id}&guests=2`;
+          if (av && av.checkin) {
+            const co = (av.checkout && av.nights && av.nights <= 14) ? av.checkout : addD(av.checkin, 7);
+            bookUrl = `reservas.html?apt=${a.id}&checkin=${av.checkin}&checkout=${co}&guests=2`;
+          }
+          return (
+            <article key={a.id} id={`apt-${a.id}`} className={`as-card ${a.id}`}>
+              <div className="as-media-wrap">
+                <AptShowcaseMedia apt={a} lang={lang} />
+                <div className="as-badges">
+                  {a.rating && (
+                    <span className="as-rating">
+                      <HiIcon name="star-fill" size="1em" /> {a.rating}<small>/10</small>
+                    </span>
+                  )}
+                  {av && (
+                    <span className="as-avail">
+                      <span className="as-avail-dot" aria-hidden="true"/>
+                      {av.checkin <= today
+                        ? (lang === 'es' ? 'Libre ahora' : 'Free now')
+                        : `${lang === 'es' ? 'Libre' : 'Free'} ${fmtDay(av.checkin)}`}
+                    </span>
+                  )}
+                </div>
+              </div>
+              <div className="as-body">
+                <div className="as-head">
+                  <h3 className="as-name"><span className="as-name-small">Hestía</span> {a.name.replace('Hestía ', '')}</h3>
+                  <span className="as-num">{a.num}</span>
+                </div>
+                <p className="as-concept">{t[a.concept]}</p>
+                <ul className="as-hl">
+                  {(APT_HIGHLIGHTS[a.id] || {})[lang].map(([ic, txt]) => (
+                    <li key={txt}><HiIcon name={ic} size={18} /> {txt}</li>
+                  ))}
+                </ul>
+                <div className="as-foot">
                   {minPrice && (
-                    <div className="apt-price-badge">
-                      <span className="apb-label">{lang === 'es' ? 'desde' : 'from'}</span>
-                      <span className="apb-price"><AnimatedPrice value={minPrice} from={0} duration={900} format={v => v.toLocaleString('es-ES')} />€</span>
-                      <span className="apb-per">{lang === 'es' ? '/noche · precio directo orientativo' : '/night · guide direct price'}</span>
-                      <span className="apb-match">
-                        <HiIcon name="check" size="1em" />{' '}
-                        {lang === 'es'
-                          ? 'Hasta un 10% aprox. más barato que en Booking o Airbnb*'
-                          : 'Up to ~10% cheaper than Booking or Airbnb*'}
+                    <div className="as-price">
+                      <span className="as-price-from">{lang === 'es' ? 'desde' : 'from'}</span>
+                      <span className="as-price-n">{minPrice}€</span>
+                      <span className="as-price-per">{lang === 'es' ? '/noche' : '/night'}</span>
+                      <span className="as-price-perk">
+                        {lang === 'es' ? 'Directo: hasta un 10% aprox. menos que en plataformas' : 'Direct: up to ~10% less than platforms'}
                       </span>
                     </div>
                   )}
-                  {(() => {
-                    const av = aptAvail[a.id];
-                    if (!av) return null;
-                    const today = new Date().toISOString().slice(0, 10);
-                    const isNow = av.checkin <= today;
-                    const months = lang === 'es'
-                      ? ['ene','feb','mar','abr','may','jun','jul','ago','sep','oct','nov','dic']
-                      : ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
-                    const fmt = d => { const [,mm,dd] = d.split('-'); return `${parseInt(dd)} ${months[parseInt(mm)-1]}`; };
-                    return (
-                      <div className="apt-avail-hint">
-                        <span className="aah-dot"/>
-                        {isNow
-                          ? (lang === 'es' ? 'Disponible ahora' : 'Available now')
-                          : `${lang === 'es' ? 'Libre' : 'Free'} ${fmt(av.checkin)}`}
-                        {av.checkout && av.nights
-                          ? <span className="aah-nights"> · {av.nights} {lang === 'es' ? 'noches' : 'nights'}</span>
-                          : <span className="aah-nights"> {lang === 'es' ? 'en adelante' : 'onwards'}</span>}
-                      </div>
-                    );
-                  })()}
-                  <div className="apt-ctas">
-                    <a href={`${a.slug}.html`} className="apt-link-cta">{t.apt_cta}</a>
-                    <a href={bookUrl} className="apt-cta">
-                      {lang === 'es' ? 'Reservar →' : 'Book →'}
-                    </a>
+                  <div className="as-ctas">
+                    <a href={`${a.slug}.html`} className="as-link">{t.apt_cta}</a>
+                    <a href={bookUrl} className="as-book">{lang === 'es' ? 'Reservar' : 'Book'} <span aria-hidden="true">→</span></a>
                   </div>
                 </div>
               </div>
-            );
-          })}
-        </div>
-        <div className="apt-scroll-progress">
-          {APARTMENTS.map((a, i) => (
-            <button
-              key={i}
-              className={`seg ${i === activeIdx ? 'active' : ''}`}
-              onClick={() => goTo(i)}
-              aria-label={a.name}
-            >
-              <span className="seg-label">{a.name.replace('Hestía ', '')}</span>
-            </button>
-          ))}
-        </div>
+            </article>
+          );
+        })}
       </div>
-    </>
+      <p className="as-pets"><HiIcon name="paw" size={16} /> {t.apts_pets}</p>
+    </section>
   );
 };
 
