@@ -535,9 +535,9 @@ const PhotoPlaceholder = ({ caption, accent, index }) => (
 );
 
 // --- Hero de la página de Hestía ---
-// Fotos del mosaico de cabecera: índices de gallery_imgs (la primera, grande).
-// Mismas elegidas que el escaparate de la portada: dormitorio, terraza, salón, piscina.
-const APT_MOSAIC = { vm: [11, 22, 0, 24, 14], vt: [2, 23, 21, 8, 27], vs: [12, 22, 3, 29, 20] };
+// Fotos del mosaico de cabecera: índices de gallery_imgs. La primera (grande) es
+// siempre el dormitorio principal, la foto que identifica a cada Hestía.
+const APT_MOSAIC = { vm: [11, 22, 0, 24, 14], vt: [8, 2, 23, 21, 27], vs: [12, 22, 3, 29, 20] };
 const _openGallery = (index) => window.dispatchEvent(new CustomEvent('hestia:gallery-open', { detail: { index } }));
 const _webp = (src) => src.replace(/\.(jpg|jpeg|png)$/i, '.webp');
 

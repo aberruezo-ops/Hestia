@@ -388,11 +388,11 @@ const _aptNextFree = (data, aptId) => {
   return { checkin: cursor, checkout: null, nights: null };
 };
 
-// Fotos de cada tarjeta de la portada (la primera es la portada de la tarjeta).
-// Elegidas de la galería de cada ficha: un dormitorio, terraza, salón y piscina.
+// Fotos de cada tarjeta de la portada. La primera es siempre el dormitorio
+// principal, la foto que identifica a cada Hestía; luego terraza, salón y piscina.
 const APT_SHOWCASE = {
   vm: ['apt-vm-gallery-26', 'apt-vm-gallery-14', 'apt-vm-gallery-1', 'apt-vm-gallery-4', 'apt-vm-gallery-9'],
-  vt: ['apt-vt-gallery-34', 'apt-vt-gallery-01', 'apt-vt-gallery-17', 'apt-vt-gallery-33', 'apt-vt-gallery-30'],
+  vt: ['apt-vt-gallery-33', 'apt-vt-gallery-34', 'apt-vt-gallery-01', 'apt-vt-gallery-17', 'apt-vt-gallery-30'],
   vs: ['apt-vs-gallery-33', 'apt-vs-gallery-20', 'apt-vs-gallery-4', 'apt-vs-gallery-32', 'apt-vs-gallery-13'],
 };
 const APT_HIGHLIGHTS = {
