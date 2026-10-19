@@ -592,7 +592,7 @@ const useReveal = () => {
     // secciones que ya están en el viewport al cargar (first-child visible).
     const BG_CLASSES = ['section-night','section-dark','section-violet','section-day','section-cream'];
     document.querySelectorAll(BG_CLASSES.map(c => `.${c}`).join(',')).forEach(el => {
-      if (!el.classList.contains('reveal-section') && !el.closest('.hero, .apt-page-hero, .page-hero')) {
+      if (!el.classList.contains('reveal-section') && !el.closest('.hero, .ah, .page-hero')) {
         el.classList.add('reveal-section');
       }
     });

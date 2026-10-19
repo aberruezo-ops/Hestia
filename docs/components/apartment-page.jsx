@@ -535,55 +535,107 @@ const PhotoPlaceholder = ({ caption, accent, index }) => (
 );
 
 // --- Hero de la página de Hestía ---
-const AptPageHero = ({ apt, lang, scrolled, mode }) => {
+// Fotos del mosaico de cabecera: índices de gallery_imgs (la primera, grande).
+// Mismas elegidas que el escaparate de la portada: dormitorio, terraza, salón, piscina.
+const APT_MOSAIC = { vm: [11, 22, 0, 24, 14], vt: [2, 23, 21, 8, 27], vs: [12, 22, 3, 29, 20] };
+const _openGallery = (index) => window.dispatchEvent(new CustomEvent('hestia:gallery-open', { detail: { index } }));
+const _webp = (src) => src.replace(/\.(jpg|jpeg|png)$/i, '.webp');
+
+// Cabecera de la ficha: primero las fotos (mosaico en escritorio, carrusel en
+// móvil) y debajo el resumen para decidir: nota, precio y reservar.
+const AptPageHero = ({ apt, lang }) => {
   const d = apt[lang];
   const tbl = HESTIA_PRICES[apt.id];
-  // El precio "desde" es el base de prices.json en temporada baja –
-  // exactamente el número que el admin ve en /p-edit.html. Sin restar
-  // el directDiscount: ese descuento sirve para calcular el ahorro
-  // vs Booking/Airbnb dentro del desglose de la reserva, no aquí.
+  // "Desde" = base de prices.json en temporada baja, el número que el admin ve
+  // en /p-edit.html, sin el directDiscount (ese vive en el desglose de reserva).
   const minPrice = tbl ? Math.min(...tbl.base.slice(1)) : null;
+  const imgs = apt.gallery_imgs || [];
+  const picks = (APT_MOSAIC[apt.id] || [0, 1, 2, 3, 4]).filter(i => imgs[i]);
+  const all = (window.REVIEWS && window.REVIEWS.items) || [];
+  const own = all.filter(r => r.status === 'published' && (r.apt === apt.id || r.apt === 'all'));
+  const avg = ratingScore(own, 'global');
+  const trackRef = React.useRef(null);
+  const [idx, setIdx] = React.useState(0);
+  const onTrack = () => { const el = trackRef.current; if (el) setIdx(Math.round(el.scrollLeft / el.clientWidth)); };
+  const seeAll = lang === 'es' ? `Ver las ${imgs.length} fotos` : `See all ${imgs.length} photos`;
   return (
-    <section className="apt-page-hero" data-apt={apt.id} style={{ '--apt-accent': apt.accent, '--apt-accent2': apt.accent2 }}>
-      <picture>
-        <source srcSet={apt.hero_img.replace(/\.(jpg|jpeg|png)(\?.*)?$/i, '.webp$2')} type="image/webp"/>
-        <BlurImg src={apt.hero_img} alt={d.name} imgClassName="apt-page-hero-img" loading="eager" fill webp={false}/>
-      </picture>
-      <WatermarkBadge size={40} pos={{ bottom: 16, right: 16 }}/>
-      <div className="apt-page-hero-wash"/>
-      <div className="apt-page-hero-content">
-        <div className="apt-page-eyebrow">
-          <span>{apt.num}</span>
-          <span className="sep">·</span>
-          <span>{apt.license}</span>
+    <section className="ah on-dark" data-apt={apt.id} style={{ '--apt-accent': apt.accent, '--apt-accent2': apt.accent2 }}>
+      {picks.length > 0 && (
+        <div className="ah-gallery">
+          <div className="ah-mosaic">
+            {picks.map((gi, k) => (
+              <button key={gi} type="button" className={`ah-tile ah-tile-${k}`} onClick={() => _openGallery(gi)}
+                      aria-label={(d.gallery_captions || [])[gi] || d.name}>
+                <picture>
+                  <source srcSet={_webp(imgs[gi])} type="image/webp"/>
+                  <img src={imgs[gi]} alt="" loading={k === 0 ? 'eager' : 'lazy'} decoding="async"
+                       fetchpriority={k === 0 ? 'high' : undefined}/>
+                </picture>
+              </button>
+            ))}
+            <button type="button" className="ah-all" onClick={() => _openGallery(picks[0])}>
+              <HiIcon name="camera" size={16} /> {seeAll}
+            </button>
+          </div>
+          <div className="ah-swipe">
+            <div className="ah-track" ref={trackRef} onScroll={onTrack}>
+              {picks.map((gi, k) => (
+                <button key={gi} type="button" className="ah-slide" onClick={() => _openGallery(gi)}
+                        aria-label={(d.gallery_captions || [])[gi] || d.name}>
+                  <picture>
+                    <source srcSet={_webp(imgs[gi])} type="image/webp"/>
+                    <img src={imgs[gi]} alt="" loading={k === 0 ? 'eager' : 'lazy'} decoding="async"/>
+                  </picture>
+                </button>
+              ))}
+            </div>
+            <span className="ah-count" aria-hidden="true">{idx + 1} / {picks.length}</span>
+            <button type="button" className="ah-all" onClick={() => _openGallery(picks[idx] ?? picks[0])}>
+              <HiIcon name="camera" size={16} /> {seeAll}
+            </button>
+          </div>
         </div>
-        <h1 className="apt-page-name">
-          <span className="small-label">HESTÍA</span>
-          {apt.name_short}
-        </h1>
-        <p className="apt-page-concept">« {d.concept} »</p>
-        {minPrice && (
-          <p className="apt-page-price">
-            {lang === 'es' ? `desde ${minPrice}€` : `from ${minPrice}€`}
-            <span className="app-per">{lang === 'es' ? ' / noche · precio directo' : ' / night · direct price'}</span>
-            <span className="app-match">
-              {lang === 'es'
-                ? '· Si lo ves más barato, no solo te lo igualamos: te lo mejoramos.'
-                : '· Find it cheaper and we don\'t just match it: we beat it.'}
-            </span>
+      )}
+      <div className="ah-summary">
+        <div className="ah-id">
+          <div className="ah-eyebrow"><span>{apt.num}</span><span className="sep">·</span><span>{apt.license}</span></div>
+          <h1 className="ah-name">
+            <span className="ah-name-small"><span className="apt-dot" data-apt={apt.id} aria-hidden="true"/>Hestía</span>
+            {apt.name_short}
+          </h1>
+          <p className="ah-concept">{d.concept}</p>
+          {avg != null && (
+            <a className="ah-rating" href="#apt-reviews">
+              <HiIcon name="star-fill" size="1em" /> <strong>{fmtRating(avg)}</strong>/10
+              <span className="ah-rating-n">· {own.length} {lang === 'es' ? 'reseñas verificadas' : 'verified reviews'}</span>
+            </a>
+          )}
+        </div>
+        <div className="ah-book">
+          {minPrice && (
+            <p className="ah-price">
+              <span className="ah-price-from">{lang === 'es' ? 'desde' : 'from'}</span>
+              <span className="ah-price-n">{minPrice}€</span>
+              <span className="ah-price-per">{lang === 'es' ? '/noche · precio directo' : '/night · direct price'}</span>
+            </p>
+          )}
+          <p className="ah-match">
+            {lang === 'es'
+              ? 'Si lo ves más barato, no solo te lo igualamos: te lo mejoramos.'
+              : 'Find it cheaper and we don\'t just match it: we beat it.'}
           </p>
-        )}
-        <div className="apt-page-ctas">
-          <a href={`reservas.html?apt=${apt.id}`} className="btn btn-primary apt-page-reserve-btn">
-            {lang === 'es' ? 'Reservar' : 'Book now'} <span className="arrow">→</span>
-          </a>
-          <a href="#apt-avail" className="btn btn-ghost-light">
-            {lang === 'es' ? 'Ver disponibilidad' : 'Check availability'}
-          </a>
+          <div className="ah-ctas">
+            <a href={`reservas.html?apt=${apt.id}`} className="btn btn-primary apt-page-reserve-btn">
+              {lang === 'es' ? 'Reservar' : 'Book now'} <span className="arrow">→</span>
+            </a>
+            <a href="#apt-avail" className="btn btn-ghost-light">
+              {lang === 'es' ? 'Ver disponibilidad' : 'Check availability'}
+            </a>
+          </div>
+          <p className="ah-cancel">
+            <HiIcon name="check" size="1em" /> {lang === 'es' ? 'Mejoramos las condiciones de cancelación' : 'We improve cancellation terms'}
+          </p>
         </div>
-        <p className="apt-page-cancel">
-          <HiIcon name="check" size="1em" /> {lang === 'es' ? 'Mejoramos las condiciones de cancelación' : 'We improve cancellation terms'}
-        </p>
       </div>
     </section>
   );
@@ -623,11 +675,13 @@ const TrustStrip = ({ apt, lang }) => {
   // cifra se presenta como LA nota de este Hestía en su propia página.
   const avg = ratingScore(own, 'global');
   const countries = new Set(own.map(r => r.country).filter(Boolean));
-  const years = new Date().getFullYear() - 2016;
+  // Mar abrió en 2016, Thalassa en 2018 y Salinas en 2020 (10, 8 y 6 años en 2026).
+  const since = { vm: 2016, vt: 2018, vs: 2020 }[apt.id] || 2016;
+  const years = new Date().getFullYear() - since;
 
   const stats = [
     { v: `${years} ${lang === 'es' ? 'años' : 'years'}`,
-      l: lang === 'es' ? 'desde 2016' : 'since 2016' },
+      l: lang === 'es' ? `desde ${since}` : `since ${since}` },
     { v: total.toString(),
       l: lang === 'es' ? (total === 1 ? 'reseña verificada' : 'reseñas verificadas') : (total === 1 ? 'verified review' : 'verified reviews') },
     avg != null ? { v: `${fmtRating(avg)}/10`,
@@ -786,6 +840,18 @@ const GalleryCarousel = ({ imgs, captions, notes = {}, accent, lang = 'es' }) =>
     document.body.style.overflow = 'hidden';
   };
   const closeLightbox = () => { setLightbox(false); document.body.style.overflow = ''; };
+
+  // La cabecera de la ficha (mosaico/carrusel) abre este mismo visor en la foto pulsada.
+  React.useEffect(() => {
+    const onOpen = (e) => {
+      const i = e.detail && Number.isInteger(e.detail.index) ? e.detail.index : 0;
+      setCur(Math.max(0, Math.min(n - 1, i)));
+      setLightbox(true);
+      document.body.style.overflow = 'hidden';
+    };
+    window.addEventListener('hestia:gallery-open', onOpen);
+    return () => window.removeEventListener('hestia:gallery-open', onOpen);
+  }, [n]);
 
   return (
     <>
@@ -1056,7 +1122,7 @@ const AptMiniReviews = ({ apt, lang }) => {
   const picks  = (inLang.length >= 3 ? inLang : pool).slice(0, 3);
 
   return (
-    <section className="apt-mini-reviews" style={{ '--apt-accent': apt.accent }}>
+    <section id="apt-reviews" className="apt-mini-reviews" style={{ '--apt-accent': apt.accent }}>
       <div className="amr-inner">
         <p className="amr-eyebrow">
           {lang === 'es' ? 'Lo que dicen los huéspedes' : 'What guests say'}
@@ -1429,11 +1495,11 @@ const ApartmentPageApp = () => {
                 o enlaces a reservas.html: funcionan igual estén donde estén
                 estas secciones, así que la trazabilidad acceso→reserva no
                 se resiente; solo cambia el orden de lectura en scroll. */}
-            <AptPageHero apt={apt} lang={lang} scrolled={scrolled} mode={mode} />
+            <AptPageHero apt={apt} lang={lang} />
+            <TrustStrip apt={apt} lang={lang} />
+            <AptVideoDesc apt={apt} lang={lang} />
             <AptCinematicReveal apt={apt} lang={lang} />
             <AptPageGallery apt={apt} lang={lang} />
-            <AptVideoDesc apt={apt} lang={lang} />
-            <TrustStrip apt={apt} lang={lang} />
             <AptMiniReviews apt={apt} lang={lang} />
             <AptPriceTeaser apt={apt} lang={lang} />
             <AptCalendar aptId={aptId} lang={lang} accent={apt.accent} />
