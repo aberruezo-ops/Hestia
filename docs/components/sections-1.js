@@ -453,8 +453,7 @@ const APARTMENTS = [{
   img: 'assets/apt-vm-gallery-26.jpg',
   imgW: 1280,
   imgH: 1600,
-  rating: null,
-  meta: ['6 + bebé', '2 hab.', 'Piscina', 'Mascotas · petición']
+  rating: null
 }, {
   id: 'vt',
   num: '02',
@@ -465,8 +464,7 @@ const APARTMENTS = [{
   img: 'assets/apt-vt-gallery-33.jpg',
   imgW: 1280,
   imgH: 1600,
-  rating: null,
-  meta: ['6 + bebé', '2 hab.', 'Ático', 'SPA']
+  rating: null
 }, {
   id: 'vs',
   num: '03',
@@ -477,8 +475,7 @@ const APARTMENTS = [{
   img: 'assets/apt-vs-gallery-33.jpg',
   imgW: 1280,
   imgH: 1600,
-  rating: null,
-  meta: ['6 + bebé', '2 hab.', '3 piscinas', 'Salinas']
+  rating: null
 }];
 // Nota de cada Hestía: fuente única (ratingScore/fmtRating, shared.jsx),
 // 'global' porque es la cifra que se presenta como LA nota de ese Hestía,
@@ -527,13 +524,96 @@ const _aptNextFree = (data, aptId) => {
     nights: null
   };
 };
+
+// Fotos de cada tarjeta de la portada (la primera es la portada de la tarjeta).
+// Elegidas de la galería de cada ficha: un dormitorio, terraza, salón y piscina.
+const APT_SHOWCASE = {
+  vm: ['apt-vm-gallery-26', 'apt-vm-gallery-14', 'apt-vm-gallery-1', 'apt-vm-gallery-4', 'apt-vm-gallery-9'],
+  vt: ['apt-vt-gallery-34', 'apt-vt-gallery-01', 'apt-vt-gallery-17', 'apt-vt-gallery-33', 'apt-vt-gallery-30'],
+  vs: ['apt-vs-gallery-33', 'apt-vs-gallery-20', 'apt-vs-gallery-4', 'apt-vs-gallery-32', 'apt-vs-gallery-13']
+};
+const APT_HIGHLIGHTS = {
+  vm: {
+    es: [['wave', 'Playa a 300 m'], ['bed', '6 + bebé · 2 hab.'], ['pool', 'Piscina y jacuzzi'], ['paw', 'Mascotas']],
+    en: [['wave', 'Beach 300 m'], ['bed', '6 + baby · 2 bed.'], ['pool', 'Pool & jacuzzi'], ['paw', 'Pets']]
+  },
+  vt: {
+    es: [['sun', 'Ático con vistas'], ['bed', '6 + bebé · 2 hab.'], ['sauna', 'SPA comunitario'], ['tennis', 'Pádel y tenis']],
+    en: [['sun', 'Penthouse views'], ['bed', '6 + baby · 2 bed.'], ['sauna', 'Shared spa'], ['tennis', 'Padel & tennis']]
+  },
+  vs: {
+    es: [['home', '87 m² · el mayor'], ['bed', '6 + bebé · 2 hab.'], ['olive', 'Grandes jardines'], ['tennis', 'Pádel y tenis']],
+    en: [['home', '87 m² · the largest'], ['bed', '6 + baby · 2 bed.'], ['olive', 'Large gardens'], ['tennis', 'Padel & tennis']]
+  }
+};
+
+// Fotos deslizables de una tarjeta. En móvil se arrastra; en escritorio,
+// flechas al pasar el ratón. El contador sigue al scroll real.
+const AptShowcaseMedia = ({
+  apt,
+  lang
+}) => {
+  const ref = React.useRef(null);
+  const [idx, setIdx] = React.useState(0);
+  const photos = APT_SHOWCASE[apt.id] || [];
+  const onScroll = () => {
+    const el = ref.current;
+    if (el) setIdx(Math.round(el.scrollLeft / el.clientWidth));
+  };
+  const go = d => {
+    const el = ref.current;
+    if (!el) return;
+    const n = Math.max(0, Math.min(photos.length - 1, idx + d));
+    el.scrollTo({
+      left: n * el.clientWidth,
+      behavior: 'smooth'
+    });
+  };
+  return /*#__PURE__*/React.createElement("div", {
+    className: "as-media"
+  }, /*#__PURE__*/React.createElement("div", {
+    className: "as-track",
+    ref: ref,
+    onScroll: onScroll
+  }, photos.map((f, i) => /*#__PURE__*/React.createElement("a", {
+    key: f,
+    className: "as-slide",
+    href: `${apt.slug}.html`,
+    tabIndex: i === 0 ? 0 : -1,
+    "aria-label": i === 0 ? lang === 'es' ? `Ver ${apt.name}` : `See ${apt.name}` : undefined
+  }, /*#__PURE__*/React.createElement("picture", null, /*#__PURE__*/React.createElement("source", {
+    srcSet: `assets/${f}.webp`,
+    type: "image/webp"
+  }), /*#__PURE__*/React.createElement("img", {
+    src: `assets/${f}.jpg`,
+    alt: i === 0 ? apt.name : '',
+    decoding: "async",
+    loading: i === 0 ? 'eager' : 'lazy',
+    draggable: "false"
+  }))))), /*#__PURE__*/React.createElement("button", {
+    type: "button",
+    className: "as-nav as-prev",
+    onClick: () => go(-1),
+    disabled: idx === 0,
+    "aria-label": lang === 'es' ? 'Foto anterior' : 'Previous photo'
+  }, "‹"), /*#__PURE__*/React.createElement("button", {
+    type: "button",
+    className: "as-nav as-next",
+    onClick: () => go(1),
+    disabled: idx >= photos.length - 1,
+    "aria-label": lang === 'es' ? 'Foto siguiente' : 'Next photo'
+  }, "›"), /*#__PURE__*/React.createElement("div", {
+    className: "as-dots",
+    "aria-hidden": "true"
+  }, photos.map((f, i) => /*#__PURE__*/React.createElement("span", {
+    key: f,
+    className: i === idx ? 'on' : ''
+  }))));
+};
 const Apartments = ({
   lang
 }) => {
   const t = COPY[lang];
-  const trackRef = React.useRef(null);
-  const [activeIdx, setActiveIdx] = React.useState(0);
-  const [hasScrolled, setHasScrolled] = React.useState(false);
   const [aptAvail, setAptAvail] = React.useState({});
   React.useEffect(() => {
     fetch('assets/availability.json?t=' + Date.now(), {
@@ -546,115 +626,35 @@ const Apartments = ({
     }).catch(() => {});
   }, []);
 
-  // Precios "desde / hasta" mostrados son el base de prices.json
-  // (lo que el admin ve en /p-edit.html). Sin aplicar directDiscount –
-  // ese descuento es para el ahorro vs plataformas dentro del desglose.
-  const aptMaxPrice = aptId => {
-    const tbl = HESTIA_PRICES[aptId];
-    if (!tbl) return null;
-    const maxBase = Math.max(...tbl.base.slice(1));
-    const maxPeak = tbl.peaks && tbl.peaks.length ? Math.max(...tbl.peaks.map(p => p.pn)) : 0;
-    return Math.max(maxBase, maxPeak);
-  };
+  // "Desde" = base más baja de prices.json (lo que el admin ve en /p-edit),
+  // sin el directDiscount: ese descuento vive en el desglose de /reservas.
   const aptMinPrice = aptId => {
     const tbl = HESTIA_PRICES[aptId];
     if (!tbl) return null;
     return Math.min(...tbl.base.slice(1));
   };
-  const handleScroll = () => {
-    const track = trackRef.current;
-    if (!track) return;
-    setHasScrolled(true);
-    const children = track.querySelectorAll('.apt-card');
-    const trackRect = track.getBoundingClientRect();
-    const center = trackRect.left + trackRect.width / 2;
-    let closestIdx = 0;
-    let closestDist = Infinity;
-    children.forEach((child, i) => {
-      const r = child.getBoundingClientRect();
-      const c = r.left + r.width / 2;
-      const d = Math.abs(c - center);
-      if (d < closestDist) {
-        closestDist = d;
-        closestIdx = i;
-      }
-    });
-    setActiveIdx(closestIdx);
+  const months = lang === 'es' ? ['ene', 'feb', 'mar', 'abr', 'may', 'jun', 'jul', 'ago', 'sep', 'oct', 'nov', 'dic'] : ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
+  const fmtDay = d => {
+    const [, mm, dd] = d.split('-');
+    return `${parseInt(dd)} ${months[parseInt(mm) - 1]}`;
   };
-  const goTo = i => {
-    const track = trackRef.current;
-    if (!track) return;
-    const child = track.querySelectorAll('.apt-card')[i];
-    if (child) {
-      track.scrollTo({
-        left: child.offsetLeft - (track.clientWidth - child.clientWidth) / 2,
-        behavior: 'smooth'
-      });
-    }
+  const addD = (ds, n) => {
+    const d = new Date(ds + 'T12:00:00Z');
+    d.setUTCDate(d.getUTCDate() + n);
+    return d.toISOString().slice(0, 10);
   };
-
-  // Tilt 3D al pasar el cursor sobre cada apt-card. Solo en desktop con
-  // hover real (excluye táctil). Máx ±6° en X/Y. Se desactiva si el
-  // usuario prefiere reduced-motion. CSS lee --tilt-rx / --tilt-ry.
-  React.useEffect(() => {
-    if (typeof window === 'undefined') return;
-    const m = window.matchMedia('(hover: hover) and (pointer: fine)');
-    const rm = window.matchMedia('(prefers-reduced-motion: reduce)');
-    if (!m.matches || rm.matches) return;
-    const track = trackRef.current;
-    if (!track) return;
-    const cards = Array.from(track.querySelectorAll('.apt-card'));
-    const cleanup = [];
-    cards.forEach(card => {
-      let raf = 0;
-      const onMove = e => {
-        const r = card.getBoundingClientRect();
-        const x = (e.clientX - r.left) / r.width;
-        const y = (e.clientY - r.top) / r.height;
-        const rx = (0.5 - y) * 6;
-        const ry = (x - 0.5) * 6;
-        cancelAnimationFrame(raf);
-        raf = requestAnimationFrame(() => {
-          card.style.setProperty('--tilt-rx', `${rx.toFixed(2)}deg`);
-          card.style.setProperty('--tilt-ry', `${ry.toFixed(2)}deg`);
-        });
-      };
-      const onLeave = () => {
-        cancelAnimationFrame(raf);
-        card.style.setProperty('--tilt-rx', '0deg');
-        card.style.setProperty('--tilt-ry', '0deg');
-      };
-      card.addEventListener('mousemove', onMove);
-      card.addEventListener('mouseleave', onLeave);
-      cleanup.push(() => {
-        card.removeEventListener('mousemove', onMove);
-        card.removeEventListener('mouseleave', onLeave);
-      });
-    });
-    return () => cleanup.forEach(fn => fn());
-  }, []);
-  return /*#__PURE__*/React.createElement(React.Fragment, null, /*#__PURE__*/React.createElement("section", {
-    className: "apartments-intro",
+  const today = new Date().toISOString().slice(0, 10);
+  return /*#__PURE__*/React.createElement("section", {
+    className: "apt-showcase",
     id: "apartamentos",
     "data-screen-label": "03 Hestías"
   }, /*#__PURE__*/React.createElement("div", {
-    className: "eyebrow"
-  }, t.apts_eyebrow), /*#__PURE__*/React.createElement("h2", null, t.apts_title), /*#__PURE__*/React.createElement("p", null, t.apts_sub), /*#__PURE__*/React.createElement("div", {
-    className: "apts-pets"
-  }, /*#__PURE__*/React.createElement(HiIcon, {
-    name: "paw",
-    size: 16,
-    style: {
-      verticalAlign: '-3px',
-      marginRight: 6
-    }
-  }), t.apts_pets)), /*#__PURE__*/React.createElement("div", {
-    className: `apartments-scroll${hasScrolled ? ' scrolled' : ''}`
+    className: "apartments-intro"
   }, /*#__PURE__*/React.createElement("div", {
-    className: "apartments-track",
-    ref: trackRef,
-    onScroll: handleScroll
-  }, APARTMENTS.map((a, i) => {
+    className: "eyebrow"
+  }, t.apts_eyebrow), /*#__PURE__*/React.createElement("h2", null, t.apts_title), /*#__PURE__*/React.createElement("p", null, t.apts_sub)), /*#__PURE__*/React.createElement("div", {
+    className: "as-grid"
+  }, APARTMENTS.map(a => {
     const minPrice = aptMinPrice(a.id);
     // "Reservar" lleva a /reservas con el apartamento, 2 huéspedes y el
     // primer hueco libre preseleccionado (todo modificable allí). Para
@@ -662,120 +662,78 @@ const Apartments = ({
     const av = aptAvail[a.id];
     let bookUrl = `reservas.html?apt=${a.id}&guests=2`;
     if (av && av.checkin) {
-      const addD = (ds, n) => {
-        const d = new Date(ds + 'T12:00:00Z');
-        d.setUTCDate(d.getUTCDate() + n);
-        return d.toISOString().slice(0, 10);
-      };
       const co = av.checkout && av.nights && av.nights <= 14 ? av.checkout : addD(av.checkin, 7);
       bookUrl = `reservas.html?apt=${a.id}&checkin=${av.checkin}&checkout=${co}&guests=2`;
     }
-    return /*#__PURE__*/React.createElement("div", {
+    return /*#__PURE__*/React.createElement("article", {
       key: a.id,
       id: `apt-${a.id}`,
-      className: `apt-card ${a.id}`
-    }, /*#__PURE__*/React.createElement("a", {
-      className: "apt-card-hit",
-      href: `${a.slug}.html`,
-      "aria-hidden": "true",
-      tabIndex: -1
-    }), /*#__PURE__*/React.createElement("picture", null, /*#__PURE__*/React.createElement("source", {
-      srcSet: a.img.replace(/\.(jpg|jpeg|png)$/i, '.webp'),
-      type: "image/webp"
-    }), /*#__PURE__*/React.createElement("img", {
-      decoding: "async",
-      src: a.img,
-      alt: a.name,
-      className: "apt-photo",
-      loading: "eager",
-      width: a.imgW,
-      height: a.imgH
-    })), /*#__PURE__*/React.createElement(WatermarkBadge, {
-      size: 32,
-      pos: {
-        bottom: 72,
-        right: 16
-      }
-    }), /*#__PURE__*/React.createElement("div", {
-      className: "apt-wash"
-    }), /*#__PURE__*/React.createElement("div", {
-      className: "pattern"
-    }), /*#__PURE__*/React.createElement("div", {
-      className: "apt-corner"
-    }, /*#__PURE__*/React.createElement("span", {
-      className: "bar"
-    }), a.license), /*#__PURE__*/React.createElement("div", {
-      className: "apt-content"
+      className: `as-card ${a.id}`
     }, /*#__PURE__*/React.createElement("div", {
-      className: "apt-num"
-    }, a.num), /*#__PURE__*/React.createElement("div", {
-      className: "apt-name"
-    }, /*#__PURE__*/React.createElement("span", {
-      className: "small"
-    }, "HESTÍA"), /*#__PURE__*/React.createElement("br", null), a.name.replace('Hestía ', '')), /*#__PURE__*/React.createElement("div", {
-      className: "apt-tag"
-    }, "« ", t[a.concept], " »"), /*#__PURE__*/React.createElement("div", {
-      className: "apt-meta"
-    }, a.meta.map((m, j) => /*#__PURE__*/React.createElement(React.Fragment, {
-      key: j
-    }, j > 0 && /*#__PURE__*/React.createElement("span", {
-      className: "dot"
-    }), /*#__PURE__*/React.createElement("span", null, m)))), minPrice && /*#__PURE__*/React.createElement("div", {
-      className: "apt-price-badge"
-    }, /*#__PURE__*/React.createElement("span", {
-      className: "apb-label"
-    }, lang === 'es' ? 'desde' : 'from'), /*#__PURE__*/React.createElement("span", {
-      className: "apb-price"
-    }, /*#__PURE__*/React.createElement(AnimatedPrice, {
-      value: minPrice,
-      from: 0,
-      duration: 900,
-      format: v => v.toLocaleString('es-ES')
-    }), "€"), /*#__PURE__*/React.createElement("span", {
-      className: "apb-per"
-    }, lang === 'es' ? '/noche · precio directo orientativo' : '/night · guide direct price'), /*#__PURE__*/React.createElement("span", {
-      className: "apb-match"
+      className: "as-media-wrap"
+    }, /*#__PURE__*/React.createElement(AptShowcaseMedia, {
+      apt: a,
+      lang: lang
+    }), /*#__PURE__*/React.createElement("div", {
+      className: "as-badges"
+    }, a.rating && /*#__PURE__*/React.createElement("span", {
+      className: "as-rating"
     }, /*#__PURE__*/React.createElement(HiIcon, {
-      name: "check",
+      name: "star-fill",
       size: "1em"
-    }), ' ', lang === 'es' ? 'Hasta un 10% aprox. más barato que en Booking o Airbnb*' : 'Up to ~10% cheaper than Booking or Airbnb*')), (() => {
-      const av = aptAvail[a.id];
-      if (!av) return null;
-      const today = new Date().toISOString().slice(0, 10);
-      const isNow = av.checkin <= today;
-      const months = lang === 'es' ? ['ene', 'feb', 'mar', 'abr', 'may', 'jun', 'jul', 'ago', 'sep', 'oct', 'nov', 'dic'] : ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
-      const fmt = d => {
-        const [, mm, dd] = d.split('-');
-        return `${parseInt(dd)} ${months[parseInt(mm) - 1]}`;
-      };
-      return /*#__PURE__*/React.createElement("div", {
-        className: "apt-avail-hint"
-      }, /*#__PURE__*/React.createElement("span", {
-        className: "aah-dot"
-      }), isNow ? lang === 'es' ? 'Disponible ahora' : 'Available now' : `${lang === 'es' ? 'Libre' : 'Free'} ${fmt(av.checkin)}`, av.checkout && av.nights ? /*#__PURE__*/React.createElement("span", {
-        className: "aah-nights"
-      }, " · ", av.nights, " ", lang === 'es' ? 'noches' : 'nights') : /*#__PURE__*/React.createElement("span", {
-        className: "aah-nights"
-      }, " ", lang === 'es' ? 'en adelante' : 'onwards'));
-    })(), /*#__PURE__*/React.createElement("div", {
-      className: "apt-ctas"
+    }), " ", a.rating, /*#__PURE__*/React.createElement("small", null, "/10")), av && /*#__PURE__*/React.createElement("span", {
+      className: "as-avail"
+    }, /*#__PURE__*/React.createElement("span", {
+      className: "as-avail-dot",
+      "aria-hidden": "true"
+    }), av.checkin <= today ? lang === 'es' ? 'Libre ahora' : 'Free now' : `${lang === 'es' ? 'Libre' : 'Free'} ${fmtDay(av.checkin)}`))), /*#__PURE__*/React.createElement("div", {
+      className: "as-body"
+    }, /*#__PURE__*/React.createElement("div", {
+      className: "as-head"
+    }, /*#__PURE__*/React.createElement("h3", {
+      className: "as-name"
+    }, /*#__PURE__*/React.createElement("span", {
+      className: "as-name-small"
+    }, "Hestía"), " ", a.name.replace('Hestía ', '')), /*#__PURE__*/React.createElement("span", {
+      className: "as-num"
+    }, a.num)), /*#__PURE__*/React.createElement("p", {
+      className: "as-concept"
+    }, t[a.concept]), /*#__PURE__*/React.createElement("ul", {
+      className: "as-hl"
+    }, (APT_HIGHLIGHTS[a.id] || {})[lang].map(([ic, txt]) => /*#__PURE__*/React.createElement("li", {
+      key: txt
+    }, /*#__PURE__*/React.createElement(HiIcon, {
+      name: ic,
+      size: 18
+    }), " ", txt))), /*#__PURE__*/React.createElement("div", {
+      className: "as-foot"
+    }, minPrice && /*#__PURE__*/React.createElement("div", {
+      className: "as-price"
+    }, /*#__PURE__*/React.createElement("span", {
+      className: "as-price-from"
+    }, lang === 'es' ? 'desde' : 'from'), /*#__PURE__*/React.createElement("span", {
+      className: "as-price-n"
+    }, minPrice, "€"), /*#__PURE__*/React.createElement("span", {
+      className: "as-price-per"
+    }, lang === 'es' ? '/noche' : '/night'), /*#__PURE__*/React.createElement("span", {
+      className: "as-price-perk"
+    }, lang === 'es' ? 'Directo: hasta un 10% aprox. menos que en plataformas' : 'Direct: up to ~10% less than platforms')), /*#__PURE__*/React.createElement("div", {
+      className: "as-ctas"
     }, /*#__PURE__*/React.createElement("a", {
       href: `${a.slug}.html`,
-      className: "apt-link-cta"
+      className: "as-link"
     }, t.apt_cta), /*#__PURE__*/React.createElement("a", {
       href: bookUrl,
-      className: "apt-cta"
-    }, lang === 'es' ? 'Reservar →' : 'Book →'))));
-  })), /*#__PURE__*/React.createElement("div", {
-    className: "apt-scroll-progress"
-  }, APARTMENTS.map((a, i) => /*#__PURE__*/React.createElement("button", {
-    key: i,
-    className: `seg ${i === activeIdx ? 'active' : ''}`,
-    onClick: () => goTo(i),
-    "aria-label": a.name
-  }, /*#__PURE__*/React.createElement("span", {
-    className: "seg-label"
-  }, a.name.replace('Hestía ', '')))))));
+      className: "as-book"
+    }, lang === 'es' ? 'Reservar' : 'Book', " ", /*#__PURE__*/React.createElement("span", {
+      "aria-hidden": "true"
+    }, "→"))))));
+  })), /*#__PURE__*/React.createElement("p", {
+    className: "as-pets"
+  }, /*#__PURE__*/React.createElement(HiIcon, {
+    name: "paw",
+    size: 16
+  }), " ", t.apts_pets));
 };
 
 // --- COMPARADOR ---

@@ -154,9 +154,10 @@ const App = () => {
         <Hero lang={lang} />
         <OfertaBanner lang={lang} />
         <RatingsMarquee lang={lang} />
-        <FraseHogar lang={lang} />
-        <HomeSearch lang={lang} />
+        {/* Los apartamentos, lo primero tras el hero: la foto vende antes que el calendario. */}
         <Apartments lang={lang} />
+        <HomeSearch lang={lang} />
+        <FraseHogar lang={lang} />
         <DirectBookingPerks lang={lang} />
         <Compare lang={lang} />
         {typeof LongStayStrip !== 'undefined' && <LongStayStrip lang={lang} />}
