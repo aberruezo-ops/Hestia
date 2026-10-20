@@ -81,8 +81,6 @@ El Propietario cede en arrendamiento de temporada con la duración que se indica
 
 Este contrato se otorga por la temporada de **{{N_NOCHES_LETRAS}} ({{N_NOCHES}}) noches**, desde el día **{{FECHA_ENTRADA}}** a las 15:00, y quedará automáticamente resuelto sin necesidad de aviso alguno, el día **{{FECHA_SALIDA}}** a las 11:00, debiendo la Parte Arrendataria entregar las llaves con anterioridad.
 
-{{BLOQUE_DURACION_EXTRA}}  *(opcional, texto propio de la reserva: p. ej. una prórroga pactada con fechas, importe y plazo para confirmarla; campo "Texto adicional a la cláusula de duración" en /p-edit)*
-
 La Parte Arrendataria deberá abandonar la finca en el estado en que la encontró, dejándola libre de efectos y enseres y permaneciendo en perfecto estado los servicios de que dispone, sin que quepa prórroga del mismo salvo acuerdo escrito entre las partes.
 
 #### CUARTA · OBLIGACIONES DE LAS PARTES
