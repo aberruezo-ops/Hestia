@@ -26,7 +26,11 @@ const TITULARES_PATH = 'titulares.json';
 let TITULARES = null;
 
 const _titFalta = (es, en) => `<span class="blank" style="color:#B8246E">[${es} / ${en}]</span>`;
-const tit = (campo, es, en) => (TITULARES && TITULARES[campo]) || _titFalta(es, en);
+// Un campo vacío o con el texto de relleno "RELLENAR" cuenta como dato que falta.
+const _titOk = v => typeof v === 'string' && v.trim() !== '' && !/RELLENAR/i.test(v);
+const TIT_CAMPOS = { nombre1: 'nombre del titular 1', nombre2: 'nombre del titular 2', dni1: 'DNI del titular 1', dni2: 'DNI del titular 2', domicilio: 'domicilio', iban: 'IBAN' };
+const titFaltan = () => Object.keys(TIT_CAMPOS).filter(k => !TITULARES || !_titOk(TITULARES[k])).map(k => TIT_CAMPOS[k]);
+const tit = (campo, es, en) => (TITULARES && _titOk(TITULARES[campo]) && TITULARES[campo]) || _titFalta(es, en);
 
 async function cargaTitulares(token) {
   if (TITULARES || !token) return TITULARES;
@@ -2236,8 +2240,6 @@ const ContractTab = ({ pricesData, prefill, token }) => {
   );
   const [fianza, setFianza]           = React.useState(p.fianza || false);
   const [fechaFirma, setFechaFirma]   = React.useState(today);
-  // Texto propio de esta reserva al final de la cláusula de duración (p. ej. una prórroga pactada).
-  const [duracionExtra, setDuracionExtra] = React.useState(p.contrato_duracion_extra || '');
   const [lang, setLang]               = React.useState('es');   // idioma del contrato: 'es' | 'en'
   const [reservaSaveMsg, setReservaSaveMsg] = React.useState(null);
 
@@ -2263,7 +2265,6 @@ const ContractTab = ({ pricesData, prefill, token }) => {
         responsable: nombre, dni, direccion: domicilio, telefono, email,
         huespedes: Number(huespedes) || list[idx].huespedes,
         mascota, fianza,
-        contrato_duracion_extra: duracionExtra.trim() || undefined,
       };
       const newData = { ...fileData, reservas: list, updatedAt: new Date().toISOString(), count: list.length };
       const put = await fetch(`${API}/repos/${PRIVATE_REPO}/contents/${RESERVAS_PATH}`, {
@@ -2348,9 +2349,6 @@ const ContractTab = ({ pricesData, prefill, token }) => {
 
 const buildContractHTML = (heroDataUrl, logoDataUrl, wmDataUrl) => {
     const escHtml = s => String(s ?? '').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
-    const duracionExtraHtml = duracionExtra.trim()
-      ? duracionExtra.trim().split(/\n\s*\n/).map(par => `<p>${escHtml(par.trim())}</p>`).join('\n')
-      : '';
     const a = aptInfo;
     const isEn = lang === 'en';
     const num  = isEn ? numToEnglish : numToSpanish;
@@ -2536,7 +2534,6 @@ ${clausulaSegunda}
 <h3>Three · Term</h3>
 <p>This contract is granted for the season of <strong>${nochesL} (${noches}) nights</strong>, from <strong>${fechaEntradaStr}</strong> at 15:00, and shall be automatically terminated, without need for any notice, on <strong>${fechaSalidaStr}</strong> at 11:00, with the Tenant returning the keys beforehand.</p>
 </div>
-${duracionExtraHtml}
 <p>The Tenant must leave the property in the condition in which it was found, free of belongings and effects, with all its services in perfect working order, with no possibility of extension save for written agreement between the parties.</p>
 
 <div class="h-keep">
@@ -2640,7 +2637,6 @@ ${clausulaSegunda}
 <h3>Tercera · Duración</h3>
 <p>Este contrato se otorga por la temporada de <strong>${nochesL} (${noches}) noches</strong>, desde el día <strong>${fechaEntradaStr}</strong> a las 15:00, y quedará automáticamente resuelto sin necesidad de aviso alguno, el día <strong>${fechaSalidaStr}</strong> a las 11:00, debiendo la Parte Arrendataria entregar las llaves con anterioridad.</p>
 </div>
-${duracionExtraHtml}
 <p>La Parte Arrendataria deberá abandonar la finca en el estado en que la encontró, dejándola libre de efectos y enseres y permaneciendo en perfecto estado los servicios de que dispone, sin que quepa prórroga del mismo salvo acuerdo escrito entre las partes.</p>
 
 <div class="h-keep">
@@ -3418,6 +3414,12 @@ info@hestiayourhome.com · +34 620 316 370`;
           Comprueba que el token tiene acceso al repositorio privado y que el fichero existe.
         </p>
       )}
+      {titListos && titFaltan().length > 0 && (
+        <p className="pe-warn" style={{ background: 'var(--err-bg, #F8E0EB)', color: 'var(--err, #B8246E)', padding: '10px 14px', borderRadius: '10px 0 10px 0', margin: '0 0 14px' }}>
+          Faltan datos de los titulares en <code>hestia-data/titulares.json</code>: {titFaltan().join(', ')}.
+          El contrato saldría con esos huecos marcados en rojo. Complétalos en el repositorio privado antes de generarlo.
+        </p>
+      )}
 
       <div className="ct-form">
         <fieldset>
@@ -3487,11 +3489,6 @@ info@hestiayourhome.com · +34 620 316 370`;
               <label className="ct-toggle"><input type="checkbox" checked={fianza} onChange={e => setFianza(e.target.checked)} /> <span>Sí, 300 € (transferencia 2 días antes)</span></label>
             </div>
             <div className="pe-field"><label>Fecha del contrato (firma)</label><input type="date" value={fechaFirma} onChange={e => setFechaFirma(e.target.value)} /></div>
-          </div>
-          <div className="pe-field">
-            <label>Texto adicional a la cláusula de duración (opcional)</label>
-            <textarea rows={4} value={duracionExtra} onChange={e => setDuracionExtra(e.target.value)}
-                      placeholder="Ej.: prórroga pactada, con fechas, importe y plazo para confirmarla. Escríbelo en el idioma del contrato." />
           </div>
         </fieldset>
 
