@@ -2977,6 +2977,8 @@ const ContractTab = ({
   const [diasCancelacion, setDiasCancelacion] = React.useState(p.cancelacion ? Number((String(p.cancelacion).match(/\d+/) || [])[0]) || 14 : 14);
   const [fianza, setFianza] = React.useState(p.fianza || false);
   const [fechaFirma, setFechaFirma] = React.useState(today);
+  // Texto propio de esta reserva al final de la cláusula de duración (p. ej. una prórroga pactada).
+  const [duracionExtra, setDuracionExtra] = React.useState(p.contrato_duracion_extra || '');
   const [lang, setLang] = React.useState('es'); // idioma del contrato: 'es' | 'en'
   const [reservaSaveMsg, setReservaSaveMsg] = React.useState(null);
 
@@ -3010,7 +3012,8 @@ const ContractTab = ({
         email,
         huespedes: Number(huespedes) || list[idx].huespedes,
         mascota,
-        fianza
+        fianza,
+        contrato_duracion_extra: duracionExtra.trim() || undefined
       };
       const newData = {
         ...fileData,
@@ -3117,6 +3120,7 @@ const ContractTab = ({
   };
   const buildContractHTML = (heroDataUrl, logoDataUrl, wmDataUrl) => {
     const escHtml = s => String(s ?? '').replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
+    const duracionExtraHtml = duracionExtra.trim() ? duracionExtra.trim().split(/\n\s*\n/).map(par => `<p>${escHtml(par.trim())}</p>`).join('\n') : '';
     const a = aptInfo;
     const isEn = lang === 'en';
     const num = isEn ? numToEnglish : numToSpanish;
@@ -3259,6 +3263,7 @@ ${clausulaSegunda}
 <h3>Three · Term</h3>
 <p>This contract is granted for the season of <strong>${nochesL} (${noches}) nights</strong>, from <strong>${fechaEntradaStr}</strong> at 15:00, and shall be automatically terminated, without need for any notice, on <strong>${fechaSalidaStr}</strong> at 11:00, with the Tenant returning the keys beforehand.</p>
 </div>
+${duracionExtraHtml}
 <p>The Tenant must leave the property in the condition in which it was found, free of belongings and effects, with all its services in perfect working order, with no possibility of extension save for written agreement between the parties.</p>
 
 <div class="h-keep">
@@ -3362,6 +3367,7 @@ ${clausulaSegunda}
 <h3>Tercera · Duración</h3>
 <p>Este contrato se otorga por la temporada de <strong>${nochesL} (${noches}) noches</strong>, desde el día <strong>${fechaEntradaStr}</strong> a las 15:00, y quedará automáticamente resuelto sin necesidad de aviso alguno, el día <strong>${fechaSalidaStr}</strong> a las 11:00, debiendo la Parte Arrendataria entregar las llaves con anterioridad.</p>
 </div>
+${duracionExtraHtml}
 <p>La Parte Arrendataria deberá abandonar la finca en el estado en que la encontró, dejándola libre de efectos y enseres y permaneciendo en perfecto estado los servicios de que dispone, sin que quepa prórroga del mismo salvo acuerdo escrito entre las partes.</p>
 
 <div class="h-keep">
@@ -4301,7 +4307,14 @@ info@hestiayourhome.com · +34 620 316 370`;
     type: "date",
     value: fechaFirma,
     onChange: e => setFechaFirma(e.target.value)
-  })))), /*#__PURE__*/React.createElement("div", {
+  }))), /*#__PURE__*/React.createElement("div", {
+    className: "pe-field"
+  }, /*#__PURE__*/React.createElement("label", null, "Texto adicional a la cláusula de duración (opcional)"), /*#__PURE__*/React.createElement("textarea", {
+    rows: 4,
+    value: duracionExtra,
+    onChange: e => setDuracionExtra(e.target.value),
+    placeholder: "Ej.: prórroga pactada, con fechas, importe y plazo para confirmarla. Escríbelo en el idioma del contrato."
+  }))), /*#__PURE__*/React.createElement("div", {
     className: "ct-actions"
   }, /*#__PURE__*/React.createElement("button", {
     type: "button",
