@@ -535,14 +535,17 @@ const PhotoPlaceholder = ({ caption, accent, index }) => (
 );
 
 // --- Hero de la página de Hestía ---
-// Fotos del mosaico de cabecera: índices de gallery_imgs. La primera (grande) es
-// siempre el dormitorio principal, la foto que identifica a cada Hestía.
-const APT_MOSAIC = { vm: [11, 22, 0, 24, 14], vt: [8, 2, 23, 21, 27], vs: [12, 22, 3, 29, 20] };
-const _openGallery = (index) => window.dispatchEvent(new CustomEvent('hestia:gallery-open', { detail: { index } }));
+// Foto de cabecera: índice en gallery_imgs del dormitorio principal, la imagen
+// que identifica a cada Hestía. El resto de fotos vive en el carrusel de abajo.
+const APT_COVER = { vm: 11, vt: 8, vs: 12 };
 const _webp = (src) => src.replace(/\.(jpg|jpeg|png)$/i, '.webp');
+const _toGallery = () => {
+  const el = document.getElementById('apt-galeria');
+  if (el) el.scrollIntoView({ behavior: 'smooth', block: 'start' });
+};
 
-// Cabecera de la ficha: primero las fotos (mosaico en escritorio, carrusel en
-// móvil) y debajo el resumen para decidir: nota, precio y reservar.
+// Cabecera de la ficha: la foto que identifica al Hestía, el acceso a todas
+// las fotos (lleva al carrusel) y debajo el resumen para decidir.
 const AptPageHero = ({ apt, lang }) => {
   const d = apt[lang];
   const tbl = HESTIA_PRICES[apt.id];
@@ -550,47 +553,25 @@ const AptPageHero = ({ apt, lang }) => {
   // en /p-edit.html, sin el directDiscount (ese vive en el desglose de reserva).
   const minPrice = tbl ? Math.min(...tbl.base.slice(1)) : null;
   const imgs = apt.gallery_imgs || [];
-  const picks = (APT_MOSAIC[apt.id] || [0, 1, 2, 3, 4]).filter(i => imgs[i]);
+  const cover = imgs[APT_COVER[apt.id]] || imgs[0] || apt.hero_img;
   const all = (window.REVIEWS && window.REVIEWS.items) || [];
   const own = all.filter(r => r.status === 'published' && (r.apt === apt.id || r.apt === 'all'));
   const avg = ratingScore(own, 'global');
-  const trackRef = React.useRef(null);
-  const [idx, setIdx] = React.useState(0);
-  const onTrack = () => { const el = trackRef.current; if (el) setIdx(Math.round(el.scrollLeft / el.clientWidth)); };
-  const seeAll = lang === 'es' ? `Ver las ${imgs.length} fotos` : `See all ${imgs.length} photos`;
+  const seeAll = imgs.length
+    ? (lang === 'es' ? `Ver las ${imgs.length} fotos` : `See all ${imgs.length} photos`)
+    : (lang === 'es' ? 'Ver todas las fotos' : 'See all photos');
   return (
     <section className="ah on-dark" data-apt={apt.id} style={{ '--apt-accent': apt.accent, '--apt-accent2': apt.accent2 }}>
-      {picks.length > 0 && (
+      {cover && (
         <div className="ah-gallery">
-          <div className="ah-mosaic">
-            {picks.map((gi, k) => (
-              <button key={gi} type="button" className={`ah-tile ah-tile-${k}`} onClick={() => _openGallery(gi)}
-                      aria-label={(d.gallery_captions || [])[gi] || d.name}>
-                <picture>
-                  <source srcSet={_webp(imgs[gi])} type="image/webp"/>
-                  <img src={imgs[gi]} alt="" loading={k === 0 ? 'eager' : 'lazy'} decoding="async"
-                       fetchpriority={k === 0 ? 'high' : undefined}/>
-                </picture>
-              </button>
-            ))}
-            <button type="button" className="ah-all" onClick={() => _openGallery(picks[0])}>
-              <HiIcon name="camera" size={16} /> {seeAll}
+          <div className="ah-cover">
+            <button type="button" className="ah-cover-img" onClick={_toGallery} aria-label={seeAll}>
+              <picture>
+                <source srcSet={_webp(cover)} type="image/webp"/>
+                <img src={cover} alt={d.name} loading="eager" decoding="async" fetchpriority="high"/>
+              </picture>
             </button>
-          </div>
-          <div className="ah-swipe">
-            <div className="ah-track" ref={trackRef} onScroll={onTrack}>
-              {picks.map((gi, k) => (
-                <button key={gi} type="button" className="ah-slide" onClick={() => _openGallery(gi)}
-                        aria-label={(d.gallery_captions || [])[gi] || d.name}>
-                  <picture>
-                    <source srcSet={_webp(imgs[gi])} type="image/webp"/>
-                    <img src={imgs[gi]} alt="" loading={k === 0 ? 'eager' : 'lazy'} decoding="async"/>
-                  </picture>
-                </button>
-              ))}
-            </div>
-            <span className="ah-count" aria-hidden="true">{idx + 1} / {picks.length}</span>
-            <button type="button" className="ah-all" onClick={() => _openGallery(picks[idx] ?? picks[0])}>
+            <button type="button" className="ah-all" onClick={_toGallery}>
               <HiIcon name="camera" size={16} /> {seeAll}
             </button>
           </div>
@@ -841,18 +822,6 @@ const GalleryCarousel = ({ imgs, captions, notes = {}, accent, lang = 'es' }) =>
   };
   const closeLightbox = () => { setLightbox(false); document.body.style.overflow = ''; };
 
-  // La cabecera de la ficha (mosaico/carrusel) abre este mismo visor en la foto pulsada.
-  React.useEffect(() => {
-    const onOpen = (e) => {
-      const i = e.detail && Number.isInteger(e.detail.index) ? e.detail.index : 0;
-      setCur(Math.max(0, Math.min(n - 1, i)));
-      setLightbox(true);
-      document.body.style.overflow = 'hidden';
-    };
-    window.addEventListener('hestia:gallery-open', onOpen);
-    return () => window.removeEventListener('hestia:gallery-open', onOpen);
-  }, [n]);
-
   return (
     <>
       <div className="gc-wrap">
@@ -974,7 +943,7 @@ const AptPageGallery = ({ apt, lang }) => {
   const notes = d.gallery_notes || {};
   const imgs = apt.gallery_imgs;
   return (
-    <section className="apt-page-gallery">
+    <section id="apt-galeria" className="apt-page-gallery">
       <div className="apt-gallery-eyebrow eyebrow">
         {lang === 'es' ? 'Galería de fotos' : 'Photo gallery'}
       </div>
@@ -1497,9 +1466,9 @@ const ApartmentPageApp = () => {
                 se resiente; solo cambia el orden de lectura en scroll. */}
             <AptPageHero apt={apt} lang={lang} />
             <TrustStrip apt={apt} lang={lang} />
+            <AptPageGallery apt={apt} lang={lang} />
             <AptVideoDesc apt={apt} lang={lang} />
             <AptCinematicReveal apt={apt} lang={lang} />
-            <AptPageGallery apt={apt} lang={lang} />
             <AptMiniReviews apt={apt} lang={lang} />
             <AptPriceTeaser apt={apt} lang={lang} />
             <AptCalendar aptId={aptId} lang={lang} accent={apt.accent} />
