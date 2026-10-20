@@ -6707,6 +6707,72 @@ body[data-apt="salinas"] a.apt-page-reserve-btn:hover {
   padding: 80px var(--page-pad);
   background: var(--ink);
 }
+/* ── Ficha · galería en mosaico editorial con filtros por estancia (on-dark) ── */
+.gm-head { max-width: 1360px; margin: 0 auto 22px; }
+.gm-title { margin: 8px 0 0; font-family: var(--serif); font-weight: 400; font-size: clamp(30px, 3.6vw, 46px); line-height: 1.08; color: var(--crema); }
+.gm-title em { font-style: italic; color: var(--sol-lt); }
+.gm-filters {
+  max-width: 1360px; margin: 0 auto 18px;
+  display: flex; gap: 8px; flex-wrap: wrap;
+}
+.gm-chip {
+  display: inline-flex; align-items: center; gap: 7px;
+  padding: 8px 14px;
+  border: 1px solid rgba(240,232,213,.24); border-radius: 10px 0 10px 0;
+  background: transparent; color: rgba(240,232,213,.85);
+  font-family: var(--sans); font-size: 13px; font-weight: 600; cursor: pointer; white-space: nowrap;
+  transition: background var(--dur-fast, 160ms), color var(--dur-fast, 160ms), border-color var(--dur-fast, 160ms);
+}
+.gm-chip:hover { border-color: rgba(240,232,213,.55); color: var(--crema); }
+.gm-chip-n { font-weight: 400; font-size: 12px; opacity: .65; }
+.gm-chip.on { background: var(--crema); border-color: var(--crema); color: var(--ink); }
+.gm-chip.on .gm-chip-n { opacity: .6; }
+.gm-chip:focus-visible { outline: 2px solid var(--sol-lt); outline-offset: 2px; }
+.gm-grid {
+  max-width: 1360px; margin: 0 auto;
+  display: grid; grid-template-columns: repeat(4, minmax(0, 1fr));
+  grid-auto-rows: clamp(150px, 14vw, 230px); grid-auto-flow: dense; gap: 8px;
+}
+.gm-tile {
+  position: relative; display: block; padding: 0; border: 0; overflow: hidden; cursor: zoom-in;
+  background: var(--ber); border-radius: 12px 0 12px 0;
+}
+.gm-tile.big  { grid-column: span 2; grid-row: span 2; }
+.gm-tile.tall { grid-row: span 2; }
+.gm-tile.wide { grid-column: span 2; }
+.gm-tile picture, .gm-tile img { display: block; width: 100%; height: 100%; }
+.gm-tile img { object-fit: cover; transition: transform 700ms var(--ease-out), filter var(--dur-base, 220ms); }
+.gm-tile::after { content: ''; position: absolute; inset: 0; background: linear-gradient(to top, rgba(26,10,30,.72) 0%, rgba(26,10,30,0) 45%); opacity: 0; transition: opacity var(--dur-base, 220ms); pointer-events: none; }
+.gm-cap {
+  position: absolute; left: 12px; right: 12px; bottom: 10px; z-index: 1;
+  font-family: var(--sans); font-size: 12.5px; line-height: 1.35; text-align: left; color: var(--crema);
+  opacity: 0; transform: translateY(6px); transition: opacity var(--dur-base, 220ms), transform var(--dur-base, 220ms) var(--ease-out);
+}
+@media (hover: hover) {
+  .gm-tile:hover img { transform: scale(1.04); }
+  .gm-tile:hover::after, .gm-tile:hover .gm-cap { opacity: 1; }
+  .gm-tile:hover .gm-cap { transform: none; }
+}
+.gm-tile:focus-visible { outline: 2px solid var(--sol-lt); outline-offset: 3px; }
+.gm-tile:focus-visible::after, .gm-tile:focus-visible .gm-cap { opacity: 1; transform: none; }
+.gm-more-wrap { max-width: 1360px; margin: 22px auto 0; text-align: center; }
+.gm-more {
+  padding: 12px 22px; border: 1px solid rgba(240,232,213,.5); border-radius: 10px 0 10px 0;
+  background: transparent; color: var(--crema);
+  font-family: var(--sans); font-size: 13px; font-weight: 700; letter-spacing: .06em; cursor: pointer;
+}
+.gm-more:hover, .gm-more:focus-visible { background: var(--crema); color: var(--ink); }
+@media (max-width: 760px) {
+  .gm-filters {
+    position: sticky; top: var(--chrome-h, 116px); z-index: 5;
+    flex-wrap: nowrap; overflow-x: auto; scrollbar-width: none;
+    margin: 0 calc(-1 * var(--page-pad)) 14px; padding: 10px var(--page-pad);
+    background: var(--ink);
+  }
+  .gm-filters::-webkit-scrollbar { display: none; }
+  .gm-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); grid-auto-rows: 42vw; gap: 6px; }
+  .gm-tile.big { grid-column: span 2; grid-row: span 1; }
+}
 
 /* ---- Visita virtual (Vimeo embed) ---- */
 .apt-video-tour {

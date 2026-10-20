@@ -482,47 +482,6 @@ const AptEquipamiento = ({
     className: "aei-label"
   }, label)))))))));
 };
-const PhotoPlaceholder = ({
-  caption,
-  accent,
-  index
-}) => /*#__PURE__*/React.createElement("div", {
-  className: "apt-photo-placeholder",
-  style: {
-    '--ph-accent': accent
-  }
-}, /*#__PURE__*/React.createElement("svg", {
-  viewBox: "0 0 3 2",
-  className: "ph-ratio",
-  "aria-hidden": "true"
-}), /*#__PURE__*/React.createElement("div", {
-  className: "ph-inner"
-}, /*#__PURE__*/React.createElement("svg", {
-  width: "32",
-  height: "32",
-  viewBox: "0 0 24 24",
-  fill: "none",
-  stroke: "currentColor",
-  strokeWidth: "1",
-  opacity: ".4",
-  "aria-hidden": "true"
-}, /*#__PURE__*/React.createElement("rect", {
-  x: "3",
-  y: "3",
-  width: "18",
-  height: "18",
-  rx: "2"
-}), /*#__PURE__*/React.createElement("circle", {
-  cx: "8.5",
-  cy: "8.5",
-  r: "1.5"
-}), /*#__PURE__*/React.createElement("path", {
-  d: "m21 15-5-5L5 21"
-})), /*#__PURE__*/React.createElement("span", {
-  className: "ph-num"
-}, "0", index + 1)), caption && /*#__PURE__*/React.createElement("div", {
-  className: "ph-caption"
-}, "– ", caption));
 
 // --- Hero de la página de Hestía ---
 // Foto de cabecera: índice en gallery_imgs del dormitorio principal, la imagen
@@ -757,39 +716,84 @@ const AptPageDesc = ({
 };
 
 // --- Galería carousel ---
-const GalleryCarousel = ({
+// Galería de la ficha: mosaico editorial con filtros por estancia y visor a
+// pantalla completa (texto y nota de intención de cada foto). La zona sale del
+// título de la foto (parte antes de " · ", en español para no depender del idioma).
+const GALLERY_ZONES = [{
+  id: 'salon',
+  es: 'Salón y comedor',
+  en: 'Living & dining',
+  test: t => /^(Salón|Comedor|Entrada|Detalle|Sofá)/.test(t)
+}, {
+  id: 'dorm',
+  es: 'Dormitorios',
+  en: 'Bedrooms',
+  test: t => /^Dormitorio/.test(t)
+}, {
+  id: 'coc',
+  es: 'Cocina',
+  en: 'Kitchen',
+  test: t => /^Cocina/.test(t)
+}, {
+  id: 'bano',
+  es: 'Baños',
+  en: 'Bathrooms',
+  test: t => /^Baño/.test(t)
+}, {
+  id: 'terr',
+  es: 'Terrazas',
+  en: 'Terraces',
+  test: t => /terraza/i.test(t)
+}, {
+  id: 'urb',
+  es: 'Urbanización',
+  en: 'The complex',
+  test: () => true
+}];
+const GALLERY_FIRST = 12;
+// Ritmo del mosaico: una grande, una alta y una ancha cada siete fotos.
+const _tileKind = k => k % 7 === 0 ? 'big' : k % 7 === 3 ? 'tall' : k % 7 === 5 ? 'wide' : '';
+const GalleryMosaic = ({
   imgs,
   captions,
+  esCaptions,
   notes = {},
   accent,
   lang = 'es'
 }) => {
-  const n = imgs.length;
-  const [cur, setCur] = React.useState(0);
-  const [lightbox, setLightbox] = React.useState(false);
-  const thumbsRef = React.useRef(null);
-  const timerRef = React.useRef(null);
-  const pausedRef = React.useRef(false);
-  const lbCloseRef = React.useRef(null);
-  const prefersReducedMotion = React.useMemo(() => !!(window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches), []);
-  const [autoplayOn, setAutoplayOn] = React.useState(!prefersReducedMotion);
+  const zoneOf = React.useMemo(() => imgs.map((_, i) => {
+    const head = ((esCaptions || captions)[i] || '').split(' · ')[0];
+    return GALLERY_ZONES.find(z => z.test(head)).id;
+  }), [imgs, captions, esCaptions]);
+  const zones = GALLERY_ZONES.map(z => ({
+    ...z,
+    n: zoneOf.filter(id => id === z.id).length
+  })).filter(z => z.n);
+  const [filter, setFilter] = React.useState('all');
+  const [expanded, setExpanded] = React.useState(false);
+  const [lb, setLb] = React.useState(null); // posición dentro de la lista visible
+  const closeRef = React.useRef(null);
 
-  // Smart object-position per photo, calculated from edge centroid.
-  // Loaded from data/photo-positions.json (cargado en window.PHOTO_POS).
-  const posFor = src => {
-    const map = window.PHOTO_POS || {};
-    const key = src.split('/').pop();
-    return map[key] || '50% 50%';
+  // "Todo" va ordenado por estancias (el salón abre el mosaico, y dentro de cada
+  // zona entrada y detalles quedan al final) para que la foto grande sea de las buenas.
+  const order = React.useMemo(() => {
+    const zi = id => GALLERY_ZONES.findIndex(z => z.id === id);
+    const minor = i => /^(Entrada|Detalle)/.test((esCaptions || captions)[i] || '') ? 1 : 0;
+    return imgs.map((_, i) => i).sort((a, b) => zi(zoneOf[a]) - zi(zoneOf[b]) || minor(a) - minor(b) || a - b);
+  }, [imgs, zoneOf]);
+  const list = order.filter(i => filter === 'all' || zoneOf[i] === filter);
+  const shown = filter === 'all' && !expanded ? list.slice(0, GALLERY_FIRST) : list;
+  const zoneName = id => {
+    const z = GALLERY_ZONES.find(x => x.id === id);
+    return z ? z[lang] : '';
   };
 
-  // Cache-bust de las fotos de galería: al reemplazar una foto con el mismo
-  // nombre, el navegador (sobre todo Safari) sirve la vieja cacheada. Subir
-  // GALLERY_V fuerza la nueva. posFor/captions siguen usando el src limpio.
+  // Cache-bust de las fotos (subir GALLERY_V al reemplazar una con el mismo nombre)
+  // y encuadre inteligente por foto (data/photo-positions.json → window.PHOTO_POS).
   const gv = src => `${src}?v=${GALLERY_V}`;
-
-  // <picture> elige la fuente .webp por type, pero si esa fuente falla (404,
-  // caché o deploy incompleto) NO cae al <img> jpg por sí sola: la imagen
-  // queda en blanco. Aquí forzamos el fallback al jpg al primer error.
+  const webp = src => gv(src).replace(/\.(jpg|jpeg|png)(\?.*)?$/i, '.webp$2');
+  const posFor = src => (window.PHOTO_POS || {})[src.split('/').pop()] || '50% 50%';
+  // Si la .webp falla (404 o caché), <picture> no cae solo al jpg: se fuerza.
   const webpFallback = e => {
     const img = e.currentTarget;
     if (img.dataset.jpgFallback) return;
@@ -800,32 +804,27 @@ const GalleryCarousel = ({
     const jpg = img.getAttribute('src');
     img.src = jpg + (jpg.indexOf('?') >= 0 ? '&' : '?') + 'fb=1';
   };
-
-  // Cambia de foto. La animación visual la lleva el CSS sobre
-  // .gc-slide (transform translateX). NO envolvemos en _vt() porque
-  // colisiona con el slide CSS y produce flicker en mobile.
-  const stepTo = next => setCur(next);
-  const resetTimer = () => {
-    clearInterval(timerRef.current);
-    if (!autoplayOn) return;
-    timerRef.current = setInterval(() => {
-      if (!pausedRef.current) stepTo((cur + 1) % n);
-    }, 6000);
+  const pick = id => {
+    setFilter(id);
+    setExpanded(false);
   };
+  const openAt = pos => {
+    setLb(pos);
+    document.body.style.overflow = 'hidden';
+  };
+  const close = () => {
+    setLb(null);
+    document.body.style.overflow = '';
+  };
+  const step = d => setLb(p => (p + d + list.length) % list.length);
   React.useEffect(() => {
-    resetTimer();
-    return () => clearInterval(timerRef.current);
-  }, [cur, n, autoplayOn]);
-
-  // Keyboard navigation + focus trap for lightbox
-  React.useEffect(() => {
-    if (!lightbox) return;
-    lbCloseRef.current && lbCloseRef.current.focus();
+    if (lb === null) return;
+    closeRef.current && closeRef.current.focus();
     const FOCUSABLE = 'button:not([disabled]), a[href], [tabindex]:not([tabindex="-1"])';
     const onKey = e => {
-      if (e.key === 'ArrowRight') stepTo((cur + 1) % n);
-      if (e.key === 'ArrowLeft') stepTo((cur - 1 + n) % n);
-      if (e.key === 'Escape') setLightbox(false);
+      if (e.key === 'ArrowRight') step(1);
+      if (e.key === 'ArrowLeft') step(-1);
+      if (e.key === 'Escape') close();
       if (e.key === 'Tab') {
         const el = document.querySelector('.gc-lightbox');
         if (!el) return;
@@ -844,159 +843,76 @@ const GalleryCarousel = ({
     };
     window.addEventListener('keydown', onKey);
     return () => window.removeEventListener('keydown', onKey);
-  }, [lightbox, cur, n]);
-
-  // Scroll the strip horizontally to centre the active thumb, never the page
-  React.useEffect(() => {
-    const strip = thumbsRef.current;
-    if (!strip) return;
-    const thumb = strip.children[cur];
-    if (!thumb) return;
-    const offset = thumb.offsetLeft - (strip.clientWidth - thumb.offsetWidth) / 2;
-    strip.scrollTo({
-      left: offset,
-      behavior: 'smooth'
-    });
-  }, [cur]);
-  const go = i => {
-    stepTo(i);
-    resetTimer();
-  };
-
-  // Swipe on main image. Trackeamos si hubo swipe para no abrir el
-  // lightbox al soltar (touchend dispara click sintético después).
+  }, [lb, list.length]);
   const touchX = React.useRef(null);
-  const swipedRef = React.useRef(false);
   const onTouchStart = e => {
     touchX.current = e.touches[0].clientX;
-    swipedRef.current = false;
   };
   const onTouchEnd = e => {
     if (touchX.current === null) return;
     const dx = e.changedTouches[0].clientX - touchX.current;
-    if (Math.abs(dx) > 40) {
-      stepTo(dx < 0 ? (cur + 1) % n : (cur - 1 + n) % n);
-      resetTimer();
-      swipedRef.current = true;
-    }
+    if (Math.abs(dx) > 40) step(dx < 0 ? 1 : -1);
     touchX.current = null;
   };
-  const openLightbox = () => {
-    if (swipedRef.current) {
-      swipedRef.current = false;
-      return;
-    }
-    setLightbox(true);
-    document.body.style.overflow = 'hidden';
-  };
-  const closeLightbox = () => {
-    setLightbox(false);
-    document.body.style.overflow = '';
-  };
+  const cur = lb !== null ? list[lb] : null;
   return /*#__PURE__*/React.createElement(React.Fragment, null, /*#__PURE__*/React.createElement("div", {
-    className: "gc-wrap"
-  }, /*#__PURE__*/React.createElement("div", {
-    className: "gc-stage",
-    onTouchStart: onTouchStart,
-    onTouchEnd: onTouchEnd,
-    onMouseEnter: () => {
-      pausedRef.current = true;
-    },
-    onMouseLeave: () => {
-      pausedRef.current = false;
-    },
-    onFocus: () => {
-      pausedRef.current = true;
-    },
-    onBlur: () => {
-      pausedRef.current = false;
-    },
-    onClick: openLightbox
-  }, imgs.map((src, i) => /*#__PURE__*/React.createElement("div", {
+    className: "gm-filters",
+    role: "tablist",
+    "aria-label": lang === 'es' ? 'Filtrar fotos por estancia' : 'Filter photos by room'
+  }, /*#__PURE__*/React.createElement("button", {
+    type: "button",
+    role: "tab",
+    "aria-selected": filter === 'all',
+    className: `gm-chip${filter === 'all' ? ' on' : ''}`,
+    onClick: () => pick('all')
+  }, lang === 'es' ? 'Todo' : 'All', " ", /*#__PURE__*/React.createElement("span", {
+    className: "gm-chip-n"
+  }, imgs.length)), zones.map(z => /*#__PURE__*/React.createElement("button", {
+    key: z.id,
+    type: "button",
+    role: "tab",
+    "aria-selected": filter === z.id,
+    className: `gm-chip${filter === z.id ? ' on' : ''}`,
+    onClick: () => pick(z.id)
+  }, z[lang], " ", /*#__PURE__*/React.createElement("span", {
+    className: "gm-chip-n"
+  }, z.n)))), /*#__PURE__*/React.createElement("div", {
+    className: "gm-grid"
+  }, shown.map((i, k) => /*#__PURE__*/React.createElement("button", {
     key: i,
-    className: `gc-slide${i === cur ? ' gc-slide-active' : ''}`,
-    style: {
-      transform: `translateX(${(i - cur) * 100}%)`
-    }
-  }, /*#__PURE__*/React.createElement(BlurImg, {
-    src: gv(src),
-    alt: captions[i],
-    fill: true,
-    loading: i === 0 ? 'eager' : 'lazy',
-    onError: webpFallback,
-    imgStyle: {
-      objectPosition: posFor(src)
-    }
-  }))), /*#__PURE__*/React.createElement("div", {
-    className: "gc-overlay"
-  }, /*#__PURE__*/React.createElement(WatermarkBadge, {
-    size: 26,
-    pos: {
-      bottom: 12,
-      right: 12
-    }
-  }), /*#__PURE__*/React.createElement("div", {
-    className: "gc-caption"
-  }, captions[cur]), /*#__PURE__*/React.createElement("div", {
-    className: "gc-counter"
-  }, cur + 1, " / ", n), /*#__PURE__*/React.createElement("div", {
-    className: "gc-zoom-hint"
-  }, "⤢")), /*#__PURE__*/React.createElement("button", {
-    className: "gc-prev",
-    onClick: e => {
-      e.stopPropagation();
-      go((cur - 1 + n) % n);
-    },
-    "aria-label": lang === 'es' ? 'Anterior' : 'Previous'
-  }, "‹"), /*#__PURE__*/React.createElement("button", {
-    className: "gc-next",
-    onClick: e => {
-      e.stopPropagation();
-      go((cur + 1) % n);
-    },
-    "aria-label": lang === 'es' ? 'Siguiente' : 'Next'
-  }, "›"), /*#__PURE__*/React.createElement("button", {
-    className: "gc-autoplay-toggle",
-    onClick: e => {
-      e.stopPropagation();
-      setAutoplayOn(v => !v);
-    },
-    "aria-label": autoplayOn ? lang === 'es' ? 'Pausar cambio automático de fotos' : 'Pause automatic photo change' : lang === 'es' ? 'Reanudar cambio automático de fotos' : 'Resume automatic photo change'
-  }, autoplayOn ? '❚❚' : '▶')), /*#__PURE__*/React.createElement("div", {
-    className: "gc-thumbs",
-    ref: thumbsRef
-  }, imgs.map((src, i) => /*#__PURE__*/React.createElement("button", {
-    key: i,
-    className: `gc-thumb${i === cur ? ' gc-thumb-on' : ''}`,
-    onClick: e => {
-      e.stopPropagation();
-      go(i);
-    },
+    type: "button",
+    className: `gm-tile ${_tileKind(k)}`,
+    onClick: () => openAt(k),
     "aria-label": captions[i]
   }, /*#__PURE__*/React.createElement("picture", null, /*#__PURE__*/React.createElement("source", {
-    srcSet: gv(src).replace(/\.(jpg|jpeg|png)(\?.*)?$/i, '.webp$2'),
+    srcSet: webp(imgs[i]),
     type: "image/webp"
   }), /*#__PURE__*/React.createElement("img", {
-    decoding: "async",
-    src: gv(src),
+    src: gv(imgs[i]),
     alt: "",
-    loading: "lazy",
+    loading: k < 4 ? 'eager' : 'lazy',
+    decoding: "async",
     onError: webpFallback,
     style: {
-      objectPosition: posFor(src)
+      objectPosition: posFor(imgs[i])
     }
-  })))))), lightbox && ReactDOM.createPortal(
+  })), /*#__PURE__*/React.createElement("span", {
+    className: "gm-cap"
+  }, captions[i])))), filter === 'all' && !expanded && list.length > GALLERY_FIRST && /*#__PURE__*/React.createElement("div", {
+    className: "gm-more-wrap"
+  }, /*#__PURE__*/React.createElement("button", {
+    type: "button",
+    className: "gm-more",
+    onClick: () => setExpanded(true)
+  }, lang === 'es' ? `Mostrar las ${list.length} fotos` : `Show all ${list.length} photos`)), cur !== null && ReactDOM.createPortal(
   /*#__PURE__*/
-  // .apt-page-gallery es position:relative + z-index propio (apilado
-  // de secciones con esquina redondeada): sin portal, este fixed
-  // quedaba atrapado en ESA pila local, con el header (z-index 99)
-  // pintando por encima y bloqueando el toque, aunque el botón de
-  // cerrar existiera y pareciera bien posicionado (confirmado con
-  // elementFromPoint: el centro del botón devolvía el <header>, no
-  // el botón). Montado en <body>, compite en la pila raíz y gana.
+  // Montado en <body>: dentro de la sección quedaba atrapado en su pila de
+  // z-index y el header (z-index 99) tapaba el botón de cerrar.
   React.createElement("div", {
     className: "gc-lightbox",
-    onClick: closeLightbox,
+    onClick: close,
+    onTouchStart: onTouchStart,
+    onTouchEnd: onTouchEnd,
     role: "dialog",
     "aria-modal": "true",
     "aria-label": lang === 'es' ? 'Galería de fotos' : 'Photo gallery',
@@ -1004,21 +920,21 @@ const GalleryCarousel = ({
       '--apt-accent': accent
     }
   }, /*#__PURE__*/React.createElement("button", {
-    ref: lbCloseRef,
+    ref: closeRef,
     className: "gc-lb-close",
-    onClick: closeLightbox,
+    onClick: close,
     "aria-label": lang === 'es' ? 'Cerrar' : 'Close'
   }, "✕"), /*#__PURE__*/React.createElement("button", {
     className: "gc-lb-prev",
     onClick: e => {
       e.stopPropagation();
-      setCur(i => (i - 1 + n) % n);
+      step(-1);
     },
     "aria-label": lang === 'es' ? 'Anterior' : 'Previous'
   }, "‹"), /*#__PURE__*/React.createElement("picture", {
     className: "gc-lb-pic"
   }, /*#__PURE__*/React.createElement("source", {
-    srcSet: gv(imgs[cur]).replace(/\.(jpg|jpeg|png)(\?.*)?$/i, '.webp$2'),
+    srcSet: webp(imgs[cur]),
     type: "image/webp"
   }), /*#__PURE__*/React.createElement("img", {
     decoding: "async",
@@ -1031,7 +947,7 @@ const GalleryCarousel = ({
     className: "gc-lb-next",
     onClick: e => {
       e.stopPropagation();
-      setCur(i => (i + 1) % n);
+      step(1);
     },
     "aria-label": lang === 'es' ? 'Siguiente' : 'Next'
   }, "›"), /*#__PURE__*/React.createElement("div", {
@@ -1042,7 +958,7 @@ const GalleryCarousel = ({
     className: "gc-lb-note"
   }, notes[cur])), /*#__PURE__*/React.createElement("div", {
     className: "gc-lb-counter"
-  }, cur + 1, " / ", n)), document.body));
+  }, lb + 1, " / ", list.length, filter !== 'all' ? ` · ${zoneName(filter)}` : '')), document.body));
 };
 const AptVideoDesc = ({
   apt,
@@ -1099,30 +1015,28 @@ const AptPageGallery = ({
   lang
 }) => {
   const d = apt[lang];
-  const captions = d.gallery_captions;
-  const notes = d.gallery_notes || {};
   const imgs = apt.gallery_imgs;
+  if (!imgs || !imgs.length) return null;
   return /*#__PURE__*/React.createElement("section", {
     id: "apt-galeria",
-    className: "apt-page-gallery"
+    className: "apt-page-gallery on-dark",
+    style: {
+      '--apt-accent': apt.accent
+    }
+  }, /*#__PURE__*/React.createElement("div", {
+    className: "gm-head"
   }, /*#__PURE__*/React.createElement("div", {
     className: "apt-gallery-eyebrow eyebrow"
-  }, lang === 'es' ? 'Galería de fotos' : 'Photo gallery'), imgs ? /*#__PURE__*/React.createElement(GalleryCarousel, {
+  }, lang === 'es' ? 'Galería de fotos' : 'Photo gallery'), /*#__PURE__*/React.createElement("h2", {
+    className: "gm-title"
+  }, lang === 'es' ? /*#__PURE__*/React.createElement(React.Fragment, null, "Rincón a ", /*#__PURE__*/React.createElement("em", null, "rincón.")) : /*#__PURE__*/React.createElement(React.Fragment, null, "Corner by ", /*#__PURE__*/React.createElement("em", null, "corner.")))), /*#__PURE__*/React.createElement(GalleryMosaic, {
     imgs: imgs,
-    captions: captions,
-    notes: notes,
+    captions: d.gallery_captions,
+    esCaptions: apt.es && apt.es.gallery_captions,
+    notes: d.gallery_notes || {},
     accent: apt.accent,
     lang: lang
-  }) : /*#__PURE__*/React.createElement(React.Fragment, null, /*#__PURE__*/React.createElement("div", {
-    className: "apt-gallery-grid"
-  }, captions.map((cap, i) => /*#__PURE__*/React.createElement(PhotoPlaceholder, {
-    key: i,
-    caption: cap,
-    accent: apt.accent,
-    index: i
-  }))), /*#__PURE__*/React.createElement("p", {
-    className: "gallery-note"
-  }, lang === 'es' ? '↑ Fotos reales próximamente. Mientras tanto, escríbenos y te mandamos más.' : "↑ Real photos coming soon. Meanwhile, write us and we'll send more.")));
+  }));
 };
 
 // --- Otros Hestías ---
