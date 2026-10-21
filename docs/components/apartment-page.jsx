@@ -530,8 +530,9 @@ const _toGallery = () => {
   if (el) el.scrollIntoView({ behavior: 'smooth', block: 'start' });
 };
 
-// Cabecera de la ficha: la foto que identifica al Hestía, el acceso a todas
-// las fotos (lleva al carrusel) y debajo el resumen para decidir.
+// Cabecera de la ficha: todas las fotos deslizables, empezando por el
+// dormitorio principal (la que identifica al Hestía) y siguiendo por estancias;
+// "Ver por estancias" baja a la galería con filtros. Debajo, el resumen.
 const AptPageHero = ({ apt, lang }) => {
   const d = apt[lang];
   const tbl = HESTIA_PRICES[apt.id];
@@ -539,26 +540,48 @@ const AptPageHero = ({ apt, lang }) => {
   // en /p-edit.html, sin el directDiscount (ese vive en el desglose de reserva).
   const minPrice = tbl ? Math.min(...tbl.base.slice(1)) : null;
   const imgs = apt.gallery_imgs || [];
-  const cover = imgs[APT_COVER[apt.id]] || imgs[0] || apt.hero_img;
+  const caps = d.gallery_captions || [];
+  const order = React.useMemo(() => {
+    const esCaps = (apt.es && apt.es.gallery_captions) || caps;
+    const zone = i => GALLERY_ZONES.findIndex(z => z.test((esCaps[i] || '').split(' · ')[0]));
+    const coverIdx = APT_COVER[apt.id] ?? 0;
+    const rest = imgs.map((_, i) => i).filter(i => i !== coverIdx).sort((x, y) => zone(x) - zone(y) || x - y);
+    return imgs[coverIdx] ? [coverIdx, ...rest] : rest;
+  }, [apt.id]);
+  const trackRef = React.useRef(null);
+  const [pos, setPos] = React.useState(0);
+  const onTrack = () => { const el = trackRef.current; if (el) setPos(Math.round(el.scrollLeft / el.clientWidth)); };
+  const go = (dlt) => {
+    const el = trackRef.current; if (!el) return;
+    const n = (pos + dlt + order.length) % order.length;
+    el.scrollTo({ left: n * el.clientWidth, behavior: Math.abs(n - pos) > 1 ? 'auto' : 'smooth' });
+  };
   const all = (window.REVIEWS && window.REVIEWS.items) || [];
   const own = all.filter(r => r.status === 'published' && (r.apt === apt.id || r.apt === 'all'));
   const avg = ratingScore(own, 'global');
-  const seeAll = imgs.length
-    ? (lang === 'es' ? `Ver las ${imgs.length} fotos` : `See all ${imgs.length} photos`)
-    : (lang === 'es' ? 'Ver todas las fotos' : 'See all photos');
   return (
     <section className="ah on-dark" data-apt={apt.id} style={{ '--apt-accent': apt.accent, '--apt-accent2': apt.accent2 }}>
-      {cover && (
+      {order.length > 0 && (
         <div className="ah-gallery">
           <div className="ah-cover">
-            <button type="button" className="ah-cover-img" onClick={_toGallery} aria-label={seeAll}>
-              <picture>
-                <source srcSet={_webp(cover)} type="image/webp"/>
-                <img src={cover} alt={d.name} loading="eager" decoding="async" fetchpriority="high"/>
-              </picture>
-            </button>
+            <div className="ah-track" ref={trackRef} onScroll={onTrack}>
+              {order.map((gi, k) => (
+                <figure key={gi} className="ah-slide">
+                  <picture>
+                    <source srcSet={_webp(imgs[gi])} type="image/webp"/>
+                    <img src={imgs[gi]} alt={caps[gi] || d.name} decoding="async"
+                         loading={k < 2 ? 'eager' : 'lazy'} fetchpriority={k === 0 ? 'high' : undefined}
+                         style={{ objectPosition: (window.PHOTO_POS || {})[imgs[gi].split('/').pop()] || '50% 50%' }}/>
+                  </picture>
+                </figure>
+              ))}
+            </div>
+            <button type="button" className="ah-nav ah-prev" onClick={() => go(-1)} aria-label={lang === 'es' ? 'Foto anterior' : 'Previous photo'}>‹</button>
+            <button type="button" className="ah-nav ah-next" onClick={() => go(1)} aria-label={lang === 'es' ? 'Foto siguiente' : 'Next photo'}>›</button>
+            <span className="ah-count" aria-live="polite">{pos + 1} / {order.length}</span>
+            {caps[order[pos]] && <span className="ah-cap">{caps[order[pos]]}</span>}
             <button type="button" className="ah-all" onClick={_toGallery}>
-              <HiIcon name="camera" size={16} /> {seeAll}
+              <HiIcon name="camera" size={16} /> {lang === 'es' ? 'Ver por estancias' : 'View by room'}
             </button>
           </div>
         </div>

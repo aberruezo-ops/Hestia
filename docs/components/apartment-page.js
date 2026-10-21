@@ -500,8 +500,9 @@ const _toGallery = () => {
   });
 };
 
-// Cabecera de la ficha: la foto que identifica al Hestía, el acceso a todas
-// las fotos (lleva al carrusel) y debajo el resumen para decidir.
+// Cabecera de la ficha: todas las fotos deslizables, empezando por el
+// dormitorio principal (la que identifica al Hestía) y siguiendo por estancias;
+// "Ver por estancias" baja a la galería con filtros. Debajo, el resumen.
 const AptPageHero = ({
   apt,
   lang
@@ -512,11 +513,32 @@ const AptPageHero = ({
   // en /p-edit.html, sin el directDiscount (ese vive en el desglose de reserva).
   const minPrice = tbl ? Math.min(...tbl.base.slice(1)) : null;
   const imgs = apt.gallery_imgs || [];
-  const cover = imgs[APT_COVER[apt.id]] || imgs[0] || apt.hero_img;
+  const caps = d.gallery_captions || [];
+  const order = React.useMemo(() => {
+    const esCaps = apt.es && apt.es.gallery_captions || caps;
+    const zone = i => GALLERY_ZONES.findIndex(z => z.test((esCaps[i] || '').split(' · ')[0]));
+    const coverIdx = APT_COVER[apt.id] ?? 0;
+    const rest = imgs.map((_, i) => i).filter(i => i !== coverIdx).sort((x, y) => zone(x) - zone(y) || x - y);
+    return imgs[coverIdx] ? [coverIdx, ...rest] : rest;
+  }, [apt.id]);
+  const trackRef = React.useRef(null);
+  const [pos, setPos] = React.useState(0);
+  const onTrack = () => {
+    const el = trackRef.current;
+    if (el) setPos(Math.round(el.scrollLeft / el.clientWidth));
+  };
+  const go = dlt => {
+    const el = trackRef.current;
+    if (!el) return;
+    const n = (pos + dlt + order.length) % order.length;
+    el.scrollTo({
+      left: n * el.clientWidth,
+      behavior: Math.abs(n - pos) > 1 ? 'auto' : 'smooth'
+    });
+  };
   const all = window.REVIEWS && window.REVIEWS.items || [];
   const own = all.filter(r => r.status === 'published' && (r.apt === apt.id || r.apt === 'all'));
   const avg = ratingScore(own, 'global');
-  const seeAll = imgs.length ? lang === 'es' ? `Ver las ${imgs.length} fotos` : `See all ${imgs.length} photos` : lang === 'es' ? 'Ver todas las fotos' : 'See all photos';
   return /*#__PURE__*/React.createElement("section", {
     className: "ah on-dark",
     "data-apt": apt.id,
@@ -524,32 +546,52 @@ const AptPageHero = ({
       '--apt-accent': apt.accent,
       '--apt-accent2': apt.accent2
     }
-  }, cover && /*#__PURE__*/React.createElement("div", {
+  }, order.length > 0 && /*#__PURE__*/React.createElement("div", {
     className: "ah-gallery"
   }, /*#__PURE__*/React.createElement("div", {
     className: "ah-cover"
-  }, /*#__PURE__*/React.createElement("button", {
-    type: "button",
-    className: "ah-cover-img",
-    onClick: _toGallery,
-    "aria-label": seeAll
+  }, /*#__PURE__*/React.createElement("div", {
+    className: "ah-track",
+    ref: trackRef,
+    onScroll: onTrack
+  }, order.map((gi, k) => /*#__PURE__*/React.createElement("figure", {
+    key: gi,
+    className: "ah-slide"
   }, /*#__PURE__*/React.createElement("picture", null, /*#__PURE__*/React.createElement("source", {
-    srcSet: _webp(cover),
+    srcSet: _webp(imgs[gi]),
     type: "image/webp"
   }), /*#__PURE__*/React.createElement("img", {
-    src: cover,
-    alt: d.name,
-    loading: "eager",
+    src: imgs[gi],
+    alt: caps[gi] || d.name,
     decoding: "async",
-    fetchpriority: "high"
-  }))), /*#__PURE__*/React.createElement("button", {
+    loading: k < 2 ? 'eager' : 'lazy',
+    fetchpriority: k === 0 ? 'high' : undefined,
+    style: {
+      objectPosition: (window.PHOTO_POS || {})[imgs[gi].split('/').pop()] || '50% 50%'
+    }
+  }))))), /*#__PURE__*/React.createElement("button", {
+    type: "button",
+    className: "ah-nav ah-prev",
+    onClick: () => go(-1),
+    "aria-label": lang === 'es' ? 'Foto anterior' : 'Previous photo'
+  }, "‹"), /*#__PURE__*/React.createElement("button", {
+    type: "button",
+    className: "ah-nav ah-next",
+    onClick: () => go(1),
+    "aria-label": lang === 'es' ? 'Foto siguiente' : 'Next photo'
+  }, "›"), /*#__PURE__*/React.createElement("span", {
+    className: "ah-count",
+    "aria-live": "polite"
+  }, pos + 1, " / ", order.length), caps[order[pos]] && /*#__PURE__*/React.createElement("span", {
+    className: "ah-cap"
+  }, caps[order[pos]]), /*#__PURE__*/React.createElement("button", {
     type: "button",
     className: "ah-all",
     onClick: _toGallery
   }, /*#__PURE__*/React.createElement(HiIcon, {
     name: "camera",
     size: 16
-  }), " ", seeAll))), /*#__PURE__*/React.createElement("div", {
+  }), " ", lang === 'es' ? 'Ver por estancias' : 'View by room'))), /*#__PURE__*/React.createElement("div", {
     className: "ah-summary"
   }, /*#__PURE__*/React.createElement("div", {
     className: "ah-id"
