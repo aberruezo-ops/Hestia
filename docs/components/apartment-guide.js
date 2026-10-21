@@ -13,51 +13,21 @@ const APT_GUIDE_PIN = {
 };
 
 // ----- Mapeo: galería de cada Hestía → estancia -----
-// Reusamos las fotos profesionales que ya están en assets/apt-vX-gallery-N.jpg
-// (mismas que la galería de Hestía). Cada índice apunta a su posición
-// en apt.gallery_imgs[]. Las captions se sacan de apt[lang].gallery_captions[].
-const ROOM_PHOTOS = {
-  vm: {
-    salon: [0, 1, 2, 19, 20, 21],
-    // 'Salón · ...' (19=lámpara sofá, movida desde urbanización)
-    cocina: [5, 6, 7],
-    // 'Cocina · ...'
-    dormitorios: [8, 9, 23],
-    // 8=Dorm 2 turquesa, 9=Dorm principal, 23=Dorm principal lámpara globo
-    banos: [13, 14, 15],
-    // 13=Baño 1 LED verde, 14/15=Baño 2 (16=Piscina movido a urbanización)
-    terraza: [11, 12],
-    // 'Terraza · ...' (13 movido a baños)
-    urbanizacion: [3, 16, 17, 18] // 3=Piscina noche, 16=Piscina día, 17=Piscina jardines, 18=Zona duchas
-  },
-  // Reconstruido desde cero (las leyendas reales de gallery_captions no
-  // coincidían con los índices anteriores: aparecían sauna en dormitorios,
-  // piscina en baños, dormitorio en salón...). Cada índice comprobado
-  // contra su leyenda real en gallery_captions antes de asignarlo.
-  vt: {
-    salon: [0, 3, 13, 18, 26],
-    // 0/3/18=Salón, 13=Comedor, 26=Entrada
-    cocina: [2],
-    // 2 = Cocina · encimera gris y azulejos ocres
-    dormitorios: [4, 6, 17, 20, 21, 22],
-    // 4/6/17=Dormitorio principal, 20/21/22=Dormitorio 2
-    banos: [5, 23, 24, 25],
-    // 5=Baño principal, 23=Baño 1, 24/25=Baño 2
-    terraza: [1, 15, 16, 19, 27],
-    // Terraza (atardecer, horizonte, toldo, amanecer)
-    urbanizacion: [7, 8, 9, 10, 11, 12, 14] // Piscina climatizada/minispa, jacuzzi, gimnasio, sauna, piscina exterior
-  },
-  vs: {
-    salon: [0, 1, 2, 3, 4, 5, 6, 7],
-    cocina: [8, 9, 10, 11],
-    dormitorios: [12, 13, 14],
-    banos: [16, 17, 18],
-    // 15 = Dormitorio 2, eliminado de baños
-    terraza: [19, 20, 21, 22, 23, 24, 25, 26],
-    // 27 = Piscina, eliminada de terraza
-    urbanizacion: [27, 28] // Piscina comunitaria (día y atardecer)
-  }
-};
+// Fotos de cada estancia de la guía: salen de la galería de la ficha
+// (apt.gallery_imgs) según el título de cada foto en español, la parte antes
+// de " · ". Antes eran índices escritos a mano y se descolocaban cada vez que
+// cambiaba el orden de la galería. Devuelve { estancia: [índices] }.
+const ROOM_ZONES = [['dormitorios', t => /^Dormitorio/.test(t)], ['banos', t => /^Baño/.test(t)], ['cocina', t => /^Cocina/.test(t)], ['terraza', t => /terraza/i.test(t)], ['salon', t => /^(Salón|Comedor|Entrada|Detalle|Sofá)/.test(t)], ['urbanizacion', () => true]];
+function roomPhotoMap(apt) {
+  const caps = apt && apt.es && apt.es.gallery_captions || [];
+  const out = {};
+  caps.forEach((c, i) => {
+    const head = (c || '').split(' · ')[0];
+    const zone = ROOM_ZONES.find(([, test]) => test(head))[0];
+    (out[zone] = out[zone] || []).push(i);
+  });
+  return out;
+}
 
 // Fotos extraídas del PDF SIN el logo verde antiguo, usadas como fallback
 // cuando no hay foto de galería para esa estancia (típicamente urbanización).
@@ -11206,7 +11176,7 @@ const AptGuideView = ({
   };
   const aptInfo = GUIDE_BY_APT[apt.id];
   const aptName = apt[lang].name;
-  const photoMap = ROOM_PHOTOS[apt.id] || {};
+  const photoMap = roomPhotoMap(apt);
   const urbExtra = URB_FALLBACK[apt.id] || [];
   const galleryImgs = apt.gallery_imgs || [];
   const galleryCaptions = apt[lang].gallery_captions || [];

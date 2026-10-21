@@ -101,7 +101,7 @@ function loadGuideData() {
   return {
     GUIDE_SHARED:    sandbox.GUIDE_SHARED,
     GUIDE_BY_APT:    sandbox.GUIDE_BY_APT,
-    ROOM_PHOTOS:     sandbox.ROOM_PHOTOS,
+    ROOM_PHOTOS:     Object.fromEntries(Object.entries(sandbox.APT_DATA || {}).map(([id, apt]) => [id, sandbox.roomPhotoMap(apt)])),
     URB_FALLBACK:    sandbox.URB_FALLBACK,
     CATEGORIES:      sandbox.CATEGORIES,
     PLACES:          sandbox.PLACES,
