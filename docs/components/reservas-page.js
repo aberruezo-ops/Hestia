@@ -60,7 +60,7 @@ const RESERVAS_COPY = {
     note: 'Al pulsar se abrirá WhatsApp con tu solicitud. Alex o Fran te responden normalmente en minutos.',
     aside_title: 'Tu solicitud llega a:',
     guarantee_title: 'Reserva directa',
-    guarantee_items: ['Si lo ves más barato, no solo te lo igualamos: te lo mejoramos', 'Reservando directo te ahorras hasta un 10 % aprox.', 'Alex o Fran responden personalmente', 'Te respondemos normalmente en minutos', 'Flexibilidad real en cambios y cancelaciones']
+    guarantee_items: ['Si lo ves más barato, no solo te lo igualamos: te lo mejoramos', 'Reservando directo te ahorras hasta un 10 % aprox.', 'Alex o Fran responden personalmente', 'Te respondemos normalmente en minutos', 'Cancelación gratuita hasta 30 días antes']
   },
   en: {
     eyebrow: 'We don\'t just match, we beat it · No commissions',
@@ -117,7 +117,7 @@ const RESERVAS_COPY = {
     note: 'Clicking will open WhatsApp with your request. Alex or Fran usually reply in minutes.',
     aside_title: 'Your request goes to:',
     guarantee_title: 'Direct booking',
-    guarantee_items: ['Find it cheaper and we don\'t just match it: we beat it', 'Book direct and save up to ~10%', 'Alex or Fran reply personally', 'We usually reply in minutes', 'Real flexibility on changes and cancellations']
+    guarantee_items: ['Find it cheaper and we don\'t just match it: we beat it', 'Book direct and save up to ~10%', 'Alex or Fran reply personally', 'We usually reply in minutes', 'Free cancellation up to 30 days before']
   }
 };
 const _resExtrasList = () => {
@@ -1705,7 +1705,7 @@ const ReservasForm = ({
     style: {
       verticalAlign: '-2px'
     }
-  }), ' ', lang === 'es' ? 'Señal del 20 % para confirmar, resto a la llegada. Cancelación flexible: hablamos tu caso, sin letra pequeña.' : '20% deposit to confirm, balance on arrival. Flexible cancellation: we talk through your case, no small print.'), /*#__PURE__*/React.createElement("div", {
+  }), ' ', lang === 'es' ? 'Señal del 20 % para confirmar, resto a la llegada. Cancelación gratuita hasta 30 días antes; la política completa va en el contrato.' : '20% deposit to confirm, balance on arrival. Free cancellation up to 30 days before; the full policy is in the contract.'), /*#__PURE__*/React.createElement("div", {
     className: "rf-step-actions",
     id: "rf-submit-zone"
   }, /*#__PURE__*/React.createElement("p", {
@@ -1811,7 +1811,7 @@ const ReservasAside = ({
     className: "rg-title"
   }, t.guarantee_title), /*#__PURE__*/React.createElement("p", {
     className: "rg-lede"
-  }, lang === 'es' ? 'Reservando directo te ahorras hasta un 10 % aprox.: no solo igualamos el precio de Booking o Airbnb, lo mejoramos, con 0% de comisiones y respuesta humana en menos de una hora.' : 'Book direct and save up to ~10%: we do not just match the Booking or Airbnb price, we beat it, with 0% commission and a human reply within an hour.'), /*#__PURE__*/React.createElement("p", {
+  }, lang === 'es' ? 'Reservando directo te ahorras hasta un 10 % aprox.: no solo igualamos el precio de Booking o Airbnb, lo mejoramos, con 0% de comisiones y respuesta humana en menos de dos horas.' : 'Book direct and save up to ~10%: we do not just match the Booking or Airbnb price, we beat it, with 0% commission and a human reply within two hours.'), /*#__PURE__*/React.createElement("p", {
     className: "rg-disclaimer"
   }, lang === 'es' ? '* El ahorro exacto depende de si la plataforma ya está aplicando descuentos o programas propios que no podemos conocer; por eso indicamos «hasta un 10 % aprox.».' : '* The exact saving depends on whether the platform is already applying its own discounts or programmes we can’t know; that’s why we say "up to ~10%".'), /*#__PURE__*/React.createElement("button", {
     type: "button",

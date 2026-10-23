@@ -35,7 +35,7 @@
   <link rel="dns-prefetch" href="//unpkg.com"/>
   <link rel="preload" href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400..700;1,9..144,400..700&family=Hanken+Grotesk:wght@400;500;600;700&display=swap" as="style"/>
   <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400..700;1,9..144,400..700&family=Hanken+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet"/>
-<link rel="stylesheet" href="assets/styles.css?v=1203"/>          <!-- GA4: cuando tengas el Measurement ID, descomenta y reemplaza G-XXXXXXXXXX
+<link rel="stylesheet" href="assets/styles.css?v=1204"/>          <!-- GA4: cuando tengas el Measurement ID, descomenta y reemplaza G-XXXXXXXXXX
        Google Analytics → Admin → Propiedad → Flujos de datos → tu dominio → Measurement ID
   <script async src="https://www.googletagmanager.com/gtag/js?id=G-XXXXXXXXXX"></script>
   <script>
@@ -49,15 +49,15 @@
 <a href="#main-content" class="skip-link">Saltar al contenido principal</a>
 <div id="root"><div class="container seo-fallback">
   <h1>Normas de Hestía · Hestía Your Home</h1>
-  <p>Las normas de uso de los tres apartamentos de Hestía en Vera Playa, publicadas antes de reservar para que no haya sorpresas. Salen del contrato que se firma y existen para que la disfrutéis vosotros, los siguientes huéspedes y los vecinos.</p>
+  <p>Las normas de uso de los tres apartamentos de Hestía en Vera Playa, publicadas antes de reservar para que no haya sorpresas. Salen del contrato que se firma y existen para que la disfrutes tú, los siguientes huéspedes y los vecinos.</p>
   <p>Entrada a partir de las 15:00 y salida antes de las 11:00. Necesitamos ese margen para dejar el apartamento a punto para la siguiente llegada. Entrada anticipada y salida tardía, sujetas a disponibilidad. La llegada es autónoma por defecto; la presencial es sin coste entre las 15:00 y las 19:00 y, fuera de ese horario, tiene coste y está sujeta a disponibilidad.</p>
   <p>Hestía es solo para quienes figuran en la reserva, nunca para terceros. Todos los huéspedes que pernoctan van en el contrato y en el parte de viajeros, como exige la normativa española.</p>
   <p>No se fuma dentro del apartamento, en ninguna estancia. Las toallas se quedan dentro de Hestía: para la piscina y la playa, cada uno lleva las suyas. La ropa se tiende solo en el tendedero, nunca en barandillas ni en la terraza.</p>
-  <p>Se respeta el descanso propio y el de los vecinos, evitando ruidos, música o jaleo a deshoras. Si salís, recoged la terraza (cojines, toldo y plantas), sobre todo si hay viento o previsión de mal tiempo.</p>
+  <p>Se respeta el descanso propio y el de los vecinos, evitando ruidos, música o jaleo a deshoras. Si sales, recoge la terraza (cojines, toldo y plantas), sobre todo si hay viento o previsión de mal tiempo.</p>
   <p>En las zonas comunes rigen las normas de cada urbanización, en especial el horario de piscina. No está permitido el naturismo ni el top less en ninguna zona de la urbanización. Dentro de la mancomunidad se circula despacio: hay niños, mascotas y peatones.</p>
   <p>En la piscina y zonas comunes está terminantemente prohibido hacer necesidades. Los bebés deben bañarse siempre con pañal de baño. Los menores quedan bajo responsabilidad de sus padres o tutores.</p>
   <p>Mascotas bienvenidas en los tres apartamentos, siempre con petición previa y con un suplemento moderado por noche, con tope por estancia.</p>
-  <p>Cuidad el equipamiento y el mobiliario: tras la estancia hacemos inventario. Y cuidad el entorno, sin malgastar luz ni agua y sin dejar el aire acondicionado encendido con las ventanas abiertas o cuando salgáis.</p>
+  <p>Cuida el equipamiento y el mobiliario: tras la estancia hacemos inventario. Y cuida el entorno, sin malgastar luz ni agua y sin dejar el aire acondicionado encendido con las ventanas abiertas o cuando salgas.</p>
   <p>Cualquier cosa puede romperse o fallar. Lo que garantizamos es que estaremos pendientes y haremos todo lo que esté en nuestra mano para resolverlo cuanto antes.</p>
   <nav aria-label="Hestía"><a href="/">Inicio</a> · <a href="/mar.html">Hestía Mar</a> · <a href="/thalassa.html">Hestía Thalassa</a> · <a href="/salinas.html">Hestía Salinas</a> · <a href="/reservas.html">Reservas</a> · <a href="/estancias-largas.html">Estancias largas</a> · <a href="/opiniones.html">Opiniones</a> · <a href="/nosotros.html">Nosotros</a> · <a href="/contacto.html">Contacto</a> · <a href="/guia-vera/">Extracto Guía</a></nav>
 </div></div>
@@ -100,7 +100,7 @@
     } catch (e) { console.warn('prices.json fetch failed; using fallback', e); }
 
     for (const file of COMPONENT_FILES) {
-      const res = await fetch(file + '?cv=38c68c9137');
+      const res = await fetch(file + '?cv=70f667ac98');
       if (!res.ok) throw new Error(`Failed to load ${file}: ${res.status}`);
       const code = await res.text();
       // eslint-disable-next-line no-eval

@@ -19,7 +19,7 @@
   <meta property="og:type"      content="website"/>
   <meta property="og:url"       content="https://www.hestiayourhome.com/contacto.html"/>
   <meta property="og:title"     content="Contacto · Hestía Your Home · Habla directamente con Alex o Fran"/>
-  <meta property="og:description" content="Reserva directa sin intermediarios. Habla con Alex o Fran por WhatsApp, teléfono o email. Respuesta en menos de 1 hora, normalmente en minutos."/>
+  <meta property="og:description" content="Reserva directa sin intermediarios. Habla con Alex o Fran por WhatsApp, teléfono o email. Respuesta en menos de 2 horas, normalmente en minutos."/>
   <meta property="og:image"     content="https://www.hestiayourhome.com/assets/og-hestia.jpg"/>
   <meta property="og:image:width"  content="1200"/>
   <meta property="og:image:height" content="630"/>
@@ -28,7 +28,7 @@
   <meta property="og:locale:alternate" content="en_GB"/>
   <meta name="twitter:card"        content="summary_large_image"/>
   <meta name="twitter:title"       content="Contacto · Hestía Your Home · Habla directamente con Alex o Fran"/>
-  <meta name="twitter:description" content="Reserva directa sin intermediarios. Habla con Alex o Fran por WhatsApp, teléfono o email. Respuesta en menos de 1 hora, normalmente en minutos."/>
+  <meta name="twitter:description" content="Reserva directa sin intermediarios. Habla con Alex o Fran por WhatsApp, teléfono o email. Respuesta en menos de 2 horas, normalmente en minutos."/>
   <meta name="twitter:image"       content="https://www.hestiayourhome.com/assets/og-hestia.jpg"/>
   <link rel="preconnect" href="https://fonts.googleapis.com"/>
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
@@ -36,14 +36,14 @@
   <link rel="dns-prefetch" href="//unpkg.com"/>
   <link rel="preload" href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400..700;1,9..144,400..700&family=Hanken+Grotesk:wght@400;500;600;700&display=swap" as="style"/>
   <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400..700;1,9..144,400..700&family=Hanken+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet"/>
-<link rel="stylesheet" href="assets/styles.css?v=1203"/>
+<link rel="stylesheet" href="assets/styles.css?v=1204"/>
 </head>
 <body>
 <a href="#main-content" class="skip-link">Saltar al contenido principal</a>
 <div id="root"><div class="container seo-fallback">
   <h1>Contacto · Hestía Your Home · Vera Playa</h1>
   <p>Habla directamente con Alex y Fran, que gestionan los tres apartamentos de Hestía en Vera Playa (Almería).</p>
-  <p>Respondemos en menos de una hora, normalmente en minutos. No hay centralita ni formulario que se pierda: escribe y te contesta una persona.</p>
+  <p>Respondemos en menos de dos horas, de 9:00 a 22:00, y normalmente en minutos. No hay centralita ni formulario que se pierda: escribe y te contesta una persona.</p>
   <p>Correo: info@hestiayourhome.com. Teléfono y WhatsApp: +34 620 316 370.</p>
   <p>Escríbenos para consultar disponibilidad y precio, resolver dudas antes de reservar, pedir cuna, trona o plaza de garaje, avisar de que viajas con mascota, o preguntar cualquier cosa sobre la zona.</p>
   <p>Estamos en Vera, Almería (04621), en la costa del Levante almeriense, entre Garrucha y Villaricos.</p>
@@ -89,7 +89,7 @@
     } catch (e) { console.warn('prices.json fetch failed; using fallback', e); }
 
     for (const file of COMPONENT_FILES) {
-      const res = await fetch(file + '?cv=38c68c9137');
+      const res = await fetch(file + '?cv=70f667ac98');
       if (!res.ok) throw new Error(`Failed to load ${file}: ${res.status}`);
       const code = await res.text();
       // eslint-disable-next-line no-eval

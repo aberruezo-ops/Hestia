@@ -708,7 +708,7 @@ const HomeSearch = ({
     className: "eyebrow hs-eyebrow"
   }, b2b ? lang === 'es' ? 'Disponibilidad · Vera Playa' : 'Availability · Vera Playa' : lang === 'es' ? 'Busca tu estancia · Vera Playa' : 'Find your stay · Vera Playa'), /*#__PURE__*/React.createElement("h2", {
     className: "hs-title"
-  }, b2b ? lang === 'es' ? /*#__PURE__*/React.createElement("em", null, "Comprueba tus fechas") : /*#__PURE__*/React.createElement("em", null, "Check your dates") : lang === 'es' ? /*#__PURE__*/React.createElement("em", null, "¿Cuándo venís?") : /*#__PURE__*/React.createElement("em", null, "When are you coming?")), /*#__PURE__*/React.createElement("p", {
+  }, b2b ? lang === 'es' ? /*#__PURE__*/React.createElement("em", null, "Comprueba tus fechas") : /*#__PURE__*/React.createElement("em", null, "Check your dates") : lang === 'es' ? /*#__PURE__*/React.createElement("em", null, "Elige tus fechas") : /*#__PURE__*/React.createElement("em", null, "Choose your dates")), /*#__PURE__*/React.createElement("p", {
     className: "hs-sub"
   }, b2b ? lang === 'es' ? 'Mira qué apartamentos tenemos libres y su precio. Para empresas tenemos condiciones especiales: lo mejor es que lo tratemos personalmente.' : 'See which apartments are free and at what price. For companies we have special terms, so it is best to handle it personally.' : lang === 'es' ? 'Coge uno de nuestros huecos o elige tu Hestía y las fechas que prefieras.' : 'Grab one of our available slots or choose your Hestía and the dates you prefer.')), /*#__PURE__*/React.createElement("form", {
     className: "hs-form",
@@ -842,7 +842,7 @@ const HomeSearch = ({
     size: 22
   })), /*#__PURE__*/React.createElement("div", {
     className: "hs-ls-body"
-  }, /*#__PURE__*/React.createElement("strong", null, lang === 'es' ? 'Condiciones especiales para empresas' : 'Special terms for companies'), /*#__PURE__*/React.createElement("span", null, lang === 'es' ? ' Sobre este precio ajustamos las condiciones según vuestras fechas y necesidades. Lo mejor es que lo tratemos personalmente.' : ' We tailor the terms on top of this price to your dates and needs. It is best to handle it personally.')), /*#__PURE__*/React.createElement("a", {
+  }, /*#__PURE__*/React.createElement("strong", null, lang === 'es' ? 'Condiciones especiales para empresas' : 'Special terms for companies'), /*#__PURE__*/React.createElement("span", null, lang === 'es' ? ' Sobre este precio ajustamos las condiciones según tus fechas y necesidades. Lo mejor es que lo tratemos personalmente.' : ' We tailor the terms on top of this price to your dates and needs. It is best to handle it personally.')), /*#__PURE__*/React.createElement("a", {
     href: "#propuesta",
     className: "hs-ls-cta"
   }, lang === 'es' ? 'Pedir propuesta →' : 'Request a proposal →')), results._isLongStay && !b2b && /*#__PURE__*/React.createElement("div", {
@@ -854,7 +854,7 @@ const HomeSearch = ({
     size: 22
   })), /*#__PURE__*/React.createElement("div", {
     className: "hs-ls-body"
-  }, /*#__PURE__*/React.createElement("strong", null, lang === 'es' ? '¿Más de un mes en Vera Playa?' : 'More than a month in Vera Playa?'), /*#__PURE__*/React.createElement("span", null, lang === 'es' ? ' Para estancias largas tenemos condiciones especiales: precio mensual fijo, contrato de arrendamiento y trato directo.' : ' For long stays we offer special terms: fixed monthly rate, rental contract and direct deal.')), /*#__PURE__*/React.createElement("a", {
+  }, /*#__PURE__*/React.createElement("strong", null, lang === 'es' ? 'Más de un mes en Vera Playa' : 'More than a month in Vera Playa'), /*#__PURE__*/React.createElement("span", null, lang === 'es' ? ' Para estancias largas tenemos condiciones especiales: precio mensual fijo, contrato de arrendamiento y trato directo.' : ' For long stays we offer special terms: fixed monthly rate, rental contract and direct deal.')), /*#__PURE__*/React.createElement("a", {
     href: "estancias-largas.html",
     className: "hs-ls-cta"
   }, lang === 'es' ? 'Ver condiciones →' : 'See conditions →')), results.some(r => r.available !== null) && results.every(r => r.available !== true) && (() => {

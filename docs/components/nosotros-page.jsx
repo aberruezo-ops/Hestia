@@ -9,8 +9,8 @@ const NOSOTROS_COPY = {
     sub: 'Las personas detrás de Hestía y su vínculo con Almería.',
 
     intro_title: (<>Alex y Fran.<br/><em>No una plataforma.</em></>),
-    intro_p1: 'Nos conocisteis cuando reservasteis, o quizás ahora mismo es la primera vez. Da igual. Lo importante es que detrás de Hestía no hay una plataforma, ni un gestor, ni una oficina. Estamos nosotros: Alex y Fran. Dos personas reales que cogen el teléfono, que conocen vuestro nombre y que se ocupan de que cuando llegáis, todo esté exactamente como tiene que estar.',
-    intro_p2: 'Alex se ocupa de la reserva y de todo lo que pasa antes de tu llegada. Fran se ocupa de la estancia y de todo lo que pasa una vez aquí. Llevamos desde 2016 transformando cada Hestía en algo que también podéis llamar "hogar" durante unos días.',
+    intro_p1: 'Nos conociste cuando reservaste, o quizás ahora mismo es la primera vez. Da igual. Lo importante es que detrás de Hestía no hay una plataforma, ni un gestor, ni una oficina. Estamos nosotros: Alex y Fran. Dos personas reales que cogen el teléfono, que conocen tu nombre y que se ocupan de que cuando llegues, todo esté exactamente como tiene que estar.',
+    intro_p2: 'Alex se ocupa de la reserva y de todo lo que pasa antes de tu llegada. Fran se ocupa de la estancia y de todo lo que pasa una vez aquí. Llevamos desde 2016 transformando cada Hestía en algo que también puedes llamar "hogar" durante unos días.',
     intro_quote: '«El hogar no es un lugar, es un sentimiento.»',
     intro_quote_attr: '– Cecelia Ahearn',
 
@@ -27,7 +27,7 @@ const NOSOTROS_COPY = {
     alex_eyebrow: '01 · Reserva · Antes de tu llegada',
     alex_lang: 'Español',
     alex_name: 'Alex Berruezo',
-    alex_bio: 'Yo me ocupo de la reserva y de todo lo que ocurre antes de tu llegada. Te respondo el WhatsApp, te paso el contrato, te cuento la casa y te ayudo a elegir el Hestía que mejor encaja con vosotros, para que cuando aterricéis ya esté todo claro.',
+    alex_bio: 'Yo me ocupo de la reserva y de todo lo que ocurre antes de tu llegada. Te respondo el WhatsApp, te paso el contrato, te cuento la casa y te ayudo a elegir el Hestía que mejor encaja contigo, para que cuando aterrices ya esté todo claro.',
     alex_quote: '«A ti, antes de que llegues, te lo cuento todo. Después, cuando te vayas, seguiremos en contacto si tú quieres…»',
     fran_eyebrow: '02 · Estancia · Mientras estás aquí',
     fran_lang: 'English',

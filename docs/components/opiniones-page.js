@@ -12,7 +12,7 @@ const OPINIONES_COPY = {
     platform_title: 'Puntuaciones verificadas',
     testimonials_title: /*#__PURE__*/React.createElement(React.Fragment, null, "Lo que dicen ", /*#__PURE__*/React.createElement("em", null, "los huéspedes.")),
     cta_eyebrow: 'Ahora es tu turno',
-    cta_title: /*#__PURE__*/React.createElement(React.Fragment, null, "¿Listo para ", /*#__PURE__*/React.createElement("em", null, "tu estancia?")),
+    cta_title: /*#__PURE__*/React.createElement(React.Fragment, null, "Mira las ", /*#__PURE__*/React.createElement("em", null, "fechas.")),
     cta_sub: 'Reserva directamente con nosotros. Sin intermediarios, sin comisiones, con Alex o Fran al otro lado.'
   },
   en: {
@@ -22,7 +22,7 @@ const OPINIONES_COPY = {
     platform_title: 'Verified scores',
     testimonials_title: /*#__PURE__*/React.createElement(React.Fragment, null, "What the ", /*#__PURE__*/React.createElement("em", null, "guests say.")),
     cta_eyebrow: 'Now it\'s your turn',
-    cta_title: /*#__PURE__*/React.createElement(React.Fragment, null, "Ready for ", /*#__PURE__*/React.createElement("em", null, "your stay?")),
+    cta_title: /*#__PURE__*/React.createElement(React.Fragment, null, "Check ", /*#__PURE__*/React.createElement("em", null, "the dates.")),
     cta_sub: 'Book directly with us. No middlemen, no commissions, with Alex or Fran on the other side.'
   }
 };
@@ -754,7 +754,7 @@ const OpinionesPageApp = () => {
     className: "container"
   }, /*#__PURE__*/React.createElement("div", {
     className: "osc-eyebrow"
-  }, lang === 'es' ? '¿Has dormido en Hestía?' : 'Have you stayed at Hestía?'), /*#__PURE__*/React.createElement("h2", {
+  }, lang === 'es' ? 'Tu estancia en Hestía' : 'Your stay at Hestía'), /*#__PURE__*/React.createElement("h2", {
     className: "osc-title"
   }, lang === 'es' ? /*#__PURE__*/React.createElement(React.Fragment, null, "Tu opinión ", /*#__PURE__*/React.createElement("em", null, "nos ayuda"), ".") : /*#__PURE__*/React.createElement(React.Fragment, null, "Your opinion ", /*#__PURE__*/React.createElement("em", null, "helps us"), ".")), /*#__PURE__*/React.createElement("p", {
     className: "osc-text"
@@ -767,7 +767,7 @@ const OpinionesPageApp = () => {
     className: "osc-gmaps"
   }, /*#__PURE__*/React.createElement("p", {
     className: "osc-gmaps-lbl"
-  }, lang === 'es' ? '¿Ya te alojaste? Déjala directamente en Google, en la ficha de tu Hestía:' : 'Already stayed with us? Post it straight on Google, on your Hestía listing:'), /*#__PURE__*/React.createElement("div", {
+  }, lang === 'es' ? 'Si ya te alojaste, déjala directamente en Google, en la ficha de tu Hestía:' : 'Already stayed with us? Post it straight on Google, on your Hestía listing:'), /*#__PURE__*/React.createElement("div", {
     className: "osc-gmaps-links"
   }, [['vm', 'Hestía Mar'], ['vt', 'Hestía Thalassa'], ['vs', 'Hestía Salinas']].map(([id, name]) => /*#__PURE__*/React.createElement("a", {
     key: id,

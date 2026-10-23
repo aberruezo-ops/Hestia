@@ -400,7 +400,7 @@ const Hero = ({
     className: "haq-rating-star"
   }), " ", a.rating))))), /*#__PURE__*/React.createElement("p", {
     className: "hero-proof-platform-solo"
-  }, lang === 'es' ? 'Media en Booking · Airbnb · web, +630 familias desde 2016' : 'Average across Booking · Airbnb · site, 630+ families since 2016'), (() => {
+  }, lang === 'es' ? 'Media en Booking · Airbnb · web, +380 estancias desde 2016' : 'Average across Booking · Airbnb · site, 380+ stays since 2016'), (() => {
     const prices = typeof HESTIA_PRICES !== 'undefined' ? HESTIA_PRICES : null;
     if (!prices) return null;
     const mins = ['vm', 'vt', 'vs'].map(id => {
@@ -833,7 +833,7 @@ const Compare = ({
   }, {
     label: 'Ideal para',
     vm: 'Practicidad · todo a mano',
-    vt: 'Las mejores vistas',
+    vt: 'Vistas panorámicas',
     vs: 'Paz · jardines · naturaleza'
   }, {
     label: 'Superguía',

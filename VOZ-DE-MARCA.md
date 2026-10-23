@@ -8,7 +8,7 @@ por WhatsApp a un huésped real, no va en la web.
 
 ## 1. Tono
 
-- **De primera mano.** Hablamos de lo que conocemos porque conocemos la zona de primera mano: "el chiringuito que abre en abril", no "la zona ofrece amplia oferta gastronómica".
+- **De primera mano.** Hablamos de lo que conocemos: "el chiringuito que abre en abril", no "la zona ofrece amplia oferta gastronómica".
 - **Concreto.** Metros, minutos, meses, nombres propios. "A 300 m de la playa" convence más que "junto al mar".
 - **Sereno.** El Mediterráneo no grita. Frases cortas, sin exclamaciones, sin urgencia artificial; la calma también vende.
 - **Honesto.** Decimos lo que hay y lo que no hay. Si la piscina es comunitaria, se dice comunitaria; la confianza es el producto.
@@ -22,7 +22,7 @@ por WhatsApp a un huésped real, no va en la web.
 3. **Sensación + hecho, en ese orden o al revés, pero siempre ambos**: "Desayunar viendo amanecer sobre las salinas" (sensación) + "terraza orientada al este" (hecho).
 4. **Nombres de sitio reales**: Salar de los Canos, Cabo de Gata, Vera Playa, Garrucha. Anclan el texto a un lugar que existe.
 5. **Verbos de vivir, no de visitar**: desayunar, bajar andando, dejar las chanclas en la puerta, volver de la playa. El huésped habita, no "descubre".
-6. **La ventaja directa siempre en términos del huésped**: "hablas con nosotros, no con un call center", "te respondemos en menos de una hora". Beneficio, no argumentario.
+6. **La ventaja directa siempre en términos del huésped**: "hablas con nosotros, no con un call center", "te respondemos en menos de dos horas". Beneficio, no argumentario.
 7. **Microcopy útil**: cada pie de foto, tooltip o estado vacío responde a una pregunta que el huésped se haría de verdad.
 8. **Admitir límites con naturalidad**: "en julio y agosto no hacemos estancias largas" dicho tal cual, sin rodeos ni disculpas.
 

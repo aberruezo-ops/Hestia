@@ -31,7 +31,7 @@ const Counters = ({ lang }) => {
     if (ref.current) io.observe(ref.current);
     return () => io.disconnect();
   }, []);
-  const families = useCountUp(630, 2200, seen);
+  const families = useCountUp(380, 2200, seen);
   const sun = useCountUp(320, 2000, seen);
   const apts = useCountUp(3, 1200, seen);
 
@@ -237,7 +237,7 @@ const RatingsMarquee = ({ lang }) => {
     `★ ${booking.int}.${booking.dec}/10 · Booking.com`,
     `★ ${airbnb.int}.${airbnb.dec}/10 · Airbnb Superhost`,
     `★ ${google.int}.${google.dec}/10 · Google Maps`,
-    '630+ familias desde 2016',
+    '380+ estancias desde 2016',
     'Sin comisiones · reserva directa',
     '10 años en Vera Playa',
     'No solo igualamos, mejoramos',
@@ -246,7 +246,7 @@ const RatingsMarquee = ({ lang }) => {
     `★ ${booking.int}.${booking.dec}/10 · Booking.com`,
     `★ ${airbnb.int}.${airbnb.dec}/10 · Airbnb Superhost`,
     `★ ${google.int}.${google.dec}/10 · Google Maps`,
-    '630+ families since 2016',
+    '380+ stays since 2016',
     'No commissions · direct booking',
     '10 years in Vera Playa',
     'We don\'t just match, we beat it',

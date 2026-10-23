@@ -49,12 +49,14 @@ Hestía es un sitio estático (GitHub Pages, sirviendo desde `docs/`) con:
 - **Pádel y tenis** en Thalassa y Salinas (siempre juntos: "pistas de pádel y tenis"). Mar no tiene pistas.
 - **Llegada**: autónoma por defecto. Presencial sin coste de 15:00 a 19:00; fuera de ese horario con coste (`rules.extras` `lateCheckin23`/`lateCheckin00`, hoy 20 € de 19:00 a 23:00 y 40 € de 23:00 a 00:00) y sujeta a disponibilidad. Texto único: `_arrivalPolicy` (shared), usado en normas, guía PDF y contratos.
 - Alex y Fran **no viven en Vera Playa** (están unidos a Almería). No escribir "vivimos aquí".
+- **Entorno**: desde Mar se ven palmeras (no pinos ni eucaliptos); a la playa, 300–400 m; a Salinas la acompaña la **reserva de aves** de las Salinas de Puerto Rey (no "Parque Natural", "humedal protegido" ni "único en Europa"); fibra de **300 a 600 Mbps**; **380+ estancias** desde 2016 (cifra real del registro de reservas, no "630+").
 - **Reseñas**: nunca inventar ni reatribuir. Una cita destacada debe ser el texto literal de una reseña de `reviews.json` con su autor.
 
 ### Reserva directa (copy comercial — debe ser coherente en TODA la web)
 - Ahorro: **"hasta un 10% aprox."** (no un número fijo distinto). [shared `DIRECT_PERKS`/`DIRECT_RIBBON`]
 - Promesa de precio: **"no solo igualamos, mejoramos"** + **0% comisiones**. No prometer otra cosa.
-- Pago: **señal ~20%** al firmar el contrato, **resto a la llegada**. Respuesta humana **≤1 h** (normalmente minutos).
+- Pago: **señal ~20%** al firmar el contrato, **resto a la llegada**. Respuesta humana en **menos de 2 horas, de 9:00 a 22:00** (normalmente en minutos).
+- Cancelación (política por defecto, la de `pago.html`): más de 30 días antes, gratis y devolución completa de la señal; entre 14 y 30 días, se devuelve el 50 %; con menos de 14 días la señal no es reembolsable (si se re-alquilan esas fechas, se devuelve íntegra). Nada de "cancelación flexible" ni "mejoramos las condiciones".
 
 ### Datos y secretos (ver también sección Seguridad)
 - **JAMÁS** datos personales de huéspedes (nombre+contacto, DNI, teléfono, importes) dentro de `docs/` ni en commits públicos. Van en el repo privado `hestia-data` / `data-private/`.
@@ -137,6 +139,7 @@ Aplica estas medidas a TODO el código nuevo y revisa lo existente cuando lo toq
 
 ## Estilo de código
 
+- **Siempre de tú**, a una persona: nada de "vosotros" ("repón", no "reponed"), ni preguntas retóricas de landing, ni exclamaciones (solo "your home!"), ni superlativos sin prueba. Ver `VOZ-DE-MARCA.md`.
 - **PROHIBIDO el guion largo / raya (`—`, em dash U+2014) en TODO el texto visible de la web** (copy, meta, JSON-LD, datos). Suena "a IA". Usa la puntuación que pida la gramática de cada frase: **coma** (apósito), **dos puntos** (introducir explicación o lista), **paréntesis** (inciso), **punto y coma** o **punto** (unir oraciones). El guion corto `–` (en dash, U+2013) sí es válido para rangos (fechas, "23 dic–6 ene"). Nunca generes un `—`.
 - **Sin comentarios redundantes**: el código autoexplicativo no necesita comentarios. Solo comenta WHY no obvio (restricciones, workarounds, decisiones de negocio).
 - **Sin emojis** salvo que se pidan explícitamente (esta guía es la excepción porque listamos categorías visuales del sitio).
@@ -158,7 +161,7 @@ Cómo aplicarlo, según el fondo (respeta la regla de contraste):
 
 Siempre que añadas una zona que liste, enlace o compare los tres (footer, tabla, selector, alternativas, guía), cada uno lleva su color. Fuente única de los tokens: `styles.css` (`--vm/--vt/--vs`) y `_ALT_APTS` en `shared.jsx`.
 
-**Logo**: solo en seis versiones: blanco, teal del día (`--sol`), berenjena de noche (`--ber-dk`) y el color de cada Hestía (Mar, Thalassa, Salinas). Ficheros en `docs/assets/`: `logo-blanco.png`, `logo-teal-transparent.png`, `logo-berenjena.png`, `logo-mar.png`, `logo-thalassa.png`, `logo-salinas.png`. Ningún otro color, ni filtros que lo cambien.
+**Logo**: solo en seis versiones: blanco, teal del día (`--sol`), berenjena de noche (`--ber-dk`) y el color de cada Hestía (Mar, Thalassa, Salinas). Ficheros en `docs/assets/`: `logo-blanco.png`, `logo-teal-transparent.png`, `logo-berenjena.png`, `logo-mar.png`, `logo-thalassa.png`, `logo-salinas.png`. Ningún otro color, ni filtros que lo cambien. El ciclo animado de cabecera y pie (18 s) funde estos mismos PNG (`logo-*-160.png` en pequeño): teal, berenjena de noche (blanco si el fondo es oscuro), Thalassa, Salinas, Mar; nunca `hue-rotate`.
 
 ### Iconografía · gramática "Sello" (regla siempre)
 

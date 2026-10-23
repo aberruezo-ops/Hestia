@@ -11,7 +11,7 @@ const EMP_W3F_KEY = '95a86784-6d6a-496f-9830-15759c0a3cff';
 const EMP_COPY = {
   es: {
     eyebrow: 'Hestía para empresas y profesionales',
-    title: /*#__PURE__*/React.createElement(React.Fragment, null, "Apartamentos en Vera Playa, ", /*#__PURE__*/React.createElement("em", null, "a vuestra medida.")),
+    title: /*#__PURE__*/React.createElement(React.Fragment, null, "Apartamentos en Vera Playa, ", /*#__PURE__*/React.createElement("em", null, "a tu medida.")),
     sub: 'Tres apartamentos totalmente equipados en Vera Playa para tus equipos, clientes o pacientes. Desde unas pocas noches hasta varios meses, y te echamos una mano con los servicios locales que necesites.',
     formCta: 'Pedir propuesta',
     trust: ['Reserva directa, 0% comisiones', 'Trato directo con los dueños', 'Estancias cortas y largas', 'Licencias turísticas VFT/AL'],
@@ -19,7 +19,7 @@ const EMP_COPY = {
     perks: [{
       icon: '📍',
       t: 'Conocemos la zona',
-      d: 'Llevamos años en Vera Playa. Os ayudamos con traslados, servicios y recomendaciones para que la estancia salga rodada.'
+      d: 'Llevamos años en Vera Playa. Te ayudamos con traslados, servicios y recomendaciones para que la estancia salga rodada.'
     }, {
       icon: '📅',
       t: 'Estancias cortas y largas',
@@ -31,7 +31,7 @@ const EMP_COPY = {
     }, {
       icon: '⏱️',
       t: 'Trato directo con los dueños',
-      d: 'Hablas directamente con Alex y Fran, de la reserva a la salida: coordinamos llegadas, servicios y necesidades especiales, con respuesta en menos de una hora.'
+      d: 'Hablas directamente con Alex y Fran, de la reserva a la salida: coordinamos llegadas, servicios y necesidades especiales, con respuesta en menos de dos horas.'
     }, {
       icon: '🏠',
       t: 'Tres apartamentos a 2 km',
@@ -42,8 +42,8 @@ const EMP_COPY = {
       d: 'WiFi de fibra, cocina equipada, lavadora, terraza y limpieza coordinada. Listos para vivir o para teletrabajar.'
     }],
     servicesTitle: 'Servicios locales a medida',
-    servicesSub: 'No solo damos las llaves. Damos algunos servicios extra y os facilitamos el resto, para que la estancia salga rodada:',
-    services: ['Limpieza, plancha y lavandería extra', 'Cambio de toallas y sábanas adicional', 'Necesidades especiales: cuna, parking, llegada autónoma fuera de horario', 'Os facilitamos los traslados del aeropuerto y cómo moveros por la zona', 'Guía local con restaurantes, golf, actividades y coworking, para que lo organicéis a vuestro aire', 'Siempre intentamos echar una mano en lo que surja'],
+    servicesSub: 'No solo damos las llaves. Damos algunos servicios extra y te facilitamos el resto, para que la estancia salga rodada:',
+    services: ['Limpieza, plancha y lavandería extra', 'Cambio de toallas y sábanas adicional', 'Necesidades especiales: cuna, parking, llegada autónoma fuera de horario', 'Os facilitamos los traslados del aeropuerto y cómo moveros por la zona', 'Guía local con restaurantes, golf, actividades y coworking, para que lo organices a tu aire', 'Siempre intentamos echar una mano en lo que surja'],
     servicesFoot: 'Dinos qué necesitas y nos ponemos manos a la obra.',
     packagesTitle: 'Dos formas de trabajar con nosotros',
     packages: [{
@@ -61,11 +61,11 @@ const EMP_COPY = {
     }, {
       n: '2',
       t: 'Te enviamos una propuesta',
-      d: 'A medida y rápida, normalmente en menos de una hora, con precio cerrado y condiciones claras.'
+      d: 'A medida y rápida, normalmente en menos de dos horas, con precio cerrado y condiciones claras.'
     }, {
       n: '3',
       t: 'Confirmas la reserva',
-      d: 'Una señal para reservar y el resto a la llegada, o mes a mes, o lo hablamos. Te lo dejamos todo por escrito y sin comisiones.'
+      d: 'Una señal para reservar y el resto a la llegada. Te lo dejamos todo por escrito y sin comisiones.'
     }, {
       n: '4',
       t: 'Os acompañamos durante la estancia',
@@ -100,7 +100,7 @@ const EMP_COPY = {
     submit: 'Enviar solicitud',
     sending: 'Enviando…',
     success_title: 'Gracias, hemos recibido tu solicitud.',
-    success_text: 'Te responderemos con una propuesta lo antes posible, normalmente en menos de una hora. Si prefieres ir más rápido, escríbenos directamente por WhatsApp.',
+    success_text: 'Te responderemos con una propuesta lo antes posible, normalmente en menos de dos horas. Si prefieres ir más rápido, escríbenos directamente por WhatsApp.',
     success_wa: 'Escribir por WhatsApp',
     success_back: '← Volver al inicio',
     error_generic: 'No hemos podido enviar tu solicitud. Inténtalo de nuevo en un minuto, o escríbenos por WhatsApp.',
@@ -167,11 +167,11 @@ const EMP_COPY = {
     }, {
       n: '2',
       t: 'We send you a proposal',
-      d: 'Tailored and fast, usually within an hour, with a closed price and clear terms.'
+      d: 'Tailored and fast, usually within two hours, with a closed price and clear terms.'
     }, {
       n: '3',
       t: 'You confirm the booking',
-      d: 'A deposit to book and the rest on arrival, month by month, or we work it out together. We put everything in writing, with no commissions.'
+      d: 'A deposit to book and the rest on arrival. We put everything in writing, with no commissions.'
     }, {
       n: '4',
       t: 'We support you throughout the stay',
@@ -206,7 +206,7 @@ const EMP_COPY = {
     submit: 'Send request',
     sending: 'Sending…',
     success_title: 'Thank you, we have received your request.',
-    success_text: 'We will reply with a proposal as soon as possible, usually within an hour. If you would rather go faster, message us directly on WhatsApp.',
+    success_text: 'We will reply with a proposal as soon as possible, usually within two hours. If you would rather go faster, message us directly on WhatsApp.',
     success_wa: 'Message on WhatsApp',
     success_back: '← Back to home',
     error_generic: 'We could not send your request. Try again in a minute, or message us on WhatsApp.',

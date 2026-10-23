@@ -685,7 +685,7 @@ const HomeSearch = ({ lang, b2b = false }) => {
           <h2 className="hs-title">
             {b2b
               ? (lang === 'es' ? <em>Comprueba tus fechas</em> : <em>Check your dates</em>)
-              : (lang === 'es' ? <em>¿Cuándo venís?</em> : <em>When are you coming?</em>)}
+              : (lang === 'es' ? <em>Elige tus fechas</em> : <em>Choose your dates</em>)}
           </h2>
           <p className="hs-sub">
             {b2b
@@ -823,7 +823,7 @@ const HomeSearch = ({ lang, b2b = false }) => {
                 <div className="hs-ls-body">
                   <strong>{lang === 'es' ? 'Condiciones especiales para empresas' : 'Special terms for companies'}</strong>
                   <span>{lang === 'es'
-                    ? ' Sobre este precio ajustamos las condiciones según vuestras fechas y necesidades. Lo mejor es que lo tratemos personalmente.'
+                    ? ' Sobre este precio ajustamos las condiciones según tus fechas y necesidades. Lo mejor es que lo tratemos personalmente.'
                     : ' We tailor the terms on top of this price to your dates and needs. It is best to handle it personally.'}</span>
                 </div>
                 <a href="#propuesta" className="hs-ls-cta">
@@ -837,7 +837,7 @@ const HomeSearch = ({ lang, b2b = false }) => {
               <div className="hs-longstay-nudge">
                 <div className="hs-ls-icon"><HiIcon name="home" size={22} /></div>
                 <div className="hs-ls-body">
-                  <strong>{lang === 'es' ? '¿Más de un mes en Vera Playa?' : 'More than a month in Vera Playa?'}</strong>
+                  <strong>{lang === 'es' ? 'Más de un mes en Vera Playa' : 'More than a month in Vera Playa'}</strong>
                   <span>{lang === 'es'
                     ? ' Para estancias largas tenemos condiciones especiales: precio mensual fijo, contrato de arrendamiento y trato directo.'
                     : ' For long stays we offer special terms: fixed monthly rate, rental contract and direct deal.'}</span>
