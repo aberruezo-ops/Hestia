@@ -579,7 +579,11 @@ const AptPageHero = ({
     className: "ah-nav ah-next",
     onClick: () => go(1),
     "aria-label": lang === 'es' ? 'Foto siguiente' : 'Next photo'
-  }, "›"), /*#__PURE__*/React.createElement("span", {
+  }, "›"), /*#__PURE__*/React.createElement(IndaloShape, {
+    className: "ah-indalo",
+    width: "34",
+    height: "34"
+  }), /*#__PURE__*/React.createElement("span", {
     className: "ah-count",
     "aria-live": "polite"
   }, pos + 1, " / ", order.length), caps[order[pos]] && /*#__PURE__*/React.createElement("span", {

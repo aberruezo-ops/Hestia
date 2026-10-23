@@ -5824,8 +5824,13 @@ body.no-stars .hero .stars { display: none; }
 .ah-prev { left: 16px; } .ah-next { right: 16px; }
 @media (hover: hover) { .ah-cover:hover .ah-nav { opacity: 1; } }
 .ah-nav:focus-visible { opacity: 1; outline: 2px solid var(--sol-lt); outline-offset: 2px; }
+.ah-indalo {
+  position: absolute; top: 16px; right: 16px; z-index: 2; width: 34px; height: 34px;
+  color: var(--crema); opacity: .72; pointer-events: none;
+  filter: drop-shadow(0 1px 4px rgba(0,0,0,.5));
+}
 .ah-count {
-  position: absolute; top: 14px; right: 14px; z-index: 2;
+  position: absolute; top: 16px; right: 62px; z-index: 2;
   padding: 5px 10px; border-radius: 10px 0 10px 0;
   background: rgba(42,15,46,.72); color: var(--crema);
   font-family: var(--sans); font-size: 12px; font-weight: 700;
