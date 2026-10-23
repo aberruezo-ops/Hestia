@@ -163,8 +163,6 @@ Siempre que añadas una zona que liste, enlace o compare los tres (footer, tabla
 
 **Logo**: solo en seis versiones: blanco, teal del día (`--sol`), berenjena de noche (`--ber-dk`) y el color de cada Hestía (Mar, Thalassa, Salinas). Ficheros en `docs/assets/`: `logo-blanco.png`, `logo-teal-transparent.png`, `logo-berenjena.png`, `logo-mar.png`, `logo-thalassa.png`, `logo-salinas.png`. Ningún otro color, ni filtros que lo cambien. El ciclo animado de cabecera y pie (18 s) funde estos mismos PNG (`logo-*-160.png` en pequeño): teal, berenjena de noche (blanco si el fondo es oscuro), Thalassa, Salinas, Mar; nunca `hue-rotate`.
 
-**Fotos de los apartamentos**: llevan el logo blanco como marca de agua en el centro, **horneada en el fichero** (jpg y webp), para que no nos las roben. Los originales sin marca viven en `hestia-data/fotos-originales/`; nunca subas a `docs/assets` una foto de apartamento sin marca. Foto nueva: copia el original en esa carpeta y ejecuta `python3 fotos-marca/watermark.py` desde `hestia-data` (siempre parte del original, así no se marca dos veces).
-
 ### Iconografía · gramática "Sello" (regla siempre)
 
 Todos los iconos de la web salen del sprite propio (`IconSprite` en `shared.jsx`) y se pintan con `<HiIcon name="…"/>`. Gramática única:
