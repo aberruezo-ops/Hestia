@@ -158,6 +158,8 @@ Cómo aplicarlo, según el fondo (respeta la regla de contraste):
 
 Siempre que añadas una zona que liste, enlace o compare los tres (footer, tabla, selector, alternativas, guía), cada uno lleva su color. Fuente única de los tokens: `styles.css` (`--vm/--vt/--vs`) y `_ALT_APTS` en `shared.jsx`.
 
+**Logo**: solo en seis versiones: blanco, teal del día (`--sol`), berenjena de noche (`--ber-dk`) y el color de cada Hestía (Mar, Thalassa, Salinas). Ficheros en `docs/assets/`: `logo-blanco.png`, `logo-teal-transparent.png`, `logo-berenjena.png`, `logo-mar.png`, `logo-thalassa.png`, `logo-salinas.png`. Ningún otro color, ni filtros que lo cambien.
+
 ### Iconografía · gramática "Sello" (regla siempre)
 
 Todos los iconos de la web salen del sprite propio (`IconSprite` en `shared.jsx`) y se pintan con `<HiIcon name="…"/>`. Gramática única:
