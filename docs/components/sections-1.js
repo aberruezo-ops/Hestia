@@ -532,6 +532,26 @@ const APT_SHOWCASE = {
   vt: ['apt-vt-gallery-33', 'apt-vt-gallery-34', 'apt-vt-gallery-01', 'apt-vt-gallery-17', 'apt-vt-gallery-30'],
   vs: ['apt-vs-gallery-33', 'apt-vs-gallery-20', 'apt-vs-gallery-4', 'apt-vs-gallery-32', 'apt-vs-gallery-13']
 };
+// Las tres fotos del dormitorio principal se encuadran distinto. Zoom (s) y
+// desplazamiento (% del lado de la tarjeta) por foto para que, juntas, tengan
+// la parte alta de las lámparas y el borde de los cojines a la misma altura.
+const APT_COVER_FIT = {
+  vm: {
+    s: 1.124,
+    x: -6.2,
+    y: -4.2
+  },
+  vt: {
+    s: 1.0741,
+    x: -3.7,
+    y: -2.24
+  },
+  vs: {
+    s: 1.0545,
+    x: -2.73,
+    y: -3.36
+  }
+};
 const APT_HIGHLIGHTS = {
   vm: {
     es: [['wave', 'Playa a 300 m'], ['bed', '6 + bebé · 2 hab.'], ['pool', 'Piscina y jacuzzi'], ['baby', 'Parque infantil']],
@@ -589,7 +609,11 @@ const AptShowcaseMedia = ({
     alt: i === 0 ? apt.name : '',
     decoding: "async",
     loading: i === 0 ? 'eager' : 'lazy',
-    draggable: "false"
+    draggable: "false",
+    style: i === 0 && APT_COVER_FIT[apt.id] ? {
+      transformOrigin: '0 0',
+      transform: `translate(${APT_COVER_FIT[apt.id].x}%, ${APT_COVER_FIT[apt.id].y}%) scale(${APT_COVER_FIT[apt.id].s})`
+    } : undefined
   }))))), /*#__PURE__*/React.createElement("button", {
     type: "button",
     className: "as-nav as-prev",
