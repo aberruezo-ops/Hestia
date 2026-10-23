@@ -628,7 +628,7 @@ const QUICK_FAQ = {
       { q: '¿Qué Hestía me conviene más?',
         a: <>Compara los tres en <a href="/">nuestra home</a>. <a href="mar.html">Mar</a> es planta primera con jardín, terraza de amanecer. <a href="thalassa.html">Thalassa</a> es el ático con SPA comunitario y vistas panorámicas al mar. <a href="salinas.html">Salinas</a> es el más grande, con grandes jardines con riachuelos y la reserva de aves a un paseo corto.</> },
       { q: '¿Quiénes sois Alex y Fran?',
-        a: <><a href="nosotros.html">Somos los propietarios</a>, no una agencia. Gestionamos los tres en persona desde 2016. Más de 380 estancias nos avalan.</> },
+        a: <><a href="nosotros.html">Somos los propietarios</a>, no una agencia. Gestionamos los tres en persona desde 2016. Más de 630 familias nos avalan.</> },
     ],
     en: [
       { q: 'How do I book directly?',
@@ -638,7 +638,7 @@ const QUICK_FAQ = {
       { q: 'Which Hestía suits me best?',
         a: <>Compare all three on <a href="/">our home page</a>. <a href="mar.html">Mar</a> is first floor with garden, sunrise terrace. <a href="thalassa.html">Thalassa</a> is the penthouse with shared SPA and panoramic sea views. <a href="salinas.html">Salinas</a> is the largest, with large gardens with streams and the Nature Park a short walk away.</> },
       { q: 'Who are Alex and Fran?',
-        a: <><a href="nosotros.html">We are the owners</a>, not an agency. We have run the three Hestías in person since 2016. Over 380 stays back us.</> },
+        a: <><a href="nosotros.html">We are the owners</a>, not an agency. We have run the three Hestías in person since 2016. Over 630 families back us.</> },
     ],
   },
   vm: {
@@ -710,7 +710,7 @@ const QUICK_FAQ = {
   nosotros: {
     es: [
       { q: '¿Desde cuándo lo hacéis vosotros mismos?',
-        a: <>Desde 2016. En diez años hemos recibido a más de 380 familias. Nunca hemos externalizado la gestión: nosotros gestionamos, nosotros cuidamos.</> },
+        a: <>Desde 2016. En diez años hemos recibido a más de 630 familias. Nunca hemos externalizado la gestión: nosotros gestionamos, nosotros cuidamos.</> },
       { q: '¿Por qué se llaman así cada Hestía?',
         a: <>Hestía era la diosa griega del hogar: la diosa pacífica, la que guardaba el fuego de casa. Eso es lo que intentamos hacer: que Hestía deje de ser un sitio donde dormir y se convierta en un lugar donde quedarse.</> },
       { q: '¿Hay alguna agencia o gestor detrás?',
@@ -720,7 +720,7 @@ const QUICK_FAQ = {
     ],
     en: [
       { q: 'How long have you been managing the Hestías yourselves?',
-        a: <>Since 2016. In ten years we have hosted over 380 families. We have never outsourced management: we still clean, reply and choose the towels ourselves. <a href="nosotros.html">Read our story.</a></> },
+        a: <>Since 2016. In ten years we have hosted over 630 families. We have never outsourced management: we still clean, reply and choose the towels ourselves. <a href="nosotros.html">Read our story.</a></> },
       { q: "Why are they called Hestía?",
         a: <>Hestía was the Greek goddess of the hearth: the peaceful goddess, guardian of the home fire. That is what we try to do: turn a Hestía from a place to sleep into a place you want to stay.</> },
       { q: 'Is there an agency or property manager behind you?',
@@ -938,8 +938,8 @@ const SABIAS_QUE_FACTS = [
   },
   {
     type: 'fact',
-    es: 'Más de 380 familias han dormido en Hestía desde 2016 y muchas vuelven, sin necesidad de ninguna oferta ni descuento.',
-    en: 'Over 380 families have stayed at Hestía since 2016 and many return, with no offer or discount needed.',
+    es: 'Más de 630 familias han dormido en Hestía desde 2016 y muchas vuelven, sin necesidad de ninguna oferta ni descuento.',
+    en: 'Over 630 families have stayed at Hestía since 2016 and many return, with no offer or discount needed.',
   },
   {
     type: 'fact',
