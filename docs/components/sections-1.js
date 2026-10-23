@@ -534,8 +534,8 @@ const APT_SHOWCASE = {
 };
 const APT_HIGHLIGHTS = {
   vm: {
-    es: [['wave', 'Playa a 300 m'], ['bed', '6 + bebé · 2 hab.'], ['pool', 'Piscina y jacuzzi'], ['paw', 'Mascotas']],
-    en: [['wave', 'Beach 300 m'], ['bed', '6 + baby · 2 bed.'], ['pool', 'Pool & jacuzzi'], ['paw', 'Pets']]
+    es: [['wave', 'Playa a 300 m'], ['bed', '6 + bebé · 2 hab.'], ['pool', 'Piscina y jacuzzi'], ['baby', 'Parque infantil']],
+    en: [['wave', 'Beach 300 m'], ['bed', '6 + baby · 2 bed.'], ['pool', 'Pool & jacuzzi'], ['baby', 'Playground']]
   },
   vt: {
     es: [['sun', 'Ático con vistas'], ['bed', '6 + bebé · 2 hab.'], ['sauna', 'SPA comunitario'], ['tennis', 'Pádel y tenis']],
@@ -1335,7 +1335,7 @@ const LastMinuteStrip = ({
   };
   return /*#__PURE__*/React.createElement("section", {
     className: `lm-strip on-dark${embedded ? ' lm-strip--embedded' : ''}`,
-    "aria-label": lang === 'es' ? 'Últimas plazas disponibles' : 'Last-minute availability'
+    "aria-label": lang === 'es' ? 'Huecos disponibles' : 'Last-minute availability'
   }, /*#__PURE__*/React.createElement("div", {
     className: "lm-inner"
   }, !embedded && /*#__PURE__*/React.createElement("span", {

@@ -8,7 +8,7 @@
 const PORQUE_COPY = {
   es: {
     origin_eyebrow: 'El origen',
-    origin_title: /*#__PURE__*/React.createElement(React.Fragment, null, "Empezó en 2016,", /*#__PURE__*/React.createElement("br", null), /*#__PURE__*/React.createElement("em", null, "con dos personas y tres llaves.")),
+    origin_title: /*#__PURE__*/React.createElement(React.Fragment, null, "Empezó en 2016,", /*#__PURE__*/React.createElement("br", null), /*#__PURE__*/React.createElement("em", null, "con dos personas y una llave.")),
     origin_p1: 'Alex y Fran tenían tres viviendas en Vera Playa. Podían ponerlas en una plataforma, cobrar la comisión y desconectar el teléfono. Hicieron lo contrario.',
     origin_p2: 'El nombre lo tomaron de la diosa griega del hogar. La idea era simple: que una casa de vacaciones se sintiera de verdad como una casa, con alguien al otro lado del teléfono que supiera tu nombre.',
     origin_p3: 'Alex es ingeniero informático. Fran, filólogo clásico. Llevan diez años con Hestía Mar, ocho con Thalassa y seis con Salinas. El uno observa y construye, el otro nombra y cuida, y entre los dos convirtieron tres viviendas en tres hogares. No tienen oficina ni recepción: solo un teléfono que siempre cogen.',

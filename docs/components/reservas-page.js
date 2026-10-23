@@ -1811,7 +1811,7 @@ const ReservasAside = ({
     className: "rg-title"
   }, t.guarantee_title), /*#__PURE__*/React.createElement("p", {
     className: "rg-lede"
-  }, lang === 'es' ? 'Reservando directo te ahorras hasta un 10 % aprox.: mejor precio que Booking o Airbnb, sin comisiones y con respuesta humana normalmente en minutos.' : 'Book direct and save up to ~10%: better price than Booking or Airbnb, no commissions and a human reply usually in minutes.'), /*#__PURE__*/React.createElement("p", {
+  }, lang === 'es' ? 'Reservando directo te ahorras hasta un 10 % aprox.: no solo igualamos el precio de Booking o Airbnb, lo mejoramos, con 0% de comisiones y respuesta humana en menos de una hora.' : 'Book direct and save up to ~10%: we do not just match the Booking or Airbnb price, we beat it, with 0% commission and a human reply within an hour.'), /*#__PURE__*/React.createElement("p", {
     className: "rg-disclaimer"
   }, lang === 'es' ? '* El ahorro exacto depende de si la plataforma ya está aplicando descuentos o programas propios que no podemos conocer; por eso indicamos «hasta un 10 % aprox.».' : '* The exact saving depends on whether the platform is already applying its own discounts or programmes we can’t know; that’s why we say "up to ~10%".'), /*#__PURE__*/React.createElement("button", {
     type: "button",

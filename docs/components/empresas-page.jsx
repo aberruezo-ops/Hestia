@@ -11,13 +11,13 @@ const EMP_COPY = {
   es: {
     eyebrow: 'Hestía para empresas y profesionales',
     title: (<>Apartamentos en Vera Playa, <em>a vuestra medida.</em></>),
-    sub: 'Tres apartamentos totalmente equipados en Vera Playa para tus equipos, clientes o pacientes. Nos adaptamos a cualquier duración y os echamos una mano con los servicios locales que necesitéis.',
+    sub: 'Tres apartamentos totalmente equipados en Vera Playa para tus equipos, clientes o pacientes. Desde unas pocas noches hasta varios meses, y te echamos una mano con los servicios locales que necesites.',
     formCta: 'Pedir propuesta',
-    trust: ['Reserva directa, 0% comisiones', 'Trato directo con los dueños', 'Nos adaptamos a cualquier duración', 'Licencias turísticas VFT/AL'],
+    trust: ['Reserva directa, 0% comisiones', 'Trato directo con los dueños', 'Estancias cortas y largas', 'Licencias turísticas VFT/AL'],
     perksTitle: 'Por qué trabajar con nosotros',
     perks: [
       { icon: '📍', t: 'Conocemos la zona', d: 'Llevamos años en Vera Playa. Os ayudamos con traslados, servicios y recomendaciones para que la estancia salga rodada.' },
-      { icon: '📅', t: 'Cualquier duración', d: 'Desde un par de noches a varios meses: nos adaptamos a lo que necesitéis, con la mejor tarifa según las fechas.' },
+      { icon: '📅', t: 'Estancias cortas y largas', d: 'Desde unas pocas noches a varios meses (las estancias largas, de septiembre a junio): te preparamos una propuesta con el precio directo según las fechas.' },
       { icon: '🤝', t: '0% comisiones', d: 'Reserva directa con nosotros, los propietarios. Sin intermediarios ni cargos de plataforma.' },
       { icon: '⏱️', t: 'Trato directo con los dueños', d: 'Hablas directamente con Alex y Fran, de la reserva a la salida: coordinamos llegadas, servicios y necesidades especiales, con respuesta en menos de una hora.' },
       { icon: '🏠', t: 'Tres apartamentos a 2 km', d: 'Hasta tres equipos o familias alojados cerca, en la misma zona de Vera Playa.' },
@@ -98,13 +98,13 @@ const EMP_COPY = {
   en: {
     eyebrow: 'Hestía for businesses & professionals',
     title: (<>Apartments in Vera Playa, <em>tailored to you.</em></>),
-    sub: 'Three fully equipped apartments in Vera Playa for your teams, clients or patients. We adapt to any length of stay and help with the local services you need.',
+    sub: 'Three fully equipped apartments in Vera Playa for your teams, clients or patients. From a few nights to several months, and we help with the local services you need.',
     formCta: 'Request a proposal',
-    trust: ['Direct booking, 0% commission', 'Deal directly with the owners', 'We adapt to any length of stay', 'VFT/AL tourist licences'],
+    trust: ['Direct booking, 0% commission', 'Deal directly with the owners', 'Short and long stays', 'VFT/AL tourist licences'],
     perksTitle: 'Why work with us',
     perks: [
       { icon: '📍', t: 'We know the area', d: 'We have spent years in Vera Playa. We help with transfers, services and recommendations so the stay runs smoothly.' },
-      { icon: '📅', t: 'Any length of stay', d: 'From a couple of nights to several months: we adapt to what you need, with the best rate for your dates.' },
+      { icon: '📅', t: 'Short and long stays', d: 'From a few nights to several months (long stays run September to June): we put together a proposal with the direct price for your dates.' },
       { icon: '🤝', t: '0% commissions', d: 'Book directly with us, the owners. No middlemen, no platform fees.' },
       { icon: '⏱️', t: 'Direct with the owners', d: 'You deal directly with Alex and Fran, from booking to checkout: we coordinate arrivals, services and special requests, with a reply in under an hour.' },
       { icon: '🏠', t: 'Three apartments within 2 km', d: 'Up to three teams or families housed close together, in the same Vera Playa area.' },

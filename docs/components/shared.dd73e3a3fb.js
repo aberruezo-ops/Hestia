@@ -2153,7 +2153,7 @@ const COPY = {
     counter_3: 'Hestías gestionados en persona por Alex y Fran',
     team_eyebrow: 'Quienes os reciben',
     team_title: /*#__PURE__*/React.createElement(React.Fragment, null, "No somos una recepción. ", /*#__PURE__*/React.createElement("em", null, "Somos Alex y Fran.")),
-    team_intro: 'En 2016 nacieron los tres, el nombre lo tomamos de la diosa griega del hogar. Diez años después seguimos limpiando, recibiendo, respondiendo WhatsApp y eligiendo las toallas. Todo lo hacemos nosotros, por eso todo importa.',
+    team_intro: 'En 2016 abrimos Mar; Thalassa llegó en 2018 y Salinas en 2020. El nombre lo tomamos de la diosa griega del hogar. Diez años después seguimos limpiando, recibiendo, respondiendo WhatsApp y eligiendo las toallas. Todo lo hacemos nosotros, por eso todo importa.',
     alex_role: 'Reserva · Antes de tu llegada',
     alex_quote: '«A ti, antes de que llegues, te lo cuento todo. Después, cuando te vayas, seguiremos en contacto si tú quieres…»',
     fran_role: 'Estancia · Mientras estás aquí',
@@ -2216,7 +2216,7 @@ const COPY = {
     counter_3: 'Hestías run in person by Alex & Fran',
     team_eyebrow: 'The hosts',
     team_title: /*#__PURE__*/React.createElement(React.Fragment, null, "Not a front desk. ", /*#__PURE__*/React.createElement("em", null, "Just Alex & Fran.")),
-    team_intro: 'In 2016 the three Hestías opened, we took the name from the Greek goddess of home. Ten years later we still clean, welcome, reply WhatsApp and choose the towels. We do everything ourselves, that is why it all matters.',
+    team_intro: 'We opened Mar in 2016; Thalassa followed in 2018 and Salinas in 2020. We took the name from the Greek goddess of home. Ten years later we still clean, welcome, reply WhatsApp and choose the towels. We do everything ourselves, that is why it all matters.',
     alex_role: 'Booking · Before you arrive',
     alex_quote: '«Before you arrive, I will tell you everything. After you leave, we will stay in touch if you like…»',
     fran_role: 'Stay · While you are here',
@@ -2355,7 +2355,7 @@ const QUICK_FAQ = {
         href: "/"
       }, "nuestra home"), ". ", /*#__PURE__*/React.createElement("a", {
         href: "mar.html"
-      }, "Mar"), " es planta primera con jardín, terraza de amanecer y mascotas. ", /*#__PURE__*/React.createElement("a", {
+      }, "Mar"), " es planta primera con jardín, terraza de amanecer. ", /*#__PURE__*/React.createElement("a", {
         href: "thalassa.html"
       }, "Thalassa"), " es el ático con SPA comunitario y vistas panorámicas al mar. ", /*#__PURE__*/React.createElement("a", {
         href: "salinas.html"
@@ -2386,7 +2386,7 @@ const QUICK_FAQ = {
         href: "/"
       }, "our home page"), ". ", /*#__PURE__*/React.createElement("a", {
         href: "mar.html"
-      }, "Mar"), " is first floor with garden, sunrise terrace and pets. ", /*#__PURE__*/React.createElement("a", {
+      }, "Mar"), " is first floor with garden, sunrise terrace. ", /*#__PURE__*/React.createElement("a", {
         href: "thalassa.html"
       }, "Thalassa"), " is the penthouse with shared SPA and panoramic sea views. ", /*#__PURE__*/React.createElement("a", {
         href: "salinas.html"
@@ -2460,7 +2460,7 @@ const QUICK_FAQ = {
       a: /*#__PURE__*/React.createElement(React.Fragment, null, "Salinas es el más espacioso de los tres, con 87 m². Dos terrazas, piscina y pistas de pádel y tenis comunitarias, grandes jardines con riachuelos y el Parque Natural de las Salinas de Puerto Rey a un paseo corto. La luz dorada de Almería llena cada habitación, con la naturaleza siempre cerca.")
     }, {
       q: '¿Qué son las Salinas de Puerto Rey?',
-      a: /*#__PURE__*/React.createElement(React.Fragment, null, "Un Parque Natural cercano, a un paseo corto, con flamencos, aves migratorias y una luz dorada al amanecer única en Europa. Una de las razones por las que Salinas tiene algo que los demás no tienen.")
+      a: /*#__PURE__*/React.createElement(React.Fragment, null, "Un Parque Natural cercano, a un paseo corto, con flamencos y aves migratorias. Al amanecer, la luz sobre las salinas es dorada.")
     }, {
       q: '¿Qué tiene la urbanización de Salinas?',
       a: /*#__PURE__*/React.createElement(React.Fragment, null, "Piscina comunitaria, pistas de pádel y tenis y unos jardines muy grandes, con riachuelos, aves y senderos para pasear. Y a un paseo corto, el Parque Natural de las Salinas de Puerto Rey.")
@@ -2555,7 +2555,7 @@ const QUICK_FAQ = {
       a: /*#__PURE__*/React.createElement(React.Fragment, null, "Puede pasar en momentos puntuales: Booking o Airbnb lanzan sus propios descuentos y programas (ofertas de última hora, niveles de fidelidad, cupones…) que nosotros no controlamos, así que a veces su precio baja del que damos por defecto. No es que te cobremos de más: es su promoción, no nuestro precio real. Si te ocurre, escríbenos con el precio que ves: nos adaptamos y hacemos todo lo posible por mejorarlo.")
     }, {
       q: '¿Cuánto tardáis en confirmar la reserva?',
-      a: /*#__PURE__*/React.createElement(React.Fragment, null, "Normalmente en minutos. Casi siempre respondemos el mismo día y, la mayoría de las veces, en cuestión de minutos.")
+      a: /*#__PURE__*/React.createElement(React.Fragment, null, "Respondemos en menos de una hora, normalmente en minutos.")
     }, {
       q: '¿Qué pasa si necesito cambiar las fechas?',
       a: /*#__PURE__*/React.createElement(React.Fragment, null, "Escríbenos. Somos flexibles con cambios y cancelaciones siempre que se puedan gestionar. No hay que batallar con ninguna plataforma, es una conversación entre personas.")
@@ -2573,7 +2573,7 @@ const QUICK_FAQ = {
       a: /*#__PURE__*/React.createElement(React.Fragment, null, "It can happen at certain moments: Booking or Airbnb run their own discounts and programs (last-minute deals, loyalty tiers, coupons…) that we don't control, so sometimes their price dips below our default one. It doesn't mean we're overcharging, it's their promotion, not our real price. If it happens, write to us with the price you see: we'll adapt and do everything we can to beat it.")
     }, {
       q: 'How long does confirmation take?',
-      a: /*#__PURE__*/React.createElement(React.Fragment, null, "Usually within minutes. Almost always the same day and, most of the time, within minutes.")
+      a: /*#__PURE__*/React.createElement(React.Fragment, null, "Within an hour, usually within minutes.")
     }, {
       q: 'What if I need to change my dates?',
       a: /*#__PURE__*/React.createElement(React.Fragment, null, "Write to us. We are flexible with changes and cancellations as long as they can be managed. No need to fight with a platform, it is a conversation between people.")
@@ -5868,7 +5868,7 @@ const HESTIA_RULES = {
       icon: '🐾',
       hi: 'paw',
       t: 'Mascotas, solo con petición previa',
-      d: `Son bienvenidas en los tres Hestías si nos lo pedís antes y lo aprobamos, con un suplemento${petSuppLabel('es') ? ` (${petSuppLabel('es')})` : ''}. En zonas comunes, siempre atadas.`
+      d: `Son bienvenidas en los tres Hestías si nos lo pides antes, con un suplemento${petSuppLabel('es') ? ` (${petSuppLabel('es')})` : ''}. En zonas comunes, siempre atadas.`
     }, {
       icon: '🚭',
       hi: 'nosmoking',
@@ -6040,7 +6040,7 @@ const DIRECT_PERKS = {
     id: 'precio',
     icon: '💰',
     stat: '✓',
-    t: 'No solo igualamos: mejoramos cualquier precio.',
+    t: 'No solo igualamos, mejoramos.',
     d: 'El precio de la web es el directo, sin comisiones de plataforma, así que casi siempre es más barato. Las plataformas a veces hacen promociones que no controlamos; si encuentras uno más bajo, tráenoslo: no solo te lo igualamos, te lo mejoramos.'
   }, {
     id: 'comision',
@@ -6053,7 +6053,7 @@ const DIRECT_PERKS = {
     icon: '⏱',
     stat: '≤1 h',
     t: 'Respuesta humana, no un bot.',
-    d: 'Hablas directamente con Alex o Fran. Casi siempre respondemos en minutos; máximo una hora en horario activo.'
+    d: 'Hablas directamente con Alex o Fran. Respondemos en menos de una hora, normalmente en minutos.'
   }, {
     id: 'cancel',
     icon: '🔓',
@@ -6175,7 +6175,7 @@ const DIRECT_RIBBON = lang => {
   const pct = `−${_lsSavingsPct()}%`;
   return lang === 'es' ? [{
     num: '✓',
-    label: 'mejor precio'
+    label: 'igualamos y mejoramos'
   }, {
     num: '0%',
     label: 'comisiones'
