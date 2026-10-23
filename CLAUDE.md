@@ -49,7 +49,7 @@ Hestía es un sitio estático (GitHub Pages, sirviendo desde `docs/`) con:
 - **Pádel y tenis** en Thalassa y Salinas (siempre juntos: "pistas de pádel y tenis"). Mar no tiene pistas.
 - **Llegada**: autónoma por defecto. Presencial sin coste de 15:00 a 19:00; fuera de ese horario con coste (`rules.extras` `lateCheckin23`/`lateCheckin00`, hoy 20 € de 19:00 a 23:00 y 40 € de 23:00 a 00:00) y sujeta a disponibilidad. Texto único: `_arrivalPolicy` (shared), usado en normas, guía PDF y contratos.
 - Alex y Fran **no viven en Vera Playa** (están unidos a Almería). No escribir "vivimos aquí".
-- **Entorno**: desde Mar se ven palmeras (no pinos ni eucaliptos); a la playa, 300–400 m; a Salinas la acompaña la **reserva de aves** de las Salinas de Puerto Rey (no "Parque Natural", "humedal protegido" ni "único en Europa"); fibra de **300 a 600 Mbps**; **380+ estancias** desde 2016 (cifra real del registro de reservas, no "630+").
+- **Entorno**: desde Mar se ven palmeras (no pinos ni eucaliptos); a la playa, 300–400 m; a Salinas la acompaña la **reserva de aves** de las Salinas de Puerto Rey (no "Parque Natural", "humedal protegido" ni "único en Europa"); fibra de **300 a 600 Mbps**; **630+ familias** han vivido Hestía desde 2016 (cifra del propietario, siempre esa).
 - **Reseñas**: nunca inventar ni reatribuir. Una cita destacada debe ser el texto literal de una reseña de `reviews.json` con su autor.
 
 ### Reserva directa (copy comercial — debe ser coherente en TODA la web)
