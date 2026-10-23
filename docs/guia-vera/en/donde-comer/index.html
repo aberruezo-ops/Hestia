@@ -21,7 +21,7 @@
 <meta property="og:locale" content="en_GB"/>
 <link rel="preconnect" href="https://fonts.googleapis.com"/>
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
-<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400..600&family=Hanken+Grotesk:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400..600&family=Hanken+Grotesk:wght@400;500;600&display=swap" rel="stylesheet"/>
 <style>
 :root{
   --ber:#3D1A35; --ber-dk:#2A0F2E; --ber-deep:#1E0722;
@@ -31,7 +31,7 @@
   --rule:#E6DCDF; --vm:#6B7A3A; --vt:#B86A3C; --vs:#B08A24;
   --r:10px 0 10px 0; --r-lg:16px 0 16px 0;
   --serif:'Fraunces',Georgia,serif; --sans:'Hanken Grotesk',system-ui,sans-serif;
-  --mono:'IBM Plex Mono','SF Mono',ui-monospace,monospace;
+  --mono:'Hanken Grotesk',system-ui,sans-serif;
   --ease:cubic-bezier(.23,1,.32,1);
 }
 *{box-sizing:border-box;margin:0;padding:0;}
@@ -267,16 +267,18 @@ html.js .reveal.is-in{opacity:1;transform:none;}
   padding:10px 18px 10px 14px;background:rgba(240,232,213,.1);
   border:1px solid rgba(240,232,213,.22);border-radius:var(--r);
   backdrop-filter:blur(6px);animation:up .8s var(--ease) .36s both;}
-.hero-rating .stars{color:var(--vs2,#E8C476);font-size:15px;letter-spacing:1px;}
+.stars{display:inline-flex;gap:2px;}
+.stars svg{fill:currentColor;stroke:none;}
+.hero-rating .stars{color:var(--vs2,#E8C476);font-size:15px;}
 .hero-rating b{font-family:var(--serif);font-size:19px;color:var(--crema);font-weight:500;}
 .hero-rating span{font-size:12px;color:rgba(240,232,213,.72);}
 
 /* ---- ficha imprescindible ---- */
 .ficha.imprescindible{background:linear-gradient(90deg,rgba(212,168,74,.07),transparent 60%);}
 .ficha.imprescindible::before{color:var(--vs);}
-.chip.destacado{background:var(--vs);color:#fff;font-weight:700;
+.chip.destacado{background:var(--vs);color:var(--ink);font-weight:700;
   display:inline-flex;align-items:center;gap:4px;}
-.chip.destacado::before{content:'★';font-size:10px;}
+.chip.destacado::before{content:'';width:10px;height:10px;background:currentColor;-webkit-mask:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath d='M12 3.8l2.4 5 5.4.8-3.9 3.8.9 5.4L12 16.3l-4.8 2.5.9-5.4-3.9-3.8 5.4-.8z'/%3E%3C/svg%3E") center/contain no-repeat;mask:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath d='M12 3.8l2.4 5 5.4.8-3.9 3.8.9 5.4L12 16.3l-4.8 2.5.9-5.4-3.9-3.8 5.4-.8z'/%3E%3C/svg%3E") center/contain no-repeat;}
 
 /* ---- CTA principal: más contundente ---- */
 .cta{animation:cta-glow 9s ease-in-out infinite;}
@@ -289,7 +291,7 @@ html.js .reveal.is-in{opacity:1;transform:none;}
   color:var(--ber-dk);background:var(--sol-lt);padding:7px 16px;
   border-radius:var(--r);margin-bottom:22px;}
 .cta-rating{display:flex;align-items:center;gap:10px;margin:6px 0 24px;}
-.cta-rating .stars{color:var(--vs2,#E8C476);font-size:16px;letter-spacing:1px;}
+.cta-rating .stars{color:var(--vs2,#E8C476);font-size:16px;}
 .cta-rating b{font-family:var(--serif);font-size:22px;color:var(--crema);}
 .cta-rating span{font-size:13px;color:rgba(240,232,213,.7);}
 
@@ -802,7 +804,7 @@ html.js .reveal.is-in{opacity:1;transform:none;}
         "item": {
           "@type": "Place",
           "name": "Barra de José Álvarez",
-          "description": "Almería city. Shares kitchen and cellar with La Costa (⭐ Michelin Star). Bar plus tableclothless tables, contemporary dishes in half portions."
+          "description": "Almería city. Shares kitchen and cellar with La Costa (Michelin Star). Bar plus tableclothless tables, contemporary dishes in half portions."
         }
       },
       {
@@ -829,7 +831,7 @@ html.js .reveal.is-in{opacity:1;transform:none;}
         "item": {
           "@type": "Place",
           "name": "Magoga (Cartagena)",
-          "description": "Cartagena. ⭐ Michelin Star. High-end Murcian cooking."
+          "description": "Cartagena. Michelin Star. High-end Murcian cooking."
         }
       },
       {
@@ -847,7 +849,7 @@ html.js .reveal.is-in{opacity:1;transform:none;}
         "item": {
           "@type": "Place",
           "name": "Cabaña Buenavista",
-          "description": "El Palmar (Murcia). ⭐⭐ Two Michelin Stars, the only one in the region. Chef Pablo González-Conejero."
+          "description": "El Palmar (Murcia). Two Michelin Stars, the only one in the region. Chef Pablo González-Conejero."
         }
       },
       {
@@ -856,7 +858,7 @@ html.js .reveal.is-in{opacity:1;transform:none;}
         "item": {
           "@type": "Place",
           "name": "Almo",
-          "description": "Murcia city. ⭐ Michelin Star. Chef Juan Guillamón. Mediterranean market cooking over two floors with floor-to-ceiling windows."
+          "description": "Murcia city. Michelin Star. Chef Juan Guillamón. Mediterranean market cooking over two floors with floor-to-ceiling windows."
         }
       },
       {
@@ -865,7 +867,7 @@ html.js .reveal.is-in{opacity:1;transform:none;}
         "item": {
           "@type": "Place",
           "name": "Frases",
-          "description": "Murcia city. ⭐ Michelin Star (new in 2025). Chefs Marco Antonio Iniesta and María Egea. Every dish is a \"sentence\" telling a local story."
+          "description": "Murcia city. Michelin Star (new in 2025). Chefs Marco Antonio Iniesta and María Egea. Every dish is a \"sentence\" telling a local story."
         }
       },
       {
@@ -874,7 +876,7 @@ html.js .reveal.is-in{opacity:1;transform:none;}
         "item": {
           "@type": "Place",
           "name": "Faralá",
-          "description": "Granada city, Cuesta de Gomérez (at the foot of the Alhambra). Recommended 2025 · ⭐ Michelin Star 2026. Chef Cristina Jiménez."
+          "description": "Granada city, Cuesta de Gomérez (at the foot of the Alhambra). Recommended 2025 · Michelin Star 2026. Chef Cristina Jiménez."
         }
       },
       {
@@ -950,9 +952,9 @@ html.js .reveal.is-in{opacity:1;transform:none;}
     <p class="intro">From Garrucha's red prawns to the Michelin stars of Almería, Murcia and Cartagena. This is not everything there is: it is where we eat and where we send our guests. Sorted by distance from the apartments.</p>
     <div class="cifras"><div class="cifra"><b>62</b><span>places</span></div><div class="cifra"><b>4</b><span>categories</span></div><div class="cifra"><b>a short walk</b><span>the nearest</span></div></div>
     <div class="hero-rating">
-      <span class="stars" aria-hidden="true">★★★★★</span>
-      <b>9.93/10</b>
-      <span>414 from real guest reviews</span>
+      <span class="stars" aria-hidden="true"><svg viewBox="0 0 24 24" width="1em" height="1em" aria-hidden="true" focusable="false"><path d="M12 3.8l2.4 5 5.4.8-3.9 3.8.9 5.4L12 16.3l-4.8 2.5.9-5.4-3.9-3.8 5.4-.8z"/></svg><svg viewBox="0 0 24 24" width="1em" height="1em" aria-hidden="true" focusable="false"><path d="M12 3.8l2.4 5 5.4.8-3.9 3.8.9 5.4L12 16.3l-4.8 2.5.9-5.4-3.9-3.8 5.4-.8z"/></svg><svg viewBox="0 0 24 24" width="1em" height="1em" aria-hidden="true" focusable="false"><path d="M12 3.8l2.4 5 5.4.8-3.9 3.8.9 5.4L12 16.3l-4.8 2.5.9-5.4-3.9-3.8 5.4-.8z"/></svg><svg viewBox="0 0 24 24" width="1em" height="1em" aria-hidden="true" focusable="false"><path d="M12 3.8l2.4 5 5.4.8-3.9 3.8.9 5.4L12 16.3l-4.8 2.5.9-5.4-3.9-3.8 5.4-.8z"/></svg><svg viewBox="0 0 24 24" width="1em" height="1em" aria-hidden="true" focusable="false"><path d="M12 3.8l2.4 5 5.4.8-3.9 3.8.9 5.4L12 16.3l-4.8 2.5.9-5.4-3.9-3.8 5.4-.8z"/></svg></span>
+      <b>9.95/10</b>
+      <span>331 from real guest reviews</span>
     </div>
   </div>
 </header>
@@ -1221,7 +1223,7 @@ can use without signal. It includes:
 <article class="ficha reveal imprescindible">
   <div class="f-cuerpo">
     <h3>Magoga (Cartagena)</h3>
-    <p>Cartagena. ⭐ Michelin Star. High-end Murcian cooking.</p>
+    <p>Cartagena. Michelin Star. High-end Murcian cooking.</p>
     <div class="chips"><span class="chip destacado">Must-see</span><span class="chip nota">4.7 out of 5</span></div>
   </div>
   <span class="dist">83 km<small>from home</small></span>
@@ -1409,7 +1411,7 @@ can use without signal. It includes:
 <article class="ficha reveal imprescindible">
   <div class="f-cuerpo">
     <h3>Barra de José Álvarez</h3>
-    <p>Almería city. Shares kitchen and cellar with La Costa (⭐ Michelin Star). Bar plus tableclothless tables, contemporary dishes in half portions.</p>
+    <p>Almería city. Shares kitchen and cellar with La Costa (Michelin Star). Bar plus tableclothless tables, contemporary dishes in half portions.</p>
     <div class="chips"><span class="chip destacado">Must-see</span><span class="chip nota">4.7 out of 5</span></div>
   </div>
   <span class="dist">72 km<small>from home</small></span>
@@ -1433,7 +1435,7 @@ can use without signal. It includes:
 <article class="ficha reveal imprescindible">
   <div class="f-cuerpo">
     <h3>Cabaña Buenavista</h3>
-    <p>El Palmar (Murcia). ⭐⭐ Two Michelin Stars, the only one in the region. Chef Pablo González-Conejero.</p>
+    <p>El Palmar (Murcia). Two Michelin Stars, the only one in the region. Chef Pablo González-Conejero.</p>
     <div class="chips"><span class="chip destacado">Must-see</span><span class="chip nota">4.9 out of 5</span><a href="https://restaurantecabanabuenavista.com" rel="nofollow noopener" target="_blank">View on map</a></div>
   </div>
   <span class="dist">102 km<small>from home</small></span>
@@ -1441,7 +1443,7 @@ can use without signal. It includes:
 <article class="ficha reveal imprescindible">
   <div class="f-cuerpo">
     <h3>Almo</h3>
-    <p>Murcia city. ⭐ Michelin Star. Chef Juan Guillamón. Mediterranean market cooking over two floors with floor-to-ceiling windows.</p>
+    <p>Murcia city. Michelin Star. Chef Juan Guillamón. Mediterranean market cooking over two floors with floor-to-ceiling windows.</p>
     <div class="chips"><span class="chip destacado">Must-see</span><span class="chip nota">4.8 out of 5</span><a href="https://almorestaurante.com" rel="nofollow noopener" target="_blank">View on map</a></div>
   </div>
   <span class="dist">103 km<small>from home</small></span>
@@ -1449,7 +1451,7 @@ can use without signal. It includes:
 <article class="ficha reveal imprescindible">
   <div class="f-cuerpo">
     <h3>Frases</h3>
-    <p>Murcia city. ⭐ Michelin Star (new in 2025). Chefs Marco Antonio Iniesta and María Egea. Every dish is a &quot;sentence&quot; telling a local story.</p>
+    <p>Murcia city. Michelin Star (new in 2025). Chefs Marco Antonio Iniesta and María Egea. Every dish is a &quot;sentence&quot; telling a local story.</p>
     <div class="chips"><span class="chip destacado">Must-see</span><span class="chip nota">4.8 out of 5</span></div>
   </div>
   <span class="dist">103 km<small>from home</small></span>
@@ -1457,7 +1459,7 @@ can use without signal. It includes:
 <article class="ficha reveal imprescindible">
   <div class="f-cuerpo">
     <h3>Faralá</h3>
-    <p>Granada city, Cuesta de Gomérez (at the foot of the Alhambra). Recommended 2025 · ⭐ Michelin Star 2026. Chef Cristina Jiménez.</p>
+    <p>Granada city, Cuesta de Gomérez (at the foot of the Alhambra). Recommended 2025 · Michelin Star 2026. Chef Cristina Jiménez.</p>
     <div class="chips"><span class="chip destacado">Must-see</span><span class="chip nota">4.8 out of 5</span><a href="https://restaurantefarala.com" rel="nofollow noopener" target="_blank">View on map</a></div>
   </div>
   <span class="dist">156 km<small>from home</small></span>
@@ -1489,7 +1491,7 @@ can use without signal. It includes:
 <article class="ficha reveal imprescindible">
   <div class="f-cuerpo">
     <h3>Barahonda</h3>
-    <p>Yecla. ⭐ Michelin Star (new in 2025, Yecla's first). Chef Alejandro Ibáñez. Terroir cooking amid the Señorío de Barahonda vineyards.</p>
+    <p>Yecla. Michelin Star (new in 2025, Yecla's first). Chef Alejandro Ibáñez. Terroir cooking amid the Señorío de Barahonda vineyards.</p>
     <div class="chips"><span class="chip destacado">Must-see</span><span class="chip nota">4.8 out of 5</span><a href="https://barahonda.com/en/restaurant/" rel="nofollow noopener" target="_blank">View on map</a></div>
   </div>
   <span class="dist">166 km<small>from home</small></span>
@@ -1497,7 +1499,7 @@ can use without signal. It includes:
 <article class="ficha reveal imprescindible">
   <div class="f-cuerpo">
     <h3>La Finca (Loja)</h3>
-    <p>Loja (Granada/Málaga). ⭐ Michelin Star. Chef Fernando Arjona. Barceló La Bobadilla resort, deep in the mountains.</p>
+    <p>Loja (Granada/Málaga). Michelin Star. Chef Fernando Arjona. Barceló La Bobadilla resort, deep in the mountains.</p>
     <div class="chips"><span class="chip destacado">Must-see</span><span class="chip nota">4.8 out of 5</span></div>
   </div>
   <span class="dist">206 km<small>from home</small></span>
@@ -1507,9 +1509,9 @@ can use without signal. It includes:
   <span class="cta-ribbon">Direct booking</span>
   <h2>This is just a sample of the guide</h2>
   <div class="cta-rating">
-    <span class="stars" aria-hidden="true">★★★★★</span>
-    <b>9.93/10</b>
-    <span>414 from real guest reviews</span>
+    <span class="stars" aria-hidden="true"><svg viewBox="0 0 24 24" width="1em" height="1em" aria-hidden="true" focusable="false"><path d="M12 3.8l2.4 5 5.4.8-3.9 3.8.9 5.4L12 16.3l-4.8 2.5.9-5.4-3.9-3.8 5.4-.8z"/></svg><svg viewBox="0 0 24 24" width="1em" height="1em" aria-hidden="true" focusable="false"><path d="M12 3.8l2.4 5 5.4.8-3.9 3.8.9 5.4L12 16.3l-4.8 2.5.9-5.4-3.9-3.8 5.4-.8z"/></svg><svg viewBox="0 0 24 24" width="1em" height="1em" aria-hidden="true" focusable="false"><path d="M12 3.8l2.4 5 5.4.8-3.9 3.8.9 5.4L12 16.3l-4.8 2.5.9-5.4-3.9-3.8 5.4-.8z"/></svg><svg viewBox="0 0 24 24" width="1em" height="1em" aria-hidden="true" focusable="false"><path d="M12 3.8l2.4 5 5.4.8-3.9 3.8.9 5.4L12 16.3l-4.8 2.5.9-5.4-3.9-3.8 5.4-.8z"/></svg><svg viewBox="0 0 24 24" width="1em" height="1em" aria-hidden="true" focusable="false"><path d="M12 3.8l2.4 5 5.4.8-3.9 3.8.9 5.4L12 16.3l-4.8 2.5.9-5.4-3.9-3.8 5.4-.8z"/></svg></span>
+    <b>9.95/10</b>
+    <span>331 from real guest reviews</span>
   </div>
   <p>What you see here anyone can read: what each place is, what is good about it and how far it is. It is the part that can be put in writing.</p>
   <p>The rest is not learned by reading: it is learned by coming back, year after

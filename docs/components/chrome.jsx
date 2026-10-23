@@ -290,9 +290,9 @@ const Header = ({ mode, scrolled, lang }) => {
       <IconSprite />
       <header ref={headerRef} className={`header ${mode} ${scrolled ? 'scrolled' : ''}`}>
         <nav className="desktop-nav nav-left">
-          <NavLink href={NAV_PAGES.mar}>{t.nav[1]}</NavLink>
-          <NavLink href={NAV_PAGES.thalassa}>{t.nav[2]}</NavLink>
-          <NavLink href={NAV_PAGES.salinas}>{t.nav[3]}</NavLink>
+          <NavLink href={NAV_PAGES.mar}><span className="apt-dot" data-apt="vm" aria-hidden="true"/>{t.nav[1]}</NavLink>
+          <NavLink href={NAV_PAGES.thalassa}><span className="apt-dot" data-apt="vt" aria-hidden="true"/>{t.nav[2]}</NavLink>
+          <NavLink href={NAV_PAGES.salinas}><span className="apt-dot" data-apt="vs" aria-hidden="true"/>{t.nav[3]}</NavLink>
           <NavLink href={NAV_PAGES.estanciasLargas}>{t.nav[9]}</NavLink>
           <NavLink href={NAV_PAGES.empresas}>{lang === 'es' ? 'Para empresas' : 'For business'}</NavLink>
         </nav>
@@ -882,8 +882,8 @@ const Footer = ({ lang }) => {
           </div>
           <div className="footer-social-cta">
             {lang === 'es'
-              ? '¡Ven a Hestía! Síguenos en redes.'
-              : 'Come to Hestía! Follow us.'}
+              ? 'Ven a Hestía. Síguenos en redes.'
+              : 'Come to Hestía. Follow us.'}
           </div>
           <div className="footer-amuleto">
             <IndaloShape className="indalo-seal" width="26" height="26" />

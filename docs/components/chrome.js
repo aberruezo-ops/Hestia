@@ -375,11 +375,23 @@ const Header = ({
     className: "desktop-nav nav-left"
   }, /*#__PURE__*/React.createElement(NavLink, {
     href: NAV_PAGES.mar
-  }, t.nav[1]), /*#__PURE__*/React.createElement(NavLink, {
+  }, /*#__PURE__*/React.createElement("span", {
+    className: "apt-dot",
+    "data-apt": "vm",
+    "aria-hidden": "true"
+  }), t.nav[1]), /*#__PURE__*/React.createElement(NavLink, {
     href: NAV_PAGES.thalassa
-  }, t.nav[2]), /*#__PURE__*/React.createElement(NavLink, {
+  }, /*#__PURE__*/React.createElement("span", {
+    className: "apt-dot",
+    "data-apt": "vt",
+    "aria-hidden": "true"
+  }), t.nav[2]), /*#__PURE__*/React.createElement(NavLink, {
     href: NAV_PAGES.salinas
-  }, t.nav[3]), /*#__PURE__*/React.createElement(NavLink, {
+  }, /*#__PURE__*/React.createElement("span", {
+    className: "apt-dot",
+    "data-apt": "vs",
+    "aria-hidden": "true"
+  }), t.nav[3]), /*#__PURE__*/React.createElement(NavLink, {
     href: NAV_PAGES.estanciasLargas
   }, t.nav[9]), /*#__PURE__*/React.createElement(NavLink, {
     href: NAV_PAGES.empresas
@@ -1477,7 +1489,7 @@ const Footer = ({
     y2: "6.5"
   })))), /*#__PURE__*/React.createElement("div", {
     className: "footer-social-cta"
-  }, lang === 'es' ? '¡Ven a Hestía! Síguenos en redes.' : 'Come to Hestía! Follow us.'), /*#__PURE__*/React.createElement("div", {
+  }, lang === 'es' ? 'Ven a Hestía. Síguenos en redes.' : 'Come to Hestía. Follow us.'), /*#__PURE__*/React.createElement("div", {
     className: "footer-amuleto"
   }, /*#__PURE__*/React.createElement(IndaloShape, {
     className: "indalo-seal",
