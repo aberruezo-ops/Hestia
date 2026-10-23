@@ -3993,7 +3993,7 @@ async function submitGuidePin(inputRef, pinState, aptId) {
 }
 Object.assign(window, { validateGuidePin, hestiaSha256Hex, logGuideAccess, submitGuidePin });
 const HESTIA_APT_META = {
-  vm: { name: 'Hestía Mar',      slug: 'mar',      accent: '#6B7A3A', concept_es: 'Frente a la playa', concept_en: 'By the beach' },
+  vm: { name: 'Hestía Mar',      slug: 'mar',      accent: '#6B7A3A', concept_es: 'A 300 m de la playa', concept_en: '300 m from the beach' },
   vt: { name: 'Hestía Thalassa', slug: 'thalassa', accent: '#B86A3C', concept_es: 'Ático panorámico',  concept_en: 'Panoramic penthouse' },
   vs: { name: 'Hestía Salinas',  slug: 'salinas',  accent: '#D4A84A', concept_es: 'Cerca de las salinas', concept_en: 'Near the salt flats' },
 };

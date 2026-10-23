@@ -7074,8 +7074,8 @@ const HESTIA_APT_META = {
     name: 'Hestía Mar',
     slug: 'mar',
     accent: '#6B7A3A',
-    concept_es: 'Frente a la playa',
-    concept_en: 'By the beach'
+    concept_es: 'A 300 m de la playa',
+    concept_en: '300 m from the beach'
   },
   vt: {
     name: 'Hestía Thalassa',
