@@ -103,6 +103,7 @@ Aplica estas medidas a TODO el código nuevo y revisa lo existente cuando lo toq
 
 - Los datos con info de huéspedes (nombre, teléfono, DNI, importes) viven en el **repo privado `aberruezo-ops/hestia-data`**, nunca en este repo (que sirve `docs/` en público). Las fichas de viajeros (registro SES) van cifradas en el KV del Worker `traveler-registry`.
 - `data-private/` está en `.gitignore`: si alguna vez se usa como copia local, no se commitea.
+- La guía de marca (`docs/guia-de-marca.html`) está **cifrada** con PIN (AES-GCM, descifra el navegador). El origen legible vive en `hestia-data/guia-marca/` (ver su README); nunca subas aquí el HTML en claro ni los PIN. Para regenerarla: `GUIA_PINS="..." python3 guia-marca/build.py` desde `hestia-data`.
 - Nunca añadas datos personales en `docs/` ni en commits que se publiquen (incluido en mensajes de commit o nombres de archivo).
 - Si tienes que mover datos privados a otro sitio (Supabase, Firestore, etc.), documenta la migración aquí.
 
