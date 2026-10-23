@@ -1695,8 +1695,8 @@ const ReservasAside = ({ lang }) => {
         <div className="rg-title">{t.guarantee_title}</div>
         <p className="rg-lede">
           {lang === 'es'
-            ? 'Reservando directo te ahorras hasta un 10 % aprox.: mejor precio que Booking o Airbnb, sin comisiones y con respuesta humana normalmente en minutos.'
-            : 'Book direct and save up to ~10%: better price than Booking or Airbnb, no commissions and a human reply usually in minutes.'}
+            ? 'Reservando directo te ahorras hasta un 10 % aprox.: no solo igualamos el precio de Booking o Airbnb, lo mejoramos, con 0% de comisiones y respuesta humana en menos de una hora.'
+            : 'Book direct and save up to ~10%: we do not just match the Booking or Airbnb price, we beat it, with 0% commission and a human reply within an hour.'}
         </p>
         <p className="rg-disclaimer">
           {lang === 'es'

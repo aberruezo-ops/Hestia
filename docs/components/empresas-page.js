@@ -12,9 +12,9 @@ const EMP_COPY = {
   es: {
     eyebrow: 'Hestía para empresas y profesionales',
     title: /*#__PURE__*/React.createElement(React.Fragment, null, "Apartamentos en Vera Playa, ", /*#__PURE__*/React.createElement("em", null, "a vuestra medida.")),
-    sub: 'Tres apartamentos totalmente equipados en Vera Playa para tus equipos, clientes o pacientes. Nos adaptamos a cualquier duración y os echamos una mano con los servicios locales que necesitéis.',
+    sub: 'Tres apartamentos totalmente equipados en Vera Playa para tus equipos, clientes o pacientes. Desde unas pocas noches hasta varios meses, y te echamos una mano con los servicios locales que necesites.',
     formCta: 'Pedir propuesta',
-    trust: ['Reserva directa, 0% comisiones', 'Trato directo con los dueños', 'Nos adaptamos a cualquier duración', 'Licencias turísticas VFT/AL'],
+    trust: ['Reserva directa, 0% comisiones', 'Trato directo con los dueños', 'Estancias cortas y largas', 'Licencias turísticas VFT/AL'],
     perksTitle: 'Por qué trabajar con nosotros',
     perks: [{
       icon: '📍',
@@ -22,8 +22,8 @@ const EMP_COPY = {
       d: 'Llevamos años en Vera Playa. Os ayudamos con traslados, servicios y recomendaciones para que la estancia salga rodada.'
     }, {
       icon: '📅',
-      t: 'Cualquier duración',
-      d: 'Desde un par de noches a varios meses: nos adaptamos a lo que necesitéis, con la mejor tarifa según las fechas.'
+      t: 'Estancias cortas y largas',
+      d: 'Desde unas pocas noches a varios meses (las estancias largas, de septiembre a junio): te preparamos una propuesta con el precio directo según las fechas.'
     }, {
       icon: '🤝',
       t: '0% comisiones',
@@ -118,9 +118,9 @@ const EMP_COPY = {
   en: {
     eyebrow: 'Hestía for businesses & professionals',
     title: /*#__PURE__*/React.createElement(React.Fragment, null, "Apartments in Vera Playa, ", /*#__PURE__*/React.createElement("em", null, "tailored to you.")),
-    sub: 'Three fully equipped apartments in Vera Playa for your teams, clients or patients. We adapt to any length of stay and help with the local services you need.',
+    sub: 'Three fully equipped apartments in Vera Playa for your teams, clients or patients. From a few nights to several months, and we help with the local services you need.',
     formCta: 'Request a proposal',
-    trust: ['Direct booking, 0% commission', 'Deal directly with the owners', 'We adapt to any length of stay', 'VFT/AL tourist licences'],
+    trust: ['Direct booking, 0% commission', 'Deal directly with the owners', 'Short and long stays', 'VFT/AL tourist licences'],
     perksTitle: 'Why work with us',
     perks: [{
       icon: '📍',
@@ -128,8 +128,8 @@ const EMP_COPY = {
       d: 'We have spent years in Vera Playa. We help with transfers, services and recommendations so the stay runs smoothly.'
     }, {
       icon: '📅',
-      t: 'Any length of stay',
-      d: 'From a couple of nights to several months: we adapt to what you need, with the best rate for your dates.'
+      t: 'Short and long stays',
+      d: 'From a few nights to several months (long stays run September to June): we put together a proposal with the direct price for your dates.'
     }, {
       icon: '🤝',
       t: '0% commissions',

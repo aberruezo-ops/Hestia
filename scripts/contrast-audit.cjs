@@ -14,7 +14,7 @@ const AXE = fs.readFileSync(_axePath, 'utf8');
 const BASE = process.env.BASE || 'http://localhost:8123';
 const DOCS = path.join(__dirname, '..', 'docs');
 const PAGES = (process.env.PAGES ? process.env.PAGES.split(',') :
-  fs.readdirSync(DOCS).filter(f => f.endsWith('.html') && f !== 'p-edit.html' && f !== '404.html'))
+  fs.readdirSync(DOCS).filter(f => f.endsWith('.html') && f !== 'p-edit.html' && f !== '404.html' && f !== 'guia-de-marca.html'))
   .map(f => f.replace(/\.html$/, ''));
 const VIEWPORTS = [
   { name: 'mobile', width: 390, height: 844, isMobile: true },

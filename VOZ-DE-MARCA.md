@@ -8,7 +8,7 @@ por WhatsApp a un huésped real, no va en la web.
 
 ## 1. Tono
 
-- **De primera mano.** Hablamos de lo que conocemos porque vivimos aquí: "el chiringuito que abre en abril", no "la zona ofrece amplia oferta gastronómica".
+- **De primera mano.** Hablamos de lo que conocemos porque conocemos la zona de primera mano: "el chiringuito que abre en abril", no "la zona ofrece amplia oferta gastronómica".
 - **Concreto.** Metros, minutos, meses, nombres propios. "A 300 m de la playa" convence más que "junto al mar".
 - **Sereno.** El Mediterráneo no grita. Frases cortas, sin exclamaciones, sin urgencia artificial; la calma también vende.
 - **Honesto.** Decimos lo que hay y lo que no hay. Si la piscina es comunitaria, se dice comunitaria; la confianza es el producto.

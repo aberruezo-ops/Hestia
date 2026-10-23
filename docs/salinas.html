@@ -43,7 +43,7 @@
     "@type": ["Accommodation", "LodgingBusiness"],
     "name": "Hestía Salinas",
     "alternateName": "Hestía Salinas, Urbanización Pueblo Salinas",
-    "description": "Hestía Salinas, cerca de las Salinas de Puerto Rey. 3 piscinas, dos terrazas, Parque Natural. Urbanización Pueblo Salinas. 2 habitaciones, 6 plazas + bebé. Vera Playa, Almería.",
+    "description": "Hestía Salinas, cerca de las Salinas de Puerto Rey. 87 m², piscina comunitaria, pistas de pádel y tenis, dos terrazas y grandes jardines con riachuelos. Urbanización Pueblo Salinas. 2 habitaciones, 6 plazas + bebé. Vera Playa, Almería.",
     "url": "https://www.hestiayourhome.com/salinas.html",
     "priceRange": "€€",
     "identifier": {
@@ -107,7 +107,7 @@
       "name": "¿Por qué elegiría Hestía Salinas sobre los otros dos?",
       "acceptedAnswer": {
         "@type": "Answer",
-        "text": "Salinas es el más luminoso de los tres. Está en la urbanización Pueblo Salinas y tiene 87 m², dos terrazas, piscina y pistas de pádel y tenis comunitarias, grandes jardines con riachuelos y el Parque Natural de las Salinas de Puerto Rey a un paseo corto."
+        "text": "Salinas es el más grande de los tres. Está en la urbanización Pueblo Salinas y tiene 87 m², dos terrazas, piscina y pistas de pádel y tenis comunitarias, grandes jardines con riachuelos y el Parque Natural de las Salinas de Puerto Rey a un paseo corto."
       }
     },
     {
@@ -115,7 +115,7 @@
       "name": "¿Qué son las Salinas de Puerto Rey?",
       "acceptedAnswer": {
         "@type": "Answer",
-        "text": "Un Parque Natural cercano, a un paseo corto, con flamencos, aves migratorias y una luz dorada al amanecer única en Europa. Una de las razones por las que Salinas tiene algo que los demás no tienen."
+        "text": "Un Parque Natural cercano, a un paseo corto, con flamencos y aves migratorias. Al amanecer, la luz sobre las salinas es dorada."
       }
     },
     {
@@ -233,7 +233,7 @@
     } catch (e) { console.warn('photo-positions.json fetch failed', e); }
 
     for (const file of COMPONENT_FILES) {
-      const res = await fetch(file + '?cv=26ad6e616d');
+      const res = await fetch(file + '?cv=dd73e3a3fb');
       if (!res.ok) throw new Error(`Failed to load ${file}: ${res.status}`);
       const code = await res.text();
       // eslint-disable-next-line no-eval

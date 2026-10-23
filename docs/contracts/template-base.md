@@ -160,7 +160,7 @@ Hestía es exclusivamente para vuestro uso y disfrute, no para el de otros.
 
 Respetad las horas de check-in (a partir de las 15:00) y check-out (hasta las 11:00), pues se necesita un tiempo considerable para poner Hestía a punto para la siguiente llegada. La llegada es autónoma por defecto. Si preferís que os recibamos, la llegada presencial es sin coste entre las 15:00 y las 19:00; fuera de ese horario tiene un coste (20 € de 19:00 a 23:00; 40 € de 23:00 a 00:00) y está sujeta a disponibilidad.
 
-No están permitidas las mascotas, salvo aprobación explícita.
+Las mascotas son bienvenidas en los tres Hestías con petición previa y suplemento.
 No fuméis. En Hestía está prohibido. Vuestra salud es lo primero.
 Las toallas son para uso exclusivo dentro de Hestía, no para la piscina ni para la playa.
 Solo está permitido colgar ropa en el tendedero, no en las barandillas ni en la terraza.
