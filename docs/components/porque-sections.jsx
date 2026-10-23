@@ -481,7 +481,7 @@ const PorqueColores = ({ lang }) => (
       </h2>
       <p className="nos-colores-intro reveal delay-1">
         {lang === 'es'
-          ? 'Vera Playa tiene una luz que cambia cada hora y una naturaleza que deja boquiabierto. Un ingeniero que observa y un filólogo que nombra. Así nació la paleta de Hestía: nueve colores del paisaje almeriense, capturados y convertidos en marca.'
+          ? 'Vera Playa tiene una luz que cambia cada hora y una naturaleza a un paseo. Un ingeniero que observa y un filólogo que nombra. Así nació la paleta de Hestía: nueve colores del paisaje almeriense, capturados y convertidos en marca.'
           : 'Vera Playa has a light that changes every hour and a nature that leaves you breathless. An engineer who observes and a philologist who names. That is how the Hestía palette was born: nine colours of the Almería landscape, captured and turned into a brand.'}
       </p>
       <div className="nos-colores-grid">

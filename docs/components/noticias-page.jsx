@@ -20,8 +20,8 @@ const NOTICIAS = {
       "accent": "var(--vm)",
       "img": "assets/apt-vm-gallery-26.jpg",
       "curiosidad": {
-        "es": "Octubre suaviza el termómetro sin apagar el verano: las máximas rondan los 25°C y el mar sigue tibio, sobre los 21-22°C, porque el Mediterráneo tarda semanas en enfriarse. Desde la terraza esquinera de Hestía Mar, el atardecer llega antes cada día (el cambio de hora es el último domingo de octubre) y el eucaliptal se enciende de ocre nada más ponerse el sol.",
-        "en": "October softens the thermometer without switching off summer: highs sit around 25°C and the sea stays mild, around 21-22°C, because the Mediterranean takes weeks to cool down. From Hestía Mar's corner terrace, sunset arrives earlier each day (the clocks go back the last Sunday of October) and the eucalyptus grove turns ochre the moment the sun dips."
+        "es": "Octubre suaviza el termómetro sin apagar el verano: las máximas rondan los 25°C y el mar sigue tibio, sobre los 21-22°C, porque el Mediterráneo tarda semanas en enfriarse. Desde la terraza esquinera de Hestía Mar, el atardecer llega antes cada día (el cambio de hora es el último domingo de octubre) y las palmeras se encienden de ocre nada más ponerse el sol.",
+        "en": "October softens the thermometer without switching off summer: highs sit around 25°C and the sea stays mild, around 21-22°C, because the Mediterranean takes weeks to cool down. From Hestía Mar's corner terrace, sunset arrives earlier each day (the clocks go back the last Sunday of October) and the palm trees turn ochre the moment the sun dips."
       },
       "reco": {
         "es": "El paseo marítimo de Vera Playa está en su mejor momento: temperatura perfecta para caminar a cualquier hora, sin la multitud de agosto. Aprovecha para subir hasta Puerto Rey en bici o a pie, la ruta va en paralelo al mar casi todo el camino.",
@@ -50,8 +50,8 @@ const NOTICIAS = {
       "accent": "var(--vs-dk)",
       "img": "assets/apt-vs-gallery-33.jpg",
       "curiosidad": {
-        "es": "Octubre es pleno curso de la temporada de estancias largas (septiembre a junio), y en Salinas se nota: la fibra simétrica hasta 600 Mbps y la mesa de trabajo bajo petición hacen que un mes de teletrabajo con vistas al Parque Natural de las Salinas de Puerto Rey sea perfectamente viable.",
-        "en": "October is in full swing for the long-stay season (September to June), and it shows at Salinas: symmetrical fibre up to 600 Mbps and a work desk on request make a month of remote work with views over the Salinas de Puerto Rey Natural Park entirely workable."
+        "es": "Octubre es pleno curso de la temporada de estancias largas (septiembre a junio), y en Salinas se nota: la fibra de 300 a 600 Mbps y la mesa de trabajo bajo petición hacen que un mes de teletrabajo con vistas a la reserva de aves de las Salinas de Puerto Rey sea perfectamente viable.",
+        "en": "October is in full swing for the long-stay season (September to June), and it shows at Salinas: fibre from 300 to 600 Mbps and a work desk on request make a month of remote work with views over the Salinas de Puerto Rey bird reserve entirely workable."
       },
       "reco": {
         "es": "La ruta de los flamencos se recorre ahora a cualquier hora del día, sin el calor de agosto. Octubre además trae más aves de paso, así que merece la pena llevar prismáticos y caminar despacio.",
@@ -156,7 +156,7 @@ const NOTICIAS = {
             "en": "Asador La Chumbera, in Sopalmo: fire-grilled food and sea views between Mojácar and Agua Amarga"
           },
           "cuerpo": {
-            "es": "En lo alto de Sopalmo, entre Mojácar y Agua Amarga, Asador La Chumbera cocina al fuego con una de las panorámicas más espectaculares de la costa. Cordero al horno de leña, lubina a la sal y chuletón de ternera, con el Mediterráneo de fondo. Con las tardes de octubre ya sin el calor de julio y agosto, cenar en la terraza al atardecer vuelve a ser un planazo.",
+            "es": "En lo alto de Sopalmo, entre Mojácar y Agua Amarga, Asador La Chumbera cocina al fuego con una panorámica abierta sobre la costa. Cordero al horno de leña, lubina a la sal y chuletón de ternera, con el Mediterráneo de fondo. Con las tardes de octubre ya sin el calor de julio y agosto, cenar en la terraza al atardecer vuelve a ser un planazo.",
             "en": "High above Sopalmo, between Mojácar and Agua Amarga, Asador La Chumbera cooks over fire with one of the coast's most spectacular views. Wood-oven lamb, salt-baked sea bass and mature beef chuletón, with the Mediterranean as a backdrop. With October evenings no longer carrying July and August's heat, dinner on the terrace at sunset is a great plan again."
           }
         },

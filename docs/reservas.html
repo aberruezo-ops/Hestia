@@ -36,7 +36,7 @@
   <link rel="dns-prefetch" href="//unpkg.com"/>
   <link rel="preload" href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400..700;1,9..144,400..700&family=Hanken+Grotesk:wght@400;500;600;700&display=swap" as="style"/>
   <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400..700;1,9..144,400..700&family=Hanken+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet"/>
-<link rel="stylesheet" href="assets/styles.css?v=1203"/>          <script type="application/ld+json">  {
+<link rel="stylesheet" href="assets/styles.css?v=1204"/>          <script type="application/ld+json">  {
   "@context": "https://schema.org",
   "@type": "FAQPage",
   "mainEntity": [
@@ -53,7 +53,7 @@
       "name": "¿Cuánto tardáis en confirmar la reserva?",
       "acceptedAnswer": {
         "@type": "Answer",
-        "text": "En menos de una hora, normalmente en minutos."
+        "text": "En menos de dos horas, de 9:00 a 22:00, y normalmente en minutos."
       }
     },
     {
@@ -61,7 +61,7 @@
       "name": "¿Qué pasa si necesito cambiar las fechas?",
       "acceptedAnswer": {
         "@type": "Answer",
-        "text": "Escríbenos. Somos flexibles con cambios y cancelaciones siempre que se puedan gestionar. No hay que batallar con ninguna plataforma, es una conversación entre personas."
+        "text": "Escríbenos. Los cambios de fecha los hablamos contigo, sin formularios ni plataformas de por medio: es una conversación entre personas. Las cancelaciones siguen la política de abajo."
       }
     },
     {
@@ -69,7 +69,7 @@
       "name": "¿Tenéis política de cancelación?",
       "acceptedAnswer": {
         "@type": "Answer",
-        "text": "Sí. Te la explicamos al confirmar la reserva, según la temporada y las fechas. Si tienes dudas antes de reservar, pregúntanos sin compromiso."
+        "text": "Sí. Más de 30 días antes, cancelación gratuita y devolución completa de la señal; entre 14 y 30 días, devolvemos el 50 %; con menos de 14 días la señal no es reembolsable, aunque si re-alquilamos esas fechas te la devolvemos íntegra. Va también en el contrato, antes de pagar la señal."
       }
     }
   ]
@@ -112,7 +112,7 @@
   <h1>Reservas · Hestía Your Home · Vera Playa</h1>
   <p>Consulta disponibilidad y precio de los tres apartamentos de Hestía en Vera Playa (Almería): Mar, Thalassa y Salinas.</p>
   <p>Al reservar directo no solo igualamos el precio que encuentres en Booking, Airbnb o cualquier otro portal, lo mejoramos. 0% de comisiones, porque no hay intermediario que cobre.</p>
-  <p>El proceso es simple: eliges fechas, te confirmamos disponibilidad y precio, firmas el contrato con una señal y el resto lo pagas a la llegada. La respuesta es humana y llega en menos de una hora, normalmente en minutos.</p>
+  <p>El proceso es simple: eliges fechas, te confirmamos disponibilidad y precio, firmas el contrato con una señal y el resto lo pagas a la llegada. La respuesta es humana y llega en menos de dos horas, normalmente en minutos.</p>
   <p>Hay una estancia mínima, algo más alta en temporada crítica. El huésped adicional y las mascotas tienen un pequeño suplemento por noche. Las condiciones y el importe exacto se ven al elegir fechas.</p>
   <p>Para estancias de un mes o más, consulta las estancias largas: tarifa mensual cerrada, disponible de septiembre a junio.</p>
   <p>Todos los huéspedes que pernoctan se registran en el parte de viajeros, como exige la normativa española.</p>
@@ -162,7 +162,7 @@
     } catch (e) { console.warn('reviews.json fetch failed', e); }
 
     for (const file of COMPONENT_FILES) {
-      const res = await fetch(file + '?cv=38c68c9137');
+      const res = await fetch(file + '?cv=70f667ac98');
       if (!res.ok) throw new Error(`Failed to load ${file}: ${res.status}`);
       const code = await res.text();
       // eslint-disable-next-line no-eval

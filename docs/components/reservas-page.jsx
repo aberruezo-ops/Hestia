@@ -63,7 +63,7 @@ const RESERVAS_COPY = {
       'Reservando directo te ahorras hasta un 10 % aprox.',
       'Alex o Fran responden personalmente',
       'Te respondemos normalmente en minutos',
-      'Flexibilidad real en cambios y cancelaciones',
+      'Cancelación gratuita hasta 30 días antes',
     ],
   },
   en: {
@@ -126,7 +126,7 @@ const RESERVAS_COPY = {
       'Book direct and save up to ~10%',
       'Alex or Fran reply personally',
       'We usually reply in minutes',
-      'Real flexibility on changes and cancellations',
+      'Free cancellation up to 30 days before',
     ],
   },
 };
@@ -1626,8 +1626,8 @@ const ReservasForm = ({ lang }) => {
               <p className="rf-payment-note">
                 <HiIcon name="shield" size={15} style={{verticalAlign:'-2px'}} />{' '}
                 {lang === 'es'
-                  ? 'Señal del 20 % para confirmar, resto a la llegada. Cancelación flexible: hablamos tu caso, sin letra pequeña.'
-                  : '20% deposit to confirm, balance on arrival. Flexible cancellation: we talk through your case, no small print.'}
+                  ? 'Señal del 20 % para confirmar, resto a la llegada. Cancelación gratuita hasta 30 días antes; la política completa va en el contrato.'
+                  : '20% deposit to confirm, balance on arrival. Free cancellation up to 30 days before; the full policy is in the contract.'}
               </p>
               <div className="rf-step-actions" id="rf-submit-zone">
                 <p className="rf-privacy-note">
@@ -1695,8 +1695,8 @@ const ReservasAside = ({ lang }) => {
         <div className="rg-title">{t.guarantee_title}</div>
         <p className="rg-lede">
           {lang === 'es'
-            ? 'Reservando directo te ahorras hasta un 10 % aprox.: no solo igualamos el precio de Booking o Airbnb, lo mejoramos, con 0% de comisiones y respuesta humana en menos de una hora.'
-            : 'Book direct and save up to ~10%: we do not just match the Booking or Airbnb price, we beat it, with 0% commission and a human reply within an hour.'}
+            ? 'Reservando directo te ahorras hasta un 10 % aprox.: no solo igualamos el precio de Booking o Airbnb, lo mejoramos, con 0% de comisiones y respuesta humana en menos de dos horas.'
+            : 'Book direct and save up to ~10%: we do not just match the Booking or Airbnb price, we beat it, with 0% commission and a human reply within two hours.'}
         </p>
         <p className="rg-disclaimer">
           {lang === 'es'

@@ -25,11 +25,11 @@ const CONTACTO_COPY = {
     addr: 'Calle Islas Canarias 7, 04621 Vera Playa, Almería, España',
     lic_eyebrow: 'Licencias de alquiler vacacional',
     book_cta: 'Solicitar reserva →',
-    book_sub: '¿Quieres reservar Hestía?',
+    book_sub: 'Reserva con nosotros',
     faq_title: 'Preguntas frecuentes',
     faqs: [{
       q: '¿Cuándo podéis responder?',
-      a: 'Normalmente en minutos, de 9h a 22h todos los días de la semana. Alex responde en español, Fran en inglés.'
+      a: 'En menos de dos horas, de 9:00 a 22:00 todos los días, y normalmente en minutos. Alex responde en español, Fran en inglés.'
     }, {
       q: '¿Puedo llamar o solo WhatsApp?',
       a: 'Puedes llamar, pero el WhatsApp es más rápido. Alex: +34 620 316 370. Fran: +34 654 138 251.'
@@ -82,11 +82,11 @@ const CONTACTO_COPY = {
     addr: 'Calle Islas Canarias 7, 04621 Vera Playa, Almería, Spain',
     lic_eyebrow: 'Holiday rental licences',
     book_cta: 'Request a booking →',
-    book_sub: 'Want to book a Hestía?',
+    book_sub: 'Book with us',
     faq_title: 'Frequently asked questions',
     faqs: [{
       q: 'When can you reply?',
-      a: 'Usually within minutes, 9am to 10pm every day of the week. Alex replies in Spanish, Fran in English.'
+      a: 'Within two hours, 9am to 10pm every day, and usually within minutes. Alex replies in Spanish, Fran in English.'
     }, {
       q: 'Can I call or only WhatsApp?',
       a: 'You can call, but WhatsApp is faster. Alex: +34 620 316 370. Fran: +34 654 138 251.'

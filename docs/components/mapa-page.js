@@ -165,7 +165,7 @@ const MAPA_COPY = {
       }, {
         href: 'reservas.html',
         label: 'Guest corner',
-        desc: 'Already booked? Access your Hestía guide here with the PIN we sent you.'
+        desc: 'If you already have a booking, access your Hestía guide here with the PIN we sent you.'
       }, {
         href: 'privacidad.html',
         label: 'Privacy',

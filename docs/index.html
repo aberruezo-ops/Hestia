@@ -38,7 +38,7 @@
   <link rel="dns-prefetch" href="//unpkg.com"/>
   <link rel="preload" href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400..700;1,9..144,400..700&family=Hanken+Grotesk:wght@400;500;600;700&display=swap" as="style"/>
   <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400..700;1,9..144,400..700&family=Hanken+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet"/>
-<link rel="stylesheet" href="assets/styles.css?v=1203"/>          <script type="application/ld+json">  {
+<link rel="stylesheet" href="assets/styles.css?v=1204"/>          <script type="application/ld+json">  {
     "@context": "https://schema.org",
     "@type": "LodgingBusiness",
     "@id": "https://www.hestiayourhome.com/#org",
@@ -193,7 +193,7 @@
       "name": "¿Qué Hestía me conviene más?",
       "acceptedAnswer": {
         "@type": "Answer",
-        "text": "Mar es planta primera con jardín y terraza de amanecer. Thalassa es el ático con SPA comunitario y vistas panorámicas al mar. Salinas es el más grande, con jardines con riachuelos y el Parque Natural a un paseo corto. Compara los tres en https://www.hestiayourhome.com/"
+        "text": "Mar es planta primera con jardín y terraza de amanecer. Thalassa es el ático con SPA comunitario y vistas panorámicas al mar. Salinas es el más grande, con jardines con riachuelos y la reserva de aves a un paseo corto. Compara los tres en https://www.hestiayourhome.com/"
       }
     },
     {
@@ -201,7 +201,7 @@
       "name": "¿Quiénes sois Alex y Fran?",
       "acceptedAnswer": {
         "@type": "Answer",
-        "text": "Somos los propietarios, no una agencia. Gestionamos los tres en persona desde 2016. Más de 630 familias nos avalan."
+        "text": "Somos los propietarios, no una agencia. Gestionamos los tres en persona desde 2016. Más de 380 estancias nos avalan."
       }
     }
   ]
@@ -224,12 +224,12 @@
   <h1>Hestía Your Home · Tu hogar en Vera Playa, Almería</h1>
   <p>Tres apartamentos turísticos en Vera Playa (Almería), gestionados directamente por Alex y Fran desde 2016, sin intermediarios ni comisiones de plataforma.</p>
   <h2>Los tres apartamentos</h2>
-  <p>Hestía Mar es el más cercano a la playa, a 300 metros, con terraza esquinera de 20 m² y vistas al mar entre los pinos. Hestía Thalassa es el ático, con terraza panorámica sobre el Mediterráneo y el Salar de los Canos, SPA comunitario, piscinas y pistas de pádel y tenis en la urbanización. Hestía Salinas es el más grande, con dos terrazas y las Salinas de Puerto Rey, único humedal protegido de la zona, a un paseo corto.</p>
+  <p>Hestía Mar es el más cercano a la playa, a 300 metros, con terraza esquinera de 20 m² y vistas al mar entre las palmeras. Hestía Thalassa es el ático, con terraza panorámica sobre el Mediterráneo y el Salar de los Canos, SPA comunitario, piscinas y pistas de pádel y tenis en la urbanización. Hestía Salinas es el más grande, con dos terrazas y las Salinas de Puerto Rey, único humedal protegido de la zona, a un paseo corto.</p>
   <p>Los tres tienen 2 habitaciones, capacidad para 6 personas más bebé, piscina, cocina completa, aire acondicionado, WiFi de fibra y Smart TV con plataformas de streaming incluidas. Mascotas bienvenidas en los tres, con petición previa y suplemento.</p>
   <h2>La zona: Vera Playa y el Levante almeriense</h2>
   <p>Vera Playa es la base para recorrer el Levante almeriense: Mojácar, Garrucha, el Parque Natural de Cabo de Gata, el Desierto de Tabernas y las playas de Villaricos y Palomares.</p>
   <h2>Reserva directa</h2>
-  <p>Reservando directo no solo igualamos el precio que encuentres en otro portal, lo mejoramos, con 0% de comisiones y respuesta humana en menos de una hora. Cientos de opiniones de huéspedes con una media sobresaliente.</p>
+  <p>Reservando directo no solo igualamos el precio que encuentres en otro portal, lo mejoramos, con 0% de comisiones y respuesta humana en menos de dos horas. Cientos de opiniones de huéspedes con una media sobresaliente.</p>
   <p>Licencias turísticas VFT/AL/01580, VFT/AL/05535 y VFT/AL/07056.</p>
   <nav aria-label="Hestía"><a href="/">Inicio</a> · <a href="/mar.html">Hestía Mar</a> · <a href="/thalassa.html">Hestía Thalassa</a> · <a href="/salinas.html">Hestía Salinas</a> · <a href="/reservas.html">Reservas</a> · <a href="/estancias-largas.html">Estancias largas</a> · <a href="/opiniones.html">Opiniones</a> · <a href="/nosotros.html">Nosotros</a> · <a href="/contacto.html">Contacto</a> · <a href="/guia-vera/">Extracto Guía</a></nav>
 </div></div>
@@ -280,7 +280,7 @@
     } catch (e) { console.warn('reviews.json fetch failed', e); }
 
     for (const file of COMPONENT_FILES) {
-      const res = await fetch(file + '?cv=38c68c9137');
+      const res = await fetch(file + '?cv=70f667ac98');
       if (!res.ok) throw new Error(`Failed to load ${file}: ${res.status}`);
       const code = await res.text();
       // eslint-disable-next-line no-eval

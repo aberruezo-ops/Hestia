@@ -2,7 +2,7 @@
 
 Habla directamente con Alex y Fran, que gestionan los tres apartamentos de Hestía en Vera Playa (Almería).
 
-Respondemos en menos de una hora, normalmente en minutos. No hay centralita ni formulario que se pierda: escribe y te contesta una persona.
+Respondemos en menos de dos horas, de 9:00 a 22:00, y normalmente en minutos. No hay centralita ni formulario que se pierda: escribe y te contesta una persona.
 
 Correo: info@hestiayourhome.com. Teléfono y WhatsApp: +34 620 316 370.
 

@@ -404,14 +404,51 @@ const Header = ({
   }, /*#__PURE__*/React.createElement("span", {
     className: "hestia-logo-mark",
     "aria-hidden": "true"
+  }, /*#__PURE__*/React.createElement("span", {
+    className: "hl-stack"
   }, /*#__PURE__*/React.createElement("img", {
     decoding: "async",
     src: "assets/logo-teal-transparent.png",
     alt: "",
-    className: "hestia-logo",
+    className: "hestia-logo hl hl-1",
     width: "600",
     height: "600"
-  })), /*#__PURE__*/React.createElement("span", {
+  }), /*#__PURE__*/React.createElement("img", {
+    decoding: "async",
+    src: "assets/logo-berenjena-160.png",
+    alt: "",
+    className: "hestia-logo hl hl-2 hl-ber",
+    width: "160",
+    height: "160"
+  }), /*#__PURE__*/React.createElement("img", {
+    decoding: "async",
+    src: "assets/logo-blanco-160.png",
+    alt: "",
+    className: "hestia-logo hl hl-2 hl-wht",
+    width: "160",
+    height: "160"
+  }), /*#__PURE__*/React.createElement("img", {
+    decoding: "async",
+    src: "assets/logo-thalassa-160.png",
+    alt: "",
+    className: "hestia-logo hl hl-3",
+    width: "160",
+    height: "160"
+  }), /*#__PURE__*/React.createElement("img", {
+    decoding: "async",
+    src: "assets/logo-salinas-160.png",
+    alt: "",
+    className: "hestia-logo hl hl-4",
+    width: "160",
+    height: "160"
+  }), /*#__PURE__*/React.createElement("img", {
+    decoding: "async",
+    src: "assets/logo-mar-160.png",
+    alt: "",
+    className: "hestia-logo hl hl-5",
+    width: "160",
+    height: "160"
+  }))), /*#__PURE__*/React.createElement("span", {
     className: "wordmark"
   }, "HESTÍA"), /*#__PURE__*/React.createElement("span", {
     className: "your-home"
@@ -1419,15 +1456,49 @@ const Footer = ({
     className: "footer-grid"
   }, /*#__PURE__*/React.createElement("div", {
     className: "col footer-brand"
+  }, /*#__PURE__*/React.createElement("span", {
+    className: "hl-stack"
   }, /*#__PURE__*/React.createElement("img", {
     decoding: "async",
     src: "assets/logo-teal-transparent.png",
     alt: "Hestía",
-    className: "hestia-logo",
+    className: "hestia-logo hl hl-1",
     loading: "lazy",
     width: "600",
     height: "600"
-  }), /*#__PURE__*/React.createElement("div", {
+  }), /*#__PURE__*/React.createElement("img", {
+    decoding: "async",
+    src: "assets/logo-blanco-160.png",
+    alt: "",
+    className: "hestia-logo hl hl-2",
+    loading: "lazy",
+    width: "160",
+    height: "160"
+  }), /*#__PURE__*/React.createElement("img", {
+    decoding: "async",
+    src: "assets/logo-thalassa-160.png",
+    alt: "",
+    className: "hestia-logo hl hl-3",
+    loading: "lazy",
+    width: "160",
+    height: "160"
+  }), /*#__PURE__*/React.createElement("img", {
+    decoding: "async",
+    src: "assets/logo-salinas-160.png",
+    alt: "",
+    className: "hestia-logo hl hl-4",
+    loading: "lazy",
+    width: "160",
+    height: "160"
+  }), /*#__PURE__*/React.createElement("img", {
+    decoding: "async",
+    src: "assets/logo-mar-160.png",
+    alt: "",
+    className: "hestia-logo hl hl-5",
+    loading: "lazy",
+    width: "160",
+    height: "160"
+  })), /*#__PURE__*/React.createElement("div", {
     className: "wordmark",
     style: {
       fontSize: 13,

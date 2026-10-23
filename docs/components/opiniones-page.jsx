@@ -10,7 +10,7 @@ const OPINIONES_COPY = {
     platform_title: 'Puntuaciones verificadas',
     testimonials_title: (<>Lo que dicen <em>los huéspedes.</em></>),
     cta_eyebrow: 'Ahora es tu turno',
-    cta_title: (<>¿Listo para <em>tu estancia?</em></>),
+    cta_title: (<>Mira las <em>fechas.</em></>),
     cta_sub: 'Reserva directamente con nosotros. Sin intermediarios, sin comisiones, con Alex o Fran al otro lado.',
   },
   en: {
@@ -20,7 +20,7 @@ const OPINIONES_COPY = {
     platform_title: 'Verified scores',
     testimonials_title: (<>What the <em>guests say.</em></>),
     cta_eyebrow: 'Now it\'s your turn',
-    cta_title: (<>Ready for <em>your stay?</em></>),
+    cta_title: (<>Check <em>the dates.</em></>),
     cta_sub: 'Book directly with us. No middlemen, no commissions, with Alex or Fran on the other side.',
   },
 };
@@ -561,7 +561,7 @@ const OpinionesPageApp = () => {
         <OpinionesTestimonials lang={lang} />
         <section className="opiniones-share-cta on-dark">
           <div className="container">
-            <div className="osc-eyebrow">{lang === 'es' ? '¿Has dormido en Hestía?' : 'Have you stayed at Hestía?'}</div>
+            <div className="osc-eyebrow">{lang === 'es' ? 'Tu estancia en Hestía' : 'Your stay at Hestía'}</div>
             <h2 className="osc-title">
               {lang === 'es'
                 ? <>Tu opinión <em>nos ayuda</em>.</>
@@ -579,7 +579,7 @@ const OpinionesPageApp = () => {
             <div className="osc-gmaps">
               <p className="osc-gmaps-lbl">
                 {lang === 'es'
-                  ? '¿Ya te alojaste? Déjala directamente en Google, en la ficha de tu Hestía:'
+                  ? 'Si ya te alojaste, déjala directamente en Google, en la ficha de tu Hestía:'
                   : 'Already stayed with us? Post it straight on Google, on your Hestía listing:'}
               </p>
               <div className="osc-gmaps-links">

@@ -443,7 +443,7 @@ const COPY = {
     apt_cta: 'Ver Hestía',
     compare_eyebrow: 'Compara · Elige · Reserva',
     compare_title: (<>Tres puertas distintas al <em>mismo Mediterráneo.</em></>),
-    counters_eyebrow: 'Diez años · una playa · vuestra casa',
+    counters_eyebrow: 'Diez años · una playa · tu casa',
     days_unit: 'días',
     counter_1: 'familias han vivido aquí desde 2016',
     counter_2: 'de sol al año en Vera Playa',
@@ -626,9 +626,9 @@ const QUICK_FAQ = {
       { q: '¿Puedo llevar a mi perro?',
         a: <>Sí, en los tres. Las mascotas son bienvenidas siempre bajo petición previa y con suplemento, respetando unas condiciones básicas dentro de Hestía, en las zonas comunes y en los espacios públicos. Avísanos al reservar.</> },
       { q: '¿Qué Hestía me conviene más?',
-        a: <>Compara los tres en <a href="/">nuestra home</a>. <a href="mar.html">Mar</a> es planta primera con jardín, terraza de amanecer. <a href="thalassa.html">Thalassa</a> es el ático con SPA comunitario y vistas panorámicas al mar. <a href="salinas.html">Salinas</a> es el más grande, con grandes jardines con riachuelos y el Parque Natural a un paseo corto.</> },
+        a: <>Compara los tres en <a href="/">nuestra home</a>. <a href="mar.html">Mar</a> es planta primera con jardín, terraza de amanecer. <a href="thalassa.html">Thalassa</a> es el ático con SPA comunitario y vistas panorámicas al mar. <a href="salinas.html">Salinas</a> es el más grande, con grandes jardines con riachuelos y la reserva de aves a un paseo corto.</> },
       { q: '¿Quiénes sois Alex y Fran?',
-        a: <><a href="nosotros.html">Somos los propietarios</a>, no una agencia. Gestionamos los tres en persona desde 2016. Más de 630 familias nos avalan.</> },
+        a: <><a href="nosotros.html">Somos los propietarios</a>, no una agencia. Gestionamos los tres en persona desde 2016. Más de 380 estancias nos avalan.</> },
     ],
     en: [
       { q: 'How do I book directly?',
@@ -638,7 +638,7 @@ const QUICK_FAQ = {
       { q: 'Which Hestía suits me best?',
         a: <>Compare all three on <a href="/">our home page</a>. <a href="mar.html">Mar</a> is first floor with garden, sunrise terrace. <a href="thalassa.html">Thalassa</a> is the penthouse with shared SPA and panoramic sea views. <a href="salinas.html">Salinas</a> is the largest, with large gardens with streams and the Nature Park a short walk away.</> },
       { q: 'Who are Alex and Fran?',
-        a: <><a href="nosotros.html">We are the owners</a>, not an agency. We have run the three Hestías in person since 2016. Over 630 families back us.</> },
+        a: <><a href="nosotros.html">We are the owners</a>, not an agency. We have run the three Hestías in person since 2016. Over 380 stays back us.</> },
     ],
   },
   vm: {
@@ -666,11 +666,11 @@ const QUICK_FAQ = {
   vt: {
     es: [
       { q: '¿Por qué elegiría Hestía Thalassa sobre los otros dos?',
-        a: <>Thalassa es el ático, el piso más alto de la urbanización. La terraza panorámica tiene vistas al Mediterráneo y al Salar de los Canos, el paisaje más abierto y luminoso de los tres. Además, la urbanización tiene dos piscinas exteriores, jardines, parques, pistas de pádel y tenis y SPA comunitario.</> },
+        a: <>Thalassa es el ático, el piso más alto de la urbanización. La terraza panorámica tiene vistas al Mediterráneo y al Salar de los Canos. Además, la urbanización tiene dos piscinas exteriores, jardines, parques, pistas de pádel y tenis y SPA comunitario.</> },
       { q: '¿Cómo funciona el SPA de la urbanización?',
         a: <>El SPA es comunitario y está abierto en otoño, invierno y primavera: piscina climatizada, jacuzzi, sauna, pediluvio y zona de relax. En verano permanece cerrado, aunque el gimnasio sigue abierto todo el año.</> },
       { q: '¿Qué vistas tiene la terraza del ático?',
-        a: <>Desde la terraza panorámica ves el Mediterráneo y, hacia el interior, el Salar de los Canos, un paisaje árido y de gran belleza. La zona tiene una luz y una aridez espectaculares. El Desierto de Tabernas propiamente dicho está a unos 30 minutos en coche.</> },
+        a: <>Desde la terraza panorámica ves el Mediterráneo y, hacia el interior, el Salar de los Canos, un paisaje árido y de gran belleza. La zona tiene una luz muy limpia y un paisaje seco. El Desierto de Tabernas propiamente dicho está a unos 30 minutos en coche.</> },
       { q: '¿Puedo traer mascotas?',
         a: <>Sí, en los tres. Siempre bajo petición previa y con un pequeño suplemento. Solo pedimos que se respeten unas normas básicas y sensatas: que no suban a sofás, sillones ni camas, y que no hagan sus necesidades en zonas comunes ni dentro de Hestía.</> },
     ],
@@ -688,21 +688,21 @@ const QUICK_FAQ = {
   vs: {
     es: [
       { q: '¿Por qué elegiría Hestía Salinas sobre los otros dos?',
-        a: <>Salinas es el más espacioso de los tres, con 87 m². Dos terrazas, piscina y pistas de pádel y tenis comunitarias, grandes jardines con riachuelos y el Parque Natural de las Salinas de Puerto Rey a un paseo corto. La luz dorada de Almería llena cada habitación, con la naturaleza siempre cerca.</> },
+        a: <>Salinas es el más espacioso de los tres, con 87 m². Dos terrazas, piscina y pistas de pádel y tenis comunitarias, grandes jardines con riachuelos y la reserva de aves de las Salinas de Puerto Rey a un paseo corto. La luz dorada de Almería llena cada habitación, con la naturaleza siempre cerca.</> },
       { q: '¿Qué son las Salinas de Puerto Rey?',
         a: <>Un Parque Natural cercano, a un paseo corto, con flamencos y aves migratorias. Al amanecer, la luz sobre las salinas es dorada.</> },
       { q: '¿Qué tiene la urbanización de Salinas?',
-        a: <>Piscina comunitaria, pistas de pádel y tenis y unos jardines muy grandes, con riachuelos, aves y senderos para pasear. Y a un paseo corto, el Parque Natural de las Salinas de Puerto Rey.</> },
+        a: <>Piscina comunitaria, pistas de pádel y tenis y unos jardines muy grandes, con riachuelos, aves y senderos para pasear. Y a un paseo corto, la reserva de aves de las Salinas de Puerto Rey.</> },
       { q: '¿Puedo traer mascotas?',
         a: <>Sí, en los tres. Siempre bajo petición previa y con suplemento, respetando unas condiciones básicas dentro de Hestía, en las zonas comunes y en los espacios públicos.</> },
     ],
     en: [
       { q: 'Why would I choose Hestía Salinas over the other two?',
-        a: <>Salinas is the most spacious of the three, at 87 m². Two terraces, a shared pool and padel and tennis courts, large gardens with streams and the Puerto Rey Salt-flat Nature Park a short walk away. Almería's golden afternoon light fills every room, with nature always close by.</> },
+        a: <>Salinas is the most spacious of the three, at 87 m². Two terraces, a shared pool and padel and tennis courts, large gardens with streams and the Puerto Rey salt-flat bird reserve a short walk away. Almería's golden afternoon light fills every room, with nature always close by.</> },
       { q: 'What is the Puerto Rey Nature Park?',
         a: <>A nearby natural park, a short walk away, with flamingos, migratory birds and a golden light at sunrise unique in Europe. One of the reasons Salinas has something the others don't.</> },
       { q: 'What does the Salinas complex have?',
-        a: <>A shared pool, padel and tennis courts and very large gardens with streams, birds and paths to wander. And a short walk away, the Puerto Rey Salt-flat Nature Park.</> },
+        a: <>A shared pool, padel and tennis courts and very large gardens with streams, birds and paths to wander. And a short walk away, the Puerto Rey salt-flat bird reserve.</> },
       { q: 'Can I bring pets?',
         a: <>Yes, in all three Hestías. Always on request and with a supplement, as long as basic conditions are respected inside the Hestía, in the communal areas and in public spaces.</> },
     ],
@@ -710,17 +710,17 @@ const QUICK_FAQ = {
   nosotros: {
     es: [
       { q: '¿Desde cuándo lo hacéis vosotros mismos?',
-        a: <>Desde 2016. En diez años hemos recibido a más de 630 familias. Nunca hemos externalizado la gestión: nosotros gestionamos, nosotros cuidamos.</> },
+        a: <>Desde 2016. En diez años hemos recibido a más de 380 familias. Nunca hemos externalizado la gestión: nosotros gestionamos, nosotros cuidamos.</> },
       { q: '¿Por qué se llaman así cada Hestía?',
         a: <>Hestía era la diosa griega del hogar: la diosa pacífica, la que guardaba el fuego de casa. Eso es lo que intentamos hacer: que Hestía deje de ser un sitio donde dormir y se convierta en un lugar donde quedarse.</> },
       { q: '¿Hay alguna agencia o gestor detrás?',
         a: <>No. Somos Alex y Fran. No hay agencia, no hay gestor, no hay centralita. Cuando nos escribes, nos escribes a nosotros directamente.</> },
       { q: '¿Qué pasa si algo falla durante mi estancia?',
-        a: <>Fran se encarga de tu estancia, está pendiente de ti, de vosotros. Responde rápido y resuelve con la mayor celeridad y eficacia posibles.</> },
+        a: <>Fran se encarga de tu estancia, está pendiente de ti. Responde rápido y lo resuelve en persona.</> },
     ],
     en: [
       { q: 'How long have you been managing the Hestías yourselves?',
-        a: <>Since 2016. In ten years we have hosted over 630 families. We have never outsourced management: we still clean, reply and choose the towels ourselves. <a href="nosotros.html">Read our story.</a></> },
+        a: <>Since 2016. In ten years we have hosted over 380 families. We have never outsourced management: we still clean, reply and choose the towels ourselves. <a href="nosotros.html">Read our story.</a></> },
       { q: "Why are they called Hestía?",
         a: <>Hestía was the Greek goddess of the hearth: the peaceful goddess, guardian of the home fire. That is what we try to do: turn a Hestía from a place to sleep into a place you want to stay.</> },
       { q: 'Is there an agency or property manager behind you?',
@@ -758,11 +758,11 @@ const QUICK_FAQ = {
       { q: '¿Y si veo un precio más barato en una plataforma?',
         a: <>Puede pasar en momentos puntuales: Booking o Airbnb lanzan sus propios descuentos y programas (ofertas de última hora, niveles de fidelidad, cupones…) que nosotros no controlamos, así que a veces su precio baja del que damos por defecto. No es que te cobremos de más: es su promoción, no nuestro precio real. Si te ocurre, escríbenos con el precio que ves: nos adaptamos y hacemos todo lo posible por mejorarlo.</> },
       { q: '¿Cuánto tardáis en confirmar la reserva?',
-        a: <>Respondemos en menos de una hora, normalmente en minutos.</> },
+        a: <>Respondemos en menos de dos horas, de 9:00 a 22:00, y normalmente en minutos.</> },
       { q: '¿Qué pasa si necesito cambiar las fechas?',
-        a: <>Escríbenos. Somos flexibles con cambios y cancelaciones siempre que se puedan gestionar. No hay que batallar con ninguna plataforma, es una conversación entre personas.</> },
+        a: <>Escríbenos. Los cambios de fecha los hablamos contigo, sin formularios ni plataformas de por medio: es una conversación entre personas. Las cancelaciones siguen la política de abajo.</> },
       { q: '¿Tenéis política de cancelación?',
-        a: <>Sí. Te la explicamos al confirmar la reserva, según la temporada y las fechas. Si tienes dudas antes de reservar, pregúntanos sin compromiso.</> },
+        a: <>Sí. Más de 30 días antes, cancelación gratuita y devolución completa de la señal; entre 14 y 30 días, devolvemos el 50 %; con menos de 14 días la señal no es reembolsable, aunque si re-alquilamos esas fechas te la devolvemos íntegra. Va también en el contrato, antes de pagar la señal.</> },
     ],
     en: [
       { q: 'Is it better to book directly than through Booking or Airbnb?',
@@ -770,11 +770,11 @@ const QUICK_FAQ = {
       { q: 'What if I see a cheaper price on a platform?',
         a: <>It can happen at certain moments: Booking or Airbnb run their own discounts and programs (last-minute deals, loyalty tiers, coupons…) that we don't control, so sometimes their price dips below our default one. It doesn't mean we're overcharging, it's their promotion, not our real price. If it happens, write to us with the price you see: we'll adapt and do everything we can to beat it.</> },
       { q: 'How long does confirmation take?',
-        a: <>Within an hour, usually within minutes.</> },
+        a: <>Within two hours, 9:00 to 22:00, usually within minutes.</> },
       { q: 'What if I need to change my dates?',
-        a: <>Write to us. We are flexible with changes and cancellations as long as they can be managed. No need to fight with a platform, it is a conversation between people.</> },
+        a: <>Write to us. We work out date changes with you, with no forms or platforms in between: it is a conversation between people. Cancellations follow the policy below.</> },
       { q: 'Do you have a cancellation policy?',
-        a: <>Yes. We explain it when we confirm your booking, depending on the season and dates. If you have doubts before booking, just ask, no commitment.</> },
+        a: <>Yes. More than 30 days before, free cancellation and a full refund of the deposit; between 14 and 30 days, we refund 50%; under 14 days the deposit is non-refundable, although if we re-let those dates we refund it in full. It is also in the contract, before you pay the deposit.</> },
     ],
   },
 };
@@ -938,8 +938,8 @@ const SABIAS_QUE_FACTS = [
   },
   {
     type: 'fact',
-    es: 'Más de 630 familias han dormido en Hestía desde 2016. Más del 40 % repite, sin necesidad de ninguna oferta ni descuento.',
-    en: 'Over 630 families have stayed at Hestía since 2016. More than 40% return, with no offer or discount needed.',
+    es: 'Más de 380 familias han dormido en Hestía desde 2016 y muchas vuelven, sin necesidad de ninguna oferta ni descuento.',
+    en: 'Over 380 families have stayed at Hestía since 2016 and many return, with no offer or discount needed.',
   },
   {
     type: 'fact',
@@ -953,8 +953,8 @@ const SABIAS_QUE_FACTS = [
   },
   {
     type: 'fact',
-    es: 'Los cambios de fecha y cancelaciones en Hestía se gestionan directamente con Alex o Fran: una conversación, no un formulario ni una política automática.',
-    en: 'Date changes and cancellations at Hestía are handled directly with Alex or Fran: a conversation, not a form or an automated policy.',
+    es: 'Los cambios de fecha en Hestía se gestionan directamente con Alex o Fran: una conversación, no un formulario. Las cancelaciones siguen una política clara: gratis hasta 30 días antes.',
+    en: 'Date changes at Hestía are handled directly with Alex or Fran: a conversation, not a form. Cancellations follow a clear policy: free up to 30 days before.',
   },
 
   /* ── Movidos desde FRASES_HOGAR (mayo 2026), eran curiosidades ── */
@@ -1027,10 +1027,10 @@ const SABIAS_QUE_FACTS = [
   { type:'fact', es:'El AVE Madrid-Granada, abierto en 2019, redujo el viaje desde Madrid a 3 h, antes eran casi 5 con tren convencional.', en:'The Madrid-Granada AVE high-speed line, opened in 2019, cut Madrid travel to 3 h, formerly nearly 5 by conventional train.' },
   { type:'fact', es:'La carretera A-92, que cruza Andalucía oriental, es la única que une a las cuatro provincias fronterizas con Almería en menos de 4 horas.', en:'The A-92 motorway across eastern Andalusia is the only road linking all four provinces bordering Almería in under 4 hours.' },
   { type:'fact', es:'Granada y Almería tienen el cielo más oscuro de la Andalucía mediterránea, la noche en el Cabo y en Sierra Nevada compite con la del Atacama.', en:'Granada and Almería have Andalusia\'s darkest Mediterranean skies, nights at Cabo de Gata and Sierra Nevada rival those of Atacama.' },
-  { type:'fact', es:'Hestía está más cerca de Mojácar (10 min) que del centro de Vera pueblo (15 min), la mejor manera de conocer ambos sin moverte de Hestía.', en:'Hestía is closer to Mojácar (10 min) than to Vera town centre (15 min), the best way to know both without leaving Hestía.' },
+  { type:'fact', es:'Hestía está más cerca de Mojácar (10 min) que del centro de Vera pueblo (15 min), una buena base para conocer ambos sin moverte de Hestía.', en:'Hestía is closer to Mojácar (10 min) than to Vera town centre (15 min), the best way to know both without leaving Hestía.' },
   { type:'fact', es:'Desde la terraza de Hestía Thalassa se ve el Mediterráneo, el Salar de los Canos y, en días limpios, las cumbres nevadas de Sierra Nevada.', en:'From Hestía Thalassa\'s terrace you can see the Mediterranean, the Salar de los Canos and, on clear days, snow-capped Sierra Nevada.' },
   { type:'fact', es:'A 30 min de Hestía empieza el Parque Natural de Cabo de Gata-Níjar y a 90 min el Parque Natural de Sierra María-Los Vélez. Dos parques en un día son posibles.', en:'30 min from Hestía starts the Cabo de Gata-Níjar Natural Park; 90 min to Sierra María-Los Vélez. Two parks in one day is possible.' },
-  { type:'fact', es:'Hestía Vera Salinas está cerca del Parque Natural de las Salinas de Puerto Rey: un paseo corto y estás entre flamencos.', en:'Hestía Vera Salinas is close to the Puerto Rey Salt Flats Natural Park: a short walk puts you among flamingos.' },
+  { type:'fact', es:'Hestía Vera Salinas está cerca de la reserva de aves de las Salinas de Puerto Rey: un paseo corto y estás entre flamencos.', en:'Hestía Vera Salinas is close to the Puerto Rey Salt Flats Natural Park: a short walk puts you among flamingos.' },
   { type:'fact', es:'La Alcazaba de Almería es el segundo conjunto fortificado musulmán más grande de España, solo por detrás de la Alhambra.', en:'Almería\'s Alcazaba is the second-largest Muslim fortress in Spain, after the Alhambra.' },
   { type:'fact', es:'La Catedral de Almería es la única catedral fortaleza de España: cuatro torres y muros gruesos para defenderse de los ataques berberiscos del siglo XVI.', en:'Almería\'s Cathedral is the only fortified cathedral in Spain, four towers and thick walls built to repel Barbary corsair raids in the 16th century.' },
   { type:'fact', es:'Los Refugios de la Guerra Civil de Almería son los más grandes de Europa abiertos al público: 4,5 km bajo el suelo, con quirófano y dispensario.', en:'Almería\'s Civil War Shelters are the largest in Europe open to the public: 4.5 km of tunnels with operating room and dispensary.' },
@@ -1622,7 +1622,7 @@ const SABIAS_QUE_HOME_FACTS = [
   },
   /* Salinas del Cano */
   {
-    es: 'Las Salinas del Cano, cerca de Hestía Salinas, son una reserva de aves catalogada Zona de Especial Protección. En invierno llegan hasta 600 flamencos rosados de una sola vez.',
+    es: 'Las Salinas del Cano, cerca de Hestía Salinas, son una reserva de aves. En invierno llegan hasta 600 flamencos rosados de una sola vez.',
     en: 'The Salinas del Cano, near Hestía Salinas, are a bird reserve classified as a Special Protection Zone. Up to 600 pink flamingos arrive together in winter.',
   },
   {
@@ -1843,7 +1843,7 @@ const SABIAS_QUE_HOME_FACTS = [
   { es: 'La Sierra de la Pila, entre Fortuna y Abarán, esconde la Cueva Negra: yacimiento del Paleolítico con homínidos de hace 800.000 años, entre los más antiguos del sur europeo.', en: 'Sierra de la Pila, between Fortuna and Abarán, hides Cueva Negra: a Paleolithic site with 800,000-year-old hominins, among southern Europe\'s oldest.' },
   { es: 'En Aledo (Murcia, frontera con Almería) hay una torre vigía del XII que se ve desde la Sierra de los Filabres, los moros la usaban para mandar señales de humo a Mojácar y Vera.', en: 'In Aledo (Murcia, on the Almería border) stands a 12th-century watchtower visible from the Filabres range, Moors used it to send smoke signals to Mojácar and Vera.' },
   { es: 'Los baños romanos de Fortuna (Murcia) llevan funcionando 2.000 años: las mismas aguas termales que usaron los legionarios se siguen embotellando hoy.', en: 'The Roman baths of Fortuna (Murcia) have been working for 2,000 years: the same thermal water once used by Roman legionaries is still bottled today.' },
-  { es: 'En las salinas de San Pedro del Pinatar conviven flamencos, avocetas y cigüeñuelas. Es el humedal con más especies de aves protegidas del sureste peninsular.', en: 'San Pedro del Pinatar\'s salt flats are home to flamingos, avocets and stilts, the south-east\'s wetland with most protected bird species.' },
+  { es: 'En las salinas de San Pedro del Pinatar conviven flamencos, avocetas y cigüeñuelas. Es un humedal con muchas especies de aves protegidas.', en: 'San Pedro del Pinatar\'s salt flats are home to flamingos, avocets and stilts, the south-east\'s wetland with most protected bird species.' },
   { es: 'Yecla tiene la mayor producción mundial de muebles tapizados de gama media: una de cada 10 sofás vendidos en Europa se fabrica en sus polígonos industriales.', en: 'Yecla is the world\'s largest producer of mid-range upholstered furniture: 1 in every 10 sofas sold in Europe is built in its industrial parks.' },
   { es: 'Cope (entre Águilas y Calabardina) tiene una torre defensiva del XVI dentro del mar, la marea sube y la rodea por completo dos veces al día.', en: 'Cope (between Águilas and Calabardina) has a 16th-century defence tower in the sea, the tide surrounds it completely twice a day.' },
   { es: 'El embalse de la Cierva (Mula) se llenó tan rápido al construirlo en 1929 que se quedó atrapado un pueblo entero, La Puebla de Mula, todavía emerge en años secos.', en: 'The Cierva reservoir (Mula) filled so fast after its 1929 construction that the entire village of La Puebla de Mula was trapped, it still emerges in drought years.' },
@@ -1936,7 +1936,7 @@ const SabiasQue = ({ lang, pool: propPool }) => {
   const item = pool[idx];
   return (
     <div className="sabias-que">
-      <span className="sq-label">{lang === 'es' ? '¿Sabías que…?' : 'Did you know?'}</span>
+      <span className="sq-label">{lang === 'es' ? 'Un dato de la zona' : 'A local fact'}</span>
       <span className={`sq-body ${visible ? 'sq-in' : 'sq-out'}`}>
         <span className="sq-fact">{item[lang]}</span>
       </span>
@@ -2016,14 +2016,14 @@ const StickyFacts = ({ lang }) => {
   }, [open]);
 
   const item  = pool[idx];
-  const label = lang === 'es' ? '¿Sabías que…?' : 'Did you know?';
+  const label = lang === 'es' ? 'Un dato de la zona' : 'A local fact';
 
   return (
     <div className={`sticky-facts ${open ? '' : 'sf-closed'}${(pastHero && !searchActive) ? '' : ' sf-hidden'}`} onClick={!open ? () => setOpen(true) : undefined}>
       {!open ? (
         <>
           <span style={{ fontSize: 14, color: 'var(--sol-lt)', fontFamily: 'var(--sans)', letterSpacing: '.12em', textTransform: 'uppercase', fontWeight: 400 }}>
-            {lang === 'es' ? '¿Sabías que…?' : 'Did you know?'}
+            {lang === 'es' ? 'Un dato de la zona' : 'A local fact'}
           </span>
           <button className="sf-toggle" onClick={() => setOpen(true)} aria-label="Expandir">＋</button>
         </>
@@ -3142,17 +3142,17 @@ const HESTIA_RULES = {
     title: 'Normas de Hestía',
     intro: 'Estas normas vienen del contrato que firmaste con nosotros. Son sencillas y están pensadas para que tú, los próximos huéspedes y nuestros vecinos disfrutemos de Hestía.',
     items: [
-      { icon: '🛒', hi: 'cart', t: 'Reponed lo que consumáis',
-        d: 'Hestía dispone de productos consumibles. Si gastáis o consumís algo, intentad reponerlo: salvo el kit de bienvenida, que es un pequeño regalo nuestro. Reponed también lo que consumáis fuera de ese kit.' },
-      { icon: '🌿', hi: 'olive', t: 'Cuidad el medio ambiente',
-        d: 'No malgastéis la luz ni el agua. Por la escasez de agua de la zona, agradecemos un uso responsable y queda prohibido llenar las bañeras. No dejéis el aire acondicionado con las ventanas abiertas o cuando salgáis. Sentíos como en vuestro hogar.' },
-      { icon: '🪑', hi: 'chair', t: 'Recoged la terraza si salís',
+      { icon: '🛒', hi: 'cart', t: 'Repón lo que consumas',
+        d: 'Hestía dispone de productos consumibles. Si gastas o consumes algo, intenta reponerlo: salvo el kit de bienvenida, que es un pequeño regalo nuestro. Repón también lo que consumas fuera de ese kit.' },
+      { icon: '🌿', hi: 'olive', t: 'Cuida el medio ambiente',
+        d: 'No malgastes la luz ni el agua. Por la escasez de agua de la zona, agradecemos un uso responsable y queda prohibido llenar las bañeras. No dejes el aire acondicionado con las ventanas abiertas o cuando salgas. Siéntete como en tu hogar.' },
+      { icon: '🪑', hi: 'chair', t: 'Recoge la terraza si sales',
         d: 'Cojines, toldo y plantas: especialmente si hay viento, lluvia o predicción de mal tiempo.' },
-      { icon: '🛏️', hi: 'bed', t: 'Cuidad equipamiento y mobiliario',
-        d: 'No extraigáis nada de Hestía. Tras vuestra estancia haremos inventario; cualquier deterioro o sustracción será responsabilidad vuestra.' },
-      { icon: '🤫', hi: 'mute', t: 'Respetad el descanso',
-        d: 'El vuestro y el de los vecinos. Evitad ruidos, música o jaleo a deshoras.' },
-      { icon: '🚪', hi: 'door', t: 'Hestía es solo para vosotros',
+      { icon: '🛏️', hi: 'bed', t: 'Cuida equipamiento y mobiliario',
+        d: 'No saques nada de Hestía. Tras tu estancia haremos inventario; cualquier deterioro o sustracción será responsabilidad tuya.' },
+      { icon: '🤫', hi: 'mute', t: 'Respeta el descanso',
+        d: 'El tuyo y el de los vecinos. Evita ruidos, música o jaleo a deshoras.' },
+      { icon: '🚪', hi: 'door', t: 'Hestía es solo para tu reserva',
         d: 'No para terceros que no figuren en la reserva.' },
       { icon: '🕒', hi: 'clock', t: 'Check-in 15:00 · Check-out 11:00',
         d: `Necesitamos un margen considerable para dejar Hestía a punto para la siguiente llegada. Late check-out y early check-in sujetos a disponibilidad. ${_arrivalPolicy('es')}` },
@@ -3161,25 +3161,25 @@ const HESTIA_RULES = {
       { icon: '🚭', hi: 'nosmoking', t: 'No se fuma dentro de Hestía',
         d: 'En toda la casa está prohibido.' },
       { icon: '🏖️', hi: 'umbrella', t: 'Toallas solo dentro de Hestía',
-        d: 'No las uséis en la piscina ni en la playa. Para esos sitios, llevad las vuestras.' },
+        d: 'No las uses en la piscina ni en la playa. Para esos sitios, lleva las tuyas.' },
       { icon: '🌬️', hi: 'wind', t: 'Tender solo en el tendedero',
-        d: 'No colguéis ropa en las barandillas ni en la terraza.' },
-      { icon: '🏊', hi: 'pool', t: 'Respetad las normas de la urbanización',
-        d: 'Especialmente el horario de piscina y zonas comunes. El incumplimiento es responsabilidad vuestra.' },
+        d: 'No cuelgues ropa en las barandillas ni en la terraza.' },
+      { icon: '🏊', hi: 'pool', t: 'Respeta las normas de la urbanización',
+        d: 'Especialmente el horario de piscina y zonas comunes. El incumplimiento es responsabilidad tuya.' },
       { icon: '🚼', hi: 'baby', t: 'Terminantemente prohibido hacer necesidades en la piscina o en cualquier zona común',
         d: 'Los bebés deben bañarse siempre con pañal de baño, nunca sin él. Si ocurre un incidente, la responsabilidad es de los familiares del bebé.' },
       { icon: '🚗', hi: 'car', t: 'No correr con el coche en la mancomunidad',
-        d: 'La velocidad máxima dentro de la mancomunidad es muy baja. Hay niños, mascotas y peatones: circulad despacio, siempre. Es una norma de la comunidad y de sentido común.' },
+        d: 'La velocidad máxima dentro de la mancomunidad es muy baja. Hay niños, mascotas y peatones: circula despacio, siempre. Es una norma de la comunidad y de sentido común.' },
       { icon: '🧹', hi: 'broom', t: 'No ensuciar ni deteriorar las zonas comunes',
-        d: 'Jardines, piscina, ascensores, pasillos y descansillos: dejadlos como os los encontrasteis. Cualquier desperfecto o suciedad reiterada es responsabilidad del huésped.' },
+        d: 'Jardines, piscina, ascensores, pasillos y descansillos: déjalos como te los encontraste. Cualquier desperfecto o suciedad reiterada es responsabilidad del huésped.' },
       { icon: '👙', hi: 'umbrella', t: 'Urbanización textil',
         d: 'No están permitidos el naturismo ni el topless en ninguna zona de la urbanización.' },
       { icon: '👨‍👩‍👧', hi: 'baby', t: 'Menores bajo responsabilidad de sus padres',
         d: 'Cualquier incidente con menores en Hestía o en zonas comunes es responsabilidad de sus padres o tutores.' },
       { icon: '🛎️', hi: 'bell', t: 'Servicios comunes y exterior',
-        d: 'Lo que pase fuera de Hestía no es responsabilidad nuestra, pero siempre intentaremos ayudaros.' },
-      { icon: '🧺', hi: 'basket', t: 'Dejad Hestía limpia y recogida',
-        d: 'De las sábanas y toallas nos encargamos nosotros. Por favor, no las lavéis con ropa de otro color.' },
+        d: 'Lo que pase fuera de Hestía no es responsabilidad nuestra, pero siempre intentaremos ayudarte.' },
+      { icon: '🧺', hi: 'basket', t: 'Deja Hestía limpia y recogida',
+        d: 'De las sábanas y toallas nos encargamos nosotros. Por favor, no las laves con ropa de otro color.' },
     ],
   },
   en: {
@@ -3239,9 +3239,9 @@ const DIRECT_PERKS = {
   es: [
     { id:'precio',    icon:'💰', stat:'✓',       t:'No solo igualamos, mejoramos.',   d:'El precio de la web es el directo, sin comisiones de plataforma, así que casi siempre es más barato. Las plataformas a veces hacen promociones que no controlamos; si encuentras uno más bajo, tráenoslo: no solo te lo igualamos, te lo mejoramos.' },
     { id:'comision',  icon:'🚫', stat:'~10%',    t:'Reservando directo te ahorras hasta un 10 % aprox.',    d:'Las plataformas como Booking o Airbnb añaden comisiones y cargos de servicio que aquí no existen: pagas el precio real, no el inflado por intermediarios. El ahorro exacto depende de si la plataforma ya está aplicando descuentos o programas propios que no podemos conocer, por eso decimos «hasta un 10 % aprox.».' },
-    { id:'respuesta', icon:'⏱',  stat:'≤1 h',    t:'Respuesta humana, no un bot.',                    d:'Hablas directamente con Alex o Fran. Respondemos en menos de una hora, normalmente en minutos.' },
-    { id:'cancel',    icon:'🔓', stat:'✓',       t:'Mejoramos las condiciones de cancelación.',       d:'¿Necesitas algo distinto a la política estándar? Pregúntanos, miramos cada caso. Sin formularios eternos, sin sanciones ocultas.' },
-    { id:'pago',      icon:'💳', stat:'✓',       t:'Pago seguro y flexible.',                         d:'Sin pre-autorizaciones que bloqueen tu tarjeta. Si necesitas plazos, los acordamos contigo. Pago directo, sin intermediarios.' },
+    { id:'respuesta', icon:'⏱',  stat:'<2 h',    t:'Respuesta humana, no un bot.',                    d:'Hablas directamente con Alex o Fran. Respondemos en menos de dos horas, de 9:00 a 22:00, y normalmente en minutos.' },
+    { id:'cancel',    icon:'🔓', stat:'✓',       t:'Cancelación gratuita hasta 30 días antes.',        d:'Más de 30 días, devolución completa de la señal; de 14 a 30 días, el 50 %. Sin formularios eternos, sin sanciones ocultas.' },
+    { id:'pago',      icon:'💳', stat:'✓',       t:'Pago seguro y directo.',                         d:'Sin pre-autorizaciones que bloqueen tu tarjeta. Señal de ~20% al firmar y el resto a la llegada. Pago directo, sin intermediarios.' },
     { id:'descuento', icon:'🎁', stat:'desde −{PCT}%', t:'Precio cerrado para estancias largas.',             d:'Mínimo 29 noches · septiembre a junio (no disponible en julio ni agosto). Desde {LS} €/mes, sin comisión, con contrato de arrendamiento firmado y trato 100 % directo.', link: { href: 'estancias-largas.html', label: 'Ver tarifas y disponibilidad →' } },
     { id:'guia',      icon:'🗝',  stat:'24/7',   t:'Guía privada y trato cercano.',                   d:'Más que una lista: Alex y Fran te preparan la llegada, te acompañan toda la estancia (recomendaciones, restaurantes, calas, rutas e instrucciones de Hestía) y te echan una mano también a la salida si hace falta. Siempre a un mensaje.' },
     { id:'aliados',   icon:'🤝', stat:'10%',     t:'Descuentos con proveedores locales.',             d:'Acabamos de empezar esta iniciativa: de momento, un 10 % en Lunar Cable Park. La lista está en tu guía privada y la iremos ampliando con más proveedores de la zona.' },
@@ -3251,9 +3251,9 @@ const DIRECT_PERKS = {
   en: [
     { id:'precio',    icon:'💰', stat:'✓',       t:'We don\'t just match, we beat any price.',        d:'The website price is the direct one, with no platform commission, so it\'s almost always cheaper. Platforms sometimes run promos we don\'t control; if you find a lower one, bring it to us: we don\'t just match it, we beat it.' },
     { id:'comision',  icon:'🚫', stat:'~10%',    t:'Book direct and save up to ~10%.',                  d:'Platforms like Booking or Airbnb add commissions and service fees that simply don\'t exist here: you pay the real price, not the inflated one. The exact saving depends on whether the platform is already applying its own discounts or programmes we can\'t know, that\'s why we say "up to ~10%".' },
-    { id:'respuesta', icon:'⏱',  stat:'≤1 h',    t:'Human reply, not a bot.',                         d:'You talk directly to Alex or Fran. Usually within minutes; up to an hour during active hours.' },
-    { id:'cancel',    icon:'🔓', stat:'✓',       t:'We improve cancellation terms.',                  d:'Need something different from the standard policy? Just ask, we look at each case. No endless forms, no hidden penalties.' },
-    { id:'pago',      icon:'💳', stat:'✓',       t:'Safe, flexible payment.',                         d:'No pre-authorisations blocking your card. If you need installments, we agree them. Direct payment, no middleman.' },
+    { id:'respuesta', icon:'⏱',  stat:'<2 h',    t:'Human reply, not a bot.',                         d:'You talk directly to Alex or Fran. We reply within two hours, 9:00 to 22:00, and usually within minutes.' },
+    { id:'cancel',    icon:'🔓', stat:'✓',       t:'Free cancellation up to 30 days before.',          d:'Over 30 days, full refund of the deposit; 14 to 30 days, 50%. No endless forms, no hidden penalties.' },
+    { id:'pago',      icon:'💳', stat:'✓',       t:'Safe, direct payment.',                            d:'No pre-authorisations blocking your card. ~20% deposit when you sign and the balance on arrival. Direct payment, no middleman.' },
     { id:'descuento', icon:'🎁', stat:'from −{PCT}%', t:'A fixed price for long stays.',                   d:'Minimum 29 nights · September to June (not available July or August). From €{LS}/month, no commission, formal lease signed by both parties, 100% direct contact.', link: { href: 'estancias-largas.html', label: 'See rates and availability →' } },
     { id:'guia',      icon:'🗝',  stat:'24/7',   t:'Private guide, personal care.',                   d:'More than a list: Alex & Fran set up your arrival, stay with you all through the trip (recommendations, restaurants, coves, routes and Hestía instructions) and give you a hand at check-out too if needed. Always one message away.' },
     { id:'aliados',   icon:'🤝', stat:'10%',     t:'Discounts with local providers.',                 d:'We just started this: for now, 10% at Lunar Cable Park. The full list is in your private guide, and we will keep adding more local providers over time.' },
@@ -3270,12 +3270,12 @@ const DIRECT_RIBBON = (lang) => {
   return lang === 'es' ? [
     { num:'✓',     label:'igualamos y mejoramos' },
     { num:'0%',    label:'comisiones' },
-    { num:'≤1 h',  label:'respuesta' },
+    { num:'<2 h',  label:'respuesta' },
     { num:pct,     label:'estancia larga' },
   ] : [
     { num:'✓',     label:'better price' },
     { num:'0%',    label:'commissions' },
-    { num:'≤1 h',  label:'reply' },
+    { num:'<2 h',  label:'reply' },
     { num:pct,     label:'long stay' },
   ];
 };
@@ -3533,7 +3533,7 @@ const AptDesktopSidebar = ({ lang, onGuideClick }) => {
         </button>
       </section>
       <section className="ads-card ads-guide">
-        <span className="eyebrow">{lang === 'es' ? '¿Ya estás reservado?' : 'Already booked?'}</span>
+        <span className="eyebrow">{lang === 'es' ? 'Si ya tienes reserva' : 'If you already have a booking'}</span>
         <h4 className="ads-title">
           {lang === 'es' ? <>Tu <em>guía privada</em></> : <>Your <em>private guide</em></>}
         </h4>
@@ -3713,7 +3713,7 @@ const WidgetSabiasQue = ({ lang }) => {
     return (
       <WidgetMiniPill
         icon={<HiIcon name="bulb" size={15} />}
-        label={lang === 'es' ? '¿Sabías que…?' : 'Did you know?'}
+        label={lang === 'es' ? 'Un dato de la zona' : 'A local fact'}
         ariaLabel={lang === 'es' ? 'Restaurar curiosidades' : 'Restore did-you-know'}
         onClick={() => setMin(false)}
         className="widget-mini-sabias"
@@ -3722,7 +3722,7 @@ const WidgetSabiasQue = ({ lang }) => {
   }
   const item = pool[idx];
   return (
-    <section className="widget-card widget-sabias" aria-label={lang === 'es' ? '¿Sabías que…?' : 'Did you know'}>
+    <section className="widget-card widget-sabias" aria-label={lang === 'es' ? 'Un dato de la zona' : 'A local fact'}>
       <button
         type="button"
         className="widget-min-btn"
@@ -3731,7 +3731,7 @@ const WidgetSabiasQue = ({ lang }) => {
         onClick={() => setMin(true)}
       >−</button>
       <div className={`sf-body ${visible ? 'sf-in' : 'sf-out'}`}>
-        <span className="sf-label">{lang === 'es' ? '¿Sabías que…?' : 'Did you know?'}</span>
+        <span className="sf-label">{lang === 'es' ? 'Un dato de la zona' : 'A local fact'}</span>
         <span className="sf-text">{item[lang]}</span>
       </div>
       <div className="sf-nav">
@@ -3765,7 +3765,7 @@ const WidgetGuidePin = ({ lang, onGuideClick }) => {
         title={lang === 'es' ? 'Minimizar' : 'Minimize'}
         onClick={() => setMin(true)}
       >−</button>
-      <span className="eyebrow">{lang === 'es' ? '¿Ya estás reservado?' : 'Already booked?'}</span>
+      <span className="eyebrow">{lang === 'es' ? 'Si ya tienes reserva' : 'If you already have a booking'}</span>
       <h4 className="widget-title">
         {lang === 'es' ? <>Guía para <em>huéspedes</em></> : <>Guests' <em>guidebook</em></>}
       </h4>

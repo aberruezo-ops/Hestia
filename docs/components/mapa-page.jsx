@@ -84,7 +84,7 @@ const MAPA_COPY = {
         title: 'Help & legal',
         items: [
           { href: 'contacto.html', label: 'Contact', desc: 'WhatsApp, phone and email, a real person replies.' },
-          { href: 'reservas.html', label: 'Guest corner', desc: 'Already booked? Access your Hestía guide here with the PIN we sent you.' },
+          { href: 'reservas.html', label: 'Guest corner', desc: 'If you already have a booking, access your Hestía guide here with the PIN we sent you.' },
           { href: 'privacidad.html', label: 'Privacy', desc: 'How we handle your data, GDPR.' },
           { href: 'cookies.html', label: 'Cookies', desc: 'What cookies we use and how to manage them.' },
         ],

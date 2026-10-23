@@ -10,13 +10,13 @@ const LS_COPY = {
     sub2: 'Tres apartamentos totalmente equipados para estancias prolongadas para teletrabajadores, empresas o simplemente porque te apetece vivir una temporada en un lugar especial con un tiempo, naturaleza y cultura privilegiados.\n\nDisponibles de septiembre a junio.',
     who_title: 'Para quién es Hestía larga estancia',
     who_1_title: 'Teletrabajador · Nómada digital',
-    who_1_body: 'WiFi de fibra hasta 600 Mbps simétricos, mesa de trabajo bajo petición, silencio y el Mediterráneo a 200 metros. Vera Playa es un destino asequible con 320 días de sol al año.',
+    who_1_body: 'WiFi de fibra de 300 a 600 Mbps, mesa de trabajo bajo petición, silencio y el Mediterráneo a 300–400 metros. Vera Playa es un destino asequible con 320 días de sol al año.',
     who_2_title: 'Empresa · Equipo de proyecto',
     who_2_body: 'Auditores, consultores, equipos desplazados. Apartamento completo más económico y cómodo que un hotel durante semanas.',
     who_3_title: 'Temporada larga · Nueva vida',
     who_3_body: 'Invierno en el sur, primera temporada fuera de casa o simplemente vivir un tiempo junto al mar antes de decidir.',
     includes_title: 'Qué incluye',
-    includes: ['WiFi fibra · hasta 600 Mbps simétricos', 'Mesa de trabajo bajo petición', 'Cocina completamente equipada', 'Ropa de cama y toallas incluidas', 'Terraza privada o con vistas', 'Aire acondicionado y calefacción', 'Parking', 'Sin gastos de agencia · trato directo', 'Contrato de arrendamiento formal', 'Señal de ~20% al firmar el contrato, resto a la llegada', 'Te respondemos en menos de una hora'],
+    includes: ['WiFi fibra · de 300 a 600 Mbps', 'Mesa de trabajo bajo petición', 'Cocina completamente equipada', 'Ropa de cama y toallas incluidas', 'Terraza privada o con vistas', 'Aire acondicionado y calefacción', 'Parking', 'Sin gastos de agencia · trato directo', 'Contrato de arrendamiento formal', 'Señal de ~20% al firmar el contrato, resto a la llegada', 'Te respondemos en menos de dos horas'],
     prices_title: 'Tarifa mensual',
     prices_note: 'Precio por apartamento completo. Navidad (23 dic–6 ene) y Semana Santa llevan suplemento. El importe exacto depende de las fechas y del Hestía: pregúntanos y te lo cerramos.',
     prices_ask: 'Pregúntanos por tus fechas',
@@ -32,7 +32,7 @@ const LS_COPY = {
       a: 'Sí. Firmamos un contrato de arrendamiento de temporada con los datos de todos los huéspedes. Recibirás el contrato antes de pagar la señal.'
     }, {
       q: '¿Cómo se reserva?',
-      a: 'Escríbenos por WhatsApp o email con las fechas y el apartamento que te interesa. Te respondemos en menos de una hora (normalmente en minutos) para confirmar disponibilidad y enviarte el contrato.'
+      a: 'Escríbenos por WhatsApp o email con las fechas y el apartamento que te interesa. Te respondemos en menos de dos horas (normalmente en minutos) para confirmar disponibilidad y enviarte el contrato.'
     }, {
       q: '¿Hay que pagar todo al reservar?',
       a: 'Una señal de ~20% al firmar el contrato; el resto, a la llegada.'
@@ -46,8 +46,8 @@ const LS_COPY = {
       q: '¿Puedo pedir servicios extra durante la estancia?',
       a: 'Sí, bajo un pequeño cargo: limpieza a mitad de mes, recepción de paquetería o renovar mes a mes. Si teletrabajas, te llevamos una mesa de trabajo al apartamento. Dinos qué necesitas y lo organizamos.'
     }],
-    cta_title: '¿Listo para instalarte?',
-    cta_body: 'Escríbenos con tus fechas y te enviamos disponibilidad y contrato en menos de una hora.',
+    cta_title: 'Escríbenos con tus fechas',
+    cta_body: 'Escríbenos con tus fechas y te enviamos disponibilidad y contrato en menos de dos horas.',
     cta_wa: 'WhatsApp Alex',
     cta_mail: 'info@hestiayourhome.com'
   },
@@ -57,13 +57,13 @@ const LS_COPY = {
     sub2: 'Three fully equipped apartments for extended stays: for remote workers, businesses, or simply because you want to spend time in a special place with exceptional weather. Available September to June.',
     who_title: 'Who is Hestía long stay for?',
     who_1_title: 'Remote worker · Digital nomad',
-    who_1_body: 'Fibre WiFi up to 600 Mbps symmetric, a work table on request, silence and the Mediterranean 200 metres away. Vera Playa is an affordable destination with 320 sunny days a year.',
+    who_1_body: 'Fibre WiFi from 300 to 600 Mbps, a work table on request, silence and the Mediterranean 300–400 metres away. Vera Playa is an affordable destination with 320 sunny days a year.',
     who_2_title: 'Business · Project team',
     who_2_body: 'Auditors, consultants, relocated teams. A full apartment, more economical and comfortable than a hotel for weeks.',
     who_3_title: 'Long season · New chapter',
     who_3_body: 'Wintering in the south, a first time living abroad or simply spending time by the sea before deciding.',
     includes_title: "What's included",
-    includes: ['Fibre WiFi · up to 600 Mbps symmetric', 'Work table on request', 'Fully equipped kitchen', 'Bed linen and towels included', 'Private terrace or sea views', 'Air conditioning and heating', 'Parking', 'No agency fees · direct deal', 'Formal rental contract', '~20% deposit on signing, the rest on arrival', 'We reply within an hour'],
+    includes: ['Fibre WiFi · from 300 to 600 Mbps', 'Work table on request', 'Fully equipped kitchen', 'Bed linen and towels included', 'Private terrace or sea views', 'Air conditioning and heating', 'Parking', 'No agency fees · direct deal', 'Formal rental contract', '~20% deposit on signing, the rest on arrival', 'We reply within two hours'],
     prices_title: 'Monthly rate',
     prices_note: 'Full apartment price. Christmas (Dec 23–Jan 6) and Easter carry a supplement. The exact amount depends on your dates and the Hestía: ask us and we will confirm it.',
     prices_ask: 'Ask us about your dates',
@@ -79,7 +79,7 @@ const LS_COPY = {
       a: "Yes. We sign a seasonal rental agreement with all guests' details. You receive the contract before paying the deposit."
     }, {
       q: 'How do I book?',
-      a: 'Message us on WhatsApp or email with your dates and chosen apartment. We reply within an hour (usually within minutes) to confirm availability and send the contract.'
+      a: 'Message us on WhatsApp or email with your dates and chosen apartment. We reply within two hours (usually within minutes) to confirm availability and send the contract.'
     }, {
       q: 'Do I pay everything upfront?',
       a: 'A ~20% deposit on signing the contract; the rest on arrival.'
@@ -93,8 +93,8 @@ const LS_COPY = {
       q: 'Can I request extra services during my stay?',
       a: 'Yes, for a small charge: mid-month cleaning, parcel reception or month-to-month renewal. If you work remotely, we bring a work table to your apartment. Tell us what you need and we sort it out.'
     }],
-    cta_title: 'Ready to settle in?',
-    cta_body: 'Message us with your dates and we will send availability and contract within an hour.',
+    cta_title: 'Write to us with your dates',
+    cta_body: 'Message us with your dates and we will send availability and contract within two hours.',
     cta_wa: 'WhatsApp Alex',
     cta_mail: 'info@hestiayourhome.com'
   }

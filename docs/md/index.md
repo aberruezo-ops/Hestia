@@ -4,7 +4,7 @@ Tres apartamentos turísticos en Vera Playa (Almería), gestionados directamente
 
 ## Los tres apartamentos
 
-Hestía Mar es el más cercano a la playa, a 300 metros, con terraza esquinera de 20 m² y vistas al mar entre los pinos. Hestía Thalassa es el ático, con terraza panorámica sobre el Mediterráneo y el Salar de los Canos, SPA comunitario, piscinas y pistas de pádel y tenis en la urbanización. Hestía Salinas es el más grande, con dos terrazas y las Salinas de Puerto Rey, único humedal protegido de la zona, a un paseo corto.
+Hestía Mar es el más cercano a la playa, a 300 metros, con terraza esquinera de 20 m² y vistas al mar entre las palmeras. Hestía Thalassa es el ático, con terraza panorámica sobre el Mediterráneo y el Salar de los Canos, SPA comunitario, piscinas y pistas de pádel y tenis en la urbanización. Hestía Salinas es el más grande, con dos terrazas y las Salinas de Puerto Rey, único humedal protegido de la zona, a un paseo corto.
 
 Los tres tienen 2 habitaciones, capacidad para 6 personas más bebé, piscina, cocina completa, aire acondicionado, WiFi de fibra y Smart TV con plataformas de streaming incluidas. Mascotas bienvenidas en los tres, con petición previa y suplemento.
 
@@ -14,7 +14,7 @@ Vera Playa es la base para recorrer el Levante almeriense: Mojácar, Garrucha, e
 
 ## Reserva directa
 
-Reservando directo no solo igualamos el precio que encuentres en otro portal, lo mejoramos, con 0% de comisiones y respuesta humana en menos de una hora. Cientos de opiniones de huéspedes con una media sobresaliente.
+Reservando directo no solo igualamos el precio que encuentres en otro portal, lo mejoramos, con 0% de comisiones y respuesta humana en menos de dos horas. Cientos de opiniones de huéspedes con una media sobresaliente.
 
 Licencias turísticas VFT/AL/01580, VFT/AL/05535 y VFT/AL/07056.
 

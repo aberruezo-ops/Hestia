@@ -37,7 +37,7 @@
   <link rel="stylesheet" href="assets/leaflet.css"/>
   <link rel="preload" href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400..700;1,9..144,400..700&family=Hanken+Grotesk:wght@400;500;600;700&display=swap" as="style"/>
   <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400..700;1,9..144,400..700&family=Hanken+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet"/>
-<link rel="stylesheet" href="assets/styles.css?v=1203"/>          <link rel="preload" as="image" href="assets/apt-vs-gallery-33.jpg" fetchpriority="high"/>  <script type="application/ld+json">
+<link rel="stylesheet" href="assets/styles.css?v=1204"/>          <link rel="preload" as="image" href="assets/apt-vs-gallery-33.jpg" fetchpriority="high"/>  <script type="application/ld+json">
   {
     "@context": "https://schema.org",
     "@type": ["Accommodation", "LodgingBusiness"],
@@ -66,7 +66,7 @@
       {"@type": "LocationFeatureSpecification", "name": "Jardines con riachuelos", "value": true},
       {"@type": "LocationFeatureSpecification", "name": "Bañera", "value": true},
       {"@type": "LocationFeatureSpecification", "name": "Dos terrazas", "value": true},
-      {"@type": "LocationFeatureSpecification", "name": "Parque Natural Salinas de Puerto Rey", "value": true},
+      {"@type": "LocationFeatureSpecification", "name": "Reserva de aves Salinas de Puerto Rey", "value": true},
       {"@type": "LocationFeatureSpecification", "name": "Mascotas permitidas", "value": true},
       {"@type": "LocationFeatureSpecification", "name": "WiFi", "value": true},
       {"@type": "LocationFeatureSpecification", "name": "Aire acondicionado", "value": true}
@@ -107,7 +107,7 @@
       "name": "¿Por qué elegiría Hestía Salinas sobre los otros dos?",
       "acceptedAnswer": {
         "@type": "Answer",
-        "text": "Salinas es el más grande de los tres. Está en la urbanización Pueblo Salinas y tiene 87 m², dos terrazas, piscina y pistas de pádel y tenis comunitarias, grandes jardines con riachuelos y el Parque Natural de las Salinas de Puerto Rey a un paseo corto."
+        "text": "Salinas es el más grande de los tres. Está en la urbanización Pueblo Salinas y tiene 87 m², dos terrazas, piscina y pistas de pádel y tenis comunitarias, grandes jardines con riachuelos y la reserva de aves de las Salinas de Puerto Rey a un paseo corto."
       }
     },
     {
@@ -123,7 +123,7 @@
       "name": "¿Qué tiene la urbanización de Salinas?",
       "acceptedAnswer": {
         "@type": "Answer",
-        "text": "Piscina comunitaria, pistas de pádel y tenis y unos jardines muy grandes, con riachuelos, aves y senderos para pasear. Y a un paseo corto, el Parque Natural de las Salinas de Puerto Rey."
+        "text": "Piscina comunitaria, pistas de pádel y tenis y unos jardines muy grandes, con riachuelos, aves y senderos para pasear. Y a un paseo corto, la reserva de aves de las Salinas de Puerto Rey."
       }
     },
     {
@@ -173,7 +173,7 @@
 <div id="root"><div class="container seo-fallback">
   <h1>Hestía Salinas · Apartamento en Vera Playa, Almería</h1>
   <p>Hestía Salinas es el más grande de los tres apartamentos, en Vera Playa (Almería). Tiene dos terrazas: una de 18 m² para el sol y la luna, y otra de 14 m² orientada al atardecer.</p>
-  <p>Está junto a las Salinas de Puerto Rey, único humedal protegido de la zona, a un paseo corto. La playa queda a 900 metros.</p>
+  <p>Está junto a la reserva de aves de las Salinas de Puerto Rey, a un paseo corto. La playa queda a 900 metros.</p>
   <p>Dos habitaciones y capacidad para 6 personas más bebé. Bañera con hidromasaje y cabina de ducha con hidromasaje. Cocina completa con lavavajillas y lavadora, aire acondicionado frío y calor, y WiFi de fibra.</p>
   <p>Smart TV de 55 pulgadas con Ambilight y streaming incluido: SkyShowtime, HBO Max, Prime Video y Disney+.</p>
   <p>La urbanización tiene piscina, pistas de pádel y tenis y grandes jardines con riachuelos. En el dormitorio principal hay nórdico de plumas y alternativa antialérgica.</p>
@@ -233,7 +233,7 @@
     } catch (e) { console.warn('photo-positions.json fetch failed', e); }
 
     for (const file of COMPONENT_FILES) {
-      const res = await fetch(file + '?cv=38c68c9137');
+      const res = await fetch(file + '?cv=70f667ac98');
       if (!res.ok) throw new Error(`Failed to load ${file}: ${res.status}`);
       const code = await res.text();
       // eslint-disable-next-line no-eval

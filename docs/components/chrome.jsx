@@ -299,7 +299,14 @@ const Header = ({ mode, scrolled, lang }) => {
         <div className="brand-center">
           <a href="/" className="brand-lockup" aria-label={lang === 'es' ? 'Hestía, your home, inicio' : 'Hestía, your home, homepage'}>
             <span className="hestia-logo-mark" aria-hidden="true">
-              <img decoding="async" src="assets/logo-teal-transparent.png" alt="" className="hestia-logo" width="600" height="600"/>
+              <span className="hl-stack">
+                <img decoding="async" src="assets/logo-teal-transparent.png" alt="" className="hestia-logo hl hl-1" width="600" height="600"/>
+                <img decoding="async" src="assets/logo-berenjena-160.png" alt="" className="hestia-logo hl hl-2 hl-ber" width="160" height="160"/>
+                <img decoding="async" src="assets/logo-blanco-160.png" alt="" className="hestia-logo hl hl-2 hl-wht" width="160" height="160"/>
+                <img decoding="async" src="assets/logo-thalassa-160.png" alt="" className="hestia-logo hl hl-3" width="160" height="160"/>
+                <img decoding="async" src="assets/logo-salinas-160.png" alt="" className="hestia-logo hl hl-4" width="160" height="160"/>
+                <img decoding="async" src="assets/logo-mar-160.png" alt="" className="hestia-logo hl hl-5" width="160" height="160"/>
+              </span>
             </span>
             <span className="wordmark">HESTÍA</span>
             <span className="your-home">your home!</span>
@@ -853,7 +860,13 @@ const Footer = ({ lang }) => {
       <IndaloWatermark className="footer-indalo-wm" />
       <div className="footer-grid">
         <div className="col footer-brand">
-          <img decoding="async" src="assets/logo-teal-transparent.png" alt="Hestía" className="hestia-logo" loading="lazy" width="600" height="600"/>
+          <span className="hl-stack">
+            <img decoding="async" src="assets/logo-teal-transparent.png" alt="Hestía" className="hestia-logo hl hl-1" loading="lazy" width="600" height="600"/>
+            <img decoding="async" src="assets/logo-blanco-160.png" alt="" className="hestia-logo hl hl-2" loading="lazy" width="160" height="160"/>
+            <img decoding="async" src="assets/logo-thalassa-160.png" alt="" className="hestia-logo hl hl-3" loading="lazy" width="160" height="160"/>
+            <img decoding="async" src="assets/logo-salinas-160.png" alt="" className="hestia-logo hl hl-4" loading="lazy" width="160" height="160"/>
+            <img decoding="async" src="assets/logo-mar-160.png" alt="" className="hestia-logo hl hl-5" loading="lazy" width="160" height="160"/>
+          </span>
           <div className="wordmark" style={{fontSize: 13, marginBottom: 4}}>HESTÍA</div>
           <div className="your-home" style={{fontSize: 11, marginBottom: 16}}>your home!</div>
           <div className="tagline">

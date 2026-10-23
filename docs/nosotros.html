@@ -37,7 +37,7 @@
   <link rel="dns-prefetch" href="//unpkg.com"/>
   <link rel="preload" href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400..700;1,9..144,400..700&family=Hanken+Grotesk:wght@400;500;600;700&display=swap" as="style"/>
   <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400..700;1,9..144,400..700&family=Hanken+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet"/>
-<link rel="stylesheet" href="assets/styles.css?v=1203"/>          <link rel="preload" as="image" href="assets/photo-nosotros-hero.jpg" fetchpriority="high"/>  <script type="application/ld+json">
+<link rel="stylesheet" href="assets/styles.css?v=1204"/>          <link rel="preload" as="image" href="assets/photo-nosotros-hero.jpg" fetchpriority="high"/>  <script type="application/ld+json">
   {
     "@context": "https://schema.org",
     "@type": "ItemList",
@@ -91,7 +91,7 @@
       "name": "¿Desde cuándo lo hacéis vosotros mismos?",
       "acceptedAnswer": {
         "@type": "Answer",
-        "text": "Desde 2016. En diez años hemos recibido a más de 630 familias. Nunca hemos externalizado la gestión: seguimos limpiando, respondiendo y eligiendo las toallas nosotros."
+        "text": "Desde 2016. En diez años hemos recibido a más de 380 familias. Nunca hemos externalizado la gestión: seguimos limpiando, respondiendo y eligiendo las toallas nosotros."
       }
     },
     {
@@ -212,7 +212,7 @@
     } catch (e) { console.warn('prices.json fetch failed; using fallback', e); }
 
     for (const file of COMPONENT_FILES) {
-      const res = await fetch(file + '?cv=38c68c9137');
+      const res = await fetch(file + '?cv=70f667ac98');
       if (!res.ok) throw new Error(`Failed to load ${file}: ${res.status}`);
       const code = await res.text();
       // eslint-disable-next-line no-eval
