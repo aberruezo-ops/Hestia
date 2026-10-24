@@ -579,10 +579,17 @@ const AptPageHero = ({
     className: "ah-nav ah-next",
     onClick: () => go(1),
     "aria-label": lang === 'es' ? 'Foto siguiente' : 'Next photo'
-  }, "›"), /*#__PURE__*/React.createElement(IndaloShape, {
-    className: "ah-indalo",
+  }, "›"), /*#__PURE__*/React.createElement("img", {
+    className: "ah-logo",
+    src: "assets/logo-blanco-160.png",
+    alt: "",
     width: "34",
-    height: "34"
+    height: "34",
+    decoding: "async"
+  }), /*#__PURE__*/React.createElement(IndaloShape, {
+    className: "ah-indalo",
+    width: "30",
+    height: "30"
   }), /*#__PURE__*/React.createElement("span", {
     className: "ah-count",
     "aria-live": "polite"
