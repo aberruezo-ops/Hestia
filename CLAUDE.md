@@ -163,7 +163,7 @@ Siempre que añadas una zona que liste, enlace o compare los tres (footer, tabla
 
 **Logo**: solo en seis versiones: blanco, teal del día (`--sol`), berenjena de noche (`--ber-dk`) y el color de cada Hestía (Mar, Thalassa, Salinas). Ficheros en `docs/assets/`: `logo-blanco.png`, `logo-teal-transparent.png`, `logo-berenjena.png`, `logo-mar.png`, `logo-thalassa.png`, `logo-salinas.png`. Ningún otro color, ni filtros que lo cambien. El ciclo animado de cabecera y pie (18 s) funde estos mismos PNG (`logo-*-160.png` en pequeño): teal, berenjena de noche (blanco si el fondo es oscuro), Thalassa, Salinas, Mar; nunca `hue-rotate`.
 
-**Marca de agua de las fotos de apartamento**: logo blanco pequeño (`logo-blanco-160.png`), puesto con CSS, no horneado en los ficheros. Arriba a la derecha en la cabecera de la ficha, en el mosaico y en el visor; abajo a la derecha en las tarjetas de la portada (arriba está el chip de disponibilidad). El Indalo, abajo a la izquierda en la cabecera de la ficha. Mismo tamaño y mismo sitio en cada tipo de contenedor.
+**Marca de agua de las fotos de apartamento**: logo pequeño del color de cada Hestía (`logo-mar-160.png`, `logo-thalassa-160.png`, `logo-salinas-160.png`) con un halo crema fino para que se lea sobre cualquier foto, puesto con CSS, no horneado en los ficheros. Arriba a la derecha en la cabecera de la ficha, en el mosaico y en el visor; abajo a la derecha en las tarjetas de la portada (arriba está el chip de disponibilidad). El Indalo, abajo a la izquierda en la cabecera de la ficha. Mismo tamaño y mismo sitio en cada tipo de contenedor.
 
 ### Iconografía · gramática "Sello" (regla siempre)
 

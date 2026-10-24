@@ -2513,13 +2513,16 @@ body.apt-bar-shown .cookies {
 /* Marca de agua del logo en las demás fotos de apartamento: mismo logo, mismo sitio en cada contenedor */
 .gm-tile::before, .gc-lb-pic::after, .as-media::before {
   content: ''; position: absolute; z-index: 1; pointer-events: none;
-  background: url(logo-blanco-160.png) center / contain no-repeat;
-  opacity: .85; filter: drop-shadow(0 1px 3px rgba(0,0,0,.55));
+  background: var(--wm-logo, url(logo-blanco-160.png)) center / contain no-repeat;
+  opacity: .95; filter: drop-shadow(0 0 1.2px rgba(250,246,240,.95)) drop-shadow(0 0 5px rgba(250,246,240,.5)) drop-shadow(0 1px 3px rgba(0,0,0,.45));
 }
 .gm-tile::before { top: 10px; right: 10px; width: 26px; height: 26px; }
 .gc-lb-pic { position: relative; }
 .gc-lb-pic::after { top: 12px; right: 12px; width: 34px; height: 34px; }
 .as-media::before { right: 12px; bottom: 12px; width: 28px; height: 28px; }
+.as-card.vm .as-media { --wm-logo: url(logo-mar-160.png); }
+.as-card.vt .as-media { --wm-logo: url(logo-thalassa-160.png); }
+.as-card.vs .as-media { --wm-logo: url(logo-salinas-160.png); }
 .as-track {
   display: flex; height: 100%;
   overflow-x: auto; scroll-snap-type: x mandatory;
@@ -5839,8 +5842,8 @@ body.no-stars .hero .stars { display: none; }
 /* Marca de agua: logo blanco pequeño arriba a la derecha y Indalo abajo a la izquierda */
 .ah-logo {
   position: absolute; top: 16px; right: 16px; z-index: 2; width: 34px; height: 34px;
-  opacity: .85; pointer-events: none;
-  filter: drop-shadow(0 1px 3px rgba(0,0,0,.55));
+  opacity: .95; pointer-events: none;
+  filter: drop-shadow(0 0 1.2px rgba(250,246,240,.95)) drop-shadow(0 0 5px rgba(250,246,240,.5)) drop-shadow(0 1px 3px rgba(0,0,0,.45));
 }
 .ah-indalo {
   position: absolute; left: 18px; bottom: 18px; z-index: 2; width: 30px; height: 30px;

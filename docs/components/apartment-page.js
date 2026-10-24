@@ -581,7 +581,7 @@ const AptPageHero = ({
     "aria-label": lang === 'es' ? 'Foto siguiente' : 'Next photo'
   }, "›"), /*#__PURE__*/React.createElement("img", {
     className: "ah-logo",
-    src: "assets/logo-blanco-160.png",
+    src: `assets/logo-${APT_WM[apt.id] || 'blanco'}-160.png`,
     alt: "",
     width: "34",
     height: "34",
@@ -893,12 +893,22 @@ const _useGridCols = () => {
   }, []);
   return cols;
 };
+
+// Logo de la marca de agua: el del color de cada Hestía.
+const APT_WM = {
+  vm: 'mar',
+  vt: 'thalassa',
+  vs: 'salinas'
+};
+// La ruta se resuelve respecto a styles.css (carpeta assets).
+const wmVar = id => `url(logo-${APT_WM[id] || 'blanco'}-160.png)`;
 const GalleryMosaic = ({
   imgs,
   captions,
   esCaptions,
   notes = {},
   accent,
+  wm,
   lang = 'es'
 }) => {
   const zoneOf = React.useMemo(() => imgs.map((_, i) => {
@@ -1059,7 +1069,8 @@ const GalleryMosaic = ({
     "aria-modal": "true",
     "aria-label": lang === 'es' ? 'Galería de fotos' : 'Photo gallery',
     style: {
-      '--apt-accent': accent
+      '--apt-accent': accent,
+      '--wm-logo': wm
     }
   }, /*#__PURE__*/React.createElement("button", {
     ref: closeRef,
@@ -1163,7 +1174,8 @@ const AptPageGallery = ({
     id: "apt-galeria",
     className: "apt-page-gallery on-dark",
     style: {
-      '--apt-accent': apt.accent
+      '--apt-accent': apt.accent,
+      '--wm-logo': wmVar(apt.id)
     }
   }, /*#__PURE__*/React.createElement("div", {
     className: "gm-head"
@@ -1172,6 +1184,7 @@ const AptPageGallery = ({
   }, lang === 'es' ? 'Galería de fotos' : 'Photo gallery'), /*#__PURE__*/React.createElement("h2", {
     className: "gm-title"
   }, lang === 'es' ? /*#__PURE__*/React.createElement(React.Fragment, null, "Rincón a ", /*#__PURE__*/React.createElement("em", null, "rincón.")) : /*#__PURE__*/React.createElement(React.Fragment, null, "Corner by ", /*#__PURE__*/React.createElement("em", null, "corner.")))), /*#__PURE__*/React.createElement(GalleryMosaic, {
+    wm: wmVar(apt.id),
     imgs: imgs,
     captions: d.gallery_captions,
     esCaptions: apt.es && apt.es.gallery_captions,
