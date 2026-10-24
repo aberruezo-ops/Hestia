@@ -2510,6 +2510,16 @@ body.apt-bar-shown .cookies {
 }
 .as-media-wrap { position: relative; }
 .as-media { position: relative; aspect-ratio: 4 / 5; background: var(--arena-dk); }
+/* Marca de agua del logo en las demás fotos de apartamento: mismo logo, mismo sitio en cada contenedor */
+.gm-tile::before, .gc-lb-pic::after, .as-media::before {
+  content: ''; position: absolute; z-index: 1; pointer-events: none;
+  background: url(logo-blanco-160.png) center / contain no-repeat;
+  opacity: .85; filter: drop-shadow(0 1px 3px rgba(0,0,0,.55));
+}
+.gm-tile::before { top: 10px; right: 10px; width: 26px; height: 26px; }
+.gc-lb-pic { position: relative; }
+.gc-lb-pic::after { top: 12px; right: 12px; width: 34px; height: 34px; }
+.as-media::before { right: 12px; bottom: 12px; width: 28px; height: 28px; }
 .as-track {
   display: flex; height: 100%;
   overflow-x: auto; scroll-snap-type: x mandatory;
@@ -5826,8 +5836,14 @@ body.no-stars .hero .stars { display: none; }
 .ah-prev { left: 16px; } .ah-next { right: 16px; }
 @media (hover: hover) { .ah-cover:hover .ah-nav { opacity: 1; } }
 .ah-nav:focus-visible { opacity: 1; outline: 2px solid var(--sol-lt); outline-offset: 2px; }
-.ah-indalo {
+/* Marca de agua: logo blanco pequeño arriba a la derecha y Indalo abajo a la izquierda */
+.ah-logo {
   position: absolute; top: 16px; right: 16px; z-index: 2; width: 34px; height: 34px;
+  opacity: .85; pointer-events: none;
+  filter: drop-shadow(0 1px 3px rgba(0,0,0,.55));
+}
+.ah-indalo {
+  position: absolute; left: 18px; bottom: 18px; z-index: 2; width: 30px; height: 30px;
   color: var(--crema); opacity: .72; pointer-events: none;
   filter: drop-shadow(0 1px 4px rgba(0,0,0,.5));
 }
@@ -5838,7 +5854,7 @@ body.no-stars .hero .stars { display: none; }
   font-family: var(--sans); font-size: 12px; font-weight: 700;
 }
 .ah-cap {
-  position: absolute; left: 18px; bottom: 18px; z-index: 2; max-width: calc(100% - 260px);
+  position: absolute; left: 62px; bottom: 18px; z-index: 2; max-width: calc(100% - 320px);
   font-family: var(--serif); font-style: italic; font-size: 16px; line-height: 1.35; color: var(--crema);
   text-shadow: 0 1px 8px rgba(0,0,0,.45);
 }
@@ -5878,6 +5894,7 @@ body.no-stars .hero .stars { display: none; }
   .ah-gallery { padding: 0; }
   .ah-cover { height: auto; aspect-ratio: 4 / 3.4; max-height: 64vh; border-radius: 0; }
   .ah-cap { left: 12px; bottom: 56px; max-width: calc(100% - 24px); font-size: 14px; }
+  .ah-indalo { left: 12px; bottom: 14px; width: 26px; height: 26px; }
   .ah-all { right: 12px; bottom: 12px; padding: 9px 13px; font-size: 12.5px; }
   .ah-summary { grid-template-columns: 1fr; align-items: start; gap: 22px; }
 }

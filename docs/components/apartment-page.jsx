@@ -578,7 +578,8 @@ const AptPageHero = ({ apt, lang }) => {
             </div>
             <button type="button" className="ah-nav ah-prev" onClick={() => go(-1)} aria-label={lang === 'es' ? 'Foto anterior' : 'Previous photo'}>‹</button>
             <button type="button" className="ah-nav ah-next" onClick={() => go(1)} aria-label={lang === 'es' ? 'Foto siguiente' : 'Next photo'}>›</button>
-            <IndaloShape className="ah-indalo" width="34" height="34" />
+            <img className="ah-logo" src="assets/logo-blanco-160.png" alt="" width="34" height="34" decoding="async"/>
+            <IndaloShape className="ah-indalo" width="30" height="30" />
             <span className="ah-count" aria-live="polite">{pos + 1} / {order.length}</span>
             {caps[order[pos]] && <span className="ah-cap">{caps[order[pos]]}</span>}
             <button type="button" className="ah-all" onClick={_toGallery}>
