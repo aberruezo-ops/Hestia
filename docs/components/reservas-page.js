@@ -1096,8 +1096,14 @@ const ReservasForm = ({
     label: lang === 'es' ? 'Envío' : 'Send'
   }].map((s, i) => /*#__PURE__*/React.createElement(React.Fragment, {
     key: s.n
-  }, /*#__PURE__*/React.createElement("div", {
-    className: `rf-ps${step === s.n ? ' rps-act' : step > s.n ? ' rps-done' : ' rps-pend'}`
+  }, /*#__PURE__*/React.createElement("button", {
+    type: "button",
+    disabled: step < s.n,
+    className: `rf-ps${step === s.n ? ' rps-act' : step > s.n ? ' rps-done' : ' rps-pend'}`,
+    onClick: () => document.getElementById(`rf-step-${s.n}`)?.scrollIntoView({
+      behavior: 'smooth',
+      block: 'start'
+    })
   }, /*#__PURE__*/React.createElement("span", {
     className: "rf-ps-n",
     "aria-current": step === s.n ? 'step' : undefined

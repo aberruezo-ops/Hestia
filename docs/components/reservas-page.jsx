@@ -1045,7 +1045,7 @@ const ReservasForm = ({ lang }) => {
       <h2 className="reservas-form-title">{t.form_title}</h2>
       <div className="reservas-form-sub">{t.form_sub}</div>
 
-      {/* Progress indicator: visible en móvil, sutil en desktop */}
+      {/* Progreso fijo bajo la cabecera, en móvil y escritorio */}
       <div className="rf-progress" aria-label={lang === 'es' ? `Paso ${step} de 3` : `Step ${step} of 3`}>
         {[
           { n: 1, label: lang === 'es' ? 'Datos'  : 'Details' },
@@ -1053,10 +1053,12 @@ const ReservasForm = ({ lang }) => {
           { n: 3, label: lang === 'es' ? 'Envío'   : 'Send'    },
         ].map((s, i) => (
           <React.Fragment key={s.n}>
-            <div className={`rf-ps${step === s.n ? ' rps-act' : step > s.n ? ' rps-done' : ' rps-pend'}`}>
+            <button type="button" disabled={step < s.n}
+                    className={`rf-ps${step === s.n ? ' rps-act' : step > s.n ? ' rps-done' : ' rps-pend'}`}
+                    onClick={() => document.getElementById(`rf-step-${s.n}`)?.scrollIntoView({ behavior: 'smooth', block: 'start' })}>
               <span className="rf-ps-n" aria-current={step === s.n ? 'step' : undefined}>{step > s.n ? <HiIcon name="check" size="1em" /> : s.n}</span>
               <span className="rf-ps-lbl">{s.label}</span>
-            </div>
+            </button>
             {i < 2 && <span className={`rf-ps-line${step > s.n ? ' rps-done' : ''}`} aria-hidden="true"/>}
           </React.Fragment>
         ))}
