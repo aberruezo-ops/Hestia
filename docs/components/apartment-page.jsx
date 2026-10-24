@@ -578,7 +578,7 @@ const AptPageHero = ({ apt, lang }) => {
             </div>
             <button type="button" className="ah-nav ah-prev" onClick={() => go(-1)} aria-label={lang === 'es' ? 'Foto anterior' : 'Previous photo'}>‹</button>
             <button type="button" className="ah-nav ah-next" onClick={() => go(1)} aria-label={lang === 'es' ? 'Foto siguiente' : 'Next photo'}>›</button>
-            <img className="ah-logo" src="assets/logo-blanco-160.png" alt="" width="34" height="34" decoding="async"/>
+            <img className="ah-logo" src={`assets/logo-${APT_WM[apt.id] || 'blanco'}-160.png`} alt="" width="34" height="34" decoding="async"/>
             <IndaloShape className="ah-indalo" width="30" height="30" />
             <span className="ah-count" aria-live="polite">{pos + 1} / {order.length}</span>
             {caps[order[pos]] && <span className="ah-cap">{caps[order[pos]]}</span>}
@@ -795,7 +795,12 @@ const _useGridCols = () => {
   return cols;
 };
 
-const GalleryMosaic = ({ imgs, captions, esCaptions, notes = {}, accent, lang = 'es' }) => {
+// Logo de la marca de agua: el del color de cada Hestía.
+const APT_WM = { vm: 'mar', vt: 'thalassa', vs: 'salinas' };
+// La ruta se resuelve respecto a styles.css (carpeta assets).
+const wmVar = (id) => `url(logo-${APT_WM[id] || 'blanco'}-160.png)`;
+
+const GalleryMosaic = ({ imgs, captions, esCaptions, notes = {}, accent, wm, lang = 'es' }) => {
   const zoneOf = React.useMemo(() => imgs.map((_, i) => {
     const head = ((esCaptions || captions)[i] || '').split(' · ')[0];
     return GALLERY_ZONES.find(z => z.test(head)).id;
@@ -908,7 +913,7 @@ const GalleryMosaic = ({ imgs, captions, esCaptions, notes = {}, accent, lang = 
         // Montado en <body>: dentro de la sección quedaba atrapado en su pila de
         // z-index y el header (z-index 99) tapaba el botón de cerrar.
         <div className="gc-lightbox" onClick={close} onTouchStart={onTouchStart} onTouchEnd={onTouchEnd}
-             role="dialog" aria-modal="true" aria-label={lang === 'es' ? 'Galería de fotos' : 'Photo gallery'} style={{ '--apt-accent': accent }}>
+             role="dialog" aria-modal="true" aria-label={lang === 'es' ? 'Galería de fotos' : 'Photo gallery'} style={{ '--apt-accent': accent, '--wm-logo': wm }}>
           <button ref={closeRef} className="gc-lb-close" onClick={close} aria-label={lang === 'es' ? 'Cerrar' : 'Close'}>✕</button>
           <button className="gc-lb-prev" onClick={e => { e.stopPropagation(); step(-1); }} aria-label={lang === 'es' ? 'Anterior' : 'Previous'}>‹</button>
           <picture className="gc-lb-pic">
@@ -970,12 +975,12 @@ const AptPageGallery = ({ apt, lang }) => {
   const imgs = apt.gallery_imgs;
   if (!imgs || !imgs.length) return null;
   return (
-    <section id="apt-galeria" className="apt-page-gallery on-dark" style={{ '--apt-accent': apt.accent }}>
+    <section id="apt-galeria" className="apt-page-gallery on-dark" style={{ '--apt-accent': apt.accent, '--wm-logo': wmVar(apt.id) }}>
       <div className="gm-head">
         <div className="apt-gallery-eyebrow eyebrow">{lang === 'es' ? 'Galería de fotos' : 'Photo gallery'}</div>
         <h2 className="gm-title">{lang === 'es' ? <>Rincón a <em>rincón.</em></> : <>Corner by <em>corner.</em></>}</h2>
       </div>
-      <GalleryMosaic imgs={imgs} captions={d.gallery_captions} esCaptions={apt.es && apt.es.gallery_captions}
+      <GalleryMosaic wm={wmVar(apt.id)} imgs={imgs} captions={d.gallery_captions} esCaptions={apt.es && apt.es.gallery_captions}
                      notes={d.gallery_notes || {}} accent={apt.accent} lang={lang}/>
     </section>
   );
