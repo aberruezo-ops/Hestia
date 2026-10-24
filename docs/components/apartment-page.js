@@ -799,6 +799,93 @@ const GALLERY_ZONES = [{
 const GALLERY_FIRST = 12;
 // Ritmo del mosaico: una grande, una alta y una ancha cada siete fotos.
 const _tileKind = k => k % 7 === 0 ? 'big' : k % 7 === 3 ? 'tall' : k % 7 === 5 ? 'wide' : '';
+const _tileSpan = (kind, cols) => {
+  if (cols <= 2) return kind === 'tall' ? [1, 2] : kind ? [2, 1] : [1, 1];
+  return kind === 'big' ? [2, 2] : kind === 'tall' ? [1, 2] : kind === 'wide' ? [2, 1] : [1, 1];
+};
+// Misma colocación "dense" que hace el grid CSS: cada pieza al primer hueco libre, por filas.
+const _placeTiles = (tiles, cols) => {
+  const grid = [];
+  const at = (r, c) => (grid[r] || [])[c];
+  const free = (r, c, cs, rs) => {
+    for (let y = r; y < r + rs; y++) for (let x = c; x < c + cs; x++) if (at(y, x) !== undefined) return false;
+    return true;
+  };
+  tiles.forEach((t, i) => {
+    for (let r = 0;; r++) {
+      let done = false;
+      for (let c = 0; c + t.cs <= cols; c++) {
+        if (free(r, c, t.cs, t.rs)) {
+          for (let y = r; y < r + t.rs; y++) {
+            grid[y] = grid[y] || [];
+            for (let x = c; x < c + t.cs; x++) grid[y][x] = i;
+          }
+          t.r = r;
+          t.c = c;
+          done = true;
+          break;
+        }
+      }
+      if (done) break;
+    }
+  });
+  return grid;
+};
+const _gridHoles = (grid, cols) => {
+  const out = [];
+  for (let r = 0; r < grid.length; r++) for (let c = 0; c < cols; c++) if ((grid[r] || [])[c] === undefined) out.push([r, c]);
+  return out;
+};
+// Tamaños de las piezas para que el mosaico cierre siempre abajo en línea recta, con
+// cualquier número de fotos: se parte del ritmo y, si queda un hueco, se estira la pieza
+// de encima o la de la izquierda; si aun así no cierra, se aplana el ritmo por la cola.
+const _flushKinds = (n, cols) => {
+  const kinds = Array.from({
+    length: n
+  }, (_, k) => _tileKind(k));
+  for (let plainFrom = n; plainFrom >= 0; plainFrom--) {
+    const tiles = kinds.map((k, i) => {
+      const [cs, rs] = _tileSpan(i < plainFrom ? k : '', cols);
+      return {
+        cs,
+        rs
+      };
+    });
+    for (let pass = 0; pass < 12; pass++) {
+      const grid = _placeTiles(tiles, cols);
+      const holes = _gridHoles(grid, cols);
+      if (!holes.length) return tiles.map(t => t.cs === 2 && t.rs === 2 ? 'big' : t.rs === 2 ? 'tall' : t.cs === 2 ? 'wide' : '');
+      let fixed = false;
+      for (const [r, c] of holes) {
+        const up = r > 0 ? tiles[grid[r - 1][c]] : null;
+        if (up && up.r + up.rs === r && up.rs < 2 && !(cols <= 2 && up.cs === 2)) {
+          up.rs = 2;
+          fixed = true;
+          break;
+        }
+        const left = c > 0 ? tiles[grid[r][c - 1]] : null;
+        if (left && left.c + left.cs === c && left.cs < 2 && !(cols <= 2 && left.rs === 2)) {
+          left.cs = 2;
+          fixed = true;
+          break;
+        }
+      }
+      if (!fixed) break;
+    }
+  }
+  return kinds.map(() => 'full');
+};
+const _useGridCols = () => {
+  const mq = () => window.matchMedia('(max-width: 760px)').matches ? 2 : 4;
+  const [cols, setCols] = React.useState(mq);
+  React.useEffect(() => {
+    const m = window.matchMedia('(max-width: 760px)');
+    const on = () => setCols(mq());
+    m.addEventListener('change', on);
+    return () => m.removeEventListener('change', on);
+  }, []);
+  return cols;
+};
 const GalleryMosaic = ({
   imgs,
   captions,
@@ -829,6 +916,8 @@ const GalleryMosaic = ({
   }, [imgs, zoneOf]);
   const list = order.filter(i => filter === 'all' || zoneOf[i] === filter);
   const shown = filter === 'all' && !expanded ? list.slice(0, GALLERY_FIRST) : list;
+  const cols = _useGridCols();
+  const kinds = React.useMemo(() => _flushKinds(shown.length, cols), [shown.length, cols]);
   const zoneName = id => {
     const z = GALLERY_ZONES.find(x => x.id === id);
     return z ? z[lang] : '';
@@ -927,7 +1016,7 @@ const GalleryMosaic = ({
   }, shown.map((i, k) => /*#__PURE__*/React.createElement("button", {
     key: i,
     type: "button",
-    className: `gm-tile ${_tileKind(k)}`,
+    className: `gm-tile ${kinds[k]}`,
     onClick: () => openAt(k),
     "aria-label": captions[i]
   }, /*#__PURE__*/React.createElement("picture", null, /*#__PURE__*/React.createElement("source", {
