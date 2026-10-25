@@ -18,6 +18,7 @@
 ## Fiestas y eventos por mes
 - **Enero:** San Antonio Abad (17, hogueras y bendición de animales, encaja con
   el mensaje pet-friendly).
+  Cabalgata de Reyes Magos (5, tarde) en Garrucha, Mojácar y Almería capital.
 - **Febrero:** Carnaval de Águilas (Interés Turístico Internacional).
 - **Marzo/Abril:** Semana Santa de Almería (Interés Turístico Nacional) y de
   Lorca (Internacional, procesiones con caballos y bordados en oro).

@@ -3231,6 +3231,10 @@ const PLACES = [
     name: 'Noche de los Museos',
     when: 'mayo',
     d: 'Visitas nocturnas gratuitas a museos y galerías del casco antiguo.'
+  }, {
+    name: 'Cabalgata de Reyes Magos',
+    when: '5 de enero',
+    d: 'Los Reyes Magos recorren el casco antiguo; buen plan de invierno para ir con niños.'
   }],
   cat: 'town',
   lat: 37.1377,
@@ -3406,6 +3410,10 @@ const PLACES = [
     name: 'Festival de la Gamba Roja',
     when: 'último fin de semana de octubre',
     d: 'Degustaciones y showcookings de gamba roja junto al puerto, con cocineros de la provincia y vino de la zona.'
+  }, {
+    name: 'Cabalgata de Reyes Magos',
+    when: '5 de enero',
+    d: 'Desfile de los Reyes Magos por el pueblo, por la tarde.'
   }],
   cat: 'town',
   lat: 37.1815,
@@ -3452,6 +3460,10 @@ const PLACES = [
     name: 'Almerijazz',
     when: 'finales de octubre a principios de noviembre',
     d: 'Festival de jazz de referencia en Andalucía, con conciertos en el Teatro Apolo y la Plaza Vieja del casco histórico.'
+  }, {
+    name: 'Cabalgata de Reyes Magos',
+    when: '5 de enero',
+    d: 'Desfile de los Reyes Magos por el centro de la ciudad.'
   }],
   cat: 'town',
   lat: 36.8350,

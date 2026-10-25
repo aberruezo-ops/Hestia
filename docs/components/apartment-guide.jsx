@@ -1155,6 +1155,7 @@ const PLACES = [
       { name: 'Moros y Cristianos', when: '2.ª semana de junio', d: 'Tres días de desfiles, embajadas y batallas históricas en homenaje a la Reconquista de 1488.' },
       { name: 'Fiestas patronales de San Agustín', when: '28-29 de agosto', d: 'Procesión del Indalo, conciertos en Plaza Nueva y verbenas en la playa.' },
       { name: 'Noche de los Museos', when: 'mayo', d: 'Visitas nocturnas gratuitas a museos y galerías del casco antiguo.' },
+      { name: 'Cabalgata de Reyes Magos', when: '5 de enero', d: 'Los Reyes Magos recorren el casco antiguo; buen plan de invierno para ir con niños.' },
     ], cat: 'town', lat: 37.1377, lng: -1.8523, featured: true },
   { id: 't-vera',         name: 'Vera pueblo',            desc: 'Cabecera comarcal. Plaza Mayor con palmeras, iglesia-fortaleza del s. XVI, ayuntamiento del s. XVIII y restos de la muralla.', desc_en: 'The comarca\'s main town. Palm-lined Plaza Mayor, a 16th-century fortress-church, an 18th-century town hall and remains of the old wall.', best: 'Iglesia de la Encarnación (sólo fortaleza de iglesia conservada en Andalucía con cuatro torres), Plaza Mayor, Mercado de Abastos y Museo Histórico Municipal.', tip: 'Aprovecha la mañana de sábado para el mercadillo grande y queda a comer en Juan Moreno o Terraza Carmona.', events: [
       { name: 'Feria y Fiestas de Vera (San Cleofás)', when: '24-29 de septiembre', d: 'Feria patronal con caseta municipal, conciertos, toros y procesión de San Cleofás.' },
@@ -1191,6 +1192,7 @@ const PLACES = [
       { name: 'Fiestas patronales de la Virgen del Carmen', when: '15-16 de julio', d: 'Procesión marítima de la Virgen por el puerto, la más emotiva de la zona.' },
       { name: 'Fiestas de San Joaquín', when: '20-22 de agosto', d: 'Feria con conciertos en el paseo marítimo y fuegos artificiales sobre el mar.' },
       { name: 'Festival de la Gamba Roja', when: 'último fin de semana de octubre', d: 'Degustaciones y showcookings de gamba roja junto al puerto, con cocineros de la provincia y vino de la zona.' },
+      { name: 'Cabalgata de Reyes Magos', when: '5 de enero', d: 'Desfile de los Reyes Magos por el pueblo, por la tarde.' },
     ], cat: 'town', lat: 37.1815, lng: -1.8225, featured: true },
   { id: 't-san-jose',     name: 'San José',                desc: 'Capital del Parque Natural de Cabo de Gata. Pueblo blanco junto al mar, base perfecta para explorar playas vírgenes.', best: 'Paseo del puerto deportivo, Centro de Visitantes Las Amoladeras, playas de Genoveses y Mónsul a 5-10 min.', tip: 'En julio-agosto el acceso a Genoveses/Mónsul se restringe, llega temprano o usa el bus lanzadera desde el pueblo.', events: [
       { name: 'Fiestas de la Virgen del Carmen', when: '15-16 de julio', d: 'Procesión marítima con barcas pesqueras engalanadas.' },
@@ -1201,6 +1203,7 @@ const PLACES = [
       { name: 'Feria de Almería en honor a la Virgen del Mar', when: 'última semana de agosto', d: 'Feria principal, con casetas en el recinto ferial y procesión marítima de la Patrona.' },
       { name: 'Festival de Flamenco y Música Tradicional', when: 'octubre', d: 'En diferentes localizaciones del casco histórico.' },
       { name: 'Almerijazz', when: 'finales de octubre a principios de noviembre', d: 'Festival de jazz de referencia en Andalucía, con conciertos en el Teatro Apolo y la Plaza Vieja del casco histórico.' },
+      { name: 'Cabalgata de Reyes Magos', when: '5 de enero', d: 'Desfile de los Reyes Magos por el centro de la ciudad.' },
     ], cat: 'town', lat: 36.8350, lng: -2.4630, featured: true },
   { id: 't-lorca',        name: 'Lorca (Murcia)',          desc: 'Ciudad barroca declarada Conjunto Histórico-Artístico. Conocida como "la Ciudad del Sol" y por una de las Semanas Santas más espectaculares de España.', desc_en: 'Baroque city declared a Historic-Artistic Site. Known as "the City of the Sun" and for one of the most spectacular Holy Weeks in Spain.', best: 'Castillo de Lorca (Fortaleza del Sol: visita guiada con teatralización), Colegiata de San Patricio, Palacio de Guevara, Museo MASS (bordados de la Semana Santa Blancos y Azules), Plaza de España.', tip: 'Sube al castillo en el ferrocarril turístico desde el centro. Si vas en Semana Santa, reserva alojamiento y entradas con meses de antelación.', events: [
       { name: 'Semana Santa de Lorca', when: 'marzo o abril', d: '⭐ Fiesta de Interés Turístico Internacional. La rivalidad histórica entre la Hermandad Blanca y la Azul produce procesiones únicas: cabalgatas con caballos y vestuario bordado en oro y seda.' },
