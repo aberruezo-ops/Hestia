@@ -1668,11 +1668,15 @@ const GUIDE_SHARED = {
     },
     checkin: {
       title: 'Comienza tu viaje hasta Hestía',
-      intro: 'Lo tienes todo cubierto: Fran te escribirá unos días antes de tu llegada para acordar la modalidad que mejor te encaje y compartirte los detalles. Llegues como llegues: en avión, bus o coche propio, te mandamos las indicaciones exactas para llegar en coche hasta la puerta de Hestía y te acompañamos a distancia hasta que estés dentro. No tienes que preocuparte de nada, solo dile a Fran a qué hora aproximada llegas.',
+      arrivalNotice: {
+        title: 'Imprescindible: dinos tu hora exacta de llegada',
+        body: 'La llegada es un proceso que nos gusta planificar bien y con tiempo. Es imprescindible que mantengas contacto con Fran y con Leila el día de la llegada para planificar tu recepción, y que les digas tu hora exacta de llegada con al menos 1 o 2 horas de antelación. Si no lo haces, no podemos garantizar que no tengas que esperar ni que tu llegada sea como queremos que sea.',
+      },
+      intro: 'Lo tienes todo cubierto: Fran te escribirá unos días antes de tu llegada para acordar la modalidad que mejor te encaje y compartirte los detalles. Llegues como llegues: en avión, bus o coche propio, te mandamos las indicaciones exactas para llegar en coche hasta la puerta de Hestía y te acompañamos a distancia hasta que estés dentro. No tienes que preocuparte de nada, solo dile a Fran y a Leila a qué hora exacta llegas.',
       beforeTitle: 'Antes de tu llegada',
       beforeIntro: 'Cuanto antes hablemos, más fácil te lo ponemos. Con estos detalles resueltos, llegas sin pensar en nada.',
       beforeItems: [
-        'Dinos tu hora aproximada de llegada: Fran te escribe unos días antes para cerrar los detalles.',
+        'Dinos tu hora exacta de llegada con al menos 1 o 2 horas de antelación, y mantén contacto con Fran y con Leila el día de la llegada: Fran te escribe unos días antes para cerrar los detalles.',
         'Cuéntanos cómo vienes (avión, autobús, tren o coche) y te mandamos las indicaciones exactas hasta la puerta.',
         '¿Vienes con mascota, bebé o necesitas algo concreto? Pídelo con antelación y lo dejamos listo.',
         'Tu llegada es autónoma por defecto (entras a tu ritmo). Si prefieres que te reciba Leila o alguien de su equipo, la llegada presencial es sin coste de 15:00 a 19:00.',
@@ -1898,11 +1902,15 @@ const GUIDE_SHARED = {
     },
     checkin: {
       title: 'Your journey to Hestía begins',
-      intro: 'You are covered: Fran will message you a few days before your arrival to agree on the option that suits you best and share the specifics. However you travel: by plane, bus or car, we send you exact directions to drive right to the front door and we are with you every step of the way until you are in. Nothing to worry about, just let Fran know your approximate arrival time.',
+      arrivalNotice: {
+        title: 'Essential: tell us your exact arrival time',
+        body: 'We like to plan every arrival carefully and well in advance. It is essential that you stay in touch with Fran and Leila on the day of your arrival so they can plan your reception, and that you give them your exact arrival time at least 1 or 2 hours ahead. If you do not, we cannot guarantee that you will not have to wait, or that your arrival will be the way we want it to be.',
+      },
+      intro: 'You are covered: Fran will message you a few days before your arrival to agree on the option that suits you best and share the specifics. However you travel: by plane, bus or car, we send you exact directions to drive right to the front door and we are with you every step of the way until you are in. Nothing to worry about, just let Fran and Leila know your exact arrival time.',
       beforeTitle: 'Before you arrive',
       beforeIntro: 'The sooner we talk, the easier we make it. With these details sorted, you arrive without a thing to think about.',
       beforeItems: [
-        'Tell us your approximate arrival time: Fran writes to you a few days before to settle the details.',
+        'Tell us your exact arrival time at least 1 or 2 hours ahead, and stay in touch with Fran and Leila on the day of your arrival: Fran writes to you a few days before to settle the details.',
         'Let us know how you are coming (plane, bus, train or car) and we send you the exact directions to the door.',
         'Travelling with a pet, a baby or need something specific? Ask in advance and we leave it ready.',
         'Your arrival is self check-in by default (at your own pace). If you would rather be greeted by Leila or someone from her team, in-person check-in is free from 15:00 to 19:00.',
@@ -5833,6 +5841,13 @@ const AptGuideView = ({ apt, lang, onClose }) => {
             <span className="ag-section-num"/>
             <h2 className="ag-h2">{s.checkin.title}</h2>
             <p className="ag-para ag-para-lead">{s.checkin.intro}</p>
+
+            {s.checkin.arrivalNotice && (
+              <div className="ag-arrival-notice" role="note">
+                <strong className="ag-arrival-notice-t">{s.checkin.arrivalNotice.title}</strong>
+                <p className="ag-arrival-notice-b">{s.checkin.arrivalNotice.body}</p>
+              </div>
+            )}
 
             {s.checkin.beforeItems && (
               <div className="ag-before">

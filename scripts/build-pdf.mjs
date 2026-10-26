@@ -1039,6 +1039,9 @@ section.no-break {
 }
 
 .checkin-intro { margin: 0 0 4mm; font-size: 10pt; line-height: 1.6; color: var(--ink); }
+.checkin-notice { margin: 0 0 4mm; padding: 3mm 3.5mm; border-left: 1.2pt solid #3AAABB; background: rgba(58,170,187,.10); border-radius: 0 1.5mm 1.5mm 0; page-break-inside: avoid; }
+.checkin-notice strong { display: block; margin-bottom: 1mm; font-size: 10.5pt; color: var(--ink); }
+.checkin-notice p { margin: 0; font-size: 9.5pt; line-height: 1.55; color: var(--ink); }
 .checkin-h3 { margin: 6mm 0 2mm; font-size: 12pt; color: var(--apt-c-dk); }
 .checkin-h4 { margin: 4mm 0 1.5mm; font-size: 10.5pt; font-weight: 700; color: var(--ink); }
 .checkin-h5 { margin: 3mm 0 1mm; font-size: 9.5pt; font-weight: 700; color: var(--apt-c-dk); }
@@ -1721,6 +1724,7 @@ function renderCheckin(shared, aptData, aptGuide, lang) {
       <h2>${esc(c.title)}</h2>
     </div>
     <p class="checkin-intro">${esc(c.intro)}</p>
+    ${c.arrivalNotice ? `<div class="checkin-notice"><strong>${esc(c.arrivalNotice.title)}</strong><p>${esc(c.arrivalNotice.body)}</p></div>` : ''}
 
     ${c.beforeItems ? `
     <h3 class="checkin-h3">${esc(c.beforeTitle)}</h3>

@@ -13622,6 +13622,16 @@ footer,
   margin-top: 24px;
   margin-bottom: 10px;
 }
+.ag-arrival-notice {
+  margin: 14px 0 18px;
+  padding: 14px 18px;
+  border-left: 4px solid var(--sol);
+  border-radius: 0 10px 10px 0;
+  background: rgba(58, 170, 187, 0.11);
+  color: var(--ink);
+}
+.ag-arrival-notice-t { display: block; margin-bottom: 6px; font-size: 15px; font-weight: 700; color: var(--ink); }
+.ag-arrival-notice-b { margin: 0; font-size: 14px; line-height: 1.6; color: var(--ink); }
 .ag-checkin-modes {
   display: grid;
   grid-template-columns: 1fr 1fr;
