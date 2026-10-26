@@ -50,8 +50,8 @@ const NOTICIAS = {
       "accent": "var(--vs-dk)",
       "img": "assets/apt-vs-gallery-33.jpg",
       "curiosidad": {
-        "es": "Octubre es pleno curso de la temporada de estancias largas (septiembre a junio), y en Salinas se nota: la fibra de 300 a 600 Mbps y la mesa de trabajo bajo petición hacen que un mes de teletrabajo con vistas a la reserva de aves de las Salinas de Puerto Rey sea perfectamente viable.",
-        "en": "October is in full swing for the long-stay season (September to June), and it shows at Salinas: fibre from 300 to 600 Mbps and a work desk on request make a month of remote work with views over the Salinas de Puerto Rey bird reserve entirely workable."
+        "es": "Octubre es pleno curso de la temporada de estancias largas (septiembre a junio), y en Salinas se nota: la fibra de 300 a 600 Mbps y la mesa de trabajo bajo petición hacen que un mes de teletrabajo con la reserva de aves de las Salinas de Puerto Rey a un paseo corto sea perfectamente viable.",
+        "en": "October is in full swing for the long-stay season (September to June), and it shows at Salinas: fibre from 300 to 600 Mbps and a work desk on request make a month of remote work with the Salinas de Puerto Rey bird reserve a short walk away entirely workable."
       },
       "reco": {
         "es": "La ruta de los flamencos se recorre ahora a cualquier hora del día, sin el calor de agosto. Octubre además trae más aves de paso, así que merece la pena llevar prismáticos y caminar despacio.",

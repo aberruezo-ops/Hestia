@@ -2460,7 +2460,7 @@ const QUICK_FAQ = {
       a: /*#__PURE__*/React.createElement(React.Fragment, null, "Salinas es el más espacioso de los tres, con 87 m². Dos terrazas, piscina y pistas de pádel y tenis comunitarias, grandes jardines con riachuelos y la reserva de aves de las Salinas de Puerto Rey a un paseo corto. La luz dorada de Almería llena cada habitación, con la naturaleza siempre cerca.")
     }, {
       q: '¿Qué son las Salinas de Puerto Rey?',
-      a: /*#__PURE__*/React.createElement(React.Fragment, null, "Un Parque Natural cercano, a un paseo corto, con flamencos y aves migratorias. Al amanecer, la luz sobre las salinas es dorada.")
+      a: /*#__PURE__*/React.createElement(React.Fragment, null, "La reserva de aves de las Salinas de Puerto Rey, a un paseo corto, con flamencos y aves migratorias. Al amanecer, la luz sobre las salinas es dorada.")
     }, {
       q: '¿Qué tiene la urbanización de Salinas?',
       a: /*#__PURE__*/React.createElement(React.Fragment, null, "Piscina comunitaria, pistas de pádel y tenis y unos jardines muy grandes, con riachuelos, aves y senderos para pasear. Y a un paseo corto, la reserva de aves de las Salinas de Puerto Rey.")
@@ -2473,7 +2473,7 @@ const QUICK_FAQ = {
       a: /*#__PURE__*/React.createElement(React.Fragment, null, "Salinas is the most spacious of the three, at 87 m². Two terraces, a shared pool and padel and tennis courts, large gardens with streams and the Puerto Rey salt-flat bird reserve a short walk away. Almería's golden afternoon light fills every room, with nature always close by.")
     }, {
       q: 'What is the Puerto Rey Nature Park?',
-      a: /*#__PURE__*/React.createElement(React.Fragment, null, "A nearby natural park, a short walk away, with flamingos, migratory birds and a golden light at sunrise unique in Europe. One of the reasons Salinas has something the others don't.")
+      a: /*#__PURE__*/React.createElement(React.Fragment, null, "The Salinas de Puerto Rey bird reserve, a short walk away, with flamingos and migratory birds. At sunrise, the light over the salt flats is golden.")
     }, {
       q: 'What does the Salinas complex have?',
       a: /*#__PURE__*/React.createElement(React.Fragment, null, "A shared pool, padel and tennis courts and very large gardens with streams, birds and paths to wander. And a short walk away, the Puerto Rey salt-flat bird reserve.")
@@ -2729,8 +2729,8 @@ const SABIAS_QUE_FACTS = [/* ── Almería y Vera Playa ── */
   en: 'Our area guide is public: over 120 places across Almería, Murcia and Granada, with what each one is and how far it sits. Book and you get the full version: when to go, what to order, where to actually park, and the discounts we have arranged.'
 }, {
   type: 'fact',
-  es: 'Salinas es uno de los pocos alojamientos del litoral mediterráneo con acceso peatonal directo a un parque natural protegido desde la puerta.',
-  en: 'Salinas is one of very few homes on the Mediterranean coast with direct pedestrian access to a protected natural park from the front door.'
+  es: 'Salinas tiene la reserva de aves de las Salinas de Puerto Rey a un paseo corto.',
+  en: 'Salinas has the Salinas de Puerto Rey bird reserve a short walk away.'
 }, {
   type: 'fact',
   es: 'Los cambios de fecha en Hestía se gestionan directamente con Alex o Fran: una conversación, no un formulario. Las cancelaciones siguen una política clara: gratis hasta 30 días antes.',
@@ -6865,8 +6865,8 @@ const TOP_RECS = [{
   name_en: 'Puerto Rey Salt Flats',
   place_es: 'Vera Playa · a un paseo corto',
   place_en: 'Vera Playa · a short walk away',
-  desc_es: 'Parque Natural cercano, a un paseo corto, con flamencos, aves migratorias y luz dorada al amanecer.',
-  desc_en: 'Nearby nature park, a short walk away, with flamingos, migratory birds and golden dawn light.',
+  desc_es: 'Reserva de aves cercana, a un paseo corto, con flamencos, aves migratorias y luz dorada al amanecer.',
+  desc_en: 'Nearby bird reserve, a short walk away, with flamingos, migratory birds and golden dawn light.',
   url: 'https://www.google.com/maps/place/Salinas+de+Vera'
 }];
 const WidgetTopRecs = ({

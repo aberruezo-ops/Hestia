@@ -4,19 +4,45 @@
 > pide o se remite a la web.
 
 ## Los tres Hestías (cada uno con su color)
-- **Hestía Mar** · color olivo. Planta primera, terraza esquinera de 20m²,
-  el más cercano a la playa (300–400 m, 5 min a pie), con palmeras a la vista.
-  2 hab · hasta 6 + bebé. Piscina, jacuzzi y parque infantil comunitarios.
-- **Hestía Thalassa** · color cobre. Ático, terraza panorámica 360°. Dos
-  piscinas exteriores, jardines, pistas de pádel y tenis y SPA comunitario
-  (piscina climatizada, jacuzzi, sauna, pediluvio, gimnasio y zona de relax).
-  Vistas al mar y al Salar de los Canos. 2 hab · hasta 6 + bebé.
-- **Hestía Salinas** · color dorado. El más grande de los tres (87 m²). Piscina
-  comunitaria, pistas de pádel y tenis, grandes jardines con riachuelos y dos
-  terrazas, con la reserva de aves de las Salinas de Puerto Rey cerca (flamencos,
-  amaneceres dorados). 2 hab · hasta 6 + bebé.
+
+> Comprobado contra las fichas de la web (`apartment-page.jsx`, `APT_EQUIP`) y
+> `CLAUDE.md`. Si una frase no sale de aquí, no se escribe.
+
+- **Hestía Mar** · color olivo. 77 m², planta primera, terraza esquinera de
+  20 m², la más cercana a la playa (300–400 m, unos 5 min a pie), con palmeras a
+  la vista. 2 hab · 2 baños · hasta 6 + bebé. Piscina, jacuzzi y parque infantil
+  comunitarios. Ascensor, lavadora, cuna y trona.
+- **Hestía Thalassa** · color cobre. 85 m², ático (tercera planta desde el
+  garaje). Terraza delantera de 18 m² con vistas al mar y terraza trasera. Desde
+  la terraza panorámica se ve el Mediterráneo y, hacia el interior, el Salar de
+  los Canos. Dos piscinas exteriores, jardines, pistas de pádel y tenis y SPA
+  comunitario (piscina climatizada, jacuzzi, sauna, pediluvio, gimnasio y zona
+  de relax). 2 hab · 2 baños · hasta 6 + bebé.
+- **Hestía Salinas** · color dorado. El más grande de los tres (87 m²), planta
+  primera. Dos terrazas (18 m² y 14 m²). Piscina, pistas de pádel y tenis y
+  grandes jardines con riachuelos. A unos 900 m del mar, con la playa a 5 min en
+  coche. La reserva de aves de las Salinas de Puerto Rey está **a un paseo
+  corto**. 2 hab · 2 baños · hasta 6 + bebé. Lavadora, cuna y trona.
 - Los tres: reserva directa, mascotas bienvenidas (petición previa), WiFi de
-  fibra, aire acondicionado, cocina equipada. Vera Playa, Almería.
+  fibra, aire acondicionado, cocina equipada (lavavajillas y lavadora), Smart TV
+  con streaming, garaje y kit de bienvenida. Vera Playa, Almería.
+
+## Lo que NO se dice (comprobado)
+
+- **Salinas no tiene vistas al Salar de los Canos.** Eso es de Thalassa. Tampoco
+  se dice que Salinas tenga vistas a la reserva de aves: está a un paseo corto.
+- **Salinas no tiene "tres piscinas"** ni es "el más luminoso". Tiene piscina.
+- **No es "Parque Natural"** ni "humedal protegido" ni "único en Europa": es la
+  reserva de aves de las Salinas de Puerto Rey.
+- **Mar:** no se promete "vistas al mar": se ven palmeras. La playa está a
+  300–400 m.
+- **Thalassa:** no se dice "360°" (no está en la ficha). La cuna y la trona no
+  figuran en su ficha.
+- **Llegada:** autónoma por defecto; presencial sin coste de 15:00 a 19:00, y
+  con coste fuera de ese horario. No se promete "entrar y salir a tu hora".
+- **Retiros y equipos:** no tenemos sala de reuniones, catering ni actividades
+  organizadas por nosotros.
+- Sin precios ni disponibilidad concretos en las redes.
 
 ## Ventajas (reales, no exagerar)
 - Reserva directa, **0% comisiones**. Respuesta humana en menos de 2 horas, de
