@@ -2168,12 +2168,12 @@ const petSuppLabel = (lang) => {
   if (PET_PER_NIGHT === null || PET_MAX === null) return null;
   return lang === 'es' ? `${PET_PER_NIGHT} €/noche · máx. ${PET_MAX} €` : `${PET_PER_NIGHT} €/night · max ${PET_MAX} €`;
 };
-// Política de llegada (propietario, oct 2026): autónoma por defecto y siempre fuera del horario de
-// check-in (15:00 a 19:00). La presencial se acuerda antes con Fran. Hora aproximada con días de
-// antelación y la más exacta posible el día de la llegada.
+// Política de llegada (propietario, oct 2026): autónoma por defecto, desde las 15:00 y también después
+// de las 19:00. La presencial solo entre 15:00 y 19:00 y acordada antes con Fran. Hora aproximada con
+// días de antelación y la más exacta posible el día de la llegada.
 const _arrivalPolicy = (lang) => lang === 'es'
-  ? 'La llegada es autónoma por defecto, y siempre lo es fuera del horario de check-in (de 15:00 a 19:00). Si necesitas que te recibamos en persona dentro de ese horario, avisa a Fran con antelación y lo acordamos. Dinos tu hora aproximada de llegada con días de antelación y tu hora lo más exacta posible el día de la llegada: estamos pendientes de ti para llamarte y darte la información y el soporte que necesites.'
-  : 'Arrival is self check-in by default, and always is outside check-in hours (15:00 to 19:00). If you need us to greet you in person within those hours, tell Fran in advance and we will arrange it. Tell us your approximate arrival time days ahead and your time as exact as possible on the day: we keep an eye out for you so we can call you and give you the information and support you need.';
+  ? 'La llegada es autónoma por defecto, desde las 15:00 y también después de las 19:00. Si necesitas que te recibamos en persona, solo es posible entre las 15:00 y las 19:00: avisa a Fran con antelación y lo acordamos. Dinos tu hora aproximada de llegada con días de antelación y tu hora lo más exacta posible el día de la llegada: estamos pendientes de ti para llamarte y darte la información y el soporte que necesites.'
+  : 'Arrival is self check-in by default, from 15:00 and also after 19:00. If you need us to greet you in person, that is only possible between 15:00 and 19:00: tell Fran in advance and we will arrange it. Tell us your approximate arrival time days ahead and your time as exact as possible on the day: we keep an eye out for you so we can call you and give you the information and support you need.';
 const _petCost = (nights) => {
   if (PET_PER_NIGHT !== null && PET_MAX !== null) {
     return Math.min(nights * PET_PER_NIGHT, PET_MAX);
