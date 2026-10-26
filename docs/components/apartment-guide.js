@@ -7423,37 +7423,34 @@ const PlacesOfInterestAtlas = ({
     })), /*#__PURE__*/React.createElement("span", null, lang === 'es' ? sc.es : sc.en), /*#__PURE__*/React.createElement("span", {
       className: "ag-poi-cat-count"
     }, items.length)), /*#__PURE__*/React.createElement("ul", {
-      className: "ag-poi-list"
-    }, items.map((p, i) => {
+      className: "ag-poi-grid"
+    }, items.slice().sort((x, y) => (Number(x.km) || 0) - (Number(y.km) || 0)).map((p, i) => {
       const name = lang === 'es' ? p.name_es : p.name_en || p.name_es;
       const desc = lang === 'es' ? p.desc_es : p.desc_en || p.desc_es;
       const url = p.url || `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(name)}`;
+      const how = lang === 'es' ? p.comoLlegar_es || p.comoLlegar_en : p.comoLlegar_en || p.comoLlegar_es;
       return /*#__PURE__*/React.createElement("li", {
         key: i,
-        className: "ag-poi-row"
+        className: "ag-poi-card"
       }, /*#__PURE__*/React.createElement("div", {
-        className: "ag-poi-row-main"
+        className: "ag-poi-card-head"
       }, /*#__PURE__*/React.createElement("a", {
         className: "ag-poi-name",
         href: url,
         target: "_blank",
         rel: "noopener noreferrer"
-      }, name), desc && /*#__PURE__*/React.createElement("span", {
-        className: "ag-poi-desc"
-      }, ", ", desc)), /*#__PURE__*/React.createElement("div", {
-        className: "ag-poi-row-meta"
-      }, /*#__PURE__*/React.createElement("span", {
+      }, name), /*#__PURE__*/React.createElement("span", {
         className: "ag-poi-km"
-      }, p.km, " km"), /*#__PURE__*/React.createElement("span", {
-        className: "ag-poi-sep"
-      }, "·"), /*#__PURE__*/React.createElement("span", {
+      }, p.km, " km")), desc && /*#__PURE__*/React.createElement("p", {
+        className: "ag-poi-desc"
+      }, desc), how && /*#__PURE__*/React.createElement("p", {
         className: "ag-poi-how"
-      }, iconifyText(lang === 'es' ? p.comoLlegar_es || p.comoLlegar_en : p.comoLlegar_en || p.comoLlegar_es)), p.anchor && /*#__PURE__*/React.createElement(React.Fragment, null, /*#__PURE__*/React.createElement("span", {
-        className: "ag-poi-sep"
-      }, "·"), /*#__PURE__*/React.createElement("a", {
+      }, /*#__PURE__*/React.createElement("span", {
+        className: "ag-poi-how-tag"
+      }, lang === 'es' ? 'Cómo llegar' : 'Getting there'), iconifyText(how)), p.anchor && /*#__PURE__*/React.createElement("a", {
         className: "ag-poi-anchor",
         href: `#${p.anchor}`
-      }, lang === 'es' ? 'ver en la guía' : 'see in the guide', " ↓"))));
+      }, lang === 'es' ? 'ver en la guía' : 'see in the guide', " ↓"));
     })));
   }));
 };
@@ -12166,7 +12163,7 @@ const AptGuideView = ({
     className: "ag-h2"
   }, lang === 'es' ? 'Lugares de interés' : 'Places of interest'), /*#__PURE__*/React.createElement("p", {
     className: "ag-para"
-  }, lang === 'es' ? 'Estos son los imprescindibles del Levante almeriense y la Región de Murcia, organizados por tipo y con la distancia desde Hestía.' : 'The must-sees of the Almería Levante and Murcia Region, sorted by type and with the distance from Hestía.'), /*#__PURE__*/React.createElement(PlacesOfInterestAtlas, {
+  }, lang === 'es' ? 'Estos son los imprescindibles del Levante almeriense y la Región de Murcia, organizados por tipo y ordenados de más cerca a más lejos desde Hestía.' : 'The must-sees of the Almería Levante and Murcia Region, sorted by type and ordered from nearest to furthest from Hestía.'), /*#__PURE__*/React.createElement(PlacesOfInterestAtlas, {
     lang: lang
   })), /*#__PURE__*/React.createElement("section", {
     id: "ag-supermercados",

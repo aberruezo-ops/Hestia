@@ -3431,28 +3431,28 @@ const PlacesOfInterestAtlas = ({ lang }) => {
               <span>{lang === 'es' ? sc.es : sc.en}</span>
               <span className="ag-poi-cat-count">{items.length}</span>
             </h3>
-            <ul className="ag-poi-list">
-              {items.map((p, i) => {
+            <ul className="ag-poi-grid">
+              {items.slice().sort((x, y) => (Number(x.km) || 0) - (Number(y.km) || 0)).map((p, i) => {
                 const name = lang === 'es' ? p.name_es : (p.name_en || p.name_es);
                 const desc = lang === 'es' ? p.desc_es : (p.desc_en || p.desc_es);
                 const url = p.url || `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(name)}`;
+                const how = lang === 'es' ? (p.comoLlegar_es || p.comoLlegar_en) : (p.comoLlegar_en || p.comoLlegar_es);
                 return (
-                  <li key={i} className="ag-poi-row">
-                    <div className="ag-poi-row-main">
+                  <li key={i} className="ag-poi-card">
+                    <div className="ag-poi-card-head">
                       <a className="ag-poi-name" href={url} target="_blank" rel="noopener noreferrer">{name}</a>
-                      {desc && <span className="ag-poi-desc">, {desc}</span>}
-                    </div>
-                    <div className="ag-poi-row-meta">
                       <span className="ag-poi-km">{p.km} km</span>
-                      <span className="ag-poi-sep">·</span>
-                      <span className="ag-poi-how">{iconifyText(lang === 'es' ? (p.comoLlegar_es || p.comoLlegar_en) : (p.comoLlegar_en || p.comoLlegar_es))}</span>
-                      {p.anchor && (
-                        <>
-                          <span className="ag-poi-sep">·</span>
-                          <a className="ag-poi-anchor" href={`#${p.anchor}`}>{lang === 'es' ? 'ver en la guía' : 'see in the guide'} ↓</a>
-                        </>
-                      )}
                     </div>
+                    {desc && <p className="ag-poi-desc">{desc}</p>}
+                    {how && (
+                      <p className="ag-poi-how">
+                        <span className="ag-poi-how-tag">{lang === 'es' ? 'Cómo llegar' : 'Getting there'}</span>
+                        {iconifyText(how)}
+                      </p>
+                    )}
+                    {p.anchor && (
+                      <a className="ag-poi-anchor" href={`#${p.anchor}`}>{lang === 'es' ? 'ver en la guía' : 'see in the guide'} ↓</a>
+                    )}
                   </li>
                 );
               })}
@@ -6216,8 +6216,8 @@ const AptGuideView = ({ apt, lang, onClose }) => {
             <h2 className="ag-h2">{lang === 'es' ? 'Lugares de interés' : 'Places of interest'}</h2>
             <p className="ag-para">
               {lang === 'es'
-                ? 'Estos son los imprescindibles del Levante almeriense y la Región de Murcia, organizados por tipo y con la distancia desde Hestía.'
-                : 'The must-sees of the Almería Levante and Murcia Region, sorted by type and with the distance from Hestía.'}
+                ? 'Estos son los imprescindibles del Levante almeriense y la Región de Murcia, organizados por tipo y ordenados de más cerca a más lejos desde Hestía.'
+                : 'The must-sees of the Almería Levante and Murcia Region, sorted by type and ordered from nearest to furthest from Hestía.'}
             </p>
             <PlacesOfInterestAtlas lang={lang} />
           </section>
