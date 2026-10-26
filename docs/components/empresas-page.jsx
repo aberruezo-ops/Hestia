@@ -34,10 +34,11 @@ const EMP_COPY = {
       'Siempre intentamos echar una mano en lo que surja',
     ],
     servicesFoot: 'Dinos qué necesitas y nos ponemos manos a la obra.',
-    packagesTitle: 'Dos formas de trabajar con nosotros',
+    packagesTitle: 'Tres formas de trabajar con nosotros',
     packages: [
-      { t: 'Equipos y proyectos', d: 'Para empresas que desplazan técnicos, cuadrillas o consultores semanas o meses: varias unidades cerca entre sí, tarifa mensual y llegada autónoma.' },
+      { t: 'Equipos y proyectos', d: 'Para empresas que desplazan técnicos, cuadrillas o consultores semanas o meses: un apartamento con cocina, lavadora e independencia en lugar de una habitación de hotel, varias unidades cerca entre sí, tarifa mensual y llegada autónoma.' },
       { t: 'Profesionales y clientes', d: 'Para quien llega a la zona de forma individual (nueva incorporación, paciente, comprador de vivienda, deportista): alojamiento listo para entrar y guía local para ubicarse desde el primer día.' },
+      { t: 'Team building y jornadas de equipo', d: 'Para empresas que quieren desplazar a parte de su plantilla unos días, para un team building o para trabajar juntos: tres apartamentos de dos dormitorios cerca entre sí, hasta 6 personas en cada uno, con cocina equipada, fibra de 300 a 600 Mbps y mesa de trabajo bajo petición. No tenemos sala de reuniones; en la guía local te indicamos coworkings y actividades de la zona.' },
     ],
     stepsTitle: 'Cómo trabajamos',
     steps: [
@@ -59,6 +60,7 @@ const EMP_COPY = {
       'Inmobiliarias y compradores de vivienda',
       'Productoras de cine y publicidad',
       'Turoperadores y clubes',
+      'Team building y jornadas de equipo',
     ],
     formTitle: 'Cuéntanos qué necesitas',
     formSub: 'Te respondemos con una propuesta a medida, normalmente en minutos.',
@@ -121,10 +123,11 @@ const EMP_COPY = {
       'We always try to help with whatever comes up',
     ],
     servicesFoot: 'Tell us what you need and we get to work.',
-    packagesTitle: 'Two ways to work with us',
+    packagesTitle: 'Three ways to work with us',
     packages: [
-      { t: 'Teams and projects', d: 'For companies sending technicians, crews or consultants for weeks or months: several units close together, a monthly rate and self check-in.' },
+      { t: 'Teams and projects', d: 'For companies sending technicians, crews or consultants for weeks or months: an apartment with a kitchen, washing machine and independence instead of a hotel room, several units close together, a monthly rate and self check-in.' },
       { t: 'Professionals and clients', d: 'For individual arrivals (new hire, patient, home buyer, athlete): a ready-to-move-in apartment and a local guide to settle in from day one.' },
+      { t: 'Team building and team days', d: 'For companies that want to move part of their staff for a few days, for team building or to work together: three two-bedroom apartments close to each other, up to 6 people in each, with a fully equipped kitchen, fibre from 300 to 600 Mbps and a work table on request. We have no meeting room; our local guide points you to coworking spaces and activities nearby.' },
     ],
     stepsTitle: 'How we work',
     steps: [
@@ -146,6 +149,7 @@ const EMP_COPY = {
       'Estate agencies and home buyers',
       'Film and advertising productions',
       'Tour operators and clubs',
+      'Team building and team days',
     ],
     formTitle: 'Tell us what you need',
     formSub: 'We reply with a tailored proposal, usually within minutes.',

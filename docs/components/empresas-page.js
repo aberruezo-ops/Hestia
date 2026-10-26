@@ -45,13 +45,16 @@ const EMP_COPY = {
     servicesSub: 'No solo damos las llaves. Damos algunos servicios extra y te facilitamos el resto, para que la estancia salga rodada:',
     services: ['Limpieza, plancha y lavandería extra', 'Cambio de toallas y sábanas adicional', 'Necesidades especiales: cuna, parking, llegada autónoma fuera de horario', 'Os facilitamos los traslados del aeropuerto y cómo moveros por la zona', 'Guía local con restaurantes, golf, actividades y coworking, para que lo organices a tu aire', 'Siempre intentamos echar una mano en lo que surja'],
     servicesFoot: 'Dinos qué necesitas y nos ponemos manos a la obra.',
-    packagesTitle: 'Dos formas de trabajar con nosotros',
+    packagesTitle: 'Tres formas de trabajar con nosotros',
     packages: [{
       t: 'Equipos y proyectos',
-      d: 'Para empresas que desplazan técnicos, cuadrillas o consultores semanas o meses: varias unidades cerca entre sí, tarifa mensual y llegada autónoma.'
+      d: 'Para empresas que desplazan técnicos, cuadrillas o consultores semanas o meses: un apartamento con cocina, lavadora e independencia en lugar de una habitación de hotel, varias unidades cerca entre sí, tarifa mensual y llegada autónoma.'
     }, {
       t: 'Profesionales y clientes',
       d: 'Para quien llega a la zona de forma individual (nueva incorporación, paciente, comprador de vivienda, deportista): alojamiento listo para entrar y guía local para ubicarse desde el primer día.'
+    }, {
+      t: 'Team building y jornadas de equipo',
+      d: 'Para empresas que quieren desplazar a parte de su plantilla unos días, para un team building o para trabajar juntos: tres apartamentos de dos dormitorios cerca entre sí, hasta 6 personas en cada uno, con cocina equipada, fibra de 300 a 600 Mbps y mesa de trabajo bajo petición. No tenemos sala de reuniones; en la guía local te indicamos coworkings y actividades de la zona.'
     }],
     stepsTitle: 'Cómo trabajamos',
     steps: [{
@@ -75,7 +78,7 @@ const EMP_COPY = {
     dlDossier: 'Descargar dossier (PDF)',
     sectorsTitle: 'Con quién trabajamos',
     sectorsSub: 'Si tu negocio necesita alojar a clientes, equipos o pacientes cerca de Vera Playa, encajamos. Algunos ejemplos:',
-    sectors: ['Empresas con técnicos o visitas (agroindustria, energía, construcción)', 'Clínicas y turismo de salud', 'Campos de entrenamiento deportivo', 'Golf (stay & play)', 'Bodas y eventos', 'Inmobiliarias y compradores de vivienda', 'Productoras de cine y publicidad', 'Turoperadores y clubes'],
+    sectors: ['Empresas con técnicos o visitas (agroindustria, energía, construcción)', 'Clínicas y turismo de salud', 'Campos de entrenamiento deportivo', 'Golf (stay & play)', 'Bodas y eventos', 'Inmobiliarias y compradores de vivienda', 'Productoras de cine y publicidad', 'Turoperadores y clubes', 'Team building y jornadas de equipo'],
     formTitle: 'Cuéntanos qué necesitas',
     formSub: 'Te respondemos con una propuesta a medida, normalmente en minutos.',
     ch_label: '¿Cómo prefieres que te contactemos?',
@@ -151,13 +154,16 @@ const EMP_COPY = {
     servicesSub: 'We do more than hand over the keys. We provide a few extra services and make the rest easy, for a smooth stay:',
     services: ['Extra cleaning, ironing and laundry', 'Additional towel and linen changes', 'Special requests: cot, parking, self check-in outside hours', 'We make airport transfers and getting around the area easy', 'A local guide with restaurants, golf, activities and coworking, so you organise it your way', 'We always try to help with whatever comes up'],
     servicesFoot: 'Tell us what you need and we get to work.',
-    packagesTitle: 'Two ways to work with us',
+    packagesTitle: 'Three ways to work with us',
     packages: [{
       t: 'Teams and projects',
-      d: 'For companies sending technicians, crews or consultants for weeks or months: several units close together, a monthly rate and self check-in.'
+      d: 'For companies sending technicians, crews or consultants for weeks or months: an apartment with a kitchen, washing machine and independence instead of a hotel room, several units close together, a monthly rate and self check-in.'
     }, {
       t: 'Professionals and clients',
       d: 'For individual arrivals (new hire, patient, home buyer, athlete): a ready-to-move-in apartment and a local guide to settle in from day one.'
+    }, {
+      t: 'Team building and team days',
+      d: 'For companies that want to move part of their staff for a few days, for team building or to work together: three two-bedroom apartments close to each other, up to 6 people in each, with a fully equipped kitchen, fibre from 300 to 600 Mbps and a work table on request. We have no meeting room; our local guide points you to coworking spaces and activities nearby.'
     }],
     stepsTitle: 'How we work',
     steps: [{
@@ -181,7 +187,7 @@ const EMP_COPY = {
     dlDossier: 'Download brochure (PDF)',
     sectorsTitle: 'Who we work with',
     sectorsSub: 'If your business needs to house clients, teams or patients near Vera Playa, we fit. Some examples:',
-    sectors: ['Companies with technicians or visitors (agribusiness, energy, construction)', 'Clinics and health tourism', 'Sports training camps', 'Golf (stay & play)', 'Weddings and events', 'Estate agencies and home buyers', 'Film and advertising productions', 'Tour operators and clubs'],
+    sectors: ['Companies with technicians or visitors (agribusiness, energy, construction)', 'Clinics and health tourism', 'Sports training camps', 'Golf (stay & play)', 'Weddings and events', 'Estate agencies and home buyers', 'Film and advertising productions', 'Tour operators and clubs', 'Team building and team days'],
     formTitle: 'Tell us what you need',
     formSub: 'We reply with a tailored proposal, usually within minutes.',
     ch_label: 'How would you like us to reach you?',

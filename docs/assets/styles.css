@@ -24822,7 +24822,7 @@ img[src$="photo-alex.jpg"]:not(.avatar-img):hover {
   padding: clamp(56px, 8vw, 88px) var(--page-pad);
 }
 .emp-packages-grid {
-  max-width: 920px;
+  max-width: 1080px;
   margin: 0 auto;
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
