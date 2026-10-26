@@ -1655,7 +1655,7 @@ const GUIDE_SHARED = {
       members: [
         { name: 'Alex', role: 'Tu reserva', body: 'Gestiona tu reserva y todo lo relacionado con ella: fechas, pagos, contrato y cualquier cambio antes de llegar.' },
         { name: 'Fran', role: 'Tu estancia', body: 'Gestiona tu estancia una vez confirmada: cualquier imprevisto, recomendación o necesidad, desde antes de llegar para tenerlo todo preparado.' },
-        { name: 'Leila y Marina', role: 'Limpieza y recepción', body: 'Nuestro equipo de limpieza y recepción. Están pendientes de ti el día que llegas: te llaman para darte información y soporte. Si la llegada es presencial, cualquiera de las dos puede ser quien te reciba.' },
+        { name: 'Leila y Marina', role: 'Limpieza y recepción', body: 'Nuestro equipo de limpieza y recepción. Están pendientes de ti el día que llegas: te llaman para darte información y soporte. Si la llegada es presencial, te recibe Leila o alguien de su equipo, como Marina.' },
       ],
       pdNote: 'Si te interesa la historia completa: de dónde viene el nombre, por qué empezamos este proyecto, qué buscamos cuando viajamos nosotros, la contamos con detalle en la web:',
       pdLinkLabel: 'Por qué creamos Hestía',
@@ -1711,7 +1711,7 @@ const GUIDE_SHARED = {
       modalitiesTitle: 'Dos modalidades de llegada',
       modalities: [
         { tag: 'Llegada autónoma', body: 'Es la llegada por defecto. Puedes entrar a partir de las 15:00, también después de las 19:00. Llegas y entras directamente, a tu ritmo, sin que nadie tenga que esperarte. Te pasamos por mensaje el código de la urbanización, el acceso a la caja-llaves y las instrucciones paso a paso. Si llegas tarde, no pasa nada.' },
-        { tag: 'Llegada presencial', body: 'Solo entre las 15:00 y las 19:00, y si lo acordamos antes: avisa a Fran con antelación. Te recibe Leila o Marina, te enseña la casa y te resuelve cualquier duda en el momento. Sin coste. Necesitamos tu hora exacta de llegada para planificarla.' },
+        { tag: 'Llegada presencial', body: 'Solo entre las 15:00 y las 19:00, y si lo acordamos antes: avisa a Fran con antelación. Te recibe Leila o alguien de su equipo, como Marina, te enseña la casa y te resuelve cualquier duda en el momento. Sin coste. Necesitamos tu hora exacta de llegada para planificarla.' },
       ],
       garageTitle: 'Plaza de garaje',
       garageIntro: 'Todos los apartamentos llevan plaza de garaje incluida en la urbanización Pueblo Salinas. La plaza que te corresponde según tu Hestía es:',
@@ -1946,7 +1946,7 @@ const GUIDE_SHARED = {
       modalitiesTitle: 'Two check-in options',
       modalities: [
         { tag: 'Self check-in', body: 'This is the default. You can come in from 15:00, also after 19:00. You arrive and let yourself in, at your own pace, with nobody having to wait for you. We send you the gate code, the lockbox access and step-by-step instructions by message. If you arrive late, it does not matter.' },
-        { tag: 'In-person check-in', body: 'Only between 15:00 and 19:00, and if we agree it beforehand: tell Fran in advance. Leila or Marina greets you, shows you around and answers anything on the spot. Free. We need your exact arrival time to plan it.' },
+        { tag: 'In-person check-in', body: 'Only between 15:00 and 19:00, and if we agree it beforehand: tell Fran in advance. Leila or someone from her team, such as Marina, greets you, shows you around and answers anything on the spot. Free. We need your exact arrival time to plan it.' },
       ],
       garageTitle: 'Garage spot',
       garageIntro: 'Every apartment comes with an included garage spot in the Pueblo Salinas complex. The spot assigned to your Hestía is:',
@@ -1969,7 +1969,7 @@ const GUIDE_SHARED = {
       members: [
         { name: 'Alex', role: 'Your booking', body: 'Handles your booking and everything related to it: dates, payment, contract and any change before you arrive.' },
         { name: 'Fran', role: 'Your stay', body: 'Handles your stay once confirmed: any hiccup, recommendation or need, from before you arrive so everything is ready.' },
-        { name: 'Leila and Marina', role: 'Cleaning & reception', body: 'Our cleaning and reception team. They keep an eye out for you on the day you arrive: they call you to give you information and support. If your arrival is in person, either one of them may be the one to greet you.' },
+        { name: 'Leila and Marina', role: 'Cleaning & reception', body: 'Our cleaning and reception team. They keep an eye out for you on the day you arrive: they call you to give you information and support. If your arrival is in person, Leila or someone from her team, such as Marina, greets you.' },
       ],
       pdNote: 'If you would like the full story: where the name comes from, why we started this project, what we look for when we travel ourselves, we tell it in detail on the website:',
       pdLinkLabel: 'Why we created Hestía',
@@ -2275,7 +2275,7 @@ const GUIDE_BY_APT = {
         carText: 'Si conduces, llegas directamente a la puerta de Hestía. Te enviamos la mejor ruta según tu origen y la plaza de garaje cubierta exacta. No improvisas nada.',
         modalities: [
           { tag: 'Llegada autónoma', body: 'Es la llegada por defecto. Puedes entrar a partir de las 15:00, también después de las 19:00. Llegas y entras directamente, a tu ritmo, sin que nadie tenga que esperarte. Te pasamos por mensaje el acceso a la caja-llaves y las instrucciones paso a paso. Si llegas tarde, no pasa nada.' },
-          { tag: 'Llegada presencial', body: 'Solo entre las 15:00 y las 19:00, y si lo acordamos antes: avisa a Fran con antelación. Te recibe Leila o Marina, te enseña la casa y te resuelve cualquier duda en el momento. Sin coste. Necesitamos tu hora exacta de llegada para planificarla.' },
+          { tag: 'Llegada presencial', body: 'Solo entre las 15:00 y las 19:00, y si lo acordamos antes: avisa a Fran con antelación. Te recibe Leila o alguien de su equipo, como Marina, te enseña la casa y te resuelve cualquier duda en el momento. Sin coste. Necesitamos tu hora exacta de llegada para planificarla.' },
         ],
         garageIntro: 'Tu plaza de garaje en Hestía Thalassa es:',
       },
@@ -2321,7 +2321,7 @@ const GUIDE_BY_APT = {
         carText: 'If you drive, you arrive straight at Hestía\'s door. We send you the best route from your starting point and the exact covered garage spot. Nothing left to chance.',
         modalities: [
           { tag: 'Self check-in', body: 'This is the default. You can come in from 15:00, also after 19:00. You arrive and let yourself in, at your own pace, with nobody having to wait for you. We send you the lockbox access and step-by-step instructions by message. If you arrive late, it does not matter.' },
-          { tag: 'In-person check-in', body: 'Only between 15:00 and 19:00, and if we agree it beforehand: tell Fran in advance. Leila or Marina greets you, shows you around and answers anything on the spot. Free. We need your exact arrival time to plan it.' },
+          { tag: 'In-person check-in', body: 'Only between 15:00 and 19:00, and if we agree it beforehand: tell Fran in advance. Leila or someone from her team, such as Marina, greets you, shows you around and answers anything on the spot. Free. We need your exact arrival time to plan it.' },
         ],
         garageIntro: 'Your garage spot at Hestía Thalassa is:',
       },
@@ -2384,7 +2384,7 @@ const GUIDE_BY_APT = {
         carText: 'Si conduces, llegas directamente a la puerta de Hestía. Te enviamos la mejor ruta según tu origen y la plaza de garaje cubierta exacta. No improvisas nada.',
         modalities: [
           { tag: 'Llegada autónoma', body: 'Es la llegada por defecto. Puedes entrar a partir de las 15:00, también después de las 19:00. Llegas y entras directamente, a tu ritmo, sin que nadie tenga que esperarte. Te pasamos por mensaje el acceso a la caja-llaves y las instrucciones paso a paso. Si llegas tarde, no pasa nada.' },
-          { tag: 'Llegada presencial', body: 'Solo entre las 15:00 y las 19:00, y si lo acordamos antes: avisa a Fran con antelación. Te recibe Leila o Marina, te enseña la casa y te resuelve cualquier duda en el momento. Sin coste. Necesitamos tu hora exacta de llegada para planificarla.' },
+          { tag: 'Llegada presencial', body: 'Solo entre las 15:00 y las 19:00, y si lo acordamos antes: avisa a Fran con antelación. Te recibe Leila o alguien de su equipo, como Marina, te enseña la casa y te resuelve cualquier duda en el momento. Sin coste. Necesitamos tu hora exacta de llegada para planificarla.' },
         ],
         garageIntro: 'Tu plaza de garaje en Hestía Salinas es:',
       },
@@ -2441,7 +2441,7 @@ const GUIDE_BY_APT = {
         carText: 'If you drive, you arrive straight at Hestía\'s door. We send you the best route from your starting point and the exact covered garage spot. Nothing left to chance.',
         modalities: [
           { tag: 'Self check-in', body: 'This is the default. You can come in from 15:00, also after 19:00. You arrive and let yourself in, at your own pace, with nobody having to wait for you. We send you the lockbox access and step-by-step instructions by message. If you arrive late, it does not matter.' },
-          { tag: 'In-person check-in', body: 'Only between 15:00 and 19:00, and if we agree it beforehand: tell Fran in advance. Leila or Marina greets you, shows you around and answers anything on the spot. Free. We need your exact arrival time to plan it.' },
+          { tag: 'In-person check-in', body: 'Only between 15:00 and 19:00, and if we agree it beforehand: tell Fran in advance. Leila or someone from her team, such as Marina, greets you, shows you around and answers anything on the spot. Free. We need your exact arrival time to plan it.' },
         ],
         garageIntro: 'Your garage spot at Hestía Salinas is:',
       },
