@@ -9,12 +9,12 @@
 > `CLAUDE.md`. Si una frase no sale de aquí, no se escribe.
 
 - **Hestía Mar** · color olivo. 77 m², planta primera, terraza esquinera de
-  20 m², la más cercana a la playa (300–400 m, unos 5 min a pie). Desde allí se
-  ven palmeras y algo de mar. 2 hab · 2 baños · hasta 6 + bebé. Piscina, jacuzzi y parque infantil
+  20 m², la más cercana a la playa (300–400 m, unos 5 min a pie). Desde la terraza
+  hay vistas parciales al mar, entre palmeras. 2 hab · 2 baños · hasta 6 + bebé. Piscina, jacuzzi y parque infantil
   comunitarios. Ascensor, lavadora, cuna y trona.
 - **Hestía Thalassa** · color cobre. 85 m², ático (tercera planta desde el
-  garaje). Terraza delantera de 18 m² con vistas al mar y terraza trasera. Desde
-  la terraza panorámica se ve el Mediterráneo y, hacia el interior, el Salar de
+  garaje). Terraza delantera de 18 m² con vistas panorámicas al mar y terraza
+  trasera. Desde la terraza panorámica se ve el Mediterráneo y, hacia el interior, el Salar de
   los Canos. Dos piscinas exteriores, jardines, pistas de pádel y tenis y SPA
   comunitario (piscina climatizada, jacuzzi, sauna, pediluvio, gimnasio y zona
   de relax). 2 hab · 2 baños · hasta 6 + bebé.
@@ -34,7 +34,7 @@
 - **Salinas no tiene "tres piscinas"** ni es "el más luminoso". Tiene piscina.
 - **No es "Parque Natural"** ni "humedal protegido" ni "único en Europa": es la
   reserva de aves de las Salinas de Puerto Rey.
-- **Mar:** no se promete "vistas al mar": se ven palmeras y algo de mar. La
+- **Mar:** vistas **parciales** al mar, nunca "vistas al mar" a secas. La
   playa está a 300–400 m.
 - **Thalassa:** no se dice "360°" (no está en la ficha). La cuna y la trona no
   figuran en su ficha.
