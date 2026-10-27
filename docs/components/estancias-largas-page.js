@@ -32,7 +32,9 @@ const LS_COPY = {
       a: 'Sí. Firmamos un contrato de arrendamiento de temporada con los datos de todos los huéspedes. Recibirás el contrato antes de pagar la señal.'
     }, {
       q: '¿Cómo se reserva?',
-      a: 'Escríbenos por WhatsApp o email con las fechas y el apartamento que te interesa. Te respondemos en menos de dos horas (normalmente en minutos) para confirmar disponibilidad y enviarte el contrato.'
+      a: /*#__PURE__*/React.createElement(React.Fragment, null, "Escríbenos por WhatsApp o email con las fechas y el apartamento que te interesa. Te respondemos en menos de dos horas (normalmente en minutos) para confirmar disponibilidad y enviarte el contrato. ", /*#__PURE__*/React.createElement(DirectVideoLink, {
+        lang: "es"
+      }))
     }, {
       q: '¿Hay que pagar todo al reservar?',
       a: 'Una señal de ~20% al firmar el contrato; el resto, a la llegada.'
@@ -79,7 +81,9 @@ const LS_COPY = {
       a: "Yes. We sign a seasonal rental agreement with all guests' details. You receive the contract before paying the deposit."
     }, {
       q: 'How do I book?',
-      a: 'Message us on WhatsApp or email with your dates and chosen apartment. We reply within two hours (usually within minutes) to confirm availability and send the contract.'
+      a: /*#__PURE__*/React.createElement(React.Fragment, null, "Message us on WhatsApp or email with your dates and chosen apartment. We reply within two hours (usually within minutes) to confirm availability and send the contract. ", /*#__PURE__*/React.createElement(DirectVideoLink, {
+        lang: "en"
+      }))
     }, {
       q: 'Do I pay everything upfront?',
       a: 'A ~20% deposit on signing the contract; the rest on arrival.'

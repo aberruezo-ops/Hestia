@@ -37,7 +37,7 @@ const LS_COPY = {
     faqs: [
       { q: '¿Cuántas noches es el mínimo?', a: 'El mínimo considerado son 29 noches. No hay máximo: si quieres quedarte más tiempo, lo acordamos.' },
       { q: '¿Hay contrato?', a: 'Sí. Firmamos un contrato de arrendamiento de temporada con los datos de todos los huéspedes. Recibirás el contrato antes de pagar la señal.' },
-      { q: '¿Cómo se reserva?', a: 'Escríbenos por WhatsApp o email con las fechas y el apartamento que te interesa. Te respondemos en menos de dos horas (normalmente en minutos) para confirmar disponibilidad y enviarte el contrato.' },
+      { q: '¿Cómo se reserva?', a: <>Escríbenos por WhatsApp o email con las fechas y el apartamento que te interesa. Te respondemos en menos de dos horas (normalmente en minutos) para confirmar disponibilidad y enviarte el contrato. <DirectVideoLink lang="es" /></> },
       { q: '¿Hay que pagar todo al reservar?', a: 'Una señal de ~20% al firmar el contrato; el resto, a la llegada.' },
       { q: '¿Está disponible en verano?', a: 'No. Los apartamentos están en máxima demanda en julio y agosto. La larga estancia está disponible de septiembre a junio.' },
       { q: '¿Se pueden registrar varias personas?', a: 'Sí, hasta 6 personas más bebé en cualquiera de los tres Hestías. Todos los huéspedes que pernocten deben estar en el contrato y se registran en el parte de entrada del SES.' },
@@ -83,7 +83,7 @@ const LS_COPY = {
     faqs: [
       { q: 'What is the minimum stay?', a: 'The minimum considered is 29 nights. There is no maximum: if you want to stay longer, we arrange it.' },
       { q: 'Is there a contract?', a: "Yes. We sign a seasonal rental agreement with all guests' details. You receive the contract before paying the deposit." },
-      { q: 'How do I book?', a: 'Message us on WhatsApp or email with your dates and chosen apartment. We reply within two hours (usually within minutes) to confirm availability and send the contract.' },
+      { q: 'How do I book?', a: <>Message us on WhatsApp or email with your dates and chosen apartment. We reply within two hours (usually within minutes) to confirm availability and send the contract. <DirectVideoLink lang="en" /></> },
       { q: 'Do I pay everything upfront?', a: 'A ~20% deposit on signing the contract; the rest on arrival.' },
       { q: 'Available in summer?', a: 'No. The apartments are in peak demand in July and August. Long stays are available September to June.' },
       { q: 'Can several people stay?', a: 'Yes, up to 6 people plus a baby in any of the three Hestías. All overnight guests must appear on the contract and be registered on the SES entry form.' },

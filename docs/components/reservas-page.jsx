@@ -1045,6 +1045,8 @@ const ReservasForm = ({ lang }) => {
       <h2 className="reservas-form-title">{t.form_title}</h2>
       <div className="reservas-form-sub">{t.form_sub}</div>
 
+      <DirectHowItWorks lang={lang} />
+
       {/* Progreso fijo bajo la cabecera, en móvil y escritorio */}
       <div className="rf-progress" aria-label={lang === 'es' ? `Paso ${step} de 3` : `Step ${step} of 3`}>
         {[

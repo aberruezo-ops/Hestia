@@ -322,6 +322,7 @@ const ContactCTA = ({ lang, availHref }) => {
           {lang === 'es' ? 'Ver todas las ventajas de la reserva directa' : 'See all direct-booking perks'}
           <span aria-hidden="true">→</span>
         </button>
+        <DirectVideoLink lang={lang} className="cta-perks-link" />
         <div className="address">Calle Islas Canarias 7 · 04621 Vera Playa · Almería</div>
       </div>
     </section>

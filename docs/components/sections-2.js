@@ -457,7 +457,10 @@ const ContactCTA = ({
     "aria-haspopup": "dialog"
   }, lang === 'es' ? 'Ver todas las ventajas de la reserva directa' : 'See all direct-booking perks', /*#__PURE__*/React.createElement("span", {
     "aria-hidden": "true"
-  }, "→")), /*#__PURE__*/React.createElement("div", {
+  }, "→")), /*#__PURE__*/React.createElement(DirectVideoLink, {
+    lang: lang,
+    className: "cta-perks-link"
+  }), /*#__PURE__*/React.createElement("div", {
     className: "address"
   }, "Calle Islas Canarias 7 · 04621 Vera Playa · Almería")));
 };

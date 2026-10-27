@@ -618,11 +618,14 @@ const useReveal = () => {
   }, []);
 };
 
+// Envoltorio perezoso: DirectVideoLink se define más abajo en este fichero.
+const DVLink = (props) => <DirectVideoLink {...props} />;
+
 const QUICK_FAQ = {
   home: {
     es: [
       { q: '¿Cómo reservo directamente?',
-        a: <>Escríbenos por <a href="https://wa.me/34620316370" target="_blank" rel="noopener">WhatsApp</a> o a <a href="mailto:info@hestiayourhome.com">info@hestiayourhome.com</a>. Sin intermediarios, sin comisiones. O usa el formulario en <a href="reservas.html">nuestra página de reservas</a>.</> },
+        a: <>Escríbenos por <a href="https://wa.me/34620316370" target="_blank" rel="noopener">WhatsApp</a> o a <a href="mailto:info@hestiayourhome.com">info@hestiayourhome.com</a>. Sin intermediarios, sin comisiones. O usa el formulario en <a href="reservas.html">nuestra página de reservas</a>. <DVLink lang="es" /></> },
       { q: '¿Puedo llevar a mi perro?',
         a: <>Sí, en los tres. Las mascotas son bienvenidas siempre bajo petición previa y con suplemento, respetando unas condiciones básicas dentro de Hestía, en las zonas comunes y en los espacios públicos. Avísanos al reservar.</> },
       { q: '¿Qué Hestía me conviene más?',
@@ -632,7 +635,7 @@ const QUICK_FAQ = {
     ],
     en: [
       { q: 'How do I book directly?',
-        a: <>Write to us via <a href="https://wa.me/34654138251" target="_blank" rel="noopener">WhatsApp</a> or <a href="mailto:info@hestiayourhome.com">info@hestiayourhome.com</a>. No middlemen, no commissions. Or use the form on <a href="reservas.html">our reservations page</a>.</> },
+        a: <>Write to us via <a href="https://wa.me/34654138251" target="_blank" rel="noopener">WhatsApp</a> or <a href="mailto:info@hestiayourhome.com">info@hestiayourhome.com</a>. No middlemen, no commissions. Or use the form on <a href="reservas.html">our reservations page</a>. <DVLink lang="en" /></> },
       { q: 'Can I bring my dog?',
         a: <>Yes, in all three Hestías. Pets are welcome on request and with a supplement, as long as basic conditions are respected inside the Hestía, in the communal areas and in public spaces. Just let us know when booking.</> },
       { q: 'Which Hestía suits me best?',
@@ -3273,6 +3276,105 @@ const DIRECT_RIBBON = (lang) => {
   ];
 };
 
+// Los seis pasos de la reserva directa. Fuente única: el panel del vídeo, el modal,
+// la tarjeta de /reservas y los textos aclaratorios salen de aquí.
+const DIRECT_STEPS = {
+  es: [
+    { t: 'Fechas y Hestía',    d: 'Eliges tus fechas y la Hestía que quieres vivir: Mar, Thalassa o Salinas.' },
+    { t: 'Pides la reserva',   d: 'Se la pides directamente a Alex y a Fran, con 0 % comisiones.' },
+    { t: 'Te respondemos',     d: 'Respondemos normalmente en minutos, siempre en menos de 2 horas, de 9:00 a 22:00.' },
+    { t: 'Contrato y señal',   d: 'Firmas el contrato y pagas una señal de ~20 %. El resto, a la llegada.' },
+    { t: 'Tu hora de llegada', d: 'Nos dices tu hora aproximada con días de antelación y mantienes contacto con Fran y con Leila ese día.' },
+    { t: 'Llegada',            d: 'Autónoma por defecto, desde las 15:00 y también de noche. Presencial, de 15:00 a 19:00, si lo acordamos.' },
+  ],
+  en: [
+    { t: 'Dates and Hestía',    d: 'You pick your dates and the Hestía you want to live in: Mar, Thalassa or Salinas.' },
+    { t: 'Request your booking', d: 'You send it straight to Alex and Fran, with 0% commission.' },
+    { t: 'We reply',            d: 'We usually reply within minutes, always within 2 hours, from 9:00 to 22:00.' },
+    { t: 'Contract and deposit', d: 'You sign the contract and pay a ~20% deposit. The rest on arrival.' },
+    { t: 'Your arrival time',   d: 'Tell us your approximate arrival time days ahead and stay in touch with Fran and Leila that day.' },
+    { t: 'Arrival',             d: 'Self check-in by default, from 15:00 and also at night. In person, from 15:00 to 19:00, if we agree it.' },
+  ],
+};
+const DIRECT_VIDEO = {
+  es: { src: 'assets/video/como-se-reserva-es.mp4', poster: 'assets/video/como-se-reserva-es.jpg' },
+  en: { src: 'assets/video/como-se-reserva-en.mp4', poster: 'assets/video/como-se-reserva-en.jpg' },
+};
+const openDirectVideo = () => window.dispatchEvent(new Event('hestia:open-direct-video'));
+
+// Enlace/botón de texto que abre el vídeo desde cualquier explicación de la reserva directa.
+const DirectVideoLink = ({ lang, className = 'dv-link' }) => (
+  <button type="button" className={className} onClick={openDirectVideo} aria-haspopup="dialog">
+    <HiIcon name="film" size={15} />
+    <span>{lang === 'es' ? 'Ver cómo se reserva (vídeo)' : 'See how booking works (video)'}</span>
+  </button>
+);
+
+// Modal con el vídeo y los pasos en texto (accesible, y vale para quien no pueda reproducir).
+const DirectVideoModal = ({ lang, onClose }) => {
+  const steps = DIRECT_STEPS[lang], vid = DIRECT_VIDEO[lang];
+  const reduce = !!(window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches);
+  const onReservas = /reservas(\.html)?$/.test(location.pathname);
+  React.useEffect(() => {
+    const prev = document.body.style.overflow;
+    document.body.style.overflow = 'hidden';
+    const onKey = (e) => { if (e.key === 'Escape') onClose(); };
+    window.addEventListener('keydown', onKey);
+    return () => { document.body.style.overflow = prev; window.removeEventListener('keydown', onKey); };
+  }, [onClose]);
+  return (
+    <div className="dbm-backdrop" onClick={onClose} role="dialog" aria-modal="true" aria-labelledby="dvm-title">
+      <div className="dvm-modal" onClick={e => e.stopPropagation()}>
+        <button type="button" className="dbm-close" onClick={onClose} aria-label={lang === 'es' ? 'Cerrar' : 'Close'}>×</button>
+        <div className="dvm-video">
+          <video src={vid.src} poster={vid.poster} controls playsInline muted loop preload="metadata"
+            autoPlay={!reduce}
+            aria-label={lang === 'es' ? 'Vídeo: así se reserva en Hestía' : 'Video: how you book at Hestía'} />
+        </div>
+        <div className="dvm-text">
+          <span className="eyebrow">{lang === 'es' ? 'Reserva directa' : 'Direct booking'}</span>
+          <h3 id="dvm-title" className="dvm-title">
+            {lang === 'es' ? <>Así se <em>reserva</em> en Hestía</> : <>How you <em>book</em> at Hestía</>}
+          </h3>
+          <ol className="dvm-steps">
+            {steps.map((st, i) => (
+              <li key={i}>
+                <span className="dvm-n" aria-hidden="true">{i + 1}</span>
+                <div><strong>{st.t}</strong><p>{st.d}</p></div>
+              </li>
+            ))}
+          </ol>
+          <a href="reservas.html" className="dbm-cta" onClick={onClose}>
+            {lang === 'es' ? (onReservas ? 'Empezar mi reserva' : 'Ver fechas y reservar') : (onReservas ? 'Start my booking' : 'See dates and book')}
+          </a>
+        </div>
+      </div>
+    </div>
+  );
+};
+
+// Tarjeta "Cómo funciona" para /reservas: portada, los seis pasos y botón al vídeo.
+const DirectHowItWorks = ({ lang }) => {
+  const steps = DIRECT_STEPS[lang], vid = DIRECT_VIDEO[lang];
+  return (
+    <section className="dhw" aria-labelledby="dhw-title">
+      <button type="button" className="dhw-poster" onClick={openDirectVideo} aria-haspopup="dialog"
+        aria-label={lang === 'es' ? 'Ver el vídeo: así se reserva en Hestía' : 'Watch the video: how you book at Hestía'}>
+        <img src={vid.poster} alt="" width="270" height="480" loading="lazy" decoding="async" />
+        <span className="dhw-play" aria-hidden="true" />
+      </button>
+      <div className="dhw-body">
+        <span className="eyebrow">{lang === 'es' ? 'Reserva directa' : 'Direct booking'}</span>
+        <h3 id="dhw-title" className="dhw-title">{lang === 'es' ? 'Cómo funciona, paso a paso' : 'How it works, step by step'}</h3>
+        <ol className="dhw-steps">
+          {steps.map((st, i) => (<li key={i}><strong>{st.t}.</strong> {st.d}</li>))}
+        </ol>
+        <DirectVideoLink lang={lang} className="dhw-btn" />
+      </div>
+    </section>
+  );
+};
+
 // Cada perk recibe su propio acento de la paleta, 9 micro-identidades.
 const _PERK_HUES = {
   precio:    { c1: '#D4A84A', c2: '#E8C476' },   // dorado/sol
@@ -3375,6 +3477,11 @@ const DirectBookingModal = ({ lang, onClose }) => {
           </h3>
         </div>
 
+        <button type="button" className="dbm-video" onClick={() => { onClose(); openDirectVideo(); }}>
+          <HiIcon name="film" size={15} />
+          <span>{lang === 'es' ? 'Ver cómo se reserva (vídeo)' : 'See how booking works (video)'}</span>
+        </button>
+
         <div className="dbm-ribbon">
           {ribbon.map((s, i) => (
             <div key={i} className="dbm-stat" style={{ '--stagger': `${i * 80}ms` }}>
@@ -3399,6 +3506,11 @@ const DirectBookingModal = ({ lang, onClose }) => {
             <h4 className="dbm-card-t">{cur.t}</h4>
             <p className="dbm-card-d">{cur.d}</p>
             {cur.link && <a href={cur.link.href} className="dbm-card-link" onClick={onClose}>{cur.link.label}</a>}
+            {cur.id === 'proceso' && (
+              <button type="button" className="dbm-card-link dbm-card-linkbtn" onClick={() => { onClose(); openDirectVideo(); }}>
+                {lang === 'es' ? 'Ver el proceso en vídeo' : 'See the process in video'}
+              </button>
+            )}
           </article>
           <button type="button" className="dbm-nav" onClick={goNext}
             aria-label={lang === 'es' ? 'Siguiente' : 'Next'}>→</button>
@@ -3460,6 +3572,7 @@ const DirectBookingPerks = ({ lang }) => {
             <span>{lang === 'es' ? 'Ver todas las ventajas' : 'See all perks'}</span>
             <span className="dbt-arrow" aria-hidden="true">→</span>
           </button>
+          <DirectVideoLink lang={lang} className="dbt-video" />
         </div>
       </section>
       {open && <DirectBookingModal lang={lang} onClose={() => setOpen(false)} />}
@@ -3524,6 +3637,7 @@ const AptDesktopSidebar = ({ lang, onGuideClick }) => {
           <span>{lang === 'es' ? 'Ver todas las ventajas' : 'See all perks'}</span>
           <span aria-hidden="true">→</span>
         </button>
+        <DirectVideoLink lang={lang} className="ads-video" />
       </section>
       <section className="ads-card ads-guide">
         <span className="eyebrow">{lang === 'es' ? 'Si ya tienes reserva' : 'If you already have a booking'}</span>
@@ -3548,7 +3662,7 @@ const AptDesktopSidebar = ({ lang, onGuideClick }) => {
   );
 };
 
-Object.assign(window, { DirectBookingPerks, DirectBookingModal, AptDesktopSidebar, DIRECT_PERKS, DIRECT_RIBBON, _lsMinMonthly, _lsSavingsPct });
+Object.assign(window, { DirectBookingPerks, DirectBookingModal, AptDesktopSidebar, DIRECT_PERKS, DIRECT_RIBBON, DIRECT_STEPS, DIRECT_VIDEO, DirectVideoLink, DirectVideoModal, DirectHowItWorks, openDirectVideo, _lsMinMonthly, _lsSavingsPct });
 
 // ================================================================
 // WidgetStack, pila de widgets flotantes independientes a la derecha
@@ -3669,6 +3783,7 @@ const WidgetDirectBooking = ({ lang }) => {
         <span>{lang === 'es' ? 'Ver todas las ventajas' : 'See all perks'}</span>
         <span aria-hidden="true">→</span>
       </button>
+      <DirectVideoLink lang={lang} className="widget-video" />
     </section>
   );
 };
@@ -4639,14 +4754,17 @@ const WidgetStack = ({ lang, extra }) => {
   // si DirectBookingPerks estaba mounted en la página. Ahora cualquier
   // página con WidgetStack tiene el listener garantizado.
   const [perksOpen, setPerksOpen] = React.useState(false);
+  const [videoOpen, setVideoOpen] = React.useState(false);
   // Oculta el botón flotante "Reservar →" mientras un checker de disponibilidad
   // ([data-avail-checker]) está a la vista, para que no compita con el "Comprobar
   // disponibilidad" de esa página (si no, al pulsar Reservar se pierde la selección).
   const [checkerInView, setCheckerInView] = React.useState(false);
   React.useEffect(() => {
     const onOpen = () => setPerksOpen(true);
+    const onVideo = () => setVideoOpen(true);
     window.addEventListener('hestia:open-direct-perks', onOpen);
-    return () => window.removeEventListener('hestia:open-direct-perks', onOpen);
+    window.addEventListener('hestia:open-direct-video', onVideo);
+    return () => { window.removeEventListener('hestia:open-direct-perks', onOpen); window.removeEventListener('hestia:open-direct-video', onVideo); };
   }, []);
 
   React.useEffect(() => {
@@ -4717,6 +4835,7 @@ const WidgetStack = ({ lang, extra }) => {
         </a>
       )}
       {perksOpen && <DirectBookingModal lang={lang} onClose={() => setPerksOpen(false)} />}
+      {videoOpen && <DirectVideoModal lang={lang} onClose={() => setVideoOpen(false)} />}
     </>
   );
 };

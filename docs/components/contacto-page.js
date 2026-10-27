@@ -40,7 +40,9 @@ const CONTACTO_COPY = {
       }, "página de reservas"), " o escríbenos directamente por WhatsApp con las fechas y qué Hestía te interesa.")
     }, {
       q: '¿Cómo es el proceso de reserva directa?',
-      a: /*#__PURE__*/React.createElement(React.Fragment, null, "Te enviamos un ", /*#__PURE__*/React.createElement("strong", null, "borrador de contrato"), " con derechos y obligaciones de ambas partes (precios, pagos, condiciones de cancelación y normas). Lo revisas, lo rellenas, lo firmas y nos lo devuelves. Al firmarlo se paga una ", /*#__PURE__*/React.createElement("strong", null, "señal de ~20% del total"), "; el resto se abona ", /*#__PURE__*/React.createElement("strong", null, "a la llegada"), " a Hestía. Acusamos recibo de todo (contrato y prereserva) para que tengas ", /*#__PURE__*/React.createElement("strong", null, "confianza, garantía y seguridad"), " en cada paso.")
+      a: /*#__PURE__*/React.createElement(React.Fragment, null, "Te enviamos un ", /*#__PURE__*/React.createElement("strong", null, "borrador de contrato"), " con derechos y obligaciones de ambas partes (precios, pagos, condiciones de cancelación y normas). Lo revisas, lo rellenas, lo firmas y nos lo devuelves. Al firmarlo se paga una ", /*#__PURE__*/React.createElement("strong", null, "señal de ~20% del total"), "; el resto se abona ", /*#__PURE__*/React.createElement("strong", null, "a la llegada"), " a Hestía. Acusamos recibo de todo (contrato y prereserva) para que tengas ", /*#__PURE__*/React.createElement("strong", null, "confianza, garantía y seguridad"), " en cada paso. ", /*#__PURE__*/React.createElement(DirectVideoLink, {
+        lang: "es"
+      }))
     }, {
       q: '¿Qué Hestías tenéis?',
       a: /*#__PURE__*/React.createElement(React.Fragment, null, "Tenemos tres: ", /*#__PURE__*/React.createElement("a", {
@@ -97,7 +99,9 @@ const CONTACTO_COPY = {
       }, "reservations page"), " or write to us directly on WhatsApp with your dates and the Hestía you are interested in.")
     }, {
       q: 'How does the direct booking process work?',
-      a: /*#__PURE__*/React.createElement(React.Fragment, null, "We send you a ", /*#__PURE__*/React.createElement("strong", null, "draft contract"), " with the rights and obligations of both sides (prices, payments, cancellation terms and house rules). You review it, fill it in, sign and return it. A ", /*#__PURE__*/React.createElement("strong", null, "~20% deposit"), " is paid when you sign it; the rest is paid ", /*#__PURE__*/React.createElement("strong", null, "on arrival"), " at Hestía. We acknowledge everything (contract and deposit) so you have ", /*#__PURE__*/React.createElement("strong", null, "trust, guarantee and security"), " at every step.")
+      a: /*#__PURE__*/React.createElement(React.Fragment, null, "We send you a ", /*#__PURE__*/React.createElement("strong", null, "draft contract"), " with the rights and obligations of both sides (prices, payments, cancellation terms and house rules). You review it, fill it in, sign and return it. A ", /*#__PURE__*/React.createElement("strong", null, "~20% deposit"), " is paid when you sign it; the rest is paid ", /*#__PURE__*/React.createElement("strong", null, "on arrival"), " at Hestía. We acknowledge everything (contract and deposit) so you have ", /*#__PURE__*/React.createElement("strong", null, "trust, guarantee and security"), " at every step. ", /*#__PURE__*/React.createElement(DirectVideoLink, {
+        lang: "en"
+      }))
     }, {
       q: 'Which Hestías do you have?',
       a: /*#__PURE__*/React.createElement(React.Fragment, null, "We have three: ", /*#__PURE__*/React.createElement("a", {

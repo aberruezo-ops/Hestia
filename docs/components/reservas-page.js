@@ -1082,7 +1082,9 @@ const ReservasForm = ({
     className: "reservas-form-title"
   }, t.form_title), /*#__PURE__*/React.createElement("div", {
     className: "reservas-form-sub"
-  }, t.form_sub), /*#__PURE__*/React.createElement("div", {
+  }, t.form_sub), /*#__PURE__*/React.createElement(DirectHowItWorks, {
+    lang: lang
+  }), /*#__PURE__*/React.createElement("div", {
     className: "rf-progress",
     "aria-label": lang === 'es' ? `Paso ${step} de 3` : `Step ${step} of 3`
   }, [{

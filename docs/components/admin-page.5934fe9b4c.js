@@ -4058,7 +4058,7 @@ To confirm your booking we need you to send us:
 
 The remaining ${remanente} € is paid in cash on the arrival day, at check-in. Any fees arising from these payments are borne by the guest.
 
-Once we have received all the documentation, your booking will be confirmed and we will write to you a few days before your arrival to coordinate it. Arrival is self check-in by default; in-person arrival is free between 15:00 and 19:00 and, outside those hours, has a fee and is subject to availability.
+Once we have received all the documentation, your booking will be confirmed and we will write to you a few days before your arrival to coordinate it. ${window._arrivalPolicy('en')}
 
 If you have any questions, feel free to write to us.
 
@@ -4078,7 +4078,7 @@ Para confirmar tu reserva necesitamos que nos hagas llegar:
 
 El remanente de ${remanente} € se abona en efectivo el día de la llegada, en el momento del check-in. Cualquier gasto derivado de estos pagos corre a cargo del huésped.
 
-Recibida toda la documentación, tu reserva quedará confirmada y te escribiremos unos días antes de tu llegada para coordinarla. La llegada es autónoma por defecto; la presencial es sin coste entre las 15:00 y las 19:00 y, fuera de ese horario, tiene coste y está sujeta a disponibilidad.
+Recibida toda la documentación, tu reserva quedará confirmada y te escribiremos unos días antes de tu llegada para coordinarla. ${window._arrivalPolicy('es')}
 
 Si tienes cualquier duda, escríbenos sin problema.
 
