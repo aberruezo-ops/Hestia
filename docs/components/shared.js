@@ -6199,7 +6199,7 @@ const DIRECT_RIBBON = lang => {
 };
 
 // Los seis pasos de la reserva directa. Fuente única: el panel del vídeo, el modal,
-// la tarjeta de /reservas y los textos aclaratorios salen de aquí.
+// y los textos aclaratorios salen de aquí.
 const DIRECT_STEPS = {
   es: [{
     t: 'Fechas y Hestía',
@@ -6332,48 +6332,6 @@ const DirectVideoModal = ({
     className: "dbm-cta",
     onClick: onClose
   }, lang === 'es' ? onReservas ? 'Empezar mi reserva' : 'Ver fechas y reservar' : onReservas ? 'Start my booking' : 'See dates and book'))));
-};
-
-// Tarjeta "Cómo funciona" para /reservas: portada, los seis pasos y botón al vídeo.
-const DirectHowItWorks = ({
-  lang
-}) => {
-  const steps = DIRECT_STEPS[lang],
-    vid = DIRECT_VIDEO[lang];
-  return /*#__PURE__*/React.createElement("section", {
-    className: "dhw",
-    "aria-labelledby": "dhw-title"
-  }, /*#__PURE__*/React.createElement("button", {
-    type: "button",
-    className: "dhw-poster",
-    onClick: openDirectVideo,
-    "aria-haspopup": "dialog",
-    "aria-label": lang === 'es' ? 'Ver el vídeo: así se reserva en Hestía' : 'Watch the video: how you book at Hestía'
-  }, /*#__PURE__*/React.createElement("img", {
-    src: vid.poster,
-    alt: "",
-    width: "270",
-    height: "480",
-    loading: "lazy",
-    decoding: "async"
-  }), /*#__PURE__*/React.createElement("span", {
-    className: "dhw-play",
-    "aria-hidden": "true"
-  })), /*#__PURE__*/React.createElement("div", {
-    className: "dhw-body"
-  }, /*#__PURE__*/React.createElement("span", {
-    className: "eyebrow"
-  }, lang === 'es' ? 'Reserva directa' : 'Direct booking'), /*#__PURE__*/React.createElement("h3", {
-    id: "dhw-title",
-    className: "dhw-title"
-  }, lang === 'es' ? 'Cómo funciona, paso a paso' : 'How it works, step by step'), /*#__PURE__*/React.createElement("ol", {
-    className: "dhw-steps"
-  }, steps.map((st, i) => /*#__PURE__*/React.createElement("li", {
-    key: i
-  }, /*#__PURE__*/React.createElement("strong", null, st.t, "."), " ", st.d))), /*#__PURE__*/React.createElement(DirectVideoLink, {
-    lang: lang,
-    className: "dhw-btn"
-  })));
 };
 
 // Cada perk recibe su propio acento de la paleta, 9 micro-identidades.
@@ -6747,7 +6705,6 @@ Object.assign(window, {
   DIRECT_VIDEO,
   DirectVideoLink,
   DirectVideoModal,
-  DirectHowItWorks,
   openDirectVideo,
   _lsMinMonthly,
   _lsSavingsPct

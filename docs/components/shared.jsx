@@ -3277,7 +3277,7 @@ const DIRECT_RIBBON = (lang) => {
 };
 
 // Los seis pasos de la reserva directa. Fuente única: el panel del vídeo, el modal,
-// la tarjeta de /reservas y los textos aclaratorios salen de aquí.
+// y los textos aclaratorios salen de aquí.
 const DIRECT_STEPS = {
   es: [
     { t: 'Fechas y Hestía',    d: 'Eliges tus fechas y la Hestía que quieres vivir: Mar, Thalassa o Salinas.' },
@@ -3350,28 +3350,6 @@ const DirectVideoModal = ({ lang, onClose }) => {
         </div>
       </div>
     </div>
-  );
-};
-
-// Tarjeta "Cómo funciona" para /reservas: portada, los seis pasos y botón al vídeo.
-const DirectHowItWorks = ({ lang }) => {
-  const steps = DIRECT_STEPS[lang], vid = DIRECT_VIDEO[lang];
-  return (
-    <section className="dhw" aria-labelledby="dhw-title">
-      <button type="button" className="dhw-poster" onClick={openDirectVideo} aria-haspopup="dialog"
-        aria-label={lang === 'es' ? 'Ver el vídeo: así se reserva en Hestía' : 'Watch the video: how you book at Hestía'}>
-        <img src={vid.poster} alt="" width="270" height="480" loading="lazy" decoding="async" />
-        <span className="dhw-play" aria-hidden="true" />
-      </button>
-      <div className="dhw-body">
-        <span className="eyebrow">{lang === 'es' ? 'Reserva directa' : 'Direct booking'}</span>
-        <h3 id="dhw-title" className="dhw-title">{lang === 'es' ? 'Cómo funciona, paso a paso' : 'How it works, step by step'}</h3>
-        <ol className="dhw-steps">
-          {steps.map((st, i) => (<li key={i}><strong>{st.t}.</strong> {st.d}</li>))}
-        </ol>
-        <DirectVideoLink lang={lang} className="dhw-btn" />
-      </div>
-    </section>
   );
 };
 
@@ -3662,7 +3640,7 @@ const AptDesktopSidebar = ({ lang, onGuideClick }) => {
   );
 };
 
-Object.assign(window, { DirectBookingPerks, DirectBookingModal, AptDesktopSidebar, DIRECT_PERKS, DIRECT_RIBBON, DIRECT_STEPS, DIRECT_VIDEO, DirectVideoLink, DirectVideoModal, DirectHowItWorks, openDirectVideo, _lsMinMonthly, _lsSavingsPct });
+Object.assign(window, { DirectBookingPerks, DirectBookingModal, AptDesktopSidebar, DIRECT_PERKS, DIRECT_RIBBON, DIRECT_STEPS, DIRECT_VIDEO, DirectVideoLink, DirectVideoModal, openDirectVideo, _lsMinMonthly, _lsSavingsPct });
 
 // ================================================================
 // WidgetStack, pila de widgets flotantes independientes a la derecha

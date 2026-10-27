@@ -10,7 +10,7 @@ const RESERVAS_COPY = {
     title: /*#__PURE__*/React.createElement(React.Fragment, null, "Reserva tu", /*#__PURE__*/React.createElement("br", null), /*#__PURE__*/React.createElement("em", null, "hogar en Vera.")),
     sub: 'Escríbenos directamente. Alex o Fran te responden normalmente en minutos.',
     form_title: 'Solicitar reserva',
-    form_sub: 'Tres pasos: dinos qué buscas, te enseñamos disponibilidad y precio, y eliges cómo enviar la solicitud.',
+    form_sub: 'Este formulario son los pasos 1 y 2 de la reserva directa: dinos qué buscas, mira disponibilidad y precio, y elige cómo enviarnos la solicitud. Después te respondemos, firmas el contrato y pagas la señal.',
     step1_title: 'Tu reserva',
     step2_title: 'Disponibilidad y precio',
     step3_title: 'Cómo nos lo envías',
@@ -67,7 +67,7 @@ const RESERVAS_COPY = {
     title: /*#__PURE__*/React.createElement(React.Fragment, null, "Book your", /*#__PURE__*/React.createElement("br", null), /*#__PURE__*/React.createElement("em", null, "home in Vera.")),
     sub: 'Write to us directly. Alex or Fran usually reply in minutes.',
     form_title: 'Request a booking',
-    form_sub: 'Three steps: tell us what you need, see availability and price, then choose how to send the request.',
+    form_sub: 'This form covers steps 1 and 2 of direct booking: tell us what you need, check availability and price, and choose how to send the request. Then we reply, you sign the contract and pay the deposit.',
     step1_title: 'Your booking',
     step2_title: 'Availability and price',
     step3_title: 'How to send it',
@@ -1082,9 +1082,7 @@ const ReservasForm = ({
     className: "reservas-form-title"
   }, t.form_title), /*#__PURE__*/React.createElement("div", {
     className: "reservas-form-sub"
-  }, t.form_sub), /*#__PURE__*/React.createElement(DirectHowItWorks, {
-    lang: lang
-  }), /*#__PURE__*/React.createElement("div", {
+  }, t.form_sub), /*#__PURE__*/React.createElement("div", {
     className: "rf-progress",
     "aria-label": lang === 'es' ? `Paso ${step} de 3` : `Step ${step} of 3`
   }, [{
@@ -1829,7 +1827,10 @@ const ReservasAside = ({
   }, lang === 'es' ? 'Ver todas las ventajas' : 'See all perks', /*#__PURE__*/React.createElement("span", {
     className: "rg-cta-arrow",
     "aria-hidden": "true"
-  }, "→"))));
+  }, "→")), /*#__PURE__*/React.createElement(DirectVideoLink, {
+    lang: lang,
+    className: "ads-video"
+  })));
 };
 const ReservasPageApp = () => {
   const [lang, setLang] = React.useState(() => localStorage.getItem('hestia-lang') || 'es');

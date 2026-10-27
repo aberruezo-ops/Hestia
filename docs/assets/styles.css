@@ -25676,7 +25676,7 @@ img[src$="photo-alex.jpg"]:not(.avatar-img):hover {
 /* ================================================================
    Vídeo "Así se reserva": enlaces, modal y tarjeta de /reservas
    ================================================================ */
-.dv-link, .dbt-video, .dhw-btn {
+.dv-link, .dbt-video {
   appearance: none;
   display: inline-flex; align-items: center; justify-content: center; gap: 8px;
   padding: 7px 14px;
@@ -25686,8 +25686,8 @@ img[src$="photo-alex.jpg"]:not(.avatar-img):hover {
   cursor: pointer; vertical-align: middle;
   transition: background .2s ease, transform .15s ease;
 }
-.dv-link:hover, .dbt-video:hover, .dhw-btn:hover { background: var(--ber); }
-.dv-link:focus-visible, .dbt-video:focus-visible, .dhw-btn:focus-visible { outline: 2px solid var(--sol); outline-offset: 3px; }
+.dv-link:hover, .dbt-video:hover:hover { background: var(--ber); }
+.dv-link:focus-visible, .dbt-video:focus-visible:focus-visible { outline: 2px solid var(--sol); outline-offset: 3px; }
 .dbt-video { margin: 14px 0 0 12px; }
 @media (max-width: 600px) { .dbt-video { display: flex; margin: 12px auto 0; width: fit-content; } }
 .ads-video, .widget-video {
@@ -25745,29 +25745,4 @@ img[src$="photo-alex.jpg"]:not(.avatar-img):hover {
 @media (max-width: 760px) {
   .dvm-modal { grid-template-columns: 1fr; gap: 16px; padding: 24px 18px 20px; }
   .dvm-video { max-width: min(100%, calc(52vh * 9 / 16)); margin: 8px auto 0; }
-}
-
-.dhw {
-  display: grid; grid-template-columns: 150px 1fr; gap: 22px;
-  margin: 0 0 28px; padding: 20px;
-  background: var(--arena); color: var(--ink);
-  border: 1px solid rgba(61, 26, 53, .12); border-radius: 14px 0 14px 0;
-}
-.dhw-poster {
-  position: relative; appearance: none; padding: 0; border: 0; cursor: pointer;
-  aspect-ratio: 9 / 16; align-self: start; overflow: hidden;
-  background: var(--ber-dk); border-radius: 10px 0 10px 0;
-}
-.dhw-poster img { display: block; width: 100%; height: 100%; object-fit: cover; }
-.dhw-play { position: absolute; inset: 0; display: grid; place-items: center; background: linear-gradient(180deg, transparent 45%, rgba(42, 15, 46, .55)); }
-.dhw-play::before { content: ''; width: 46px; height: 46px; border-radius: 50%; background: var(--sol); box-shadow: 0 4px 16px rgba(0, 0, 0, .35); }
-.dhw-play::after { content: ''; position: absolute; margin-left: 4px; border-left: 14px solid var(--ber-dk); border-top: 9px solid transparent; border-bottom: 9px solid transparent; }
-.dhw-poster:hover .dhw-play::before { background: var(--sol-lt); }
-.dhw-body { display: flex; flex-direction: column; align-items: flex-start; gap: 10px; }
-.dhw-title { margin: 0; font-family: var(--serif); font-weight: 400; font-size: clamp(21px, 2.6vw, 26px); line-height: 1.2; color: var(--ber-dk); }
-.dhw-steps { margin: 0; padding-left: 20px; display: grid; gap: 6px; font-size: 14px; line-height: 1.5; color: var(--ink); }
-.dhw-steps strong { color: var(--ber-dk); }
-@media (max-width: 640px) {
-  .dhw { grid-template-columns: 1fr; padding: 18px 16px; }
-  .dhw-poster { max-width: 130px; }
 }
