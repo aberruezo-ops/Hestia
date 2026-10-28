@@ -38,8 +38,9 @@
   playa está a 300–400 m.
 - **Thalassa:** no se dice "360°" (no está en la ficha). La cuna y la trona no
   figuran en su ficha.
-- **Llegada:** autónoma por defecto; presencial sin coste de 15:00 a 19:00, y
-  con coste fuera de ese horario. No se promete "entrar y salir a tu hora".
+- **Llegada:** autónoma por defecto, desde las 15:00 y también de noche;
+  presencial sin coste solo de 15:00 a 19:00 y acordada antes con Fran. No hay
+  llegada presencial fuera de ese horario. No se promete "entrar y salir a tu hora".
 - **Retiros y equipos:** no tenemos sala de reuniones, catering ni actividades
   organizadas por nosotros.
 - Sin precios ni disponibilidad concretos en las redes.
