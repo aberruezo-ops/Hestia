@@ -1829,7 +1829,8 @@ const ReservasAside = ({
     "aria-hidden": "true"
   }, "→")), /*#__PURE__*/React.createElement(DirectVideoLink, {
     lang: lang,
-    className: "ads-video"
+    button: true,
+    className: "rg-cta"
   })));
 };
 const ReservasPageApp = () => {

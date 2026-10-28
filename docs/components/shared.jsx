@@ -3302,13 +3302,28 @@ const DIRECT_VIDEO = {
 };
 const openDirectVideo = () => window.dispatchEvent(new Event('hestia:open-direct-video'));
 
-// Enlace/botón de texto que abre el vídeo desde cualquier explicación de la reserva directa.
-const DirectVideoLink = ({ lang, className = 'dv-link' }) => (
-  <button type="button" className={className} onClick={openDirectVideo} aria-haspopup="dialog">
-    <HiIcon name="film" size={15} />
-    <span>{lang === 'es' ? 'Ver cómo se reserva (vídeo)' : 'See how booking works (video)'}</span>
-  </button>
-);
+// Abre el vídeo desde cualquier explicación de la reserva directa. Sin `button` es un enlace
+// en línea (FAQ); con `button` toma las clases del botón vecino (variante ghost) para que
+// tenga sus mismas medidas: etiqueta corta y la película a la derecha, donde otros llevan la flecha.
+const DirectVideoLink = ({ lang, className = 'dv-link', button = false }) => {
+  const es = lang === 'es';
+  return (
+    <button type="button" className={className} onClick={openDirectVideo} aria-haspopup="dialog"
+      aria-label={es ? 'Ver cómo se reserva (vídeo)' : 'See how booking works (video)'}>
+      {button ? (
+        <>
+          <span>{es ? 'Cómo se reserva' : 'How booking works'}</span>
+          <HiIcon name="film" size={16} />
+        </>
+      ) : (
+        <>
+          <HiIcon name="film" size={15} />
+          <span>{es ? 'Ver cómo se reserva (vídeo)' : 'See how booking works (video)'}</span>
+        </>
+      )}
+    </button>
+  );
+};
 
 // Modal con el vídeo y los pasos en texto (accesible, y vale para quien no pueda reproducir).
 const DirectVideoModal = ({ lang, onClose }) => {
@@ -3455,9 +3470,10 @@ const DirectBookingModal = ({ lang, onClose }) => {
           </h3>
         </div>
 
-        <button type="button" className="dbm-video" onClick={() => { onClose(); openDirectVideo(); }}>
-          <HiIcon name="film" size={15} />
-          <span>{lang === 'es' ? 'Ver cómo se reserva (vídeo)' : 'See how booking works (video)'}</span>
+        <button type="button" className="dbm-video" onClick={() => { onClose(); openDirectVideo(); }}
+          aria-label={lang === 'es' ? 'Ver cómo se reserva (vídeo)' : 'See how booking works (video)'}>
+          <span>{lang === 'es' ? 'Cómo se reserva' : 'How booking works'}</span>
+          <HiIcon name="film" size={16} />
         </button>
 
         <div className="dbm-ribbon">
@@ -3540,17 +3556,19 @@ const DirectBookingPerks = ({ lang }) => {
               ? <>Reserva directa, <em>siempre</em> mejor.</>
               : <>Booking direct is <em>always</em> better.</>}
           </h3>
-          <button
-            type="button"
-            className="dbt-btn"
-            onClick={() => setOpen(true)}
-            aria-haspopup="dialog"
-          >
-            <span className="dbt-btn-pulse" aria-hidden="true"></span>
-            <span>{lang === 'es' ? 'Ver todas las ventajas' : 'See all perks'}</span>
-            <span className="dbt-arrow" aria-hidden="true">→</span>
-          </button>
-          <DirectVideoLink lang={lang} className="dbt-video" />
+          <div className="dbt-actions">
+            <button
+              type="button"
+              className="dbt-btn"
+              onClick={() => setOpen(true)}
+              aria-haspopup="dialog"
+            >
+              <span className="dbt-btn-pulse" aria-hidden="true"></span>
+              <span>{lang === 'es' ? 'Ver todas las ventajas' : 'See all perks'}</span>
+              <span className="dbt-arrow" aria-hidden="true">→</span>
+            </button>
+            <DirectVideoLink lang={lang} button className="dbt-btn dbt-btn-ghost" />
+          </div>
         </div>
       </section>
       {open && <DirectBookingModal lang={lang} onClose={() => setOpen(false)} />}
@@ -3615,7 +3633,7 @@ const AptDesktopSidebar = ({ lang, onGuideClick }) => {
           <span>{lang === 'es' ? 'Ver todas las ventajas' : 'See all perks'}</span>
           <span aria-hidden="true">→</span>
         </button>
-        <DirectVideoLink lang={lang} className="ads-video" />
+        <DirectVideoLink lang={lang} button className="ads-btn ads-btn-ghost" />
       </section>
       <section className="ads-card ads-guide">
         <span className="eyebrow">{lang === 'es' ? 'Si ya tienes reserva' : 'If you already have a booking'}</span>
@@ -3761,7 +3779,7 @@ const WidgetDirectBooking = ({ lang }) => {
         <span>{lang === 'es' ? 'Ver todas las ventajas' : 'See all perks'}</span>
         <span aria-hidden="true">→</span>
       </button>
-      <DirectVideoLink lang={lang} className="widget-video" />
+      <DirectVideoLink lang={lang} button className="widget-cta widget-cta-ghost" />
     </section>
   );
 };
