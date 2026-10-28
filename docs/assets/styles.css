@@ -25676,7 +25676,7 @@ img[src$="photo-alex.jpg"]:not(.avatar-img):hover {
 /* ================================================================
    Vídeo "Así se reserva": enlaces, modal y tarjeta de /reservas
    ================================================================ */
-.dv-link, .dbt-video {
+.dv-link {
   appearance: none;
   display: inline-flex; align-items: center; justify-content: center; gap: 8px;
   padding: 7px 14px;
@@ -25686,36 +25686,40 @@ img[src$="photo-alex.jpg"]:not(.avatar-img):hover {
   cursor: pointer; vertical-align: middle;
   transition: background .2s ease, transform .15s ease;
 }
-.dv-link:hover, .dbt-video:hover:hover { background: var(--ber); }
-.dv-link:focus-visible, .dbt-video:focus-visible:focus-visible { outline: 2px solid var(--sol); outline-offset: 3px; }
-.dbt-video { margin: 14px 0 0 12px; }
-@media (max-width: 600px) { .dbt-video { display: flex; margin: 12px auto 0; width: fit-content; } }
-.ads-video, .widget-video {
-  appearance: none;
-  display: flex; align-items: center; justify-content: center; gap: 8px;
-  width: 100%; margin-top: 8px; padding: 9px 12px;
-  background: transparent; color: var(--crema);
-  border: 1px solid color-mix(in srgb, var(--sol-lt) 70%, transparent);
-  border-radius: 10px 0 10px 0;
-  font-family: var(--sans); font-size: 12px; font-weight: 600; letter-spacing: .04em;
-  cursor: pointer;
-  transition: background .2s ease, border-color .2s ease;
+.dv-link:hover { background: var(--ber); }
+.dv-link:focus-visible { outline: 2px solid var(--sol); outline-offset: 3px; }
+/* El vídeo comparte clases con el botón principal vecino (ads-btn, widget-cta, dbt-btn, rg-cta):
+   solo se añade la variante ghost y el hueco entre ambos. */
+.ads-perks .ads-btn-ghost { margin-top: 8px; }
+.ads-btn:focus-visible, .widget-cta:focus-visible, .dbt-btn:focus-visible { outline: 2px solid var(--sol-lt); outline-offset: 3px; }
+.dbt-actions { display: flex; flex-wrap: wrap; justify-content: center; gap: 12px; }
+.dbt-btn-ghost {
+  background: transparent; color: var(--ber-dk);
+  border-color: color-mix(in srgb, var(--ber) 55%, transparent);
+  box-shadow: none;
 }
-.ads-video:hover, .widget-video:hover { background: rgba(111, 196, 209, .16); border-color: var(--sol-lt); }
-.ads-video:focus-visible, .widget-video:focus-visible { outline: 2px solid var(--sol-lt); outline-offset: 3px; }
+.dbt-btn-ghost:hover { background: rgba(61, 26, 53, .08); border-color: var(--ber); color: var(--ber-dk); box-shadow: none; }
+@media (max-width: 600px) {
+  .dbt-actions { flex-direction: column; align-items: stretch; max-width: 320px; margin: 0 auto; }
+  .dbt-actions .dbt-btn { justify-content: space-between; }
+}
+.reservas-guarantee .rg-cta { width: 100%; justify-content: space-between; }
+.reservas-guarantee .rg-cta + .rg-cta { margin-top: 8px; }
+.reservas-guarantee .rg-cta > svg { color: #6FC4D1; flex-shrink: 0; }
 .cta-perks-link + .cta-perks-link { margin-top: 10px; }
 @media (max-width: 767px) { .cta-perks-link + .cta-perks-link { display: flex; } }
 .dbm-video {
   appearance: none;
-  display: inline-flex; align-items: center; gap: 8px;
-  margin: 2px auto 16px; padding: 8px 16px;
+  display: flex; align-items: center; justify-content: space-between; gap: 8px;
+  width: 100%; max-width: 360px; margin: 2px auto 16px; padding: 12px 18px;
   background: transparent; color: var(--ber-dk);
-  border: 1px solid color-mix(in srgb, var(--ber) 45%, transparent);
+  border: 1px solid color-mix(in srgb, var(--ber) 55%, transparent);
   border-radius: 10px 0 10px 0;
-  font-family: var(--sans); font-size: 12.5px; font-weight: 600; letter-spacing: .04em;
+  font-family: var(--sans); font-size: 12px; font-weight: 700; letter-spacing: .09em; text-transform: uppercase;
   cursor: pointer; position: relative; z-index: 1;
+  transition: background .2s ease, border-color .2s ease;
 }
-.dbm-video:hover { background: rgba(61, 26, 53, .07); }
+.dbm-video:hover { background: rgba(61, 26, 53, .07); border-color: var(--ber); }
 .dbm-card-linkbtn { appearance: none; background: none; border: 0; padding: 0; cursor: pointer; }
 
 .dvm-modal {

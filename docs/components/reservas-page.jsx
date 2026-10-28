@@ -1714,7 +1714,7 @@ const ReservasAside = ({ lang }) => {
           {lang === 'es' ? 'Ver todas las ventajas' : 'See all perks'}
           <span className="rg-cta-arrow" aria-hidden="true">→</span>
         </button>
-        <DirectVideoLink lang={lang} className="ads-video" />
+        <DirectVideoLink lang={lang} button className="rg-cta" />
       </div>
     </aside>
   );

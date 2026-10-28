@@ -6252,19 +6252,29 @@ const DIRECT_VIDEO = {
 };
 const openDirectVideo = () => window.dispatchEvent(new Event('hestia:open-direct-video'));
 
-// Enlace/botón de texto que abre el vídeo desde cualquier explicación de la reserva directa.
+// Abre el vídeo desde cualquier explicación de la reserva directa. Sin `button` es un enlace
+// en línea (FAQ); con `button` toma las clases del botón vecino (variante ghost) para que
+// tenga sus mismas medidas: etiqueta corta y la película a la derecha, donde otros llevan la flecha.
 const DirectVideoLink = ({
   lang,
-  className = 'dv-link'
-}) => /*#__PURE__*/React.createElement("button", {
-  type: "button",
-  className: className,
-  onClick: openDirectVideo,
-  "aria-haspopup": "dialog"
-}, /*#__PURE__*/React.createElement(HiIcon, {
-  name: "film",
-  size: 15
-}), /*#__PURE__*/React.createElement("span", null, lang === 'es' ? 'Ver cómo se reserva (vídeo)' : 'See how booking works (video)'));
+  className = 'dv-link',
+  button = false
+}) => {
+  const es = lang === 'es';
+  return /*#__PURE__*/React.createElement("button", {
+    type: "button",
+    className: className,
+    onClick: openDirectVideo,
+    "aria-haspopup": "dialog",
+    "aria-label": es ? 'Ver cómo se reserva (vídeo)' : 'See how booking works (video)'
+  }, button ? /*#__PURE__*/React.createElement(React.Fragment, null, /*#__PURE__*/React.createElement("span", null, es ? 'Cómo se reserva' : 'How booking works'), /*#__PURE__*/React.createElement(HiIcon, {
+    name: "film",
+    size: 16
+  })) : /*#__PURE__*/React.createElement(React.Fragment, null, /*#__PURE__*/React.createElement(HiIcon, {
+    name: "film",
+    size: 15
+  }), /*#__PURE__*/React.createElement("span", null, es ? 'Ver cómo se reserva (vídeo)' : 'See how booking works (video)')));
+};
 
 // Modal con el vídeo y los pasos en texto (accesible, y vale para quien no pueda reproducir).
 const DirectVideoModal = ({
@@ -6502,11 +6512,12 @@ const DirectBookingModal = ({
     onClick: () => {
       onClose();
       openDirectVideo();
-    }
-  }, /*#__PURE__*/React.createElement(HiIcon, {
+    },
+    "aria-label": lang === 'es' ? 'Ver cómo se reserva (vídeo)' : 'See how booking works (video)'
+  }, /*#__PURE__*/React.createElement("span", null, lang === 'es' ? 'Cómo se reserva' : 'How booking works'), /*#__PURE__*/React.createElement(HiIcon, {
     name: "film",
-    size: 15
-  }), /*#__PURE__*/React.createElement("span", null, lang === 'es' ? 'Ver cómo se reserva (vídeo)' : 'See how booking works (video)')), /*#__PURE__*/React.createElement("div", {
+    size: 16
+  })), /*#__PURE__*/React.createElement("div", {
     className: "dbm-ribbon"
   }, ribbon.map((s, i) => /*#__PURE__*/React.createElement("div", {
     key: i,
@@ -6601,7 +6612,9 @@ const DirectBookingPerks = ({
     "aria-hidden": "true"
   }), lang === 'es' ? 'Reserva directa' : 'Direct booking'), /*#__PURE__*/React.createElement("h3", {
     className: "dbt-title"
-  }, lang === 'es' ? /*#__PURE__*/React.createElement(React.Fragment, null, "Reserva directa, ", /*#__PURE__*/React.createElement("em", null, "siempre"), " mejor.") : /*#__PURE__*/React.createElement(React.Fragment, null, "Booking direct is ", /*#__PURE__*/React.createElement("em", null, "always"), " better.")), /*#__PURE__*/React.createElement("button", {
+  }, lang === 'es' ? /*#__PURE__*/React.createElement(React.Fragment, null, "Reserva directa, ", /*#__PURE__*/React.createElement("em", null, "siempre"), " mejor.") : /*#__PURE__*/React.createElement(React.Fragment, null, "Booking direct is ", /*#__PURE__*/React.createElement("em", null, "always"), " better.")), /*#__PURE__*/React.createElement("div", {
+    className: "dbt-actions"
+  }, /*#__PURE__*/React.createElement("button", {
     type: "button",
     className: "dbt-btn",
     onClick: () => setOpen(true),
@@ -6614,8 +6627,9 @@ const DirectBookingPerks = ({
     "aria-hidden": "true"
   }, "→")), /*#__PURE__*/React.createElement(DirectVideoLink, {
     lang: lang,
-    className: "dbt-video"
-  }))), open && /*#__PURE__*/React.createElement(DirectBookingModal, {
+    button: true,
+    className: "dbt-btn dbt-btn-ghost"
+  })))), open && /*#__PURE__*/React.createElement(DirectBookingModal, {
     lang: lang,
     onClose: () => setOpen(false)
   }));
@@ -6678,7 +6692,8 @@ const AptDesktopSidebar = ({
     "aria-hidden": "true"
   }, "→")), /*#__PURE__*/React.createElement(DirectVideoLink, {
     lang: lang,
-    className: "ads-video"
+    button: true,
+    className: "ads-btn ads-btn-ghost"
   })), /*#__PURE__*/React.createElement("section", {
     className: "ads-card ads-guide"
   }, /*#__PURE__*/React.createElement("span", {
@@ -6858,7 +6873,8 @@ const WidgetDirectBooking = ({
     "aria-hidden": "true"
   }, "→")), /*#__PURE__*/React.createElement(DirectVideoLink, {
     lang: lang,
-    className: "widget-video"
+    button: true,
+    className: "widget-cta widget-cta-ghost"
   }));
 };
 const WidgetSabiasQue = ({
