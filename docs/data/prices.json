@@ -640,6 +640,16 @@
       "value": 5,
       "lastMinute": true,
       "auto": true
+    },
+    "vs|2026-11-28": {
+      "apt": "vs",
+      "start": "2026-11-28",
+      "end": "2026-12-01",
+      "nights": 3,
+      "type": "discount",
+      "value": 5,
+      "lastMinute": true,
+      "auto": true
     }
   },
   "gapSplits": {
