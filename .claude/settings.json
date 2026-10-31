@@ -38,13 +38,26 @@
       "Bash(grep:*)",
       "Bash(cp:*)",
       "Bash(mkdir:*)",
-      "Bash(sleep:*)"
+      "Bash(sleep:*)",
+      "Bash",
+      "Read",
+      "Edit",
+      "Write",
+      "Glob",
+      "Grep",
+      "WebFetch",
+      "WebSearch",
+      "Skill",
+      "Agent",
+      "mcp__playwright"
     ],
     "deny": [
       "Bash(git push --force:*)",
       "Bash(git push -f:*)",
       "Bash(rm -rf /:*)",
-      "Bash(git reset --hard:*)"
+      "Bash(git reset --hard:*)",
+      "Bash(rm -rf ~:*)",
+      "Bash(git push origin --delete:*)"
     ]
   },
   "hooks": {
