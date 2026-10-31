@@ -1,0 +1,52 @@
+{
+  "key": "2026-11",
+  "edition": {
+    "es": "Noviembre 2026",
+    "en": "November 2026"
+  },
+  "voz": [
+    {
+      "num": "01",
+      "apt": "Hestía Mar",
+      "slug": "mar.html",
+      "accent": "var(--vm)",
+      "curiosidad": {
+        "es": "",
+        "en": ""
+      },
+      "reco": {
+        "es": "",
+        "en": ""
+      }
+    },
+    {
+      "num": "02",
+      "apt": "Hestía Thalassa",
+      "slug": "thalassa.html",
+      "accent": "var(--vt)",
+      "curiosidad": {
+        "es": "",
+        "en": ""
+      },
+      "reco": {
+        "es": "",
+        "en": ""
+      }
+    },
+    {
+      "num": "03",
+      "apt": "Hestía Salinas",
+      "slug": "salinas.html",
+      "accent": "var(--vs-dk)",
+      "curiosidad": {
+        "es": "",
+        "en": ""
+      },
+      "reco": {
+        "es": "",
+        "en": ""
+      }
+    }
+  ],
+  "territorio": []
+}
