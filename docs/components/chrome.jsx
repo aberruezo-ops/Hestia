@@ -318,6 +318,7 @@ const Header = ({ mode, scrolled, lang }) => {
             </button>
           )}
         </div>
+        <div className="header-sol"><SolChip lang={lang} compact /></div>
         <div className="nav-right-area">
           <nav className="desktop-nav nav-right">
             <NavLink href={NAV_PAGES.nosotros}>{t.nav[4]}</NavLink>
