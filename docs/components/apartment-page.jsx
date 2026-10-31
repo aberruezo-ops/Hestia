@@ -525,6 +525,13 @@ const AptEquipamiento = ({ apt, lang }) => {
 // Foto de cabecera: índice en gallery_imgs del dormitorio principal, la imagen
 // que identifica a cada Hestía. El resto de fotos vive en el carrusel de abajo.
 const APT_COVER = { vm: 11, vt: 8, vs: 12 };
+// Con el sol de Vera (vera-sol.js) la primera foto de la ficha cambia: de noche, la terraza
+// iluminada de esa Hestía; al atardecer, la terraza de Thalassa. El resto de fotos no se toca.
+const APT_COVER_FASE = {
+  vm: { noche: 'apt-vm-gallery-14.jpg' },
+  vt: { ocaso: 'apt-vt-gallery-09.jpg', noche: 'apt-vt-gallery-17.jpg' },
+  vs: { noche: 'apt-vs-gallery-14.jpg' },
+};
 const _webp = (src) => src.replace(/\.(jpg|jpeg|png)$/i, '.webp');
 const _toGallery = () => {
   const el = document.getElementById('apt-galeria');
@@ -542,15 +549,20 @@ const AptPageHero = ({ apt, lang }) => {
   const minPrice = tbl ? Math.min(...tbl.base.slice(1)) : null;
   const imgs = apt.gallery_imgs || [];
   const caps = d.gallery_captions || [];
+  const { st: sol } = useVeraSol();
+  const fase = sol ? sol.fase : 'dia';
   const order = React.useMemo(() => {
     const esCaps = (apt.es && apt.es.gallery_captions) || caps;
     const zone = i => GALLERY_ZONES.findIndex(z => z.test((esCaps[i] || '').split(' · ')[0]));
-    const coverIdx = APT_COVER[apt.id] ?? 0;
+    const fasePhoto = (APT_COVER_FASE[apt.id] || {})[fase];
+    const faseIdx = fasePhoto ? imgs.findIndex(src => src.endsWith('/' + fasePhoto)) : -1;
+    const coverIdx = faseIdx >= 0 ? faseIdx : (APT_COVER[apt.id] ?? 0);
     const rest = imgs.map((_, i) => i).filter(i => i !== coverIdx).sort((x, y) => zone(x) - zone(y) || x - y);
     return imgs[coverIdx] ? [coverIdx, ...rest] : rest;
-  }, [apt.id]);
+  }, [apt.id, fase]);
   const trackRef = React.useRef(null);
   const [pos, setPos] = React.useState(0);
+  React.useEffect(() => { const el = trackRef.current; if (el) el.scrollTo({ left: 0, behavior: 'auto' }); setPos(0); }, [fase]);
   const onTrack = () => { const el = trackRef.current; if (el) setPos(Math.round(el.scrollLeft / el.clientWidth)); };
   const go = (dlt) => {
     const el = trackRef.current; if (!el) return;
@@ -564,6 +576,7 @@ const AptPageHero = ({ apt, lang }) => {
     <section className="ah on-dark" data-apt={apt.id} style={{ '--apt-accent': apt.accent, '--apt-accent2': apt.accent2 }}>
       {order.length > 0 && (
         <div className="ah-gallery">
+          <div className="ah-sol-wrap"><SolChip lang={lang} side="left" /></div>
           <div className="ah-cover">
             <div className="ah-track" ref={trackRef} onScroll={onTrack}>
               {order.map((gi, k) => (

@@ -4939,7 +4939,7 @@ const useVeraSol = () => {
   }, [aviso]);
   return { st, aviso };
 };
-const SolChip = ({ lang }) => {
+const SolChip = ({ lang, side }) => {
   const es = lang === 'es';
   const V = window.VeraSol;
   const { st, aviso } = useVeraSol();
@@ -4962,12 +4962,12 @@ const SolChip = ({ lang }) => {
   const minutos = st.minVera;
   const horaTxt = String(Math.floor(minutos / 60)).padStart(2, '0') + ':' + String(minutos % 60).padStart(2, '0');
   return (
-    <div className={`sol-chip-wrap${open ? ' is-open' : ''}`} ref={wrapRef}>
+    <div className={`sol-chip-wrap${open ? ' is-open' : ''}${side === 'left' ? ' is-left' : ''}`} ref={wrapRef}>
       <button type="button" className="sol-chip" aria-expanded={open} aria-controls="sol-pop"
         onClick={() => setOpen(o => !o)}>
         <HiIcon name={st.fase === 'noche' ? 'moon' : 'sun'} size={20} className="sol-chip-ic" />
         <span className="sol-chip-txt">
-          <strong>{st.vistaPrevia ? (es ? 'Vista previa' : 'Preview') : (es ? 'Ahora' : 'Now')} · {horaTxt} · {SOL_FASE[L][st.fase]}</strong>
+          <strong><span className="sol-chip-pre">{st.vistaPrevia ? (es ? 'Vista previa' : 'Preview') : (es ? 'Ahora' : 'Now')} · </span>{horaTxt} · {SOL_FASE[L][st.fase]}</strong>
           <span>{proximo}</span>
         </span>
       </button>

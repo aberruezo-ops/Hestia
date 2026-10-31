@@ -8309,7 +8309,8 @@ const useVeraSol = () => {
   };
 };
 const SolChip = ({
-  lang
+  lang,
+  side
 }) => {
   const es = lang === 'es';
   const V = window.VeraSol;
@@ -8341,7 +8342,7 @@ const SolChip = ({
   const minutos = st.minVera;
   const horaTxt = String(Math.floor(minutos / 60)).padStart(2, '0') + ':' + String(minutos % 60).padStart(2, '0');
   return /*#__PURE__*/React.createElement("div", {
-    className: `sol-chip-wrap${open ? ' is-open' : ''}`,
+    className: `sol-chip-wrap${open ? ' is-open' : ''}${side === 'left' ? ' is-left' : ''}`,
     ref: wrapRef
   }, /*#__PURE__*/React.createElement("button", {
     type: "button",
@@ -8355,7 +8356,9 @@ const SolChip = ({
     className: "sol-chip-ic"
   }), /*#__PURE__*/React.createElement("span", {
     className: "sol-chip-txt"
-  }, /*#__PURE__*/React.createElement("strong", null, st.vistaPrevia ? es ? 'Vista previa' : 'Preview' : es ? 'Ahora' : 'Now', " · ", horaTxt, " · ", SOL_FASE[L][st.fase]), /*#__PURE__*/React.createElement("span", null, proximo))), /*#__PURE__*/React.createElement("div", {
+  }, /*#__PURE__*/React.createElement("strong", null, /*#__PURE__*/React.createElement("span", {
+    className: "sol-chip-pre"
+  }, st.vistaPrevia ? es ? 'Vista previa' : 'Preview' : es ? 'Ahora' : 'Now', " · "), horaTxt, " · ", SOL_FASE[L][st.fase]), /*#__PURE__*/React.createElement("span", null, proximo))), /*#__PURE__*/React.createElement("div", {
     className: "sol-live",
     role: "status",
     "aria-live": "polite"
