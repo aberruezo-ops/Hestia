@@ -8245,6 +8245,152 @@ const HomeGuideTeaser = ({
     onClose: () => setModalOpen(false)
   }), document.body));
 };
+
+// ================================================================
+// El sol de Vera: estado reactivo (assets/vera-sol.js) y aviso visible para el
+// visitante. La web cambia con el sol real de Vera Playa (portada, luz, favicon,
+// barra del navegador) y esto se lo cuenta, con un deslizador para ver otra hora.
+// ================================================================
+const SOL_FASE = {
+  es: {
+    alba: 'Amanece en Vera',
+    dia: 'Día en Vera',
+    ocaso: 'Atardece en Vera',
+    noche: 'Noche en Vera'
+  },
+  en: {
+    alba: 'Dawn in Vera',
+    dia: 'Daytime in Vera',
+    ocaso: 'Sunset in Vera',
+    noche: 'Night in Vera'
+  }
+};
+const SOL_AVISO = {
+  es: {
+    alba: 'Amanece en Vera Playa',
+    dia: 'Es de día en Vera Playa',
+    ocaso: 'Atardece en Vera Playa',
+    noche: 'Se hace de noche en Vera Playa'
+  },
+  en: {
+    alba: 'Dawn is breaking in Vera Playa',
+    dia: 'It is daytime in Vera Playa',
+    ocaso: 'Sunset in Vera Playa',
+    noche: 'Night falls in Vera Playa'
+  }
+};
+const useVeraSol = () => {
+  const V = window.VeraSol;
+  const [st, setSt] = React.useState(() => V ? V.estado() : null);
+  const [aviso, setAviso] = React.useState(null);
+  React.useEffect(() => {
+    if (!V) return;
+    const on = e => {
+      setSt(e.detail.estado);
+      const d = e.detail;
+      if (d.cambio && d.anterior && !d.estado.vistaPrevia && !d.anterior.vistaPrevia) setAviso(d.estado.fase);
+    };
+    window.addEventListener('hestia:sol', on);
+    const tick = setInterval(() => setSt(V.estadoEn(V.ahoraMs())), 30000);
+    setSt(V.estadoEn(V.ahoraMs()));
+    return () => {
+      window.removeEventListener('hestia:sol', on);
+      clearInterval(tick);
+    };
+  }, []);
+  React.useEffect(() => {
+    if (!aviso) return;
+    const t = setTimeout(() => setAviso(null), 9000);
+    return () => clearTimeout(t);
+  }, [aviso]);
+  return {
+    st,
+    aviso
+  };
+};
+const SolChip = ({
+  lang
+}) => {
+  const es = lang === 'es';
+  const V = window.VeraSol;
+  const {
+    st,
+    aviso
+  } = useVeraSol();
+  const [open, setOpen] = React.useState(false);
+  const wrapRef = React.useRef(null);
+  React.useEffect(() => {
+    if (!open) return;
+    const onKey = e => {
+      if (e.key === 'Escape') setOpen(false);
+    };
+    const onDoc = e => {
+      if (wrapRef.current && !wrapRef.current.contains(e.target)) setOpen(false);
+    };
+    window.addEventListener('keydown', onKey);
+    document.addEventListener('pointerdown', onDoc);
+    return () => {
+      window.removeEventListener('keydown', onKey);
+      document.removeEventListener('pointerdown', onDoc);
+    };
+  }, [open]);
+  if (!V || !st) return null;
+  const L = es ? 'es' : 'en';
+  const hh = ms => V.hora(ms);
+  const proximo = st.solArriba ? es ? `se pone el sol a las ${hh(st.pone)}` : `sunset at ${hh(st.pone)}` : es ? `sale el sol a las ${hh(st.ms < st.sale ? st.sale : V.estadoEn(st.ms + 864e5).sale)}` : `sunrise at ${hh(st.ms < st.sale ? st.sale : V.estadoEn(st.ms + 864e5).sale)}`;
+  const minutos = st.minVera;
+  const horaTxt = String(Math.floor(minutos / 60)).padStart(2, '0') + ':' + String(minutos % 60).padStart(2, '0');
+  return /*#__PURE__*/React.createElement("div", {
+    className: `sol-chip-wrap${open ? ' is-open' : ''}`,
+    ref: wrapRef
+  }, /*#__PURE__*/React.createElement("button", {
+    type: "button",
+    className: "sol-chip",
+    "aria-expanded": open,
+    "aria-controls": "sol-pop",
+    onClick: () => setOpen(o => !o)
+  }, /*#__PURE__*/React.createElement(HiIcon, {
+    name: st.fase === 'noche' ? 'moon' : 'sun',
+    size: 20,
+    className: "sol-chip-ic"
+  }), /*#__PURE__*/React.createElement("span", {
+    className: "sol-chip-txt"
+  }, /*#__PURE__*/React.createElement("strong", null, st.vistaPrevia ? es ? 'Vista previa' : 'Preview' : es ? 'Ahora' : 'Now', " · ", horaTxt, " · ", SOL_FASE[L][st.fase]), /*#__PURE__*/React.createElement("span", null, proximo))), /*#__PURE__*/React.createElement("div", {
+    className: "sol-live",
+    role: "status",
+    "aria-live": "polite"
+  }, aviso ? SOL_AVISO[L][aviso] : ''), open && /*#__PURE__*/React.createElement("div", {
+    className: "sol-pop",
+    id: "sol-pop",
+    role: "group",
+    "aria-label": es ? 'El sol de Vera Playa' : 'The sun in Vera Playa'
+  }, /*#__PURE__*/React.createElement("h3", {
+    className: "sol-pop-title"
+  }, es ? 'Esta web sigue el sol de Vera Playa' : 'This site follows the sun in Vera Playa'), /*#__PURE__*/React.createElement("p", null, es ? 'La portada, la luz, el icono de la pestaña y el color de tu navegador cambian según el momento del día allí. Ahora son las ' + horaTxt + ' en Vera.' : 'The cover, the light, the tab icon and your browser colour change with the time of day there. It is ' + horaTxt + ' in Vera right now.'), /*#__PURE__*/React.createElement("label", {
+    className: "sol-range-l",
+    htmlFor: "sol-range"
+  }, es ? 'Ver Vera a otra hora' : 'See Vera at another time'), /*#__PURE__*/React.createElement("input", {
+    id: "sol-range",
+    type: "range",
+    min: "0",
+    max: "1439",
+    step: "10",
+    value: minutos,
+    onChange: e => V.setPreview(+e.target.value),
+    className: "sol-range",
+    "aria-valuetext": horaTxt + ' · ' + SOL_FASE[L][st.fase]
+  }), /*#__PURE__*/React.createElement("div", {
+    className: "sol-range-v"
+  }, /*#__PURE__*/React.createElement("span", null, "00:00"), /*#__PURE__*/React.createElement("strong", null, horaTxt), /*#__PURE__*/React.createElement("span", null, "23:59")), st.vistaPrevia && /*#__PURE__*/React.createElement("button", {
+    type: "button",
+    className: "sol-back",
+    onClick: () => V.setPreview(null)
+  }, es ? 'Volver a la hora real' : 'Back to the real time')));
+};
+Object.assign(window, {
+  useVeraSol,
+  SolChip
+});
 Object.assign(window, {
   WidgetStack,
   WidgetDirectBooking,

@@ -79,6 +79,8 @@ const HERO_VIDEOS = [
   // Moods: violet | teal | warm | night.
 ];
 
+const HERO_MOODS_FASE = { alba: ['violet'], dia: ['teal'], ocaso: ['warm', 'violet'], noche: ['night'] };
+
 // Reparte un texto en <span> por palabra, con --word-index para el stagger
 // en cascada (ver .word-reveal en styles.css). Preserva los espacios como
 // nodos de texto sueltos, no como parte del span, para que la selección y
@@ -177,15 +179,22 @@ const Hero = ({ lang, onScrollDown }) => {
   // Playlist aleatoria: mezcla Fisher-Yates una vez por sesión (useMemo
   // se ejecuta solo en el montaje, es decir, una vez por carga de página).
   // El orden cambia en cada sesión sin necesidad de sessionStorage.
+  // Cada clip lleva su mood; la fase del sol en Vera (vera-sol.js) decide cuáles
+  // se muestran: alba violeta, día turquesa, ocaso cálido y noche azul profundo.
+  const { st: sol } = useVeraSol();
+  const fase = sol ? sol.fase : 'dia';
   const playlist = React.useMemo(() => {
-    const a = [...HERO_VIDEOS];
+    const moods = HERO_MOODS_FASE[fase];
+    const base = HERO_VIDEOS.filter(v => moods.includes(v.mood));
+    const a = base.length ? [...base] : [...HERO_VIDEOS];
     for (let i = a.length - 1; i > 0; i--) {
       const j = Math.floor(Math.random() * (i + 1));
       [a[i], a[j]] = [a[j], a[i]];
     }
     return a;
-  }, []);
+  }, [fase]);
   const [vidIdx, setVidIdx] = React.useState(0);
+  React.useEffect(() => { setVidIdx(0); }, [fase]);
   const pick = playlist[vidIdx];
 
   // prefers-reduced-motion: se queda con el poster fijo, sin autoplay ni reintentos.
@@ -253,6 +262,8 @@ const Hero = ({ lang, onScrollDown }) => {
       >
         <source src={`${pick.src}?v=${VIDEO_V}`} type="video/mp4"/>
       </video>
+      <div className="hero-sol-sky" aria-hidden="true"/>
+      <div className="hero-sol-wrap"><SolChip lang={lang} /></div>
       <div className="hero-content">
         <WordReveal
           as="h1"
