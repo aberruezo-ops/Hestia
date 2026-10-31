@@ -4,7 +4,7 @@
   <meta charset="UTF-8"/>  <link rel="icon" type="image/png" sizes="32x32" href="assets/favicon-32x32.png"/>
   <link rel="icon" type="image/png" sizes="16x16" href="assets/favicon-16x16.png"/>
   <link rel="apple-touch-icon" sizes="180x180" href="assets/apple-touch-icon.png"/>
-  <script src="assets/favicon-dia-noche.js?v=1"></script>
+  <script src="assets/vera-sol.js?v=1"></script>
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <meta name="theme-color" content="#2A0F2E"/>
   <title>Estancias largas en Vera Playa · Teletrabajo y temporada</title>
@@ -96,7 +96,7 @@
   <link rel="preconnect" href="https://unpkg.com" crossorigin/>
   <link rel="dns-prefetch" href="//unpkg.com"/>
   <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400..700;1,9..144,400..700&family=Hanken+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet"/>
-  <link rel="stylesheet" href="assets/styles.css?v=1219"/>
+  <link rel="stylesheet" href="assets/styles.css?v=1221"/>
   <!-- GA4: cuando tengas el Measurement ID, descomenta y reemplaza G-XXXXXXXXXX
        Google Analytics → Admin → Propiedad → Flujos de datos → tu dominio → Measurement ID
   <script async src="https://www.googletagmanager.com/gtag/js?id=G-XXXXXXXXXX"></script>
@@ -158,7 +158,7 @@
     } catch (e) { console.warn('prices.json fetch failed', e); }
 
     for (const file of COMPONENT_FILES) {
-      const res = await fetch(file + '?cv=6249dd267e');
+      const res = await fetch(file + '?cv=6439418183');
       if (!res.ok) throw new Error(`Failed to load ${file}: ${res.status}`);
       eval(await res.text());
     }

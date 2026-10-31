@@ -25750,3 +25750,100 @@ img[src$="photo-alex.jpg"]:not(.avatar-img):hover {
   .dvm-modal { grid-template-columns: 1fr; gap: 16px; padding: 24px 18px 20px; }
   .dvm-video { max-width: min(100%, calc(52vh * 9 / 16)); margin: 8px auto 0; }
 }
+
+/* ================================================================
+   El sol de Vera (assets/vera-sol.js): la portada, el aviso y la vista previa
+   siguen la fase real del día en Vera Playa (data-sol en <html>).
+   ================================================================ */
+.hero-sol-sky {
+  position: absolute; inset: 0; z-index: 1; pointer-events: none; opacity: 0;
+  transition: opacity 1.4s ease, background 1.4s ease;
+}
+:root[data-sol="dia"] .hero-sol-sky {
+  opacity: 1;
+  background: linear-gradient(180deg, rgba(14, 28, 44, .30) 0%, rgba(14, 28, 44, .26) 50%, rgba(14, 28, 44, .10) 100%);
+}
+:root[data-sol="alba"] .hero-sol-sky {
+  opacity: 1;
+  background: linear-gradient(180deg, rgba(255, 160, 140, .20) 0%, rgba(120, 80, 150, .18) 45%, rgba(78, 36, 70, .12) 100%);
+}
+:root[data-sol="ocaso"] .hero-sol-sky {
+  opacity: 1;
+  background: linear-gradient(180deg, rgba(255, 150, 70, .14) 0%, rgba(200, 70, 60, .10) 50%, transparent 100%);
+}
+:root[data-sol="noche"] .hero-sol-sky {
+  opacity: 1;
+  background: linear-gradient(180deg, rgba(6, 10, 34, .50) 0%, rgba(18, 10, 40, .30) 55%, rgba(26, 10, 38, .40) 100%);
+}
+.hero-sol-sky::before {
+  content: ''; position: absolute; inset: 0; opacity: 0; transition: opacity 1.4s ease;
+  background-image:
+    radial-gradient(1px 1px at 12% 14%, rgba(240, 232, 213, .85), transparent),
+    radial-gradient(1.5px 1.5px at 27% 8%, rgba(111, 196, 209, .8), transparent),
+    radial-gradient(1px 1px at 41% 22%, rgba(240, 232, 213, .6), transparent),
+    radial-gradient(1px 1px at 58% 11%, rgba(240, 232, 213, .8), transparent),
+    radial-gradient(1.5px 1.5px at 72% 26%, rgba(240, 232, 213, .7), transparent),
+    radial-gradient(1px 1px at 86% 9%, rgba(111, 196, 209, .7), transparent),
+    radial-gradient(1px 1px at 93% 31%, rgba(240, 232, 213, .6), transparent),
+    radial-gradient(1px 1px at 6% 36%, rgba(240, 232, 213, .6), transparent),
+    radial-gradient(1px 1px at 34% 40%, rgba(240, 232, 213, .5), transparent),
+    radial-gradient(1px 1px at 64% 44%, rgba(240, 232, 213, .5), transparent);
+  -webkit-mask-image: linear-gradient(180deg, #000 0, #000 50%, transparent 85%);
+  mask-image: linear-gradient(180deg, #000 0, #000 50%, transparent 85%);
+  animation: sol-twinkle 7s ease-in-out infinite alternate;
+}
+:root[data-sol="noche"] .hero-sol-sky::before { opacity: 1; }
+:root[data-sol="alba"] .hero-sol-sky::before { opacity: .35; }
+@keyframes sol-twinkle { 0% { filter: brightness(.7); } 100% { filter: brightness(1.15); } }
+
+.hero-sol-wrap {
+  position: absolute; z-index: 4;
+  right: var(--page-pad, 24px); top: calc(var(--chrome-h, 116px) + 14px);
+}
+.sol-chip-wrap { position: relative; display: flex; flex-direction: column; align-items: flex-end; gap: 8px; }
+.sol-chip {
+  appearance: none; display: inline-flex; align-items: center; gap: 12px; text-align: left;
+  padding: 9px 16px 9px 12px; cursor: pointer;
+  color: var(--crema, #FAF6F0);
+  background: rgba(31, 10, 34, .62); -webkit-backdrop-filter: blur(10px); backdrop-filter: blur(10px);
+  border: 1px solid rgba(240, 232, 213, .28); border-radius: 10px 0 10px 0;
+  font-family: var(--sans); transition: background .2s ease, border-color .2s ease;
+}
+.sol-chip:hover { background: rgba(31, 10, 34, .78); border-color: rgba(240, 232, 213, .5); }
+.sol-chip:focus-visible, .sol-range:focus-visible, .sol-back:focus-visible { outline: 2px solid var(--sol-lt, #6FC4D1); outline-offset: 3px; }
+.sol-chip-ic { --hi-tint: var(--sol-lt, #6FC4D1); color: var(--crema, #FAF6F0); flex-shrink: 0; }
+.sol-chip-txt { display: flex; flex-direction: column; gap: 2px; line-height: 1.25; }
+.sol-chip-txt strong { font-size: 13px; font-weight: 600; letter-spacing: .03em; }
+.sol-chip-txt span { font-size: 12px; font-weight: 300; color: rgba(240, 232, 213, .8); }
+.sol-live { min-height: 0; font-size: 12px; color: var(--crema, #FAF6F0); background: rgba(31, 10, 34, .62); border-radius: 8px 0 8px 0; padding: 0 12px; max-height: 0; overflow: hidden; transition: max-height .4s ease, padding .4s ease; }
+.sol-live:not(:empty) { max-height: 40px; padding: 7px 12px; }
+.sol-pop {
+  position: absolute; right: 0; top: calc(100% + 10px); z-index: 5;
+  width: min(340px, calc(100vw - 2 * var(--page-pad, 24px)));
+  padding: 18px 18px 16px; color: var(--crema, #FAF6F0); text-align: left;
+  background: rgba(31, 10, 34, .96); border: 1px solid rgba(240, 232, 213, .2); border-radius: 14px 0 14px 0;
+  box-shadow: 0 18px 50px rgba(0, 0, 0, .45); font-family: var(--sans);
+}
+.sol-pop-title { margin: 0 0 8px; font: 400 21px/1.2 var(--serif); color: var(--crema, #FAF6F0); }
+.sol-pop p { margin: 0 0 14px; font-size: 14px; line-height: 1.5; color: rgba(240, 232, 213, .85); }
+.sol-range-l { display: block; margin-bottom: 8px; font-size: 11px; letter-spacing: .16em; text-transform: uppercase; color: var(--sol-lt, #6FC4D1); }
+.sol-range { width: 100%; accent-color: var(--sol-lt, #6FC4D1); cursor: pointer; }
+.sol-range-v { display: flex; justify-content: space-between; align-items: baseline; font-size: 12px; color: rgba(240, 232, 213, .6); }
+.sol-range-v strong { font-size: 18px; font-weight: 500; color: var(--crema, #FAF6F0); }
+.sol-back {
+  appearance: none; margin-top: 14px; width: 100%; padding: 10px 14px; cursor: pointer;
+  background: rgba(240, 232, 213, .1); color: var(--crema, #FAF6F0);
+  border: 1px solid rgba(240, 232, 213, .32); border-radius: 8px 0 8px 0;
+  font: 700 11px var(--sans); letter-spacing: .12em; text-transform: uppercase;
+}
+.sol-back:hover { background: rgba(240, 232, 213, .2); }
+@media (max-width: 600px) {
+  .hero-sol-wrap { left: 50%; right: auto; transform: translateX(-50%); width: max-content; max-width: calc(100vw - 2 * var(--page-pad, 16px)); }
+  .sol-chip-wrap { align-items: center; }
+  .sol-chip-txt strong { font-size: 12px; }
+  .sol-pop { right: auto; left: 50%; transform: translateX(-50%); }
+}
+@media (prefers-reduced-motion: reduce) {
+  .hero-sol-sky, .hero-sol-sky::before, .sol-live { transition: none; }
+  .hero-sol-sky::before { animation: none; }
+}
