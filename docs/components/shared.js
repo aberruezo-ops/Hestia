@@ -8265,6 +8265,20 @@ const SOL_FASE = {
     noche: 'Night in Vera'
   }
 };
+const SOL_FASE_CORTA = {
+  es: {
+    alba: 'Amanece',
+    dia: 'Día',
+    ocaso: 'Atardece',
+    noche: 'Noche'
+  },
+  en: {
+    alba: 'Dawn',
+    dia: 'Day',
+    ocaso: 'Sunset',
+    noche: 'Night'
+  }
+};
 const SOL_AVISO = {
   es: {
     alba: 'Amanece en Vera Playa',
@@ -8310,7 +8324,8 @@ const useVeraSol = () => {
 };
 const SolChip = ({
   lang,
-  side
+  side,
+  compact
 }) => {
   const es = lang === 'es';
   const V = window.VeraSol;
@@ -8320,13 +8335,15 @@ const SolChip = ({
   } = useVeraSol();
   const [open, setOpen] = React.useState(false);
   const wrapRef = React.useRef(null);
+  const popRef = React.useRef(null);
   React.useEffect(() => {
     if (!open) return;
     const onKey = e => {
       if (e.key === 'Escape') setOpen(false);
     };
     const onDoc = e => {
-      if (wrapRef.current && !wrapRef.current.contains(e.target)) setOpen(false);
+      if (wrapRef.current && wrapRef.current.contains(e.target) || popRef.current && popRef.current.contains(e.target)) return;
+      setOpen(false);
     };
     window.addEventListener('keydown', onKey);
     document.addEventListener('pointerdown', onDoc);
@@ -8342,7 +8359,7 @@ const SolChip = ({
   const minutos = st.minVera;
   const horaTxt = String(Math.floor(minutos / 60)).padStart(2, '0') + ':' + String(minutos % 60).padStart(2, '0');
   return /*#__PURE__*/React.createElement("div", {
-    className: `sol-chip-wrap${open ? ' is-open' : ''}${side === 'left' ? ' is-left' : ''}`,
+    className: `sol-chip-wrap${open ? ' is-open' : ''}${side === 'left' ? ' is-left' : ''}${compact ? ' is-compact' : ''}`,
     ref: wrapRef
   }, /*#__PURE__*/React.createElement("button", {
     type: "button",
@@ -8356,39 +8373,43 @@ const SolChip = ({
     className: "sol-chip-ic"
   }), /*#__PURE__*/React.createElement("span", {
     className: "sol-chip-txt"
-  }, /*#__PURE__*/React.createElement("strong", null, /*#__PURE__*/React.createElement("span", {
+  }, compact ? /*#__PURE__*/React.createElement(React.Fragment, null, /*#__PURE__*/React.createElement("strong", null, horaTxt, " · ", SOL_FASE_CORTA[L][st.fase]), /*#__PURE__*/React.createElement("span", null, st.vistaPrevia ? es ? 'vista previa en Vera' : 'preview in Vera' : es ? 'ahora en Vera' : 'now in Vera')) : /*#__PURE__*/React.createElement("strong", null, /*#__PURE__*/React.createElement("span", {
     className: "sol-chip-pre"
-  }, st.vistaPrevia ? es ? 'Vista previa' : 'Preview' : es ? 'Ahora' : 'Now', " · "), horaTxt, " · ", SOL_FASE[L][st.fase]), /*#__PURE__*/React.createElement("span", null, proximo))), /*#__PURE__*/React.createElement("div", {
+  }, st.vistaPrevia ? es ? 'Vista previa' : 'Preview' : es ? 'Ahora' : 'Now', " · "), horaTxt, " · ", SOL_FASE[L][st.fase]), !compact && /*#__PURE__*/React.createElement("span", null, proximo))), /*#__PURE__*/React.createElement("div", {
     className: "sol-live",
     role: "status",
     "aria-live": "polite"
-  }, aviso ? SOL_AVISO[L][aviso] : ''), open && /*#__PURE__*/React.createElement("div", {
-    className: "sol-pop",
-    id: "sol-pop",
-    role: "group",
-    "aria-label": es ? 'El sol de Vera Playa' : 'The sun in Vera Playa'
-  }, /*#__PURE__*/React.createElement("h3", {
-    className: "sol-pop-title"
-  }, es ? 'Esta web sigue el sol de Vera Playa' : 'This site follows the sun in Vera Playa'), /*#__PURE__*/React.createElement("p", null, es ? 'La portada, la luz, el icono de la pestaña y el color de tu navegador cambian según el momento del día allí. Ahora son las ' + horaTxt + ' en Vera.' : 'The cover, the light, the tab icon and your browser colour change with the time of day there. It is ' + horaTxt + ' in Vera right now.'), /*#__PURE__*/React.createElement("label", {
-    className: "sol-range-l",
-    htmlFor: "sol-range"
-  }, es ? 'Ver Vera a otra hora' : 'See Vera at another time'), /*#__PURE__*/React.createElement("input", {
-    id: "sol-range",
-    type: "range",
-    min: "0",
-    max: "1439",
-    step: "10",
-    value: minutos,
-    onChange: e => V.setPreview(+e.target.value),
-    className: "sol-range",
-    "aria-valuetext": horaTxt + ' · ' + SOL_FASE[L][st.fase]
-  }), /*#__PURE__*/React.createElement("div", {
-    className: "sol-range-v"
-  }, /*#__PURE__*/React.createElement("span", null, "00:00"), /*#__PURE__*/React.createElement("strong", null, horaTxt), /*#__PURE__*/React.createElement("span", null, "23:59")), st.vistaPrevia && /*#__PURE__*/React.createElement("button", {
-    type: "button",
-    className: "sol-back",
-    onClick: () => V.setPreview(null)
-  }, es ? 'Volver a la hora real' : 'Back to the real time')));
+  }, aviso ? SOL_AVISO[L][aviso] : ''), open && (() => {
+    const pop = /*#__PURE__*/React.createElement("div", {
+      className: `sol-pop${compact ? ' is-portal' : ''}`,
+      id: "sol-pop",
+      ref: popRef,
+      role: "group",
+      "aria-label": es ? 'El sol de Vera Playa' : 'The sun in Vera Playa'
+    }, /*#__PURE__*/React.createElement("h3", {
+      className: "sol-pop-title"
+    }, es ? 'Esta web sigue el sol de Vera Playa' : 'This site follows the sun in Vera Playa'), /*#__PURE__*/React.createElement("p", null, es ? 'La portada, la luz, el icono de la pestaña y el color de tu navegador cambian según el momento del día allí. Ahora son las ' + horaTxt + ' en Vera.' : 'The cover, the light, the tab icon and your browser colour change with the time of day there. It is ' + horaTxt + ' in Vera right now.'), /*#__PURE__*/React.createElement("label", {
+      className: "sol-range-l",
+      htmlFor: "sol-range"
+    }, es ? 'Ver Vera a otra hora' : 'See Vera at another time'), /*#__PURE__*/React.createElement("input", {
+      id: "sol-range",
+      type: "range",
+      min: "0",
+      max: "1439",
+      step: "10",
+      value: minutos,
+      onChange: e => V.setPreview(+e.target.value),
+      className: "sol-range",
+      "aria-valuetext": horaTxt + ' · ' + SOL_FASE[L][st.fase]
+    }), /*#__PURE__*/React.createElement("div", {
+      className: "sol-range-v"
+    }, /*#__PURE__*/React.createElement("span", null, "00:00"), /*#__PURE__*/React.createElement("strong", null, horaTxt), /*#__PURE__*/React.createElement("span", null, "23:59")), st.vistaPrevia && /*#__PURE__*/React.createElement("button", {
+      type: "button",
+      className: "sol-back",
+      onClick: () => V.setPreview(null)
+    }, es ? 'Volver a la hora real' : 'Back to the real time'));
+    return compact ? ReactDOM.createPortal(pop, document.body) : pop;
+  })());
 };
 Object.assign(window, {
   useVeraSol,

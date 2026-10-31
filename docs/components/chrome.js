@@ -458,6 +458,11 @@ const Header = ({
     onClick: expandVit,
     "aria-label": lang === 'es' ? 'Expandir animación Vitruvio' : 'Expand Vitruvio animation'
   }, "+")), /*#__PURE__*/React.createElement("div", {
+    className: "header-sol"
+  }, /*#__PURE__*/React.createElement(SolChip, {
+    lang: lang,
+    compact: true
+  })), /*#__PURE__*/React.createElement("div", {
     className: "nav-right-area"
   }, /*#__PURE__*/React.createElement("nav", {
     className: "desktop-nav nav-right"

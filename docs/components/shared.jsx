@@ -4912,6 +4912,10 @@ const SOL_FASE = {
   es: { alba: 'Amanece en Vera', dia: 'Día en Vera', ocaso: 'Atardece en Vera', noche: 'Noche en Vera' },
   en: { alba: 'Dawn in Vera', dia: 'Daytime in Vera', ocaso: 'Sunset in Vera', noche: 'Night in Vera' },
 };
+const SOL_FASE_CORTA = {
+  es: { alba: 'Amanece', dia: 'Día', ocaso: 'Atardece', noche: 'Noche' },
+  en: { alba: 'Dawn', dia: 'Day', ocaso: 'Sunset', noche: 'Night' },
+};
 const SOL_AVISO = {
   es: { alba: 'Amanece en Vera Playa', dia: 'Es de día en Vera Playa', ocaso: 'Atardece en Vera Playa', noche: 'Se hace de noche en Vera Playa' },
   en: { alba: 'Dawn is breaking in Vera Playa', dia: 'It is daytime in Vera Playa', ocaso: 'Sunset in Vera Playa', noche: 'Night falls in Vera Playa' },
@@ -4939,16 +4943,17 @@ const useVeraSol = () => {
   }, [aviso]);
   return { st, aviso };
 };
-const SolChip = ({ lang, side }) => {
+const SolChip = ({ lang, side, compact }) => {
   const es = lang === 'es';
   const V = window.VeraSol;
   const { st, aviso } = useVeraSol();
   const [open, setOpen] = React.useState(false);
   const wrapRef = React.useRef(null);
+  const popRef = React.useRef(null);
   React.useEffect(() => {
     if (!open) return;
     const onKey = (e) => { if (e.key === 'Escape') setOpen(false); };
-    const onDoc = (e) => { if (wrapRef.current && !wrapRef.current.contains(e.target)) setOpen(false); };
+    const onDoc = (e) => { if ((wrapRef.current && wrapRef.current.contains(e.target)) || (popRef.current && popRef.current.contains(e.target))) return; setOpen(false); };
     window.addEventListener('keydown', onKey); document.addEventListener('pointerdown', onDoc);
     return () => { window.removeEventListener('keydown', onKey); document.removeEventListener('pointerdown', onDoc); };
   }, [open]);
@@ -4962,18 +4967,25 @@ const SolChip = ({ lang, side }) => {
   const minutos = st.minVera;
   const horaTxt = String(Math.floor(minutos / 60)).padStart(2, '0') + ':' + String(minutos % 60).padStart(2, '0');
   return (
-    <div className={`sol-chip-wrap${open ? ' is-open' : ''}${side === 'left' ? ' is-left' : ''}`} ref={wrapRef}>
+    <div className={`sol-chip-wrap${open ? ' is-open' : ''}${side === 'left' ? ' is-left' : ''}${compact ? ' is-compact' : ''}`} ref={wrapRef}>
       <button type="button" className="sol-chip" aria-expanded={open} aria-controls="sol-pop"
         onClick={() => setOpen(o => !o)}>
         <HiIcon name={st.fase === 'noche' ? 'moon' : 'sun'} size={20} className="sol-chip-ic" />
         <span className="sol-chip-txt">
+          {compact ? (
+            <>
+              <strong>{horaTxt} · {SOL_FASE_CORTA[L][st.fase]}</strong>
+              <span>{st.vistaPrevia ? (es ? 'vista previa en Vera' : 'preview in Vera') : (es ? 'ahora en Vera' : 'now in Vera')}</span>
+            </>
+          ) : (
           <strong><span className="sol-chip-pre">{st.vistaPrevia ? (es ? 'Vista previa' : 'Preview') : (es ? 'Ahora' : 'Now')} · </span>{horaTxt} · {SOL_FASE[L][st.fase]}</strong>
-          <span>{proximo}</span>
+          )}
+          {!compact && <span>{proximo}</span>}
         </span>
       </button>
       <div className="sol-live" role="status" aria-live="polite">{aviso ? SOL_AVISO[L][aviso] : ''}</div>
-      {open && (
-        <div className="sol-pop" id="sol-pop" role="group" aria-label={es ? 'El sol de Vera Playa' : 'The sun in Vera Playa'}>
+      {open && (() => { const pop = (
+        <div className={`sol-pop${compact ? ' is-portal' : ''}`} id="sol-pop" ref={popRef} role="group" aria-label={es ? 'El sol de Vera Playa' : 'The sun in Vera Playa'}>
           <h3 className="sol-pop-title">{es ? 'Esta web sigue el sol de Vera Playa' : 'This site follows the sun in Vera Playa'}</h3>
           <p>{es
             ? 'La portada, la luz, el icono de la pestaña y el color de tu navegador cambian según el momento del día allí. Ahora son las ' + horaTxt + ' en Vera.'
@@ -4989,7 +5001,7 @@ const SolChip = ({ lang, side }) => {
             </button>
           )}
         </div>
-      )}
+      ); return compact ? ReactDOM.createPortal(pop, document.body) : pop; })()}
     </div>
   );
 };
