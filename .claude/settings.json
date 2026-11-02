@@ -18,6 +18,7 @@
       "Bash(git branch:*)",
       "mcp__higgsfield",
       "mcp__Publora",
+      "mcp__Publora__*",
       "mcp__Claude_Code_Remote",
       "mcp__github",
       "Bash(curl:*)",
