@@ -80,7 +80,7 @@ header p{margin:4px 0 0;font-size:13px;color:rgba(42,15,46,.7)}
   M('teal', 0x1fb0c0); M('tealWall', 0x1f6b66); M('greenDk', 0x1f4637); M('greenThrow', 0x1f5d46);
   M('sage', 0x78a39e); M('lilac', 0xcbb8d6, { transparent: true, opacity: 0.55 }); M('voile', 0xf5f1ea, { transparent: true, opacity: 0.55 });
   M('tileGrey', 0xffffff); M('kitFloor', 0xffffff); M('amber', 0xb4561f); M('cream', 0xefe6d2); M('stripe', 0xc9a24a);
-  M('copper', 0xb8672f, { metalness: 0.7, roughness: 0.3 }); M('whiteGloss', 0xfbfbf9, { roughness: 0.3 }); M('brown', 0x5a3a24);
+  M('copper', 0xb8672f, { metalness: 0.7, roughness: 0.3 }); M('sofaTeal', 0x4fb0b5); M('rust', 0xb85a32); M('whiteGloss', 0xfbfbf9, { roughness: 0.3 }); M('brown', 0x5a3a24);
 
   function tileTexture(base, line, step, size) {
     var c = document.createElement('canvas'); c.width = c.height = 256;
@@ -89,7 +89,15 @@ header p{margin:4px 0 0;font-size:13px;color:rgba(42,15,46,.7)}
     var t = new T.CanvasTexture(c); t.wrapS = t.wrapT = T.RepeatWrapping; t.repeat.set(size / step, size / step);
     t.encoding = T.sRGBEncoding; return t;
   }
-  mats.floor.map = tileTexture('#e9dec6', '#d3c6a8', 0.45, 1);
+  mats.floor.map = tileTexture('#ece3cd', '#d8ccb0', 0.6, 1);
+  (function () {
+    var c = document.createElement('canvas'); c.width = 128; c.height = 512; var g = c.getContext('2d');
+    g.fillStyle = '#e9e7e2'; g.fillRect(0, 0, 128, 512); g.strokeStyle = '#9a9ca0'; g.lineWidth = 3;
+    for (var y = 0; y < 512; y += 64) { for (var x = 32; x < 128; x += 64) {
+      g.beginPath(); g.ellipse(x, y + 32, 14, 26, 0, 0, 7); g.stroke(); g.beginPath(); g.ellipse(x, y + 32, 6, 12, 0, 0, 7); g.stroke();
+      g.beginPath(); g.moveTo(x - 24, y + 32); g.quadraticCurveTo(x, y + 8, x + 24, y + 32); g.stroke(); } }
+    var t = new T.CanvasTexture(c); t.encoding = T.sRGBEncoding; mats.damask = new T.MeshStandardMaterial({ map: t, roughness: 0.6, metalness: 0.2 });
+  })();
   mats.tileBath.map = tileTexture('#d4cbb8', '#b9ae98', 0.3, 1);
 
   /* ---------- helpers de geometría ---------- */
@@ -130,7 +138,7 @@ header p{margin:4px 0 0;font-size:13px;color:rgba(42,15,46,.7)}
   floorRect(6.9, 0, 11, 3.3, mats.floor);           // dormitorio 2
   floorRect(0, 3.3, 9.1, 7, mats.floor);            // salón-comedor y cocina
   floorRect(9.1, 3.3, 11, 7, mats.tileBath);        // baño 2
-  floorRect(6.0, 4.1, 9.1, 7, mats.kitFloor, 0.003); // suelo gris de la cocina
+  floorRect(5.8, 4.6, 9.1, 7, mats.kitFloor, 0.003); // suelo gris de la cocina
   var deck = new T.Mesh(new T.BoxGeometry(3.0, 0.12, 6.9), mats.tileGrey);
   deck.position.set(-1.5, -0.04, 3.45); deck.receiveShadow = true; gShell.add(deck);
   mats.tileGrey.map = tileTexture('#bdbab3', '#a29f98', 0.6, 1);
@@ -302,36 +310,54 @@ header p{margin:4px 0 0;font-size:13px;color:rgba(42,15,46,.7)}
     /* ENTRADA */
     box(0.9, 0.9, 0.3, 6.15, 0, 0.2, mats.wood);
 
-    /* SALÓN-COMEDOR: mesa de madera con patas negras, cuatro sillas negras, lámpara negra, sofá, mesa blanca tallada */
-    box(1.5, 0.05, 0.85, 4.8, 0.72, 5.25, mats.woodDark);
-    box(0.06, 0.72, 0.8, 4.1, 0, 5.25, mats.black); box(0.06, 0.72, 0.8, 5.5, 0, 5.25, mats.black); box(1.4, 0.05, 0.05, 4.8, 0.12, 5.25, mats.black);
-    [[4.4, 4.62, 0], [5.2, 4.62, 0], [4.4, 5.88, Math.PI], [5.2, 5.88, Math.PI]].forEach(function (p) { chair(p[0], p[1], p[2], mats.black, mats.wood); });
-    cyl(0.01, 1.0, 4.8, 1.55, 5.25, mats.black); cyl(0.27, 0.17, 4.8, 1.55, 5.25, mats.black, null, 0.14);     // lámpara negra
-    cyl(0.03, 0.2, 4.8, 0.77, 5.25, mats.glass);                                                               // centro de mesa
-    box(1.4, 0.45, 0.4, 2.6, 0, 3.55, mats.white);                                                             // mueble del televisor
-    FP = gDecor; box(1.3, 0.75, 0.04, 2.6, 1.0, 3.4, mats.black); FP = gFurn;
-    box(2.1, 0.42, 0.95, 2.6, 0, 6.15, mats.sage); box(2.1, 0.5, 0.2, 2.6, 0.42, 6.55, mats.sage);
-    box(0.22, 0.65, 0.95, 1.47, 0, 6.15, mats.sage); box(0.22, 0.65, 0.95, 3.73, 0, 6.15, mats.sage);
-    box(0.45, 0.1, 0.22, 1.95, 0.5, 6.4, mats.garnet); box(0.45, 0.1, 0.22, 3.25, 0.5, 6.4, mats.garnet); box(0.4, 0.1, 0.2, 2.6, 0.5, 6.42, mats.white);
-    box(1.1, 0.38, 0.62, 2.6, 0, 5.0, mats.whiteGloss);                                                         // mesa blanca tallada
-    box(0.45, 0.6, 0.45, 1.15, 0.0, 6.2, mats.black); box(0.4, 0.02, 0.4, 1.15, 0.6, 6.2, mats.glass);          // mesa auxiliar de metal negro
-    cyl(0.12, 0.35, 1.15, 0.02, 6.2, mats.sage, null, 0.08); tableLamp(1.15, 0.62, 6.2);
-    var sun = new T.Mesh(new T.CylinderGeometry(0.46, 0.46, 0.02, 40), mats.gold); sun.rotation.x = Math.PI / 2; sun.position.set(2.6, 1.75, 6.93); gDecor.add(sun);
-    var sunIn = new T.Mesh(new T.CircleGeometry(0.14, 24), mats.mirror); sunIn.position.set(2.6, 1.75, 6.918); sunIn.rotation.y = Math.PI; gDecor.add(sunIn);
-    cyl(0.14, 0.9, 0.5, 0, 6.6, mats.amber, null, 0.1); box(0.02, 1.0, 0.02, 0.5, 0.9, 6.6, mats.brown);       // jarrón alto con ramas
-    FP = gDecor; curtain(0.12, 3.9, 0.12, 6.4, mats.voile); FP = gFurn;
-    plant(0.55, 4.0, 1.1);
+    /* SALÓN-COMEDOR: la posición de cada mueble sale del plano existente (televisor en la pared norte con dos farolillos al lado,
+       mesa baja blanca, sofá en la pared sur, mesa de comedor larga junto a la cocina); el aspecto sale de las fotos */
+    var TX = 4.4, TZ = 5.4;
+    box(0.9, 0.05, 1.45, TX, 0.72, TZ, mats.woodDark);                                      // sobre de madera de dos piezas
+    box(0.012, 0.012, 1.45, TX, 0.77, TZ, mats.black, null, false);
+    box(0.06, 0.72, 0.06, TX - 0.4, 0, TZ - 0.65, mats.black); box(0.06, 0.72, 0.06, TX + 0.4, 0, TZ - 0.65, mats.black);
+    box(0.06, 0.72, 0.06, TX - 0.4, 0, TZ + 0.65, mats.black); box(0.06, 0.72, 0.06, TX + 0.4, 0, TZ + 0.65, mats.black);
+    box(0.06, 0.06, 1.3, TX - 0.4, 0.1, TZ, mats.black); box(0.06, 0.06, 1.3, TX + 0.4, 0.1, TZ, mats.black);
+    [[TX - 0.75, TZ - 0.35, Math.PI / 2], [TX - 0.75, TZ + 0.35, Math.PI / 2], [TX + 0.75, TZ - 0.35, -Math.PI / 2], [TX + 0.75, TZ + 0.35, -Math.PI / 2]].forEach(function (p) { chair(p[0], p[1], p[2], mats.black, mats.wood); });
+    cyl(0.01, 0.9, TX, 1.65, TZ, mats.black);
+    cyl(0.32, 0.15, TX, 1.5, TZ, mats.black, null, 0.3);                                       // lámpara plana, forma de tambor
+    cyl(0.03, 0.2, TX - 0.15, 0.77, TZ - 0.3, mats.white); sphere(0.07, TX - 0.15, 1.0, TZ - 0.3, mats.garnet);
+    box(0.2, 0.025, 0.28, TX + 0.1, 0.77, TZ + 0.3, mats.cream);                                  // cuaderno
 
-    /* COCINA: en L blanca brillante, encimera gris, campana negra inclinada, columna de nevera y horno de acero */
-    box(2.0, 0.9, 0.6, 7.45, 0, 6.65, mats.whiteGloss); box(2.0, 0.04, 0.62, 7.45, 0.9, 6.65, mats.counter);
-    FP = gDecor; box(2.0, 0.75, 0.35, 7.45, 1.45, 6.82, mats.whiteGloss);
-    var hood = box(0.8, 0.07, 0.45, 7.55, 1.62, 6.7, mats.black); hood.rotation.x = -0.45; FP = gFurn;
-    box(0.55, 0.01, 0.5, 7.55, 0.94, 6.65, mats.black);                                                         // placa de inducción
-    box(0.6, 2.05, 0.62, 8.75, 0, 6.68, mats.steel); box(0.6, 0.55, 0.5, 8.75, 1.0, 6.18, mats.steel);          // nevera combi y columna de horno y microondas
-    box(0.6, 0.9, 1.0, 8.8, 0, 5.4, mats.whiteGloss); box(0.62, 0.04, 1.0, 8.8, 0.9, 5.4, mats.counter);       // brazo de la L con el fregadero
-    cyl(0.015, 0.3, 8.8, 0.94, 5.1, mats.steel);
-    FP = gDecor; box(0.5, 0.6, 0.3, 8.8, 1.5, 5.45, mats.whiteGloss); FP = gFurn;
-    box(0.28, 0.1, 0.18, 6.85, 0.94, 6.7, mats.black);                                                          // cafetera
+    var SX = 2.1;
+    box(2.25, 0.42, 0.95, SX, 0, 6.45, mats.sofaTeal); box(2.25, 0.5, 0.2, SX, 0.42, 6.85, mats.sofaTeal);   // sofá turquesa de tela acanalada
+    box(0.22, 0.62, 0.95, SX - 1.15, 0, 6.45, mats.sofaTeal); box(0.22, 0.62, 0.95, SX + 1.15, 0, 6.45, mats.sofaTeal);
+    box(0.45, 0.12, 0.2, SX - 0.5, 0.5, 6.65, mats.rust); box(0.45, 0.12, 0.2, SX - 0.1, 0.5, 6.62, mats.rust); box(0.4, 0.12, 0.2, SX + 0.3, 0.5, 6.65, mats.white);
+    box(1.0, 0.38, 0.6, 1.9, 0, 5.0, mats.whiteGloss); box(0.35, 0.1, 0.25, 1.9, 0.38, 5.0, mats.cream);        // mesa baja blanca con caja tallada
+    box(0.4, 0.55, 0.4, 0.62, 0, 6.5, mats.black); box(0.36, 0.02, 0.36, 0.62, 0.55, 6.5, mats.glass);          // mesita metálica con lámpara de cerámica
+    cyl(0.12, 0.28, 0.62, 0.57, 6.5, mats.sage, null, 0.08); cyl(0.17, 0.2, 0.62, 0.84, 6.5, mats.cream, null, 0.1);
+    [[1.0, 3.55], [2.5, 3.55]].forEach(function (p) {                                                              // farolillos con marco dorado y vela azul, a los lados del televisor
+      box(0.24, 0.02, 0.24, p[0], 0, p[1], mats.gold); box(0.02, 0.5, 0.02, p[0] - 0.11, 0, p[1] - 0.11, mats.gold); box(0.02, 0.5, 0.02, p[0] + 0.11, 0, p[1] - 0.11, mats.gold);
+      box(0.02, 0.5, 0.02, p[0] - 0.11, 0, p[1] + 0.11, mats.gold); box(0.02, 0.5, 0.02, p[0] + 0.11, 0, p[1] + 0.11, mats.gold); box(0.06, 0.1, 0.06, p[0], 0.02, p[1], mats.teal); });
+    FP = gDecor;
+    box(1.3, 0.75, 0.05, 1.75, 1.0, 3.4, mats.black);                                                             // televisor en la pared norte
+    var sun = new T.Mesh(new T.CylinderGeometry(0.5, 0.5, 0.015, 48), mats.gold); sun.rotation.x = Math.PI / 2; sun.position.set(SX, 1.75, 6.94); gDecor.add(sun);
+    var sunIn = new T.Mesh(new T.CircleGeometry(0.1, 24), mats.mirror); sunIn.position.set(SX, 1.75, 6.93); sunIn.rotation.y = Math.PI; gDecor.add(sunIn);
+    box(0.55, 2.3, 0.03, 3.85, 0, 6.97, mats.white, null, false); box(0.55, 2.3, 0.03, 4.5, 0, 6.97, mats.white, null, false);   // paneles de damasco gris y plata
+    box(0.5, 2.2, 0.02, 3.85, 0.05, 6.955, mats.damask, null, false); box(0.5, 2.2, 0.02, 4.5, 0.05, 6.955, mats.damask, null, false);
+    curtain(0.12, 3.9, 0.12, 6.5, mats.voile);
+    sphere(0.15, 0.5, 2.0, 3.9, mats.plant); cyl(0.01, 0.4, 0.5, 2.1, 3.9, mats.black);                            // planta colgante
+    FP = gFurn;
+    cyl(0.14, 0.9, 0.5, 0, 5.9, mats.amber, null, 0.1); box(0.02, 1.0, 0.02, 0.5, 0.9, 5.9, mats.brown);        // jarrón alto con ramas
+    plant(0.55, 4.1, 1.1);
+
+    /* COCINA: encimera gris con fregadero y placa en la pared sur y península gris al norte (plano); torre blanca y de acero
+       al fondo; frentes blancos, grifo alto y campana negra inclinada (fotos); suelo gris */
+    box(0.62, 2.0, 0.62, 8.75, 0, 5.25, mats.steel);                                                        // nevera combi
+    box(0.6, 0.6, 0.55, 8.76, 1.35, 5.9, mats.steel); box(0.6, 0.6, 0.55, 8.76, 0.7, 5.9, mats.steel); box(0.6, 0.62, 0.55, 8.76, 0.0, 5.9, mats.whiteGloss); // horno + microondas
+    box(0.62, 2.1, 0.62, 8.75, 0, 6.5, mats.whiteGloss);                                                    // armario alto blanco
+    box(2.5, 0.9, 0.6, 7.1, 0, 6.68, mats.whiteGloss); box(2.5, 0.04, 0.62, 7.1, 0.9, 6.68, mats.counter);   // encimera de la pared sur
+    box(0.5, 0.01, 0.4, 6.4, 0.94, 6.66, mats.steel); cyl(0.015, 0.4, 6.4, 0.94, 6.8, mats.steel);           // fregadero y grifo alto
+    box(0.55, 0.01, 0.5, 7.4, 0.94, 6.66, mats.black);                                                      // placa de inducción
+    box(1.8, 0.9, 0.6, 6.8, 0, 5.2, mats.whiteGloss); box(1.84, 0.04, 0.64, 6.8, 0.9, 5.2, mats.counter);   // península gris
+    FP = gDecor; box(1.3, 0.75, 0.35, 7.1, 1.4, 6.82, mats.whiteGloss);
+    var hood = box(0.8, 0.07, 0.45, 7.4, 1.62, 6.7, mats.black); hood.rotation.x = -0.45; FP = gFurn;
+    box(0.28, 0.1, 0.18, 7.9, 0.94, 6.75, mats.black);                                                      // cafetera de cápsulas
 
     /* BAÑO 1: bañera con mampara y columna de ducha, mueble blanco con encimera de madera, espejo con luz, inodoro */
     box(1.38, 0.5, 0.72, 4.65, 0, 0.5, mats.white); box(1.3, 0.04, 0.64, 4.65, 0.5, 0.5, mats.cream);
@@ -352,15 +378,17 @@ header p{margin:4px 0 0;font-size:13px;color:rgba(42,15,46,.7)}
     box(0.4, 0.4, 0.6, 10.55, 0, 6.6, mats.white);
     var rm = new T.Mesh(new T.CircleGeometry(0.28, 28), mats.mirror); rm.position.set(10.98, 1.55, 5.3); rm.rotation.y = -Math.PI / 2; gDecor.add(rm);
 
-    /* TERRAZA: sofá de dos plazas, dos sillones, mesa baja de madera oscura, pufs, macetas blancas y bola luminosa */
-    box(1.7, 0.4, 0.8, -0.55, 0, 3.4, mats.woodDark); box(1.5, 0.14, 0.64, -0.55, 0.4, 3.4, mats.cream); box(0.14, 0.6, 1.5, -0.2, 0.4, 3.4, mats.cream);
-    box(0.5, 0.1, 0.12, -0.7, 0.55, 3.0, mats.teal); box(0.5, 0.1, 0.12, -0.7, 0.55, 3.8, mats.teal);
-    armchair(-1.5, 2.2, Math.PI / 2 * 0); armchair(-1.5, 4.6, Math.PI);
-    box(0.95, 0.04, 0.6, -1.5, 0.34, 3.4, mats.woodDark); box(0.9, 0.34, 0.55, -1.5, 0.0, 3.4, mats.woodDark);
-    [[-2.5, 2.8], [-2.5, 4.0]].forEach(function (p) { pouf(p[0], p[1]); });
-    plant(-2.65, 1.1, 1.3, mats.white); plant(-2.65, 5.9, 1.3, mats.white);
-    sphere(0.17, -0.5, 0.2, 5.4, mats.lamp);
-    box(0.4, 0.5, 0.4, -0.35, 0, 1.8, mats.woodDark);
+    /* TERRAZA: zona chill out delante del dormitorio (norte) y mesa octogonal de madera con cuatro sillas delante del salón (sur) */
+    box(0.8, 0.4, 1.7, -0.55, 0, 1.65, mats.woodDark); box(0.64, 0.14, 1.5, -0.55, 0.4, 1.65, mats.cream); box(0.14, 0.6, 1.5, -0.2, 0.4, 1.65, mats.cream);   // sofá de dos plazas pegado a la fachada
+    box(0.12, 0.12, 0.42, -0.65, 0.55, 1.2, mats.teal); box(0.12, 0.12, 0.42, -0.65, 0.55, 2.1, mats.teal);
+    box(0.55, 0.34, 0.95, -1.45, 0, 1.65, mats.woodDark); box(0.5, 0.04, 0.9, -1.45, 0.34, 1.65, mats.woodDark);    // mesa baja
+    armchair(-1.45, 0.55, 0); armchair(-1.45, 2.75, Math.PI);                                                   // sillones a los lados
+    pouf(-2.4, 1.2); pouf(-2.4, 2.1);
+    var oct = new T.Mesh(new T.CylinderGeometry(0.62, 0.62, 0.06, 8), mats.wood); oct.position.set(-1.5, 0.75, 5.2); oct.castShadow = true; oct.receiveShadow = true; gFurn.add(oct);   // mesa octogonal de madera
+    cyl(0.07, 0.72, -1.5, 0.0, 5.2, mats.woodDark); box(0.7, 0.04, 0.12, -1.5, 0.0, 5.2, mats.woodDark); box(0.12, 0.04, 0.7, -1.5, 0.0, 5.2, mats.woodDark);
+    [[-2.25, 5.2, Math.PI / 2], [-0.75, 5.2, -Math.PI / 2], [-1.5, 4.45, 0], [-1.5, 5.95, Math.PI]].forEach(function (p) { chair(p[0], p[1], p[2], mats.wood, mats.woodDark); });
+    plant(-2.65, 3.2, 1.4, mats.white); plant(-2.65, 6.5, 1.3, mats.white); plant(-2.65, 0.45, 1.2, mats.white);
+    sphere(0.17, -0.45, 0.2, 3.1, mats.lamp);
   }
 
   /* ---------- etiquetas ---------- */
@@ -404,7 +432,7 @@ header p{margin:4px 0 0;font-size:13px;color:rgba(42,15,46,.7)}
     aerea: { t: [3.4, 0.4, 3.4], d: 18.5, az: -0.62, pol: 0.95 },
     planta: { t: [4.2, 0, 3.4], d: 17, az: 0, pol: 0.001 },
     terraza: { t: [4.6, 0.9, 3.6], d: 13, az: -1.3, pol: 1.22 },
-    cocina: { t: [7.0, 1.0, 5.2], d: 8.5, az: 2.4, pol: 1.2 }
+    cocina: { t: [7.6, 0.9, 5.6], d: 8.5, az: 2.3, pol: 1.1 }
   };
   function applyCam() {
     var dd = dist * (camera.aspect < 0.8 ? 1.2 : 1);
