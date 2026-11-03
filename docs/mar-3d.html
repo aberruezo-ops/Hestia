@@ -138,7 +138,7 @@ header p{margin:4px 0 0;font-size:13px;color:rgba(42,15,46,.7)}
   floorRect(6.9, 0, 11, 3.3, mats.floor);           // dormitorio 2
   floorRect(0, 3.3, 9.1, 7, mats.floor);            // salón-comedor y cocina
   floorRect(9.1, 3.3, 11, 7, mats.tileBath);        // baño 2
-  floorRect(5.8, 4.6, 9.1, 7, mats.kitFloor, 0.003); // suelo gris de la cocina
+  floorRect(4.8, 4.4, 9.1, 7, mats.kitFloor, 0.003); // suelo gris de la cocina
   var deck = new T.Mesh(new T.BoxGeometry(3.0, 0.12, 6.9), mats.tileGrey);
   deck.position.set(-1.5, -0.04, 3.45); deck.receiveShadow = true; gShell.add(deck);
   mats.tileGrey.map = tileTexture('#bdbab3', '#a29f98', 0.6, 1);
@@ -312,7 +312,7 @@ header p{margin:4px 0 0;font-size:13px;color:rgba(42,15,46,.7)}
 
     /* SALÓN-COMEDOR: la posición de cada mueble sale del plano existente (televisor en la pared norte con dos farolillos al lado,
        mesa baja blanca, sofá en la pared sur, mesa de comedor larga junto a la cocina); el aspecto sale de las fotos */
-    var TX = 4.4, TZ = 5.4;
+    var TX = 3.85, TZ = 5.95;
     box(0.9, 0.05, 1.45, TX, 0.72, TZ, mats.woodDark);                                      // sobre de madera de dos piezas
     box(0.012, 0.012, 1.45, TX, 0.77, TZ, mats.black, null, false);
     box(0.06, 0.72, 0.06, TX - 0.4, 0, TZ - 0.65, mats.black); box(0.06, 0.72, 0.06, TX + 0.4, 0, TZ - 0.65, mats.black);
@@ -324,40 +324,38 @@ header p{margin:4px 0 0;font-size:13px;color:rgba(42,15,46,.7)}
     cyl(0.03, 0.2, TX - 0.15, 0.77, TZ - 0.3, mats.white); sphere(0.07, TX - 0.15, 1.0, TZ - 0.3, mats.garnet);
     box(0.2, 0.025, 0.28, TX + 0.1, 0.77, TZ + 0.3, mats.cream);                                  // cuaderno
 
-    var SX = 2.1;
+    var SX = 1.63;
     box(2.25, 0.42, 0.95, SX, 0, 6.45, mats.sofaTeal); box(2.25, 0.5, 0.2, SX, 0.42, 6.85, mats.sofaTeal);   // sofá turquesa de tela acanalada
     box(0.22, 0.62, 0.95, SX - 1.15, 0, 6.45, mats.sofaTeal); box(0.22, 0.62, 0.95, SX + 1.15, 0, 6.45, mats.sofaTeal);
     box(0.45, 0.12, 0.2, SX - 0.5, 0.5, 6.65, mats.rust); box(0.45, 0.12, 0.2, SX - 0.1, 0.5, 6.62, mats.rust); box(0.4, 0.12, 0.2, SX + 0.3, 0.5, 6.65, mats.white);
-    box(1.0, 0.38, 0.6, 1.9, 0, 5.0, mats.whiteGloss); box(0.35, 0.1, 0.25, 1.9, 0.38, 5.0, mats.cream);        // mesa baja blanca con caja tallada
-    box(0.4, 0.55, 0.4, 0.62, 0, 6.5, mats.black); box(0.36, 0.02, 0.36, 0.62, 0.55, 6.5, mats.glass);          // mesita metálica con lámpara de cerámica
-    cyl(0.12, 0.28, 0.62, 0.57, 6.5, mats.sage, null, 0.08); cyl(0.17, 0.2, 0.62, 0.84, 6.5, mats.cream, null, 0.1);
-    [[1.0, 3.55], [2.5, 3.55]].forEach(function (p) {                                                              // farolillos con marco dorado y vela azul, a los lados del televisor
+    box(0.95, 0.38, 0.9, 1.6, 0, 5.2, mats.whiteGloss); box(0.35, 0.1, 0.25, 1.6, 0.38, 5.2, mats.cream);        // mesa baja blanca con caja tallada
+    cyl(0.02, 1.45, 0.32, 0, 6.8, mats.black); cyl(0.22, 0.32, 0.32, 1.35, 6.8, mats.cream, null, 0.16);       // lámpara de pie de la esquina
+    [[0.9, 4.4], [2.2, 4.25]].forEach(function (p) {                                                              // farolillos con marco dorado y vela azul, a los lados del televisor
       box(0.24, 0.02, 0.24, p[0], 0, p[1], mats.gold); box(0.02, 0.5, 0.02, p[0] - 0.11, 0, p[1] - 0.11, mats.gold); box(0.02, 0.5, 0.02, p[0] + 0.11, 0, p[1] - 0.11, mats.gold);
       box(0.02, 0.5, 0.02, p[0] - 0.11, 0, p[1] + 0.11, mats.gold); box(0.02, 0.5, 0.02, p[0] + 0.11, 0, p[1] + 0.11, mats.gold); box(0.06, 0.1, 0.06, p[0], 0.02, p[1], mats.teal); });
     FP = gDecor;
-    box(1.3, 0.75, 0.05, 1.75, 1.0, 3.4, mats.black);                                                             // televisor en la pared norte
+    box(1.3, 0.75, 0.05, 1.5, 1.0, 3.4, mats.black);                                                             // televisor en la pared norte
     var sun = new T.Mesh(new T.CylinderGeometry(0.5, 0.5, 0.015, 48), mats.gold); sun.rotation.x = Math.PI / 2; sun.position.set(SX, 1.75, 6.94); gDecor.add(sun);
     var sunIn = new T.Mesh(new T.CircleGeometry(0.1, 24), mats.mirror); sunIn.position.set(SX, 1.75, 6.93); sunIn.rotation.y = Math.PI; gDecor.add(sunIn);
-    box(0.55, 2.3, 0.03, 3.85, 0, 6.97, mats.white, null, false); box(0.55, 2.3, 0.03, 4.5, 0, 6.97, mats.white, null, false);   // paneles de damasco gris y plata
-    box(0.5, 2.2, 0.02, 3.85, 0.05, 6.955, mats.damask, null, false); box(0.5, 2.2, 0.02, 4.5, 0.05, 6.955, mats.damask, null, false);
+    box(0.55, 2.3, 0.03, 5.0, 0, 6.97, mats.white, null, false); box(0.55, 2.3, 0.03, 5.65, 0, 6.97, mats.white, null, false);   // paneles de damasco gris y plata
+    box(0.5, 2.2, 0.02, 5.0, 0.05, 6.955, mats.damask, null, false); box(0.5, 2.2, 0.02, 5.65, 0.05, 6.955, mats.damask, null, false);
     curtain(0.12, 3.9, 0.12, 6.5, mats.voile);
     sphere(0.15, 0.5, 2.0, 3.9, mats.plant); cyl(0.01, 0.4, 0.5, 2.1, 3.9, mats.black);                            // planta colgante
     FP = gFurn;
     cyl(0.14, 0.9, 0.5, 0, 5.9, mats.amber, null, 0.1); box(0.02, 1.0, 0.02, 0.5, 0.9, 5.9, mats.brown);        // jarrón alto con ramas
     plant(0.55, 4.1, 1.1);
 
-    /* COCINA: encimera gris con fregadero y placa en la pared sur y península gris al norte (plano); torre blanca y de acero
-       al fondo; frentes blancos, grifo alto y campana negra inclinada (fotos); suelo gris */
-    box(0.62, 2.0, 0.62, 8.75, 0, 5.25, mats.steel);                                                        // nevera combi
-    box(0.6, 0.6, 0.55, 8.76, 1.35, 5.9, mats.steel); box(0.6, 0.6, 0.55, 8.76, 0.7, 5.9, mats.steel); box(0.6, 0.62, 0.55, 8.76, 0.0, 5.9, mats.whiteGloss); // horno + microondas
-    box(0.62, 2.1, 0.62, 8.75, 0, 6.5, mats.whiteGloss);                                                    // armario alto blanco
-    box(2.5, 0.9, 0.6, 7.1, 0, 6.68, mats.whiteGloss); box(2.5, 0.04, 0.62, 7.1, 0.9, 6.68, mats.counter);   // encimera de la pared sur
-    box(0.5, 0.01, 0.4, 6.4, 0.94, 6.66, mats.steel); cyl(0.015, 0.4, 6.4, 0.94, 6.8, mats.steel);           // fregadero y grifo alto
-    box(0.55, 0.01, 0.5, 7.4, 0.94, 6.66, mats.black);                                                      // placa de inducción
-    box(1.8, 0.9, 0.6, 6.8, 0, 5.2, mats.whiteGloss); box(1.84, 0.04, 0.64, 6.8, 0.9, 5.2, mats.counter);   // península gris
-    FP = gDecor; box(1.3, 0.75, 0.35, 7.1, 1.4, 6.82, mats.whiteGloss);
-    var hood = box(0.8, 0.07, 0.45, 7.4, 1.62, 6.7, mats.black); hood.rotation.x = -0.45; FP = gFurn;
-    box(0.28, 0.1, 0.18, 7.9, 0.94, 6.75, mats.black);                                                      // cafetera de cápsulas
+    /* COCINA: medidas tomadas del plano calibrado. Suelo gris, una encimera con fregadero y placa pegada a la pared sur
+       (de 4,9 a 8 m) y la torre de armarios y electrodomésticos al este; frentes blancos, grifo alto y campana negra (fotos) */
+    box(0.62, 2.0, 0.62, 8.45, 0, 5.05, mats.steel);                                                        // nevera combi
+    box(0.6, 0.6, 0.55, 8.46, 1.35, 5.7, mats.steel); box(0.6, 0.6, 0.55, 8.46, 0.7, 5.7, mats.steel); box(0.6, 0.62, 0.55, 8.46, 0.0, 5.7, mats.whiteGloss); // horno + microondas
+    box(0.62, 2.1, 0.7, 8.45, 0, 6.35, mats.whiteGloss);                                                    // armario alto blanco
+    box(3.1, 0.9, 0.62, 6.45, 0, 6.68, mats.whiteGloss); box(3.1, 0.04, 0.64, 6.45, 0.9, 6.68, mats.counter);   // encimera de la pared sur
+    box(0.7, 0.01, 0.42, 5.45, 0.94, 6.66, mats.steel); cyl(0.015, 0.4, 5.45, 0.94, 6.82, mats.steel);        // fregadero y grifo alto
+    box(0.6, 0.01, 0.5, 6.55, 0.94, 6.66, mats.black);                                                      // placa de inducción
+    FP = gDecor; box(2.2, 0.75, 0.35, 5.9, 1.4, 6.82, mats.whiteGloss);
+    var hood = box(0.8, 0.07, 0.45, 6.55, 1.62, 6.7, mats.black); hood.rotation.x = -0.45; FP = gFurn;
+    box(0.28, 0.1, 0.18, 7.4, 0.94, 6.75, mats.black);                                                      // cafetera de cápsulas
 
     /* BAÑO 1: bañera con mampara y columna de ducha, mueble blanco con encimera de madera, espejo con luz, inodoro */
     box(1.38, 0.5, 0.72, 4.65, 0, 0.5, mats.white); box(1.3, 0.04, 0.64, 4.65, 0.5, 0.5, mats.cream);
