@@ -557,6 +557,19 @@ const AptPageHero = ({
   const all = window.REVIEWS && window.REVIEWS.items || [];
   const own = all.filter(r => r.status === 'published' && (r.apt === apt.id || r.apt === 'all'));
   const avg = ratingScore(own, 'global');
+  const [videoOpen, setVideoOpen] = React.useState(false);
+  React.useEffect(() => {
+    if (!videoOpen) return;
+    const onKey = e => {
+      if (e.key === 'Escape') setVideoOpen(false);
+    };
+    document.addEventListener('keydown', onKey);
+    document.body.style.overflow = 'hidden';
+    return () => {
+      document.removeEventListener('keydown', onKey);
+      document.body.style.overflow = '';
+    };
+  }, [videoOpen]);
   return /*#__PURE__*/React.createElement("section", {
     className: "ah on-dark",
     "data-apt": apt.id,
@@ -564,7 +577,26 @@ const AptPageHero = ({
       '--apt-accent': apt.accent,
       '--apt-accent2': apt.accent2
     }
-  }, order.length > 0 && /*#__PURE__*/React.createElement("div", {
+  }, videoOpen && ReactDOM.createPortal(/*#__PURE__*/React.createElement("div", {
+    className: "ah-vlb",
+    role: "dialog",
+    "aria-modal": "true",
+    "aria-label": lang === 'es' ? `Vídeo de ${d.name}` : `${d.name} video`,
+    onClick: e => {
+      if (e.target === e.currentTarget) setVideoOpen(false);
+    }
+  }, /*#__PURE__*/React.createElement("button", {
+    type: "button",
+    className: "ah-vlb-x",
+    onClick: () => setVideoOpen(false),
+    "aria-label": lang === 'es' ? 'Cerrar' : 'Close'
+  }, "✕"), /*#__PURE__*/React.createElement("video", {
+    src: apt.video_src,
+    poster: apt.hero_img,
+    controls: true,
+    autoPlay: true,
+    playsInline: true
+  })), document.body), order.length > 0 && /*#__PURE__*/React.createElement("div", {
     className: "ah-gallery"
   }, /*#__PURE__*/React.createElement("div", {
     className: "ah-sol-wrap"
@@ -618,14 +650,23 @@ const AptPageHero = ({
     "aria-live": "polite"
   }, pos + 1, " / ", order.length), caps[order[pos]] && /*#__PURE__*/React.createElement("span", {
     className: "ah-cap"
-  }, caps[order[pos]]), /*#__PURE__*/React.createElement("button", {
+  }, caps[order[pos]]), /*#__PURE__*/React.createElement("div", {
+    className: "ah-btns"
+  }, apt.video_src && /*#__PURE__*/React.createElement("button", {
+    type: "button",
+    className: "ah-all",
+    onClick: () => setVideoOpen(true)
+  }, /*#__PURE__*/React.createElement(HiIcon, {
+    name: "film",
+    size: 16
+  }), " ", lang === 'es' ? 'Ver vídeo' : 'Watch video'), /*#__PURE__*/React.createElement("button", {
     type: "button",
     className: "ah-all",
     onClick: _toGallery
   }, /*#__PURE__*/React.createElement(HiIcon, {
     name: "camera",
     size: 16
-  }), " ", lang === 'es' ? 'Ver por estancias' : 'View by room'))), /*#__PURE__*/React.createElement("div", {
+  }), " ", lang === 'es' ? 'Ver por estancias' : 'View by room')))), /*#__PURE__*/React.createElement("div", {
     className: "ah-summary"
   }, /*#__PURE__*/React.createElement("div", {
     className: "ah-id"

@@ -563,8 +563,25 @@ const AptPageHero = ({ apt, lang }) => {
   const all = (window.REVIEWS && window.REVIEWS.items) || [];
   const own = all.filter(r => r.status === 'published' && (r.apt === apt.id || r.apt === 'all'));
   const avg = ratingScore(own, 'global');
+  const [videoOpen, setVideoOpen] = React.useState(false);
+  React.useEffect(() => {
+    if (!videoOpen) return;
+    const onKey = (e) => { if (e.key === 'Escape') setVideoOpen(false); };
+    document.addEventListener('keydown', onKey);
+    document.body.style.overflow = 'hidden';
+    return () => { document.removeEventListener('keydown', onKey); document.body.style.overflow = ''; };
+  }, [videoOpen]);
   return (
     <section className="ah on-dark" data-apt={apt.id} style={{ '--apt-accent': apt.accent, '--apt-accent2': apt.accent2 }}>
+      {/* El vídeo completo (con sonido) solo se descarga al pedirlo: en la cabecera pesaría demasiado. */}
+      {videoOpen && ReactDOM.createPortal(
+        <div className="ah-vlb" role="dialog" aria-modal="true" aria-label={lang === 'es' ? `Vídeo de ${d.name}` : `${d.name} video`}
+             onClick={(e) => { if (e.target === e.currentTarget) setVideoOpen(false); }}>
+          <button type="button" className="ah-vlb-x" onClick={() => setVideoOpen(false)} aria-label={lang === 'es' ? 'Cerrar' : 'Close'}>✕</button>
+          <video src={apt.video_src} poster={apt.hero_img} controls autoPlay playsInline />
+        </div>,
+        document.body
+      )}
       {order.length > 0 && (
         <div className="ah-gallery">
           <div className="ah-sol-wrap"><SolChip lang={lang} side="left" /></div>
@@ -587,9 +604,16 @@ const AptPageHero = ({ apt, lang }) => {
             <IndaloShape className="ah-indalo" width="30" height="30" />
             <span className="ah-count" aria-live="polite">{pos + 1} / {order.length}</span>
             {caps[order[pos]] && <span className="ah-cap">{caps[order[pos]]}</span>}
-            <button type="button" className="ah-all" onClick={_toGallery}>
-              <HiIcon name="camera" size={16} /> {lang === 'es' ? 'Ver por estancias' : 'View by room'}
-            </button>
+            <div className="ah-btns">
+              {apt.video_src && (
+                <button type="button" className="ah-all" onClick={() => setVideoOpen(true)}>
+                  <HiIcon name="film" size={16} /> {lang === 'es' ? 'Ver vídeo' : 'Watch video'}
+                </button>
+              )}
+              <button type="button" className="ah-all" onClick={_toGallery}>
+                <HiIcon name="camera" size={16} /> {lang === 'es' ? 'Ver por estancias' : 'View by room'}
+              </button>
+            </div>
           </div>
         </div>
       )}
