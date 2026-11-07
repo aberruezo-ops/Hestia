@@ -759,7 +759,22 @@ const GALLERY_ZONES = [
 // Logo de la marca de agua: el del color de cada Hestía.
 const APT_WM = { vm: 'mar', vt: 'thalassa', vs: 'salinas' };
 
+// El vídeo pesa 22-25 MB: no se descarga hasta que la sección está a punto de
+// verse, y se pausa al salir de pantalla.
 const AptVideoDesc = ({ apt, lang }) => {
+  const vidRef = React.useRef(null);
+  const [near, setNear] = React.useState(false);
+  React.useEffect(() => {
+    const el = vidRef.current;
+    if (!el || !('IntersectionObserver' in window)) { setNear(true); return; }
+    const io = new IntersectionObserver(([e]) => {
+      if (e.isIntersecting) { setNear(true); el.play && el.play().catch(() => {}); }
+      else if (!el.paused) el.pause();
+    }, { rootMargin: '300px 0px' });
+    io.observe(el);
+    return () => io.disconnect();
+  }, [apt.video_src]);
+  React.useEffect(() => { const el = vidRef.current; if (near && el && el.play) el.play().catch(() => {}); }, [near]);
   if (!apt.video_src) return null;
   const d = apt[lang];
   const reservasHref = `reservas.html?apt=${apt.id}`;
@@ -771,9 +786,11 @@ const AptVideoDesc = ({ apt, lang }) => {
           <span className="eyebrow avd-eyebrow">{lang === 'es' ? 'Visita virtual' : 'Virtual tour'}</span>
           <div className="avd-iframe-wrap">
             <video
+              ref={vidRef}
               className="avd-iframe"
-              src={apt.video_src}
-              autoPlay muted loop playsInline controls
+              src={near ? apt.video_src : undefined}
+              preload="none"
+              autoPlay={near} muted loop playsInline controls
               poster={apt.hero_img}
             />
           </div>
