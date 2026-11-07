@@ -113,8 +113,8 @@ const APT_DATA = {
     bedroom_img: 'assets/apt-vt-gallery-33.jpg',
     reveal_img: 'assets/apt-vt-gallery-20.jpg',
     plan3d: 'thalassa-3d.html',
-    floorplan_desc_es: 'Thalassa ocupa la tercera planta (desde el garaje) en una sola crujía: salón con terraza panorámica, cocina abierta, dos dormitorios, dos baños y vistas al Mediterráneo y al Salar de los Canos.',
-    floorplan_desc_en: 'Thalassa occupies the third floor (from the garage) in a single open plan: living room with panoramic terrace, open kitchen, two bedrooms, two bathrooms and views over the Mediterranean and the Salar de los Canos.',
+    floorplan_desc_es: 'Thalassa ocupa la tercera planta (desde el garaje) en una sola crujía: salón con terraza panorámica, cocina independiente, dos dormitorios, dos baños y vistas al Mediterráneo y al Salar de los Canos.',
+    floorplan_desc_en: 'Thalassa occupies the third floor (from the garage) in a single open plan: living room with panoramic terrace, separate kitchen, two bedrooms, two bathrooms and views over the Mediterranean and the Salar de los Canos.',
     others: ['vm', 'vs'],
     // Orden por estancia (recorrido de visita): entrada, salón/comedor,
     // cocina, dormitorio principal, dormitorio 2, baños, terraza, piscinas.
