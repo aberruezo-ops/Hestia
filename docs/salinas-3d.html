@@ -14,7 +14,7 @@ header p{margin:3px 0 0;font-size:13px;color:rgba(42,15,46,.7)}
 .tools{display:flex;gap:6px;flex-wrap:wrap}
 button{font:600 13px system-ui,sans-serif;color:var(--ink);cursor:pointer}
 .tools button{border:1px solid rgba(42,15,46,.22);background:#fff;padding:8px 12px;border-radius:10px 0 10px 0}
-.tools button:hover{border-color:var(--vs-dk)}.tools button.off{opacity:.5;text-decoration:line-through}
+.tools button:hover{border-color:var(--vs-dk)}.tools .ficha{display:inline-flex;align-items:center;font:600 13px system-ui,sans-serif;text-decoration:none;color:var(--crema);background:var(--vs-dk);padding:8px 12px;border-radius:10px 0 10px 0}.tools .ficha:hover{background:var(--ink)}.tools button.off{opacity:.5;text-decoration:line-through}
 aside{background:var(--crema);border-right:1px solid var(--line);padding:14px;overflow:auto}
 aside h3{margin:0 0 10px;font-size:11px;letter-spacing:.2em;text-transform:uppercase;color:rgba(42,15,46,.6)}
 #rooms{display:flex;flex-direction:column;gap:6px}
@@ -56,7 +56,7 @@ footer{grid-column:1/3;padding:8px 18px 10px;background:var(--crema);border-top:
 </style></head><body>
 <div id="app">
 <header><div class="tt"><h1 id="t-title"></h1><p id="t-sub"></p></div>
-<div class="tools"><button id="b-all"></button><button id="b-top"></button><button id="b-walls"></button><button id="b-furn"></button><button id="b-lab"></button><button id="b-lang">EN</button></div></header>
+<div class="tools"><a id="b-ficha" class="ficha" href="salinas.html"></a><button id="b-all"></button><button id="b-top"></button><button id="b-walls"></button><button id="b-furn"></button><button id="b-lab"></button><button id="b-lang">EN</button></div></header>
 <aside><h3 id="t-rooms"></h3><div id="rooms"></div></aside>
 <div id="stage"><div id="t-hint"></div><div id="card" hidden></div></div>
 <footer id="t-note"></footer>
@@ -89,8 +89,8 @@ footer{grid-column:1/3;padding:8px 18px 10px;background:var(--crema);border-top:
       en_t: ['Colourful wooden table with black legs and four upholstered chairs', 'Teal pendant over the table', 'Mustard wall with the HESTIA VERA letters'],
       photos: [1, 8] },
     { id: 'recibidor', es: 'Recibidor', en: 'Entrance hall', rect: [7.9, 6.2, 10.2, 7.6], view: { az: -0.8, pol: 0.8, d: 7 },
-      es_t: ['Puerta de entrada blanca, en la fachada este', 'Pared mostaza con espejo ovalado', 'Da paso al salón-comedor y a la cocina'],
-      en_t: ['White front door on the east side', 'Mustard wall with an oval mirror', 'Opens onto the living-dining room and the kitchen'],
+      es_t: ['Puerta de entrada blanca, junto al final de la segunda terraza', 'Pared mostaza con espejo ovalado', 'Da paso al salón-comedor y a la cocina'],
+      en_t: ['White front door, just past the end of the second terrace', 'Mustard wall with an oval mirror', 'Opens onto the living-dining room and the kitchen'],
       photos: [2] },
     { id: 'cocina', es: 'Cocina', en: 'Kitchen', rect: [6.3, 2.6, 8.9, 6.2], view: { az: -0.65, pol: 0.78, d: 8 },
       es_t: ['Cocina cerrada; se entra desde el salón-comedor, junto al recibidor', 'Muebles blancos sin tiradores y encimera de madera', 'Placa con campana negra inclinada', 'Frigorífico combi de acero, horno y microondas en columna', 'Lavavajillas', 'Puerta de cristal a la segunda terraza'],
@@ -126,11 +126,11 @@ footer{grid-column:1/3;padding:8px 18px 10px;background:var(--crema);border-top:
     es: { title: 'Hestía Salinas en 3D', sub: '87 m² · 2 dormitorios · 2 baños · dos terrazas de 18 y 14 m²',
       all: 'Toda la casa', top: 'Planta', walls: 'Paredes completas', low: 'Paredes bajas', furn: 'Muebles', labels: 'Nombres',
       rooms: 'Estancias', photos: 'Fotos de esta estancia', close: 'Cerrar', hint: 'Arrastra para girar · rueda o pellizco para acercar · toca una estancia',
-      note: 'Distribución reconstruida a partir del plano de la ficha y de las fotos. Medidas aproximadas; no es un plano de obra.', back: 'Ver toda la casa' },
+      note: 'Distribución reconstruida a partir del plano de la ficha y de las fotos. Medidas aproximadas; no es un plano de obra.', back: 'Ver toda la casa', ficha: 'Volver a la ficha' },
     en: { title: 'Hestía Salinas in 3D', sub: '87 m² · 2 bedrooms · 2 bathrooms · two terraces of 18 and 14 m²',
       all: 'Whole home', top: 'Top view', walls: 'Full walls', low: 'Low walls', furn: 'Furniture', labels: 'Labels',
       rooms: 'Rooms', photos: 'Photos of this room', close: 'Close', hint: 'Drag to rotate · scroll or pinch to zoom · tap a room',
-      note: 'Layout rebuilt from the plan on the listing and the photos. Measurements are approximate; not a construction drawing.', back: 'See the whole home' }
+      note: 'Layout rebuilt from the plan on the listing and the photos. Measurements are approximate; not a construction drawing.', back: 'See the whole home', ficha: 'Back to the listing' }
   };
 
   /* ================= ESCENA ================= */
@@ -512,7 +512,7 @@ footer{grid-column:1/3;padding:8px 18px 10px;background:var(--crema);border-top:
     var s = TXT[lang]; document.documentElement.lang = lang;
     $('#t-title').textContent = s.title; $('#t-sub').textContent = s.sub; $('#b-all').textContent = s.all; $('#b-top').textContent = s.top;
     $('#b-walls').textContent = wallH > 1.5 ? s.low : s.walls; $('#b-furn').textContent = s.furn; $('#b-lab').textContent = s.labels;
-    $('#b-lang').textContent = lang === 'es' ? 'EN' : 'ES'; $('#t-rooms').textContent = s.rooms; $('#t-hint').textContent = s.hint; $('#t-note').textContent = s.note;
+    $('#b-lang').textContent = lang === 'es' ? 'EN' : 'ES'; $('#b-ficha').textContent = s.ficha; $('#t-rooms').textContent = s.rooms; $('#t-hint').textContent = s.hint; $('#t-note').textContent = s.note;
     buildLabels(); renderList(); renderCard(selected ? ROOMS.filter(function (x) { return x.id === selected; })[0] : null);
   }
   $('#b-all').addEventListener('click', clearSel);

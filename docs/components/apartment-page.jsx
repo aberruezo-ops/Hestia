@@ -205,6 +205,7 @@ const APT_DATA = {
     bedroom_img: 'assets/apt-vs-gallery-33.jpg',
     reveal_img: 'assets/apt-vs-gallery-32.jpg',
     floorplan_img: 'assets/apt-vs-floorplan.jpg',
+    plan3d: 'salinas-3d.html',
     floorplan_subtitle_es: 'distribución en planta.',
     floorplan_subtitle_en: 'floor layout.',
     floorplan_desc_es: 'Salinas se distribuye en planta primera: salón-comedor, cocina equipada, dos dormitorios, dos baños y dos terrazas, la principal al sur con vistas a los jardines y la piscina de la urbanización.',
@@ -1066,6 +1067,15 @@ const AptFloorPlan = ({ apt, lang }) => {
             </div>
           </div>
         </div>
+        {apt.plan3d && (
+          <div className="apt-fp-3d-wrap">
+            <a className="apt-fp-3d" href={apt.plan3d + (lang === 'en' ? '?lang=en' : '')}>
+              <HiIcon name="home" size={18} />
+              <span>{lang === 'es' ? 'Recórrelo en 3D, estancia a estancia' : 'Explore it in 3D, room by room'}</span>
+            </a>
+            <p className="apt-fp-3d-note">{lang === 'es' ? 'Gira la casa, entra en cada estancia y mira sus fotos.' : 'Turn the home around, step into each room and see its photos.'}</p>
+          </div>
+        )}
       </div>
     </section>
   );
