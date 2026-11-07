@@ -23,7 +23,7 @@ aside h3{margin:0 0 10px;font-size:11px;letter-spacing:.2em;text-transform:upper
 .room:hover{border-color:var(--vs)}.room.on{background:var(--vs-dk);color:var(--crema);border-color:var(--vs-dk)}
 #stage{position:relative;min-height:0;overflow:hidden}#stage canvas{display:block;width:100%;height:100%}
 #t-hint{position:absolute;left:12px;bottom:12px;font-size:12px;background:rgba(250,246,240,.9);padding:6px 10px;border-radius:8px 0 8px 0;pointer-events:none;color:rgba(42,15,46,.75)}
-#card{position:absolute;right:14px;top:14px;width:330px;max-height:calc(100% - 28px);overflow:auto;background:#fff;color:var(--ink);border-radius:14px 0 14px 0;box-shadow:0 12px 40px rgba(42,15,46,.18);padding:16px 16px 14px;border-top:4px solid var(--vs)}
+#card{position:absolute;right:14px;top:14px;width:400px;max-height:calc(100% - 28px);overflow:auto;background:#fff;color:var(--ink);border-radius:14px 0 14px 0;box-shadow:0 12px 40px rgba(42,15,46,.18);padding:16px 16px 14px;border-top:4px solid var(--vs)}
 #card[hidden]{display:none}
 .card-h{display:flex;justify-content:space-between;align-items:flex-start;gap:10px}
 .card-h h2{margin:0;font-size:18px}
@@ -35,6 +35,13 @@ aside h3{margin:0 0 10px;font-size:11px;letter-spacing:.2em;text-transform:upper
 .th{padding:0;border:0;background:#eee;aspect-ratio:1;overflow:hidden;border-radius:8px 0 8px 0}
 .th img{width:100%;height:100%;object-fit:cover;display:block;transition:transform .3s}
 .th:hover img{transform:scale(1.06)}
+.pv{position:relative;margin:-16px -16px 10px;aspect-ratio:4/3;background:#e9e2d4;overflow:hidden;border-radius:14px 0 0 0}
+.pv img{width:100%;height:100%;object-fit:cover;display:block;cursor:zoom-in}
+.pv-nav{position:absolute;top:50%;transform:translateY(-50%);width:38px;height:38px;border:0;border-radius:10px 0 10px 0;background:rgba(250,246,240,.94);color:var(--ink);font-size:22px;line-height:1;box-shadow:0 4px 14px rgba(42,15,46,.25)}
+.pv-prev{left:10px}.pv-next{right:10px}
+.pv-n{position:absolute;right:10px;bottom:10px;background:rgba(42,15,46,.75);color:var(--crema);font:700 12px system-ui,sans-serif;padding:4px 8px;border-radius:8px 0 8px 0}
+.pv-cap{margin:0 0 6px;font:italic 15px Georgia,serif;color:rgba(42,15,46,.78)}
+.thumbs{grid-template-columns:repeat(5,1fr);margin-top:12px}.th.on{outline:2px solid var(--vs-dk);outline-offset:1px}
 .back{margin-top:14px;width:100%;border:1px solid rgba(42,15,46,.22);background:var(--crema);padding:9px;border-radius:10px 0 10px 0}
 body.embed header .tt{display:none}body.embed header{justify-content:flex-end;padding:10px 12px}body.embed footer{display:none}body.embed #app{grid-template-rows:auto 1fr}@media (max-width:820px){body.embed #app{grid-template-rows:auto auto 1fr}}
 footer{grid-column:1/3;padding:8px 18px 10px;background:var(--crema);border-top:1px solid var(--line);font-size:12px;color:rgba(42,15,46,.65)}
@@ -50,7 +57,8 @@ footer{grid-column:1/3;padding:8px 18px 10px;background:var(--crema);border-top:
  aside h3{display:none}
  #rooms{flex-direction:row;gap:6px;width:max-content}
  .room{padding:8px 10px;white-space:nowrap;font-size:13px}
- #card{left:10px;right:10px;top:auto;bottom:10px;width:auto;max-height:48%}
+ #card{left:10px;right:10px;top:auto;bottom:10px;width:auto;max-height:66%}
+ .pv{aspect-ratio:16/10}
  .tools button{padding:7px 10px}
  h1{font-size:17px}
 }
@@ -82,6 +90,9 @@ footer{grid-column:1/3;padding:8px 18px 10px;background:var(--crema);border-top:
      dormitorio y la mesa octogonal con cuatro sillas delante del salón. */
   var W = 11.0, D = 7.0, H_FULL = 2.5, H_LOW = 1.05;
   var PHOTO = function (n) { return 'assets/apt-vm-gallery-' + n + '.webp'; };
+
+  var CAPS = {"1": ["Salón · sobremesas de madera, cocina a mano", "Living & dining · wood made for lingering"], "2": ["Salón · sofá bajo un sol de espejo", "Living room · sofa under a mirrored sun"], "3": ["Salón · a vista de pájaro, todo tuyo", "Living room · from above, all yours"], "21": ["Salón · lámpara y sofá, tarde en calma", "Living room · lamp glow, evening ease"], "22": ["Salón · el sofá entero para ti", "Living room · the whole sofa, yours"], "5": ["Detalle · jarrón y textiles que abrigan", "Detail · vase & textiles, gentle touches"], "23": ["Detalle · el sol dorado del espejo", "Detail · the mirror's golden sun"], "24": ["Detalle · suelo hidráulico de otra época", "Detail · hydraulic tiles from another era"], "6": ["Cocina · mañanas que empiezan despacio", "Kitchen · mornings that start slow"], "7": ["Cocina · copa en la encimera, sin prisa", "Kitchen · wine on the counter, unhurried"], "8": ["Cocina · campana a punto, guisos lentos", "Kitchen · hood ready, slow cooking ahead"], "26": ["Dormitorio principal · verde profundo, cojines granate", "Master bedroom · deep green, burgundy cushions"], "10": ["Dormitorio principal · armario espejo, luz doblada", "Master bedroom · mirrored wardrobe doubling the light"], "25": ["Dormitorio principal · un globo de luz suave", "Master bedroom · a globe of soft light"], "9": ["Dormitorio 2 · sueños en turquesa", "Bedroom 2 · dreams in teal"], "11": ["Dormitorio 2 · dos camas, mismo descanso", "Bedroom 2 · two beds, one calm"], "15": ["Baño 1 · un resplandor verde y sereno", "Bathroom 1 · a serene green glow"], "29": ["Baño 1 · bañera y ducha, flores rojas de bienvenida", "Bathroom 1 · bathtub and shower, red flowers to welcome you"], "16": ["Baño 2 · ducha lista, toallas esperando", "Bathroom 2 · shower ready, towels waiting"], "17": ["Baño 2 · lavabo y aromas suaves", "Bathroom 2 · vessel sink & soft scents"], "30": ["Baño 2 · cabina de ducha y velas, agua caliente al momento", "Bathroom 2 · shower cabin and candles, instant hot water"], "13": ["Terraza · veladas de verano que se alargan", "Terrace · summer evenings that stretch on"], "14": ["Terraza · sofás para charlas de noche", "Terrace · sofas for late-night talks"], "28": ["Terraza · copa de vino y velas, la luna de testigo", "Terrace · a glass of wine, candlelight, moon as witness"], "4": ["Piscina comunitaria · el agua brilla de noche", "Community pool · water glowing at night"], "27": ["Piscina comunitaria · el jacuzzi, luces encendidas al anochecer", "Community pool · the jacuzzi lit up at dusk"], "18": ["Piscina · jardines alrededor, verano lento", "Pool · gardens around, summer slowed"], "19": ["Piscina comunitaria · azul de mediodía", "Community pool · the blue of midday"], "20": ["Zona duchas · mosaico azul tras el baño", "Pool showers · blue mosaic after the swim"], "31": ["Dormitorio 2 · cabeceros azules, dos camas", "Bedroom 2 · blue headboards, twin beds"], "32": ["Dormitorio principal · cojines de rayas verdes, flores naranjas", "Master bedroom · striped green cushions, orange flowers"]};
+  function capOf(n) { var c = CAPS[n]; if (!c) return ''; var t = c[lang === 'es' ? 0 : 1], i = t.indexOf(' · '); t = i >= 0 ? t.slice(i + 3) : t; return t.charAt(0).toUpperCase() + t.slice(1); }
 
   var ROOMS = [
     { id: 'salon', es: 'Salón-comedor', en: 'Living and dining room', rect: [0, 3.3, 4.8, 7.0], floors: [[0, 3.3, 4.8, 7.0], [4.8, 3.3, 9.1, 4.4]], lab: [2.6, 5.4], view: { az: -0.3, pol: 0.85, d: 9 },
@@ -604,22 +615,38 @@ footer{grid-column:1/3;padding:8px 18px 10px;background:var(--crema);border-top:
       b.addEventListener('click', function () { r.id === selected ? clearSel() : select(r.id); }); ul.appendChild(b);
     });
   }
+  var pvIdx = 0;
   function renderCard(r) {
     var c = $('#card');
     if (!r) { c.hidden = true; viewShift = 0; applyView(); return; }
-    c.hidden = false; viewShift = host.clientWidth > 820 ? Math.round(c.offsetWidth / 2 + 10) : 0;
-    var s = TXT[lang], items = r[lang + '_t'];
-    c.innerHTML = '<div class="card-h"><h2>' + r[lang] + '</h2><button class="x" aria-label="' + s.close + '">✕</button></div>' +
+    c.hidden = false; pvIdx = 0;
+    var s = TXT[lang], items = r[lang + '_t'], ph = r.photos;
+    // la foto de la estancia, grande y lo primero: es lo que mejor la enseña
+    c.innerHTML = (ph.length ? '<div class="pv"><img id="pv-img" alt=""><span class="pv-n"></span>' +
+        (ph.length > 1 ? '<button class="pv-nav pv-prev" aria-label="‹">‹</button><button class="pv-nav pv-next" aria-label="›">›</button>' : '') + '</div><p class="pv-cap"></p>' : '') +
+      '<div class="card-h"><h2>' + r[lang] + '</h2><button class="x" aria-label="' + s.close + '">✕</button></div>' +
       '<ul class="facts">' + items.map(function (t) { return '<li>' + t + '</li>'; }).join('') + '</ul>' +
-      (r.photos.length ? '<p class="ph">' + s.photos + '</p><div class="thumbs">' + r.photos.map(function (n) { return '<button class="th" data-n="' + n + '"><img loading="lazy" src="' + PHOTO(n) + '" alt=""></button>'; }).join('') + '</div>' : '') +
+      (ph.length > 1 ? '<div class="thumbs">' + ph.map(function (n, i) { return '<button class="th" data-i="' + i + '"><img loading="lazy" src="' + PHOTO(n) + '" alt=""></button>'; }).join('') + '</div>' : '') +
       '<button class="back">' + s.back + '</button>';
     viewShift = host.clientWidth > 820 ? Math.round(c.offsetWidth / 2 + 10) : 0; applyView();
     c.querySelector('.x').addEventListener('click', clearSel); c.querySelector('.back').addEventListener('click', clearSel);
-    Array.prototype.forEach.call(c.querySelectorAll('.th'), function (b) { b.addEventListener('click', function () { openLb(r, +b.dataset.n); }); });
+    if (!ph.length) return;
+    function show(i) {
+      pvIdx = (i + ph.length) % ph.length;
+      $('#pv-img').src = PHOTO(ph[pvIdx]); c.querySelector('.pv-n').textContent = (pvIdx + 1) + ' / ' + ph.length;
+      c.querySelector('.pv-cap').textContent = capOf(ph[pvIdx]);
+      Array.prototype.forEach.call(c.querySelectorAll('.th'), function (b, k) { b.classList.toggle('on', k === pvIdx); });
+      var nx = new Image(); nx.src = PHOTO(ph[(pvIdx + 1) % ph.length]);
+    }
+    show(0);
+    $('#pv-img').addEventListener('click', function () { openLb(r, ph[pvIdx]); });
+    var pp = c.querySelector('.pv-prev'), pn = c.querySelector('.pv-next');
+    if (pp) { pp.addEventListener('click', function () { show(pvIdx - 1); }); pn.addEventListener('click', function () { show(pvIdx + 1); }); }
+    Array.prototype.forEach.call(c.querySelectorAll('.th'), function (b) { b.addEventListener('click', function () { show(+b.dataset.i); }); });
   }
   var lbRoom = null, lbIdx = 0;
   function openLb(r, n) { lbRoom = r; lbIdx = r.photos.indexOf(n); showLb(); $('#lb').hidden = false; }
-  function showLb() { var n = lbRoom.photos[lbIdx]; $('#lb-img').src = PHOTO(n); $('#lb-cap').textContent = lbRoom[lang] + ' · ' + (lbIdx + 1) + '/' + lbRoom.photos.length; }
+  function showLb() { var n = lbRoom.photos[lbIdx]; $('#lb-img').src = PHOTO(n); $('#lb-cap').textContent = lbRoom[lang] + ' · ' + capOf(n) + ' · ' + (lbIdx + 1) + '/' + lbRoom.photos.length; }
   $('#lb-close').addEventListener('click', function () { $('#lb').hidden = true; });
   $('#lb-prev').addEventListener('click', function () { lbIdx = (lbIdx - 1 + lbRoom.photos.length) % lbRoom.photos.length; showLb(); });
   $('#lb-next').addEventListener('click', function () { lbIdx = (lbIdx + 1) % lbRoom.photos.length; showLb(); });

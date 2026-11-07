@@ -23,7 +23,7 @@ aside h3{margin:0 0 10px;font-size:11px;letter-spacing:.2em;text-transform:upper
 .room:hover{border-color:var(--vs)}.room.on{background:var(--vs-dk);color:var(--crema);border-color:var(--vs-dk)}
 #stage{position:relative;min-height:0;overflow:hidden}#stage canvas{display:block;width:100%;height:100%}
 #t-hint{position:absolute;left:12px;bottom:12px;font-size:12px;background:rgba(250,246,240,.9);padding:6px 10px;border-radius:8px 0 8px 0;pointer-events:none;color:rgba(42,15,46,.75)}
-#card{position:absolute;right:14px;top:14px;width:330px;max-height:calc(100% - 28px);overflow:auto;background:#fff;color:var(--ink);border-radius:14px 0 14px 0;box-shadow:0 12px 40px rgba(42,15,46,.18);padding:16px 16px 14px;border-top:4px solid var(--vs)}
+#card{position:absolute;right:14px;top:14px;width:400px;max-height:calc(100% - 28px);overflow:auto;background:#fff;color:var(--ink);border-radius:14px 0 14px 0;box-shadow:0 12px 40px rgba(42,15,46,.18);padding:16px 16px 14px;border-top:4px solid var(--vs)}
 #card[hidden]{display:none}
 .card-h{display:flex;justify-content:space-between;align-items:flex-start;gap:10px}
 .card-h h2{margin:0;font-size:18px}
@@ -35,6 +35,13 @@ aside h3{margin:0 0 10px;font-size:11px;letter-spacing:.2em;text-transform:upper
 .th{padding:0;border:0;background:#eee;aspect-ratio:1;overflow:hidden;border-radius:8px 0 8px 0}
 .th img{width:100%;height:100%;object-fit:cover;display:block;transition:transform .3s}
 .th:hover img{transform:scale(1.06)}
+.pv{position:relative;margin:-16px -16px 10px;aspect-ratio:4/3;background:#e9e2d4;overflow:hidden;border-radius:14px 0 0 0}
+.pv img{width:100%;height:100%;object-fit:cover;display:block;cursor:zoom-in}
+.pv-nav{position:absolute;top:50%;transform:translateY(-50%);width:38px;height:38px;border:0;border-radius:10px 0 10px 0;background:rgba(250,246,240,.94);color:var(--ink);font-size:22px;line-height:1;box-shadow:0 4px 14px rgba(42,15,46,.25)}
+.pv-prev{left:10px}.pv-next{right:10px}
+.pv-n{position:absolute;right:10px;bottom:10px;background:rgba(42,15,46,.75);color:var(--crema);font:700 12px system-ui,sans-serif;padding:4px 8px;border-radius:8px 0 8px 0}
+.pv-cap{margin:0 0 6px;font:italic 15px Georgia,serif;color:rgba(42,15,46,.78)}
+.thumbs{grid-template-columns:repeat(5,1fr);margin-top:12px}.th.on{outline:2px solid var(--vs-dk);outline-offset:1px}
 .back{margin-top:14px;width:100%;border:1px solid rgba(42,15,46,.22);background:var(--crema);padding:9px;border-radius:10px 0 10px 0}
 body.embed header .tt{display:none}body.embed header{justify-content:flex-end;padding:10px 12px}body.embed footer{display:none}body.embed #app{grid-template-rows:auto 1fr}@media (max-width:820px){body.embed #app{grid-template-rows:auto auto 1fr}}
 footer{grid-column:1/3;padding:8px 18px 10px;background:var(--crema);border-top:1px solid var(--line);font-size:12px;color:rgba(42,15,46,.65)}
@@ -50,7 +57,8 @@ footer{grid-column:1/3;padding:8px 18px 10px;background:var(--crema);border-top:
  aside h3{display:none}
  #rooms{flex-direction:row;gap:6px;width:max-content}
  .room{padding:8px 10px;white-space:nowrap;font-size:13px}
- #card{left:10px;right:10px;top:auto;bottom:10px;width:auto;max-height:48%}
+ #card{left:10px;right:10px;top:auto;bottom:10px;width:auto;max-height:66%}
+ .pv{aspect-ratio:16/10}
  .tools button{padding:7px 10px}
  h1{font-size:17px}
 }
@@ -82,6 +90,9 @@ footer{grid-column:1/3;padding:8px 18px 10px;background:var(--crema);border-top:
      entrada, cocina y baños confirmados por el propietario. */
   var W = 9.6, D = 10.3, H_FULL = 2.5, H_LOW = 1.05;
   var PHOTO = function (n) { return 'assets/apt-vt-gallery-' + (n < 10 ? '0' : '') + n + '.webp'; };
+
+  var CAPS = {"8": ["Entrada · mueble artesano, espejo que recibe", "Entrance · artisan cabinet, a mirror's welcome"], "20": ["Salón · luz cálida, terraza a un paso", "Living room · warm light, terrace steps away"], "34": ["Salón · el atardecer entra por la ventana", "Living room · sunset pouring through the window"], "10": ["Salón · rincón de sofá, luz de tarde", "Living room · sofa corner, evening light"], "42": ["Salón · sofá, estufa y el horizonte de fondo", "Living room · sofa, stove, and the horizon behind"], "5": ["Salón · la ventana abierta al horizonte", "Living room · a window open to the horizon"], "6": ["Comedor · mesa que crece, luz que acompaña", "Dining area · the table grows, light follows"], "19": ["Cocina · nevera y campana en acero, tulipanes en la encimera", "Kitchen · steel fridge and hood, tulips on the counter"], "33": ["Dormitorio principal · manta suave y horizonte", "Master bedroom · soft throw and horizon"], "24": ["Dormitorio principal · pared turquesa, cojines de damasco", "Master bedroom · turquoise wall, damask cushions"], "23": ["Baño · lavabo en negro, espejo de luna", "Bathroom · black vanity, moon-round mirror"], "35": ["Baño · el mismo rincón, más cerca", "Bathroom · the same corner, a closer look"], "43": ["Baño · el mismo lavabo negro, de cerca", "Bathroom · the same black vanity, up close"], "3": ["Dormitorio principal · cojines en índigo, de cerca", "Master bedroom · indigo cushions, up close"], "21": ["Dormitorio principal · el mar, visto desde la cama", "Master bedroom · the sea, glimpsed from bed"], "4": ["Dormitorio 2 · mantas de lana, dos camas", "Bedroom 2 · wool throws, twin beds"], "12": ["Dormitorio 2 · la ventana al mar, mantas turquesa", "Bedroom 2 · a window to the sea, turquoise throws"], "32": ["Dormitorio 2 · ropa de cama blanca, cojines de color", "Bedroom 2 · crisp white linen, a wall of colour"], "7": ["Baño 1 · azul de mosaico bajo los pies", "Bathroom 1 · mosaic blue underfoot"], "14": ["Baño 2 · ducha de obra, amarillo que despierta", "Bathroom 2 · built-in shower, yellow that wakes"], "16": ["Baño 2 · negro mate y una flor serena", "Bathroom 2 · matte black, one quiet flower"], "17": ["Terraza · noches cálidas que apetece alargar", "Terrace · warm nights worth stretching"], "11": ["Terraza · el horizonte entero al atardecer", "Terrace · the whole horizon, golden hour"], "1": ["Terraza · primera luz del amanecer sobre la urbanización", "Terrace · first light of dawn over the complex"], "9": ["Terraza · el Mediterráneo se tiñe de oro", "Terrace · the Mediterranean turns to gold"], "31": ["Terraza · bajo el toldo, sin prisa", "Terrace · under the awning, unhurried"], "37": ["Piscina exterior comunitaria · jardines y sierra al fondo", "Outdoor community pool · gardens and hills beyond"], "30": ["Piscina exterior comunitaria · el puente de madera", "Outdoor community pool · the wooden bridge"], "18": ["Piscina · desde arriba, el Mediterráneo espera", "Pool · from above, the Mediterranean beyond"], "25": ["Piscina climatizada · luz de palmeras tras el cristal", "Heated pool · palm-tree light through the glass"], "26": ["Piscina climatizada · el punto de encuentro, todo el año", "Heated pool · the year-round gathering spot"], "40": ["Piscina climatizada · el cielo se enciende al anochecer", "Heated pool · the sky catches fire at dusk"], "27": ["Jacuzzi y piscina climatizada", "Jacuzzi and heated pool"], "39": ["Jacuzzi cubierto · un momento para ti al atardecer", "Covered jacuzzi · a moment to yourself at sunset"], "28": ["Gimnasio comunitario", "Community gym"], "36": ["Gimnasio comunitario · máquinas y pesas libres", "Community gym · machines and free weights"], "38": ["Pista de tenis comunitaria", "Community tennis court"], "41": ["Zona infantil · columpios y tobogán para los peques", "Playground · swings and slide for the kids"], "29": ["Sauna y baño de vapor", "Sauna and steam room"], "44": ["Dormitorio 2 · mantas moradas y el mar en la ventana", "Bedroom 2 · purple throws and the sea in the window"], "45": ["Baño 1 · bañera con columna de hidromasaje y mosaico azul", "Bathroom 1 · bathtub with hydro-massage column and blue mosaic"]};
+  function capOf(n) { var c = CAPS[n]; if (!c) return ''; var t = c[lang === 'es' ? 0 : 1], i = t.indexOf(' · '); t = i >= 0 ? t.slice(i + 3) : t; return t.charAt(0).toUpperCase() + t.slice(1); }
 
   var ROOMS = [
     { id: 'salon', es: 'Salón', en: 'Living room', rect: [5.9, 6.2, 9.6, 10.3], view: { az: -0.3, pol: 0.85, d: 9 },
@@ -487,22 +498,38 @@ footer{grid-column:1/3;padding:8px 18px 10px;background:var(--crema);border-top:
       b.addEventListener('click', function () { r.id === selected ? clearSel() : select(r.id); }); ul.appendChild(b);
     });
   }
+  var pvIdx = 0;
   function renderCard(r) {
     var c = $('#card');
     if (!r) { c.hidden = true; viewShift = 0; applyView(); return; }
-    c.hidden = false; viewShift = host.clientWidth > 820 ? Math.round(c.offsetWidth / 2 + 10) : 0;
-    var s = TXT[lang], items = r[lang + '_t'];
-    c.innerHTML = '<div class="card-h"><h2>' + r[lang] + '</h2><button class="x" aria-label="' + s.close + '">✕</button></div>' +
+    c.hidden = false; pvIdx = 0;
+    var s = TXT[lang], items = r[lang + '_t'], ph = r.photos;
+    // la foto de la estancia, grande y lo primero: es lo que mejor la enseña
+    c.innerHTML = (ph.length ? '<div class="pv"><img id="pv-img" alt=""><span class="pv-n"></span>' +
+        (ph.length > 1 ? '<button class="pv-nav pv-prev" aria-label="‹">‹</button><button class="pv-nav pv-next" aria-label="›">›</button>' : '') + '</div><p class="pv-cap"></p>' : '') +
+      '<div class="card-h"><h2>' + r[lang] + '</h2><button class="x" aria-label="' + s.close + '">✕</button></div>' +
       '<ul class="facts">' + items.map(function (t) { return '<li>' + t + '</li>'; }).join('') + '</ul>' +
-      (r.photos.length ? '<p class="ph">' + s.photos + '</p><div class="thumbs">' + r.photos.map(function (n) { return '<button class="th" data-n="' + n + '"><img loading="lazy" src="' + PHOTO(n) + '" alt=""></button>'; }).join('') + '</div>' : '') +
+      (ph.length > 1 ? '<div class="thumbs">' + ph.map(function (n, i) { return '<button class="th" data-i="' + i + '"><img loading="lazy" src="' + PHOTO(n) + '" alt=""></button>'; }).join('') + '</div>' : '') +
       '<button class="back">' + s.back + '</button>';
     viewShift = host.clientWidth > 820 ? Math.round(c.offsetWidth / 2 + 10) : 0; applyView();
     c.querySelector('.x').addEventListener('click', clearSel); c.querySelector('.back').addEventListener('click', clearSel);
-    Array.prototype.forEach.call(c.querySelectorAll('.th'), function (b) { b.addEventListener('click', function () { openLb(r, +b.dataset.n); }); });
+    if (!ph.length) return;
+    function show(i) {
+      pvIdx = (i + ph.length) % ph.length;
+      $('#pv-img').src = PHOTO(ph[pvIdx]); c.querySelector('.pv-n').textContent = (pvIdx + 1) + ' / ' + ph.length;
+      c.querySelector('.pv-cap').textContent = capOf(ph[pvIdx]);
+      Array.prototype.forEach.call(c.querySelectorAll('.th'), function (b, k) { b.classList.toggle('on', k === pvIdx); });
+      var nx = new Image(); nx.src = PHOTO(ph[(pvIdx + 1) % ph.length]);
+    }
+    show(0);
+    $('#pv-img').addEventListener('click', function () { openLb(r, ph[pvIdx]); });
+    var pp = c.querySelector('.pv-prev'), pn = c.querySelector('.pv-next');
+    if (pp) { pp.addEventListener('click', function () { show(pvIdx - 1); }); pn.addEventListener('click', function () { show(pvIdx + 1); }); }
+    Array.prototype.forEach.call(c.querySelectorAll('.th'), function (b) { b.addEventListener('click', function () { show(+b.dataset.i); }); });
   }
   var lbRoom = null, lbIdx = 0;
   function openLb(r, n) { lbRoom = r; lbIdx = r.photos.indexOf(n); showLb(); $('#lb').hidden = false; }
-  function showLb() { var n = lbRoom.photos[lbIdx]; $('#lb-img').src = PHOTO(n); $('#lb-cap').textContent = lbRoom[lang] + ' · ' + (lbIdx + 1) + '/' + lbRoom.photos.length; }
+  function showLb() { var n = lbRoom.photos[lbIdx]; $('#lb-img').src = PHOTO(n); $('#lb-cap').textContent = lbRoom[lang] + ' · ' + capOf(n) + ' · ' + (lbIdx + 1) + '/' + lbRoom.photos.length; }
   $('#lb-close').addEventListener('click', function () { $('#lb').hidden = true; });
   $('#lb-prev').addEventListener('click', function () { lbIdx = (lbIdx - 1 + lbRoom.photos.length) % lbRoom.photos.length; showLb(); });
   $('#lb-next').addEventListener('click', function () { lbIdx = (lbIdx + 1) % lbRoom.photos.length; showLb(); });
