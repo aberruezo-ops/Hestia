@@ -110,8 +110,8 @@ footer{grid-column:1/3;padding:8px 18px 10px;background:var(--crema);border-top:
       es_t: ['Cabina de ducha con hidromasaje', 'Lavabo sobre mueble blanco y azulejo azul'],
       en_t: ['Shower cabin with hydro-massage', 'Basin on a white unit and blue tiles'], photos: [9, 10] },
     { id: 'bano2', es: 'Baño principal', en: 'Main bathroom', rect: [4.45, 0, 6.3, 1.75], view: { az: 0.2, pol: 0.72, d: 5.8 },
-      es_t: ['Bañera con hidromasaje', 'Bidé y mueble de madera con lavabo'],
-      en_t: ['Bathtub with hydro-massage', 'Bidet and wooden unit with basin'], photos: [11] },
+      es_t: ['Al entrar, a la izquierda el inodoro y después la bañera con hidromasaje', 'Bidé y mueble de madera con lavabo y espejo'],
+      en_t: ['On your left as you enter, the toilet and then the hydro-massage bathtub', 'Bidet and wooden unit with basin and mirror'], photos: [11] },
     { id: 'dorm2', es: 'Dormitorio 2', en: 'Bedroom 2', rect: [6.3, 0, 10.2, 2.6], view: { az: 0.3, pol: 0.82, d: 8 },
       es_t: ['Dos camas individuales con cabeceros tapizados', 'Espejos redondos y mesilla negra entre las camas', 'Armario empotrado', 'Salida a la segunda terraza'],
       en_t: ['Two single beds with upholstered headboards', 'Round mirrors and a black bedside table between the beds', 'Built-in wardrobe', 'Door out to the second terrace'],
@@ -120,7 +120,7 @@ footer{grid-column:1/3;padding:8px 18px 10px;background:var(--crema);border-top:
       es_t: ['Zona de estar de madera delante del dormitorio: sofá, mesa baja y dos butacas', 'Mesa con cuatro sillas delante del salón', 'Se sale desde el salón y desde el dormitorio principal'],
       en_t: ['Wooden seating area in front of the bedroom: sofa, coffee table and two armchairs', 'Table with four chairs in front of the living room', 'Reached from the living room and the master bedroom'],
       photos: [13, 24, 25, 27, 28] },
-    { id: 'terr2', es: 'Segunda terraza · 14 m²', en: 'Second terrace · 14 m²', rect: [10.2, 0.3, 11.4, 6.0], view: { az: 0.9, pol: 0.88, d: 9 },
+    { id: 'terr2', es: 'Segunda terraza · 14 m²', en: 'Second terrace · 14 m²', rect: [10.2, 0.3, 12.65, 6.0], view: { az: 0.9, pol: 0.88, d: 9 },
       es_t: ['Pérgola blanca', 'Mesa para dos', 'Se sale desde el dormitorio 2'],
       en_t: ['White pergola', 'Table for two', 'Reached from bedroom 2'], photos: [19] }
   ];
@@ -286,7 +286,7 @@ footer{grid-column:1/3;padding:8px 18px 10px;background:var(--crema);border-top:
     // pretiles de las terrazas
     var ph = Math.min(1.05, H);
     box(0.12, ph, 7.8, -2.05, 0, 3.8, M.wallOut, G.walls); box(2.1, ph, 0.12, -1.02, 0, -0.1, M.wallOut, G.walls); box(2.1, ph, 0.12, -1.02, 0, 7.7, M.wallOut, G.walls);
-    box(0.12, ph, 5.7, 11.4, 0, 3.15, M.wallOut, G.walls); box(1.25, ph, 0.12, 10.8, 0, 0.3, M.wallOut, G.walls); box(1.25, ph, 0.12, 10.8, 0, 6.0, M.wallOut, G.walls);
+    box(0.12, ph, 5.7, 12.65, 0, 3.15, M.wallOut, G.walls); box(2.5, ph, 0.12, 11.42, 0, 0.3, M.wallOut, G.walls); box(2.5, ph, 0.12, 11.42, 0, 6.0, M.wallOut, G.walls);
   }
 
   /* ---------- muebles ---------- */
@@ -328,10 +328,10 @@ footer{grid-column:1/3;padding:8px 18px 10px;background:var(--crema);border-top:
     box(0.38, 0.4, 0.55, 3.15, 0, 0.35, M.white); box(0.38, 0.45, 0.16, 3.15, 0.4, 0.1, M.white);
     box(0.45, 0.8, 0.5, 2.99, 0, 1.18, M.gloss); cyl(0.2, 0.14, 2.99, 0.8, 1.18, M.white, null, 0.22);
     FP = G.decor; box(0.03, 0.6, 0.45, 2.77, 1.3, 1.18, M.mirror); FP = G.furn;
-    /* BAÑO PRINCIPAL (plano + foto 11): bañera en la pared oeste, bidé y mueble de madera con espejo al norte, inodoro */
-    box(0.72, 0.55, 1.6, 4.86, 0, 0.88, M.white); box(0.62, 0.04, 1.5, 4.86, 0.55, 0.88, M.glass);
+    /* BAÑO PRINCIPAL (plano, foto 11 y propietario): al entrar, a la izquierda el inodoro y después la bañera; bidé y mueble de madera con espejo al norte */
+    box(0.72, 0.55, 1.2, 4.86, 0, 0.65, M.white); box(0.62, 0.04, 1.1, 4.86, 0.55, 0.65, M.glass);
     box(0.38, 0.4, 0.5, 5.45, 0, 0.3, M.white);
-    box(0.38, 0.4, 0.55, 6.0, 0, 1.0, M.white); box(0.16, 0.45, 0.38, 6.17, 0.4, 1.0, M.white);
+    box(0.55, 0.4, 0.38, 4.8, 0, 1.48, M.white); box(0.16, 0.45, 0.38, 4.58, 0.4, 1.48, M.white);
     box(0.62, 0.85, 0.48, 5.95, 0, 0.3, M.darkWood); box(0.4, 0.12, 0.36, 5.95, 0.85, 0.3, M.white);
     FP = G.decor; box(0.72, 0.8, 0.03, 5.95, 1.25, 0.14, M.white); box(0.58, 0.66, 0.035, 5.95, 1.32, 0.15, M.mirror); FP = G.furn;
 
@@ -391,12 +391,12 @@ footer{grid-column:1/3;padding:8px 18px 10px;background:var(--crema);border-top:
     armchair(-1.5, 2.0, Math.PI); armchair(-0.6, 2.0, Math.PI);
     box(0.85, 0.05, 0.85, -1.05, 0.73, 5.35, M.darkWood); [[-0.38, -0.38], [0.38, -0.38], [-0.38, 0.38], [0.38, 0.38]].forEach(function (p) { box(0.04, 0.73, 0.04, -1.05 + p[0], 0, 5.35 + p[1], M.darkWood); });
     [[-1.05, 4.7, 0], [-1.05, 6.0, Math.PI], [-1.7, 5.35, Math.PI / 2], [-0.4, 5.35, -Math.PI / 2]].forEach(function (p) { chair(p[0], p[1], p[2], M.darkWood, M.darkWood); });
-    /* SEGUNDA TERRAZA (estrecha en el plano): pérgola blanca (foto 19) y mesa para dos */
-    box(0.6, 0.05, 0.6, 11.0, 0.73, 3.3, M.darkWood); box(0.06, 0.73, 0.06, 11.0, 0, 3.3, M.darkWood);
-    chair(10.95, 2.7, 0, M.darkWood, M.darkWood); chair(10.95, 3.9, Math.PI, M.darkWood, M.darkWood);
+    /* SEGUNDA TERRAZA (unos 14 m²): pérgola blanca y mesa para dos junto al pretil (foto 19) */
+    box(0.6, 0.05, 0.7, 12.22, 0.73, 3.3, M.darkWood); box(0.06, 0.73, 0.06, 12.22, 0, 3.3, M.darkWood);
+    chair(12.15, 2.7, 0, M.darkWood, M.darkWood); chair(12.15, 3.9, Math.PI, M.darkWood, M.darkWood);
     FP = G.decor;
-    for (var i = 0; i < 9; i++) box(1.2, 0.08, 0.06, 10.8, 2.45, 0.55 + i * 0.65, M.pergola, G.decor, false);
-    box(0.12, 0.12, 5.6, 11.32, 2.35, 3.15, M.pergola); box(0.1, 2.45, 0.1, 11.32, 0, 0.45, M.pergola); box(0.1, 2.45, 0.1, 11.32, 0, 5.85, M.pergola);
+    for (var i = 0; i < 9; i++) box(2.4, 0.08, 0.06, 11.42, 2.45, 0.55 + i * 0.65, M.pergola, G.decor, false);
+    box(0.12, 0.12, 5.6, 12.55, 2.35, 3.15, M.pergola); box(0.1, 2.45, 0.1, 12.55, 0, 0.45, M.pergola); box(0.1, 2.45, 0.1, 12.55, 0, 5.85, M.pergola);
     FP = G.furn;
   }
 
