@@ -88,18 +88,18 @@ footer{grid-column:1/3;padding:8px 18px 10px;background:var(--crema);border-top:
      (dormitorio principal → salón); origen en la pared exterior de la cocina, a la altura del dormitorio.
      Distribución tomada del plano de la ficha (perspectiva calibrada, 85 m²) y de las fotos;
      entrada, cocina y baños confirmados por el propietario. */
-  var W = 9.6, D = 10.3, H_FULL = 2.5, H_LOW = 1.05;
+  var W = 8.6, D = 10.3, H_FULL = 2.5, H_LOW = 1.05;
   var PHOTO = function (n) { return 'assets/apt-vt-gallery-' + (n < 10 ? '0' : '') + n + '.webp'; };
 
   var CAPS = {"8": ["Entrada · mueble artesano, espejo que recibe", "Entrance · artisan cabinet, a mirror's welcome"], "20": ["Salón · luz cálida, terraza a un paso", "Living room · warm light, terrace steps away"], "34": ["Salón · el atardecer entra por la ventana", "Living room · sunset pouring through the window"], "10": ["Salón · rincón de sofá, luz de tarde", "Living room · sofa corner, evening light"], "42": ["Salón · sofá, estufa y el horizonte de fondo", "Living room · sofa, stove, and the horizon behind"], "5": ["Salón · la ventana abierta al horizonte", "Living room · a window open to the horizon"], "6": ["Comedor · mesa que crece, luz que acompaña", "Dining area · the table grows, light follows"], "19": ["Cocina · nevera y campana en acero, tulipanes en la encimera", "Kitchen · steel fridge and hood, tulips on the counter"], "33": ["Dormitorio principal · manta suave y horizonte", "Master bedroom · soft throw and horizon"], "24": ["Dormitorio principal · pared turquesa, cojines de damasco", "Master bedroom · turquoise wall, damask cushions"], "23": ["Baño · lavabo en negro, espejo de luna", "Bathroom · black vanity, moon-round mirror"], "35": ["Baño · el mismo rincón, más cerca", "Bathroom · the same corner, a closer look"], "43": ["Baño · el mismo lavabo negro, de cerca", "Bathroom · the same black vanity, up close"], "3": ["Dormitorio principal · cojines en índigo, de cerca", "Master bedroom · indigo cushions, up close"], "21": ["Dormitorio principal · el mar, visto desde la cama", "Master bedroom · the sea, glimpsed from bed"], "4": ["Dormitorio 2 · mantas de lana, dos camas", "Bedroom 2 · wool throws, twin beds"], "12": ["Dormitorio 2 · la ventana al mar, mantas turquesa", "Bedroom 2 · a window to the sea, turquoise throws"], "32": ["Dormitorio 2 · ropa de cama blanca, cojines de color", "Bedroom 2 · crisp white linen, a wall of colour"], "7": ["Baño 1 · azul de mosaico bajo los pies", "Bathroom 1 · mosaic blue underfoot"], "14": ["Baño 2 · ducha de obra, amarillo que despierta", "Bathroom 2 · built-in shower, yellow that wakes"], "16": ["Baño 2 · negro mate y una flor serena", "Bathroom 2 · matte black, one quiet flower"], "17": ["Terraza · noches cálidas que apetece alargar", "Terrace · warm nights worth stretching"], "11": ["Terraza · el horizonte entero al atardecer", "Terrace · the whole horizon, golden hour"], "1": ["Terraza · primera luz del amanecer sobre la urbanización", "Terrace · first light of dawn over the complex"], "9": ["Terraza · el Mediterráneo se tiñe de oro", "Terrace · the Mediterranean turns to gold"], "31": ["Terraza · bajo el toldo, sin prisa", "Terrace · under the awning, unhurried"], "37": ["Piscina exterior comunitaria · jardines y sierra al fondo", "Outdoor community pool · gardens and hills beyond"], "30": ["Piscina exterior comunitaria · el puente de madera", "Outdoor community pool · the wooden bridge"], "18": ["Piscina · desde arriba, el Mediterráneo espera", "Pool · from above, the Mediterranean beyond"], "25": ["Piscina climatizada · luz de palmeras tras el cristal", "Heated pool · palm-tree light through the glass"], "26": ["Piscina climatizada · el punto de encuentro, todo el año", "Heated pool · the year-round gathering spot"], "40": ["Piscina climatizada · el cielo se enciende al anochecer", "Heated pool · the sky catches fire at dusk"], "27": ["Jacuzzi y piscina climatizada", "Jacuzzi and heated pool"], "39": ["Jacuzzi cubierto · un momento para ti al atardecer", "Covered jacuzzi · a moment to yourself at sunset"], "28": ["Gimnasio comunitario", "Community gym"], "36": ["Gimnasio comunitario · máquinas y pesas libres", "Community gym · machines and free weights"], "38": ["Pista de tenis comunitaria", "Community tennis court"], "41": ["Zona infantil · columpios y tobogán para los peques", "Playground · swings and slide for the kids"], "29": ["Sauna y baño de vapor", "Sauna and steam room"], "44": ["Dormitorio 2 · mantas moradas y el mar en la ventana", "Bedroom 2 · purple throws and the sea in the window"], "45": ["Baño 1 · bañera con columna de hidromasaje y mosaico azul", "Bathroom 1 · bathtub with hydro-massage column and blue mosaic"]};
   function capOf(n) { var c = CAPS[n]; if (!c) return ''; var t = c[lang === 'es' ? 0 : 1], i = t.indexOf(' · '); t = i >= 0 ? t.slice(i + 3) : t; return t.charAt(0).toUpperCase() + t.slice(1); }
 
   var ROOMS = [
-    { id: 'salon', es: 'Salón', en: 'Living room', rect: [5.9, 6.2, 9.6, 10.3], view: { az: -0.3, pol: 0.85, d: 9 },
+    { id: 'salon', es: 'Salón', en: 'Living room', rect: [5.2, 6.2, 8.6, 10.3], view: { az: -0.3, pol: 0.85, d: 9 },
       es_t: ['Sofá cama contra la pared, mirando a la tele, con cojines en tonos teja', 'Smart TV 55" y estufa', 'Mesa baja de madera', 'Ventanal con salida a la terraza'],
       en_t: ['Sofa bed against the wall facing the TV, with terracotta-toned cushions', '55" Smart TV and a stove', 'Wooden coffee table', 'Glass doors out to the terrace'],
       photos: [20, 34, 10, 42, 5] },
-    { id: 'comedor', es: 'Comedor y entrada', en: 'Dining area and entrance', rect: [2.25, 6.2, 5.9, 10.3], view: { az: -0.2, pol: 0.85, d: 9 },
+    { id: 'comedor', es: 'Comedor y entrada', en: 'Dining area and entrance', rect: [2.25, 6.2, 5.2, 10.3], view: { az: -0.2, pol: 0.85, d: 9 },
       es_t: ['La puerta de entrada da directamente al salón, con la cocina a la izquierda', 'Mueble artesano con espejo redondo', 'Pared de papel ocre con las letras HESTIA VERA', 'Mesa de madera extensible y dos lámparas negras'],
       en_t: ['The front door opens straight into the living room, with the kitchen on the left', 'Artisan cabinet with a round mirror', 'Ochre papered wall with the HESTIA VERA letters', 'Extendable wooden table and two black pendant lights'],
       photos: [6, 8] },
@@ -107,7 +107,7 @@ footer{grid-column:1/3;padding:8px 18px 10px;background:var(--crema);border-top:
       es_t: ['Cocina cerrada, con puerta al comedor', 'Muebles blancos y encimera gris', 'Nevera y campana en acero', 'Horno en columna y lavavajillas', 'Puerta a la terraza trasera'],
       en_t: ['Closed kitchen with a door to the dining area', 'White units and a grey worktop', 'Steel fridge and hood', 'Oven in a column and dishwasher', 'Door to the rear terrace'],
       photos: [19] },
-    { id: 'dorm1', es: 'Dormitorio principal', en: 'Master bedroom', rect: [3.9, 0, 9.6, 3.0], view: { az: 0.2, pol: 0.82, d: 8 },
+    { id: 'dorm1', es: 'Dormitorio principal', en: 'Master bedroom', rect: [3.9, 0, 8.6, 3.0], view: { az: 0.2, pol: 0.82, d: 8 },
       es_t: ['Cama de matrimonio con cabecero tapizado', 'Pared turquesa', 'Armario de madera', 'Baño propio con bañera', 'Se ve el mar desde la cama'],
       en_t: ['Double bed with an upholstered headboard', 'Turquoise wall', 'Wooden wardrobe', 'En-suite bathroom with a bathtub', 'Sea view from the bed'],
       photos: [33, 24, 3, 21] },
@@ -121,11 +121,11 @@ footer{grid-column:1/3;padding:8px 18px 10px;background:var(--crema);border-top:
       es_t: ['Ducha con mampara negra', 'Lavabo negro y espejo redondo', 'Se entra desde el pasillo'],
       en_t: ['Shower with a black-framed screen', 'Black vanity and a round mirror', 'Reached from the hallway'],
       photos: [23, 35, 43, 14, 16] },
-    { id: 'dorm2', es: 'Dormitorio 2', en: 'Bedroom 2', rect: [4.9, 3.0, 9.6, 6.2], view: { az: 0.2, pol: 0.82, d: 8 },
+    { id: 'dorm2', es: 'Dormitorio 2', en: 'Bedroom 2', rect: [4.9, 3.0, 8.6, 6.2], view: { az: 0.2, pol: 0.82, d: 8 },
       es_t: ['Dos camas individuales con cabeceros color cuero', 'Espejos redondos y mesilla blanca entre las camas', 'Ventana al mar'],
       en_t: ['Two single beds with leather-toned headboards', 'Round mirrors and a white bedside table between the beds', 'Window with a sea view'],
       photos: [4, 12, 32, 44] },
-    { id: 'terr1', es: 'Terraza · 18 m²', en: 'Terrace · 18 m²', rect: [9.6, 3.0, 12.25, 10.3], floors: [[9.6, 3.0, 12.25, 6.5], [9.6, 6.5, 11.0, 10.3]], lab: [10.9, 4.6], view: { az: 0.7, pol: 0.85, d: 9 },
+    { id: 'terr1', es: 'Terraza · 18 m²', en: 'Terrace · 18 m²', rect: [8.6, 3.0, 11.25, 10.3], floors: [[8.6, 3.0, 11.25, 6.5], [8.6, 6.5, 10.0, 10.3]], lab: [9.9, 4.6], view: { az: 0.7, pol: 0.85, d: 9 },
       es_t: ['Zona de estar con sofá y butacas de madera', 'Toldo y mesa baja', 'Vistas al Mediterráneo y al Salar de los Canos', 'Se sale desde el salón'],
       en_t: ['Seating area with a wooden sofa and armchairs', 'Awning and a coffee table', 'Views over the Mediterranean and the Salar de los Canos', 'Reached from the living room'],
       photos: [17, 11, 1, 9, 31] },
@@ -303,8 +303,8 @@ footer{grid-column:1/3;padding:8px 18px 10px;background:var(--crema);border-top:
     G.decor.visible = H > 1.5 && furnOn; fitTall();
     // pretiles de las terrazas
     var ph = Math.min(1.0, H);
-    box(0.12, ph, 3.5, 12.25, 0, 4.75, M.wallOut, G.walls); box(2.65, ph, 0.12, 10.92, 0, 3.0, M.wallOut, G.walls); box(1.25, ph, 0.12, 11.62, 0, 6.5, M.wallOut, G.walls);
-    box(0.12, ph, 3.8, 11.0, 0, 8.4, M.wallOut, G.walls); box(1.4, ph, 0.12, 10.3, 0, 10.3, M.wallOut, G.walls);
+    box(0.12, ph, 3.5, 11.25, 0, 4.75, M.wallOut, G.walls); box(2.65, ph, 0.12, 9.92, 0, 3.0, M.wallOut, G.walls); box(1.25, ph, 0.12, 10.62, 0, 6.5, M.wallOut, G.walls);
+    box(0.12, ph, 3.8, 10.0, 0, 8.4, M.wallOut, G.walls); box(1.4, ph, 0.12, 9.3, 0, 10.3, M.wallOut, G.walls);
     box(1.4, ph, 0.12, 1.55, 0, 3.65, M.wallOut, G.walls); box(0.12, ph, 2.55, 0.85, 0, 4.92, M.wallOut, G.walls);
   }
 
@@ -341,9 +341,9 @@ footer{grid-column:1/3;padding:8px 18px 10px;background:var(--crema);border-top:
       var c = new T.Mesh(new T.CircleGeometry(r - 0.01, 36), M.mirror); c.position.set(x, y, z); c.rotation.y = ry; G.decor.add(c); }
 
     /* DORMITORIO PRINCIPAL: cama con cabecero gris tapizado contra la pared turquesa, mesillas blancas, armario de madera */
-    bed(5.75, 1.05, 1.5, 2.0, M.greyFab, 1.65, 1.1, M.mustardFab);
-    box(0.5, 0.14, 0.16, 5.4, 0.55, 0.3, M.teal); box(0.5, 0.14, 0.16, 6.1, 0.55, 0.3, M.teal);
-    [4.7, 6.85].forEach(function (x) { box(0.42, 0.5, 0.36, x, 0, 0.27, M.white); cyl(0.07, 0.3, x, 0.5, 0.27, M.amber, null, 0.1); cyl(0.17, 0.2, x, 0.8, 0.27, M.cream, null, 0.13); });
+    bed(6.45, 1.05, 1.5, 2.0, M.greyFab, 1.65, 1.1, M.mustardFab);
+    box(0.5, 0.14, 0.16, 6.1, 0.55, 0.3, M.teal); box(0.5, 0.14, 0.16, 6.8, 0.55, 0.3, M.teal);
+    [5.25, 7.65].forEach(function (x) { box(0.42, 0.5, 0.36, x, 0, 0.27, M.white); cyl(0.07, 0.3, x, 0.5, 0.27, M.amber, null, 0.1); cyl(0.17, 0.2, x, 0.8, 0.27, M.cream, null, 0.13); });
     box(0.6, 2.2, 1.7, 4.25, 0, 1.05, M.oak);
 
     /* BAÑO 1 (en suite): bañera con columna de hidromasaje, inodoro, mueble de madera clara */
@@ -362,8 +362,8 @@ footer{grid-column:1/3;padding:8px 18px 10px;background:var(--crema);border-top:
     roundMirror(2.36, 1.55, 5.45, Math.PI / 2, 0.3, M.black);
 
     /* DORMITORIO 2: dos camas con el cabecero en la pared del salón, mesilla blanca, espejos redondos, armario blanco */
-    [6.35, 7.75].forEach(function (x) { grp(x, 5.2, Math.PI, function () { bed(0, 0, 0.9, 1.9, M.tan, 1.0, 1.1, M.tealLight); }); roundMirror(x, 1.7, 6.13, Math.PI, 0.2, M.white); });
-    box(0.4, 0.55, 0.36, 7.05, 0, 5.95, M.white); cyl(0.1, 0.25, 7.05, 0.55, 5.95, M.tealLight, null, 0.06);
+    [6.15, 7.65].forEach(function (x) { grp(x, 5.2, Math.PI, function () { bed(0, 0, 0.9, 1.9, M.tan, 1.0, 1.1, M.tealLight); }); roundMirror(x, 1.7, 6.13, Math.PI, 0.2, M.white); });
+    box(0.4, 0.55, 0.36, 6.9, 0, 5.95, M.white); cyl(0.1, 0.25, 6.9, 0.55, 5.95, M.tealLight, null, 0.06);
     box(0.6, 2.2, 1.15, 5.25, 0, 5.55, M.gloss);
 
     /* COMEDOR Y ENTRADA */
@@ -381,16 +381,16 @@ footer{grid-column:1/3;padding:8px 18px 10px;background:var(--crema);border-top:
     FP = G.furn;
 
     /* SALÓN: sofá cama contra la pared de abajo, mesa baja de madera, tele y estufa en la pared del dormitorio 2 */
-    box(2.1, 0.42, 0.9, 7.7, 0, 9.73, M.beige); box(2.1, 0.45, 0.22, 7.7, 0.42, 10.07, M.beige);
-    box(0.18, 0.62, 0.9, 6.74, 0, 9.73, M.beige); box(0.18, 0.62, 0.9, 8.66, 0, 9.73, M.beige);
-    box(0.42, 0.36, 0.14, 7.2, 0.48, 9.9, M.terra); box(0.42, 0.36, 0.14, 8.2, 0.48, 9.9, M.terra);
-    box(1.0, 0.05, 0.55, 7.8, 0.4, 8.85, M.oak); [[-0.46, -0.24], [0.46, -0.24], [-0.46, 0.24], [0.46, 0.24]].forEach(function (p) { box(0.03, 0.4, 0.03, 7.8 + p[0], 0, 8.85 + p[1], M.black); });
-    box(0.5, 0.6, 0.3, 8.45, 0, 6.42, M.black);
-    armchair(9.05, 7.15, -Math.PI / 2);
-    cyl(0.15, 0.03, 9.2, 0, 9.95, M.black); cyl(0.015, 1.5, 9.2, 0.03, 9.95, M.black); cyl(0.22, 0.25, 9.2, 1.5, 9.95, M.black, null, 0.14);
+    box(2.1, 0.42, 0.9, 7.1, 0, 9.73, M.beige); box(2.1, 0.45, 0.22, 7.1, 0.42, 10.07, M.beige);
+    box(0.18, 0.62, 0.9, 6.14, 0, 9.73, M.beige); box(0.18, 0.62, 0.9, 8.06, 0, 9.73, M.beige);
+    box(0.42, 0.36, 0.14, 6.6, 0.48, 9.9, M.terra); box(0.42, 0.36, 0.14, 7.6, 0.48, 9.9, M.terra);
+    box(1.0, 0.05, 0.55, 7.2, 0.4, 8.85, M.oak); [[-0.46, -0.24], [0.46, -0.24], [-0.46, 0.24], [0.46, 0.24]].forEach(function (p) { box(0.03, 0.4, 0.03, 7.2 + p[0], 0, 8.85 + p[1], M.black); });
+    box(0.5, 0.6, 0.3, 7.85, 0, 6.42, M.black);
+    armchair(8.1, 7.15, -Math.PI / 2);
+    cyl(0.15, 0.03, 8.3, 0, 9.95, M.black); cyl(0.015, 1.5, 8.3, 0.03, 9.95, M.black); cyl(0.22, 0.25, 8.3, 1.5, 9.95, M.black, null, 0.14);
     FP = G.decor;
-    box(1.25, 0.72, 0.06, 7.75, 0.9, 6.29, M.black); plane(1.2, 0.67, 7.75, 1.26, 6.325, 0, M.screen);
-    [7.25, 8.15].forEach(function (x) { box(0.55, 1.0, 0.03, x, 1.2, 10.14, M.damask); });
+    box(1.25, 0.72, 0.06, 7.15, 0.9, 6.29, M.black); plane(1.2, 0.67, 7.15, 1.26, 6.325, 0, M.screen);
+    [6.65, 7.55].forEach(function (x) { box(0.55, 1.0, 0.03, x, 1.2, 10.14, M.damask); });
     curtain(W - 0.14, 6.8, 7.6, new T.MeshStandardMaterial({ color: 0xffffff, transparent: true, opacity: 0.5 })); curtain(W - 0.14, 9.0, 9.8, new T.MeshStandardMaterial({ color: 0xffffff, transparent: true, opacity: 0.5 }));
     FP = G.furn;
 
@@ -403,13 +403,13 @@ footer{grid-column:1/3;padding:8px 18px 10px;background:var(--crema);border-top:
     FP = G.decor; var hood = box(0.45, 0.06, 0.7, 0.33, 1.55, 8.75, M.black); hood.rotation.z = 0.5; FP = G.furn;
 
     /* TERRAZA: sofá y dos butacas de madera alrededor de una mesa baja, macetas, toldo */
-    grp(10.15, 5.15, Math.PI / 2, function () { box(1.4, 0.36, 0.66, 0, 0, 0, M.darkWood); box(1.3, 0.12, 0.56, 0, 0.36, 0.03, M.sheet); box(1.4, 0.45, 0.09, 0, 0.36, -0.29, M.darkWood); box(0.6, 0.34, 0.1, -0.33, 0.48, -0.22, M.sheet); box(0.6, 0.34, 0.1, 0.33, 0.48, -0.22, M.sheet); });
-    armchair(11.25, 4.0, 0); armchair(11.25, 6.15, Math.PI);
-    box(0.6, 0.04, 0.6, 11.2, 0.4, 5.1, M.darkWood); [[-0.26, -0.26], [0.26, -0.26], [-0.26, 0.26], [0.26, 0.26]].forEach(function (p) { box(0.04, 0.4, 0.04, 11.2 + p[0], 0, 5.1 + p[1], M.darkWood); });
-    cyl(0.2, 0.4, 11.95, 0, 3.35, M.terra, null, 0.24); sph(0.28, 11.95, 0.72, 3.35, M.plant);
-    cyl(0.2, 0.4, 11.95, 0, 6.2, M.terra, null, 0.24); sph(0.28, 11.95, 0.72, 6.2, M.plant);
+    grp(9.15, 5.15, Math.PI / 2, function () { box(1.4, 0.36, 0.66, 0, 0, 0, M.darkWood); box(1.3, 0.12, 0.56, 0, 0.36, 0.03, M.sheet); box(1.4, 0.45, 0.09, 0, 0.36, -0.29, M.darkWood); box(0.6, 0.34, 0.1, -0.33, 0.48, -0.22, M.sheet); box(0.6, 0.34, 0.1, 0.33, 0.48, -0.22, M.sheet); });
+    armchair(10.25, 4.0, 0); armchair(10.25, 6.15, Math.PI);
+    box(0.6, 0.04, 0.6, 10.2, 0.4, 5.1, M.darkWood); [[-0.26, -0.26], [0.26, -0.26], [-0.26, 0.26], [0.26, 0.26]].forEach(function (p) { box(0.04, 0.4, 0.04, 10.2 + p[0], 0, 5.1 + p[1], M.darkWood); });
+    cyl(0.2, 0.4, 10.95, 0, 3.35, M.terra, null, 0.24); sph(0.28, 10.95, 0.72, 3.35, M.plant);
+    cyl(0.2, 0.4, 10.95, 0, 6.2, M.terra, null, 0.24); sph(0.28, 10.95, 0.72, 6.2, M.plant);
     FP = G.decor;
-    box(2.6, 0.03, 3.4, 10.92, 2.45, 4.75, M.awning); box(0.1, 2.45, 0.1, 12.18, 0, 3.08, M.darkWood); box(0.1, 2.45, 0.1, 12.18, 0, 6.42, M.darkWood);
+    box(2.6, 0.03, 3.4, 9.92, 2.45, 4.75, M.awning); box(0.1, 2.45, 0.1, 11.18, 0, 3.08, M.darkWood); box(0.1, 2.45, 0.1, 11.18, 0, 6.42, M.darkWood);
     FP = G.furn;
   }
 
@@ -439,7 +439,7 @@ footer{grid-column:1/3;padding:8px 18px 10px;background:var(--crema);border-top:
 
   /* ================= CÁMARA ================= */
   var target = new T.Vector3(5.8, 0.3, 5.2), dist = 21, az = -0.42, pol = 0.92, goal = null;
-  var VIEW_ALL = { t: [5.9, 0.2, 5.2], d: 21, az: -0.42, pol: 0.88 }, VIEW_TOP = { t: [6.0, 0, 5.2], d: 21, az: 0, pol: 0.001 };
+  var VIEW_ALL = { t: [5.4, 0.2, 5.2], d: 20.5, az: -0.42, pol: 0.88 }, VIEW_TOP = { t: [5.5, 0, 5.2], d: 20.5, az: 0, pol: 0.001 };
   function aspectK() { return camera.aspect < 0.8 ? 1.35 : 1; }
   var viewShift = 0;
   function applyView() { var w = host.clientWidth, h = host.clientHeight; if (viewShift) camera.setViewOffset(w, h, viewShift, 0, w, h); else camera.clearViewOffset(); camera.updateProjectionMatrix(); }
