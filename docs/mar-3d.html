@@ -88,41 +88,42 @@ footer{grid-column:1/3;padding:8px 18px 10px;background:var(--crema);border-top:
      Distribución del plano de la ficha (perspectiva calibrada) con las correcciones del propietario:
      la entrada queda entre el baño pequeño y la pared verde; en la terraza, el chill out delante del
      dormitorio y la mesa octogonal con cuatro sillas delante del salón. */
-  var W = 11.0, D = 7.0, H_FULL = 2.5, H_LOW = 1.05;
+  var W = 8.5, D = 9.0, H_FULL = 2.5, H_LOW = 1.05;
   var PHOTO = function (n) { return 'assets/apt-vm-gallery-' + n + '.webp'; };
 
   var CAPS = {"1": ["Salón · sobremesas de madera, cocina a mano", "Living & dining · wood made for lingering"], "2": ["Salón · sofá bajo un sol de espejo", "Living room · sofa under a mirrored sun"], "3": ["Salón · a vista de pájaro, todo tuyo", "Living room · from above, all yours"], "21": ["Salón · lámpara y sofá, tarde en calma", "Living room · lamp glow, evening ease"], "22": ["Salón · el sofá entero para ti", "Living room · the whole sofa, yours"], "5": ["Detalle · jarrón y textiles que abrigan", "Detail · vase & textiles, gentle touches"], "23": ["Detalle · el sol dorado del espejo", "Detail · the mirror's golden sun"], "24": ["Detalle · suelo hidráulico de otra época", "Detail · hydraulic tiles from another era"], "6": ["Cocina · mañanas que empiezan despacio", "Kitchen · mornings that start slow"], "7": ["Cocina · copa en la encimera, sin prisa", "Kitchen · wine on the counter, unhurried"], "8": ["Cocina · campana a punto, guisos lentos", "Kitchen · hood ready, slow cooking ahead"], "26": ["Dormitorio principal · verde profundo, cojines granate", "Master bedroom · deep green, burgundy cushions"], "10": ["Dormitorio principal · armario espejo, luz doblada", "Master bedroom · mirrored wardrobe doubling the light"], "25": ["Dormitorio principal · un globo de luz suave", "Master bedroom · a globe of soft light"], "9": ["Dormitorio 2 · sueños en turquesa", "Bedroom 2 · dreams in teal"], "11": ["Dormitorio 2 · dos camas, mismo descanso", "Bedroom 2 · two beds, one calm"], "15": ["Baño 1 · un resplandor verde y sereno", "Bathroom 1 · a serene green glow"], "29": ["Baño 1 · bañera y ducha, flores rojas de bienvenida", "Bathroom 1 · bathtub and shower, red flowers to welcome you"], "16": ["Baño 2 · ducha lista, toallas esperando", "Bathroom 2 · shower ready, towels waiting"], "17": ["Baño 2 · lavabo y aromas suaves", "Bathroom 2 · vessel sink & soft scents"], "30": ["Baño 2 · cabina de ducha y velas, agua caliente al momento", "Bathroom 2 · shower cabin and candles, instant hot water"], "13": ["Terraza · veladas de verano que se alargan", "Terrace · summer evenings that stretch on"], "14": ["Terraza · sofás para charlas de noche", "Terrace · sofas for late-night talks"], "28": ["Terraza · copa de vino y velas, la luna de testigo", "Terrace · a glass of wine, candlelight, moon as witness"], "4": ["Piscina comunitaria · el agua brilla de noche", "Community pool · water glowing at night"], "27": ["Piscina comunitaria · el jacuzzi, luces encendidas al anochecer", "Community pool · the jacuzzi lit up at dusk"], "18": ["Piscina · jardines alrededor, verano lento", "Pool · gardens around, summer slowed"], "19": ["Piscina comunitaria · azul de mediodía", "Community pool · the blue of midday"], "20": ["Zona duchas · mosaico azul tras el baño", "Pool showers · blue mosaic after the swim"], "31": ["Dormitorio 2 · cabeceros azules, dos camas", "Bedroom 2 · blue headboards, twin beds"], "32": ["Dormitorio principal · cojines de rayas verdes, flores naranjas", "Master bedroom · striped green cushions, orange flowers"]};
   function capOf(n) { var c = CAPS[n]; if (!c) return ''; var t = c[lang === 'es' ? 0 : 1], i = t.indexOf(' · '); t = i >= 0 ? t.slice(i + 3) : t; return t.charAt(0).toUpperCase() + t.slice(1); }
 
   var ROOMS = [
-    { id: 'salon', es: 'Salón-comedor', en: 'Living and dining room', rect: [0, 3.3, 4.8, 7.0], floors: [[0, 3.3, 4.8, 7.0], [4.8, 3.3, 9.1, 4.4]], lab: [2.6, 5.4], view: { az: -0.3, pol: 0.85, d: 9 },
+    { id: 'salon', es: 'Salón-comedor', en: 'Living and dining room', rect: [0, 3.3, 4.2, 9.0], floors: [[0, 3.3, 4.2, 9.0], [4.2, 3.4, 5.2, 4.6]], lab: [1.6, 6.4], view: { az: -0.3, pol: 0.85, d: 9 },
       es_t: ['Sofá cama turquesa bajo un espejo de sol dorado', 'Smart TV 55"', 'Mesa de madera con cuatro sillas junto a la cocina', 'Ventanal con salida a la terraza'],
       en_t: ['Teal sofa bed under a golden sun mirror', '55" Smart TV', 'Wooden table with four chairs by the kitchen', 'Glass doors out to the terrace'],
       photos: [1, 2, 3, 21, 22, 23, 5] },
-    { id: 'cocina', es: 'Cocina', en: 'Kitchen', rect: [4.8, 4.4, 9.1, 7.0], mat: 'kitGrey', lab: [7.4, 5.7], view: { az: 0.3, pol: 0.8, d: 8 },
-      es_t: ['Abierta al salón-comedor', 'Encimera con fregadero y placa, campana negra', 'Nevera combi, horno y microondas en columna', 'Lavavajillas'],
-      en_t: ['Open to the living and dining room', 'Worktop with sink and hob, black hood', 'Fridge-freezer, oven and microwave in a column', 'Dishwasher'],
+    { id: 'cocina', es: 'Cocina', en: 'Kitchen', rect: [4.2, 4.6, 7.2, 9.0], mat: 'kitGrey', lab: [5.4, 6.6], view: { az: 0.3, pol: 0.8, d: 8 },
+      es_t: ['Abierta al salón-comedor; el pasillo de la entrada llega a ella', 'Encimera con fregadero y placa, campana negra', 'Nevera combi, horno y microondas en columna', 'Lavavajillas'],
+      en_t: ['Open to the living and dining room; the entrance hallway leads into it', 'Worktop with sink and hob, black hood', 'Fridge-freezer, oven and microwave in a column', 'Dishwasher'],
       photos: [6, 7, 8] },
-    { id: 'entrada', es: 'Entrada', en: 'Entrance', rect: [9.1, 3.3, 11, 4.4], lab: [10.05, 3.85], view: { az: 0.5, pol: 0.75, d: 7 },
+    { id: 'entrada', es: 'Entrada', en: 'Entrance', rect: [5.2, 3.6, 8.5, 4.6], lab: [7.4, 4.1], view: { az: 0.4, pol: 0.75, d: 7 },
       es_t: ['La puerta de entrada está entre la pared verde y el baño pequeño', 'Un pasillo corto, junto a la pared verde, lleva a la cocina y de ahí al salón-comedor'],
       en_t: ['The front door sits between the green wall and the small bathroom', 'A short hallway along the green wall leads to the kitchen and on into the living and dining room'], photos: [] },
-    { id: 'dorm1', es: 'Dormitorio principal', en: 'Master bedroom', rect: [0, 0, 3.7, 3.3], lab: [1.95, 1.7], view: { az: -0.3, pol: 0.82, d: 8 },
+    { id: 'descansillo', es: 'Descansillo', en: 'Landing', rect: [3.1, 2.1, 5.2, 3.4], lab: [4.15, 2.75], view: { az: 0, pol: 0.75, d: 6.5 },
+      es_t: ['Pequeño descansillo junto al salón', 'A la izquierda, el dormitorio principal; de frente, el baño principal; a la derecha, el dormitorio 2'],
+      en_t: ['Small landing off the living room', 'Master bedroom on the left, main bathroom straight ahead, bedroom 2 on the right'], photos: [] },
+    { id: 'dorm1', es: 'Dormitorio principal', en: 'Master bedroom', rect: [0, 0, 3.1, 3.3], lab: [1.3, 1.9], view: { az: -0.3, pol: 0.82, d: 7.5 },
       es_t: ['Pared verde profundo y cojines granate', 'Armario con puertas de espejo', 'Lámpara de globo', 'Salida a la terraza'],
       en_t: ['Deep green wall and burgundy cushions', 'Wardrobe with mirrored doors', 'Globe lamp', 'Door out to the terrace'],
       photos: [26, 10, 25, 32] },
-    { id: 'bano1', es: 'Baño principal', en: 'Main bathroom', rect: [3.7, 0, 5.9, 2.2], lab: [4.8, 1.0], view: { az: -0.2, pol: 0.72, d: 6 },
-      es_t: ['El baño grande, con bañera y ducha', 'Mueble blanco con encimera de madera y espejo', 'Se entra desde el descansillo, de frente'],
-      en_t: ['The larger bathroom, with bathtub and shower', 'White vanity with a wooden top and a mirror', 'Straight ahead from the landing'], photos: [15, 29] },
-    { id: 'descansillo', es: 'Descansillo', en: 'Landing', rect: [3.7, 2.2, 5.9, 3.3], lab: [4.8, 2.75], view: { az: 0, pol: 0.75, d: 6.5 },
-      es_t: ['Pequeño descansillo junto al salón', 'A la izquierda, el dormitorio principal; de frente, el baño principal; a la derecha, el dormitorio 2'],
-      en_t: ['Small landing off the living room', 'Master bedroom on the left, main bathroom straight ahead, bedroom 2 on the right'], photos: [] },
-    { id: 'dorm2', es: 'Dormitorio 2', en: 'Bedroom 2', rect: [5.9, 0, 11, 3.3], lab: [8.6, 2.4], view: { az: 0.3, pol: 0.82, d: 8.5 },
-      es_t: ['Dos camas con cabeceros turquesa', 'Mesilla blanca entre las camas', 'Armario grande'],
-      en_t: ['Two beds with teal headboards', 'White bedside table between the beds', 'Large wardrobe'], photos: [9, 11, 31] },
-    { id: 'bano2', es: 'Baño 2', en: 'Bathroom 2', rect: [9.1, 4.4, 11, 7.0], lab: [10.05, 5.9], view: { az: 0.3, pol: 0.75, d: 6.5 },
+    { id: 'bano1', es: 'Baño principal', en: 'Main bathroom', rect: [3.1, 0, 5.2, 2.1], lab: [4.15, 1.0], view: { az: -0.1, pol: 0.72, d: 5.8 },
+      es_t: ['Bañera con mampara y columna de ducha', 'Mueble blanco con encimera de madera y espejo con luz, y el inodoro al lado', 'Se entra desde el descansillo, de frente'],
+      en_t: ['Bathtub with a glass screen and shower column', 'White vanity with a wooden top and a backlit mirror, with the toilet next to it', 'Straight ahead from the landing'],
+      photos: [15, 29] },
+    { id: 'dorm2', es: 'Dormitorio 2', en: 'Bedroom 2', rect: [5.2, 0, 8.5, 3.6], lab: [6.9, 2.4], view: { az: 0.3, pol: 0.82, d: 7.5 },
+      es_t: ['Dos camas con cabeceros turquesa', 'Mesilla blanca entre las camas', 'Armario'],
+      en_t: ['Two beds with teal headboards', 'White bedside table between the beds', 'Wardrobe'], photos: [9, 11, 31] },
+    { id: 'bano2', es: 'Baño 2', en: 'Bathroom 2', rect: [7.2, 4.6, 8.5, 9.0], lab: [7.85, 6.9], view: { az: 0.3, pol: 0.75, d: 6.5 },
       es_t: ['El baño pequeño, junto a la entrada', 'Cabina de ducha', 'Lavabo sobre mesa de acero y cristal, espejo redondo'],
       en_t: ['The small bathroom, next to the entrance', 'Shower cabin', 'Basin on a steel and glass stand, round mirror'], photos: [16, 17, 30] },
-    { id: 'terr1', es: 'Terraza de esquina · 20 m²', en: 'Corner terrace · 20 m²', rect: [-3.0, 0, 0, 7.0], mat: 'deckGrey', lab: [-1.5, 3.4], view: { az: -0.8, pol: 0.88, d: 10 },
+    { id: 'terr1', es: 'Terraza de esquina · 20 m²', en: 'Corner terrace · 20 m²', rect: [-2.3, -1.2, 0, 9.0], mat: 'deckGrey', lab: [-1.15, 3.4], view: { az: -0.8, pol: 0.88, d: 10 },
       es_t: ['Chill out delante del dormitorio', 'Mesa octogonal de madera con cuatro sillas delante del salón', 'Se sale desde el salón y desde el dormitorio principal'],
       en_t: ['Chill-out area in front of the bedroom', 'Octagonal wooden table with four chairs in front of the living room', 'Reached from the living room and the master bedroom'],
       photos: [13, 14, 28] }
@@ -282,33 +283,21 @@ footer{grid-column:1/3;padding:8px 18px 10px;background:var(--crema);border-top:
   /* ---------- paredes ---------- */
   // o: aperturas a lo largo del muro { a, b, s (alféizar), h (alto), k: door | win | slide | front }
   var WALLS = [
-    // exteriores
-    { p: [0, 0, W, 0], t: 0.25, m: 'wallOut', o: [
-      { a: 1.4, b: 2.6, s: 0.9, h: 1.2, k: 'win' },
-      { a: 8.2, b: 9.6, s: 0.9, h: 1.2, k: 'win' },
-      { a: 4.9, b: 5.6, s: 1.5, h: 0.6, k: 'win' }] },
-    { p: [0, D, W, D], t: 0.25, m: 'wallOut', o: [
-      { a: 3.0, b: 4.6, s: 0.9, h: 1.2, k: 'win' },
-      { a: 6.6, b: 7.8, s: 1.0, h: 1.1, k: 'win' },
-      { a: 9.7, b: 10.3, s: 1.5, h: 0.6, k: 'win' }] },
-    { p: [W, 0, W, D], t: 0.25, m: 'wallOut', o: [
-      { a: 3.45, b: 4.25, s: 0, h: 2.1, k: 'front' },  // puerta de entrada: entre la ventana del dormitorio 2 y la del baño pequeño
-      { a: 1.0, b: 2.4, s: 0.9, h: 1.2, k: 'win' },
-      { a: 4.5, b: 5.1, s: 1.5, h: 0.6, k: 'win' }] },
-    { p: [0, 0, 0, D], t: 0.25, m: 'wallOut', o: [
-      { a: 0.4, b: 2.2, s: 0, h: 2.2, k: 'slide' },
-      { a: 3.8, b: 6.5, s: 0, h: 2.2, k: 'slide' }] },
-    // interiores
-    { p: [0, 3.3, 3.7, 3.3], t: 0.12, m: 'wall', o: [] },
-    // descansillo junto al salón: dormitorio principal a la izquierda, baño principal de frente, dormitorio 2 a la derecha
-    { p: [3.7, 2.2, 5.9, 2.2], t: 0.12, m: 'wall', o: [{ a: 0.7, b: 1.5, s: 0, h: 2.05, k: 'door' }] },
-    { p: [5.9, 3.3, 9.1, 3.3], t: 0.12, m: 'green', o: [] },
-    { p: [9.1, 3.3, W, 3.3], t: 0.12, m: 'wall', o: [] },
-    { p: [3.7, 0, 3.7, 3.3], t: 0.12, m: 'wall', o: [{ a: 2.35, b: 3.15, s: 0, h: 2.05, k: 'door' }] },
-    { p: [5.9, 0, 5.9, 3.3], t: 0.12, m: 'wall', o: [{ a: 2.35, b: 3.15, s: 0, h: 2.05, k: 'door' }] },
-    // baño pequeño: el pasillo de entrada pasa por delante, junto a la pared verde, hasta la cocina
-    { p: [9.1, 4.4, 9.1, D], t: 0.12, m: 'wall', o: [] },
-    { p: [9.1, 4.4, W, 4.4], t: 0.12, m: 'wall', o: [{ a: 0.3, b: 1.1, s: 0, h: 2.05, k: 'door' }] }
+    // fachadas
+    { p: [0, 0, W, 0], t: 0.25, m: 'wallOut', o: [{ a: 4.55, b: 5.05, s: 1.5, h: 0.6, k: 'win' }] },
+    { p: [0, D, W, D], t: 0.25, m: 'wallOut', o: [] },
+    // puerta de entrada: entre la ventana del dormitorio 2 y la del baño pequeño
+    { p: [W, 0, W, D], t: 0.25, m: 'wallOut', o: [{ a: 1.0, b: 2.6, s: 0.9, h: 1.2, k: 'win' }, { a: 3.75, b: 4.5, s: 0, h: 2.1, k: 'front' }, { a: 7.0, b: 7.6, s: 1.5, h: 0.6, k: 'win' }] },
+    { p: [0, 0, 0, D], t: 0.25, m: 'wallOut', o: [{ a: 0.4, b: 2.9, s: 0, h: 2.2, k: 'slide' }, { a: 3.9, b: 7.9, s: 0, h: 2.2, k: 'slide' }] },
+    // interiores: descansillo con tres puertas (dormitorio principal, baño principal, dormitorio 2)
+    { p: [0, 3.3, 3.1, 3.3], t: 0.12, m: 'wall', o: [] },
+    { p: [3.1, 0, 3.1, 3.3], t: 0.12, m: 'wall', o: [{ a: 2.35, b: 3.1, s: 0, h: 2.05, k: 'door' }] },
+    { p: [3.1, 2.1, 5.2, 2.1], t: 0.12, m: 'wall', o: [{ a: 1.15, b: 1.95, s: 0, h: 2.05, k: 'door' }] },
+    { p: [5.2, 0, 5.2, 3.6], t: 0.12, m: 'wall', o: [{ a: 2.3, b: 3.05, s: 0, h: 2.05, k: 'door' }] },
+    { p: [5.2, 3.6, W, 3.6], t: 0.12, m: 'green', o: [] },
+    // baño pequeño: se entra desde el pasillo de la entrada
+    { p: [7.2, 4.6, W, 4.6], t: 0.12, m: 'wall', o: [{ a: 0.2, b: 0.9, s: 0, h: 2.05, k: 'door' }] },
+    { p: [7.2, 4.6, 7.2, D], t: 0.12, m: 'wall', o: [] }
   ];
   var wallH = H_LOW, tallList = [];
   function fitTall() { tallList.forEach(function (o) { var h = o.userData.h, k = wallH > 1.5 ? 1 : Math.min(1, (H_LOW + 0.1) / h); o.scale.y = k; o.position.y = o.userData.y0 + (h * k) / 2; }); }
@@ -341,21 +330,21 @@ footer{grid-column:1/3;padding:8px 18px 10px;background:var(--crema);border-top:
       seg(cut, len, 0, H);
     });
     // revestimientos: pared verde del dormitorio principal, pared turquesa con HESTIA VERA, pretiles de la terraza
-    box(3.5, Math.min(2.45, H), 0.02, 1.95, 0, 0.14, mm.greenDk, G.walls, false);
-    var tp = box(3.1, Math.min(2.45, H), 0.02, 7.5, 0, 3.4, mm.tealWall, G.walls, false);
+    box(3.0, Math.min(2.45, H), 0.02, 1.55, 0, 0.14, mm.greenDk, G.walls, false);
+    var tp = box(3.2, Math.min(2.45, H), 0.02, 6.85, 0, 3.675, mm.tealWall, G.walls, false);
     if (!lettersDone) { lettersDone = true;
     var cv = document.createElement('canvas'); cv.width = 64; cv.height = 512; var cg = cv.getContext('2d');
     cg.fillStyle = '#f3efe6'; cg.font = '700 40px Georgia, serif'; cg.textAlign = 'center';
     'HESTIA VERA'.split('').forEach(function (ch, i) { if (ch !== ' ') cg.fillText(ch, 32, 44 + i * 42 - (i > 6 ? 0 : 0)); });
     var lt = new T.CanvasTexture(cv); lt.encoding = T.sRGBEncoding;
     var letters = new T.Mesh(new T.PlaneGeometry(0.14, 1.12), new T.MeshBasicMaterial({ map: lt, transparent: true }));
-    letters.position.set(7.3, 1.35, 3.415); letters.rotation.y = 0; G.decor.add(letters); }
+    letters.position.set(6.0, 1.35, 3.69); letters.rotation.y = 0; G.decor.add(letters); }
     // pretiles de la terraza
     var ph = Math.min(1.05, H);
-    box(0.1, ph, D, -3.0, 0, D / 2, mm.wall, G.walls);
-    box(3.05, ph, 0.1, -1.5, 0, 0.0, mm.wall, G.walls);
-    box(3.05, ph, 0.1, -1.5, 0, D, mm.wall, G.walls);
-    for (var k = 0; k < 14; k++) box(0.02, 0.35, 0.02, -3.0, ph, 0.25 + k * 0.5, mm.black, G.walls, false);
+    box(0.1, ph, 10.2, -2.3, 0, 3.9, mm.wall, G.walls);
+    box(2.35, ph, 0.1, -1.15, 0, -1.2, mm.wall, G.walls);
+    box(2.35, ph, 0.1, -1.15, 0, 9.0, mm.wall, G.walls);
+    for (var k = 0; k < 20; k++) box(0.02, 0.35, 0.02, -2.3, ph, -0.95 + k * 0.5, mm.black, G.walls, false);
     G.decor.visible = H > 1.5 && furnOn; fitTall();
   }
 
@@ -421,113 +410,96 @@ footer{grid-column:1/3;padding:8px 18px 10px;background:var(--crema);border-top:
   }
 
   function buildFurniture() {
-    /* DORMITORIO PRINCIPAL: cabecero beige acolchado en rombos, pared verde, mesillas blancas, armario con espejos */
-    bedM(1.95, 1.25, 1.6, 2.0, mm.beige, mm.greenThrow, 1.9, 1.15);
-    box(1.4, 0.12, 0.35, 1.95, 0.46, 0.55, mm.cream);                                  // almohadas crema
-    box(0.5, 0.12, 0.3, 1.45, 0.58, 0.58, mm.garnet); box(0.5, 0.12, 0.3, 2.45, 0.58, 0.58, mm.garnet);   // cojines granates estampados
-    box(0.5, 0.1, 0.22, 1.7, 0.58, 0.95, mm.stripe); box(0.5, 0.1, 0.22, 2.2, 0.58, 0.95, mm.stripe);       // cojines de rayas
-    nightstandM(0.7, 0.4); nightstandM(3.15, 0.4);
-    tableLampM(0.7, 0.54, 0.4); tableLampM(3.15, 0.54, 0.4);
+    /* DORMITORIO PRINCIPAL: cabecero beige acolchado, pared verde, mesillas blancas, armario de espejo junto al baño */
+    bedM(1.25, 1.25, 1.6, 2.0, mm.beige, mm.greenThrow, 1.9, 1.15);
+    box(1.4, 0.12, 0.35, 1.25, 0.46, 0.55, mm.cream);
+    box(0.5, 0.12, 0.3, 0.75, 0.58, 0.58, mm.garnet); box(0.5, 0.12, 0.3, 1.75, 0.58, 0.58, mm.garnet);
+    box(0.5, 0.1, 0.22, 1.0, 0.58, 0.95, mm.stripe); box(0.5, 0.1, 0.22, 1.5, 0.58, 0.95, mm.stripe);
+    nightstandM(0.24, 0.4); nightstandM(2.28, 0.4); tableLampM(0.24, 0.54, 0.4); tableLampM(2.28, 0.54, 0.4);
     FP = G.decor;
-    var mir = new T.Mesh(new T.TorusGeometry(0.38, 0.045, 12, 40), mm.gold); mir.position.set(1.95, 1.85, 0.18); G.decor.add(mir);
-    var mirIn = new T.Mesh(new T.CircleGeometry(0.34, 40), mm.mirror); mirIn.position.set(1.95, 1.85, 0.17); G.decor.add(mirIn);
+    var mir = new T.Mesh(new T.TorusGeometry(0.38, 0.045, 12, 40), mm.gold); mir.position.set(1.25, 1.85, 0.18); G.decor.add(mir);
+    var mirIn = new T.Mesh(new T.CircleGeometry(0.34, 40), mm.mirror); mirIn.position.set(1.25, 1.85, 0.17); G.decor.add(mirIn);
     FP = G.furn;
-    box(0.58, 2.3, 1.7, 3.38, 0, 1.4, mm.mirror);                                       // armario con puertas de espejo
-    box(0.6, 0.04, 1.72, 3.38, 2.3, 1.4, mm.white);
-    sph(0.24, 0.75, 1.85, 2.2, mm.lamp); cyl(0.01, 0.55, 0.75, 1.95, 2.2, mm.black); // lámpara globo
-    box(2.2, 0.01, 1.7, 1.95, 0.003, 1.9, mm.rug, null, false);
-    FP = G.decor; curtainM(0.12, 0.35, 0.12, 2.25, mm.lilac); FP = G.furn;
+    box(0.55, 2.3, 1.4, 2.8, 0, 0.85, mm.mirror); box(0.57, 0.04, 1.42, 2.8, 2.3, 0.85, mm.white);
+    sph(0.24, 0.4, 1.85, 2.6, mm.lamp); cyl(0.01, 0.55, 0.4, 1.95, 2.6, mm.black);
+    box(2.0, 0.01, 1.6, 1.25, 0.003, 1.9, mm.rug, null, false);
+    FP = G.decor; curtainM(0.12, 0.4, 0.12, 2.9, mm.lilac); FP = G.furn;
 
-    /* DORMITORIO 2: camas en la esquina noroeste (como en el plano), cabeceros turquesa, mesilla blanca, armario grande al este */
-    bedM(6.85, 1.12, 0.9, 1.9, mm.teal, mm.garnet, 1.0, 1.0);
-    bedM(8.1, 1.12, 0.9, 1.9, mm.teal, mm.garnet, 1.0, 1.0);
-    box(0.34, 0.8, 0.3, 7.475, 0.0, 0.32, mm.white); box(0.3, 0.03, 0.26, 7.475, 0.45, 0.32, mm.white);
-    cyl(0.14, 0.2, 7.475, 0.88, 0.32, mm.cream, null, 0.08); sph(0.05, 7.475, 0.84, 0.32, mm.teal);
-    box(0.5, 0.1, 0.25, 6.85, 0.58, 0.55, mm.garnet); box(0.5, 0.1, 0.25, 8.1, 0.58, 0.55, mm.garnet);
-    box(0.6, 2.3, 2.2, 10.55, 0, 1.7, mm.white);                                          // armario grande
-    cyl(0.01, 0.6, 7.475, 1.95, 1.5, mm.black); cyl(0.2, 0.12, 7.475, 1.83, 1.5, mm.copper, null, 0.06);  // lámpara de cobre
-    FP = G.decor; curtainM(10.88, 0.5, 10.88, 1.5, mm.voile); FP = G.furn;
+    /* BAÑO PRINCIPAL (fotos): bañera con mampara y columna de ducha a la izquierda; mueble blanco con encimera de madera y espejo con luz; inodoro al lado */
+    box(0.72, 0.5, 1.7, 3.52, 0, 0.98, mm.white); box(0.64, 0.04, 1.62, 3.52, 0.5, 0.98, mm.cream);
+    box(0.03, 1.4, 0.9, 3.88, 0.5, 0.55, mm.glass, null, false); box(0.08, 1.4, 0.08, 3.25, 0.6, 0.22, mm.steel);
+    box(0.8, 0.5, 0.46, 4.35, 0.32, 0.28, mm.whiteGloss); box(0.82, 0.04, 0.48, 4.35, 0.82, 0.28, mm.wood); box(0.5, 0.14, 0.36, 4.35, 0.86, 0.28, mm.white);
+    [[-0.36, -0.18], [0.36, -0.18], [-0.36, 0.18], [0.36, 0.18]].forEach(function (p) { box(0.02, 0.32, 0.02, 4.35 + p[0], 0, 0.28 + p[1], mm.steel); });
+    box(0.4, 0.4, 0.55, 4.95, 0, 0.42, mm.white); box(0.4, 0.5, 0.14, 4.95, 0.4, 0.17, mm.white);
+    box(0.6, 0.01, 0.9, 4.4, 0.005, 1.15, mm.black, null, false);
+    FP = G.decor; box(0.6, 0.8, 0.03, 4.35, 1.15, 0.14, mm.mirror); FP = G.furn;
 
-    /* ENTRADA */
+    /* DORMITORIO 2: dos camas con cabeceros turquesa, mesilla blanca entre ellas, armario junto a la puerta */
+    bedM(6.5, 1.12, 0.9, 1.9, mm.teal, mm.garnet, 1.0, 1.0);
+    bedM(7.85, 1.12, 0.9, 1.9, mm.teal, mm.garnet, 1.0, 1.0);
+    box(0.34, 0.8, 0.3, 7.175, 0.0, 0.32, mm.white); box(0.3, 0.03, 0.26, 7.175, 0.45, 0.32, mm.white);
+    cyl(0.14, 0.2, 7.175, 0.88, 0.32, mm.cream, null, 0.08); sph(0.05, 7.175, 0.84, 0.32, mm.teal);
+    box(0.5, 0.1, 0.25, 6.5, 0.58, 0.55, mm.garnet); box(0.5, 0.1, 0.25, 7.85, 0.58, 0.55, mm.garnet);
+    box(0.6, 2.3, 1.5, 5.55, 0, 0.9, mm.white);
+    cyl(0.01, 0.6, 7.175, 1.95, 1.5, mm.black); cyl(0.2, 0.12, 7.175, 1.83, 1.5, mm.copper, null, 0.06);
+    FP = G.decor; curtainM(8.38, 1.0, 8.38, 2.6, mm.voile); FP = G.furn;
 
-
-    /* SALÓN-COMEDOR: la posición de cada mueble sale del plano existente (televisor en la pared norte con dos farolillos al lado,
-       mesa baja blanca, sofá en la pared sur, mesa de comedor larga junto a la cocina); el aspecto sale de las fotos */
-    var TX = 3.85, TZ = 5.95;
-    box(0.9, 0.05, 1.45, TX, 0.72, TZ, mm.woodDark);                                      // sobre de madera de dos piezas
-    box(0.012, 0.012, 1.45, TX, 0.77, TZ, mm.black, null, false);
-    box(0.06, 0.72, 0.06, TX - 0.4, 0, TZ - 0.65, mm.black); box(0.06, 0.72, 0.06, TX + 0.4, 0, TZ - 0.65, mm.black);
-    box(0.06, 0.72, 0.06, TX - 0.4, 0, TZ + 0.65, mm.black); box(0.06, 0.72, 0.06, TX + 0.4, 0, TZ + 0.65, mm.black);
+    /* SALÓN-COMEDOR: televisor en la pared del dormitorio con dos farolillos, mesa baja blanca, sofá contra la pared de abajo, mesa de comedor junto a la cocina */
+    var TX = 3.45, TZ = 7.3;
+    box(0.9, 0.05, 1.45, TX, 0.72, TZ, mm.woodDark); box(0.012, 0.012, 1.45, TX, 0.77, TZ, mm.black, null, false);
+    [[-0.4, -0.65], [0.4, -0.65], [-0.4, 0.65], [0.4, 0.65]].forEach(function (p) { box(0.06, 0.72, 0.06, TX + p[0], 0, TZ + p[1], mm.black); });
     box(0.06, 0.06, 1.3, TX - 0.4, 0.1, TZ, mm.black); box(0.06, 0.06, 1.3, TX + 0.4, 0.1, TZ, mm.black);
     [[TX - 0.75, TZ - 0.35, Math.PI / 2], [TX - 0.75, TZ + 0.35, Math.PI / 2], [TX + 0.75, TZ - 0.35, -Math.PI / 2], [TX + 0.75, TZ + 0.35, -Math.PI / 2]].forEach(function (p) { chairM(p[0], p[1], p[2], mm.black, mm.wood); });
-    cyl(0.01, 0.9, TX, 1.65, TZ, mm.black);
-    cyl(0.32, 0.15, TX, 1.5, TZ, mm.black, null, 0.3);                                       // lámpara plana, forma de tambor
+    cyl(0.01, 0.9, TX, 1.65, TZ, mm.black); cyl(0.32, 0.15, TX, 1.5, TZ, mm.black, null, 0.3);
     cyl(0.03, 0.2, TX - 0.15, 0.77, TZ - 0.3, mm.white); sph(0.07, TX - 0.15, 1.0, TZ - 0.3, mm.garnet);
-    box(0.2, 0.025, 0.28, TX + 0.1, 0.77, TZ + 0.3, mm.cream);                                  // cuaderno
-
-    var SX = 1.63;
-    box(2.25, 0.42, 0.95, SX, 0, 6.45, mm.sofaTeal); box(2.25, 0.5, 0.2, SX, 0.42, 6.85, mm.sofaTeal);   // sofá turquesa de tela acanalada
-    box(0.22, 0.62, 0.95, SX - 1.15, 0, 6.45, mm.sofaTeal); box(0.22, 0.62, 0.95, SX + 1.15, 0, 6.45, mm.sofaTeal);
-    box(0.45, 0.12, 0.2, SX - 0.5, 0.5, 6.65, mm.rust); box(0.45, 0.12, 0.2, SX - 0.1, 0.5, 6.62, mm.rust); box(0.4, 0.12, 0.2, SX + 0.3, 0.5, 6.65, mm.white);
-    box(0.95, 0.38, 0.9, 1.6, 0, 5.2, mm.whiteGloss); box(0.35, 0.1, 0.25, 1.6, 0.38, 5.2, mm.cream);        // mesa baja blanca con caja tallada
-    cyl(0.02, 1.45, 0.32, 0, 6.8, mm.black); cyl(0.22, 0.32, 0.32, 1.35, 6.8, mm.cream, null, 0.16);       // lámpara de pie de la esquina
-    [[0.9, 4.4], [2.2, 4.25]].forEach(function (p) {                                                              // farolillos con marco dorado y vela azul, a los lados del televisor
-      box(0.24, 0.02, 0.24, p[0], 0, p[1], mm.gold); box(0.02, 0.5, 0.02, p[0] - 0.11, 0, p[1] - 0.11, mm.gold); box(0.02, 0.5, 0.02, p[0] + 0.11, 0, p[1] - 0.11, mm.gold);
-      box(0.02, 0.5, 0.02, p[0] - 0.11, 0, p[1] + 0.11, mm.gold); box(0.02, 0.5, 0.02, p[0] + 0.11, 0, p[1] + 0.11, mm.gold); box(0.06, 0.1, 0.06, p[0], 0.02, p[1], mm.teal); });
+    var SX = 1.45;
+    box(2.25, 0.42, 0.95, SX, 0, 8.4, mm.sofaTeal); box(2.25, 0.5, 0.2, SX, 0.42, 8.8, mm.sofaTeal);
+    box(0.22, 0.62, 0.95, SX - 1.15, 0, 8.4, mm.sofaTeal); box(0.22, 0.62, 0.95, SX + 1.15, 0, 8.4, mm.sofaTeal);
+    box(0.45, 0.12, 0.2, SX - 0.5, 0.5, 8.6, mm.rust); box(0.45, 0.12, 0.2, SX - 0.1, 0.5, 8.57, mm.rust); box(0.4, 0.12, 0.2, SX + 0.3, 0.5, 8.6, mm.white);
+    box(0.95, 0.38, 0.9, 1.4, 0, 5.75, mm.whiteGloss); box(0.35, 0.1, 0.25, 1.4, 0.38, 5.75, mm.cream);
+    cyl(0.02, 1.45, 0.3, 0, 8.7, mm.black); cyl(0.22, 0.32, 0.3, 1.35, 8.7, mm.cream, null, 0.16);
+    [[0.65, 4.35], [2.05, 4.3]].forEach(function (p) {
+      box(0.24, 0.02, 0.24, p[0], 0, p[1], mm.gold); [[-0.11, -0.11], [0.11, -0.11], [-0.11, 0.11], [0.11, 0.11]].forEach(function (q) { box(0.02, 0.5, 0.02, p[0] + q[0], 0, p[1] + q[1], mm.gold); });
+      box(0.06, 0.1, 0.06, p[0], 0.02, p[1], mm.teal); });
     FP = G.decor;
-    box(1.3, 0.75, 0.05, 1.5, 1.0, 3.4, mm.black);                                                             // televisor en la pared norte
-    var sun = new T.Mesh(new T.CylinderGeometry(0.5, 0.5, 0.015, 48), mm.gold); sun.rotation.x = Math.PI / 2; sun.position.set(SX, 1.75, 6.94); G.decor.add(sun);
-    var sunIn = new T.Mesh(new T.CircleGeometry(0.1, 24), mm.mirror); sunIn.position.set(SX, 1.75, 6.93); sunIn.rotation.y = Math.PI; G.decor.add(sunIn);
-    box(0.55, 2.3, 0.03, 5.0, 0, 6.97, mm.white, null, false); box(0.55, 2.3, 0.03, 5.65, 0, 6.97, mm.white, null, false);   // paneles de damasco gris y plata
-    box(0.5, 2.2, 0.02, 5.0, 0.05, 6.955, mm.damask, null, false); box(0.5, 2.2, 0.02, 5.65, 0.05, 6.955, mm.damask, null, false);
-    curtainM(0.12, 3.9, 0.12, 6.5, mm.voile);
-    sph(0.15, 0.5, 2.0, 3.9, mm.plant); cyl(0.01, 0.4, 0.5, 2.1, 3.9, mm.black);                            // planta colgante
+    box(1.3, 0.75, 0.05, 1.35, 1.0, 3.39, mm.black);
+    var sun = new T.Mesh(new T.CylinderGeometry(0.5, 0.5, 0.015, 48), mm.gold); sun.rotation.x = Math.PI / 2; sun.position.set(SX, 1.75, 8.86); G.decor.add(sun);
+    var sunIn = new T.Mesh(new T.CircleGeometry(0.1, 24), mm.mirror); sunIn.position.set(SX, 1.75, 8.85); sunIn.rotation.y = Math.PI; G.decor.add(sunIn);
+    box(0.5, 2.2, 0.02, 2.95, 0.05, 8.86, mm.damask, null, false); box(0.5, 2.2, 0.02, 3.95, 0.05, 8.86, mm.damask, null, false);
+    curtainM(0.12, 3.9, 0.12, 7.9, mm.voile);
+    sph(0.15, 0.35, 2.0, 3.8, mm.plant); cyl(0.01, 0.4, 0.35, 2.1, 3.8, mm.black);
     FP = G.furn;
-    cyl(0.14, 0.9, 0.5, 0, 5.9, mm.amber, null, 0.1); box(0.02, 1.0, 0.02, 0.5, 0.9, 5.9, mm.brown);        // jarrón alto con ramas
-    plantM(0.55, 4.1, 1.1);
+    cyl(0.14, 0.9, 0.35, 0, 6.6, mm.amber, null, 0.1); box(0.02, 1.0, 0.02, 0.35, 0.9, 6.6, mm.brown);
+    plantM(0.4, 4.0, 1.1);
 
-    /* COCINA: medidas tomadas del plano calibrado. Suelo gris, una encimera con fregadero y placa pegada a la pared sur
-       (de 4,9 a 8 m) y la torre de armarios y electrodomésticos al este; frentes blancos, grifo alto y campana negra (fotos) */
-    box(0.62, 2.0, 0.62, 8.45, 0, 5.05, mm.steel);                                                        // nevera combi
-    box(0.6, 0.6, 0.55, 8.46, 1.35, 5.7, mm.steel); box(0.6, 0.6, 0.55, 8.46, 0.7, 5.7, mm.steel); box(0.6, 0.62, 0.55, 8.46, 0.0, 5.7, mm.whiteGloss); // horno + microondas
-    box(0.62, 2.1, 0.7, 8.45, 0, 6.35, mm.whiteGloss);                                                    // armario alto blanco
-    box(3.1, 0.9, 0.62, 6.45, 0, 6.68, mm.whiteGloss); box(3.1, 0.04, 0.64, 6.45, 0.9, 6.68, mm.counter);   // encimera de la pared sur
-    box(0.7, 0.01, 0.42, 5.45, 0.94, 6.66, mm.steel); cyl(0.015, 0.4, 5.45, 0.94, 6.82, mm.steel);        // fregadero y grifo alto
-    box(0.6, 0.01, 0.5, 6.55, 0.94, 6.66, mm.black);                                                      // placa de inducción
-    FP = G.decor; box(2.2, 0.75, 0.35, 5.9, 1.4, 6.82, mm.whiteGloss);
-    var hood = box(0.8, 0.07, 0.45, 6.55, 1.62, 6.7, mm.black); hood.rotation.x = -0.45; FP = G.furn;
-    box(0.28, 0.1, 0.18, 7.4, 0.94, 6.75, mm.black);                                                      // cafetera de cápsulas
+    /* COCINA: encimera en la pared de abajo con fregadero y placa; columna de nevera, horno y armario alto contra el baño pequeño */
+    box(2.3, 0.9, 0.62, 5.4, 0, 8.69, mm.whiteGloss); box(2.32, 0.04, 0.64, 5.4, 0.9, 8.69, mm.counter);
+    box(0.7, 0.01, 0.42, 4.75, 0.94, 8.66, mm.steel); cyl(0.015, 0.4, 4.75, 0.94, 8.84, mm.steel);
+    box(0.6, 0.01, 0.5, 5.8, 0.94, 8.66, mm.black); box(0.28, 0.1, 0.18, 6.3, 0.94, 8.78, mm.black);
+    FP = G.decor; box(2.2, 0.75, 0.35, 5.4, 1.4, 8.82, mm.whiteGloss); var hood = box(0.8, 0.07, 0.45, 5.8, 1.62, 8.7, mm.black); hood.rotation.x = 0.45; FP = G.furn;
+    box(0.62, 2.0, 0.62, 6.9, 0, 5.0, mm.steel);
+    box(0.6, 0.6, 0.55, 6.91, 1.35, 5.62, mm.steel); box(0.6, 0.6, 0.55, 6.91, 0.7, 5.62, mm.steel); box(0.6, 0.62, 0.55, 6.91, 0, 5.62, mm.whiteGloss);
+    box(0.62, 2.1, 0.7, 6.9, 0, 6.25, mm.whiteGloss);
 
-    /* BAÑO 1 (el pequeño): bañera con mampara, mueble blanco con encimera de madera, espejo con luz e inodoro */
-    box(0.72, 0.5, 1.7, 4.1, 0, 1.0, mm.white); box(0.64, 0.04, 1.62, 4.1, 0.5, 1.0, mm.cream);
-    box(0.03, 1.9, 1.0, 4.46, 0.5, 0.95, mm.glass, null, false);                                                 // mampara
-    box(0.08, 1.4, 0.08, 3.8, 0.6, 0.25, mm.steel);                                                              // columna de ducha
-    box(0.42, 0.55, 0.75, 5.62, 0, 1.45, mm.whiteGloss); box(0.44, 0.04, 0.77, 5.62, 0.55, 1.45, mm.wood);
-    box(0.36, 0.14, 0.42, 5.62, 0.59, 1.45, mm.white);
-    FP = G.decor; box(0.03, 0.8, 0.55, 5.82, 1.1, 1.45, mm.mirror); FP = G.furn;
-    box(0.4, 0.4, 0.55, 5.05, 0, 0.42, mm.white); box(0.4, 0.5, 0.14, 5.05, 0.4, 0.2, mm.white);                  // inodoro
-    box(0.5, 0.01, 0.8, 4.85, 0.005, 1.3, mm.black, null, false);                                                 // alfombra estampada
+    /* BAÑO 2 (el pequeño): lavabo sobre mesa de acero y cristal con espejo redondo, inodoro con termo encima, cabina de ducha al fondo */
+    box(0.9, 0.06, 0.9, 8.0, 0, 8.5, mm.white); box(0.02, 2.1, 0.9, 7.55, 0, 8.5, mm.glass, null, false); box(0.9, 2.1, 0.02, 8.0, 0, 8.05, mm.glass, null, false);
+    box(0.05, 0.05, 0.05, 8.0, 2.05, 8.5, mm.steel);
+    box(0.55, 0.4, 0.4, 8.18, 0, 7.3, mm.white); box(0.14, 0.5, 0.4, 8.4, 0.4, 7.3, mm.white);
+    box(0.45, 0.04, 0.5, 7.48, 0.82, 6.4, mm.glass); [[-0.2, -0.22], [0.2, -0.22], [-0.2, 0.22], [0.2, 0.22]].forEach(function (p) { box(0.03, 0.82, 0.03, 7.48 + p[0], 0, 6.4 + p[1], mm.steel); });
+    sph(0.21, 7.48, 0.99, 6.4, mm.white); box(0.34, 0.04, 0.4, 7.48, 0.35, 6.4, mm.woodDark);
+    FP = G.decor; cyl(0.17, 0.85, 8.3, 1.6, 7.3, mm.white); FP = G.furn;
+    var rm = new T.Mesh(new T.CircleGeometry(0.28, 28), mm.mirror); rm.position.set(7.28, 1.55, 6.4); rm.rotation.y = Math.PI / 2; G.decor.add(rm);
 
-    /* BAÑO 2: cabina de ducha en esquina, lavabo sobre mesa de acero y cristal, termo, espejo redondo */
-    box(0.9, 0.06, 0.9, 10.5, 0.0, 4.95, mm.white); box(0.02, 2.1, 0.9, 10.05, 0, 4.95, mm.glass, null, false); box(0.9, 2.1, 0.02, 10.5, 0, 5.41, mm.glass, null, false);
-    box(0.05, 0.05, 0.05, 10.5, 2.05, 4.95, mm.steel);
-    box(0.5, 0.04, 0.45, 10.55, 0.82, 5.9, mm.glass); [[-0.22, -0.2], [0.22, -0.2], [-0.22, 0.2], [0.22, 0.2]].forEach(function (p) { box(0.03, 0.82, 0.03, 10.55 + p[0], 0, 5.9 + p[1], mm.steel); });
-    sph(0.21, 10.55, 0.99, 5.9, mm.white); box(0.4, 0.04, 0.34, 10.55, 0.35, 5.9, mm.woodDark);
-    FP = G.decor; cyl(0.17, 0.85, 10.78, 1.6, 6.45, mm.white); FP = G.furn;                                           // termo
-    box(0.4, 0.4, 0.6, 10.55, 0, 6.6, mm.white);
-    var rm = new T.Mesh(new T.CircleGeometry(0.28, 28), mm.mirror); rm.position.set(10.86, 1.55, 5.9); rm.rotation.y = -Math.PI / 2; G.decor.add(rm);
-
-    /* TERRAZA: zona chill out delante del dormitorio (norte) y mesa octogonal de madera con cuatro sillas delante del salón (sur) */
-    box(0.8, 0.4, 1.7, -0.55, 0, 1.65, mm.woodDark); box(0.64, 0.14, 1.5, -0.55, 0.4, 1.65, mm.cream); box(0.14, 0.6, 1.5, -0.2, 0.4, 1.65, mm.cream);   // sofá de dos plazas pegado a la fachada
-    box(0.12, 0.12, 0.42, -0.65, 0.55, 1.2, mm.teal); box(0.12, 0.12, 0.42, -0.65, 0.55, 2.1, mm.teal);
-    box(0.55, 0.34, 0.95, -1.45, 0, 1.65, mm.woodDark); box(0.5, 0.04, 0.9, -1.45, 0.34, 1.65, mm.woodDark);    // mesa baja
-    armchairM(-1.45, 0.55, 0); armchairM(-1.45, 2.75, Math.PI);                                                   // sillones a los lados
-    poufM(-2.4, 1.2); poufM(-2.4, 2.1);
-    var oct = new T.Mesh(new T.CylinderGeometry(0.62, 0.62, 0.06, 8), mm.wood); oct.position.set(-1.5, 0.75, 5.2); oct.castShadow = true; oct.receiveShadow = true; G.furn.add(oct);   // mesa octogonal de madera
-    cyl(0.07, 0.72, -1.5, 0.0, 5.2, mm.woodDark); box(0.7, 0.04, 0.12, -1.5, 0.0, 5.2, mm.woodDark); box(0.12, 0.04, 0.7, -1.5, 0.0, 5.2, mm.woodDark);
-    [[-2.25, 5.2, Math.PI / 2], [-0.75, 5.2, -Math.PI / 2], [-1.5, 4.45, 0], [-1.5, 5.95, Math.PI]].forEach(function (p) { chairM(p[0], p[1], p[2], mm.wood, mm.woodDark); });
-    plantM(-2.65, 3.2, 1.4, mm.white); plantM(-2.65, 6.5, 1.3, mm.white); plantM(-2.65, 0.45, 1.2, mm.white);
-    sph(0.17, -0.45, 0.2, 3.1, mm.lamp);
+    /* TERRAZA: chill out delante del dormitorio y mesa octogonal de madera con cuatro sillas delante del salón */
+    box(1.6, 0.4, 0.75, -1.15, 0, -0.75, mm.woodDark); box(1.5, 0.14, 0.6, -1.15, 0.4, -0.72, mm.cream); box(1.5, 0.6, 0.14, -1.15, 0.4, -1.05, mm.cream);
+    box(0.42, 0.12, 0.12, -1.5, 0.55, -0.9, mm.teal); box(0.42, 0.12, 0.12, -0.8, 0.55, -0.9, mm.teal);
+    box(0.9, 0.34, 0.55, -1.15, 0, 0.3, mm.woodDark); box(0.86, 0.04, 0.5, -1.15, 0.34, 0.3, mm.woodDark);
+    armchairM(-1.65, 1.25, Math.PI); armchairM(-0.65, 1.25, Math.PI);
+    var oct = new T.Mesh(new T.CylinderGeometry(0.62, 0.62, 0.06, 8), mm.wood); oct.position.set(-1.15, 0.75, 6.2); oct.castShadow = true; oct.receiveShadow = true; G.furn.add(oct);
+    cyl(0.07, 0.72, -1.15, 0.0, 6.2, mm.woodDark); box(0.7, 0.04, 0.12, -1.15, 0.0, 6.2, mm.woodDark); box(0.12, 0.04, 0.7, -1.15, 0.0, 6.2, mm.woodDark);
+    [[-1.9, 6.2, Math.PI / 2], [-0.4, 6.2, -Math.PI / 2], [-1.15, 5.45, 0], [-1.15, 6.95, Math.PI]].forEach(function (p) { chairM(p[0], p[1], p[2], mm.wood, mm.woodDark); });
+    plantM(-2.0, 3.2, 1.2, mm.white); plantM(-2.0, 8.6, 1.2, mm.white); plantM(-2.0, -0.95, 1.0, mm.white);
+    sph(0.17, -0.3, 0.2, 3.1, mm.lamp);
   }
 
   /* ================= ETIQUETAS ================= */
@@ -555,8 +527,8 @@ footer{grid-column:1/3;padding:8px 18px 10px;background:var(--crema);border-top:
   function sizeLabels() { var k = host.clientWidth / Math.max(1, host.clientHeight) < 0.8 ? 0.17 : 0.2; labelSprites.forEach(function (s) { s.scale.set(k, k * 0.1875, 1); }); }
 
   /* ================= CÁMARA ================= */
-  var target = new T.Vector3(3.6, 0.3, 3.5), dist = 18.5, az = -0.62, pol = 0.95, goal = null;
-  var VIEW_ALL = { t: [3.6, 0.3, 3.5], d: 18.5, az: -0.62, pol: 0.95 }, VIEW_TOP = { t: [4.0, 0, 3.5], d: 18, az: 0, pol: 0.001 };
+  var target = new T.Vector3(3.2, 0.3, 4.2), dist = 19, az = -0.55, pol = 0.92, goal = null;
+  var VIEW_ALL = { t: [3.2, 0.3, 4.2], d: 19, az: -0.55, pol: 0.92 }, VIEW_TOP = { t: [3.1, 0, 3.9], d: 19.5, az: 0, pol: 0.001 };
   function aspectK() { return camera.aspect < 0.8 ? 1.35 : 1; }
   var viewShift = 0;
   function applyView() { var w = host.clientWidth, h = host.clientHeight; if (viewShift) camera.setViewOffset(w, h, viewShift, 0, w, h); else camera.clearViewOffset(); camera.updateProjectionMatrix(); }
