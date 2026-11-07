@@ -29,9 +29,7 @@ const APT_DATA = {
     hero_img: 'assets/apt-vm-gallery-26.jpg',
     bedroom_img: 'assets/apt-vm-gallery-26.jpg',
     reveal_img: 'assets/apt-vm-gallery-27.jpg',
-    floorplan_img: 'assets/apt-vm-plano.jpg?v=2',
-    floorplan_subtitle_es: 'distribución en planta.',
-    floorplan_subtitle_en: 'floor layout.',
+    plan3d: 'mar-3d.html',
     floorplan_desc_es: 'Mar se distribuye en primera planta con terraza de esquina: salón-comedor abierto, cocina equipada, dos dormitorios y dos baños. La terraza en esquina recibe luz desde el amanecer hasta el atardecer.',
     floorplan_desc_en: 'Mar is on the first floor with a corner terrace: open living and dining room, equipped kitchen, two bedrooms and two bathrooms. The corner terrace catches light from sunrise to sunset.',
     others: ['vt', 'vs'],
@@ -114,10 +112,7 @@ const APT_DATA = {
     hero_img: 'assets/apt-vt-gallery-33.jpg',
     bedroom_img: 'assets/apt-vt-gallery-33.jpg',
     reveal_img: 'assets/apt-vt-gallery-20.jpg',
-    floorplan_img: 'assets/apt-vt-plano.png',
     plan3d: 'thalassa-3d.html',
-    floorplan_subtitle_es: 'distribución del ático.',
-    floorplan_subtitle_en: 'penthouse layout.',
     floorplan_desc_es: 'Thalassa ocupa la tercera planta (desde el garaje) en una sola crujía: salón con terraza panorámica, cocina abierta, dos dormitorios, dos baños y vistas al Mediterráneo y al Salar de los Canos.',
     floorplan_desc_en: 'Thalassa occupies the third floor (from the garage) in a single open plan: living room with panoramic terrace, open kitchen, two bedrooms, two bathrooms and views over the Mediterranean and the Salar de los Canos.',
     others: ['vm', 'vs'],
@@ -203,10 +198,7 @@ const APT_DATA = {
     hero_img: 'assets/apt-vs-gallery-33.jpg',
     bedroom_img: 'assets/apt-vs-gallery-33.jpg',
     reveal_img: 'assets/apt-vs-gallery-32.jpg',
-    floorplan_img: 'assets/apt-vs-floorplan.jpg',
     plan3d: 'salinas-3d.html',
-    floorplan_subtitle_es: 'distribución en planta.',
-    floorplan_subtitle_en: 'floor layout.',
     floorplan_desc_es: 'Salinas se distribuye en planta primera: salón-comedor, cocina equipada, dos dormitorios, dos baños y dos terrazas, la principal al sur con vistas a los jardines y la piscina de la urbanización.',
     floorplan_desc_en: 'Salinas is a first-floor apartment: living and dining room, equipped kitchen, two bedrooms, two bathrooms and two terraces, the main one faces south with views over the complex gardens and pool.',
     others: ['vm', 'vt'],
@@ -533,13 +525,13 @@ const APT_COVER_FASE = {
 };
 const _webp = (src) => src.replace(/\.(jpg|jpeg|png)$/i, '.webp');
 const _toGallery = () => {
-  const el = document.getElementById('apt-galeria');
+  const el = document.getElementById('apt-plano');
   if (el) el.scrollIntoView({ behavior: 'smooth', block: 'start' });
 };
 
 // Cabecera de la ficha: todas las fotos deslizables, empezando por el
 // dormitorio principal (la que identifica al Hestía) y siguiendo por estancias;
-// "Ver por estancias" baja a la galería con filtros. Debajo, el resumen.
+// "Ver por estancias" baja al plano 3D, donde cada estancia abre sus fotos. Debajo, el resumen.
 const AptPageHero = ({ apt, lang }) => {
   const d = apt[lang];
   const tbl = HESTIA_PRICES[apt.id];
@@ -730,10 +722,8 @@ const AptPageDesc = ({ apt, lang }) => {
   );
 };
 
-// --- Galería carousel ---
-// Galería de la ficha: mosaico editorial con filtros por estancia y visor a
-// pantalla completa (texto y nota de intención de cada foto). La zona sale del
-// título de la foto (parte antes de " · ", en español para no depender del idioma).
+// Zonas de las fotos: ordenan la cabecera por estancias. La zona sale del título
+// de la foto (parte antes de " · ", en español para no depender del idioma).
 const GALLERY_ZONES = [
   { id: 'salon', es: 'Salón y comedor', en: 'Living & dining', test: t => /^(Salón|Comedor|Entrada|Detalle|Sofá)/.test(t) },
   { id: 'dorm',  es: 'Dormitorios',     en: 'Bedrooms',        test: t => /^Dormitorio/.test(t) },
@@ -742,209 +732,8 @@ const GALLERY_ZONES = [
   { id: 'terr',  es: 'Terrazas',        en: 'Terraces',        test: t => /terraza/i.test(t) },
   { id: 'urb',   es: 'Urbanización',    en: 'The complex',     test: () => true },
 ];
-const GALLERY_FIRST = 12;
-// Ritmo del mosaico: una grande, una alta y una ancha cada siete fotos.
-const _tileKind = (k) => (k % 7 === 0 ? 'big' : k % 7 === 3 ? 'tall' : k % 7 === 5 ? 'wide' : '');
-const _tileSpan = (kind, cols) => {
-  if (cols <= 2) return kind === 'tall' ? [1, 2] : kind ? [2, 1] : [1, 1];
-  return kind === 'big' ? [2, 2] : kind === 'tall' ? [1, 2] : kind === 'wide' ? [2, 1] : [1, 1];
-};
-// Misma colocación "dense" que hace el grid CSS: cada pieza al primer hueco libre, por filas.
-const _placeTiles = (tiles, cols) => {
-  const grid = [];
-  const at = (r, c) => (grid[r] || [])[c];
-  const free = (r, c, cs, rs) => { for (let y = r; y < r + rs; y++) for (let x = c; x < c + cs; x++) if (at(y, x) !== undefined) return false; return true; };
-  tiles.forEach((t, i) => {
-    for (let r = 0; ; r++) {
-      let done = false;
-      for (let c = 0; c + t.cs <= cols; c++) {
-        if (free(r, c, t.cs, t.rs)) {
-          for (let y = r; y < r + t.rs; y++) { grid[y] = grid[y] || []; for (let x = c; x < c + t.cs; x++) grid[y][x] = i; }
-          t.r = r; t.c = c; done = true; break;
-        }
-      }
-      if (done) break;
-    }
-  });
-  return grid;
-};
-const _gridHoles = (grid, cols) => {
-  const out = [];
-  for (let r = 0; r < grid.length; r++) for (let c = 0; c < cols; c++) if ((grid[r] || [])[c] === undefined) out.push([r, c]);
-  return out;
-};
-// Tamaños de las piezas para que el mosaico cierre siempre abajo en línea recta, con
-// cualquier número de fotos: se parte del ritmo y, si queda un hueco, se estira la pieza
-// de encima o la de la izquierda; si aun así no cierra, se aplana el ritmo por la cola.
-const _flushKinds = (n, cols) => {
-  const kinds = Array.from({ length: n }, (_, k) => _tileKind(k));
-  for (let plainFrom = n; plainFrom >= 0; plainFrom--) {
-    const tiles = kinds.map((k, i) => { const [cs, rs] = _tileSpan(i < plainFrom ? k : '', cols); return { cs, rs }; });
-    for (let pass = 0; pass < 12; pass++) {
-      const grid = _placeTiles(tiles, cols);
-      const holes = _gridHoles(grid, cols);
-      if (!holes.length) return tiles.map(t => (t.cs === 2 && t.rs === 2 ? 'big' : t.rs === 2 ? 'tall' : t.cs === 2 ? 'wide' : ''));
-      let fixed = false;
-      for (const [r, c] of holes) {
-        const up = r > 0 ? tiles[grid[r - 1][c]] : null;
-        if (up && up.r + up.rs === r && up.rs < 2 && !(cols <= 2 && up.cs === 2)) { up.rs = 2; fixed = true; break; }
-        const left = c > 0 ? tiles[grid[r][c - 1]] : null;
-        if (left && left.c + left.cs === c && left.cs < 2 && !(cols <= 2 && left.rs === 2)) { left.cs = 2; fixed = true; break; }
-      }
-      if (!fixed) break;
-    }
-  }
-  return kinds.map(() => 'full');
-};
-const _useGridCols = () => {
-  const mq = () => (window.matchMedia('(max-width: 760px)').matches ? 2 : 4);
-  const [cols, setCols] = React.useState(mq);
-  React.useEffect(() => {
-    const m = window.matchMedia('(max-width: 760px)');
-    const on = () => setCols(mq());
-    m.addEventListener('change', on);
-    return () => m.removeEventListener('change', on);
-  }, []);
-  return cols;
-};
-
 // Logo de la marca de agua: el del color de cada Hestía.
 const APT_WM = { vm: 'mar', vt: 'thalassa', vs: 'salinas' };
-// La ruta se resuelve respecto a styles.css (carpeta assets).
-const wmVar = (id) => `url(logo-${APT_WM[id] || 'blanco'}-160.png)`;
-
-const GalleryMosaic = ({ imgs, captions, esCaptions, notes = {}, accent, wm, lang = 'es' }) => {
-  const zoneOf = React.useMemo(() => imgs.map((_, i) => {
-    const head = ((esCaptions || captions)[i] || '').split(' · ')[0];
-    return GALLERY_ZONES.find(z => z.test(head)).id;
-  }), [imgs, captions, esCaptions]);
-  const zones = GALLERY_ZONES.map(z => ({ ...z, n: zoneOf.filter(id => id === z.id).length })).filter(z => z.n);
-  const [filter, setFilter] = React.useState('all');
-  const [expanded, setExpanded] = React.useState(false);
-  const [lb, setLb] = React.useState(null); // posición dentro de la lista visible
-  const closeRef = React.useRef(null);
-
-  // "Todo" va ordenado por estancias (el salón abre el mosaico, y dentro de cada
-  // zona entrada y detalles quedan al final) para que la foto grande sea de las buenas.
-  const order = React.useMemo(() => {
-    const zi = id => GALLERY_ZONES.findIndex(z => z.id === id);
-    const minor = i => /^(Entrada|Detalle)/.test(((esCaptions || captions)[i] || '')) ? 1 : 0;
-    return imgs.map((_, i) => i).sort((a, b) => zi(zoneOf[a]) - zi(zoneOf[b]) || minor(a) - minor(b) || a - b);
-  }, [imgs, zoneOf]);
-  const list = order.filter(i => filter === 'all' || zoneOf[i] === filter);
-  const shown = filter === 'all' && !expanded ? list.slice(0, GALLERY_FIRST) : list;
-  const cols = _useGridCols();
-  const kinds = React.useMemo(() => _flushKinds(shown.length, cols), [shown.length, cols]);
-  const zoneName = id => { const z = GALLERY_ZONES.find(x => x.id === id); return z ? z[lang] : ''; };
-
-  // Cache-bust de las fotos (subir GALLERY_V al reemplazar una con el mismo nombre)
-  // y encuadre inteligente por foto (data/photo-positions.json → window.PHOTO_POS).
-  const gv = (src) => `${src}?v=${GALLERY_V}`;
-  const webp = (src) => gv(src).replace(/\.(jpg|jpeg|png)(\?.*)?$/i, '.webp$2');
-  const posFor = (src) => (window.PHOTO_POS || {})[src.split('/').pop()] || '50% 50%';
-  // Si la .webp falla (404 o caché), <picture> no cae solo al jpg: se fuerza.
-  const webpFallback = (e) => {
-    const img = e.currentTarget;
-    if (img.dataset.jpgFallback) return;
-    img.dataset.jpgFallback = '1';
-    const pic = img.parentNode;
-    const source = pic && pic.tagName === 'PICTURE' ? pic.querySelector('source[type="image/webp"]') : null;
-    if (source) source.remove();
-    const jpg = img.getAttribute('src');
-    img.src = jpg + (jpg.indexOf('?') >= 0 ? '&' : '?') + 'fb=1';
-  };
-
-  const pick = (id) => { setFilter(id); setExpanded(false); };
-  const openAt = (pos) => { setLb(pos); document.body.style.overflow = 'hidden'; };
-  const close = () => { setLb(null); document.body.style.overflow = ''; };
-  const step = (d) => setLb(p => (p + d + list.length) % list.length);
-
-  React.useEffect(() => {
-    if (lb === null) return;
-    closeRef.current && closeRef.current.focus();
-    const FOCUSABLE = 'button:not([disabled]), a[href], [tabindex]:not([tabindex="-1"])';
-    const onKey = e => {
-      if (e.key === 'ArrowRight') step(1);
-      if (e.key === 'ArrowLeft')  step(-1);
-      if (e.key === 'Escape')     close();
-      if (e.key === 'Tab') {
-        const el = document.querySelector('.gc-lightbox');
-        if (!el) return;
-        const nodes = [...el.querySelectorAll(FOCUSABLE)];
-        if (!nodes.length) return;
-        const first = nodes[0], last = nodes[nodes.length - 1];
-        if (e.shiftKey && document.activeElement === first) { e.preventDefault(); last.focus(); }
-        else if (!e.shiftKey && document.activeElement === last) { e.preventDefault(); first.focus(); }
-      }
-    };
-    window.addEventListener('keydown', onKey);
-    return () => window.removeEventListener('keydown', onKey);
-  }, [lb, list.length]);
-
-  const touchX = React.useRef(null);
-  const onTouchStart = e => { touchX.current = e.touches[0].clientX; };
-  const onTouchEnd = e => {
-    if (touchX.current === null) return;
-    const dx = e.changedTouches[0].clientX - touchX.current;
-    if (Math.abs(dx) > 40) step(dx < 0 ? 1 : -1);
-    touchX.current = null;
-  };
-
-  const cur = lb !== null ? list[lb] : null;
-  return (
-    <>
-      <div className="gm-filters" role="tablist" aria-label={lang === 'es' ? 'Filtrar fotos por estancia' : 'Filter photos by room'}>
-        <button type="button" role="tab" aria-selected={filter === 'all'} className={`gm-chip${filter === 'all' ? ' on' : ''}`} onClick={() => pick('all')}>
-          {lang === 'es' ? 'Todo' : 'All'} <span className="gm-chip-n">{imgs.length}</span>
-        </button>
-        {zones.map(z => (
-          <button key={z.id} type="button" role="tab" aria-selected={filter === z.id} className={`gm-chip${filter === z.id ? ' on' : ''}`} onClick={() => pick(z.id)}>
-            {z[lang]} <span className="gm-chip-n">{z.n}</span>
-          </button>
-        ))}
-      </div>
-      <div className="gm-grid">
-        {shown.map((i, k) => (
-          <button key={i} type="button" className={`gm-tile ${kinds[k]}`} onClick={() => openAt(k)} aria-label={captions[i]}>
-            <picture>
-              <source srcSet={webp(imgs[i])} type="image/webp"/>
-              <img src={gv(imgs[i])} alt="" loading={k < 4 ? 'eager' : 'lazy'} decoding="async" onError={webpFallback}
-                   style={{ objectPosition: posFor(imgs[i]) }}/>
-            </picture>
-            <span className="gm-cap">{captions[i]}</span>
-          </button>
-        ))}
-      </div>
-      {filter === 'all' && !expanded && list.length > GALLERY_FIRST && (
-        <div className="gm-more-wrap">
-          <button type="button" className="gm-more" onClick={() => setExpanded(true)}>
-            {lang === 'es' ? `Mostrar las ${list.length} fotos` : `Show all ${list.length} photos`}
-          </button>
-        </div>
-      )}
-      {cur !== null && ReactDOM.createPortal(
-        // Montado en <body>: dentro de la sección quedaba atrapado en su pila de
-        // z-index y el header (z-index 99) tapaba el botón de cerrar.
-        <div className="gc-lightbox" onClick={close} onTouchStart={onTouchStart} onTouchEnd={onTouchEnd}
-             role="dialog" aria-modal="true" aria-label={lang === 'es' ? 'Galería de fotos' : 'Photo gallery'} style={{ '--apt-accent': accent, '--wm-logo': wm }}>
-          <button ref={closeRef} className="gc-lb-close" onClick={close} aria-label={lang === 'es' ? 'Cerrar' : 'Close'}>✕</button>
-          <button className="gc-lb-prev" onClick={e => { e.stopPropagation(); step(-1); }} aria-label={lang === 'es' ? 'Anterior' : 'Previous'}>‹</button>
-          <picture className="gc-lb-pic">
-            <source srcSet={webp(imgs[cur])} type="image/webp"/>
-            <img decoding="async" className="gc-lb-img" src={gv(imgs[cur])} alt={captions[cur]} onError={webpFallback} onClick={e => e.stopPropagation()}/>
-          </picture>
-          <button className="gc-lb-next" onClick={e => { e.stopPropagation(); step(1); }} aria-label={lang === 'es' ? 'Siguiente' : 'Next'}>›</button>
-          <div className="gc-lb-caption-wrap">
-            <div className="gc-lb-caption">{captions[cur]}</div>
-            {notes[cur] && <p className="gc-lb-note">{notes[cur]}</p>}
-          </div>
-          <div className="gc-lb-counter">{lb + 1} / {list.length}{filter !== 'all' ? ` · ${zoneName(filter)}` : ''}</div>
-        </div>,
-        document.body
-      )}
-    </>
-  );
-};
 
 const AptVideoDesc = ({ apt, lang }) => {
   if (!apt.video_src) return null;
@@ -979,22 +768,6 @@ const AptVideoDesc = ({ apt, lang }) => {
           </div>
         </div>
       </div>
-    </section>
-  );
-};
-
-const AptPageGallery = ({ apt, lang }) => {
-  const d = apt[lang];
-  const imgs = apt.gallery_imgs;
-  if (!imgs || !imgs.length) return null;
-  return (
-    <section id="apt-galeria" className="apt-page-gallery on-dark" style={{ '--apt-accent': apt.accent, '--wm-logo': wmVar(apt.id) }}>
-      <div className="gm-head">
-        <div className="apt-gallery-eyebrow eyebrow">{lang === 'es' ? 'Galería de fotos' : 'Photo gallery'}</div>
-        <h2 className="gm-title">{lang === 'es' ? <>Rincón a <em>rincón.</em></> : <>Corner by <em>corner.</em></>}</h2>
-      </div>
-      <GalleryMosaic wm={wmVar(apt.id)} imgs={imgs} captions={d.gallery_captions} esCaptions={apt.es && apt.es.gallery_captions}
-                     notes={d.gallery_notes || {}} accent={apt.accent} lang={lang}/>
     </section>
   );
 };
@@ -1038,43 +811,39 @@ const AptPageOthers = ({ apt, lang }) => {
   );
 };
 
-// --- Plano de Hestía (solo si floorplan_img está definido) ---
+// --- Plano 3D interactivo de Hestía ---
+// Sustituye a la galería en mosaico: cada estancia del plano abre sus fotos.
+// El iframe queda "dormido" hasta que se toca, para que la rueda y el dedo
+// sigan moviendo la página; en móvil, tocar abre el plano a pantalla completa.
 const AptFloorPlan = ({ apt, lang }) => {
-  if (!apt.floorplan_img) return null;
-  const subtitle = lang === 'es' ? (apt.floorplan_subtitle_es || 'distribución en planta.') : (apt.floorplan_subtitle_en || 'floor layout.');
-  const desc     = lang === 'es' ? apt.floorplan_desc_es : apt.floorplan_desc_en;
+  const [live, setLive] = React.useState(false);
+  if (!apt.plan3d) return null;
+  const es = lang === 'es';
+  const desc = es ? apt.floorplan_desc_es : apt.floorplan_desc_en;
+  const full = apt.plan3d + (es ? '' : '?lang=en');
+  const src = apt.plan3d + '?embed=1' + (es ? '' : '&lang=en');
+  const activate = () => {
+    if (window.matchMedia('(max-width: 767px)').matches) { window.location.href = full; return; }
+    setLive(true);
+  };
   return (
-    <section className="apt-floorplan section-cream">
+    <section id="apt-plano" className="apt-floorplan section-cream">
       <div className="container">
-        <div className="eyebrow apt-fp-eyebrow">
-          {lang === 'es' ? 'Distribución de Hestía' : 'Hestía layout'}
-        </div>
-        <h2 className="apt-fp-title">
-          {apt.name_short}, <em>{subtitle}</em>
-        </h2>
+        <div className="eyebrow apt-fp-eyebrow">{es ? 'Distribución de Hestía' : 'Hestía layout'}</div>
+        <h2 className="apt-fp-title">{apt.name_short}, <em>{es ? 'estancia a estancia.' : 'room by room.'}</em></h2>
         {desc && <p className="apt-fp-desc">{desc}</p>}
-        <div className="apt-fp-img-wrap reveal">
-          <div className="apt-fp-watermark-wrap">
-            <img decoding="async"
-              src={apt.floorplan_img}
-              alt={lang === 'es' ? `Plano de ${apt[lang].name}` : `Floor plan of ${apt[lang].name}`}
-              className="apt-fp-img"
-              loading="lazy"
-            />
-            <div className="apt-fp-watermark" aria-hidden="true">
-              <img src="assets/logo-hestia-brand.png" alt="" className="apt-fp-watermark-logo" />
-            </div>
-          </div>
+        <div className={'apt-fp-live' + (live ? ' is-live' : '')}>
+          <iframe src={src} title={es ? `Plano 3D de ${apt[lang].name}` : `3D plan of ${apt[lang].name}`} loading="lazy" tabIndex={live ? 0 : -1} />
+          {!live && (
+            <button type="button" className="apt-fp-activate" onClick={activate}>
+              <span className="apt-fp-pill"><HiIcon name="home" size={18} />{es ? 'Explora el plano en 3D' : 'Explore the 3D plan'}</span>
+            </button>
+          )}
         </div>
-        {apt.plan3d && (
-          <div className="apt-fp-3d-wrap">
-            <a className="apt-fp-3d" href={apt.plan3d + (lang === 'en' ? '?lang=en' : '')}>
-              <HiIcon name="home" size={18} />
-              <span>{lang === 'es' ? 'Recórrelo en 3D, estancia a estancia' : 'Explore it in 3D, room by room'}</span>
-            </a>
-            <p className="apt-fp-3d-note">{lang === 'es' ? 'Gira la casa, entra en cada estancia y mira sus fotos.' : 'Turn the home around, step into each room and see its photos.'}</p>
-          </div>
-        )}
+        <p className="apt-fp-3d-note">
+          {es ? 'Toca una estancia para ver sus fotos. ' : 'Tap a room to see its photos. '}
+          <a href={full}>{es ? 'Abrir a pantalla completa' : 'Open full screen'}</a>
+        </p>
       </div>
     </section>
   );
@@ -1501,21 +1270,22 @@ const ApartmentPageApp = () => {
                 los huéspedes decían que las fotos "quedaban muy abajo".
                 Nuevo orden, narrativa VER → CONFIAR → RESERVAR → DETALLE:
                 hero → fotos → vídeo/descripción → confianza → reseñas →
-                precio → calendario → equipamiento → plano → resto. Los CTA
+                precio → calendario → equipamiento → plano → resto.
+                Nov-2026: el plano 3D interactivo (con las fotos de cada
+                estancia) sustituye al mosaico de fotos y ocupa su sitio. Los CTA
                 "Reservar"/"Ver disponibilidad" del hero son anclas (#apt-avail)
                 o enlaces a reservas.html: funcionan igual estén donde estén
                 estas secciones, así que la trazabilidad acceso→reserva no
                 se resiente; solo cambia el orden de lectura en scroll. */}
             <AptPageHero apt={apt} lang={lang} />
             <TrustStrip apt={apt} lang={lang} />
-            <AptPageGallery apt={apt} lang={lang} />
+            <AptFloorPlan apt={apt} lang={lang} />
             <AptVideoDesc apt={apt} lang={lang} />
             <AptCinematicReveal apt={apt} lang={lang} />
             <AptMiniReviews apt={apt} lang={lang} />
             <AptPriceTeaser apt={apt} lang={lang} />
             <AptCalendar aptId={aptId} lang={lang} accent={apt.accent} />
             <AptEquipamiento apt={apt} lang={lang} />
-            <AptFloorPlan apt={apt} lang={lang} />
             <DirectBookingPerks lang={lang} />
             {typeof AptGuideGate !== 'undefined' &&
               <AptGuideGate apt={apt} lang={lang} onUnlock={() => _vt(() => setGuideOpen(true))} />}

@@ -36,6 +36,7 @@ aside h3{margin:0 0 10px;font-size:11px;letter-spacing:.2em;text-transform:upper
 .th img{width:100%;height:100%;object-fit:cover;display:block;transition:transform .3s}
 .th:hover img{transform:scale(1.06)}
 .back{margin-top:14px;width:100%;border:1px solid rgba(42,15,46,.22);background:var(--crema);padding:9px;border-radius:10px 0 10px 0}
+body.embed header .tt{display:none}body.embed header{justify-content:flex-end;padding:10px 12px}body.embed footer{display:none}body.embed #app{grid-template-rows:auto 1fr}@media (max-width:820px){body.embed #app{grid-template-rows:auto auto 1fr}}
 footer{grid-column:1/3;padding:8px 18px 10px;background:var(--crema);border-top:1px solid var(--line);font-size:12px;color:rgba(42,15,46,.65)}
 #lb{position:fixed;inset:0;background:rgba(20,8,22,.86);display:flex;align-items:center;justify-content:center;z-index:50;flex-direction:column;gap:10px;padding:16px}
 #lb[hidden]{display:none}
@@ -91,22 +92,22 @@ footer{grid-column:1/3;padding:8px 18px 10px;background:var(--crema);border-top:
       es_t: ['Abierta al salón-comedor', 'Encimera con fregadero y placa, campana negra', 'Nevera combi, horno y microondas en columna', 'Lavavajillas'],
       en_t: ['Open to the living and dining room', 'Worktop with sink and hob, black hood', 'Fridge-freezer, oven and microwave in a column', 'Dishwasher'],
       photos: [6, 7, 8] },
-    { id: 'entrada', es: 'Entrada', en: 'Entrance', rect: [4.75, 0, 5.9, 3.3], mat: 'tileGrey', lab: [5.32, 2.0], view: { az: 0.1, pol: 0.75, d: 6.5 },
-      es_t: ['La puerta de entrada queda entre el baño pequeño y la pared verde', 'Da al salón-comedor'],
-      en_t: ['The front door sits between the small bathroom and the green wall', 'Opens onto the living and dining room'], photos: [] },
+    { id: 'entrada', es: 'Entrada', en: 'Entrance', rect: [9.1, 3.3, 11, 4.4], lab: [10.05, 3.85], view: { az: 0.5, pol: 0.75, d: 7 },
+      es_t: ['La puerta de entrada está entre la pared verde y el baño pequeño', 'Un pasillo corto, junto a la pared verde, lleva a la cocina y de ahí al salón-comedor'],
+      en_t: ['The front door sits between the green wall and the small bathroom', 'A short hallway along the green wall leads to the kitchen and on into the living and dining room'], photos: [] },
     { id: 'dorm1', es: 'Dormitorio principal', en: 'Master bedroom', rect: [0, 0, 3.7, 3.3], lab: [1.95, 1.7], view: { az: -0.3, pol: 0.82, d: 8 },
       es_t: ['Pared verde profundo y cojines granate', 'Armario con puertas de espejo', 'Lámpara de globo', 'Salida a la terraza'],
       en_t: ['Deep green wall and burgundy cushions', 'Wardrobe with mirrored doors', 'Globe lamp', 'Door out to the terrace'],
       photos: [26, 10, 25, 32] },
-    { id: 'bano1', es: 'Baño 1', en: 'Bathroom 1', rect: [3.7, 0, 4.75, 3.3], lab: [4.22, 1.2], view: { az: -0.2, pol: 0.72, d: 6 },
-      es_t: ['Bañera y ducha', 'Mueble blanco con encimera de madera y espejo'],
-      en_t: ['Bathtub and shower', 'White vanity with a wooden top and a mirror'], photos: [15, 29] },
+    { id: 'bano1', es: 'Baño 1', en: 'Bathroom 1', rect: [3.7, 0, 5.9, 3.3], lab: [4.8, 1.4], view: { az: -0.2, pol: 0.72, d: 6 },
+      es_t: ['El baño grande, con bañera y ducha', 'Mueble blanco con encimera de madera y espejo', 'Se entra desde el salón-comedor'],
+      en_t: ['The larger bathroom, with bathtub and shower', 'White vanity with a wooden top and a mirror', 'Reached from the living and dining room'], photos: [15, 29] },
     { id: 'dorm2', es: 'Dormitorio 2', en: 'Bedroom 2', rect: [5.9, 0, 11, 3.3], lab: [8.6, 2.4], view: { az: 0.3, pol: 0.82, d: 8.5 },
       es_t: ['Dos camas con cabeceros turquesa', 'Mesilla blanca entre las camas', 'Armario grande'],
       en_t: ['Two beds with teal headboards', 'White bedside table between the beds', 'Large wardrobe'], photos: [9, 11, 31] },
-    { id: 'bano2', es: 'Baño 2', en: 'Bathroom 2', rect: [9.1, 3.3, 11, 7.0], lab: [10.05, 5.4], view: { az: 0.3, pol: 0.75, d: 6.5 },
-      es_t: ['Cabina de ducha', 'Lavabo sobre mesa de acero y cristal, espejo redondo'],
-      en_t: ['Shower cabin', 'Basin on a steel and glass stand, round mirror'], photos: [16, 17, 30] },
+    { id: 'bano2', es: 'Baño 2', en: 'Bathroom 2', rect: [9.1, 4.4, 11, 7.0], lab: [10.05, 5.9], view: { az: 0.3, pol: 0.75, d: 6.5 },
+      es_t: ['El baño pequeño, junto a la entrada', 'Cabina de ducha', 'Lavabo sobre mesa de acero y cristal, espejo redondo'],
+      en_t: ['The small bathroom, next to the entrance', 'Shower cabin', 'Basin on a steel and glass stand, round mirror'], photos: [16, 17, 30] },
     { id: 'terr1', es: 'Terraza de esquina · 20 m²', en: 'Corner terrace · 20 m²', rect: [-3.0, 0, 0, 7.0], mat: 'deckGrey', lab: [-1.5, 3.4], view: { az: -0.8, pol: 0.88, d: 10 },
       es_t: ['Chill out delante del dormitorio', 'Mesa octogonal de madera con cuatro sillas delante del salón', 'Se sale desde el salón y desde el dormitorio principal'],
       en_t: ['Chill-out area in front of the bedroom', 'Octagonal wooden table with four chairs in front of the living room', 'Reached from the living room and the master bedroom'],
@@ -117,14 +118,16 @@ footer{grid-column:1/3;padding:8px 18px 10px;background:var(--crema);border-top:
     es: { title: 'Hestía Mar en 3D', sub: '77 m² · 2 dormitorios · 2 baños · terraza de esquina de 20 m²',
       all: 'Toda la casa', top: 'Planta', walls: 'Paredes completas', low: 'Paredes bajas', furn: 'Muebles', labels: 'Nombres',
       rooms: 'Estancias', photos: 'Fotos de esta estancia', close: 'Cerrar', hint: 'Arrastra para girar · rueda o pellizco para acercar · toca una estancia',
-      note: 'Distribución reconstruida a partir del plano de la ficha y de las fotos. Medidas aproximadas; no es un plano de obra.', back: 'Ver toda la casa', ficha: 'Volver a la ficha' },
+      note: 'Distribución reconstruida a partir del plano de la ficha y de las fotos. Medidas aproximadas; no es un plano de obra.', back: 'Ver toda la casa', ficha: 'Volver a la ficha', full: 'Pantalla completa' },
     en: { title: 'Hestía Mar in 3D', sub: '77 m² · 2 bedrooms · 2 bathrooms · 20 m² corner terrace',
       all: 'Whole home', top: 'Top view', walls: 'Full walls', low: 'Low walls', furn: 'Furniture', labels: 'Labels',
       rooms: 'Rooms', photos: 'Photos of this room', close: 'Close', hint: 'Drag to rotate · scroll or pinch to zoom · tap a room',
-      note: 'Layout rebuilt from the plan on the listing and the photos. Measurements are approximate; not a construction drawing.', back: 'See the whole home', ficha: 'Back to the listing' }
+      note: 'Layout rebuilt from the plan on the listing and the photos. Measurements are approximate; not a construction drawing.', back: 'See the whole home', ficha: 'Back to the listing', full: 'Full screen' }
   };
 
   /* ================= ESCENA ================= */
+  // dentro de la ficha (iframe): sin título propio y con enlace a pantalla completa
+  var EMBED = /[?&]embed=1/.test(location.search); if (EMBED) document.body.classList.add('embed');
   var host = document.getElementById('stage');
   var renderer = new T.WebGLRenderer({ antialias: true, preserveDrawingBuffer: true });
   renderer.setPixelRatio(Math.min(window.devicePixelRatio || 1, 2));
@@ -269,26 +272,27 @@ footer{grid-column:1/3;padding:8px 18px 10px;background:var(--crema);border-top:
     { p: [0, 0, W, 0], t: 0.25, m: 'wallOut', o: [
       { a: 1.4, b: 2.6, s: 0.9, h: 1.2, k: 'win' },
       { a: 8.2, b: 9.6, s: 0.9, h: 1.2, k: 'win' },
-      { a: 4.4, b: 5.0, s: 1.5, h: 0.6, k: 'win' }] },
+      { a: 4.9, b: 5.6, s: 1.5, h: 0.6, k: 'win' }] },
     { p: [0, D, W, D], t: 0.25, m: 'wallOut', o: [
       { a: 3.0, b: 4.6, s: 0.9, h: 1.2, k: 'win' },
       { a: 6.6, b: 7.8, s: 1.0, h: 1.1, k: 'win' },
       { a: 9.7, b: 10.3, s: 1.5, h: 0.6, k: 'win' }] },
     { p: [W, 0, W, D], t: 0.25, m: 'wallOut', o: [
+      { a: 3.45, b: 4.25, s: 0, h: 2.1, k: 'front' },  // puerta de entrada: entre la ventana del dormitorio 2 y la del baño pequeño
       { a: 1.0, b: 2.4, s: 0.9, h: 1.2, k: 'win' },
       { a: 4.5, b: 5.1, s: 1.5, h: 0.6, k: 'win' }] },
     { p: [0, 0, 0, D], t: 0.25, m: 'wallOut', o: [
       { a: 0.4, b: 2.2, s: 0, h: 2.2, k: 'slide' },
       { a: 3.8, b: 6.5, s: 0, h: 2.2, k: 'slide' }] },
     // interiores
-    { p: [0, 3.3, 4.75, 3.3], t: 0.12, m: 'wall', o: [{ a: 2.9, b: 3.6, s: 0, h: 2.05, k: 'door' }, { a: 3.85, b: 4.6, s: 0, h: 2.05, k: 'door' }] },
-    { p: [4.75, 3.3, 5.9, 3.3], t: 0.12, m: 'wall', o: [{ a: 0.15, b: 1.0, s: 0, h: 2.1, k: 'front' }] },
+    { p: [0, 3.3, 5.9, 3.3], t: 0.12, m: 'wall', o: [{ a: 2.9, b: 3.6, s: 0, h: 2.05, k: 'door' }, { a: 4.9, b: 5.7, s: 0, h: 2.05, k: 'door' }] },
     { p: [5.9, 3.3, 9.1, 3.3], t: 0.12, m: 'green', o: [{ a: 0.1, b: 0.9, s: 0, h: 2.05, k: 'door' }] },
     { p: [9.1, 3.3, W, 3.3], t: 0.12, m: 'wall', o: [] },
     { p: [3.7, 0, 3.7, 3.3], t: 0.12, m: 'wall', o: [] },
-    { p: [4.75, 0, 4.75, 3.3], t: 0.12, m: 'wall', o: [] },
     { p: [5.9, 0, 5.9, 3.3], t: 0.12, m: 'wall', o: [] },
-    { p: [9.1, 3.3, 9.1, D], t: 0.12, m: 'wall', o: [{ a: 0.15, b: 0.95, s: 0, h: 2.05, k: 'door' }] }
+    // baño pequeño: el pasillo de entrada pasa por delante, junto a la pared verde, hasta la cocina
+    { p: [9.1, 4.4, 9.1, D], t: 0.12, m: 'wall', o: [] },
+    { p: [9.1, 4.4, W, 4.4], t: 0.12, m: 'wall', o: [{ a: 0.3, b: 1.1, s: 0, h: 2.05, k: 'door' }] }
   ];
   var wallH = H_LOW, tallList = [];
   function fitTall() { tallList.forEach(function (o) { var h = o.userData.h, k = wallH > 1.5 ? 1 : Math.min(1, (H_LOW + 0.1) / h); o.scale.y = k; o.position.y = o.userData.y0 + (h * k) / 2; }); }
@@ -310,8 +314,9 @@ footer{grid-column:1/3;padding:8px 18px 10px;background:var(--crema);border-top:
           g.castShadow = false;
         }
         if (o.k === 'front') { var l2 = o.b - o.a - 0.04, c2 = o.a + (o.b - o.a) / 2, dh = Math.min(2.05, H + 0.05);
-          if (hor) { box(l2, dh, 0.05, x1 + c2, 0, z1 - 0.09, M.door, G.walls); box(0.04, 0.04, 0.08, x1 + o.a + 0.12, 1.0, z1 - 0.13, M.steel, G.walls, false); }
-          else { box(0.05, dh, l2, x1 - 0.09, 0, z1 + c2, M.door, G.walls); box(0.08, 0.04, 0.04, x1 - 0.13, Math.min(1.0, dh - 0.1), z1 + o.a + 0.12, M.steel, G.walls, false); } }
+          var sg = (hor ? z1 < D / 2 : x1 < W / 2) ? 1 : -1;
+          if (hor) { box(l2, dh, 0.05, x1 + c2, 0, z1 + sg * 0.09, M.door, G.walls); box(0.04, 0.04, 0.08, x1 + o.a + 0.12, Math.min(1.0, dh - 0.1), z1 + sg * 0.13, M.steel, G.walls, false); }
+          else { box(0.05, dh, l2, x1 + sg * 0.09, 0, z1 + c2, M.door, G.walls); box(0.08, 0.04, 0.04, x1 + sg * 0.13, Math.min(1.0, dh - 0.1), z1 + o.a + 0.12, M.steel, G.walls, false); } }
         if (o.k === 'glass') { var gh2 = Math.min(o.h, H), l3 = o.b - o.a, c3 = z1 + o.a + l3 / 2;
           box(0.02, gh2, l3 - 0.06, x1, 0, c3, M.glass, G.walls, false);
           box(0.05, gh2, 0.04, x1, 0, z1 + o.a + 0.02, M.black, G.walls); box(0.05, gh2, 0.04, x1, 0, z1 + o.b - 0.02, M.black, G.walls);
@@ -481,20 +486,20 @@ footer{grid-column:1/3;padding:8px 18px 10px;background:var(--crema);border-top:
     box(0.72, 0.5, 1.7, 4.1, 0, 1.0, mm.white); box(0.64, 0.04, 1.62, 4.1, 0.5, 1.0, mm.cream);
     box(0.03, 1.9, 1.0, 4.46, 0.5, 0.95, mm.glass, null, false);                                                 // mampara
     box(0.08, 1.4, 0.08, 3.8, 0.6, 0.25, mm.steel);                                                              // columna de ducha
-    box(0.42, 0.55, 0.75, 4.5, 0, 2.2, mm.whiteGloss); box(0.44, 0.04, 0.77, 4.5, 0.55, 2.2, mm.wood);
-    box(0.36, 0.14, 0.42, 4.5, 0.59, 2.2, mm.white);
-    FP = G.decor; box(0.03, 0.8, 0.55, 4.7, 1.1, 2.2, mm.mirror); FP = G.furn;
+    box(0.42, 0.55, 0.75, 5.62, 0, 2.0, mm.whiteGloss); box(0.44, 0.04, 0.77, 5.62, 0.55, 2.0, mm.wood);
+    box(0.36, 0.14, 0.42, 5.62, 0.59, 2.0, mm.white);
+    FP = G.decor; box(0.03, 0.8, 0.55, 5.82, 1.1, 2.0, mm.mirror); FP = G.furn;
     box(0.4, 0.4, 0.55, 4.2, 0, 3.0, mm.white); box(0.4, 0.5, 0.14, 4.2, 0.4, 3.2, mm.white);                  // inodoro
     box(0.5, 0.01, 0.8, 4.2, 0.005, 2.0, mm.black, null, false);                                                 // alfombra estampada
 
     /* BAÑO 2: cabina de ducha en esquina, lavabo sobre mesa de acero y cristal, termo, espejo redondo */
-    box(0.9, 0.06, 0.9, 10.5, 0.0, 3.9, mm.white); box(0.02, 2.1, 0.9, 10.05, 0, 3.9, mm.glass, null, false); box(0.9, 2.1, 0.02, 10.5, 0, 4.36, mm.glass, null, false);
-    box(0.05, 0.05, 0.05, 10.5, 2.05, 3.9, mm.steel);
-    box(0.5, 0.04, 0.45, 10.55, 0.82, 5.3, mm.glass); [[-0.22, -0.2], [0.22, -0.2], [-0.22, 0.2], [0.22, 0.2]].forEach(function (p) { box(0.03, 0.82, 0.03, 10.55 + p[0], 0, 5.3 + p[1], mm.steel); });
-    sph(0.21, 10.55, 0.99, 5.3, mm.white); box(0.4, 0.04, 0.34, 10.55, 0.35, 5.3, mm.woodDark);
+    box(0.9, 0.06, 0.9, 10.5, 0.0, 4.95, mm.white); box(0.02, 2.1, 0.9, 10.05, 0, 4.95, mm.glass, null, false); box(0.9, 2.1, 0.02, 10.5, 0, 5.41, mm.glass, null, false);
+    box(0.05, 0.05, 0.05, 10.5, 2.05, 4.95, mm.steel);
+    box(0.5, 0.04, 0.45, 10.55, 0.82, 5.9, mm.glass); [[-0.22, -0.2], [0.22, -0.2], [-0.22, 0.2], [0.22, 0.2]].forEach(function (p) { box(0.03, 0.82, 0.03, 10.55 + p[0], 0, 5.9 + p[1], mm.steel); });
+    sph(0.21, 10.55, 0.99, 5.9, mm.white); box(0.4, 0.04, 0.34, 10.55, 0.35, 5.9, mm.woodDark);
     FP = G.decor; cyl(0.17, 0.85, 10.78, 1.6, 6.45, mm.white); FP = G.furn;                                           // termo
     box(0.4, 0.4, 0.6, 10.55, 0, 6.6, mm.white);
-    var rm = new T.Mesh(new T.CircleGeometry(0.28, 28), mm.mirror); rm.position.set(10.98, 1.55, 5.3); rm.rotation.y = -Math.PI / 2; G.decor.add(rm);
+    var rm = new T.Mesh(new T.CircleGeometry(0.28, 28), mm.mirror); rm.position.set(10.86, 1.55, 5.9); rm.rotation.y = -Math.PI / 2; G.decor.add(rm);
 
     /* TERRAZA: zona chill out delante del dormitorio (norte) y mesa octogonal de madera con cuatro sillas delante del salón (sur) */
     box(0.8, 0.4, 1.7, -0.55, 0, 1.65, mm.woodDark); box(0.64, 0.14, 1.5, -0.55, 0.4, 1.65, mm.cream); box(0.14, 0.6, 1.5, -0.2, 0.4, 1.65, mm.cream);   // sofá de dos plazas pegado a la fachada
@@ -621,7 +626,7 @@ footer{grid-column:1/3;padding:8px 18px 10px;background:var(--crema);border-top:
     var s = TXT[lang]; document.documentElement.lang = lang;
     $('#t-title').textContent = s.title; $('#t-sub').textContent = s.sub; $('#b-all').textContent = s.all; $('#b-top').textContent = s.top;
     $('#b-walls').textContent = wallH > 1.5 ? s.low : s.walls; $('#b-furn').textContent = s.furn; $('#b-lab').textContent = s.labels;
-    $('#b-lang').textContent = lang === 'es' ? 'EN' : 'ES'; $('#b-ficha').textContent = s.ficha; $('#t-rooms').textContent = s.rooms; $('#t-hint').textContent = s.hint; $('#t-note').textContent = s.note;
+    $('#b-lang').textContent = lang === 'es' ? 'EN' : 'ES'; $('#b-ficha').textContent = EMBED ? s.full : s.ficha; if (EMBED) { $('#b-ficha').href = location.pathname.split('/').pop() + (lang === 'en' ? '?lang=en' : ''); $('#b-ficha').target = '_top'; } $('#t-rooms').textContent = s.rooms; $('#t-hint').textContent = s.hint; $('#t-note').textContent = s.note;
     buildLabels(); renderList(); renderCard(selected ? ROOMS.filter(function (x) { return x.id === selected; })[0] : null);
   }
   $('#b-all').addEventListener('click', clearSel);
