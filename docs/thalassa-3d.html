@@ -100,8 +100,8 @@ footer{grid-column:1/3;padding:8px 18px 10px;background:var(--crema);border-top:
       en_t: ['Sofa bed against the wall facing the TV, with terracotta-toned cushions', '55" Smart TV and a stove', 'Wooden coffee table', 'Glass doors out to the terrace'],
       photos: [20, 34, 10, 42, 5] },
     { id: 'comedor', es: 'Comedor y entrada', en: 'Dining area and entrance', rect: [2.25, 6.2, 5.2, 10.3], view: { az: -0.2, pol: 0.85, d: 9 },
-      es_t: ['La puerta de entrada da directamente al salón, con la cocina a la izquierda', 'Mueble artesano con espejo redondo', 'Pared de papel ocre con las letras HESTIA VERA', 'Mesa de madera extensible y dos lámparas negras'],
-      en_t: ['The front door opens straight into the living room, with the kitchen on the left', 'Artisan cabinet with a round mirror', 'Ochre papered wall with the HESTIA VERA letters', 'Extendable wooden table and two black pendant lights'],
+      es_t: ['La puerta de entrada da directamente al salón, con la cocina a la izquierda', 'Pared granate de damasco con el mueble artesano, el espejo redondo y las letras HESTIA VERA', 'Mesa de madera extensible y dos lámparas negras'],
+      en_t: ['The front door opens straight into the living room, with the kitchen on the left', 'Burgundy damask wall with the artisan cabinet, the round mirror and the HESTIA VERA letters', 'Extendable wooden table and two black pendant lights'],
       photos: [6, 8] },
     { id: 'cocina', es: 'Cocina', en: 'Kitchen', rect: [0, 6.2, 2.25, 10.3], view: { az: -0.6, pol: 0.78, d: 7 },
       es_t: ['Cocina cerrada, con puerta al comedor', 'Muebles blancos y encimera gris', 'Nevera y campana en acero', 'Horno en columna y lavavajillas', 'Puerta a la terraza trasera'],
@@ -129,7 +129,7 @@ footer{grid-column:1/3;padding:8px 18px 10px;background:var(--crema);border-top:
       es_t: ['Zona de estar con sofá y butacas de madera', 'Toldo y mesa baja', 'Vistas al Mediterráneo y al Salar de los Canos', 'Se sale desde el salón'],
       en_t: ['Seating area with a wooden sofa and armchairs', 'Awning and a coffee table', 'Views over the Mediterranean and the Salar de los Canos', 'Reached from the living room'],
       photos: [17, 11, 1, 9, 31] },
-    { id: 'terr2', es: 'Terraza trasera', en: 'Rear terrace', rect: [0.85, 3.65, 2.25, 6.2], view: { az: -0.5, pol: 0.8, d: 6 },
+    { id: 'terr2', es: 'Terraza trasera', en: 'Rear terrace', rect: [0, 3.65, 1.6, 6.2], view: { az: -0.5, pol: 0.8, d: 6 },
       es_t: ['Se sale desde la cocina'], en_t: ['Reached from the kitchen'], photos: [] }
   ];
 
@@ -210,7 +210,7 @@ footer{grid-column:1/3;padding:8px 18px 10px;background:var(--crema);border-top:
   mat('door', { color: 0xf3f1ec, roughness: 0.5 });
   mat('teal3', { color: 0x2f8f93, roughness: 0.8 }); mat('amber', { color: 0xc8742a, roughness: 0.4 }); mat('tan', { color: 0xa8673a, roughness: 0.7 }); mat('beige', { color: 0xd9ccb4, roughness: 0.95 });
   mat('terra', { color: 0xb8582e, roughness: 0.8 }); mat('awning', { color: 0xf1e8d6, roughness: 0.9 });
-  mat('damask', { color: 0xffffff, map: canvasTex(256, 256, function (g, w, h) { g.fillStyle = '#b7802f'; g.fillRect(0, 0, w, h); g.fillStyle = 'rgba(240,200,120,0.45)'; for (var y = 0; y < h; y += 64) for (var x = 0; x < w; x += 64) { var o = (y / 64) % 2 ? 32 : 0; g.beginPath(); g.ellipse(x + o + 16, y + 32, 12, 24, 0, 0, 7); g.fill(); } }, [2, 4]) });
+  mat('damask', { color: 0xffffff, map: canvasTex(256, 256, function (g, w, h) { g.fillStyle = '#6e2f24'; g.fillRect(0, 0, w, h); g.fillStyle = 'rgba(214,150,100,0.4)'; for (var y = 0; y < h; y += 64) for (var x = 0; x < w; x += 64) { var o = (y / 64) % 2 ? 32 : 0; g.beginPath(); g.ellipse(x + o + 16, y + 32, 12, 24, 0, 0, 7); g.fill(); } }, [2, 4]) });
   mat('diamond', { color: 0xffffff, map: canvasTex(128, 128, function (g, w, h) { g.fillStyle = '#f7efe2'; g.fillRect(0, 0, w, h); g.fillStyle = '#d9822b'; g.beginPath(); g.moveTo(w / 2, 0); g.lineTo(w, h / 2); g.lineTo(w / 2, h); g.lineTo(0, h / 2); g.closePath(); g.fill(); }, [6, 1]) });
   mat('mosaic', { color: 0xffffff, map: texTile('#2f6fb3', '#9fc3e6', 16) }); mat('ochreTile', { color: 0xffffff, map: texTile('#e2b35c', '#f3e2bd', 10) }); mat('pergola', { color: 0xf4f1ea, roughness: 0.7 }); mat('stringLight', { color: 0xffd27a, emissive: 0xffc04a, emissiveIntensity: 1 });
 
@@ -253,7 +253,7 @@ footer{grid-column:1/3;padding:8px 18px 10px;background:var(--crema);border-top:
     // puerta de entrada: pared de abajo, da al salón con la puerta de la cocina a la izquierda
     { p: [0, D, W, D], t: 0.25, m: 'wallOut', o: [{ a: 4.15, b: 5.05, s: 0, h: 2.1, k: 'front' }] },
     { p: [0, 6.2, 0, D], t: 0.25, m: 'wallOut', o: [{ a: 1.0, b: 2.2, s: 1.0, h: 1.1, k: 'win' }] },
-    { p: [0, 6.2, 2.25, 6.2], t: 0.2, m: 'wallOut', o: [{ a: 1.05, b: 1.85, s: 0, h: 2.1, k: 'door' }] },
+    { p: [0, 6.2, 2.25, 6.2], t: 0.2, m: 'wallOut', o: [{ a: 0.7, b: 1.5, s: 0, h: 2.1, k: 'door' }] },
     { p: [2.25, 0, 2.25, 6.2], t: 0.2, m: 'wallOut', o: [] },
     // interiores
     { p: [2.25, 6.2, 2.25, D], t: 0.1, m: 'wall', o: [{ a: 2.7, b: 3.5, s: 0, h: 2.05, k: 'door' }] },
@@ -305,7 +305,7 @@ footer{grid-column:1/3;padding:8px 18px 10px;background:var(--crema);border-top:
     var ph = Math.min(1.0, H);
     box(0.12, ph, 3.5, 11.25, 0, 4.75, M.wallOut, G.walls); box(2.65, ph, 0.12, 9.92, 0, 3.0, M.wallOut, G.walls); box(1.25, ph, 0.12, 10.62, 0, 6.5, M.wallOut, G.walls);
     box(0.12, ph, 3.8, 10.0, 0, 8.4, M.wallOut, G.walls); box(1.4, ph, 0.12, 9.3, 0, 10.3, M.wallOut, G.walls);
-    box(1.4, ph, 0.12, 1.55, 0, 3.65, M.wallOut, G.walls); box(0.12, ph, 2.55, 0.85, 0, 4.92, M.wallOut, G.walls);
+    box(1.6, ph, 0.12, 0.8, 0, 3.65, M.wallOut, G.walls); box(0.12, ph, 2.55, 0, 0, 4.92, M.wallOut, G.walls); box(0.12, ph, 2.55, 1.6, 0, 4.92, M.wallOut, G.walls);
   }
 
   /* ---------- muebles ---------- */
@@ -370,13 +370,13 @@ footer{grid-column:1/3;padding:8px 18px 10px;background:var(--crema);border-top:
     box(1.6, 0.05, 0.9, 5.7, 0.73, 7.8, M.oak);
     [-1, 1].forEach(function (s) { var a = box(0.05, 0.86, 0.05, 5.7 + s * 0.62, 0, 7.8, M.black); a.rotation.x = 0.55; var b = box(0.05, 0.86, 0.05, 5.7 + s * 0.62, 0, 7.8, M.black); b.rotation.x = -0.55; });
     [[5.3, 7.15, 0], [6.1, 7.15, 0], [5.3, 8.45, Math.PI], [6.1, 8.45, Math.PI]].forEach(function (p) { chair(p[0], p[1], p[2], M.black, M.black); });
-    box(0.42, 1.15, 0.85, 2.51, 0, 6.95, M.darkWood); box(0.02, 0.9, 0.7, 2.73, 0.15, 6.95, M.white, null, false);
+    box(0.85, 1.15, 0.42, 2.85, 0, 6.49, M.darkWood); box(0.7, 0.9, 0.02, 2.85, 0.15, 6.71, M.white, null, false);
     cyl(0.14, 0.25, 2.95, 0, 8.2, M.pot); sph(0.26, 2.95, 0.55, 8.2, M.plant);
     cyl(0.14, 0.25, 5.75, 0, 9.7, M.pot); sph(0.26, 5.75, 0.55, 9.7, M.plant);
     FP = G.decor;
     [5.35, 6.05].forEach(function (x) { cyl(0.005, 0.7, x, 1.9, 7.8, M.black); cyl(0.12, 0.28, x, 1.62, 7.8, M.black, null, 0.03); });
     [5.05, 5.65, 6.25].forEach(function (x) { box(0.45, 0.32, 0.03, x, 1.45, 6.27, M.black); box(0.37, 0.24, 0.035, x, 1.49, 6.27, M.terra); });
-    roundMirror(2.32, 1.62, 6.95, Math.PI / 2, 0.3, M.gold);
+    roundMirror(2.85, 1.65, 6.29, 0, 0.3, M.gold);
     plane(0.1, 1.15, 3.62, 1.4, 6.267, 0, M.letters);
     FP = G.furn;
 
