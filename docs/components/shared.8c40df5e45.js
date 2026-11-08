@@ -8415,7 +8415,45 @@ Object.assign(window, {
   useVeraSol,
   SolChip
 });
+
+// Primer hueco libre de un Hestía (iCal + bloqueos manuales): lo muestran la home y las fichas.
+const _aptNextFree = (data, aptId) => {
+  if (!data) return null;
+  const today = new Date().toISOString().slice(0, 10);
+  const manualBlocks = window.PRICES_V2?.manual_blocks || {};
+  const avBlocked = data[aptId]?.blocked || [];
+  const all = [...avBlocked, ...(manualBlocks[aptId] || [])].sort((a, b) => a.start.localeCompare(b.start));
+  const merged = [];
+  for (const r of all) {
+    if (merged.length && r.start <= merged[merged.length - 1].end) {
+      if (r.end > merged[merged.length - 1].end) merged[merged.length - 1] = {
+        ...merged[merged.length - 1],
+        end: r.end
+      };
+    } else merged.push({
+      ...r
+    });
+  }
+  let cursor = today;
+  for (const block of merged.filter(b => b.end > today)) {
+    if (block.start > cursor) {
+      const nights = Math.round((new Date(block.start + 'T12:00:00Z') - new Date(cursor + 'T12:00:00Z')) / 86400000);
+      if (nights >= 2) return {
+        checkin: cursor,
+        checkout: block.start,
+        nights
+      };
+    }
+    if (block.end > cursor) cursor = block.end;
+  }
+  return {
+    checkin: cursor,
+    checkout: null,
+    nights: null
+  };
+};
 Object.assign(window, {
+  _aptNextFree,
   WidgetStack,
   WidgetDirectBooking,
   WidgetSabiasQue,

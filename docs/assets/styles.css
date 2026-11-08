@@ -5900,6 +5900,10 @@ body.no-stars .hero .stars { display: none; }
 .ah-price-from { font-family: var(--sans); font-size: 13px; color: rgba(240,232,213,.7); }
 .ah-price-n { font-family: var(--serif); font-size: clamp(38px, 3.6vw, 48px); line-height: 1; color: var(--crema); }
 .ah-price-per { font-family: var(--sans); font-size: 13px; color: rgba(240,232,213,.7); }
+.ah-avail { display: inline-flex; align-items: center; gap: 8px; margin-bottom: 12px; padding: 7px 12px; border-radius: 10px 0 10px 0; background: rgba(250,246,240,.94); color: var(--ink); font-family: var(--sans); font-size: 12.5px; font-weight: 700; text-decoration: none; }
+.ah-avail:hover { background: #fff; color: var(--ink); }
+.ah-avail-dot { width: 7px; height: 7px; border-radius: 50%; background: var(--ok); box-shadow: 0 0 0 3px color-mix(in srgb, var(--ok) 22%, transparent); }
+.ah-avail-n { font-weight: 500; color: rgba(42,15,46,.7); }
 .ah-match { margin: 8px 0 16px; font-family: var(--sans); font-size: 13px; line-height: 1.45; color: var(--sol-lt); }
 .ah-ctas { display: flex; flex-wrap: wrap; gap: 10px; }
 .ah-cancel { margin: 14px 0 0; display: flex; align-items: center; gap: 6px; font-family: var(--sans); font-size: 12.5px; color: rgba(240,232,213,.7); }

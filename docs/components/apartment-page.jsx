@@ -563,6 +563,22 @@ const AptPageHero = ({ apt, lang }) => {
   const all = (window.REVIEWS && window.REVIEWS.items) || [];
   const own = all.filter(r => r.status === 'published' && (r.apt === apt.id || r.apt === 'all'));
   const avg = ratingScore(own, 'global');
+  const [av, setAv] = React.useState(null);
+  React.useEffect(() => {
+    fetch('assets/availability.json?t=' + Date.now(), { cache: 'no-store' })
+      .then(r => r.ok ? r.json() : null)
+      .then(data => { if (data) setAv(_aptNextFree(data, apt.id)); })
+      .catch(() => {});
+  }, [apt.id]);
+  const today = new Date().toISOString().slice(0, 10);
+  const _addD = (ds, n) => { const x = new Date(ds + 'T12:00:00Z'); x.setUTCDate(x.getUTCDate() + n); return x.toISOString().slice(0, 10); };
+  const _fmtDay = (ds) => { const m = lang === 'es' ? ['ene','feb','mar','abr','may','jun','jul','ago','sep','oct','nov','dic'] : ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec']; const [, mm, dd] = ds.split('-'); return `${parseInt(dd)} ${m[parseInt(mm) - 1]}`; };
+  // Como en la home: "Reservar" lleva al primer hueco libre (una semana por defecto en huecos abiertos o largos).
+  let bookUrl = `reservas.html?apt=${apt.id}`;
+  if (av && av.checkin) {
+    const co = (av.checkout && av.nights && av.nights <= 14) ? av.checkout : _addD(av.checkin, 7);
+    bookUrl = `reservas.html?apt=${apt.id}&checkin=${av.checkin}&checkout=${co}&guests=2`;
+  }
   const [videoOpen, setVideoOpen] = React.useState(false);
   React.useEffect(() => {
     if (!videoOpen) return;
@@ -633,6 +649,17 @@ const AptPageHero = ({ apt, lang }) => {
           )}
         </div>
         <div className="ah-book">
+          {av && (
+            <a className="ah-avail" href={bookUrl}>
+              <span className="ah-avail-dot" aria-hidden="true"/>
+              {av.checkin <= today
+                ? (lang === 'es' ? 'Libre ahora' : 'Free now')
+                : `${lang === 'es' ? 'Libre desde el' : 'Free from'} ${_fmtDay(av.checkin)}`}
+              {av.checkout && av.nights && av.nights <= 14 && (
+                <span className="ah-avail-n">· {av.nights} {lang === 'es' ? 'noches' : 'nights'}</span>
+              )}
+            </a>
+          )}
           {minPrice && (
             <p className="ah-price">
               <span className="ah-price-from">{lang === 'es' ? 'desde' : 'from'}</span>
@@ -646,7 +673,7 @@ const AptPageHero = ({ apt, lang }) => {
               : 'Find it cheaper and we don\'t just match it: we beat it.'}
           </p>
           <div className="ah-ctas">
-            <a href={`reservas.html?apt=${apt.id}`} className="btn btn-primary apt-page-reserve-btn">
+            <a href={bookUrl} className="btn btn-primary apt-page-reserve-btn">
               {lang === 'es' ? 'Reservar' : 'Book now'} <span className="arrow">→</span>
             </a>
             <a href="#apt-avail" className="btn btn-ghost-light">
