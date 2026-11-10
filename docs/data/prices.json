@@ -580,6 +580,76 @@
       "value": 20,
       "minNights": 4,
       "lastMinute": true
+    },
+    "vt|2026-11-16": {
+      "apt": "vt",
+      "start": "2026-11-16",
+      "end": "2026-11-20",
+      "nights": 4,
+      "type": "discount",
+      "value": 5,
+      "lastMinute": true,
+      "auto": true
+    },
+    "vt|2026-11-20": {
+      "apt": "vt",
+      "start": "2026-11-20",
+      "end": "2026-11-24",
+      "nights": 4,
+      "type": "discount",
+      "value": 5,
+      "lastMinute": true,
+      "auto": true
+    },
+    "vt|2026-11-24": {
+      "apt": "vt",
+      "start": "2026-11-24",
+      "end": "2026-11-28",
+      "nights": 4,
+      "type": "discount",
+      "value": 5,
+      "lastMinute": true,
+      "auto": true
+    },
+    "vt|2026-11-28": {
+      "apt": "vt",
+      "start": "2026-11-28",
+      "end": "2026-12-02",
+      "nights": 4,
+      "type": "discount",
+      "value": 5,
+      "lastMinute": true,
+      "auto": true
+    },
+    "vt|2026-12-02": {
+      "apt": "vt",
+      "start": "2026-12-02",
+      "end": "2026-12-06",
+      "nights": 4,
+      "type": "discount",
+      "value": 5,
+      "lastMinute": true,
+      "auto": true
+    },
+    "vt|2026-12-06": {
+      "apt": "vt",
+      "start": "2026-12-06",
+      "end": "2026-12-09",
+      "nights": 3,
+      "type": "discount",
+      "value": 5,
+      "lastMinute": true,
+      "auto": true
+    },
+    "vt|2026-12-09": {
+      "apt": "vt",
+      "start": "2026-12-09",
+      "end": "2026-12-12",
+      "nights": 3,
+      "type": "discount",
+      "value": 5,
+      "lastMinute": true,
+      "auto": true
     }
   },
   "gapSplits": {
@@ -593,6 +663,14 @@
     ],
     "vs|2026-08-23": [
       "2026-08-30"
+    ],
+    "vt|2026-11-16": [
+      "2026-11-20",
+      "2026-11-24",
+      "2026-11-28",
+      "2026-12-02",
+      "2026-12-06",
+      "2026-12-09"
     ]
   },
   "longStayConfig": {
@@ -663,5 +741,7 @@
       }
     ]
   },
-  "gapSplitsAuto": []
+  "gapSplitsAuto": [
+    "vt|2026-11-16"
+  ]
 }
