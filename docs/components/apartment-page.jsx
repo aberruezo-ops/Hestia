@@ -23,8 +23,8 @@ const APT_DATA = {
   vm: {
     id: 'vm', num: '01', slug: 'mar', license: 'VFT/AL/01580',
     name_short: 'Mar',
-    video_src: 'assets/hestia v13 mar clean.mp4',
-    video_duration: 'PT1M14S', video_upload: '2026-05-30T12:00:00+02:00',
+    video_src: 'assets/hestia-mar.mp4',
+    video_duration: 'PT1M14S', video_upload: '2026-11-10T12:00:00+01:00',
     accent: '#6B7A3A', accent2: '#8B9A52', accent_dk: '#4A5628',
     hero_img: 'assets/apt-vm-gallery-26.jpg',
     bedroom_img: 'assets/apt-vm-gallery-26.jpg',
@@ -106,8 +106,8 @@ const APT_DATA = {
   vt: {
     id: 'vt', num: '02', slug: 'thalassa', license: 'VFT/AL/05535',
     name_short: 'Thalassa',
-    video_src: 'assets/hestia intro v9 thalassa outro.mp4',
-    video_duration: 'PT1M6S', video_upload: '2026-05-30T12:00:00+02:00',
+    video_src: 'assets/hestia-thalassa.mp4',
+    video_duration: 'PT1M6S', video_upload: '2026-11-10T12:00:00+01:00',
     accent: '#B86A3C', accent2: '#D08B5A', accent_dk: '#8A4A24',
     hero_img: 'assets/apt-vt-gallery-33.jpg',
     bedroom_img: 'assets/apt-vt-gallery-33.jpg',
@@ -192,8 +192,8 @@ const APT_DATA = {
   vs: {
     id: 'vs', num: '03', slug: 'salinas', license: 'VFT/AL/07056',
     name_short: 'Salinas',
-    video_src: 'assets/hestia v14 salinas clean.mp4',
-    video_duration: 'PT1M21S', video_upload: '2026-05-30T12:00:00+02:00',
+    video_src: 'assets/hestia-salinas.mp4',
+    video_duration: 'PT1M21S', video_upload: '2026-11-10T12:00:00+01:00',
     accent: '#D4A84A', accent2: '#E8C476', accent_dk: '#7A5E1A',
     hero_img: 'assets/apt-vs-gallery-33.jpg',
     bedroom_img: 'assets/apt-vs-gallery-33.jpg',

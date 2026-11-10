@@ -133,7 +133,7 @@
       "apt": "vm",
       "video": "assets/reel-blog.mp4",
       "clip": {
-        "src": "assets/hestia v13 mar clean.mp4",
+        "src": "assets/hestia-mar.mp4",
         "start": 13,
         "dur": 9
       },
@@ -154,7 +154,7 @@
       "apt": "vt",
       "video": "assets/reels/amenity-streaming-2026-08-24.mp4",
       "clip": {
-        "src": "assets/hestia intro v9 thalassa outro.mp4",
+        "src": "assets/hestia-thalassa.mp4",
         "start": 33,
         "dur": 9
       },
@@ -175,7 +175,7 @@
       "apt": "vt",
       "video": "assets/reels/gap-vt-2026-08-30.mp4",
       "clip": {
-        "src": "assets/hestia intro v9 thalassa outro.mp4",
+        "src": "assets/hestia-thalassa.mp4",
         "start": 24,
         "dur": 9
       },
@@ -196,7 +196,7 @@
       "apt": "vm",
       "video": "assets/reels/mes-2026-09-vm.mp4",
       "clip": {
-        "src": "assets/hestia v13 mar clean.mp4",
+        "src": "assets/hestia-mar.mp4",
         "start": 17,
         "dur": 9
       },
@@ -217,7 +217,7 @@
       "apt": "vt",
       "video": "assets/reels/mes-2026-09-vt.mp4",
       "clip": {
-        "src": "assets/hestia intro v9 thalassa outro.mp4",
+        "src": "assets/hestia-thalassa.mp4",
         "start": 36,
         "dur": 9
       },
@@ -238,7 +238,7 @@
       "apt": "vs",
       "video": "assets/reels/mes-2026-09-vs.mp4",
       "clip": {
-        "src": "assets/hestia v14 salinas clean.mp4",
+        "src": "assets/hestia-salinas.mp4",
         "start": 4,
         "dur": 9
       },
@@ -259,7 +259,7 @@
       "apt": "vs",
       "video": "assets/reels/weekly-2026w35.mp4",
       "clip": {
-        "src": "assets/hestia v14 salinas clean.mp4",
+        "src": "assets/hestia-salinas.mp4",
         "start": 14,
         "dur": 9
       },
@@ -280,7 +280,7 @@
       "apt": "vt",
       "video": "assets/reels/weekly-2026w34.mp4",
       "clip": {
-        "src": "assets/hestia intro v9 thalassa outro.mp4",
+        "src": "assets/hestia-thalassa.mp4",
         "start": 37,
         "dur": 9
       },
@@ -301,7 +301,7 @@
       "apt": "vm",
       "video": "assets/reels/weekly-2026w33.mp4",
       "clip": {
-        "src": "assets/hestia v13 mar clean.mp4",
+        "src": "assets/hestia-mar.mp4",
         "start": 30,
         "dur": 9
       },
@@ -322,7 +322,7 @@
       "apt": "vs",
       "video": "assets/reels/weekly-2026w32.mp4",
       "clip": {
-        "src": "assets/hestia v14 salinas clean.mp4",
+        "src": "assets/hestia-salinas.mp4",
         "start": 58,
         "dur": 9
       },
@@ -343,7 +343,7 @@
       "apt": "vm",
       "video": "assets/reels/mes-2026-08-vm.mp4",
       "clip": {
-        "src": "assets/hestia v13 mar clean.mp4",
+        "src": "assets/hestia-mar.mp4",
         "start": 48,
         "dur": 9
       },
@@ -364,7 +364,7 @@
       "apt": "vt",
       "video": "assets/reels/mes-2026-08-vt.mp4",
       "clip": {
-        "src": "assets/hestia intro v9 thalassa outro.mp4",
+        "src": "assets/hestia-thalassa.mp4",
         "start": 45,
         "dur": 9
       },
@@ -385,7 +385,7 @@
       "apt": "vs",
       "video": "assets/reels/mes-2026-08-vs.mp4",
       "clip": {
-        "src": "assets/hestia v14 salinas clean.mp4",
+        "src": "assets/hestia-salinas.mp4",
         "start": 48,
         "dur": 9
       },
@@ -406,7 +406,7 @@
       "apt": "vt",
       "video": "assets/reels/weekly-2026w31.mp4",
       "clip": {
-        "src": "assets/hestia intro v9 thalassa outro.mp4",
+        "src": "assets/hestia-thalassa.mp4",
         "start": 10,
         "dur": 9
       },
@@ -442,7 +442,7 @@
       "apt": "vm",
       "video": "assets/reels/weekly-2026w30.mp4",
       "clip": {
-        "src": "assets/hestia v13 mar clean.mp4",
+        "src": "assets/hestia-mar.mp4",
         "start": 7,
         "dur": 9
       },
@@ -463,7 +463,7 @@
       "apt": "vm",
       "video": "assets/reels/gap-vm-2026-08-30.mp4",
       "clip": {
-        "src": "assets/hestia v13 mar clean.mp4",
+        "src": "assets/hestia-mar.mp4",
         "start": 57,
         "dur": 9
       },
@@ -484,7 +484,7 @@
       "apt": "vs",
       "video": "assets/reels/weekly-2026w29.mp4",
       "clip": {
-        "src": "assets/hestia v14 salinas clean.mp4",
+        "src": "assets/hestia-salinas.mp4",
         "start": 40,
         "dur": 9
       },
@@ -505,7 +505,7 @@
       "apt": "vm",
       "video": "assets/reels/gap-vm-2026-07-30.mp4",
       "clip": {
-        "src": "assets/hestia v13 mar clean.mp4",
+        "src": "assets/hestia-mar.mp4",
         "start": 16,
         "dur": 9
       },
@@ -526,7 +526,7 @@
       "apt": "vm",
       "video": "assets/reels/gap-vm-2026-08-10.mp4",
       "clip": {
-        "src": "assets/hestia v13 mar clean.mp4",
+        "src": "assets/hestia-mar.mp4",
         "start": 1,
         "dur": 9
       },
@@ -547,7 +547,7 @@
       "apt": "vt",
       "video": "assets/reels/weekly-2026w28.mp4",
       "clip": {
-        "src": "assets/hestia intro v9 thalassa outro.mp4",
+        "src": "assets/hestia-thalassa.mp4",
         "start": 36,
         "dur": 9
       },
