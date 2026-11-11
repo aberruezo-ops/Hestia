@@ -107,7 +107,7 @@ const APT_DATA = {
     id: 'vt', num: '02', slug: 'thalassa', license: 'VFT/AL/05535',
     name_short: 'Thalassa',
     video_src: 'assets/hestia-thalassa.mp4',
-    video_duration: 'PT1M6S', video_upload: '2026-11-10T12:00:00+01:00',
+    video_duration: 'PT1M8S', video_upload: '2026-11-11T12:00:00+01:00',
     accent: '#B86A3C', accent2: '#D08B5A', accent_dk: '#8A4A24',
     hero_img: 'assets/apt-vt-gallery-33.jpg',
     bedroom_img: 'assets/apt-vt-gallery-33.jpg',
