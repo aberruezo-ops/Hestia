@@ -75,10 +75,10 @@ Usar texto oscuro sobre ellas produce contraste ~0:
 
 **En superficies oscuras SIEMPRE usa:**
 ```css
-color: var(--crema, #FAF6F0);          /* texto principal */
-color: var(--arena, #F0E8D5);          /* texto secundario */
-color: rgba(240, 232, 213, 0.65);      /* texto muted / labels */
-color: rgba(240, 232, 213, 0.45);      /* texto muy sutil / notas */
+color: var(--crema, #F1F6F6);          /* texto principal */
+color: var(--arena, #DFEBEC);          /* texto secundario */
+color: rgba(223, 235, 236, 0.65);      /* texto muted / labels */
+color: rgba(223, 235, 236, 0.45);      /* texto muy sutil / notas */
 color: var(--sol-lt, #6FC4D1);         /* acento, highlights */
 ```
 
@@ -93,7 +93,7 @@ color: var(--ink-soft);  /* sinónimo de ber */
 
 ### Superficies CLARAS — texto puede ser oscuro
 
-`body` (`var(--crema, #FAF6F0)`), `.reservas-body`, formularios, cards.
+`body` (`var(--crema, #F1F6F6)`), `.reservas-body`, formularios, cards.
 Aquí sí: `color: var(--ber)`, `color: var(--ink-soft)`, `color: rgba(42,15,46,0.6)`.
 
 ### Patrón para componentes reutilizados en contextos mixtos
@@ -103,9 +103,9 @@ como clara, añade **scoped overrides** en el CSS del contexto oscuro:
 
 ```css
 /* Componente en superficie oscura — override de contraste */
-.apt-avail .price-label-sm    { color: rgba(240,232,213,.55); opacity: 1; }
-.apt-avail .price-direct-total { color: var(--crema, #FAF6F0); }
-.apt-avail .price-avg-night   { color: rgba(240,232,213,.60); opacity: 1; }
+.apt-avail .price-label-sm    { color: rgba(223,235,236,.55); opacity: 1; }
+.apt-avail .price-direct-total { color: var(--crema, #F1F6F6); }
+.apt-avail .price-avg-night   { color: rgba(223,235,236,.60); opacity: 1; }
 ```
 
 El `opacity: 1` explícito cancela cualquier `opacity: 0.5` heredado.
@@ -135,9 +135,9 @@ El `opacity: 1` explícito cancela cualquier `opacity: 0.5` heredado.
 ### Cremas (fondos y texto sobre oscuro)
 
 ```css
---crema:    #FAF6F0;  /* fondo página / texto principal sobre oscuro */
---arena:    #F0E8D5;  /* crema cálida / texto secundario sobre oscuro */
---arena-dk: #E4D9BE;  /* crema más oscura */
+--crema:    #F1F6F6;  /* fondo página / texto principal sobre oscuro */
+--arena:    #DFEBEC;  /* blanco azulado más profundo / texto secundario sobre oscuro */
+--arena-dk: #CCDEE1;  /* tono más profundo de la misma familia */
 ```
 
 ### Identidades de apartamentos
@@ -349,7 +349,7 @@ copies aquí ni en el código: se quedan viejas. Las invariantes completas está
 Antes de escribir cualquier regla de color, responde:
 
 1. ¿En qué sección vive este elemento? ¿Es oscura o clara? (ver tabla de superficies)
-2. Si es oscura: ¿usas `var(--crema)` / `rgba(240,232,213,...)` para el texto?
+2. Si es oscura: ¿usas `var(--crema)` / `rgba(223,235,236,...)` para el texto?
 3. Si es un componente reutilizable: ¿has añadido el scoped override para el contexto oscuro?
 4. ¿Has evitado `color: var(--ber)` + `opacity: 0.5`? (= invisible sobre oscuro)
 5. Rápida visual antes de commitear: ¿el texto es legible contra el fondo?

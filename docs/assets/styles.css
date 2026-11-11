@@ -49,7 +49,7 @@
   left: 16px;
   z-index: 9999;
   background: #2A0F2E;
-  color: #F0E8D5;
+  color: #DFEBEC;
   padding: 10px 20px;
   border-radius: 10px 0 10px 0;
   font-family: sans-serif;
@@ -122,7 +122,7 @@
 }
 .vintro-skip {
   background: var(--ber);
-  border: 1.5px solid rgba(240,232,213,.4);
+  border: 1.5px solid rgba(223,235,236,.4);
   color: var(--arena);
 }
 @media (hover: hover) and (pointer: fine) {
@@ -150,9 +150,9 @@
   --sol-h:   #2A8E9E;
   --sol-lt:  #6FC4D1;
   --sol-text:#176E80;
-  --arena:   #F0E8D5;
-  --arena-dk:#E4D9BE;
-  --crema:   #FAF6F0;
+  --arena:   #DFEBEC;
+  --arena-dk:#CCDEE1;
+  --crema:   #F1F6F6;
   --ink:     #2A0F2E;
   --ink-soft:#3D1A35;
 
@@ -172,11 +172,11 @@
   --vs:  #D4A84A;  --vs2: #E8C476;  --vs-dk: #7A5E1A;
 
   /* Crema · variantes atmosféricas del cielo a lo largo del día */
-  --crema-alba: #F5E8DB;                    /* alba rosada */
-  --crema-dawn: #F2E6CE;                    /* primera luz cálida */
-  --crema-noon: #FFF6E2;                    /* media mañana luminosa */
-  --crema-dusk: #E8D4A6;                    /* tarde dorada */
-  --crema-warm: #F6E3C2;                    /* crema cálida intensa */
+  --crema-alba: #EFF3F6;                    /* alba rosada */
+  --crema-dawn: #E6F1F2;                    /* primera luz cálida */
+  --crema-noon: #F7FCFC;                    /* media mañana luminosa */
+  --crema-dusk: #CFE3E8;                    /* tarde dorada */
+  --crema-warm: #DFEDEE;                    /* crema cálida intensa */
 
   /* Berenjena · variantes para gradientes animados de sky/twilight.
      Valores hex reales — antes eran var() autoreferentes (undefined)
@@ -300,7 +300,7 @@ p  { line-height: 1.65; font-weight: 300; }
   align-items: center;
   gap: 24px;
   letter-spacing: 0.02em;
-  border-bottom: 1px solid rgba(240, 232, 213, 0.08);
+  border-bottom: 1px solid rgba(223, 235, 236, 0.08);
 }
 /* Fills the triangular gap at the top-left corner between the topbar and the header's
    border-radius. The radial-gradient creates a concave curve: topbar colour fills the
@@ -350,7 +350,7 @@ p  { line-height: 1.65; font-weight: 300; }
 }
 /* 9 Hestía palette colours, 3 s each = 27 s full cycle */
 @keyframes tl-dot-rainbow {
-  0%     { background: #F0E8D5; box-shadow: 0 0 4px rgba(240,232,213,.5); }
+  0%     { background: #DFEBEC; box-shadow: 0 0 4px rgba(223,235,236,.5); }
   11.11% { background: #1BC8D8; box-shadow: 0 0 4px rgba(27,200,216,.6); }
   22.22% { background: #D42B80; box-shadow: 0 0 4px rgba(212,43,128,.6); }
   33.33% { background: #D4A84A; box-shadow: 0 0 4px rgba(212,168,74,.6); }
@@ -464,20 +464,20 @@ p  { line-height: 1.65; font-weight: 300; }
     var(--ber-dk, #2A0F2E);
   backdrop-filter: blur(22px) saturate(1.6);
   -webkit-backdrop-filter: blur(22px) saturate(1.6);
-  border-bottom-color: rgba(240,232,213,0.08);
+  border-bottom-color: rgba(223,235,236,0.08);
   animation: hdr-night-flow 22s ease-in-out infinite;
 }
 .header.day {
   background:
     linear-gradient(108deg,
-      rgba(196,140,80,0.05)   0%,
-      rgba(252,242,218,0.96) 20%,
-      rgba(255,250,238,0.97) 46%,
-      rgba(212,168,74,0.13)  65%,
-      rgba(252,242,218,0.95) 82%,
-      rgba(196,140,80,0.05) 100%
+      rgba(58,170,187,0.06)   0%,
+      rgba(226,240,242,0.96) 20%,
+      rgba(246,251,251,0.97) 46%,
+      rgba(111,196,209,0.16)  65%,
+      rgba(226,240,242,0.95) 82%,
+      rgba(58,170,187,0.06) 100%
     ) 100% 50% / 290% 100%,
-    var(--crema, #FAF6F0);
+    var(--crema, #F1F6F6);
   backdrop-filter: blur(22px) saturate(1.6);
   -webkit-backdrop-filter: blur(22px) saturate(1.6);
   border-bottom-color: rgba(184,106,60,0.14);
@@ -542,7 +542,7 @@ p  { line-height: 1.65; font-weight: 300; }
 /* RESERVA del header — efecto glass cult-ui sobre vidrio OSCURO.
    El header pasa de cream (idle) a transparent (scrolled) — un glass
    claro daría cream-on-cream. Usamos eggplant translúcido (#2A0F2E al
-   62%) + backdrop blur: el texto crema #F0E8D5 mantiene contraste
+   62%) + backdrop blur: el texto crema #DFEBEC mantiene contraste
    AAA (>10:1) sobre el cristal, sea cual sea el fondo. ::before lleva
    el halo coloreado que cicla. ::after es el sheen de luz. */
 .header nav .cta {
@@ -551,13 +551,13 @@ p  { line-height: 1.65; font-weight: 300; }
   align-items: center;
   justify-content: center;
   padding: 10px 22px;
-  border: 1px solid rgba(240, 232, 213, 0.28) !important;
+  border: 1px solid rgba(223, 235, 236, 0.28) !important;
   border-radius: 10px 0 10px 0;
   font-size: 12px;
   letter-spacing: 0.12em;
   text-transform: uppercase;
   opacity: 1;
-  color: #F0E8D5 !important;
+  color: #DFEBEC !important;
   background-color: rgba(42, 15, 46, 0.62) !important;   /* eggplant translúcido */
   background-image: none !important;
   -webkit-backdrop-filter: blur(14px) saturate(1.6);
@@ -627,7 +627,7 @@ p  { line-height: 1.65; font-weight: 300; }
     inset 0 1px 0 rgba(255, 255, 255, 0.42),
     inset 0 -1px 0 rgba(0, 0, 0, 0.32),
     0 10px 32px rgba(0, 0, 0, 0.36),
-    0 0 0 1px rgba(240, 232, 213, 0.30);
+    0 0 0 1px rgba(223, 235, 236, 0.30);
 }
 .header nav .cta .cta-text {
   position: relative;
@@ -685,7 +685,7 @@ p  { line-height: 1.65; font-weight: 300; }
   width: 12px; height: 12px;
   margin: -6px 0 0 -6px;
   border-radius: 50%;
-  background: radial-gradient(circle, rgba(240,232,213,.55), transparent 70%);
+  background: radial-gradient(circle, rgba(223,235,236,.55), transparent 70%);
   transform: scale(0);
   opacity: 0;
   pointer-events: none;
@@ -715,9 +715,9 @@ p  { line-height: 1.65; font-weight: 300; }
   0%   {
     background: #2A0F2E;
     box-shadow: 0 2px 10px rgba(0,0,0,0.42),
-                inset 0 1px 0 rgba(240,232,213,0.10);
-    border-color: rgba(240,232,213,0.42);
-    color: #F0E8D5;
+                inset 0 1px 0 rgba(223,235,236,0.10);
+    border-color: rgba(223,235,236,0.42);
+    color: #DFEBEC;
   }
   22%  {
     background: #3D1A35;
@@ -725,7 +725,7 @@ p  { line-height: 1.65; font-weight: 300; }
                 inset 0 1px 0 rgba(212,168,74,0.22),
                 0 0 10px rgba(212,168,74,0.20);
     border-color: rgba(212,168,74,0.50);
-    color: #F0E8D5;
+    color: #DFEBEC;
   }
   44%  {
     background: #5D2A48;
@@ -733,30 +733,30 @@ p  { line-height: 1.65; font-weight: 300; }
                 inset 0 2px 0 rgba(240,220,155,0.38),
                 0 0 18px rgba(212,168,74,0.44);
     border-color: rgba(212,168,74,0.82);
-    color: #F5EAC5;
+    color: #D4E4E6;
   }
   66%  {
     background: #4E2446;
     box-shadow: 0 2px 16px rgba(78,36,70,0.48),
-                inset 0 1px 0 rgba(240,232,213,0.26),
+                inset 0 1px 0 rgba(223,235,236,0.26),
                 0 0 12px rgba(212,168,74,0.26);
     border-color: rgba(240,218,155,0.65);
-    color: #F0E8D5;
+    color: #DFEBEC;
   }
   88%  {
     background: #3D1A35;
     box-shadow: 0 2px 12px rgba(0,0,0,0.38),
                 inset 0 1px 0 rgba(212,168,74,0.12),
                 0 0 6px rgba(212,168,74,0.12);
-    border-color: rgba(240,232,213,0.52);
-    color: #F0E8D5;
+    border-color: rgba(223,235,236,0.52);
+    color: #DFEBEC;
   }
   100% {
     background: #2A0F2E;
     box-shadow: 0 2px 10px rgba(0,0,0,0.42),
-                inset 0 1px 0 rgba(240,232,213,0.10);
-    border-color: rgba(240,232,213,0.42);
-    color: #F0E8D5;
+                inset 0 1px 0 rgba(223,235,236,0.10);
+    border-color: rgba(223,235,236,0.42);
+    color: #DFEBEC;
   }
 }
 .hv-logo-btn {
@@ -768,7 +768,7 @@ p  { line-height: 1.65; font-weight: 300; }
   border-radius: 8px 0 8px 0;
   background: var(--ber-dk);
   color: var(--arena);
-  border: 2px solid rgba(240,232,213,0.6);
+  border: 2px solid rgba(223,235,236,0.6);
   box-shadow: 0 2px 10px rgba(0,0,0,0.35);
   font-size: 20px;
   font-weight: 300;
@@ -930,7 +930,7 @@ p  { line-height: 1.65; font-weight: 300; }
 }
 .header.night .hamburger-btn { color: var(--arena); }
 .header.day .hamburger-btn { color: var(--ber-dk); }
-.header.night .hamburger-btn:hover { background: rgba(240,232,213,0.1); }
+.header.night .hamburger-btn:hover { background: rgba(223,235,236,0.1); }
 .header.day .hamburger-btn:hover { background: rgba(184,106,60,0.10); }
 
 /* -------- Mobile menu overlay -------- */
@@ -1195,14 +1195,14 @@ p  { line-height: 1.65; font-weight: 300; }
   text-transform: uppercase;
   color: var(--arena);
   background: transparent;
-  border: 1px solid rgba(240,232,213,.22);
+  border: 1px solid rgba(223,235,236,.22);
   border-radius: 12px 0 12px 0;
   cursor: pointer;
   transition: background .2s, border-color .2s;
 }
 .mn-cta-secondary:hover {
-  background: rgba(240,232,213,.06);
-  border-color: rgba(240,232,213,.42);
+  background: rgba(223,235,236,.06);
+  border-color: rgba(223,235,236,.42);
 }
 .mn-cta-secondary .mn-cta-ico {
   color: var(--sol);
@@ -1219,7 +1219,7 @@ p  { line-height: 1.65; font-weight: 300; }
   align-items: center;
   justify-content: center;
   padding-top: 10px;
-  border-top: 1px solid rgba(240,232,213,.07);
+  border-top: 1px solid rgba(223,235,236,.07);
   width: 100%;
   animation: mnFadeUp 0.40s cubic-bezier(0.22,1,0.36,1) both;
   animation-delay: 0.32s;
@@ -1231,11 +1231,11 @@ p  { line-height: 1.65; font-weight: 300; }
   font-family: var(--sans);
   font-size: 11px;
   letter-spacing: 0.04em;
-  color: rgba(240,232,213,.32);
+  color: rgba(223,235,236,.32);
   transition: color .2s;
   text-decoration: none;
 }
-.mn-contacts a:hover { color: rgba(240,232,213,.7); }
+.mn-contacts a:hover { color: rgba(223,235,236,.7); }
 .mn-contacts .tl-dot {
   width: 5px; height: 5px;
   border-radius: 50%;
@@ -1275,7 +1275,7 @@ p  { line-height: 1.65; font-weight: 300; }
   width: 56px; height: 56px; border-radius: 12px 0 12px 0; padding: 0;
   background-color: #3AAABB; color: #2A0F2E; border: 0; cursor: pointer;
   box-shadow:
-    0 0 0 3px rgba(240, 232, 213, 0.92),
+    0 0 0 3px rgba(223, 235, 236, 0.92),
     0 0 0 5px rgba(42, 15, 46, 0.55),
     0 10px 30px rgba(58, 170, 187, 0.55),
     0 4px 14px rgba(42, 15, 46, 0.45);
@@ -1288,7 +1288,7 @@ p  { line-height: 1.65; font-weight: 300; }
   .gift-fab:hover {
     background-color: #6FC4D1; transform: scale(1.08);
     box-shadow:
-      0 0 0 3px rgba(240, 232, 213, 1),
+      0 0 0 3px rgba(223, 235, 236, 1),
       0 0 0 5px rgba(42, 15, 46, 0.65),
       0 14px 36px rgba(58, 170, 187, 0.70),
       0 6px 18px rgba(42, 15, 46, 0.55);
@@ -1298,7 +1298,7 @@ p  { line-height: 1.65; font-weight: 300; }
 .gift-panel {
   position: absolute; right: 0; bottom: calc(100% + 14px);
   width: 320px; max-width: 82vw; max-height: 76vh; overflow-y: auto;
-  background: var(--crema, #FAF6F0); color: var(--ber, #3D1A35);
+  background: var(--crema, #F1F6F6); color: var(--ber, #3D1A35);
   border-radius: 14px 0 14px 0; padding: 18px;
   box-shadow: 0 18px 50px rgba(20, 8, 24, .32);
   opacity: 0; pointer-events: none; transform: translateY(10px) scale(.97);
@@ -1360,7 +1360,7 @@ body.rf-submit-in-view .float-chat {
   display: flex; align-items: center; justify-content: center;
   font-size: 24px;
   box-shadow:
-    0 0 0 3px rgba(240, 232, 213, 0.92),            /* anillo arena externo — silueta sobre fondo oscuro */
+    0 0 0 3px rgba(223, 235, 236, 0.92),            /* anillo arena externo — silueta sobre fondo oscuro */
     0 0 0 5px rgba(42, 15, 46, 0.55),               /* anillo eggplant — silueta sobre fondo claro */
     0 10px 30px rgba(58, 170, 187, 0.55),           /* sol glow halo */
     0 4px 14px rgba(42, 15, 46, 0.45);
@@ -1376,7 +1376,7 @@ body.rf-submit-in-view .float-chat {
     background-color: #6FC4D1 !important;
     color: #2A0F2E !important;
     box-shadow:
-      0 0 0 3px rgba(240, 232, 213, 1),
+      0 0 0 3px rgba(223, 235, 236, 1),
       0 0 0 5px rgba(42, 15, 46, 0.65),
       0 14px 36px rgba(58, 170, 187, 0.70),
       0 6px 18px rgba(42, 15, 46, 0.55);
@@ -1429,8 +1429,8 @@ body.rf-submit-in-view .float-chat {
 .float-chat .contact-row .avatar.avatar-photo {
   overflow: hidden;
   position: relative;
-  background: #F0E8D5;
-  border: 1.5px solid rgba(240, 232, 213, 0.7);
+  background: #DFEBEC;
+  border: 1.5px solid rgba(223, 235, 236, 0.7);
   box-shadow: 0 2px 8px rgba(42, 15, 46, 0.32), inset 0 0 0 1px rgba(42, 15, 46, 0.06);
 }
 .float-chat .contact-row .avatar-img {
@@ -1473,8 +1473,8 @@ body.rf-submit-in-view .float-chat {
 .float-chat .contact-person .avatar.avatar-photo {
   overflow: hidden;
   position: relative;
-  background: #F0E8D5;
-  border: 1.5px solid rgba(240, 232, 213, 0.7);
+  background: #DFEBEC;
+  border: 1.5px solid rgba(223, 235, 236, 0.7);
   box-shadow: 0 2px 8px rgba(42, 15, 46, 0.32), inset 0 0 0 1px rgba(42, 15, 46, 0.06);
 }
 .float-chat .contact-person .avatar-img {
@@ -1644,13 +1644,13 @@ section {
   position: absolute; inset: 0;
   pointer-events: none; z-index: 1;
   background-image:
-    radial-gradient(circle 3.5px  at  8% 18%, rgba(240,232,213,1) 0%, transparent 100%),
+    radial-gradient(circle 3.5px  at  8% 18%, rgba(223,235,236,1) 0%, transparent 100%),
     radial-gradient(circle 2.5px  at 23% 72%, rgba(111,196,209,1)  0%, transparent 100%),
-    radial-gradient(circle 3px    at 41% 31%, rgba(240,232,213,1) 0%, transparent 100%),
+    radial-gradient(circle 3px    at 41% 31%, rgba(223,235,236,1) 0%, transparent 100%),
     radial-gradient(circle 2px    at 57% 82%, rgba(111,196,209,1)  0%, transparent 100%),
-    radial-gradient(circle 3.5px  at 69% 12%, rgba(240,232,213,1) 0%, transparent 100%),
+    radial-gradient(circle 3.5px  at 69% 12%, rgba(223,235,236,1) 0%, transparent 100%),
     radial-gradient(circle 2.5px  at 79% 58%, rgba(111,196,209,1)  0%, transparent 100%),
-    radial-gradient(circle 3px    at 88% 28%, rgba(240,232,213,1) 0%, transparent 100%),
+    radial-gradient(circle 3px    at 88% 28%, rgba(223,235,236,1) 0%, transparent 100%),
     radial-gradient(circle 2px    at 47% 91%, rgba(111,196,209,.9)  0%, transparent 100%);
   background-size: 100% 100%;
   opacity: 0;
@@ -1799,10 +1799,10 @@ section {
   width: min(400px, calc(100% - 40px));
   background-color: #2A0F2E !important;            /* ber-dk literal */
   background-image: none !important;
-  color: #F0E8D5 !important;                        /* arena literal */
+  color: #DFEBEC !important;                        /* arena literal */
   padding: 16px 22px 16px 24px;
   border-radius: 14px 0 14px 0;
-  border: 1px solid rgba(240,232,213,.22);
+  border: 1px solid rgba(223,235,236,.22);
   border-left: 4px solid #3AAABB;                   /* sol */
   box-shadow: 0 18px 50px rgba(42, 15, 46, 0.62), 0 4px 14px rgba(42,15,46,0.32);
   z-index: 9999;
@@ -1865,7 +1865,7 @@ body.apt-bar-shown .cookies {
   min-width: 180px;
   font-size: 14px;
   line-height: 1.5;
-  color: #F0E8D5 !important;          /* arena 100% — sin opacity */
+  color: #DFEBEC !important;          /* arena 100% — sin opacity */
   opacity: 1;
 }
 .cookies .cookies-btns {
@@ -1901,13 +1901,13 @@ body.apt-bar-shown .cookies {
 /* Solo esenciales — outline arena (alto contraste sobre eggplant). */
 .cookies .cookies-btns .essential {
   background-color: transparent !important;
-  color: #F0E8D5 !important;
-  border: 1.5px solid #F0E8D5 !important;
+  color: #DFEBEC !important;
+  border: 1.5px solid #DFEBEC !important;
 }
 .cookies .cookies-btns .essential:hover {
-  background-color: rgba(240,232,213,.14) !important;
-  color: #F0E8D5 !important;
-  border-color: #F0E8D5 !important;
+  background-color: rgba(223,235,236,.14) !important;
+  color: #DFEBEC !important;
+  border-color: #DFEBEC !important;
 }
 
 /* ============================================================
@@ -1994,14 +1994,14 @@ body.apt-bar-shown .cookies {
 .hero .stars::after {
   content: ''; position: absolute; inset: 0;
   background-image:
-    radial-gradient(1px 1px at 20% 30%, rgba(240,232,213,0.8), transparent),
-    radial-gradient(1px 1px at 70% 20%, rgba(240,232,213,0.6), transparent),
+    radial-gradient(1px 1px at 20% 30%, rgba(223,235,236,0.8), transparent),
+    radial-gradient(1px 1px at 70% 20%, rgba(223,235,236,0.6), transparent),
     radial-gradient(1.5px 1.5px at 50% 50%, rgba(111,196,209,0.7), transparent),
-    radial-gradient(1px 1px at 85% 60%, rgba(240,232,213,0.5), transparent),
-    radial-gradient(1px 1px at 15% 80%, rgba(240,232,213,0.7), transparent),
+    radial-gradient(1px 1px at 85% 60%, rgba(223,235,236,0.5), transparent),
+    radial-gradient(1px 1px at 15% 80%, rgba(223,235,236,0.7), transparent),
     radial-gradient(1.5px 1.5px at 40% 85%, rgba(111,196,209,0.5), transparent),
-    radial-gradient(1px 1px at 90% 40%, rgba(240,232,213,0.6), transparent),
-    radial-gradient(1px 1px at 35% 15%, rgba(240,232,213,0.5), transparent);
+    radial-gradient(1px 1px at 90% 40%, rgba(223,235,236,0.6), transparent),
+    radial-gradient(1px 1px at 35% 15%, rgba(223,235,236,0.5), transparent);
   background-size: 100% 100%;
   animation: twinkle 6s ease-in-out infinite alternate;
 }
@@ -2108,7 +2108,7 @@ body.apt-bar-shown .cookies {
   border-radius: 6px 0 6px 0;
   background: var(--ber-dk);
   color: var(--arena);
-  border: 1px solid rgba(240,232,213,0.35);
+  border: 1px solid rgba(223,235,236,0.35);
   font-size: 18px;
   font-weight: 300;
   font-family: var(--sans);
@@ -2264,15 +2264,15 @@ body.apt-bar-shown .cookies {
 .hero-af-field label {
   font-family: var(--sans);
   font-size: 11px; letter-spacing: .13em; text-transform: uppercase;
-  color: rgba(240,232,213,.9);
+  color: rgba(223,235,236,.9);
 }
 .hero-af-field input[type="date"] {
   width: 100%;
   font-family: var(--sans);
   font-size: 15px;
   color: var(--ink, #2A0F2E);
-  background: rgba(250,246,240,.96);
-  border: 1px solid rgba(240,232,213,.3);
+  background: rgba(241,246,246,.96);
+  border: 1px solid rgba(223,235,236,.3);
   border-radius: 10px 0 10px 0;
   padding: 10px 12px;
   color-scheme: light;
@@ -2294,7 +2294,7 @@ body.apt-bar-shown .cookies {
   margin: 2px 0 0;
   font-family: var(--sans);
   font-size: 12.5px;
-  color: color-mix(in srgb, var(--err, #B8246E) 55%, var(--crema, #FAF6F0));
+  color: color-mix(in srgb, var(--err, #B8246E) 55%, var(--crema, #F1F6F6));
   text-align: center;
 }
 .hero-availform .btn-primary {
@@ -2303,7 +2303,7 @@ body.apt-bar-shown .cookies {
   color: #2A0F2E !important;
   border: 0 !important;
   font-weight: 700 !important;
-  box-shadow: 0 4px 14px rgba(58,170,187,.38), 0 0 0 1px rgba(240,232,213,.18);
+  box-shadow: 0 4px 14px rgba(58,170,187,.38), 0 0 0 1px rgba(223,235,236,.18);
 }
 .hero-availform .btn-primary::before { display: none !important; }
 .hero-availform .btn-primary:hover { background-color: #6FC4D1 !important; }
@@ -2321,7 +2321,7 @@ body.apt-bar-shown .cookies {
   justify-content: space-between;
   align-items: center;
   padding: 22px var(--page-pad);
-  border-top: 1px solid rgba(240, 232, 213, 0.12);
+  border-top: 1px solid rgba(223, 235, 236, 0.12);
   font-size: 11px;
   letter-spacing: 0.22em;
   text-transform: uppercase;
@@ -2361,7 +2361,7 @@ body.apt-bar-shown .cookies {
   font-family: var(--sans);
   font-size: 13px;
   font-weight: 400;
-  color: rgba(240,232,213,.85);
+  color: rgba(223,235,236,.85);
   letter-spacing: 0.04em;
 }
 .hero-proof-item > .hero-proof-name {
@@ -2373,7 +2373,7 @@ body.apt-bar-shown .cookies {
 .hero-proof-dot {
   width: 3px; height: 3px;
   border-radius: 50%;
-  background: rgba(240,232,213,.3);
+  background: rgba(223,235,236,.3);
   flex-shrink: 0;
 }
 .hero-proof-platform {
@@ -2381,10 +2381,10 @@ body.apt-bar-shown .cookies {
   font-size: 11px;
   text-transform: uppercase;
   letter-spacing: 0.2em;
-  color: rgba(240,232,213,.38);
+  color: rgba(223,235,236,.38);
   font-weight: 400;
   padding-left: 8px;
-  border-left: 1px solid rgba(240,232,213,.2);
+  border-left: 1px solid rgba(223,235,236,.2);
 }
 /* Pie único, sin repetir los nombres (ya van en las miniaturas de arriba). */
 .hero-proof-platform-solo {
@@ -2393,7 +2393,7 @@ body.apt-bar-shown .cookies {
   text-align: center;
   text-transform: uppercase;
   letter-spacing: 0.16em;
-  color: rgba(240,232,213,.38);
+  color: rgba(223,235,236,.38);
   font-weight: 400;
   margin-top: 18px;
 }
@@ -2403,10 +2403,10 @@ body.apt-bar-shown .cookies {
   margin-top: 14px;
   font-family: var(--sans);
   font-size: 13px;
-  color: rgba(240,232,213,.75);
+  color: rgba(223,235,236,.75);
 }
 .hpl-from { font-weight: 400; }
-.hpl-price { font-size: 18px; font-weight: 700; color: var(--cream, #F0E8D5); }
+.hpl-price { font-size: 18px; font-weight: 700; color: var(--cream, #DFEBEC); }
 .hpl-per { font-size: 11px; opacity: .55; margin-left: 4px; }
 
 /* Acceso rápido a cada Hestía desde el hero: 3 miniaturas SIN marco/borde,
@@ -2420,7 +2420,7 @@ body.apt-bar-shown .cookies {
 }
 .haq-item {
   display: flex; flex-direction: column; align-items: center; gap: 6px;
-  text-decoration: none; color: var(--crema, #F0E8D5);
+  text-decoration: none; color: var(--crema, #DFEBEC);
   transition: transform .2s cubic-bezier(.2,.8,.2,1);
 }
 .haq-thumb {
@@ -2433,14 +2433,14 @@ body.apt-bar-shown .cookies {
 .haq-label {
   font-family: var(--sans); font-size: clamp(11px, 2.6vw, 12px); font-weight: 700;
   letter-spacing: .08em; text-transform: uppercase; white-space: nowrap;
-  color: rgba(240,232,213,.85);
+  color: rgba(223,235,236,.85);
 }
 /* Valoración bajo el nombre: el nombre del apartamento ya se lee en
    .haq-label, así que la estrella no repite quién es, solo la nota. */
 .haq-rating {
   display: inline-flex; align-items: center; gap: 3px;
   font-family: var(--sans); font-size: 11px; font-weight: 600;
-  color: rgba(240,232,213,.6);
+  color: rgba(223,235,236,.6);
 }
 .haq-rating-star { color: var(--sol-lt, #6FC4D1); }
 .haq-item:hover,
@@ -2514,7 +2514,7 @@ body.apt-bar-shown .cookies {
 .gm-tile::before, .gc-lb-pic::after, .as-media::before {
   content: ''; position: absolute; z-index: 1; pointer-events: none;
   background: var(--wm-logo, url(logo-blanco-160.png)) center / contain no-repeat;
-  opacity: .95; filter: drop-shadow(0 0 1.2px rgba(250,246,240,.95)) drop-shadow(0 0 5px rgba(250,246,240,.5)) drop-shadow(0 1px 3px rgba(0,0,0,.45));
+  opacity: .95; filter: drop-shadow(0 0 1.2px rgba(241,246,246,.95)) drop-shadow(0 0 5px rgba(241,246,246,.5)) drop-shadow(0 1px 3px rgba(0,0,0,.45));
 }
 .gm-tile::before { top: 10px; right: 10px; width: 26px; height: 26px; }
 .gc-lb-pic { position: relative; }
@@ -2541,7 +2541,7 @@ body.apt-bar-shown .cookies {
   position: absolute; top: 50%; transform: translateY(-50%);
   width: 38px; height: 38px;
   border: 0; border-radius: 10px 0 10px 0;
-  background: rgba(250,246,240,.92); color: var(--ink);
+  background: rgba(241,246,246,.92); color: var(--ink);
   font-size: 22px; line-height: 1; cursor: pointer;
   opacity: 0; transition: opacity var(--dur-fast, 160ms);
   z-index: 2;
@@ -2554,7 +2554,7 @@ body.apt-bar-shown .cookies {
   position: absolute; left: 0; right: 0; bottom: 12px;
   display: flex; justify-content: center; gap: 6px; z-index: 2; pointer-events: none;
 }
-.as-dots span { width: 6px; height: 6px; border-radius: 3px; background: rgba(250,246,240,.55); transition: width var(--dur-base, 220ms) var(--ease-out), background var(--dur-base, 220ms); }
+.as-dots span { width: 6px; height: 6px; border-radius: 3px; background: rgba(241,246,246,.55); transition: width var(--dur-base, 220ms) var(--ease-out), background var(--dur-base, 220ms); }
 .as-dots span.on { width: 18px; background: var(--crema); }
 .as-badges {
   position: absolute; top: 12px; left: 12px; right: 12px;
@@ -2568,7 +2568,7 @@ body.apt-bar-shown .cookies {
 }
 .as-rating { background: rgba(42,15,46,.78); color: var(--crema); -webkit-backdrop-filter: blur(6px); backdrop-filter: blur(6px); }
 .as-rating small { font-weight: 400; opacity: .75; }
-.as-avail { background: rgba(250,246,240,.94); color: var(--ink); }
+.as-avail { background: rgba(241,246,246,.94); color: var(--ink); }
 .as-avail-dot { width: 7px; height: 7px; border-radius: 50%; background: var(--ok); box-shadow: 0 0 0 3px color-mix(in srgb, var(--ok) 22%, transparent); }
 .as-body { display: flex; flex-direction: column; flex: 1; padding: 20px 22px 22px; border-top: 3px solid var(--as-accent); }
 .as-head { display: flex; align-items: baseline; justify-content: space-between; gap: 12px; }
@@ -2737,10 +2737,10 @@ body.apt-bar-shown .cookies {
   border-radius: inherit;
   padding: 1.5px;
   background: conic-gradient(from var(--apt-border-angle, 0deg),
-    rgba(240, 232, 213, 0) 0%,
+    rgba(223, 235, 236, 0) 0%,
     var(--apt-border-c1, #3AAABB) 30%,
     var(--apt-border-c2, #6FC4D1) 50%,
-    rgba(240, 232, 213, 0) 80%
+    rgba(223, 235, 236, 0) 80%
   );
   -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
           mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
@@ -2854,7 +2854,7 @@ body.apt-bar-shown .cookies {
   font-weight: 300;
   letter-spacing: -0.01em;
 }
-.apt-card .apt-name .small { font-size: 0.55em; opacity: 0.95; letter-spacing: 0.04em; color: var(--crema, #F0E8D5); }
+.apt-card .apt-name .small { font-size: 0.55em; opacity: 0.95; letter-spacing: 0.04em; color: var(--crema, #DFEBEC); }
 /* Nombre del apartamento en su color (variante clara, legible sobre foto oscura).
    El "HESTÍA" queda en crema; el nombre lleva su tinte de marca. */
 .apt-card.vm .apt-name { color: var(--vm2, #8B9A52); }
@@ -2909,7 +2909,7 @@ body.apt-bar-shown .cookies {
   display: flex; align-items: center; gap: 6px;
   font-family: var(--sans); font-size: 11px; font-weight: 500;
   letter-spacing: 0.06em; text-transform: uppercase;
-  color: rgba(240,232,213,.75);
+  color: rgba(223,235,236,.75);
   margin: 2px 0 6px;
 }
 .apt-avail-hint .aah-dot {
@@ -3154,7 +3154,7 @@ body.apt-bar-shown .cookies {
   .cc-card-head {
     display: flex; flex-direction: column; gap: 6px;
     margin-bottom: 18px; padding-bottom: 14px;
-    border-bottom: 1px solid rgba(240,232,213,0.12);
+    border-bottom: 1px solid rgba(223,235,236,0.12);
   }
   .cc-card-name {
     font-family: var(--serif); font-size: 26px; font-weight: 300;
@@ -3166,11 +3166,11 @@ body.apt-bar-shown .cookies {
   .cc-row {
     display: flex; justify-content: space-between; align-items: flex-start;
     gap: 12px; padding: 9px 0;
-    border-bottom: 1px solid rgba(240,232,213,0.06);
+    border-bottom: 1px solid rgba(223,235,236,0.06);
     font-size: 12.5px;
   }
   .cc-row:last-child { border-bottom: none; }
-  .cc-lbl { color: rgba(240,232,213,0.5); flex-shrink: 0; }
+  .cc-lbl { color: rgba(223,235,236,0.5); flex-shrink: 0; }
   .cc-val { color: var(--crema); text-align: right; max-width: 60%; }
   .cc-val.rate { font-family: var(--serif); font-size: 22px; font-weight: 300; color: var(--sol-lt); }
 }
@@ -3202,7 +3202,7 @@ body.apt-bar-shown .cookies {
 }
 .counter {
   padding: 30px 20px;
-  border-left: 1px solid rgba(240,232,213,0.12);
+  border-left: 1px solid rgba(223,235,236,0.12);
 }
 .counter:first-child { border-left: none; }
 .counter .num {
@@ -3279,8 +3279,8 @@ body.apt-bar-shown .cookies {
   content: '';
   position: absolute; inset: 0;
   background:
-    radial-gradient(ellipse 60% 70% at 50% 38%, rgba(240, 232, 213, 0.45), transparent 70%),
-    radial-gradient(circle at 50% 30%, rgba(240, 232, 213, 0.25) 0%, transparent 40%);
+    radial-gradient(ellipse 60% 70% at 50% 38%, rgba(223, 235, 236, 0.45), transparent 70%),
+    radial-gradient(circle at 50% 30%, rgba(223, 235, 236, 0.25) 0%, transparent 40%);
 }
 .team-member .portrait > img {
   position: absolute;
@@ -3408,7 +3408,7 @@ body.apt-bar-shown .cookies {
   font-size: clamp(16px, 1.35vw, 21px);
   line-height: 1.55;
   letter-spacing: -0.002em;
-  color: rgba(240, 232, 213, 0.88);
+  color: rgba(223, 235, 236, 0.88);
   margin: 0 0 18px;
   max-width: 60ch;
 }
@@ -3434,10 +3434,10 @@ body.apt-bar-shown .cookies {
   grid-template-columns: 60px 1fr;
   gap: 30px;
   padding: 26px 0;
-  border-top: 1px solid rgba(240,232,213,0.15);
+  border-top: 1px solid rgba(223,235,236,0.15);
   align-items: center;
 }
-.manifest .principle:last-child { border-bottom: 1px solid rgba(240,232,213,0.15); }
+.manifest .principle:last-child { border-bottom: 1px solid rgba(223,235,236,0.15); }
 .manifest .principle .p-num {
   font-family: var(--serif);
   font-size: 22px;
@@ -3467,9 +3467,9 @@ body.apt-bar-shown .cookies {
    ============================================================ */
 .ratings-marquee {
   background-color: #2A0F2E;
-  color: #F0E8D5;
-  border-top: 1px solid rgba(240, 232, 213, 0.10);
-  border-bottom: 1px solid rgba(240, 232, 213, 0.10);
+  color: #DFEBEC;
+  border-top: 1px solid rgba(223, 235, 236, 0.10);
+  border-bottom: 1px solid rgba(223, 235, 236, 0.10);
   overflow: hidden;
   padding: 16px 0 52px; /* +32px bottom compensa que home-search (z:48) cubre el overlap */
   position: relative;
@@ -3510,7 +3510,7 @@ body.apt-bar-shown .cookies {
   font-weight: 600;
   letter-spacing: 0.10em;
   text-transform: uppercase;
-  color: #F0E8D5;
+  color: #DFEBEC;
 }
 .rm-dot {
   color: #6FC4D1;                               /* sol-lt — pinta de marca */
@@ -3744,20 +3744,20 @@ footer::before {
   content: '';
   position: absolute; inset: 0;
   background-image:
-    radial-gradient(1px 1px at 12% 18%, rgba(240,232,213,.48) 0%, transparent 100%),
-    radial-gradient(1px 1px at 28% 42%, rgba(240,232,213,.35) 0%, transparent 100%),
-    radial-gradient(1px 1px at 45% 12%, rgba(240,232,213,.52) 0%, transparent 100%),
-    radial-gradient(1px 1px at 62% 55%, rgba(240,232,213,.38) 0%, transparent 100%),
-    radial-gradient(1px 1px at 78% 28%, rgba(240,232,213,.48) 0%, transparent 100%),
-    radial-gradient(1px 1px at 91% 72%, rgba(240,232,213,.42) 0%, transparent 100%),
-    radial-gradient(0.8px 0.8px at  8%  8%, rgba(240,232,213,.25) 0%, transparent 100%),
-    radial-gradient(0.8px 0.8px at 22% 65%, rgba(240,232,213,.22) 0%, transparent 100%),
-    radial-gradient(0.8px 0.8px at 38% 32%, rgba(240,232,213,.28) 0%, transparent 100%),
-    radial-gradient(0.8px 0.8px at 55% 78%, rgba(240,232,213,.22) 0%, transparent 100%),
-    radial-gradient(0.8px 0.8px at 72% 15%, rgba(240,232,213,.28) 0%, transparent 100%),
-    radial-gradient(0.8px 0.8px at 85% 48%, rgba(240,232,213,.25) 0%, transparent 100%),
-    radial-gradient(2px 2px at 35% 22%, rgba(240,232,213,.72) 0%, transparent 100%),
-    radial-gradient(2px 2px at 68% 82%, rgba(240,232,213,.68) 0%, transparent 100%),
+    radial-gradient(1px 1px at 12% 18%, rgba(223,235,236,.48) 0%, transparent 100%),
+    radial-gradient(1px 1px at 28% 42%, rgba(223,235,236,.35) 0%, transparent 100%),
+    radial-gradient(1px 1px at 45% 12%, rgba(223,235,236,.52) 0%, transparent 100%),
+    radial-gradient(1px 1px at 62% 55%, rgba(223,235,236,.38) 0%, transparent 100%),
+    radial-gradient(1px 1px at 78% 28%, rgba(223,235,236,.48) 0%, transparent 100%),
+    radial-gradient(1px 1px at 91% 72%, rgba(223,235,236,.42) 0%, transparent 100%),
+    radial-gradient(0.8px 0.8px at  8%  8%, rgba(223,235,236,.25) 0%, transparent 100%),
+    radial-gradient(0.8px 0.8px at 22% 65%, rgba(223,235,236,.22) 0%, transparent 100%),
+    radial-gradient(0.8px 0.8px at 38% 32%, rgba(223,235,236,.28) 0%, transparent 100%),
+    radial-gradient(0.8px 0.8px at 55% 78%, rgba(223,235,236,.22) 0%, transparent 100%),
+    radial-gradient(0.8px 0.8px at 72% 15%, rgba(223,235,236,.28) 0%, transparent 100%),
+    radial-gradient(0.8px 0.8px at 85% 48%, rgba(223,235,236,.25) 0%, transparent 100%),
+    radial-gradient(2px 2px at 35% 22%, rgba(223,235,236,.72) 0%, transparent 100%),
+    radial-gradient(2px 2px at 68% 82%, rgba(223,235,236,.68) 0%, transparent 100%),
     radial-gradient(1.2px 1.2px at 52% 38%, rgba(111,196,209,.55) 0%, transparent 100%),
     radial-gradient(1.2px 1.2px at 18% 88%, rgba(111,196,209,.48) 0%, transparent 100%);
   pointer-events: none;
@@ -3838,8 +3838,8 @@ footer .footer-brand .addr {
 .footer-social a {
   display: flex; align-items: center; justify-content: center;
   width: 34px; height: 34px; border-radius: 8px 0 8px 0;
-  border: 1px solid rgba(240,232,213,0.2);
-  color: rgba(240,232,213,0.65);
+  border: 1px solid rgba(223,235,236,0.2);
+  color: rgba(223,235,236,0.65);
   transition: color 0.2s, border-color 0.2s;
 }
 .footer-social a:hover { color: var(--sol-lt); border-color: var(--sol-lt); }
@@ -3857,9 +3857,9 @@ footer .footer-brand .addr {
 }
 .footer-bottom .licences { font-family: var(--serif); font-style: italic; text-transform: none; letter-spacing: 0.04em; }
 .footer-owner-link {
-  color: rgba(240, 232, 213, 0.75);
+  color: rgba(223, 235, 236, 0.75);
   text-decoration: none;
-  border-bottom: 1px solid rgba(240, 232, 213, 0.3);
+  border-bottom: 1px solid rgba(223, 235, 236, 0.3);
   padding-bottom: 1px;
   transition: color var(--dur-fast, 160ms) var(--ease-out, ease), border-color var(--dur-fast, 160ms) var(--ease-out, ease);
 }
@@ -3874,7 +3874,7 @@ footer .footer-brand .addr {
 .apt-avail {
   padding: 90px 40px;
   background: linear-gradient(135deg, #4E2446 0%, #3D1A35 50%, var(--ber-glow) 100%);
-  border-top: 1px solid rgba(240,232,213,0.07);
+  border-top: 1px solid rgba(223,235,236,0.07);
 }
 .avail-hd {
   text-align: center;
@@ -3889,7 +3889,7 @@ footer .footer-brand .addr {
   font-size: 11px;
   letter-spacing: 0.22em;
   text-transform: uppercase;
-  color: rgba(240,232,213,0.72);
+  color: rgba(223,235,236,0.72);
   margin-bottom: 22px;
 }
 .avail-dot {
@@ -3907,7 +3907,7 @@ footer .footer-brand .addr {
   font-family: var(--serif);
   font-size: clamp(24px,3.2vw,36px);
   font-weight: 300;
-  color: rgba(240,232,213,.92);
+  color: rgba(223,235,236,.92);
   margin: 0 0 16px;
   line-height: 1.25;
 }
@@ -3915,7 +3915,7 @@ footer .footer-brand .addr {
 .avail-sub {
   font-size: 14px;
   line-height: 1.7;
-  color: rgba(240,232,213,.78);
+  color: rgba(223,235,236,.78);
   font-family: var(--sans);
   font-weight: 300;
   max-width: 48ch;
@@ -3936,7 +3936,7 @@ footer .footer-brand .addr {
   /* El acento del apartamento es oscuro (olivo, cobre, dorado) y esto vive
      sobre berenjena: teñir el texto con él lo dejaba ilegible. El color de
      apartamento se queda en el punto y el borde, el texto va en crema. */
-  color: var(--crema, #FAF6F0);
+  color: var(--crema, #F1F6F6);
   border: 1px solid var(--apt-accent-30, rgba(185,129,62,.3));
   background: var(--apt-accent-8, rgba(185,129,62,.08));
   border-radius: 10px 0 10px 0;
@@ -3993,7 +3993,7 @@ footer .footer-brand .addr {
   font-family: var(--serif);
   font-size: 17px;
   font-weight: 300;
-  color: rgba(240,232,213,.88);
+  color: rgba(223,235,236,.88);
   letter-spacing: 0.05em;
   min-width: 260px;
   text-align: center;
@@ -4001,8 +4001,8 @@ footer .footer-brand .addr {
 }
 .avail-arr {
   background: none;
-  border: 1px solid rgba(240,232,213,.18);
-  color: rgba(240,232,213,.65);
+  border: 1px solid rgba(223,235,236,.18);
+  color: rgba(223,235,236,.65);
   width: 38px; height: 38px;
   flex-shrink: 0;
   border-radius: 8px 0 8px 0;
@@ -4027,8 +4027,8 @@ footer .footer-brand .addr {
 }
 /* ---- Month card ---- */
 .cal-month {
-  background: rgba(240,232,213,.03);
-  border: 1px solid rgba(240,232,213,.08);
+  background: rgba(223,235,236,.03);
+  border: 1px solid rgba(223,235,236,.08);
   border-radius: 10px 0 10px 0;
   padding: 28px 18px 20px;
 }
@@ -4038,7 +4038,7 @@ footer .footer-brand .addr {
   font-family: var(--serif);
   font-size: 16px;
   font-weight: 400;
-  color: rgba(240,232,213,.88);
+  color: rgba(223,235,236,.88);
   text-align: center;
   letter-spacing: 0.04em;
   margin-bottom: 20px;
@@ -4056,7 +4056,7 @@ footer .footer-brand .addr {
   font-size: 12px;
   letter-spacing: .12em;
   text-transform: uppercase;
-  color: rgba(240,232,213,.25);
+  color: rgba(223,235,236,.25);
   padding-bottom: 11px;
 }
 /* ---- Day cell ---- */
@@ -4083,7 +4083,7 @@ footer .footer-brand .addr {
   font-family: var(--sans);
   font-size: 12.5px;
   font-weight: 300;
-  color: rgba(240,232,213,.8);
+  color: rgba(223,235,236,.8);
   line-height: 1;
   pointer-events: none;
 }
@@ -4100,12 +4100,12 @@ footer .footer-brand .addr {
    para el calendario claro de /reservas) quedaba invisible ahí. */
 .apt-avail .cal-cell.blk .c-n,
 .home-search .cal-cell.blk .c-n {
-  color: rgba(240,232,213,.55);
-  text-decoration-color: rgba(240,232,213,.35);
+  color: rgba(223,235,236,.55);
+  text-decoration-color: rgba(223,235,236,.35);
 }
 .apt-avail .cal-cell.blk-after .c-n,
 .home-search .cal-cell.blk-after .c-n {
-  color: rgba(240,232,213,.55);
+  color: rgba(223,235,236,.55);
 }
 .apt-avail .cal-cell.today:not(.blk) .c-n,
 .home-search .cal-cell.today:not(.blk) .c-n {
@@ -4180,18 +4180,18 @@ footer .footer-brand .addr {
   font-family: var(--sans);
   font-size: 11px; letter-spacing: .1em;
   text-transform: uppercase;
-  color: rgba(240,232,213,.4);
+  color: rgba(223,235,236,.4);
 }
 .leg-item { display: flex; align-items: center; gap: 7px; }
 .leg-sep  { opacity: .3; }
 .leg-dot  { width: 13px; height: 13px; border-radius: 50%; flex-shrink: 0; }
-.leg-dot.lg-av { border: 1.5px solid rgba(240,232,213,.28); }
+.leg-dot.lg-av { border: 1.5px solid rgba(223,235,236,.28); }
 .leg-dot.lg-bk { background: var(--crema); border: 1px solid color-mix(in srgb, var(--crema) 70%, var(--ber-dk)); }
 .avail-meta { display: flex; align-items: center; gap: 12px; flex-wrap: wrap; }
 .avail-upd {
   display: flex; align-items: center; gap: 5px;
   font-family: var(--sans); font-size: 11px;
-  color: rgba(240,232,213,.28); letter-spacing: .04em;
+  color: rgba(223,235,236,.28); letter-spacing: .04em;
 }
 .avail-srcs { display: flex; gap: 6px; }
 .avail-src {
@@ -4209,7 +4209,7 @@ footer .footer-brand .addr {
 .avail-cta-note {
   font-family: var(--sans); font-size: 11px;
   letter-spacing: .12em; text-transform: uppercase;
-  color: rgba(240,232,213,.3);
+  color: rgba(223,235,236,.3);
 }
 /* ---- Responsive ---- */
 @media (max-width: 700px) {
@@ -4231,14 +4231,14 @@ footer .footer-brand .addr {
 .c-sel-circ  { background: var(--sel-circ, rgba(58,170,187,.9)); }
 .cal-cell.sel-s .c-n,
 .cal-cell.sel-e .c-n { color: var(--crema); font-weight: 400; }
-.cal-cell.sel-m .c-n { color: rgba(240,232,213,.45); }
+.cal-cell.sel-m .c-n { color: rgba(223,235,236,.45); }
 
 /* ---- Preview range (hover) ---- */
 .c-prev-strip { background: var(--prev-fill, rgba(58,170,187,.11)); }
 .c-prev-circ  { background: var(--prev-circ, rgba(58,170,187,.48)); }
 .cal-cell.prev-s .c-n,
-.cal-cell.prev-e .c-n { color: rgba(240,232,213,.85); }
-.cal-cell.prev-m .c-n { color: rgba(240,232,213,.35); }
+.cal-cell.prev-e .c-n { color: rgba(223,235,236,.85); }
+.cal-cell.prev-m .c-n { color: rgba(223,235,236,.35); }
 
 /* ---- Selection hint bar ---- */
 .avail-hint {
@@ -4539,7 +4539,7 @@ body[data-apt="salinas"]  .ag-nav-btn-primary {
     inset 0 1px 0 rgba(255, 255, 255, 0.32),
     inset 0 -1px 0 rgba(0, 0, 0, 0.20),
     0 6px 22px var(--apt-glow, rgba(58, 170, 187, 0.45)) !important;
-  border: 1px solid rgba(240, 232, 213, 0.22) !important;
+  border: 1px solid rgba(223, 235, 236, 0.22) !important;
   animation: aptCtaFlow 9s ease-in-out infinite;
   background-size: 220% 220% !important;
   transition: transform var(--dur-fast) var(--ease-out),
@@ -4557,7 +4557,7 @@ body[data-apt="mar"]      .ag-nav-btn-primary {
   background-image: linear-gradient(135deg,
     #6B7A3A 0%, #8B9A52 32%, #6B7A3A 55%, #556330 78%, #6B7A3A 100%) !important;
   background-color: #6B7A3A !important;
-  color: #F0E8D5 !important;
+  color: #DFEBEC !important;
   --apt-glow: rgba(107, 122, 58, 0.55);
 }
 /* Thalassa — siena metálico */
@@ -4572,7 +4572,7 @@ body[data-apt="thalassa"] .ag-nav-btn-primary {
   background-image: linear-gradient(135deg,
     #8A4A24 0%, #B86A3C 32%, #8A4A24 55%, #6E3A1C 78%, #8A4A24 100%) !important;
   background-color: #8A4A24 !important;
-  color: #F0E8D5 !important;
+  color: #DFEBEC !important;
   --apt-glow: rgba(184, 106, 60, 0.55);
 }
 /* Salinas — dorado metálico */
@@ -5185,7 +5185,7 @@ body[data-apt="salinas"]  .widget-mini > * { position: relative; z-index: 1; }
   .team-grid { grid-template-columns: 1fr; }
   .manifest-inner { grid-template-columns: 1fr; gap: 40px; }
   .counters-grid { grid-template-columns: 1fr; }
-  .counter { border-left: none; border-top: 1px solid rgba(240,232,213,0.12); }
+  .counter { border-left: none; border-top: 1px solid rgba(223,235,236,0.12); }
   .counter:first-child { border-top: none; }
   .ratings-grid { grid-template-columns: 1fr; }
   .footer-grid { grid-template-columns: 1fr 1fr; }
@@ -5282,13 +5282,13 @@ body.no-stars .hero .stars { display: none; }
   padding: 20px 22px;
   z-index: 300;
   box-shadow: 0 30px 80px rgba(42,15,46,0.42);
-  border: 1px solid rgba(240,232,213,0.15);
+  border: 1px solid rgba(223,235,236,0.15);
   font-family: var(--sans);
   font-size: 13px;
 }
 .tweaks-head {
   padding-bottom: 16px;
-  border-bottom: 1px solid rgba(240,232,213,0.12);
+  border-bottom: 1px solid rgba(223,235,236,0.12);
   margin-bottom: 16px;
   text-align: center;
 }
@@ -5303,7 +5303,7 @@ body.no-stars .hero .stars { display: none; }
 }
 .seg-control, .tweaks-jumps {
   display: flex; gap: 4px; flex-wrap: wrap;
-  background: rgba(240,232,213,0.06);
+  background: rgba(223,235,236,0.06);
   border-radius: 10px 0 10px 0;
   padding: 3px;
 }
@@ -5326,7 +5326,7 @@ body.no-stars .hero .stars { display: none; }
   border-radius: 10px 0 10px 0;
   font-size: 11px; letter-spacing: 0.1em;
   color: var(--arena);
-  background: rgba(240,232,213,0.08);
+  background: rgba(223,235,236,0.08);
   transition: background var(--dur-base) var(--ease-out), color var(--dur-base) var(--ease-out);
 }
 .tweaks-jumps button:hover { background: var(--sol); color: var(--ber-dk); }
@@ -5378,13 +5378,13 @@ body.no-stars .hero .stars { display: none; }
 .hero-title .it {
   /* Shimmer cult-ui — el italic mantiene sol-lt como base pero un
      brillo crema más intenso lo cruza cada 6 s. Contraste base
-     #6FC4D1 sobre eggplant ~6.4 (AA). El brillo crema #F0E8D5 da
+     #6FC4D1 sobre eggplant ~6.4 (AA). El brillo crema #DFEBEC da
      ~10.5 (AAA) — nunca baja. */
   background: linear-gradient(
     100deg,
     #6FC4D1 0%,
     #6FC4D1 40%,
-    #F0E8D5 50%,
+    #DFEBEC 50%,
     #6FC4D1 60%,
     #6FC4D1 100%
   );
@@ -5442,7 +5442,7 @@ body.no-stars .hero .stars { display: none; }
     90deg,
     transparent               0%,
     rgba(111,196,209,.65)    25%,
-    rgba(240,232,213,.40)    50%,
+    rgba(223,235,236,.40)    50%,
     rgba(111,196,209,.65)    75%,
     transparent              100%
   );
@@ -5665,70 +5665,70 @@ body.no-stars .hero .stars { display: none; }
   position: absolute; inset: 0;
   background-image:
     /* tiny very faint */
-    radial-gradient(0.8px 0.8px at  3%  7%, rgba(240,232,213,.22) 0%, transparent 100%),
-    radial-gradient(0.8px 0.8px at  9% 22%, rgba(240,232,213,.20) 0%, transparent 100%),
-    radial-gradient(0.8px 0.8px at 17% 47%, rgba(240,232,213,.25) 0%, transparent 100%),
-    radial-gradient(0.8px 0.8px at 24%  8%, rgba(240,232,213,.18) 0%, transparent 100%),
-    radial-gradient(0.8px 0.8px at 31% 63%, rgba(240,232,213,.22) 0%, transparent 100%),
-    radial-gradient(0.8px 0.8px at 38% 82%, rgba(240,232,213,.20) 0%, transparent 100%),
-    radial-gradient(0.8px 0.8px at  6% 34%, rgba(240,232,213,.25) 0%, transparent 100%),
-    radial-gradient(0.8px 0.8px at 13% 56%, rgba(240,232,213,.18) 0%, transparent 100%),
-    radial-gradient(0.8px 0.8px at 20% 78%, rgba(240,232,213,.22) 0%, transparent 100%),
-    radial-gradient(0.8px 0.8px at 28% 18%, rgba(240,232,213,.20) 0%, transparent 100%),
-    radial-gradient(0.8px 0.8px at 35% 41%, rgba(240,232,213,.25) 0%, transparent 100%),
-    radial-gradient(0.8px 0.8px at 42% 69%, rgba(240,232,213,.18) 0%, transparent 100%),
-    radial-gradient(0.8px 0.8px at 49% 25%, rgba(240,232,213,.22) 0%, transparent 100%),
-    radial-gradient(0.8px 0.8px at 57% 88%, rgba(240,232,213,.20) 0%, transparent 100%),
-    radial-gradient(0.8px 0.8px at 63% 12%, rgba(240,232,213,.25) 0%, transparent 100%),
-    radial-gradient(0.8px 0.8px at 70% 52%, rgba(240,232,213,.18) 0%, transparent 100%),
-    radial-gradient(0.8px 0.8px at 78% 34%, rgba(240,232,213,.22) 0%, transparent 100%),
-    radial-gradient(0.8px 0.8px at 84% 71%, rgba(240,232,213,.20) 0%, transparent 100%),
-    radial-gradient(0.8px 0.8px at 91% 18%, rgba(240,232,213,.25) 0%, transparent 100%),
-    radial-gradient(0.8px 0.8px at 96% 83%, rgba(240,232,213,.18) 0%, transparent 100%),
+    radial-gradient(0.8px 0.8px at  3%  7%, rgba(223,235,236,.22) 0%, transparent 100%),
+    radial-gradient(0.8px 0.8px at  9% 22%, rgba(223,235,236,.20) 0%, transparent 100%),
+    radial-gradient(0.8px 0.8px at 17% 47%, rgba(223,235,236,.25) 0%, transparent 100%),
+    radial-gradient(0.8px 0.8px at 24%  8%, rgba(223,235,236,.18) 0%, transparent 100%),
+    radial-gradient(0.8px 0.8px at 31% 63%, rgba(223,235,236,.22) 0%, transparent 100%),
+    radial-gradient(0.8px 0.8px at 38% 82%, rgba(223,235,236,.20) 0%, transparent 100%),
+    radial-gradient(0.8px 0.8px at  6% 34%, rgba(223,235,236,.25) 0%, transparent 100%),
+    radial-gradient(0.8px 0.8px at 13% 56%, rgba(223,235,236,.18) 0%, transparent 100%),
+    radial-gradient(0.8px 0.8px at 20% 78%, rgba(223,235,236,.22) 0%, transparent 100%),
+    radial-gradient(0.8px 0.8px at 28% 18%, rgba(223,235,236,.20) 0%, transparent 100%),
+    radial-gradient(0.8px 0.8px at 35% 41%, rgba(223,235,236,.25) 0%, transparent 100%),
+    radial-gradient(0.8px 0.8px at 42% 69%, rgba(223,235,236,.18) 0%, transparent 100%),
+    radial-gradient(0.8px 0.8px at 49% 25%, rgba(223,235,236,.22) 0%, transparent 100%),
+    radial-gradient(0.8px 0.8px at 57% 88%, rgba(223,235,236,.20) 0%, transparent 100%),
+    radial-gradient(0.8px 0.8px at 63% 12%, rgba(223,235,236,.25) 0%, transparent 100%),
+    radial-gradient(0.8px 0.8px at 70% 52%, rgba(223,235,236,.18) 0%, transparent 100%),
+    radial-gradient(0.8px 0.8px at 78% 34%, rgba(223,235,236,.22) 0%, transparent 100%),
+    radial-gradient(0.8px 0.8px at 84% 71%, rgba(223,235,236,.20) 0%, transparent 100%),
+    radial-gradient(0.8px 0.8px at 91% 18%, rgba(223,235,236,.25) 0%, transparent 100%),
+    radial-gradient(0.8px 0.8px at 96% 83%, rgba(223,235,236,.18) 0%, transparent 100%),
     /* small dim */
-    radial-gradient(1px 1px at  5% 89%, rgba(240,232,213,.38) 0%, transparent 100%),
-    radial-gradient(1px 1px at 14% 39%, rgba(240,232,213,.35) 0%, transparent 100%),
-    radial-gradient(1px 1px at 22% 73%, rgba(240,232,213,.40) 0%, transparent 100%),
-    radial-gradient(1px 1px at 30% 54%, rgba(240,232,213,.32) 0%, transparent 100%),
-    radial-gradient(1px 1px at 45% 11%, rgba(240,232,213,.38) 0%, transparent 100%),
-    radial-gradient(1px 1px at 52% 78%, rgba(240,232,213,.35) 0%, transparent 100%),
-    radial-gradient(1px 1px at 60% 46%, rgba(240,232,213,.40) 0%, transparent 100%),
-    radial-gradient(1px 1px at 67% 23%, rgba(240,232,213,.32) 0%, transparent 100%),
-    radial-gradient(1px 1px at 75% 64%, rgba(240,232,213,.38) 0%, transparent 100%),
-    radial-gradient(1px 1px at 82% 87%, rgba(240,232,213,.35) 0%, transparent 100%),
-    radial-gradient(1px 1px at  4% 52%, rgba(240,232,213,.38) 0%, transparent 100%),
-    radial-gradient(1px 1px at 12% 88%, rgba(240,232,213,.35) 0%, transparent 100%),
-    radial-gradient(1px 1px at 19% 32%, rgba(240,232,213,.40) 0%, transparent 100%),
-    radial-gradient(1px 1px at 26% 73%, rgba(240,232,213,.32) 0%, transparent 100%),
-    radial-gradient(1px 1px at 36%  6%, rgba(240,232,213,.38) 0%, transparent 100%),
-    radial-gradient(1px 1px at 43% 58%, rgba(240,232,213,.35) 0%, transparent 100%),
-    radial-gradient(1px 1px at 50% 91%, rgba(240,232,213,.40) 0%, transparent 100%),
-    radial-gradient(1px 1px at 58% 44%, rgba(240,232,213,.32) 0%, transparent 100%),
+    radial-gradient(1px 1px at  5% 89%, rgba(223,235,236,.38) 0%, transparent 100%),
+    radial-gradient(1px 1px at 14% 39%, rgba(223,235,236,.35) 0%, transparent 100%),
+    radial-gradient(1px 1px at 22% 73%, rgba(223,235,236,.40) 0%, transparent 100%),
+    radial-gradient(1px 1px at 30% 54%, rgba(223,235,236,.32) 0%, transparent 100%),
+    radial-gradient(1px 1px at 45% 11%, rgba(223,235,236,.38) 0%, transparent 100%),
+    radial-gradient(1px 1px at 52% 78%, rgba(223,235,236,.35) 0%, transparent 100%),
+    radial-gradient(1px 1px at 60% 46%, rgba(223,235,236,.40) 0%, transparent 100%),
+    radial-gradient(1px 1px at 67% 23%, rgba(223,235,236,.32) 0%, transparent 100%),
+    radial-gradient(1px 1px at 75% 64%, rgba(223,235,236,.38) 0%, transparent 100%),
+    radial-gradient(1px 1px at 82% 87%, rgba(223,235,236,.35) 0%, transparent 100%),
+    radial-gradient(1px 1px at  4% 52%, rgba(223,235,236,.38) 0%, transparent 100%),
+    radial-gradient(1px 1px at 12% 88%, rgba(223,235,236,.35) 0%, transparent 100%),
+    radial-gradient(1px 1px at 19% 32%, rgba(223,235,236,.40) 0%, transparent 100%),
+    radial-gradient(1px 1px at 26% 73%, rgba(223,235,236,.32) 0%, transparent 100%),
+    radial-gradient(1px 1px at 36%  6%, rgba(223,235,236,.38) 0%, transparent 100%),
+    radial-gradient(1px 1px at 43% 58%, rgba(223,235,236,.35) 0%, transparent 100%),
+    radial-gradient(1px 1px at 50% 91%, rgba(223,235,236,.40) 0%, transparent 100%),
+    radial-gradient(1px 1px at 58% 44%, rgba(223,235,236,.32) 0%, transparent 100%),
     /* small bright */
-    radial-gradient(1px 1px at  8% 14%, rgba(240,232,213,.58) 0%, transparent 100%),
-    radial-gradient(1px 1px at 19% 38%, rgba(240,232,213,.55) 0%, transparent 100%),
-    radial-gradient(1px 1px at 33% 66%, rgba(240,232,213,.62) 0%, transparent 100%),
-    radial-gradient(1px 1px at 46% 22%, rgba(240,232,213,.55) 0%, transparent 100%),
-    radial-gradient(1px 1px at 58% 55%, rgba(240,232,213,.60) 0%, transparent 100%),
-    radial-gradient(1px 1px at 71% 80%, rgba(240,232,213,.55) 0%, transparent 100%),
-    radial-gradient(1px 1px at 85% 28%, rgba(240,232,213,.62) 0%, transparent 100%),
-    radial-gradient(1px 1px at 94% 62%, rgba(240,232,213,.55) 0%, transparent 100%),
-    radial-gradient(1px 1px at 12% 77%, rgba(240,232,213,.60) 0%, transparent 100%),
-    radial-gradient(1px 1px at 39% 16%, rgba(240,232,213,.55) 0%, transparent 100%),
+    radial-gradient(1px 1px at  8% 14%, rgba(223,235,236,.58) 0%, transparent 100%),
+    radial-gradient(1px 1px at 19% 38%, rgba(223,235,236,.55) 0%, transparent 100%),
+    radial-gradient(1px 1px at 33% 66%, rgba(223,235,236,.62) 0%, transparent 100%),
+    radial-gradient(1px 1px at 46% 22%, rgba(223,235,236,.55) 0%, transparent 100%),
+    radial-gradient(1px 1px at 58% 55%, rgba(223,235,236,.60) 0%, transparent 100%),
+    radial-gradient(1px 1px at 71% 80%, rgba(223,235,236,.55) 0%, transparent 100%),
+    radial-gradient(1px 1px at 85% 28%, rgba(223,235,236,.62) 0%, transparent 100%),
+    radial-gradient(1px 1px at 94% 62%, rgba(223,235,236,.55) 0%, transparent 100%),
+    radial-gradient(1px 1px at 12% 77%, rgba(223,235,236,.60) 0%, transparent 100%),
+    radial-gradient(1px 1px at 39% 16%, rgba(223,235,236,.55) 0%, transparent 100%),
     /* medium */
-    radial-gradient(1.5px 1.5px at  7% 25%, rgba(240,232,213,.50) 0%, transparent 100%),
-    radial-gradient(1.5px 1.5px at 22% 72%, rgba(240,232,213,.48) 0%, transparent 100%),
-    radial-gradient(1.5px 1.5px at 36% 43%, rgba(240,232,213,.52) 0%, transparent 100%),
-    radial-gradient(1.5px 1.5px at 51% 89%, rgba(240,232,213,.48) 0%, transparent 100%),
-    radial-gradient(1.5px 1.5px at 64% 17%, rgba(240,232,213,.50) 0%, transparent 100%),
-    radial-gradient(1.5px 1.5px at 77% 61%, rgba(240,232,213,.48) 0%, transparent 100%),
-    radial-gradient(1.5px 1.5px at 88% 38%, rgba(240,232,213,.52) 0%, transparent 100%),
-    radial-gradient(1.5px 1.5px at 15% 91%, rgba(240,232,213,.48) 0%, transparent 100%),
+    radial-gradient(1.5px 1.5px at  7% 25%, rgba(223,235,236,.50) 0%, transparent 100%),
+    radial-gradient(1.5px 1.5px at 22% 72%, rgba(223,235,236,.48) 0%, transparent 100%),
+    radial-gradient(1.5px 1.5px at 36% 43%, rgba(223,235,236,.52) 0%, transparent 100%),
+    radial-gradient(1.5px 1.5px at 51% 89%, rgba(223,235,236,.48) 0%, transparent 100%),
+    radial-gradient(1.5px 1.5px at 64% 17%, rgba(223,235,236,.50) 0%, transparent 100%),
+    radial-gradient(1.5px 1.5px at 77% 61%, rgba(223,235,236,.48) 0%, transparent 100%),
+    radial-gradient(1.5px 1.5px at 88% 38%, rgba(223,235,236,.52) 0%, transparent 100%),
+    radial-gradient(1.5px 1.5px at 15% 91%, rgba(223,235,236,.48) 0%, transparent 100%),
     /* large bright */
-    radial-gradient(2.5px 2.5px at 11% 19%, rgba(240,232,213,.78) 0%, transparent 100%),
-    radial-gradient(2.5px 2.5px at 55% 35%, rgba(240,232,213,.75) 0%, transparent 100%),
-    radial-gradient(2.5px 2.5px at 89% 73%, rgba(240,232,213,.78) 0%, transparent 100%),
-    radial-gradient(2.5px 2.5px at 23% 81%, rgba(240,232,213,.75) 0%, transparent 100%),
+    radial-gradient(2.5px 2.5px at 11% 19%, rgba(223,235,236,.78) 0%, transparent 100%),
+    radial-gradient(2.5px 2.5px at 55% 35%, rgba(223,235,236,.75) 0%, transparent 100%),
+    radial-gradient(2.5px 2.5px at 89% 73%, rgba(223,235,236,.78) 0%, transparent 100%),
+    radial-gradient(2.5px 2.5px at 23% 81%, rgba(223,235,236,.75) 0%, transparent 100%),
     /* teal accent */
     radial-gradient(1.2px 1.2px at 16% 31%, rgba(111,196,209,.62) 0%, transparent 100%),
     radial-gradient(1.2px 1.2px at 44% 67%, rgba(111,196,209,.58) 0%, transparent 100%),
@@ -5768,7 +5768,7 @@ body.no-stars .hero .stars { display: none; }
 
 /* ---- btn-ghost (dark background variant) ---- */
 .btn-ghost {
-  border: 1px solid rgba(240,232,213,.35);
+  border: 1px solid rgba(223,235,236,.35);
   color: var(--arena);
   padding: 14px 28px;
   font-family: var(--sans);
@@ -5781,8 +5781,8 @@ body.no-stars .hero .stars { display: none; }
 }
 @media (hover: hover) {
   .btn-ghost:hover {
-    border-color: rgba(240,232,213,.7);
-    background: rgba(240,232,213,.06);
+    border-color: rgba(223,235,236,.7);
+    background: rgba(223,235,236,.06);
   }
 }
 
@@ -5833,7 +5833,7 @@ body.no-stars .hero .stars { display: none; }
 .ah-nav {
   position: absolute; top: 50%; transform: translateY(-50%); z-index: 2;
   width: 44px; height: 44px; border: 0; border-radius: 10px 0 10px 0;
-  background: rgba(250,246,240,.92); color: var(--ink); font-size: 24px; line-height: 1; cursor: pointer;
+  background: rgba(241,246,246,.92); color: var(--ink); font-size: 24px; line-height: 1; cursor: pointer;
   opacity: 0; transition: opacity var(--dur-fast, 160ms);
 }
 .ah-prev { left: 16px; } .ah-next { right: 16px; }
@@ -5843,7 +5843,7 @@ body.no-stars .hero .stars { display: none; }
 .ah-logo {
   position: absolute; top: 16px; right: 16px; z-index: 2; width: 34px; height: 34px;
   opacity: .95; pointer-events: none;
-  filter: drop-shadow(0 0 1.2px rgba(250,246,240,.95)) drop-shadow(0 0 5px rgba(250,246,240,.5)) drop-shadow(0 1px 3px rgba(0,0,0,.45));
+  filter: drop-shadow(0 0 1.2px rgba(241,246,246,.95)) drop-shadow(0 0 5px rgba(241,246,246,.5)) drop-shadow(0 1px 3px rgba(0,0,0,.45));
 }
 .ah-indalo {
   position: absolute; left: 18px; bottom: 18px; z-index: 2; width: 30px; height: 30px;
@@ -5865,7 +5865,7 @@ body.no-stars .hero .stars { display: none; }
 .ah-all {
   display: inline-flex; align-items: center; gap: 8px;
   padding: 10px 16px; border: 0; border-radius: 10px 0 10px 0;
-  background: rgba(250,246,240,.95); color: var(--ink);
+  background: rgba(241,246,246,.95); color: var(--ink);
   font-family: var(--sans); font-size: 13px; font-weight: 700; cursor: pointer;
   box-shadow: 0 8px 22px -12px rgba(0,0,0,.6);
 }
@@ -5879,34 +5879,34 @@ body.no-stars .hero .stars { display: none; }
 .ah-vlb-x {
   position: absolute; top: 14px; right: 14px;
   width: 42px; height: 42px; border: 0; border-radius: 10px 0 10px 0;
-  background: rgba(250,246,240,.95); color: var(--ink); font-size: 18px; cursor: pointer;
+  background: rgba(241,246,246,.95); color: var(--ink); font-size: 18px; cursor: pointer;
 }
 .ah-summary {
   max-width: 1360px; margin: 0 auto;
   padding: clamp(24px, 3vw, 40px) var(--page-pad) clamp(36px, 4.5vw, 64px);
   display: grid; grid-template-columns: minmax(0, 1.25fr) minmax(0, 1fr); gap: clamp(24px, 4vw, 64px); align-items: end;
 }
-.ah-eyebrow { font-family: var(--sans); font-size: 11px; letter-spacing: .22em; color: rgba(240,232,213,.6); margin-bottom: 10px; }
+.ah-eyebrow { font-family: var(--sans); font-size: 11px; letter-spacing: .22em; color: rgba(223,235,236,.6); margin-bottom: 10px; }
 .ah-eyebrow .sep { margin: 0 8px; }
 .ah-name { margin: 0; font-family: var(--serif); font-weight: 400; font-size: clamp(44px, 5.4vw, 76px); line-height: .98; color: var(--crema); }
-.ah-name-small { display: flex; align-items: center; gap: 8px; font-family: var(--sans); font-size: 12px; letter-spacing: .26em; text-transform: uppercase; color: rgba(240,232,213,.75); margin-bottom: 8px; }
-.ah-concept { margin: 14px 0 0; max-width: 46ch; font-family: var(--serif); font-style: italic; font-size: clamp(17px, 1.5vw, 20px); line-height: 1.45; color: rgba(240,232,213,.82); }
+.ah-name-small { display: flex; align-items: center; gap: 8px; font-family: var(--sans); font-size: 12px; letter-spacing: .26em; text-transform: uppercase; color: rgba(223,235,236,.75); margin-bottom: 8px; }
+.ah-concept { margin: 14px 0 0; max-width: 46ch; font-family: var(--serif); font-style: italic; font-size: clamp(17px, 1.5vw, 20px); line-height: 1.45; color: rgba(223,235,236,.82); }
 .ah-rating { display: inline-flex; align-items: center; gap: 6px; margin-top: 16px; font-family: var(--sans); font-size: 14px; color: var(--crema); text-decoration: none; }
 .ah-rating strong { font-size: 16px; }
 .ah-rating .hi { --hi-tint: var(--apt-accent); }
-.ah-rating-n { color: rgba(240,232,213,.7); text-decoration: underline; text-underline-offset: 3px; text-decoration-color: rgba(240,232,213,.35); }
-.ah-book { padding: 22px 24px; border: 1px solid rgba(240,232,213,.14); border-radius: 16px 0 16px 0; background: rgba(250,246,240,.04); }
+.ah-rating-n { color: rgba(223,235,236,.7); text-decoration: underline; text-underline-offset: 3px; text-decoration-color: rgba(223,235,236,.35); }
+.ah-book { padding: 22px 24px; border: 1px solid rgba(223,235,236,.14); border-radius: 16px 0 16px 0; background: rgba(241,246,246,.04); }
 .ah-price { margin: 0; display: flex; flex-wrap: wrap; align-items: baseline; gap: 6px; }
-.ah-price-from { font-family: var(--sans); font-size: 13px; color: rgba(240,232,213,.7); }
+.ah-price-from { font-family: var(--sans); font-size: 13px; color: rgba(223,235,236,.7); }
 .ah-price-n { font-family: var(--serif); font-size: clamp(38px, 3.6vw, 48px); line-height: 1; color: var(--crema); }
-.ah-price-per { font-family: var(--sans); font-size: 13px; color: rgba(240,232,213,.7); }
-.ah-avail { display: inline-flex; align-items: center; gap: 8px; margin-bottom: 12px; padding: 7px 12px; border-radius: 10px 0 10px 0; background: rgba(250,246,240,.94); color: var(--ink); font-family: var(--sans); font-size: 12.5px; font-weight: 700; text-decoration: none; }
+.ah-price-per { font-family: var(--sans); font-size: 13px; color: rgba(223,235,236,.7); }
+.ah-avail { display: inline-flex; align-items: center; gap: 8px; margin-bottom: 12px; padding: 7px 12px; border-radius: 10px 0 10px 0; background: rgba(241,246,246,.94); color: var(--ink); font-family: var(--sans); font-size: 12.5px; font-weight: 700; text-decoration: none; }
 .ah-avail:hover { background: #fff; color: var(--ink); }
 .ah-avail-dot { width: 7px; height: 7px; border-radius: 50%; background: var(--ok); box-shadow: 0 0 0 3px color-mix(in srgb, var(--ok) 22%, transparent); }
 .ah-avail-n { font-weight: 500; color: rgba(42,15,46,.7); }
 .ah-match { margin: 8px 0 16px; font-family: var(--sans); font-size: 13px; line-height: 1.45; color: var(--sol-lt); }
 .ah-ctas { display: flex; flex-wrap: wrap; gap: 10px; }
-.ah-cancel { margin: 14px 0 0; display: flex; align-items: center; gap: 6px; font-family: var(--sans); font-size: 12.5px; color: rgba(240,232,213,.7); }
+.ah-cancel { margin: 14px 0 0; display: flex; align-items: center; gap: 6px; font-family: var(--sans); font-size: 12.5px; color: rgba(223,235,236,.7); }
 @media (max-width: 820px) {
   .ah { padding: calc(var(--chrome-h, 116px) + 6px) 0 0; }
   .ah-gallery { padding: 0; }
@@ -6081,7 +6081,7 @@ a.apt-page-reserve-btn::before { display: none !important; }
 .apt-page-hero[data-apt="vm"] a.apt-page-reserve-btn,
 body[data-apt="mar"] a.apt-page-reserve-btn {
   background-color: #6B7A3A !important;        /* olivo Mar */
-  color: #F0E8D5 !important;
+  color: #DFEBEC !important;
   box-shadow: 0 4px 14px rgba(107,122,58,.38) !important;
 }
 .apt-page-hero[data-apt="vm"] a.apt-page-reserve-btn:hover,
@@ -6093,7 +6093,7 @@ body[data-apt="mar"] a.apt-page-reserve-btn:hover {
 .apt-page-hero[data-apt="vt"] a.apt-page-reserve-btn,
 body[data-apt="thalassa"] a.apt-page-reserve-btn {
   background-color: #B86A3C !important;        /* siena Thalassa */
-  color: #F0E8D5 !important;
+  color: #DFEBEC !important;
   box-shadow: 0 4px 14px rgba(184,106,60,.38) !important;
 }
 .apt-page-hero[data-apt="vt"] a.apt-page-reserve-btn:hover,
@@ -6183,7 +6183,7 @@ body[data-apt="salinas"] a.apt-page-reserve-btn:hover {
   position: absolute;
   top: 12px; right: 16px;
   font-size: 18px;
-  color: rgba(240,232,213,.5);
+  color: rgba(223,235,236,.5);
   pointer-events: none;
   z-index: 2;
 }
@@ -6217,7 +6217,7 @@ body[data-apt="salinas"] a.apt-page-reserve-btn:hover {
   top: 16px; right: 20px;
   background: none;
   border: none;
-  color: rgba(240,232,213,.8);
+  color: rgba(223,235,236,.8);
   font-size: 28px;
   cursor: pointer;
   padding: 8px;
@@ -6229,7 +6229,7 @@ body[data-apt="salinas"] a.apt-page-reserve-btn:hover {
 .gc-lb-prev, .gc-lb-next {
   position: absolute;
   top: 50%; transform: translateY(-50%);
-  background: rgba(240,232,213,.1);
+  background: rgba(223,235,236,.1);
   border: none;
   color: var(--arena);
   font-size: 30px;
@@ -6240,7 +6240,7 @@ body[data-apt="salinas"] a.apt-page-reserve-btn:hover {
   line-height: 1;
   z-index: 2;
 }
-.gc-lb-prev:hover, .gc-lb-next:hover { background: rgba(240,232,213,.2); }
+.gc-lb-prev:hover, .gc-lb-next:hover { background: rgba(223,235,236,.2); }
 .gc-lb-prev { left: 12px; }
 .gc-lb-next { right: 12px; }
 .gc-lb-caption-wrap {
@@ -6264,7 +6264,7 @@ body[data-apt="salinas"] a.apt-page-reserve-btn:hover {
   font-family: var(--sans);
   letter-spacing: .12em;
   text-transform: uppercase;
-  color: rgba(240,232,213,.55);
+  color: rgba(223,235,236,.55);
 }
 /* Segunda línea, solo en las fotos que traen nota de qué buscamos al
    decorar/equipar esa estancia (gallery_notes, no todas las fotos la
@@ -6302,7 +6302,7 @@ body[data-apt="salinas"] a.apt-page-reserve-btn:hover {
   font-size: 11px;
   font-family: var(--sans);
   letter-spacing: .12em;
-  color: rgba(240,232,213,.45);
+  color: rgba(223,235,236,.45);
 }
 
 /* --- Apartment sticky booking bar --- */
@@ -6316,7 +6316,7 @@ body[data-apt="salinas"] a.apt-page-reserve-btn:hover {
   top: auto;
   z-index: 200;
   background: var(--ber);
-  border-top: 1px solid rgba(240,232,213,.12);
+  border-top: 1px solid rgba(223,235,236,.12);
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -6336,9 +6336,9 @@ body[data-apt="salinas"] a.apt-page-reserve-btn:hover {
   gap: 6px;
   padding: 8px 12px;
   border-radius: 8px 0 8px 0;
-  background: rgba(240, 232, 213, 0.08);
-  color: #F0E8D5;
-  border: 1px solid rgba(240, 232, 213, 0.30);
+  background: rgba(223, 235, 236, 0.08);
+  color: #DFEBEC;
+  border: 1px solid rgba(223, 235, 236, 0.30);
   font-family: var(--sans);
   font-size: 11px;
   font-weight: 600;
@@ -6350,8 +6350,8 @@ body[data-apt="salinas"] a.apt-page-reserve-btn:hover {
   transition: background .2s ease, border-color .2s ease, transform .15s ease;
 }
 .asb-perks:hover {
-  background: rgba(240, 232, 213, 0.16);
-  border-color: rgba(240, 232, 213, 0.55);
+  background: rgba(223, 235, 236, 0.16);
+  border-color: rgba(223, 235, 236, 0.55);
 }
 .asb-perks:active { transform: scale(.97); }
 .asb-perks-icon { color: #6FC4D1; font-size: 12px; opacity: .9; }
@@ -6413,7 +6413,7 @@ body[data-apt="salinas"] a.apt-page-reserve-btn:hover {
   border-radius: 6px 0 6px 0;
   background: transparent;
   color: var(--arena);
-  border: 1px solid rgba(240, 232, 213, 0.3);
+  border: 1px solid rgba(223, 235, 236, 0.3);
   font-size: 14px;
   line-height: 1;
   cursor: pointer;
@@ -6427,7 +6427,7 @@ body[data-apt="salinas"] a.apt-page-reserve-btn:hover {
 }
 .asb-close:hover {
   opacity: 1;
-  background: rgba(240, 232, 213, 0.1);
+  background: rgba(223, 235, 236, 0.1);
 }
 .apt-sticky-bar { padding-right: 40px; }
 @media (max-width: 480px) {
@@ -6498,7 +6498,7 @@ body[data-apt="salinas"] a.apt-page-reserve-btn:hover {
   align-items: start;
 }
 .avd-eyebrow {
-  color: color-mix(in srgb, var(--apt-accent) 48%, var(--crema, #FAF6F0));
+  color: color-mix(in srgb, var(--apt-accent) 48%, var(--crema, #F1F6F6));
   display: block;
   margin-bottom: 20px;
 }
@@ -6537,7 +6537,7 @@ body[data-apt="salinas"] a.apt-page-reserve-btn:hover {
 .avd-desc2 {
   font-size: 15px;
   line-height: 1.7;
-  color: rgba(240,232,213,.6);
+  color: rgba(223,235,236,.6);
   margin: 0;
 }
 .avd-cta-row {
@@ -6742,7 +6742,7 @@ body[data-apt="salinas"] a.apt-page-reserve-btn:hover {
   border: 1px solid rgba(61,26,53,.12);
   border-radius: 20px 0 20px 0;
   overflow: hidden;
-  background: #f4eee2;
+  background: #e6eff0;
 }
 .apt-fp-live iframe { display: block; width: 100%; height: 100%; border: 0; }
 .apt-fp-live:not(.is-live) iframe { pointer-events: none; }
@@ -6763,7 +6763,7 @@ body[data-apt="salinas"] a.apt-page-reserve-btn:hover {
   gap: 10px;
   padding: 13px 22px;
   background: var(--ber, #3D1A35);
-  color: var(--crema, #FAF6F0);
+  color: var(--crema, #F1F6F6);
   border-radius: 10px 0 10px 0;
   font: 600 15px var(--sans);
   box-shadow: 0 10px 28px rgba(42,15,46,.28);
@@ -6800,12 +6800,12 @@ body[data-apt="salinas"] a.apt-page-reserve-btn:hover {
 .gm-chip {
   display: inline-flex; align-items: center; gap: 7px;
   padding: 8px 14px;
-  border: 1px solid rgba(240,232,213,.24); border-radius: 10px 0 10px 0;
-  background: transparent; color: rgba(240,232,213,.85);
+  border: 1px solid rgba(223,235,236,.24); border-radius: 10px 0 10px 0;
+  background: transparent; color: rgba(223,235,236,.85);
   font-family: var(--sans); font-size: 13px; font-weight: 600; cursor: pointer; white-space: nowrap;
   transition: background var(--dur-fast, 160ms), color var(--dur-fast, 160ms), border-color var(--dur-fast, 160ms);
 }
-.gm-chip:hover { border-color: rgba(240,232,213,.55); color: var(--crema); }
+.gm-chip:hover { border-color: rgba(223,235,236,.55); color: var(--crema); }
 .gm-chip-n { font-weight: 400; font-size: 12px; opacity: .65; }
 .gm-chip.on { background: var(--crema); border-color: var(--crema); color: var(--ink); }
 .gm-chip.on .gm-chip-n { opacity: .6; }
@@ -6840,7 +6840,7 @@ body[data-apt="salinas"] a.apt-page-reserve-btn:hover {
 .gm-tile:focus-visible::after, .gm-tile:focus-visible .gm-cap { opacity: 1; transform: none; }
 .gm-more-wrap { max-width: 1360px; margin: 22px auto 0; text-align: center; }
 .gm-more {
-  padding: 12px 22px; border: 1px solid rgba(240,232,213,.5); border-radius: 10px 0 10px 0;
+  padding: 12px 22px; border: 1px solid rgba(223,235,236,.5); border-radius: 10px 0 10px 0;
   background: transparent; color: var(--crema);
   font-family: var(--sans); font-size: 13px; font-weight: 700; letter-spacing: .06em; cursor: pointer;
 }
@@ -6928,7 +6928,7 @@ body[data-apt="salinas"] a.apt-page-reserve-btn:hover {
   align-items: center;
   justify-content: center;
   gap: 8px;
-  color: rgba(240,232,213,.45);
+  color: rgba(223,235,236,.45);
 }
 .ph-num {
   font-family: var(--serif);
@@ -6942,7 +6942,7 @@ body[data-apt="salinas"] a.apt-page-reserve-btn:hover {
   font-size: 11px;
   font-family: var(--sans);
   letter-spacing: 0.08em;
-  color: rgba(240,232,213,.45);
+  color: rgba(223,235,236,.45);
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
@@ -7070,7 +7070,7 @@ body[data-apt="salinas"] a.apt-page-reserve-btn:hover {
   font-family: var(--sans);
   letter-spacing: 0.10em;
   text-transform: uppercase;
-  color: rgba(240,232,213,.82);
+  color: rgba(223,235,236,.82);
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
@@ -7083,7 +7083,7 @@ body[data-apt="salinas"] a.apt-page-reserve-btn:hover {
   font-size: 11px;
   font-family: var(--sans);
   letter-spacing: 0.12em;
-  color: rgba(240,232,213,.55);
+  color: rgba(223,235,236,.55);
   z-index: 2;
   pointer-events: none;
 }
@@ -7240,7 +7240,7 @@ body[data-apt="salinas"] a.apt-page-reserve-btn:hover {
   font-family: var(--serif);
   font-style: italic;
   font-size: 13px;
-  color: rgba(240,232,213,.6);
+  color: rgba(223,235,236,.6);
   margin: 4px 0 10px;
 }
 .apt-other-cta {
@@ -7378,7 +7378,7 @@ body[data-apt="salinas"] a.apt-page-reserve-btn:hover {
   align-items: flex-start;
   gap: 28px;
   padding: 26px 0;
-  border-bottom: 1px solid rgba(240,232,213,.1);
+  border-bottom: 1px solid rgba(223,235,236,.1);
 }
 .reserva-step:last-child { border-bottom: none; }
 .step-num {
@@ -7568,12 +7568,12 @@ body[data-apt="salinas"] a.apt-page-reserve-btn:hover {
 }
 
 /* Pull-quotes marquee — cinta de frases cortas entre Ratings y Grid.
-   Bg eggplant #2A0F2E + texto arena #F0E8D5 (~11:1 ratio). Pausa hover. */
+   Bg eggplant #2A0F2E + texto arena #DFEBEC (~11:1 ratio). Pausa hover. */
 .opiniones-quotes-marquee {
   background-color: #2A0F2E;
-  color: #F0E8D5;
-  border-top: 1px solid rgba(240, 232, 213, 0.10);
-  border-bottom: 1px solid rgba(240, 232, 213, 0.10);
+  color: #DFEBEC;
+  border-top: 1px solid rgba(223, 235, 236, 0.10);
+  border-bottom: 1px solid rgba(223, 235, 236, 0.10);
   overflow: hidden;
   padding: 18px 0;
   position: relative;
@@ -7609,7 +7609,7 @@ body[data-apt="salinas"] a.apt-page-reserve-btn:hover {
   font-style: italic;
   font-size: clamp(14px, 1.3vw, 17px);
   font-weight: 300;
-  color: #F0E8D5;
+  color: #DFEBEC;
   letter-spacing: 0.005em;
 }
 .oqm-mark {
@@ -7706,7 +7706,7 @@ body[data-apt="salinas"] a.apt-page-reserve-btn:hover {
 }
 .testimonial-name { color: var(--arena); font-weight: 400; }
 .testimonial-apt { color: var(--sol-lt); }
-.testimonial-year { color: rgba(240,232,213,.35); }
+.testimonial-year { color: rgba(223,235,236,.35); }
 
 /* ================================================================
    PÁGINA NOSOTROS
@@ -7814,7 +7814,7 @@ body[data-apt="salinas"] a.apt-page-reserve-btn:hover {
 }
 .nosotros-person-body p {
   font-size: 15px;
-  color: rgba(240,232,213,.85);
+  color: rgba(223,235,236,.85);
   line-height: 1.65;
   margin: 0 0 16px;
 }
@@ -7915,11 +7915,11 @@ body[data-apt="salinas"] a.apt-page-reserve-btn:hover {
   width: auto; height: auto; top: 0; left: 0;
   filter: none; border-radius: 0; mix-blend-mode: normal;
   background-image:
-    radial-gradient(circle 1.5px at  9% 21%, rgba(240,232,213,1) 0%, transparent 100%),
+    radial-gradient(circle 1.5px at  9% 21%, rgba(223,235,236,1) 0%, transparent 100%),
     radial-gradient(circle 1px   at 37% 67%, rgba(111,196,209,1)  0%, transparent 100%),
-    radial-gradient(circle 1.5px at 68% 14%, rgba(240,232,213,1) 0%, transparent 100%),
+    radial-gradient(circle 1.5px at 68% 14%, rgba(223,235,236,1) 0%, transparent 100%),
     radial-gradient(circle 1px   at 82% 73%, rgba(111,196,209,1)  0%, transparent 100%),
-    radial-gradient(circle 1.5px at 53% 42%, rgba(240,232,213,1) 0%, transparent 100%);
+    radial-gradient(circle 1.5px at 53% 42%, rgba(223,235,236,1) 0%, transparent 100%);
   background-size: 100% 100%;
   opacity: 0;
   animation: starsWink 24s ease-in-out infinite;
@@ -8240,7 +8240,7 @@ body[data-apt="salinas"] a.apt-page-reserve-btn:hover {
 .porque-logo-text p {
   font-size: 17px;
   line-height: 1.75;
-  color: rgba(240,232,213,.78);
+  color: rgba(223,235,236,.78);
   margin: 0 0 24px;
   max-width: 54ch;
 }
@@ -8249,7 +8249,7 @@ body[data-apt="salinas"] a.apt-page-reserve-btn:hover {
   flex-direction: column;
   gap: 20px;
   margin-top: 36px;
-  border-top: 1px solid rgba(240,232,213,.1);
+  border-top: 1px solid rgba(223,235,236,.1);
   padding-top: 32px;
 }
 .pls-sym {
@@ -8271,7 +8271,7 @@ body[data-apt="salinas"] a.apt-page-reserve-btn:hover {
   font-size: 15px;
   font-weight: 300;
   font-style: italic;
-  color: rgba(240,232,213,.65);
+  color: rgba(223,235,236,.65);
   line-height: 1.5;
 }
 
@@ -8381,7 +8381,7 @@ body[data-apt="salinas"] a.apt-page-reserve-btn:hover {
   gap: 28px;
   align-items: start;
   padding: 32px 0;
-  border-bottom: 1px solid rgba(240,232,213,.1);
+  border-bottom: 1px solid rgba(223,235,236,.1);
 }
 .nos-principio:last-child { border-bottom: none; }
 .nos-p-num {
@@ -8403,7 +8403,7 @@ body[data-apt="salinas"] a.apt-page-reserve-btn:hover {
 .nos-p-desc {
   font-size: 15px;
   font-weight: 300;
-  color: rgba(240,232,213,.68);
+  color: rgba(223,235,236,.68);
   line-height: 1.65;
 }
 
@@ -8465,7 +8465,7 @@ body[data-apt="salinas"] a.apt-page-reserve-btn:hover {
 .pq-valores-title em { font-style: italic; color: var(--sol-lt); }
 .pq-valores-lede {
   font-size: clamp(15px, 1.55vw, 18px);
-  color: rgba(240,232,213,.78);
+  color: rgba(223,235,236,.78);
   line-height: 1.75;
   max-width: 60ch;
   margin: 0;
@@ -8599,7 +8599,7 @@ body[data-apt="salinas"] a.apt-page-reserve-btn:hover {
     var(--sol-lt) 18%,
     rgba(255, 255, 255, 0.85) 35%,
     var(--sol-h)  55%,
-    rgba(240, 232, 213, 0.75) 72%,
+    rgba(223, 235, 236, 0.75) 72%,
     rgba(184, 122, 44, 0.88) 100%);
   background-size: 220% 220%;
   background-position: 0% 0%;
@@ -8724,7 +8724,7 @@ body[data-apt="salinas"] a.apt-page-reserve-btn:hover {
   font-weight: 500;
   letter-spacing: 0.24em;
   text-transform: uppercase;
-  color: rgba(240, 232, 213, 0.55);
+  color: rgba(223, 235, 236, 0.55);
 }
 .pq-v4-text-idx { font-variant-numeric: tabular-nums; }
 .pq-v4-text-idx-sep { opacity: 0.4; }
@@ -8776,7 +8776,7 @@ body[data-apt="salinas"] a.apt-page-reserve-btn:hover {
   font-size: clamp(15px, 1.35vw, 17.5px);
   font-weight: 300;
   line-height: 1.75;
-  color: rgba(240, 232, 213, 0.85);
+  color: rgba(223, 235, 236, 0.85);
   max-width: 50ch;
   margin: 0;
 }
@@ -8828,12 +8828,12 @@ body[data-apt="salinas"] a.apt-page-reserve-btn:hover {
   font-style: italic;
   font-weight: 300;
   font-size: clamp(22px, 2.4vw, 28px);
-  color: rgba(240, 232, 213, 0.45);
+  color: rgba(223, 235, 236, 0.45);
   line-height: 1;
   transition: color 320ms var(--pq-ease), transform 320ms var(--pq-ease);
 }
 .pq-v4-strip-btn:hover .pq-v4-strip-letter {
-  color: rgba(240, 232, 213, 0.9);
+  color: rgba(223, 235, 236, 0.9);
   transform: scale(1.08);
 }
 .pq-v4-strip-btn.is-active::before { opacity: 1; }
@@ -8861,7 +8861,7 @@ body[data-apt="salinas"] a.apt-page-reserve-btn:hover {
 }
 .pq-v4-strip-ring-track {
   fill: none;
-  stroke: rgba(240, 232, 213, 0.12);
+  stroke: rgba(223, 235, 236, 0.12);
   stroke-width: 1.2;
 }
 .pq-v4-strip-ring-fill {
@@ -9165,7 +9165,7 @@ body[data-apt="salinas"] a.apt-page-reserve-btn:hover {
   font-family: 'Courier New', monospace;
   font-size: 11px;
   letter-spacing: .08em;
-  color: rgba(250,246,240,.65);
+  color: rgba(241,246,246,.65);
   line-height: 1;
 }
 .bg-ls-info { flex: 1; }
@@ -9619,14 +9619,14 @@ body[data-apt="salinas"] a.apt-page-reserve-btn:hover {
   font-size: 13.5px;
   font-weight: 300;
   line-height: 1.55;
-  color: rgba(240, 232, 213, 0.82);
+  color: rgba(223, 235, 236, 0.82);
   margin: 0 0 14px;
 }
 .reservas-guarantee .rg-disclaimer {
   font-size: 11.5px;
   font-weight: 300;
   line-height: 1.5;
-  color: rgba(240, 232, 213, 0.55);
+  color: rgba(223, 235, 236, 0.55);
   margin: 0 0 14px;
 }
 .reservas-guarantee .rg-cta {
@@ -9634,9 +9634,9 @@ body[data-apt="salinas"] a.apt-page-reserve-btn:hover {
   align-items: center;
   gap: 8px;
   padding: 10px 16px;
-  background: rgba(240, 232, 213, 0.10);
-  color: #F0E8D5;
-  border: 1px solid rgba(240, 232, 213, 0.32);
+  background: rgba(223, 235, 236, 0.10);
+  color: #DFEBEC;
+  border: 1px solid rgba(223, 235, 236, 0.32);
   border-radius: 8px 0 8px 0;
   font-family: var(--sans);
   font-size: 11px;
@@ -9647,8 +9647,8 @@ body[data-apt="salinas"] a.apt-page-reserve-btn:hover {
   transition: background .25s ease, border-color .25s ease, transform .15s ease;
 }
 .reservas-guarantee .rg-cta:hover {
-  background: rgba(240, 232, 213, 0.20);
-  border-color: rgba(240, 232, 213, 0.55);
+  background: rgba(223, 235, 236, 0.20);
+  border-color: rgba(223, 235, 236, 0.55);
 }
 .reservas-guarantee .rg-cta:active { transform: scale(.98); }
 .reservas-guarantee .rg-cta-arrow {
@@ -9854,7 +9854,7 @@ body[data-apt="salinas"] a.apt-page-reserve-btn:hover {
   justify-content: space-between;
   margin-top: 14px;
   padding-top: 11px;
-  border-top: 1px solid rgba(240,232,213,.12);
+  border-top: 1px solid rgba(223,235,236,.12);
 }
 .sf-nav-btn {
   background: none; border: none;
@@ -9916,15 +9916,15 @@ body[data-apt="salinas"] a.apt-page-reserve-btn:hover {
 .hs-sub {
   font-family: var(--sans);
   font-size: 14px; font-weight: 300;
-  color: rgba(240,232,213,.82);
+  color: rgba(223,235,236,.82);
   max-width: 560px; margin: 0 auto;
   line-height: 1.7;
 }
 
 /* Form */
 .hs-form {
-  background: rgba(240,232,213,.04);
-  border: 1px solid rgba(240,232,213,.1);
+  background: rgba(223,235,236,.04);
+  border: 1px solid rgba(223,235,236,.1);
   border-radius: 10px 0 10px 0;
   padding: 32px 28px;
   display: flex;
@@ -9944,9 +9944,9 @@ body[data-apt="salinas"] a.apt-page-reserve-btn:hover {
   letter-spacing: .12em; text-transform: uppercase;
   padding: 8px 18px;
   border-radius: 10px 0 10px 0;
-  border: 1.5px solid rgba(240,232,213,.22);
+  border: 1.5px solid rgba(223,235,236,.22);
   background: transparent;
-  color: rgba(240,232,213,.7);
+  color: rgba(223,235,236,.7);
   cursor: pointer;
   transition: background var(--dur-base) var(--ease-out), color var(--dur-base) var(--ease-out), border-color var(--dur-base) var(--ease-out);
 }
@@ -9954,7 +9954,7 @@ body[data-apt="salinas"] a.apt-page-reserve-btn:hover {
   .hs-apt-btn { min-height: 44px; }
 }
 .hs-apt-btn:hover {
-  border-color: rgba(240,232,213,.45);
+  border-color: rgba(223,235,236,.45);
   color: var(--arena);
 }
 .hs-apt-btn.active {
@@ -9988,7 +9988,7 @@ body[data-apt="salinas"] a.apt-page-reserve-btn:hover {
   font-family: var(--sans);
   font-size: 11px; font-weight: 400;
   letter-spacing: .13em; text-transform: uppercase;
-  color: rgba(240,232,213,.72);
+  color: rgba(223,235,236,.72);
   margin-bottom: 8px;
 }
 .hs-field--inline .hs-lbl { margin-bottom: 0; }
@@ -9996,8 +9996,8 @@ body[data-apt="salinas"] a.apt-page-reserve-btn:hover {
 /* Date inputs */
 .hs-input {
   width: 100%;
-  background: rgba(240,232,213,.06);
-  border: 1.5px solid rgba(240,232,213,.14);
+  background: rgba(223,235,236,.06);
+  border: 1.5px solid rgba(223,235,236,.14);
   border-radius: 10px 0 10px 0;
   color: var(--arena);
   font-family: var(--sans);
@@ -10008,7 +10008,7 @@ body[data-apt="salinas"] a.apt-page-reserve-btn:hover {
   color-scheme: dark;
 }
 .hs-input:focus {
-  border-color: rgba(240,232,213,.4);
+  border-color: rgba(223,235,236,.4);
 }
 
 /* Nights badge */
@@ -10041,8 +10041,8 @@ body[data-apt="salinas"] a.apt-page-reserve-btn:hover {
 .hs-cnt-btn {
   width: 32px; height: 32px;
   display: flex; align-items: center; justify-content: center;
-  background: rgba(240,232,213,.08);
-  border: 1.5px solid rgba(240,232,213,.16);
+  background: rgba(223,235,236,.08);
+  border: 1.5px solid rgba(223,235,236,.16);
   border-radius: 10px 0 10px 0;
   color: var(--arena);
   font-size: 18px; line-height: 1;
@@ -10050,8 +10050,8 @@ body[data-apt="salinas"] a.apt-page-reserve-btn:hover {
   transition: background .18s, border-color .18s;
 }
 .hs-cnt-btn:hover {
-  background: rgba(240,232,213,.16);
-  border-color: rgba(240,232,213,.32);
+  background: rgba(223,235,236,.16);
+  border-color: rgba(223,235,236,.32);
 }
 .hs-cnt-num {
   font-family: var(--serif);
@@ -10074,16 +10074,16 @@ body[data-apt="salinas"] a.apt-page-reserve-btn:hover {
   letter-spacing: .12em; text-transform: uppercase;
   padding: 7px 16px;
   border-radius: 10px 0 10px 0;
-  border: 1.5px solid rgba(240,232,213,.2);
+  border: 1.5px solid rgba(223,235,236,.2);
   background: transparent;
-  color: rgba(240,232,213,.6);
+  color: rgba(223,235,236,.6);
   cursor: pointer;
   transition: background var(--dur-fast) var(--ease-out), color var(--dur-fast) var(--ease-out), border-color var(--dur-fast) var(--ease-out);
 }
-.hs-toggle:hover { border-color: rgba(240,232,213,.38); color: var(--arena); }
+.hs-toggle:hover { border-color: rgba(223,235,236,.38); color: var(--arena); }
 .hs-toggle.on {
-  background: rgba(240,232,213,.12);
-  border-color: rgba(240,232,213,.45);
+  background: rgba(223,235,236,.12);
+  border-color: rgba(223,235,236,.45);
   color: var(--arena);
 }
 
@@ -10098,19 +10098,19 @@ body[data-apt="salinas"] a.apt-page-reserve-btn:hover {
   font-family: var(--sans);
   font-size: 11px; font-weight: 400;
   letter-spacing: .1em; text-transform: uppercase;
-  color: rgba(240,232,213,.65);
-  background: rgba(240,232,213,.04);
-  border: 1.5px solid rgba(240,232,213,.12);
+  color: rgba(223,235,236,.65);
+  background: rgba(223,235,236,.04);
+  border: 1.5px solid rgba(223,235,236,.12);
   border-radius: 10px 0 10px 0;
   padding: 7px 14px;
   cursor: pointer;
   transition: background var(--dur-fast) var(--ease-out), color var(--dur-fast) var(--ease-out), border-color var(--dur-fast) var(--ease-out);
 }
 .hs-extra-item input[type="checkbox"] { display: none; }
-.hs-extra-item:hover { border-color: rgba(240,232,213,.28); color: var(--arena); }
+.hs-extra-item:hover { border-color: rgba(223,235,236,.28); color: var(--arena); }
 .hs-extra-item.checked {
-  background: rgba(240,232,213,.1);
-  border-color: rgba(240,232,213,.38);
+  background: rgba(223,235,236,.1);
+  border-color: rgba(223,235,236,.38);
   color: var(--arena);
 }
 .hs-extra-item.checked::before {
@@ -10163,7 +10163,7 @@ body[data-apt="salinas"] a.apt-page-reserve-btn:hover {
   color: #2A0F2E !important;                   /* ber-dk */
   border: 0 !important;
   font-weight: 700 !important;
-  box-shadow: 0 4px 14px rgba(58,170,187,.35), 0 0 0 1px rgba(240,232,213,.18) !important;
+  box-shadow: 0 4px 14px rgba(58,170,187,.35), 0 0 0 1px rgba(223,235,236,.18) !important;
 }
 .home-search .btn-primary::before,
 .section-dark .btn-primary::before,
@@ -10185,13 +10185,13 @@ body[data-apt="salinas"] a.apt-page-reserve-btn:hover {
 .page-hero .btn-primary:hover {
   background-color: #6FC4D1 !important;        /* sol-lt */
   color: #2A0F2E !important;
-  box-shadow: 0 5px 18px rgba(58,170,187,.46), 0 0 0 1px rgba(240,232,213,.32) !important;
+  box-shadow: 0 5px 18px rgba(58,170,187,.46), 0 0 0 1px rgba(223,235,236,.32) !important;
   transform: translateY(-1px);
 }
 .hs-loading-note {
   font-family: var(--sans);
   font-size: 12px; font-weight: 300;
-  color: rgba(240,232,213,.45);
+  color: rgba(223,235,236,.45);
   font-style: italic;
 }
 
@@ -10205,7 +10205,7 @@ body[data-apt="salinas"] a.apt-page-reserve-btn:hover {
 .hs-results-hd {
   font-family: var(--serif);
   font-size: 18px; font-weight: 300;
-  color: rgba(240,232,213,.75);
+  color: rgba(223,235,236,.75);
   font-style: italic;
   margin-bottom: 4px;
 }
@@ -10213,14 +10213,14 @@ body[data-apt="salinas"] a.apt-page-reserve-btn:hover {
 /* Result card */
 .hs-result-card {
   display: flex;
-  background: rgba(240,232,213,.04);
-  border: 1px solid rgba(240,232,213,.1);
+  background: rgba(223,235,236,.04);
+  border: 1px solid rgba(223,235,236,.1);
   border-radius: 10px 0 10px 0;
   overflow: hidden;
   transition: border-color .2s;
 }
 .hs-result-card.avail {
-  border-color: rgba(240,232,213,.14);
+  border-color: rgba(223,235,236,.14);
 }
 .hs-result-card.taken {
   opacity: .7;
@@ -10265,7 +10265,7 @@ body[data-apt="salinas"] a.apt-page-reserve-btn:hover {
 .hs-rc-concept {
   font-family: var(--serif);
   font-size: 12px; font-weight: 300;
-  color: rgba(240,232,213,.68);
+  color: rgba(223,235,236,.68);
   font-style: italic;
   margin-top: 3px;
 }
@@ -10301,7 +10301,7 @@ body[data-apt="salinas"] a.apt-page-reserve-btn:hover {
   flex: 1 1 140px;
   padding: 8px 12px;
   border-radius: 6px 0 6px 0;
-  border: 1px solid rgba(240,232,213,.2);
+  border: 1px solid rgba(223,235,236,.2);
   background: rgba(255,255,255,.06);
   color: var(--arena);
   font-family: var(--sans);
@@ -10309,8 +10309,8 @@ body[data-apt="salinas"] a.apt-page-reserve-btn:hover {
   outline: none;
   transition: border-color .18s;
 }
-.hs-rc-input::placeholder { color: rgba(240,232,213,.35); }
-.hs-rc-input:focus { border-color: rgba(240,232,213,.5); }
+.hs-rc-input::placeholder { color: rgba(223,235,236,.35); }
+.hs-rc-input:focus { border-color: rgba(223,235,236,.5); }
 .hs-rc-hint { font-family: var(--sans); font-size: 11px; color: #D42B80; margin: 0 0 8px; letter-spacing: .06em; }
 .hs-rc-actions {
   display: flex;
@@ -10324,7 +10324,7 @@ body[data-apt="salinas"] a.apt-page-reserve-btn:hover {
 .hs-rc-link {
   font-family: var(--sans);
   font-size: 12px; font-weight: 400;
-  color: rgba(240,232,213,.68);
+  color: rgba(223,235,236,.68);
   text-decoration: none;
   transition: color .18s;
   margin-left: 4px;
@@ -10333,15 +10333,15 @@ body[data-apt="salinas"] a.apt-page-reserve-btn:hover {
 .hs-rc-note {
   font-family: var(--sans);
   font-size: 12px; font-weight: 300;
-  color: rgba(240,232,213,.62);
+  color: rgba(223,235,236,.62);
   font-style: italic;
   line-height: 1.55;
   margin: 0;
 }
 /* Dark-theme price block inside home search result cards */
 .hs-price-block {
-  background: rgba(240,232,213,.05);
-  border: 1px solid rgba(240,232,213,.1);
+  background: rgba(223,235,236,.05);
+  border: 1px solid rgba(223,235,236,.1);
   border-radius: 10px 0 10px 0;
   padding: 16px 18px;
   margin: 0 0 14px;
@@ -10357,52 +10357,52 @@ body[data-apt="salinas"] a.apt-page-reserve-btn:hover {
 .hs-pb-direct { display: flex; flex-direction: column; gap: 2px; }
 .hs-pb-lbl {
   font-size: 11px; text-transform: uppercase; letter-spacing: .14em;
-  color: rgba(240,232,213,.5); font-family: var(--sans);
+  color: rgba(223,235,236,.5); font-family: var(--sans);
 }
 .hs-pb-total {
   font-family: var(--serif); font-size: clamp(24px, 3.5vw, 36px);
   font-weight: 400; color: var(--arena); line-height: 1;
 }
-.hs-pb-avg { font-size: 12px; color: rgba(240,232,213,.6); }
+.hs-pb-avg { font-size: 12px; color: rgba(223,235,236,.6); }
 .hs-pb-right { display: flex; flex-direction: column; align-items: flex-end; gap: 7px; }
 .hs-pb-ref { display: flex; flex-direction: column; align-items: flex-end; }
-.hs-pb-ref-lbl { font-size: 11px; text-transform: uppercase; letter-spacing: .12em; color: rgba(240,232,213,.62); }
+.hs-pb-ref-lbl { font-size: 11px; text-transform: uppercase; letter-spacing: .12em; color: rgba(223,235,236,.62); }
 .hs-pb-ref-val {
-  font-size: 16px; color: rgba(240,232,213,.58);
+  font-size: 16px; color: rgba(223,235,236,.58);
   text-decoration: line-through; font-family: var(--serif);
 }
 .hs-pb-breakdown {
-  border-top: 1px solid rgba(240,232,213,.1);
+  border-top: 1px solid rgba(223,235,236,.1);
   padding-top: 12px; display: flex; flex-direction: column; gap: 5px;
 }
 .hs-pb-line {
   display: flex; justify-content: space-between;
-  font-size: 12px; color: rgba(240,232,213,.72); font-family: var(--sans);
+  font-size: 12px; color: rgba(223,235,236,.72); font-family: var(--sans);
 }
 .hs-pb-disc { color: #D42B80; }
 .hs-pb-total-line {
   font-weight: 600; color: var(--arena);
-  border-top: 1px solid rgba(240,232,213,.1);
+  border-top: 1px solid rgba(223,235,236,.1);
   padding-top: 7px; margin-top: 2px; font-size: 13px;
 }
 .hs-pb-note {
-  font-size: 12px; color: rgba(240,232,213,.62);
+  font-size: 12px; color: rgba(223,235,236,.62);
   margin: 10px 0 0; line-height: 1.5; font-family: var(--sans);
 }
 .hs-pb-total-line.is-striked { text-decoration: line-through; opacity: .45; font-weight: 400; }
 /* LS highlight on dark home-search card — override the light-bg defaults */
-.hs-price-block .price-line-ls-hl { color: rgba(240,232,213,.9); border-top: 1px solid rgba(240,232,213,.1); padding-top: 8px; margin-top: 2px; }
+.hs-price-block .price-line-ls-hl { color: rgba(223,235,236,.9); border-top: 1px solid rgba(223,235,236,.1); padding-top: 8px; margin-top: 2px; }
 .hs-price-block .price-line-ls-hl .prl-ls-val { color: #fff; }
-.hs-price-block .price-line-saving { color: rgba(240,232,213,.95); background: rgba(100,180,60,.18); }
+.hs-price-block .price-line-saving { color: rgba(223,235,236,.95); background: rgba(100,180,60,.18); }
 
 .hs-rc-unavail-note {
   font-family: var(--sans);
   font-size: 13px; font-weight: 300;
-  color: rgba(240,232,213,.5);
+  color: rgba(223,235,236,.5);
   margin: 0;
 }
 .hs-rc-unavail-note a {
-  color: rgba(240,232,213,.65);
+  color: rgba(223,235,236,.65);
   text-decoration: underline;
   text-underline-offset: 3px;
 }
@@ -10412,13 +10412,13 @@ body[data-apt="salinas"] a.apt-page-reserve-btn:hover {
 .hs-alts-hd {
   font-family: var(--serif);
   font-size: 18px;
-  color: var(--crema, #FAF6F0);
+  color: var(--crema, #F1F6F6);
   margin-bottom: 2px;
 }
 .hs-alts-sub {
   font-family: var(--sans);
   font-size: 13px;
-  color: rgba(240, 232, 213, .6);
+  color: rgba(223, 235, 236, .6);
   margin: 0 0 12px;
 }
 .hs-alts-grid {
@@ -10431,36 +10431,36 @@ body[data-apt="salinas"] a.apt-page-reserve-btn:hover {
   flex-direction: column;
   gap: 3px;
   padding: 14px 16px;
-  background: rgba(240, 232, 213, .06);
-  border: 1px solid rgba(240, 232, 213, .26);
+  background: rgba(223, 235, 236, .06);
+  border: 1px solid rgba(223, 235, 236, .26);
   border-left-width: 3px;
   border-left-color: color-mix(in srgb, var(--hs-accent, var(--sol)) 70%, white);
   border-radius: 10px 0 10px 0;
   text-decoration: none;
   transition: background .2s var(--ease-out, ease), border-color .2s, transform .2s var(--ease-out, ease);
 }
-.hs-alt-card:hover { background: rgba(240, 232, 213, .1); transform: translateY(-2px); }
+.hs-alt-card:hover { background: rgba(223, 235, 236, .1); transform: translateY(-2px); }
 .hs-alt-apt { font-family: var(--serif); font-size: 16px; color: color-mix(in srgb, var(--hs-accent, var(--sol)) 70%, white); }
-.hs-alt-dates { font-family: var(--sans); font-size: 13.5px; color: var(--arena, #F0E8D5); }
+.hs-alt-dates { font-family: var(--sans); font-size: 13.5px; color: var(--arena, #DFEBEC); }
 .hs-alt-shift {
   font-family: var(--sans);
   font-size: 11px;
   letter-spacing: .03em;
   text-transform: uppercase;
-  color: rgba(240, 232, 213, .55);
+  color: rgba(223, 235, 236, .55);
 }
 .hs-alt-price { margin-top: 6px; display: flex; align-items: baseline; gap: 7px; }
 .hs-alt-price strong { font-size: 19px; font-weight: 600; color: var(--sol-lt, #6FC4D1); }
-.hs-alt-price small { font-size: 12px; color: rgba(240, 232, 213, .6); }
+.hs-alt-price small { font-size: 12px; color: rgba(223, 235, 236, .6); }
 .hs-alt-cta { margin-top: 6px; font-family: var(--sans); font-size: 13px; font-weight: 600; color: var(--sol-lt, #6FC4D1); }
 
 /* No data fallback */
 .hs-no-data {
   font-family: var(--sans);
   font-size: 13.5px; font-weight: 300;
-  color: rgba(240,232,213,.55);
-  background: rgba(240,232,213,.04);
-  border: 1px solid rgba(240,232,213,.1);
+  color: rgba(223,235,236,.55);
+  background: rgba(223,235,236,.04);
+  border: 1px solid rgba(223,235,236,.1);
   border-radius: 10px 0 10px 0;
   padding: 20px 22px;
   line-height: 1.65;
@@ -10477,7 +10477,7 @@ body[data-apt="salinas"] a.apt-page-reserve-btn:hover {
   border: none;
   font-family: var(--sans);
   font-size: 13px; font-weight: 300;
-  color: rgba(240,232,213,.68);
+  color: rgba(223,235,236,.68);
   cursor: pointer;
   padding: 4px 0;
   letter-spacing: .04em;
@@ -10485,7 +10485,7 @@ body[data-apt="salinas"] a.apt-page-reserve-btn:hover {
   text-align: left;
   margin-top: 4px;
 }
-.hs-reset:hover { color: rgba(240,232,213,.75); }
+.hs-reset:hover { color: rgba(223,235,236,.75); }
 
 /* Trust bar */
 .hs-trust {
@@ -10499,13 +10499,13 @@ body[data-apt="salinas"] a.apt-page-reserve-btn:hover {
   font-weight: 400;
   letter-spacing: 0.12em;
   text-transform: uppercase;
-  color: rgba(240,232,213,.38);
+  color: rgba(223,235,236,.38);
   margin-top: 16px;
 }
 .hs-trust-dot {
   width: 3px; height: 3px;
   border-radius: 50%;
-  background: rgba(240,232,213,.22);
+  background: rgba(223,235,236,.22);
   flex-shrink: 0;
 }
 
@@ -10513,13 +10513,13 @@ body[data-apt="salinas"] a.apt-page-reserve-btn:hover {
 .hs-notify {
   margin-top: 60px;
   padding-top: 40px;
-  border-top: 1px solid rgba(240,232,213,.08);
+  border-top: 1px solid rgba(223,235,236,.08);
   text-align: center;
 }
 .hs-notify-text {
   font-family: var(--sans);
   font-size: 14px; font-weight: 300;
-  color: rgba(240,232,213,.5);
+  color: rgba(223,235,236,.5);
   line-height: 1.65;
   margin: 0 auto 22px;
   max-width: 520px;
@@ -10600,25 +10600,25 @@ body[data-apt="salinas"] a.apt-page-reserve-btn:hover {
 .hscal-sel-row {
   display: flex; align-items: center; gap: 16px; flex-wrap: wrap;
   margin-top: 14px; padding-top: 14px;
-  border-top: 1px solid rgba(240,232,213,.1);
+  border-top: 1px solid rgba(223,235,236,.1);
 }
 .hscal-sel-item { display: flex; flex-direction: column; gap: 2px; }
 .hscal-sel-lbl {
   font-family: var(--sans);
   font-size: 11px; font-weight: 500;
   letter-spacing: .12em; text-transform: uppercase;
-  color: rgba(240,232,213,.4);
+  color: rgba(223,235,236,.4);
 }
 .hscal-sel-item strong {
   font-family: var(--sans); font-size: 14px; font-weight: 400; color: var(--arena);
 }
 .hscal-clear {
   font-family: var(--sans); font-size: 11px; font-weight: 400;
-  letter-spacing: .08em; color: rgba(240,232,213,.4);
+  letter-spacing: .08em; color: rgba(223,235,236,.4);
   background: none; border: none; cursor: pointer; padding: 4px 8px;
   transition: color .15s; margin-left: auto;
 }
-.hscal-clear:hover { color: rgba(240,232,213,.7); }
+.hscal-clear:hover { color: rgba(223,235,236,.7); }
 
 /* Mobile */
 @media (max-width: 600px) {
@@ -10745,7 +10745,7 @@ body[data-apt="salinas"] a.apt-page-reserve-btn:hover {
 .ngp-box {
   display: flex; gap: clamp(16px, 3vw, 32px); align-items: center;
   background: linear-gradient(135deg, var(--ber, #3D1A35) 0%, var(--ber-lt, #4E2446) 100%);
-  color: var(--arena, #F0E8D5);
+  color: var(--arena, #DFEBEC);
   border-radius: 16px 0 16px 0;
   padding: clamp(22px, 4vw, 40px);
   box-shadow: 0 10px 30px rgba(42, 15, 46, .18);
@@ -10755,12 +10755,12 @@ body[data-apt="salinas"] a.apt-page-reserve-btn:hover {
 .ngp-title {
   font-family: var(--serif); font-weight: 300;
   font-size: clamp(22px, 3.4vw, 34px); line-height: 1.18;
-  color: var(--arena, #F0E8D5); margin: 0 0 12px;
+  color: var(--arena, #DFEBEC); margin: 0 0 12px;
 }
 .ngp-title em { color: var(--sol-lt, #6FC4D1); font-style: italic; }
 .ngp-body {
   font-family: var(--sans); font-size: 15px; font-weight: 300; line-height: 1.65;
-  color: rgba(240, 232, 213, .9); margin: 0 0 18px; max-width: 60ch;
+  color: rgba(223, 235, 236, .9); margin: 0 0 18px; max-width: 60ch;
 }
 .ngp-cta { display: inline-block; }
 @media (max-width: 600px) {
@@ -10778,7 +10778,7 @@ body[data-apt="salinas"] a.apt-page-reserve-btn:hover {
   font-family: var(--sans);
   font-size: 16px;
   font-weight: 300;
-  color: rgba(240,232,213,.65);
+  color: rgba(223,235,236,.65);
   line-height: 1.65;
   max-width: 560px;
   margin: 0;
@@ -10808,8 +10808,8 @@ body[data-apt="salinas"] a.apt-page-reserve-btn:hover {
   gap: 28px;
 }
 .voz-card {
-  background: rgba(240,232,213,.04);
-  border: 1px solid rgba(240,232,213,.08);
+  background: rgba(223,235,236,.04);
+  border: 1px solid rgba(223,235,236,.08);
   border-top: 3px solid var(--voz-accent, var(--sol));
   border-radius: 10px 0 10px 0;
   padding: 32px 28px 28px;
@@ -10864,7 +10864,7 @@ body[data-apt="salinas"] a.apt-page-reserve-btn:hover {
   font-size: 15px;
   font-weight: 300;
   font-style: italic;
-  color: rgba(240,232,213,.8);
+  color: rgba(223,235,236,.8);
   line-height: 1.65;
   margin: 0;
 }
@@ -10878,7 +10878,7 @@ body[data-apt="salinas"] a.apt-page-reserve-btn:hover {
   text-decoration: none;
   margin-top: auto;
   padding-top: 16px;
-  border-top: 1px solid rgba(240,232,213,.08);
+  border-top: 1px solid rgba(223,235,236,.08);
   transition: opacity .2s;
 }
 .voz-apt-link:hover { opacity: 0.7; }
@@ -11124,7 +11124,7 @@ body[data-apt="salinas"] a.apt-page-reserve-btn:hover {
   font-family: var(--serif);
   font-size: clamp(16px, 1.8vw, 20px);
   font-style: italic;
-  color: rgba(240,232,213,.7);
+  color: rgba(223,235,236,.7);
   line-height: 1.65;
   margin: 18px 0 32px;
 }
@@ -11150,7 +11150,7 @@ body[data-apt="salinas"] a.apt-page-reserve-btn:hover {
   gap: 20px;
 }
 .noticias-share-text {
-  color: rgba(240,232,213,.75);
+  color: rgba(223,235,236,.75);
   font-size: 15px;
   margin: 0;
 }
@@ -11171,13 +11171,13 @@ body[data-apt="salinas"] a.apt-page-reserve-btn:hover {
   cursor: pointer;
   transition: opacity .15s;
   text-decoration: none;
-  border: 1px solid rgba(240,232,213,.25);
+  border: 1px solid rgba(223,235,236,.25);
   background: transparent;
-  color: rgba(240,232,213,.9);
+  color: rgba(223,235,236,.9);
 }
 .noticias-share-btn:hover { opacity: .75; }
 .noticias-share-wa { border-color: var(--sol, #3AAABB); color: var(--sol, #3AAABB); }
-.noticias-share-x  { border-color: rgba(240,232,213,.4); }
+.noticias-share-x  { border-color: rgba(223,235,236,.4); }
 
 /* Responsive */
 @media (max-width: 900px) {
@@ -11216,7 +11216,7 @@ body[data-apt="salinas"] a.apt-page-reserve-btn:hover {
 .archivo-item {
   border-radius: 8px 0 8px 0;
   overflow: hidden;
-  border: 1px solid rgba(240,232,213,.1);
+  border: 1px solid rgba(223,235,236,.1);
   transition: border-color .2s;
 }
 .archivo-item.open {
@@ -11252,11 +11252,11 @@ body[data-apt="salinas"] a.apt-page-reserve-btn:hover {
 .archivo-content {
   padding: 40px 24px 48px;
   background: rgba(0,0,0,.18);
-  border-top: 1px solid rgba(240,232,213,.06);
+  border-top: 1px solid rgba(223,235,236,.06);
 }
 .archivo-content .voz-card {
   background: rgba(255,255,255,.05);
-  border-color: rgba(240,232,213,.1);
+  border-color: rgba(223,235,236,.1);
 }
 .archivo-content .voz-apt-name,
 .archivo-content .voz-apt-link { color: var(--sol-lt); }
@@ -11278,7 +11278,7 @@ body[data-apt="salinas"] a.apt-page-reserve-btn:hover {
 
 .acto {
   position: relative; z-index: 38;
-  background: var(--crema, #FAF6F0);
+  background: var(--crema, #F1F6F6);
   padding: calc(clamp(64px, 8vw, 104px) + 32px) var(--page-pad) clamp(28px, 4vw, 48px);
 }
 .acto-inner {
@@ -11318,7 +11318,7 @@ body[data-apt="salinas"] a.apt-page-reserve-btn:hover {
 /* El origen comparte maquetación con la intro de Nosotros y va justo debajo:
    sin este cambio de fondo se leen como un único muro de texto. */
 .nos-intro.pq-origen {
-  background: linear-gradient(180deg, var(--crema, #FAF6F0) 0%, #F5EFE3 100%);
+  background: linear-gradient(180deg, var(--crema, #F1F6F6) 0%, #E8F0F0 100%);
 }
 .nos-intro.pq-origen .nos-intro-head .eyebrow { color: var(--sol-text, #176E80); }
 
@@ -11472,7 +11472,7 @@ html:has(.apt-page-hero) {
 
 /* ── Secciones secundarias — stacking completo (todos los inner pages) ──────
    Estas secciones no estaban en el sistema de overlap y exponían el fondo
-   crema del body (≈ #FAF6F0) en las esquinas redondeadas de secciones oscuras.
+   crema del body (≈ #F1F6F6) en las esquinas redondeadas de secciones oscuras.
    Se añaden border-radius + margin-bottom + z-index + padding-top compensado. */
 
 /* Secciones sin .section-* class — necesitan border-radius explícito */
@@ -11858,7 +11858,7 @@ footer,
   margin: 0 auto 28px;
   padding: 22px 28px;
   max-width: 60ch;
-  background: rgba(255, 251, 244, 0.55);
+  background: rgba(248, 251, 251, 0.55);
   border: 1px solid rgba(61, 26, 53, 0.10);
   border-radius: 8px 0 8px 0;
   display: grid;
@@ -12710,7 +12710,7 @@ footer,
   padding: 14px 16px;
   border: 1px solid rgba(0,0,0,0.10);
   border-radius: 8px 0 8px 0;
-  background: rgba(255, 251, 244, 0.6);
+  background: rgba(248, 251, 251, 0.6);
 }
 .ag-team-name {
   display: block;
@@ -13612,7 +13612,7 @@ footer,
   padding: 12px 16px;
   border: 1px solid rgba(61, 26, 53, 0.15);
   border-radius: 8px 0 8px 0;
-  background: var(--crema, #FAF6F0);
+  background: var(--crema, #F1F6F6);
   color: var(--ink);
   font-family: var(--sans);
   font-size: 16px;
@@ -13677,7 +13677,7 @@ footer,
   padding: 14px 16px;
   border: 1px solid rgba(0,0,0,0.10);
   border-radius: 8px 0 8px 0;
-  background: rgba(255, 251, 244, 0.6);
+  background: rgba(248, 251, 251, 0.6);
 }
 .ag-checkin-mode-tag {
   display: inline-block;
@@ -13758,7 +13758,7 @@ footer,
   border: 1px solid rgba(0,0,0,0.08);
   border-radius: 8px 0 8px 0;
   padding: 14px 16px;
-  background: rgba(255, 251, 244, 0.6);
+  background: rgba(248, 251, 251, 0.6);
   break-inside: avoid;
 }
 .ag-dish-head {
@@ -14335,12 +14335,12 @@ footer,
 .pe-sync-btn {
   display: flex; align-items: center; gap: 5px;
   padding: 5px 10px; font-size: 11px; border-radius: 6px 0 6px 0;
-  border: 1px solid rgba(240,232,213,.25);
-  background: rgba(240,232,213,.08); color: var(--arena, #F0E8D5);
+  border: 1px solid rgba(223,235,236,.25);
+  background: rgba(223,235,236,.08); color: var(--arena, #DFEBEC);
   cursor: pointer; transition: background .15s, border-color .15s;
   text-transform: none; letter-spacing: .03em;
 }
-.pe-sync-btn:hover:not(:disabled) { background: rgba(240,232,213,.16); border-color: rgba(240,232,213,.45); }
+.pe-sync-btn:hover:not(:disabled) { background: rgba(223,235,236,.16); border-color: rgba(223,235,236,.45); }
 .pe-sync-btn:disabled { opacity: .6; cursor: not-allowed; }
 .pe-sync-btn.pe-sync-ok { border-color: rgba(100,200,100,.5); background: rgba(100,200,100,.12); color: #9de09d; }
 .pe-sync-btn.pe-sync-err { border-color: rgba(220,80,80,.5); background: rgba(220,80,80,.12); color: #f5a5a5; }
@@ -14421,10 +14421,10 @@ footer,
    especificidad de hover/active heredada del crema. */
 .pe-topbar .pe-btn-ghost {
   color: var(--crema) !important;
-  border-color: rgba(240, 232, 213, 0.42) !important;
+  border-color: rgba(223, 235, 236, 0.42) !important;
 }
 .pe-topbar .pe-btn-ghost:hover {
-  background: rgba(240, 232, 213, 0.10) !important;
+  background: rgba(223, 235, 236, 0.10) !important;
   border-color: var(--crema) !important;
   color: var(--crema) !important;
 }
@@ -15528,14 +15528,14 @@ footer,
 .ads-btn-ghost {
   background-color: transparent !important;
   background-image: none !important;
-  color: #F0E8D5 !important;
-  border: 1px solid #F0E8D5 !important;
+  color: #DFEBEC !important;
+  border: 1px solid #DFEBEC !important;
   box-shadow: none;
 }
 .ads-btn-ghost:hover {
-  background-color: rgba(240,232,213,.16) !important;
-  color: #F0E8D5 !important;
-  border-color: #F0E8D5 !important;
+  background-color: rgba(223,235,236,.16) !important;
+  color: #DFEBEC !important;
+  border-color: #DFEBEC !important;
 }
 
 @media (min-width: 1100px) {
@@ -15585,7 +15585,7 @@ footer,
      widget se vea sobre CUALQUIER fondo, incluido ber-dk eggplant
      animado del contact-cta / footer / section-dark.                */
   background: #4E2446 !important;            /* ber-lt literal — distintos de bg page */
-  color: #F0E8D5 !important;                 /* arena literal */
+  color: #DFEBEC !important;                 /* arena literal */
   border-radius: 12px 0 12px 0;
   border: 1px solid rgba(255, 255, 255, 0.18);   /* borde blanco tenue siempre visible */
   border-left: 3px solid var(--apt-accent, #3AAABB);
@@ -15723,8 +15723,8 @@ footer,
 .widget-cta:active { transform: translateY(0) scale(.98); }
 .widget-cta-ghost {
   background-color: transparent !important;
-  color: #F0E8D5 !important;
-  border: 1px solid #F0E8D5 !important;
+  color: #DFEBEC !important;
+  border: 1px solid #DFEBEC !important;
   font-weight: 700 !important;
   box-shadow: none;
 }
@@ -15750,7 +15750,7 @@ footer,
   display: flex;
   align-items: center;
   gap: 8px;
-  color: var(--crema, #F0E8D5);
+  color: var(--crema, #DFEBEC);
 }
 .wthr-fact strong {
   font-family: var(--serif);
@@ -15766,9 +15766,9 @@ footer,
 }
 .wthr-moon-lbl { text-transform: capitalize; }
 .widget-cta-ghost:hover {
-  background-color: rgba(240,232,213,.16) !important;
-  color: #F0E8D5 !important;
-  border-color: #F0E8D5 !important;
+  background-color: rgba(223,235,236,.16) !important;
+  color: #DFEBEC !important;
+  border-color: #DFEBEC !important;
 }
 .wthr-links {
   display: flex;
@@ -15810,7 +15810,7 @@ body:has(.sound-toggle) .wthr-fab-wrap {
   display: grid; place-items: center;
   background-color: #3AAABB; color: #2A0F2E; border: 0; cursor: pointer;
   box-shadow:
-    0 0 0 3px rgba(240, 232, 213, 0.92),
+    0 0 0 3px rgba(223, 235, 236, 0.92),
     0 0 0 5px rgba(42, 15, 46, 0.55),
     0 10px 30px rgba(58, 170, 187, 0.55),
     0 4px 14px rgba(42, 15, 46, 0.45);
@@ -15822,7 +15822,7 @@ body:has(.sound-toggle) .wthr-fab-wrap {
   .wthr-fab:hover {
     background-color: #6FC4D1; transform: scale(1.08);
     box-shadow:
-      0 0 0 3px rgba(240, 232, 213, 1),
+      0 0 0 3px rgba(223, 235, 236, 1),
       0 0 0 5px rgba(42, 15, 46, 0.65),
       0 14px 36px rgba(58, 170, 187, 0.70),
       0 6px 18px rgba(42, 15, 46, 0.55);
@@ -15955,7 +15955,7 @@ body:has(.sound-toggle) .wthr-fab-wrap {
   align-items: center;
   gap: 10px;
   padding: 10px 0;
-  border-top: 1px solid rgba(240,232,213,.14);
+  border-top: 1px solid rgba(223,235,236,.14);
 }
 .wc-person:first-of-type { border-top: none; }
 .wc-avatar {
@@ -15965,8 +15965,8 @@ body:has(.sound-toggle) .wthr-fab-wrap {
   border-radius: 50%;
   overflow: hidden;
   flex-shrink: 0;
-  background: #F0E8D5;
-  border: 1.5px solid rgba(240,232,213,.5);
+  background: #DFEBEC;
+  border: 1.5px solid rgba(223,235,236,.5);
 }
 .wc-avatar-img {
   position: absolute; inset: 0;
@@ -15981,7 +15981,7 @@ body:has(.sound-toggle) .wthr-fab-wrap {
   display: block;
   font-weight: 600;
   font-size: 13px;
-  color: var(--crema, #F0E8D5);
+  color: var(--crema, #DFEBEC);
   margin-bottom: 4px;
 }
 .wc-actions { display: flex; gap: 6px; flex-wrap: wrap; }
@@ -15999,10 +15999,10 @@ body:has(.sound-toggle) .wthr-fab-wrap {
 .wc-btn:hover { background: #6FC4D1; transform: translateY(-1px); }
 .wc-btn-tel {
   background: transparent;
-  color: var(--crema, #F0E8D5);
-  border-color: rgba(240,232,213,.3);
+  color: var(--crema, #DFEBEC);
+  border-color: rgba(223,235,236,.3);
 }
-.wc-btn-tel:hover { background: rgba(240,232,213,.12); border-color: rgba(240,232,213,.5); }
+.wc-btn-tel:hover { background: rgba(223,235,236,.12); border-color: rgba(223,235,236,.5); }
 
 /* Overrides por apt — botón ventajas toma color del Hestía.
    Selector reforzado con [data-apt=…] sobre el body O sobre .apt-main
@@ -16010,7 +16010,7 @@ body:has(.sound-toggle) .wthr-fab-wrap {
 [data-apt="mar"] .widget-cta,
 body[data-apt="mar"] .widget-cta {
   background-color: #6B7A3A !important;
-  color: #F0E8D5 !important;
+  color: #DFEBEC !important;
   box-shadow: 0 4px 14px rgba(107,122,58,.35) !important;
 }
 [data-apt="mar"] .widget-cta:hover,
@@ -16116,7 +16116,7 @@ body[data-apt="salinas"] .widget-cta:hover {
 .widget-recs .sf-nav {
   margin-top: 9px;
   padding-top: 8px;
-  border-top: 1px solid rgba(240,232,213,.12);
+  border-top: 1px solid rgba(223,235,236,.12);
 }
 .widget-recs .tr-map {
   font-family: var(--sans);
@@ -16225,7 +16225,7 @@ body[data-apt="salinas"] .widget-cta:hover {
   width: 22px; height: 22px;
   background: transparent;
   color: #2A0F2E;
-  --hi-tint: rgba(240, 232, 213, .9);         /* sello crema sobre el sol del widget */
+  --hi-tint: rgba(223, 235, 236, .9);         /* sello crema sobre el sol del widget */
   font-size: 14px;
   font-weight: 700;
   line-height: 1;
@@ -16268,7 +16268,7 @@ body[data-apt="salinas"] .widget-cta:hover {
 [data-apt="thalassa"] { --wm-acc: #B86A3C; --wm-dk: #8A4A24; }
 [data-apt="salinas"]  { --wm-acc: #D4A84A; --wm-dk: #7A5E1A; }
 :is([data-apt="mar"],[data-apt="thalassa"],[data-apt="salinas"]) .widget-mini {
-  background-color: #FAF6F0 !important;
+  background-color: #F1F6F6 !important;
   background-image: none !important;
   color: var(--wm-dk) !important;
   border: 1px solid var(--wm-acc) !important;
@@ -16554,7 +16554,7 @@ body.apt-bar-shown .widget-stack {
   align-items: center;
   justify-content: center;
   border: 1px solid rgba(61,26,53,.18);
-  background: #FFFBF4;
+  background: #F8FBFB;
   color: var(--ber-dk);
   border-radius: 4px 0 4px 0;
   font-size: 14px;
@@ -16720,26 +16720,26 @@ body.apt-bar-shown .widget-stack {
 
 /* ── Overrides de contraste: price-engine sobre fondo oscuro (apt-avail) ── */
 .apt-avail .price-label-sm {
-  color: rgba(240,232,213,.55);
+  color: rgba(223,235,236,.55);
   opacity: 1;
 }
-.apt-avail .price-direct-total { color: var(--crema, #FAF6F0); }
-.apt-avail .price-avg-night { color: rgba(240,232,213,.60); opacity: 1; }
-.apt-avail .price-guarantee-sub { color: rgba(240,232,213,.60); }
-.home-search .price-guarantee-sub { color: rgba(240,232,213,.65); }
+.apt-avail .price-direct-total { color: var(--crema, #F1F6F6); }
+.apt-avail .price-avg-night { color: rgba(223,235,236,.60); opacity: 1; }
+.apt-avail .price-guarantee-sub { color: rgba(223,235,236,.60); }
+.home-search .price-guarantee-sub { color: rgba(223,235,236,.65); }
 .apt-avail .price-breakdown {
-  border-top-color: rgba(240,232,213,.12);
+  border-top-color: rgba(223,235,236,.12);
 }
-.apt-avail .price-line { color: rgba(240,232,213,.65); }
+.apt-avail .price-line { color: rgba(223,235,236,.65); }
 .apt-avail .price-line-disc { color: #F899CC; }
 .apt-avail .price-line-total {
-  color: var(--crema, #FAF6F0);
-  border-top-color: rgba(240,232,213,.15);
+  color: var(--crema, #F1F6F6);
+  border-top-color: rgba(223,235,236,.15);
 }
-.apt-avail .price-note { color: rgba(240,232,213,.45); opacity: 1; }
+.apt-avail .price-note { color: rgba(223,235,236,.45); opacity: 1; }
 .apt-avail .price-engine {
   background: rgba(255,255,255,.04);
-  border-color: rgba(240,232,213,.10);
+  border-color: rgba(223,235,236,.10);
 }
 
 /* ── FIX CONTRASTE: .req-panel es SIEMPRE una tarjeta clara (--crema), aunque
@@ -16840,9 +16840,9 @@ body.apt-bar-shown .widget-stack {
   gap: 6px;
   padding: 10px 18px;
   border-radius: 12px 0 12px 0;
-  border: 1.5px solid rgba(240, 232, 213, 0.45);   /* +contraste vs antes 0.22 */
+  border: 1.5px solid rgba(223, 235, 236, 0.45);   /* +contraste vs antes 0.22 */
   background: transparent;
-  color: #F0E8D5;                                  /* arena sólido literal */
+  color: #DFEBEC;                                  /* arena sólido literal */
   font-family: var(--sans);
   font-size: 12px;
   letter-spacing: .1em;
@@ -16855,8 +16855,8 @@ body.apt-bar-shown .widget-stack {
   .opiniones-tab { min-height: 44px; }
 }
 .opiniones-tab:hover {
-  background: rgba(240, 232, 213, 0.10);
-  border-color: rgba(240, 232, 213, 0.75);
+  background: rgba(223, 235, 236, 0.10);
+  border-color: rgba(223, 235, 236, 0.75);
   color: #FFFFFF;
 }
 .opiniones-tab.is-active {
@@ -16890,7 +16890,7 @@ body.apt-bar-shown .widget-stack {
 .opi-resumen {
   display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between;
   gap: 18px 32px; margin: 26px 0 30px; padding: 20px 24px;
-  background: var(--arena, #F0E8D5); border-radius: 10px 0 10px 0;
+  background: var(--arena, #DFEBEC); border-radius: 10px 0 10px 0;
 }
 .opi-res-datos { display: flex; flex-wrap: wrap; gap: 14px 34px; }
 .opi-res-datos div b {
@@ -16922,7 +16922,7 @@ body.apt-bar-shown .widget-stack {
 .opi-cat-bars {
   margin: 0 0 30px;
   padding: 24px 26px;
-  background: var(--arena, #F0E8D5);
+  background: var(--arena, #DFEBEC);
   border-radius: 10px 0 10px 0;
 }
 .opi-cat-title {
@@ -17388,17 +17388,17 @@ a.cta-wa-btn::before,
   margin: 0 auto 28px;
   font-size: 15px;
   line-height: 1.6;
-  color: rgba(240,232,213,.82);
+  color: rgba(223,235,236,.82);
 }
 .osc-btn { display: inline-flex; }
 .osc-gmaps {
   margin-top: 28px;
   padding-top: 24px;
-  border-top: 1px solid rgba(240,232,213,.14);
+  border-top: 1px solid rgba(223,235,236,.14);
 }
 .osc-gmaps-lbl {
   font-size: 13px;
-  color: rgba(240,232,213,.7);
+  color: rgba(223,235,236,.7);
   margin: 0 0 14px;
 }
 .osc-gmaps-links {
@@ -17418,13 +17418,13 @@ a.cta-wa-btn::before,
   font-weight: 600;
   color: var(--arena);
   text-decoration: none;
-  background: rgba(240,232,213,.08);
-  border: 1px solid rgba(240,232,213,.2);
+  background: rgba(223,235,236,.08);
+  border: 1px solid rgba(223,235,236,.2);
   transition: background .18s, border-color .18s;
 }
 .osc-gmaps-link .apt-dot { margin-right: 0; }
 .osc-gmaps-link:hover {
-  background: rgba(240,232,213,.14);
+  background: rgba(223,235,236,.14);
   border-color: var(--sol);
 }
 .osc-gmaps-g {
@@ -17625,7 +17625,7 @@ a.cta-wa-btn::before,
   position: absolute;
   inset: 0;
   border-radius: inherit;
-  box-shadow: inset 0 0 0 1px rgba(240, 232, 213, 0.18);
+  box-shadow: inset 0 0 0 1px rgba(223, 235, 236, 0.18);
   pointer-events: none;
 }
 .pe-tab-badge {
@@ -18199,7 +18199,7 @@ a:focus-visible,
   padding: 10px 14px;
   border: 1px solid color-mix(in srgb, var(--ber) 12%, transparent);
   border-radius: 12px 0 12px 0;
-  background: color-mix(in srgb, var(--crema, #FAF6F0) 97%, transparent);
+  background: color-mix(in srgb, var(--crema, #F1F6F6) 97%, transparent);
   -webkit-backdrop-filter: blur(10px);
   backdrop-filter: blur(10px);
   box-shadow: 0 12px 26px -20px rgba(42, 15, 46, .55);
@@ -18454,8 +18454,8 @@ button.rf-ps:focus-visible { outline: 2px solid var(--sol); outline-offset: 4px;
     color: #2A0F2E;
     background: linear-gradient(
       180deg,
-      color-mix(in srgb, #D4A84A 8%, #FAF6F0),
-      #FAF6F0
+      color-mix(in srgb, #D4A84A 8%, #F1F6F6),
+      #F1F6F6
     );
     font-family: 'Hanken Grotesk', sans-serif;
   }
@@ -18788,7 +18788,7 @@ button.rf-ps:focus-visible { outline: 2px solid var(--sol); outline-offset: 4px;
     position: relative;
     padding: 4mm 4mm 4mm 14mm !important;
     margin-bottom: 3mm !important;
-    background: color-mix(in srgb, var(--apt-accent-dk, var(--vs-dk)) 4%, #FAF6F0) !important;
+    background: color-mix(in srgb, var(--apt-accent-dk, var(--vs-dk)) 4%, #F1F6F6) !important;
     border: 0 !important;
     border-bottom: 0 !important;
     border-radius: 10px 0 10px 0 !important;
@@ -18931,13 +18931,13 @@ button.rf-ps:focus-visible { outline: 2px solid var(--sol); outline-offset: 4px;
       content: "GUÍA DEL HOGAR";
       font-family: 'Hanken Grotesk', sans-serif;
       font-size: 8pt; letter-spacing: 0.32em;
-      color: #E4D9BE; padding-bottom: 4mm;
+      color: #CCDEE1; padding-bottom: 4mm;
     }
     @bottom-left {
       content: "www.hestiayourhome.com";
       font-family: 'Hanken Grotesk', sans-serif;
       font-size: 8pt; letter-spacing: 0.18em;
-      color: #E4D9BE; padding-top: 4mm;
+      color: #CCDEE1; padding-top: 4mm;
     }
     @bottom-right {
       content: counter(page);
@@ -18962,13 +18962,13 @@ button.rf-ps:focus-visible { outline: 2px solid var(--sol); outline-offset: 4px;
       content: "GUÍA DEL HOGAR";
       font-family: 'Hanken Grotesk', sans-serif;
       font-size: 8pt; letter-spacing: 0.32em;
-      color: #E4D9BE; padding-bottom: 4mm;
+      color: #CCDEE1; padding-bottom: 4mm;
     }
     @bottom-left {
       content: "www.hestiayourhome.com";
       font-family: 'Hanken Grotesk', sans-serif;
       font-size: 8pt; letter-spacing: 0.18em;
-      color: #E4D9BE; padding-top: 4mm;
+      color: #CCDEE1; padding-top: 4mm;
     }
     @bottom-right {
       content: counter(page);
@@ -19699,7 +19699,7 @@ img[src$="photo-alex.jpg"]:not(.avatar-img):hover {
 }
 .pe-cf-banner-sub {
   font-size: 12px;
-  color: rgba(240,232,213,0.55);
+  color: rgba(223,235,236,0.55);
   margin-top: 2px;
 }
 .pe-cf-banner-btn { white-space: nowrap; }
@@ -19771,7 +19771,7 @@ img[src$="photo-alex.jpg"]:not(.avatar-img):hover {
    AptMiniReviews — 3 citas de huéspedes antes del calendario
    ============================================================ */
 .apt-mini-reviews {
-  background: color-mix(in srgb, var(--apt-accent) 4%, var(--crema, #FAF6F0));
+  background: color-mix(in srgb, var(--apt-accent) 4%, var(--crema, #F1F6F6));
   border-top: 1px solid color-mix(in srgb, var(--apt-accent) 12%, transparent);
   border-bottom: 1px solid color-mix(in srgb, var(--apt-accent) 12%, transparent);
   padding: 52px 32px;
@@ -20220,7 +20220,7 @@ img[src$="photo-alex.jpg"]:not(.avatar-img):hover {
   padding: 8px 0;
 }
 .testimonial-card {
-  background: linear-gradient(180deg, #FFFCF6 0%, var(--crema) 100%) !important;
+  background: linear-gradient(180deg, #FAFBFB 0%, var(--crema) 100%) !important;
   border: 1px solid color-mix(in srgb, var(--apt-color, var(--ber)) 12%, transparent) !important;
   border-radius: 14px 0 14px 0 !important;
   padding: 0 !important;
@@ -20237,7 +20237,7 @@ img[src$="photo-alex.jpg"]:not(.avatar-img):hover {
   .testimonial-card:hover {
     transform: translateY(-3px);
     box-shadow: 0 4px 8px rgba(42,15,46,0.06), 0 16px 40px rgba(42,15,46,0.14);
-    background: #FFFCF6 !important;
+    background: #FAFBFB !important;
   }
 }
 .testimonial-stripe {
@@ -20337,7 +20337,7 @@ img[src$="photo-alex.jpg"]:not(.avatar-img):hover {
   font-family: var(--sans);
   font-size: 12px;
   letter-spacing: 0.1em;
-  color: rgba(240,232,213,0.55);
+  color: rgba(223,235,236,0.55);
   min-width: 80px;
   text-align: center;
 }
@@ -20387,7 +20387,7 @@ img[src$="photo-alex.jpg"]:not(.avatar-img):hover {
    acento sutil del color del Hestía (no fondo tintado)
    ============================================================ */
 .rf-summary-card {
-  background: linear-gradient(150deg, color-mix(in srgb, var(--apt-accent) 9%, #FFFCF6) 0%, #FFFCF6 65%);
+  background: linear-gradient(150deg, color-mix(in srgb, var(--apt-accent) 9%, #FAFBFB) 0%, #FAFBFB 65%);
   border: 1px solid rgba(61,26,53,0.10);
   border-left: 5px solid var(--apt-accent);
   border-radius: 14px 0 14px 0;
@@ -20717,7 +20717,7 @@ img[src$="photo-alex.jpg"]:not(.avatar-img):hover {
   border-radius: 8px 0 8px 0;
   padding: 12px 18px 18px;
   margin: 0 0 18px;
-  background: rgba(255, 251, 244, 0.4);
+  background: rgba(248, 251, 251, 0.4);
 }
 .ct-form legend {
   padding: 0 8px;
@@ -20800,7 +20800,7 @@ img[src$="photo-alex.jpg"]:not(.avatar-img):hover {
 @media (max-width: 760px) { .rv-stats, .rv-stats-canal { grid-template-columns: repeat(2, 1fr); } }
 
 .rv-stat {
-  background: rgba(255, 251, 244, 0.6);
+  background: rgba(248, 251, 251, 0.6);
   border: 1px solid rgba(61,26,53,.10);
   border-left: 4px solid var(--vt);
   padding: 8px 12px;
@@ -20876,7 +20876,7 @@ img[src$="photo-alex.jpg"]:not(.avatar-img):hover {
   letter-spacing: 0.04em;
   text-transform: uppercase;
   color: var(--ber-dk);
-  background: rgba(255, 251, 244, 0.6);
+  background: rgba(248, 251, 251, 0.6);
 }
 .rv-table td.num, .rv-table th.num { text-align: right; font-variant-numeric: tabular-nums; }
 .rv-table tr.rv-past { opacity: 0.55; }
@@ -20897,7 +20897,7 @@ img[src$="photo-alex.jpg"]:not(.avatar-img):hover {
   grid-template-columns: 64px 1fr;
   gap: 12px;
   padding: 10px 14px;
-  background: rgba(255, 251, 244, 0.6);
+  background: rgba(248, 251, 251, 0.6);
   border: 1px solid rgba(61,26,53,.08);
   border-left: 4px solid var(--vt);
   border-radius: 6px 0 6px 0;
@@ -21062,7 +21062,7 @@ img[src$="photo-alex.jpg"]:not(.avatar-img):hover {
   padding: 14px 16px;
   border: 1px solid rgba(61, 26, 53, 0.12);
   border-radius: 10px 0 10px 0;
-  background: rgba(255, 251, 244, 0.75);
+  background: rgba(248, 251, 251, 0.75);
   color: var(--ink);
   transition: border-color var(--dur-base, 220ms) var(--ease-out, ease), box-shadow var(--dur-base, 220ms) var(--ease-out, ease);
 }
@@ -21306,7 +21306,7 @@ img[src$="photo-alex.jpg"]:not(.avatar-img):hover {
   margin-top: 18px;
 }
 .ag-cal-month-acc {
-  background: rgba(255, 251, 244, 0.5);
+  background: rgba(248, 251, 251, 0.5);
   border: 1px solid rgba(61,26,53,.10);
   border-radius: 6px 0 6px 0;
   overflow: hidden;
@@ -21317,7 +21317,7 @@ img[src$="photo-alex.jpg"]:not(.avatar-img):hover {
   border-color: color-mix(in srgb, var(--sol) 40%, transparent);
 }
 .ag-cal-month-acc[open] {
-  background: rgba(255, 251, 244, 0.75);
+  background: rgba(248, 251, 251, 0.75);
 }
 .ag-cal-month-acc.is-current[open] {
   background: rgba(232, 194, 107, 0.12);
@@ -21386,7 +21386,7 @@ img[src$="photo-alex.jpg"]:not(.avatar-img):hover {
   margin-top: 14px;
 }
 .ag-cal-card {
-  background: rgba(255, 251, 244, 0.7);
+  background: rgba(248, 251, 251, 0.7);
   border: 1px solid rgba(61,26,53,.10);
   border-left: 3px solid var(--vt);
   border-radius: 0 6px 6px 0;
@@ -21477,7 +21477,7 @@ img[src$="photo-alex.jpg"]:not(.avatar-img):hover {
   align-items: center;
   gap: 10px;
   width: 100%;
-  background: rgba(255,251,244,.7);
+  background: rgba(248,251,251,.7);
   border: none;
   padding: 10px 14px;
   cursor: pointer;
@@ -21529,7 +21529,7 @@ img[src$="photo-alex.jpg"]:not(.avatar-img):hover {
   margin-top: 24px;
 }
 .ag-gem-card {
-  background: color-mix(in srgb, var(--apt-accent) 4%, var(--crema, #F5F0E8));
+  background: color-mix(in srgb, var(--apt-accent) 4%, var(--crema, #EBF2F2));
   border: 1px solid color-mix(in srgb, var(--apt-accent) 14%, transparent);
   border-radius: 12px 0 12px 0;
   padding: 16px 14px 12px;
@@ -21866,7 +21866,7 @@ img[src$="photo-alex.jpg"]:not(.avatar-img):hover {
    por año de salida (criterio contable real). */
 .rv-yearly {
   margin: 14px 0 18px;
-  background: linear-gradient(180deg, rgba(58,170,187,0.04) 0%, rgba(255,251,244,0) 100%);
+  background: linear-gradient(180deg, rgba(58,170,187,0.04) 0%, rgba(248,251,251,0) 100%);
   border: 1px solid rgba(61,26,53,.08);
   border-radius: 10px 0 10px 0;
   padding: 14px 16px 4px;
@@ -21921,7 +21921,7 @@ img[src$="photo-alex.jpg"]:not(.avatar-img):hover {
 .rv-agg-badge { display: inline-block; margin-left: 6px; padding: 1px 6px; font-size: 10px; font-weight: 600; letter-spacing: .06em; text-transform: uppercase; background: rgba(58,170,187,.12); color: var(--sol-text, #176E80); border-radius: 4px 0 4px 0; }
 .rv-yearly-neg { color: #8a4a24; }
 .rv-kpi {
-  background: rgba(255, 251, 244, 0.7);
+  background: rgba(248, 251, 251, 0.7);
   border: 1px solid rgba(61,26,53,.10);
   border-left: 3px solid var(--sol);
   border-radius: 4px 0 4px 0;
@@ -21959,7 +21959,7 @@ img[src$="photo-alex.jpg"]:not(.avatar-img):hover {
 }
 @media (max-width: 800px) { .rv-dashboard-2 { grid-template-columns: 1fr; } }
 .rv-block {
-  background: rgba(255, 251, 244, 0.5);
+  background: rgba(248, 251, 251, 0.5);
   border: 1px solid rgba(61,26,53,.08);
   border-radius: 4px 0 4px 0;
   padding: 10px 14px;
@@ -22114,7 +22114,7 @@ img[src$="photo-alex.jpg"]:not(.avatar-img):hover {
 .rv-ocup-hd h3 { margin: 0; font-size: 15px; color: var(--ber-dk); display: flex; align-items: center; gap: 6px; }
 .rv-ocup-nav { display: flex; align-items: center; gap: 6px; margin-left: auto; }
 .rv-ocup-nav button {
-  border: 1px solid rgba(61,26,53,.16); background: var(--crema, #F0E8D5); color: var(--ink);
+  border: 1px solid rgba(61,26,53,.16); background: var(--crema, #DFEBEC); color: var(--ink);
   border-radius: 8px 0 8px 0; padding: 4px 11px; font-size: 14px; cursor: pointer; line-height: 1;
 }
 .rv-ocup-nav button:hover { background: rgba(61,26,53,.06); }
@@ -22136,7 +22136,7 @@ img[src$="photo-alex.jpg"]:not(.avatar-img):hover {
   display: grid;
   grid-template-columns: var(--lbl) repeat(var(--n), var(--dayw));
 }
-.rv-ocup-months { border-bottom: 1px solid rgba(61,26,53,.10); background: rgba(251,247,236,.96); }
+.rv-ocup-months { border-bottom: 1px solid rgba(61,26,53,.10); background: rgba(241,246,246,.96); }
 .rv-ocup-mcell {
   padding: 6px 0; font-size: 12px; font-weight: 700; color: var(--ber-dk);
   border-left: 1px solid rgba(61,26,53,.14); white-space: nowrap;
@@ -22144,7 +22144,7 @@ img[src$="photo-alex.jpg"]:not(.avatar-img):hover {
 /* El nombre del mes queda fijo tras la columna de nombres mientras ese mes
    está a la vista; al llegar el siguiente mes, se releva. */
 .rv-ocup-mcell > span { position: sticky; left: var(--lbl); display: inline-block; padding: 0 10px; }
-.rv-ocup-axis { background: rgba(251,247,236,.96); border-bottom: 1px solid rgba(61,26,53,.12); }
+.rv-ocup-axis { background: rgba(241,246,246,.96); border-bottom: 1px solid rgba(61,26,53,.12); }
 .rv-ocup-axis .rv-ocup-d {
   font-size: 10.5px; color: var(--ink-soft); text-align: center; padding: 6px 0 5px;
   border-left: 1px solid rgba(61,26,53,.07); font-variant-numeric: tabular-nums;
@@ -22157,8 +22157,8 @@ img[src$="photo-alex.jpg"]:not(.avatar-img):hover {
 .rv-ocup-d.today { background: var(--ber-dk, #2A0F2E); color: #fff; font-weight: 700; }
 .rv-ocup-row { align-items: center; border-top: 1px solid rgba(61,26,53,.07); min-height: 46px; }
 .rv-ocup-lbl { grid-column: 1; grid-row: 1; display: flex; align-items: center; padding: 0 10px;
-  position: sticky; left: 0; z-index: 3; background: rgba(251,247,236,.97); align-self: stretch; }
-.rv-ocup-corner { grid-column: 1; position: sticky; left: 0; z-index: 4; background: rgba(251,247,236,.98); }
+  position: sticky; left: 0; z-index: 3; background: rgba(241,246,246,.97); align-self: stretch; }
+.rv-ocup-corner { grid-column: 1; position: sticky; left: 0; z-index: 4; background: rgba(241,246,246,.98); }
 .rv-ocup-cell { border-left: 1px solid rgba(61,26,53,.07); height: 100%; min-height: 46px; }
 .rv-ocup-cell.we { background: rgba(61,26,53,.03); }
 .rv-ocup-cell.today { box-shadow: inset 0 0 0 2px rgba(42,15,46,.16); }
@@ -22233,7 +22233,7 @@ img[src$="photo-alex.jpg"]:not(.avatar-img):hover {
   letter-spacing: 0.04em;
   text-transform: uppercase;
   color: var(--ber-dk);
-  background: rgba(255, 251, 244, 0.6);
+  background: rgba(248, 251, 251, 0.6);
   border-bottom: 1px solid rgba(61,26,53,.15);
   text-align: left;
   font-weight: 700;
@@ -22255,10 +22255,10 @@ img[src$="photo-alex.jpg"]:not(.avatar-img):hover {
   box-shadow: inset 4px 0 0 0 var(--apt-c, transparent);
 }
 .rv-row:hover {
-  background: color-mix(in srgb, var(--apt-c, var(--ber)) 6%, #FFFBF4);
+  background: color-mix(in srgb, var(--apt-c, var(--ber)) 6%, #F8FBFB);
 }
 .rv-row.is-selected {
-  background: color-mix(in srgb, var(--apt-c, var(--sol)) 12%, #FFFBF4);
+  background: color-mix(in srgb, var(--apt-c, var(--sol)) 12%, #F8FBFB);
   box-shadow: inset 6px 0 0 0 var(--apt-c, var(--sol));
 }
 .rv-row-past { opacity: 0.55; }
@@ -22321,7 +22321,7 @@ img[src$="photo-alex.jpg"]:not(.avatar-img):hover {
 }
 .funnel-label { color: var(--ink, #2A0F2E); font-weight: 500; }
 .funnel-bar-track {
-  height: 10px; border-radius: 6px 0 6px 0; background: var(--arena, #F0E8D5);
+  height: 10px; border-radius: 6px 0 6px 0; background: var(--arena, #DFEBEC);
   overflow: hidden;
 }
 .funnel-bar-fill {
@@ -22398,7 +22398,7 @@ img[src$="photo-alex.jpg"]:not(.avatar-img):hover {
   position: fixed;
   top: 0; right: 0; bottom: 0;
   width: min(520px, 92vw);
-  background: #FFFBF4;
+  background: #F8FBFB;
   border-left: 1px solid rgba(61,26,53,.20);
   box-shadow: -8px 0 24px rgba(42, 15, 46, 0.18);
   z-index: 999;
@@ -22415,7 +22415,7 @@ img[src$="photo-alex.jpg"]:not(.avatar-img):hover {
   justify-content: space-between;
   padding: 16px 20px;
   background: var(--apt-c, var(--ber));
-  color: #FFFBF4;
+  color: #F8FBFB;
   /* Gradiente sutil hacia berenjena para todos los apts —
      mantiene la marca incluso cuando es Thalassa (teal). */
   background-image: linear-gradient(135deg, var(--apt-c, var(--ber)) 0%, color-mix(in srgb, var(--apt-c, var(--ber)) 75%, #2A0F2E) 100%);
@@ -22425,7 +22425,7 @@ img[src$="photo-alex.jpg"]:not(.avatar-img):hover {
   font-family: var(--serif);
   font-size: 18px;
   font-weight: 600;
-  color: #FFFBF4;
+  color: #F8FBFB;
 }
 .rv-edit-eyebrow {
   font-size: 12px;
@@ -22436,8 +22436,8 @@ img[src$="photo-alex.jpg"]:not(.avatar-img):hover {
 }
 .rv-edit-close {
   background: transparent;
-  border: 1px solid rgba(255,251,244,0.4);
-  color: #FFFBF4;
+  border: 1px solid rgba(248,251,251,0.4);
+  color: #F8FBFB;
   font-size: 18px;
   width: 28px;
   height: 28px;
@@ -22445,7 +22445,7 @@ img[src$="photo-alex.jpg"]:not(.avatar-img):hover {
   cursor: pointer;
   line-height: 1;
 }
-.rv-edit-close:hover { background: rgba(255,251,244,0.15); }
+.rv-edit-close:hover { background: rgba(248,251,251,0.15); }
 
 .rv-edit-body { flex: 1; overflow-y: auto; overflow-x: hidden; padding: 16px 20px 24px; }
 .rv-edit-body fieldset {
@@ -23004,8 +23004,8 @@ img[src$="photo-alex.jpg"]:not(.avatar-img):hover {
 .lm-strip {
   background: var(--ber-dk, #1A0A1E);
   padding: clamp(14px, 2vw, 24px) var(--page-pad);
-  border-top: 1px solid rgba(240, 232, 213, 0.08);
-  border-bottom: 1px solid rgba(240, 232, 213, 0.08);
+  border-top: 1px solid rgba(223, 235, 236, 0.08);
+  border-bottom: 1px solid rgba(223, 235, 236, 0.08);
 }
 @media (prefers-reduced-motion: reduce) {
   .lm-slot, .lm-slot--in { opacity: 1 !important; transform: none !important; transition: none !important; }
@@ -23016,7 +23016,7 @@ img[src$="photo-alex.jpg"]:not(.avatar-img):hover {
 }
 .lm-eyebrow {
   margin-bottom: 12px;
-  color: rgba(240, 232, 213, 0.75);
+  color: rgba(223, 235, 236, 0.75);
   font-size: 10px;
   letter-spacing: 0.12em;
 }
@@ -23055,7 +23055,7 @@ img[src$="photo-alex.jpg"]:not(.avatar-img):hover {
   background: rgba(255, 255, 255, 0.05);
   border: 1px solid rgba(255, 255, 255, 0.08);
   border-left: 3px solid var(--lm-color, #3AAABB);
-  color: var(--cream, #F0E8D5);
+  color: var(--cream, #DFEBEC);
   text-decoration: none;
   min-width: 152px;
   transition: background .2s ease;
@@ -23065,7 +23065,7 @@ img[src$="photo-alex.jpg"]:not(.avatar-img):hover {
   font-size: 11px;
   font-weight: 700;
   letter-spacing: 0.12em;
-  color: color-mix(in srgb, var(--lm-color, #3AAABB) 50%, var(--crema, #FAF6F0));
+  color: color-mix(in srgb, var(--lm-color, #3AAABB) 50%, var(--crema, #F1F6F6));
 }
 .lm-card-dates {
   display: flex;
@@ -23082,22 +23082,22 @@ img[src$="photo-alex.jpg"]:not(.avatar-img):hover {
   letter-spacing: 0.02em;
 }
 .lm-card-ppn {
-  color: color-mix(in srgb, var(--lm-color, #3AAABB) 50%, var(--crema, #FAF6F0));
+  color: color-mix(in srgb, var(--lm-color, #3AAABB) 50%, var(--crema, #F1F6F6));
   opacity: 1;
 }
 .lm-card-orig s {
-  color: rgba(240,232,213,.40);
+  color: rgba(223,235,236,.40);
   text-decoration: line-through;
   font-style: normal;
 }
 .lm-card-discounted {
-  color: color-mix(in srgb, var(--lm-color, #3AAABB) 50%, var(--crema, #FAF6F0));
+  color: color-mix(in srgb, var(--lm-color, #3AAABB) 50%, var(--crema, #F1F6F6));
   font-weight: 600;
 }
 .lm-card-total {
   font-size: 15px;
   font-weight: 600;
-  color: color-mix(in srgb, var(--lm-color, #3AAABB) 50%, var(--crema, #FAF6F0));
+  color: color-mix(in srgb, var(--lm-color, #3AAABB) 50%, var(--crema, #F1F6F6));
   letter-spacing: 0.01em;
 }
 /* Badge "ÚLTIMA HORA" */
@@ -23151,7 +23151,7 @@ img[src$="photo-alex.jpg"]:not(.avatar-img):hover {
   display: inline-block;
   margin-top: 14px;
   font-size: 11px;
-  color: var(--cream, #F0E8D5);
+  color: var(--cream, #DFEBEC);
   opacity: 0.72;
   text-decoration: none;
   letter-spacing: 0.07em;
@@ -23185,10 +23185,10 @@ img[src$="photo-alex.jpg"]:not(.avatar-img):hover {
   flex: 1;
   min-width: 130px;
   padding: 10px 13px;
-  border: 1px solid rgba(240, 232, 213, 0.18);
+  border: 1px solid rgba(223, 235, 236, 0.18);
   border-radius: 8px 0 8px 0;
   background: rgba(255, 255, 255, 0.05);
-  color: var(--cream, #F0E8D5);
+  color: var(--cream, #DFEBEC);
   font-size: 14px;
   font-family: inherit;
 }
@@ -23891,15 +23891,15 @@ img[src$="photo-alex.jpg"]:not(.avatar-img):hover {
   display: flex;
   align-items: flex-start;
   gap: 14px;
-  background: rgba(240,232,213,.06);
-  border: 1.5px solid rgba(240,232,213,.22);
+  background: rgba(223,235,236,.06);
+  border: 1.5px solid rgba(223,235,236,.22);
   border-radius: 8px 0 8px 0;
   padding: 14px 16px;
   margin: 4px 0;
   flex-wrap: wrap;
 }
 .hs-ls-icon { font-size: 20px; flex-shrink: 0; margin-top: 1px; }
-.hs-ls-body { flex: 1; font-size: 13px; color: rgba(240,232,213,.85); line-height: 1.55; min-width: 180px; }
+.hs-ls-body { flex: 1; font-size: 13px; color: rgba(223,235,236,.85); line-height: 1.55; min-width: 180px; }
 .hs-ls-cta  {
   display: inline-flex;
   align-items: center;
@@ -24119,7 +24119,7 @@ img[src$="photo-alex.jpg"]:not(.avatar-img):hover {
   font-family: var(--display, 'Fraunces', serif);
   font-size: clamp(34px, 5.5vw, 58px);
   font-weight: 500;
-  color: var(--crema, #FAF6F0);
+  color: var(--crema, #F1F6F6);
   line-height: 1.1;
   text-shadow: 0 2px 32px rgba(80,20,100,.6);
 }
@@ -24302,17 +24302,17 @@ img[src$="photo-alex.jpg"]:not(.avatar-img):hover {
    anidada (tarjeta blanca) declara su PROPIO color oscuro, para no
    heredar claro-sobre-blanco. Nunca uses --ink/--ink-soft ni un acento
    oscuro para texto directo sobre .on-dark. */
-.on-dark { color: var(--crema, #FAF6F0); }
+.on-dark { color: var(--crema, #F1F6F6); }
 /* .btn-ghost-dark usa tinta oscura (pensado para fondos claros). Sobre una
    seccion .on-dark se volveria invisible: aqui lo forzamos a claro. */
 .on-dark .btn-ghost-dark {
-  color: var(--crema, #FAF6F0);
-  border-color: rgba(240, 232, 213, .55);
+  color: var(--crema, #F1F6F6);
+  border-color: rgba(223, 235, 236, .55);
 }
 .on-dark .btn-ghost-dark:hover {
-  background: rgba(240, 232, 213, .12);
-  color: var(--crema, #FAF6F0);
-  border-color: var(--crema, #FAF6F0);
+  background: rgba(223, 235, 236, .12);
+  color: var(--crema, #F1F6F6);
+  border-color: var(--crema, #F1F6F6);
 }
 
 .lsl-search-dark {
@@ -24328,7 +24328,7 @@ img[src$="photo-alex.jpg"]:not(.avatar-img):hover {
   pointer-events: none;
 }
 .lsl-search-dark .lsl-inner { position: relative; z-index: 1; }
-.lsl-h2--ondk { color: var(--crema, #FAF6F0) !important; }
+.lsl-h2--ondk { color: var(--crema, #F1F6F6) !important; }
 .lsl-sd-card {
   background: #fff;
   color: var(--ink, #3D1A35);
@@ -24430,15 +24430,15 @@ img[src$="photo-alex.jpg"]:not(.avatar-img):hover {
   box-shadow: 0 2px 8px rgba(42,15,46,.07);
 }
 .lsl-result--unavail {
-  background: rgba(240,232,213,.05);
-  border-color: rgba(240,232,213,.16);
+  background: rgba(223,235,236,.05);
+  border-color: rgba(223,235,236,.16);
   box-shadow: none;
 }
 .lsl-result--unavail .lsl-result-apt {
-  color: rgba(240,232,213,.72);
+  color: rgba(223,235,236,.72);
 }
 .lsl-result--unavail .lsl-result-unavail-msg {
-  color: rgba(240,232,213,.6);
+  color: rgba(223,235,236,.6);
 }
 .lsl-result-thumb {
   width: 32px; height: 32px; border-radius: 8px 0 8px 0; object-fit: cover;
@@ -24527,7 +24527,7 @@ img[src$="photo-alex.jpg"]:not(.avatar-img):hover {
     transform: translateX(-50%);
     z-index: 900;
     background: var(--sol, #3AAABB);
-    color: var(--crema, #FAF6F0);
+    color: var(--crema, #F1F6F6);
     font-family: var(--sans); font-size: 13px; font-weight: 600;
     letter-spacing: 0.14em; text-transform: uppercase;
     padding: 13px 32px;
@@ -24581,7 +24581,7 @@ img[src$="photo-alex.jpg"]:not(.avatar-img):hover {
   color: #2A0F2E;
   cursor: pointer;
   box-shadow:
-    0 0 0 3px rgba(240, 232, 213, 0.92),
+    0 0 0 3px rgba(223, 235, 236, 0.92),
     0 0 0 5px rgba(42, 15, 46, 0.55),
     0 10px 30px rgba(58, 170, 187, 0.55),
     0 4px 14px rgba(42, 15, 46, 0.45);
@@ -24596,7 +24596,7 @@ img[src$="photo-alex.jpg"]:not(.avatar-img):hover {
   .sound-toggle:hover {
     background-color: #6FC4D1; transform: scale(1.08);
     box-shadow:
-      0 0 0 3px rgba(240, 232, 213, 1),
+      0 0 0 3px rgba(223, 235, 236, 1),
       0 0 0 5px rgba(42, 15, 46, 0.65),
       0 14px 36px rgba(58, 170, 187, 0.70),
       0 6px 18px rgba(42, 15, 46, 0.55);
@@ -24675,9 +24675,9 @@ img[src$="photo-alex.jpg"]:not(.avatar-img):hover {
   font-size: 13px;
   font-weight: 600;
   letter-spacing: 0.01em;
-  color: var(--crema, #FAF6F0);
+  color: var(--crema, #F1F6F6);
   text-decoration: none;
-  border-bottom: 1px solid rgba(240, 232, 213, .4);
+  border-bottom: 1px solid rgba(223, 235, 236, .4);
   padding-bottom: 2px;
   transition: color .18s, border-color .18s;
 }
@@ -24702,7 +24702,7 @@ img[src$="photo-alex.jpg"]:not(.avatar-img):hover {
   position: relative;
   z-index: 51;
   background: var(--ber-dk, #2A0F2E);
-  border-top: 1px solid rgba(240, 232, 213, .12);
+  border-top: 1px solid rgba(223, 235, 236, .12);
   /* El hero lleva margin-bottom:-32px (efecto de solape); padding superior
      para que la cinta no quede tapada por el hero. */
   padding: 46px 0 16px;
@@ -24741,7 +24741,7 @@ img[src$="photo-alex.jpg"]:not(.avatar-img):hover {
   font-size: 13px;
   font-weight: 600;
   letter-spacing: .02em;
-  color: var(--crema, #FAF6F0);
+  color: var(--crema, #F1F6F6);
 }
 .emp-trust-check {
   flex-shrink: 0;
@@ -24931,7 +24931,7 @@ img[src$="photo-alex.jpg"]:not(.avatar-img):hover {
   text-align: center;
   font-size: 15px;
   line-height: 1.6;
-  color: rgba(240,232,213,.82);
+  color: rgba(223,235,236,.82);
 }
 .emp-sectors-list {
   max-width: 880px;
@@ -24951,14 +24951,14 @@ img[src$="photo-alex.jpg"]:not(.avatar-img):hover {
   font-weight: 500;
   letter-spacing: 0.02em;
   color: var(--crema);
-  background: rgba(240,232,213,.06);
-  border: 1px solid rgba(240,232,213,.42);
+  background: rgba(223,235,236,.06);
+  border: 1px solid rgba(223,235,236,.42);
   border-radius: 10px 0 10px 0;
   padding: 12px 20px;
   transition: background var(--dur-base, .2s) var(--ease-out, ease), border-color var(--dur-base, .2s) var(--ease-out, ease);
 }
 .emp-sector-chip:hover {
-  background: rgba(240,232,213,.12);
+  background: rgba(223,235,236,.12);
   border-color: var(--sol);
 }
 
@@ -25155,7 +25155,7 @@ img[src$="photo-alex.jpg"]:not(.avatar-img):hover {
   height: 480px;
   border-radius: 10px 0 10px 0;
   overflow: hidden;
-  background: var(--crema, #FAF6F0);
+  background: var(--crema, #F1F6F6);
 }
 @media (max-width: 640px) {
   .ag-map-leaflet { height: 340px; }
@@ -25192,7 +25192,7 @@ img[src$="photo-alex.jpg"]:not(.avatar-img):hover {
 .pe-pins-panel {
   width: 300px; flex-shrink: 0;
   display: flex; flex-direction: column;
-  background: var(--crema, #FAF6F0);
+  background: var(--crema, #F1F6F6);
   border-left: 1px solid rgba(42,15,46,.1);
   font-size: 12px;
 }
@@ -25308,13 +25308,13 @@ img[src$="photo-alex.jpg"]:not(.avatar-img):hover {
 }
 .emp-success-icon .hi, .eo-success-icon .hi { width: 52px; height: 52px; }
 .rf-sent-icon .hi { width: 44px; height: 44px; }
-.emp-trust-check { color: var(--arena, #F0E8D5); }
+.emp-trust-check { color: var(--arena, #DFEBEC); }
 .emp-trust-check .hi { width: 18px; height: 18px; }
-.apb-match .hi { --hi-tint: var(--arena-dk, #E4D9BE); }
+.apb-match .hi { --hi-tint: var(--arena-dk, #CCDEE1); }
 .emp-service-check .hi { width: 20px; height: 20px; }
-.ga-apt-star { background: none; --hi-tint: var(--ga-accent); color: var(--crema, #FAF6F0); }
+.ga-apt-star { background: none; --hi-tint: var(--ga-accent); color: var(--crema, #F1F6F6); }
 .ga-apt-star .hi { width: 22px; height: 22px; }
-.rm-dot, .oqm-dot, .asb-perks-icon, .ads-mini-star { color: rgba(240, 232, 213, .85); }
+.rm-dot, .oqm-dot, .asb-perks-icon, .ads-mini-star { color: rgba(223, 235, 236, .85); }
 
 /* Iconos propios en cabeceras del admin (h2/h3 de pestañas) */
 .pe-h-ic { vertical-align: -0.14em; margin-right: 3px; opacity: .92; }
@@ -25324,7 +25324,7 @@ img[src$="photo-alex.jpg"]:not(.avatar-img):hover {
 .indalo-wm {
   position: absolute;
   width: 360px; height: 360px;
-  color: var(--crema, #F0E8D5);
+  color: var(--crema, #DFEBEC);
   opacity: 0.05;
   pointer-events: none;
   z-index: 0;
@@ -25338,7 +25338,7 @@ img[src$="photo-alex.jpg"]:not(.avatar-img):hover {
 .footer-amuleto {
   display: flex; align-items: center; gap: 9px;
   margin-top: 16px; max-width: 230px;
-  color: rgba(240, 232, 213, 0.78);
+  color: rgba(223, 235, 236, 0.78);
 }
 .footer-amuleto .indalo-seal { color: var(--albero, #D4A84A); flex-shrink: 0; }
 .footer-amuleto span { font-size: 11.5px; line-height: 1.35; font-style: italic; }
@@ -25351,7 +25351,7 @@ img[src$="photo-alex.jpg"]:not(.avatar-img):hover {
   margin: 8px auto 48px;
   padding: 28px 24px;
   text-align: center;
-  border-bottom: 1px solid rgba(240,232,213,.14);
+  border-bottom: 1px solid rgba(223,235,236,.14);
 }
 .footer-indalo-gallery .fig-eyebrow {
   display: block;
@@ -25366,7 +25366,7 @@ img[src$="photo-alex.jpg"]:not(.avatar-img):hover {
 .footer-indalo-gallery .fig-intro {
   font-size: 13.5px;
   line-height: 1.5;
-  color: rgba(240,232,213,.72);
+  color: rgba(223,235,236,.72);
   max-width: 440px;
   margin: 0 auto 22px;
 }
@@ -25400,8 +25400,8 @@ img[src$="photo-alex.jpg"]:not(.avatar-img):hover {
 .fig-mark {
   width: 70px; height: 70px;
   border-radius: 50%;
-  background: rgba(240,232,213,.06);
-  border: 1px solid rgba(240,232,213,.16);
+  background: rgba(223,235,236,.06);
+  border: 1px solid rgba(223,235,236,.16);
   display: flex; align-items: center; justify-content: center;
   padding: 14px;
   overflow: hidden;
@@ -25409,14 +25409,14 @@ img[src$="photo-alex.jpg"]:not(.avatar-img):hover {
 }
 .fig-mark svg { width: 100%; height: 100%; border-radius: 50%; }
 .fig-card:hover .fig-mark {
-  background: rgba(240,232,213,.11);
-  border-color: rgba(240,232,213,.32);
+  background: rgba(223,235,236,.11);
+  border-color: rgba(223,235,236,.32);
   transform: translateY(-2px);
 }
 .fig-label {
   font-size: 10px;
   letter-spacing: .03em;
-  color: rgba(240,232,213,.68);
+  color: rgba(223,235,236,.68);
   text-align: center;
   white-space: nowrap;
 }
@@ -25426,7 +25426,7 @@ img[src$="photo-alex.jpg"]:not(.avatar-img):hover {
   font-family: var(--serif);
   font-style: italic;
   font-size: 12px;
-  color: rgba(240,232,213,.5);
+  color: rgba(223,235,236,.5);
 }
 @media (max-width: 560px) {
   .footer-indalo-gallery { padding: 24px 0; }
@@ -25469,11 +25469,11 @@ img[src$="photo-alex.jpg"]:not(.avatar-img):hover {
   min-height: 100vh;
   background: var(--ber-dk, #2A0F2E);
   background-image: linear-gradient(160deg, #2A0F2E 0%, #3D1A35 45%, #2A0F2E 100%);
-  color: var(--crema, #F0E8D5);
+  color: var(--crema, #DFEBEC);
   padding: 28px 16px 64px;
 }
 .reg-lang { position: absolute; top: 16px; right: 18px; display: flex; gap: 8px; align-items: center; font-size: 13px; }
-.reg-lang button { background: none; border: 0; color: rgba(240,232,213,.6); cursor: pointer; font: inherit; }
+.reg-lang button { background: none; border: 0; color: rgba(223,235,236,.6); cursor: pointer; font: inherit; }
 .reg-lang button.active { color: var(--sol-lt, #6FC4D1); font-weight: 700; }
 .reg-inner { max-width: 640px; margin: 0 auto; }
 @media (min-width: 860px) { .reg-inner { max-width: 720px; } }
@@ -25481,13 +25481,13 @@ img[src$="photo-alex.jpg"]:not(.avatar-img):hover {
 .reg-logo { width: 52px; height: 52px; display: block; }
 .reg-eyebrow { display: block; font-size: 12px; letter-spacing: .18em; text-transform: uppercase; color: var(--sol-lt, #6FC4D1); font-weight: 600; }
 .reg-title { font-family: var(--serif); font-weight: 400; font-size: clamp(24px, 5vw, 34px); margin: 6px 0 12px; color: var(--crema); }
-.reg-legal { display: flex; gap: 9px; align-items: flex-start; font-size: 13px; line-height: 1.5; color: rgba(240,232,213,.82);
+.reg-legal { display: flex; gap: 9px; align-items: flex-start; font-size: 13px; line-height: 1.5; color: rgba(223,235,236,.82);
   background: rgba(58,170,187,.10); border-radius: 10px 0 10px 0; padding: 11px 13px; margin: 0 0 22px; }
-.reg-legal-ic { color: var(--arena, #F0E8D5); flex-shrink: 0; margin-top: 1px; }
+.reg-legal-ic { color: var(--arena, #DFEBEC); flex-shrink: 0; margin-top: 1px; }
 .reg-topmsg { background: rgba(184,36,110,.16); border: 1px solid rgba(184,36,110,.5); color: #ffd7e6; border-radius: 10px 0 10px 0; padding: 10px 13px; margin: 0 0 16px; font-size: 13px; }
 
 /* Tarjeta clara sobre fondo oscuro: declara su propio color de texto oscuro */
-.reg-card { background: var(--crema, #FAF6F0); color: var(--ber-dk, #2A0F2E); border-radius: 14px 0 14px 0; padding: 16px 16px 18px; margin: 0 0 16px; box-shadow: 0 12px 34px rgba(0,0,0,.35); }
+.reg-card { background: var(--crema, #F1F6F6); color: var(--ber-dk, #2A0F2E); border-radius: 14px 0 14px 0; padding: 16px 16px 18px; margin: 0 0 16px; box-shadow: 0 12px 34px rgba(0,0,0,.35); }
 .reg-card-hdr { display: flex; align-items: center; justify-content: space-between; margin-bottom: 12px; }
 .reg-card-hdr h3 { margin: 0; font-family: var(--sans); font-size: 15px; font-weight: 700; color: var(--ber, #3D1A35); display: inline-flex; align-items: center; gap: 6px; }
 .reg-card-ic { color: var(--sol-text, #176E80); }
@@ -25526,15 +25526,15 @@ img[src$="photo-alex.jpg"]:not(.avatar-img):hover {
 .reg-err-msg { font-size: 11px; color: #B8246E; }
 .reg-sub { display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 8px; margin: 16px 0 10px; font-size: 12px; font-weight: 700; letter-spacing: .04em; text-transform: uppercase; color: var(--sol-text, #176E80); }
 .reg-copy-btn { background: rgba(58,170,187,.12); border: 0; border-radius: 999px; padding: 8px 12px; font-size: 12px; font-weight: 600; text-transform: none; letter-spacing: 0; color: var(--ber, #3D1A35); cursor: pointer; }
-.reg-add { display: inline-flex; align-items: center; gap: 7px; min-height: 46px; background: rgba(240,232,213,.10); border: 1.5px dashed rgba(240,232,213,.4); color: var(--crema); border-radius: 10px 0 10px 0; padding: 11px 16px; font: inherit; font-size: 15px; font-weight: 600; cursor: pointer; margin: 0 0 20px; }
-.reg-add:hover { background: rgba(240,232,213,.18); }
-.reg-consent { display: flex; gap: 10px; align-items: flex-start; font-size: 13px; line-height: 1.45; color: rgba(240,232,213,.9); margin: 0 0 18px; padding: 4px 0; }
+.reg-add { display: inline-flex; align-items: center; gap: 7px; min-height: 46px; background: rgba(223,235,236,.10); border: 1.5px dashed rgba(223,235,236,.4); color: var(--crema); border-radius: 10px 0 10px 0; padding: 11px 16px; font: inherit; font-size: 15px; font-weight: 600; cursor: pointer; margin: 0 0 20px; }
+.reg-add:hover { background: rgba(223,235,236,.18); }
+.reg-consent { display: flex; gap: 10px; align-items: flex-start; font-size: 13px; line-height: 1.45; color: rgba(223,235,236,.9); margin: 0 0 18px; padding: 4px 0; }
 .reg-consent input { margin-top: 2px; flex-shrink: 0; width: 22px; height: 22px; accent-color: var(--sol, #3AAABB); }
 .reg-submit { width: 100%; justify-content: center; }
 .reg-done { text-align: center; padding: 30px 10px 20px; }
 .reg-done-ic { color: var(--sol-lt, #6FC4D1); }
 .reg-done h1 { font-family: var(--serif); font-weight: 400; font-size: 28px; margin: 14px 0 8px; color: var(--crema); }
-.reg-done p { color: rgba(240,232,213,.85); line-height: 1.55; max-width: 420px; margin: 0 auto 18px; }
+.reg-done p { color: rgba(223,235,236,.85); line-height: 1.55; max-width: 420px; margin: 0 auto 18px; }
 @media (max-width: 520px) { .reg-grid { grid-template-columns: 1fr; } }
 
 /* Registro de viajeros · pestaña /p-edit */
@@ -25715,16 +25715,16 @@ img[src$="photo-alex.jpg"]:not(.avatar-img):hover {
 .hero-sol-sky::before {
   content: ''; position: absolute; inset: 0; opacity: 0; transition: opacity 1.4s ease;
   background-image:
-    radial-gradient(1px 1px at 12% 14%, rgba(240, 232, 213, .85), transparent),
+    radial-gradient(1px 1px at 12% 14%, rgba(223, 235, 236, .85), transparent),
     radial-gradient(1.5px 1.5px at 27% 8%, rgba(111, 196, 209, .8), transparent),
-    radial-gradient(1px 1px at 41% 22%, rgba(240, 232, 213, .6), transparent),
-    radial-gradient(1px 1px at 58% 11%, rgba(240, 232, 213, .8), transparent),
-    radial-gradient(1.5px 1.5px at 72% 26%, rgba(240, 232, 213, .7), transparent),
+    radial-gradient(1px 1px at 41% 22%, rgba(223, 235, 236, .6), transparent),
+    radial-gradient(1px 1px at 58% 11%, rgba(223, 235, 236, .8), transparent),
+    radial-gradient(1.5px 1.5px at 72% 26%, rgba(223, 235, 236, .7), transparent),
     radial-gradient(1px 1px at 86% 9%, rgba(111, 196, 209, .7), transparent),
-    radial-gradient(1px 1px at 93% 31%, rgba(240, 232, 213, .6), transparent),
-    radial-gradient(1px 1px at 6% 36%, rgba(240, 232, 213, .6), transparent),
-    radial-gradient(1px 1px at 34% 40%, rgba(240, 232, 213, .5), transparent),
-    radial-gradient(1px 1px at 64% 44%, rgba(240, 232, 213, .5), transparent);
+    radial-gradient(1px 1px at 93% 31%, rgba(223, 235, 236, .6), transparent),
+    radial-gradient(1px 1px at 6% 36%, rgba(223, 235, 236, .6), transparent),
+    radial-gradient(1px 1px at 34% 40%, rgba(223, 235, 236, .5), transparent),
+    radial-gradient(1px 1px at 64% 44%, rgba(223, 235, 236, .5), transparent);
   -webkit-mask-image: linear-gradient(180deg, #000 0, #000 50%, transparent 85%);
   mask-image: linear-gradient(180deg, #000 0, #000 50%, transparent 85%);
   animation: sol-twinkle 7s ease-in-out infinite alternate;
@@ -25741,39 +25741,39 @@ img[src$="photo-alex.jpg"]:not(.avatar-img):hover {
 .sol-chip {
   appearance: none; display: inline-flex; align-items: center; gap: 12px; text-align: left;
   padding: 9px 16px 9px 12px; cursor: pointer;
-  color: var(--crema, #FAF6F0);
+  color: var(--crema, #F1F6F6);
   background: rgba(31, 10, 34, .62); -webkit-backdrop-filter: blur(10px); backdrop-filter: blur(10px);
-  border: 1px solid rgba(240, 232, 213, .28); border-radius: 10px 0 10px 0;
+  border: 1px solid rgba(223, 235, 236, .28); border-radius: 10px 0 10px 0;
   font-family: var(--sans); transition: background .2s ease, border-color .2s ease;
 }
-.sol-chip:hover { background: rgba(31, 10, 34, .78); border-color: rgba(240, 232, 213, .5); }
+.sol-chip:hover { background: rgba(31, 10, 34, .78); border-color: rgba(223, 235, 236, .5); }
 .sol-chip:focus-visible, .sol-range:focus-visible, .sol-back:focus-visible { outline: 2px solid var(--sol-lt, #6FC4D1); outline-offset: 3px; }
-.sol-chip-ic { --hi-tint: var(--sol-lt, #6FC4D1); color: var(--crema, #FAF6F0); flex-shrink: 0; }
+.sol-chip-ic { --hi-tint: var(--sol-lt, #6FC4D1); color: var(--crema, #F1F6F6); flex-shrink: 0; }
 .sol-chip-txt { display: flex; flex-direction: column; gap: 2px; line-height: 1.25; }
 .sol-chip-txt strong { font-size: 13px; font-weight: 600; letter-spacing: .03em; }
-.sol-chip-txt > span { font-size: 12px; font-weight: 300; color: rgba(240, 232, 213, .8); }
-.sol-live { min-height: 0; font-size: 12px; color: var(--crema, #FAF6F0); background: rgba(31, 10, 34, .62); border-radius: 8px 0 8px 0; padding: 0 12px; max-height: 0; overflow: hidden; transition: max-height .4s ease, padding .4s ease; }
+.sol-chip-txt > span { font-size: 12px; font-weight: 300; color: rgba(223, 235, 236, .8); }
+.sol-live { min-height: 0; font-size: 12px; color: var(--crema, #F1F6F6); background: rgba(31, 10, 34, .62); border-radius: 8px 0 8px 0; padding: 0 12px; max-height: 0; overflow: hidden; transition: max-height .4s ease, padding .4s ease; }
 .sol-live:not(:empty) { max-height: 40px; padding: 7px 12px; }
 .sol-pop {
   position: absolute; right: 0; top: calc(100% + 10px); z-index: 5;
   width: min(340px, calc(100vw - 2 * var(--page-pad, 24px)));
-  padding: 18px 18px 16px; color: var(--crema, #FAF6F0); text-align: left;
-  background: rgba(31, 10, 34, .96); border: 1px solid rgba(240, 232, 213, .2); border-radius: 14px 0 14px 0;
+  padding: 18px 18px 16px; color: var(--crema, #F1F6F6); text-align: left;
+  background: rgba(31, 10, 34, .96); border: 1px solid rgba(223, 235, 236, .2); border-radius: 14px 0 14px 0;
   box-shadow: 0 18px 50px rgba(0, 0, 0, .45); font-family: var(--sans);
 }
-.sol-pop-title { margin: 0 0 8px; font: 400 21px/1.2 var(--serif); color: var(--crema, #FAF6F0); }
-.sol-pop p { margin: 0 0 14px; font-size: 14px; line-height: 1.5; color: rgba(240, 232, 213, .85); }
+.sol-pop-title { margin: 0 0 8px; font: 400 21px/1.2 var(--serif); color: var(--crema, #F1F6F6); }
+.sol-pop p { margin: 0 0 14px; font-size: 14px; line-height: 1.5; color: rgba(223, 235, 236, .85); }
 .sol-range-l { display: block; margin-bottom: 8px; font-size: 11px; letter-spacing: .16em; text-transform: uppercase; color: var(--sol-lt, #6FC4D1); }
 .sol-range { width: 100%; accent-color: var(--sol-lt, #6FC4D1); cursor: pointer; }
-.sol-range-v { display: flex; justify-content: space-between; align-items: baseline; font-size: 12px; color: rgba(240, 232, 213, .6); }
-.sol-range-v strong { font-size: 18px; font-weight: 500; color: var(--crema, #FAF6F0); }
+.sol-range-v { display: flex; justify-content: space-between; align-items: baseline; font-size: 12px; color: rgba(223, 235, 236, .6); }
+.sol-range-v strong { font-size: 18px; font-weight: 500; color: var(--crema, #F1F6F6); }
 .sol-back {
   appearance: none; margin-top: 14px; width: 100%; padding: 10px 14px; cursor: pointer;
-  background: rgba(240, 232, 213, .1); color: var(--crema, #FAF6F0);
-  border: 1px solid rgba(240, 232, 213, .32); border-radius: 8px 0 8px 0;
+  background: rgba(223, 235, 236, .1); color: var(--crema, #F1F6F6);
+  border: 1px solid rgba(223, 235, 236, .32); border-radius: 8px 0 8px 0;
   font: 700 11px var(--sans); letter-spacing: .12em; text-transform: uppercase;
 }
-.sol-back:hover { background: rgba(240, 232, 213, .2); }
+.sol-back:hover { background: rgba(223, 235, 236, .2); }
 @media (max-width: 600px) {
   .hero-sol-wrap { left: 50%; right: auto; transform: translateX(-50%); width: max-content; max-width: calc(100vw - 2 * var(--page-pad, 16px)); }
   .sol-chip-wrap { align-items: center; }

@@ -168,10 +168,10 @@ const NosotrosTeam = ({
     y2: "1"
   }, /*#__PURE__*/React.createElement("stop", {
     offset: "0%",
-    stopColor: "rgba(240,232,213,0.25)"
+    stopColor: "rgba(223,235,236,0.25)"
   }), /*#__PURE__*/React.createElement("stop", {
     offset: "100%",
-    stopColor: "rgba(240,232,213,0)"
+    stopColor: "rgba(223,235,236,0)"
   }))), /*#__PURE__*/React.createElement("circle", {
     cx: "50",
     cy: "30",

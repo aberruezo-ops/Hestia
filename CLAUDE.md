@@ -147,6 +147,16 @@ Aplica estas medidas a TODO el código nuevo y revisa lo existente cuando lo toq
 - **Edita lo existente** antes de crear archivos nuevos. Pregunta antes de añadir un módulo si no es estrictamente necesario.
 - **Sin backwards-compat** por defecto: si renombras o eliminas algo, hazlo limpio.
 
+### Fondo de la web · «sal y mar» (regla siempre)
+
+El fondo claro de la marca es **blanco azulado «sal y mar»**, no un crema cálido (el crema se leía a "web hecha por IA"). Los tokens conservan su nombre por compatibilidad, pero sus valores son estos:
+
+- `--crema` **#F1F6F6** (fondo de página y texto claro sobre oscuro) · `--arena` **#DFEBEC** · `--arena-dk` **#CCDEE1**.
+- Degradado de la cabecera de día (`--crema-alba/dawn/noon/dusk/warm`): de #EFF3F6 a #CFE3E8, todo en la familia del teal `--sol`.
+- **Nunca** reintroducir beiges, arenas ni cremas cálidos (tonos tipo #FAF6F0, #F0E8D5, #F5EFE4) en CSS, JSX, vídeos, PDFs ni gráficos. Si necesitas un tono claro nuevo, deriva uno del teal con la misma luminosidad.
+- Excepción deliberada: los fondos de aviso (`--warn-bg` #F5E8D4 y #FFF3CD) siguen cálidos para que un aviso se distinga de un fondo de página.
+- Las paredes del plano 3D son materiales del piso real y conservan su tono; el fondo de la escena sí es #E6EFF0.
+
 ### Color por Hestía · identidad (regla siempre)
 
 Cada Hestía tiene SU color y debe llevarlo **siempre que se le nombre o represente**, para que el usuario asocie el color al apartamento:
@@ -183,7 +193,7 @@ Todos los iconos de la web salen del sprite propio (`IconSprite` en `shared.jsx`
 
 - **Toda sección con fondo oscuro lleva la clase `on-dark`** (en `styles.css`: fija el color de texto por defecto en claro, `--crema`). Así, si un elemento olvida declarar su color, hereda claro (legible), no el oscuro de página.
 - **Contrapartida obligatoria**: toda superficie clara anidada (tarjeta blanca, input, píldora clara) sobre un fondo oscuro **declara su propio color de texto oscuro** (`color: var(--ink)`), para no heredar claro-sobre-blanco.
-- **Nunca** uses `--ink`, `--ink-soft` ni un acento oscuro (de marca) para texto que va directo sobre un fondo oscuro. Usa los tonos crema (`--crema`, `rgba(240,232,213,...)`).
+- **Nunca** uses `--ink`, `--ink-soft` ni un acento oscuro (de marca) para texto que va directo sobre un fondo oscuro. Usa los tonos crema (`--crema`, `rgba(223,235,236,...)`).
 - **Cubre todos los estados**, no solo el inicial: `:hover`, `:focus`, `:disabled`, vacío, cargando y "no disponible". El audit de contraste solo recorre el estado inicial de cada página, así que los estados que aparecen tras interactuar (resultados, no disponible, desplegables) no los caza: revísalos a mano.
 
 ## Tests y verificación
