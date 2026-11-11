@@ -24,7 +24,7 @@ const APT_DATA = {
     id: 'vm', num: '01', slug: 'mar', license: 'VFT/AL/01580',
     name_short: 'Mar',
     video_src: 'assets/hestia-mar.mp4',
-    video_duration: 'PT1M14S', video_upload: '2026-11-10T12:00:00+01:00',
+    video_duration: 'PT1M23S', video_upload: '2026-11-11T12:00:00+01:00',
     accent: '#6B7A3A', accent2: '#8B9A52', accent_dk: '#4A5628',
     hero_img: 'assets/apt-vm-gallery-26.jpg',
     bedroom_img: 'assets/apt-vm-gallery-26.jpg',
