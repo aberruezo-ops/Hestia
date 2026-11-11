@@ -1241,7 +1241,7 @@ const IndaloBordadoMark = () => /*#__PURE__*/React.createElement("svg", {
   width: "22",
   height: "22",
   rx: "2",
-  fill: "#EFE3C8",
+  fill: "#D2E2E5",
   opacity: "0.14"
 }), /*#__PURE__*/React.createElement("g", {
   stroke: "#B86A3C",
