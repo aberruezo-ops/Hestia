@@ -193,7 +193,7 @@ const APT_DATA = {
     id: 'vs', num: '03', slug: 'salinas', license: 'VFT/AL/07056',
     name_short: 'Salinas',
     video_src: 'assets/hestia-salinas.mp4',
-    video_duration: 'PT1M21S', video_upload: '2026-11-10T12:00:00+01:00',
+    video_duration: 'PT1M22S', video_upload: '2026-11-11T12:00:00+01:00',
     accent: '#D4A84A', accent2: '#E8C476', accent_dk: '#7A5E1A',
     hero_img: 'assets/apt-vs-gallery-33.jpg',
     bedroom_img: 'assets/apt-vs-gallery-33.jpg',
