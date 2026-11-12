@@ -86,10 +86,16 @@
 <a href="#main-content" class="skip-link">Saltar al contenido principal</a>
 <div id="root"><div class="container seo-fallback">
   <h1>Noticias & Blog · Hestía Your Home · Vera Playa, Almería</h1>
-  <p>Qué pasa en Vera, Mojácar, Garrucha y el Levante almeriense: fiestas, mercados, eventos y novedades de la zona, además de las nuestras.</p>
-  <p>Publicamos por ediciones, con lo que de verdad merece la pena de cada temporada: mercadillos semanales, fiestas patronales, temporada de playas, agenda cultural y avisos prácticos para quien viene de visita.</p>
-  <p>Vera celebra sus fiestas en septiembre y tiene mercadillo semanal. Garrucha mantiene su lonja de pescado, con subasta de la gamba roja. Mojácar concentra buena parte de la agenda cultural de la comarca.</p>
-  <p>También contamos las novedades de los tres apartamentos: mejoras, servicios nuevos y cambios de temporada.</p>
+  <p>Qué pasa en Vera, Mojácar, Garrucha, Almería y Murcia: fiestas, planes y rincones de la zona, con lo que recomendamos desde cada Hestía. Publicamos una edición cada mes.</p>
+  <h2>Edición de Noviembre 2026</h2>
+  <ul>
+    <li><a href="/noticias/2026-11/noviembre-en-vera-playa-sol-de-invierno-y-la-playa-para-ti/">Noviembre en Vera Playa: sol de invierno y la playa para ti</a>. Con 320 días de sol al año, noviembre sigue siendo un mes de salir a la calle: las máximas rondan los 20°C y las mínimas los 12°C. La playa larga, de arena fina, se recorre a pie sin prisa y casi sin gente. Es un mes de abrigo ligero, no de bufanda.</li>
+    <li><a href="/noticias/2026-11/noviembre-buen-mes-para-trabajar-desde-la-costa/">Noviembre, buen mes para trabajar desde la costa</a>. Las estancias largas de Hestía van de septiembre a junio y empiezan en 29 noches. Con fibra de 300 a 600 Mbps y una mesa de trabajo bajo petición, el invierno suave de Vera Playa convierte el teletrabajo en una rutina con sol. Mira las condiciones en la página de estancias largas.</li>
+    <li><a href="/noticias/2026-11/fical-el-festival-de-cine-de-almeria-del-13-al-22-de-noviembre/">FICAL, el Festival de Cine de Almería, del 13 al 22 de noviembre</a>. El Festival Internacional de Cine de Almería llega a su 25.ª edición con sede principal en la Plaza Bendicho, en la capital. Son diez días de proyecciones en una provincia con larga relación con el cine. Las fechas están anunciadas, pero confirma el programa en la web del festival antes de ir.</li>
+    <li><a href="/noticias/2026-11/flamencos-en-las-salinas-de-cabo-de-gata-el-invierno-es-su-temporada/">Flamencos en las Salinas de Cabo de Gata: el invierno es su temporada</a>. Las colonias de flamencos se ven en las salinas del Cabo de Gata durante todo el invierno, y algunos se quedan el año entero. Las mejores horas son el amanecer y el atardecer, cuando las aves se mueven más. Lleva prismáticos, una capa ligera y respeta los miradores señalizados.</li>
+    <li><a href="/noticias/2026-11/fiestas-del-milagro-y-romeria-de-bolnuevo-en-mazarron-del-13-al-22-de/">Fiestas del Milagro y Romería de Bolnuevo, en Mazarrón, del 13 al 22 de noviembre</a>. Mazarrón anuncia sus Fiestas del Milagro con la Romería de Bolnuevo, con entrada libre, del 13 al 22 de noviembre. Bolnuevo es también la playa de Las Gredas que te recomendamos en octubre, así que es buena excusa para volver. Confirma el programa en el ayuntamiento, las fechas y actividades pueden variar.</li>
+  </ul>
+  <p><a href="/noticias/2026-11/">Edición de Noviembre 2026 completa</a> · <a href="/noticias/">Archivo de ediciones</a> · <a href="/noticias/en/">Archive in English</a></p>
   <p>Escrito por Alex y Fran, que conocen la zona de primera mano y no copian la información de otras webs.</p>
   <nav aria-label="Hestía"><a href="/">Inicio</a> · <a href="/mar.html">Hestía Mar</a> · <a href="/thalassa.html">Hestía Thalassa</a> · <a href="/salinas.html">Hestía Salinas</a> · <a href="/reservas.html">Reservas</a> · <a href="/estancias-largas.html">Estancias largas</a> · <a href="/opiniones.html">Opiniones</a> · <a href="/nosotros.html">Nosotros</a> · <a href="/contacto.html">Contacto</a> · <a href="/guia-vera/">Extracto Guía</a></nav>
 </div></div>
@@ -132,7 +138,7 @@
     } catch (e) { console.warn('prices.json fetch failed; using fallback', e); }
 
     for (const file of COMPONENT_FILES) {
-      const res = await fetch(file + '?cv=58bdd22768');
+      const res = await fetch(file + '?cv=da1926d023');
       if (!res.ok) throw new Error(`Failed to load ${file}: ${res.status}`);
       const code = await res.text();
       // eslint-disable-next-line no-eval

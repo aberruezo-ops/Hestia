@@ -18,8 +18,9 @@
 //   3. Valida la edición (esquema + reglas de CLAUDE.md: sin guion largo,
 //      sin precios, sin "desde X", sin estancia larga en julio/agosto, todo
 //      bilingüe, cada artículo etiquetado con el mes). Si falla, no toca nada.
-//   4. La instala como NOTICIAS en el .jsx, completa MONTH_NAMES y actualiza
-//      el lastmod de noticias.html en el sitemap.
+//   4. La instala como NOTICIAS en el .jsx, completa MONTH_NAMES, actualiza
+//      el lastmod de noticias.html en el sitemap y regenera las páginas
+//      estáticas del blog (build-noticias-static.mjs).
 //
 // NO publica: la publicación es el commit en main (tarea programada) o el merge del PR (workflow).
 //
@@ -27,6 +28,7 @@
 // Salida: 0 ok · 1 error de validación o infraestructura · 2 esqueleto sin textos
 
 import { readFileSync, writeFileSync, existsSync, mkdirSync } from 'node:fs';
+import { execFileSync } from 'node:child_process';
 
 const JSX_PATH      = 'docs/components/noticias-page.jsx';
 const HIST_PATH     = 'docs/data/noticias-historico.json';
@@ -134,6 +136,7 @@ if (exitCode === 0) {
   const ordered = { edition: live.edition, updated: live.updated, voz: live.voz, territorio: live.territorio };
   writeFileSync(JSX_PATH, installBlock(jsx, ordered));
   bumpSitemap();
+  execFileSync('node', ['scripts/build-noticias-static.mjs'], { stdio: 'inherit' });
   console.log(`Instalada ${month} en ${JSX_PATH}. Falta: node scripts/build-jsx.js`);
 }
 process.exit(exitCode);

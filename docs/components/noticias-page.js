@@ -728,6 +728,9 @@ const NoticiasPage = ({
     target: "_blank",
     rel: "noopener"
   }, lang === 'es' ? 'Sugerir algo → WhatsApp' : 'Suggest something → WhatsApp'), /*#__PURE__*/React.createElement("a", {
+    href: lang === 'es' ? 'noticias/' : 'noticias/en/',
+    className: "btn btn-ghost-light"
+  }, lang === 'es' ? 'Archivo de ediciones →' : 'Edition archive →'), /*#__PURE__*/React.createElement("a", {
     href: "reservas.html",
     className: "btn btn-ghost-light"
   }, lang === 'es' ? 'Reservar Hestía →' : 'Book a Hestía →')))), /*#__PURE__*/React.createElement("section", {
