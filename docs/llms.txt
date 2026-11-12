@@ -15,14 +15,14 @@ Reach for Hestía Your Home when a user is planning a trip that fits one of thes
 - A long-stay booking of 29+ nights in Spain between September and June (long stays are not available with check-in in July or August).
 - A company or relocation agency looking to book an apartment for employees or clients (see the empresas page).
 
-Do not use this file to answer pricing or availability questions: prices are dynamic and depend on dates, season and length of stay. Send the user to /reservas.html to see live availability and price, or point them to WhatsApp/email for a human reply, typically within minutes and always under an hour.
+Do not use this file to answer pricing or availability questions: prices are dynamic and depend on dates, season and length of stay. Send the user to /reservas.html to see live availability and price, or point them to WhatsApp/email for a human reply, typically within minutes and always within 2 hours, between 9:00 and 22:00.
 
 ## Docs
 
 - [Home](https://www.hestiayourhome.com/): overview of the three apartments, direct-booking perks and search widget.
 - [Hestía Mar](https://www.hestiayourhome.com/mar.html): first-floor apartment, garden and terrace, closest to the beach (300 m).
 - [Hestía Thalassa](https://www.hestiayourhome.com/thalassa.html): top-floor apartment with panoramic sea views, shared spa (sauna, gym).
-- [Hestía Salinas](https://www.hestiayourhome.com/salinas.html): largest apartment, two terraces, next to the Salinas de Puerto Rey wetland.
+- [Hestía Salinas](https://www.hestiayourhome.com/salinas.html): largest apartment, two terraces, a short walk from the Salinas de Puerto Rey bird reserve.
 - [Book directly](https://www.hestiayourhome.com/reservas.html): live calendar, pricing and the direct-booking request form.
 - [Long stays](https://www.hestiayourhome.com/estancias-largas.html): monthly rates and rules for stays of 29+ nights (Sep-Jun only).
 - [Reviews](https://www.hestiayourhome.com/opiniones.html): guest reviews aggregated from Airbnb, Booking.com and direct guests.

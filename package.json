@@ -10,6 +10,7 @@
     "test:pricing": "node scripts/test-pricing.mjs && node scripts/price-consistency.mjs",
     "test:smoke": "node scripts/smoke-test.cjs",
     "test:contrast": "node scripts/contrast-audit.cjs",
+    "sitemap": "node scripts/sitemap-lastmod.mjs",
     "lqip": "python3 scripts/build-lqip.py",
     "pdf": "node scripts/build-pdf.mjs"
   },
