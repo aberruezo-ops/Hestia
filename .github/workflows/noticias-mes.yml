@@ -1,16 +1,15 @@
 name: Blog mensual (edición del mes siguiente)
 
-# El último día de cada mes prepara la edición del mes siguiente de
-# Noticias & Blog y abre un PR. NO publica: la publicación es el merge.
-# Ver scripts/gen-noticias-mes.mjs para el detalle (archivo del mes vigente,
-# obtención de textos, validación, instalación en el .jsx).
+# Ya NO corre solo. La edición mensual de Noticias & Blog la escribe y
+# publica el día 1 de cada mes una tarea programada de Claude Code (ver
+# CLAUDE.md, "Blog mensual"), que investiga los eventos del mes, valida con
+# scripts/gen-noticias-mes.mjs y fusiona en main.
 #
-# Secreto opcional: ANTHROPIC_API_KEY. Sin él, el PR llega con esqueleto y
-# la etiqueta "faltan textos"; con él, con la edición escrita y validada.
+# Este workflow queda como disparo manual (workflow_dispatch) para preparar
+# una edición con PR cuando haga falta. Secreto opcional: ANTHROPIC_API_KEY;
+# sin él, el PR llega con esqueleto y la etiqueta "faltan textos".
 
 on:
-  schedule:
-    - cron: '0 6 * * *'   # diario 06:00 UTC; solo actúa si mañana es día 1
   workflow_dispatch:
     inputs:
       month:

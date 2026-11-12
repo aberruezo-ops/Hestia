@@ -1,0 +1,173 @@
+{
+  "key": "2026-11",
+  "edition": {
+    "es": "Noviembre 2026",
+    "en": "November 2026"
+  },
+  "voz": [
+    {
+      "num": "01",
+      "apt": "Hestía Mar",
+      "slug": "mar.html",
+      "accent": "var(--vm)",
+      "curiosidad": {
+        "es": "Noviembre le sienta bien a la terraza esquinera de Hestía Mar. Con máximas en torno a los 20°C y la luz baja del otoño, se desayuna fuera entre palmeras, con vistas parciales al mar, y la playa, a 300–400 m, es un paseo tranquilo de cinco minutos.",
+        "en": "November suits the corner terrace at Hestía Mar. With highs around 20°C and the low autumn light, breakfast outside among the palm trees, with partial sea views, and the beach, 300–400 m away, is a five-minute walk in peace."
+      },
+      "reco": {
+        "es": "Baja a la playa a media mañana, cuando el sol ya calienta, y camina la orilla hasta donde te apetezca. Vuelve a comer a la terraza: es el mes de la chaqueta fina y del mar sin prisa.",
+        "en": "Head down to the beach mid-morning, when the sun is warm, and walk the shoreline as far as you feel like. Come back to eat on the terrace: this is the month of the light jacket and the unhurried sea."
+      }
+    },
+    {
+      "num": "02",
+      "apt": "Hestía Thalassa",
+      "slug": "thalassa.html",
+      "accent": "var(--vt)",
+      "curiosidad": {
+        "es": "Cuando las tardes refrescan, el SPA comunitario de Thalassa se vuelve el plan: piscina climatizada, jacuzzi, sauna, pediluvio, gimnasio y zona de relax. Y arriba, la terraza con el Mediterráneo de frente y, hacia el interior, el Salar de los Canos.",
+        "en": "When the evenings cool down, the shared spa at Thalassa becomes the plan: heated pool, jacuzzi, sauna, foot bath, gym and relaxation area. And upstairs, the terrace with the Mediterranean ahead and, inland, the Salar de los Canos."
+      },
+      "reco": {
+        "es": "Dedica la mañana a la costa y deja el SPA para después: sauna y jacuzzi al caer la tarde saben distinto en noviembre. Si el mediodía acompaña, las pistas de pádel y tenis comunitarias también están a mano.",
+        "en": "Spend the morning on the coast and keep the spa for later: sauna and jacuzzi at the end of the day feel different in November. If midday is mild, the shared padel and tennis courts are close by too."
+      }
+    },
+    {
+      "num": "03",
+      "apt": "Hestía Salinas",
+      "slug": "salinas.html",
+      "accent": "var(--vs-dk)",
+      "curiosidad": {
+        "es": "Noviembre es pleno invierno de estancia larga (de septiembre a junio, a partir de 29 noches) y Salinas, el más grande de los tres con 87 m², lo aprovecha: dos terrazas, grandes jardines con riachuelos, fibra de 300 a 600 Mbps y una mesa de trabajo bajo petición para teletrabajar con sol.",
+        "en": "November is deep into the long-stay season (September to June, from 29 nights) and Salinas, the largest of the three at 87 m², makes the most of it: two terraces, large gardens with streams, fibre from 300 to 600 Mbps and a work desk on request for remote work in the sun."
+      },
+      "reco": {
+        "es": "Sal temprano hacia la reserva de aves de las Salinas de Puerto Rey, a un paseo corto, con prismáticos y una capa ligera. A media mañana el sol ya templa y el paseo de vuelta por los jardines cierra la ruta.",
+        "en": "Head out early to the Salinas de Puerto Rey bird reserve, a short walk away, with binoculars and a light layer. By mid-morning the sun is warm and the walk back through the gardens closes the route."
+      }
+    }
+  ],
+  "territorio": [
+    {
+      "cat": {
+        "es": "Vera Playa & alrededores",
+        "en": "Vera Playa & surroundings"
+      },
+      "icon": "🌊",
+      "accent": "var(--sol)",
+      "articles": [
+        {
+          "months": [
+            11
+          ],
+          "tag": {
+            "es": "Playa",
+            "en": "Beach"
+          },
+          "titulo": {
+            "es": "Noviembre en Vera Playa: sol de invierno y la playa para ti",
+            "en": "November in Vera Playa: winter sun and the beach to yourself"
+          },
+          "cuerpo": {
+            "es": "Con 320 días de sol al año, noviembre sigue siendo un mes de salir a la calle: las máximas rondan los 20°C y las mínimas los 12°C. La playa larga, de arena fina, se recorre a pie sin prisa y casi sin gente. Es un mes de abrigo ligero, no de bufanda.",
+            "en": "With 320 days of sunshine a year, November is still a month for being outdoors: highs hover around 20°C and lows around 12°C. The long fine-sand beach is a walk at your own pace, almost empty. A light jacket month, not a scarf one."
+          },
+          "icon": "umbrella"
+        },
+        {
+          "months": [
+            11
+          ],
+          "tag": {
+            "es": "Teletrabajo",
+            "en": "Remote work"
+          },
+          "titulo": {
+            "es": "Noviembre, buen mes para trabajar desde la costa",
+            "en": "November, a good month to work from the coast"
+          },
+          "cuerpo": {
+            "es": "Las estancias largas de Hestía van de septiembre a junio y empiezan en 29 noches. Con fibra de 300 a 600 Mbps y una mesa de trabajo bajo petición, el invierno suave de Vera Playa convierte el teletrabajo en una rutina con sol. Mira las condiciones en la página de estancias largas.",
+            "en": "Hestía long stays run from September to June and start at 29 nights. With fibre from 300 to 600 Mbps and a work desk on request, Vera Playa's mild winter turns remote work into a routine with sunshine. Check the terms on the long stays page."
+          },
+          "icon": "coffee"
+        }
+      ]
+    },
+    {
+      "cat": {
+        "es": "Almería capital & provincia",
+        "en": "Almería city & province"
+      },
+      "icon": "🎤",
+      "accent": "var(--vm)",
+      "articles": [
+        {
+          "months": [
+            11
+          ],
+          "tag": {
+            "es": "Cine",
+            "en": "Film"
+          },
+          "titulo": {
+            "es": "FICAL, el Festival de Cine de Almería, del 13 al 22 de noviembre",
+            "en": "FICAL, the Almería Film Festival, 13 to 22 November"
+          },
+          "cuerpo": {
+            "es": "El Festival Internacional de Cine de Almería llega a su 25.ª edición con sede principal en la Plaza Bendicho, en la capital. Son diez días de proyecciones en una provincia con larga relación con el cine. Las fechas están anunciadas, pero confirma el programa en la web del festival antes de ir.",
+            "en": "The Almería International Film Festival reaches its 25th edition with its main venue at Plaza Bendicho, in the capital. Ten days of screenings in a province with a long relationship with cinema. Dates are announced, but check the programme on the festival website before you go."
+          },
+          "icon": "ticket"
+        },
+        {
+          "months": [
+            11
+          ],
+          "tag": {
+            "es": "Naturaleza",
+            "en": "Nature"
+          },
+          "titulo": {
+            "es": "Flamencos en las Salinas de Cabo de Gata: el invierno es su temporada",
+            "en": "Flamingos at the Cabo de Gata salt flats: winter is their season"
+          },
+          "cuerpo": {
+            "es": "Las colonias de flamencos se ven en las salinas del Cabo de Gata durante todo el invierno, y algunos se quedan el año entero. Las mejores horas son el amanecer y el atardecer, cuando las aves se mueven más. Lleva prismáticos, una capa ligera y respeta los miradores señalizados.",
+            "en": "Flamingo colonies can be seen on the Cabo de Gata salt flats throughout winter, and some stay all year. The best hours are sunrise and sunset, when the birds are most active. Bring binoculars, a light layer and stay at the marked viewpoints."
+          },
+          "icon": "camera"
+        }
+      ]
+    },
+    {
+      "cat": {
+        "es": "Murcia",
+        "en": "Murcia"
+      },
+      "icon": "⛵",
+      "accent": "var(--vs-dk)",
+      "articles": [
+        {
+          "months": [
+            11
+          ],
+          "tag": {
+            "es": "Fiestas",
+            "en": "Festival"
+          },
+          "titulo": {
+            "es": "Fiestas del Milagro y Romería de Bolnuevo, en Mazarrón, del 13 al 22 de noviembre",
+            "en": "Fiestas del Milagro and Bolnuevo Pilgrimage, in Mazarrón, 13 to 22 November"
+          },
+          "cuerpo": {
+            "es": "Mazarrón anuncia sus Fiestas del Milagro con la Romería de Bolnuevo, con entrada libre, del 13 al 22 de noviembre. Bolnuevo es también la playa de Las Gredas que te recomendamos en octubre, así que es buena excusa para volver. Confirma el programa en el ayuntamiento, las fechas y actividades pueden variar.",
+            "en": "Mazarrón announces its Fiestas del Milagro with the Bolnuevo Pilgrimage, free to attend, from 13 to 22 November. Bolnuevo is also home to the Las Gredas beach we recommended in October, so it is a good excuse to return. Check the programme with the town hall, as dates and activities may change."
+          },
+          "icon": "spark"
+        }
+      ]
+    }
+  ]
+}

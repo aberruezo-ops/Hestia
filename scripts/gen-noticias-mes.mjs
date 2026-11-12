@@ -1,7 +1,9 @@
 // gen-noticias-mes.mjs
 //
-// Agente mensual del blog (Noticias & Blog). Corre el último día de cada mes
-// (workflow noticias-mes.yml) y deja lista la edición del mes siguiente:
+// Agente mensual del blog (Noticias & Blog). La tarea programada del día 1
+// (ver CLAUDE.md, "Blog mensual") escribe docs/data/noticias/<YYYY-MM>.json y
+// lo ejecuta para validarlo e instalarlo; el workflow noticias-mes.yml es el
+// disparo manual alternativo. Prepara la edición indicada:
 //
 //   1. Archiva la edición vigente (constante NOTICIAS de noticias-page.jsx)
 //      en docs/data/noticias-historico.json, si no está ya (idempotente).
@@ -19,7 +21,7 @@
 //   4. La instala como NOTICIAS en el .jsx, completa MONTH_NAMES y actualiza
 //      el lastmod de noticias.html en el sitemap.
 //
-// NO publica: el workflow abre un PR y la publicación es el merge.
+// NO publica: la publicación es el commit en main (tarea programada) o el merge del PR (workflow).
 //
 // Uso:  node scripts/gen-noticias-mes.mjs --month 2026-09 [--dry-run] [--no-llm]
 // Salida: 0 ok · 1 error de validación o infraestructura · 2 esqueleto sin textos

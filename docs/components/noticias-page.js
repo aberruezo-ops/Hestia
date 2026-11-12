@@ -7,8 +7,8 @@
 
 const NOTICIAS = {
   "edition": {
-    "es": "Octubre 2026",
-    "en": "October 2026"
+    "es": "Noviembre 2026",
+    "en": "November 2026"
   },
   "updated": {
     "es": "Actualizado cada mes por Hestía",
@@ -19,42 +19,39 @@ const NOTICIAS = {
     "apt": "Hestía Mar",
     "slug": "mar.html",
     "accent": "var(--vm)",
-    "img": "assets/apt-vm-gallery-26.jpg",
     "curiosidad": {
-      "es": "Octubre suaviza el termómetro sin apagar el verano: las máximas rondan los 25°C y el mar sigue tibio, sobre los 21-22°C, porque el Mediterráneo tarda semanas en enfriarse. Desde la terraza esquinera de Hestía Mar, el atardecer llega antes cada día (el cambio de hora es el último domingo de octubre) y las palmeras se encienden de ocre nada más ponerse el sol.",
-      "en": "October softens the thermometer without switching off summer: highs sit around 25°C and the sea stays mild, around 21-22°C, because the Mediterranean takes weeks to cool down. From Hestía Mar's corner terrace, sunset arrives earlier each day (the clocks go back the last Sunday of October) and the palm trees turn ochre the moment the sun dips."
+      "es": "Noviembre le sienta bien a la terraza esquinera de Hestía Mar. Con máximas en torno a los 20°C y la luz baja del otoño, se desayuna fuera entre palmeras, con vistas parciales al mar, y la playa, a 300–400 m, es un paseo tranquilo de cinco minutos.",
+      "en": "November suits the corner terrace at Hestía Mar. With highs around 20°C and the low autumn light, breakfast outside among the palm trees, with partial sea views, and the beach, 300–400 m away, is a five-minute walk in peace."
     },
     "reco": {
-      "es": "El paseo marítimo de Vera Playa está en su mejor momento: temperatura perfecta para caminar a cualquier hora, sin la multitud de agosto. Aprovecha para subir hasta Puerto Rey en bici o a pie, la ruta va en paralelo al mar casi todo el camino.",
-      "en": "Vera Playa's seafront promenade is at its best right now: perfect walking temperature at any hour, without August's crowds. Take the chance to go up to Puerto Rey by bike or on foot, the route runs almost the whole way alongside the sea."
+      "es": "Baja a la playa a media mañana, cuando el sol ya calienta, y camina la orilla hasta donde te apetezca. Vuelve a comer a la terraza: es el mes de la chaqueta fina y del mar sin prisa.",
+      "en": "Head down to the beach mid-morning, when the sun is warm, and walk the shoreline as far as you feel like. Come back to eat on the terrace: this is the month of the light jacket and the unhurried sea."
     }
   }, {
     "num": "02",
     "apt": "Hestía Thalassa",
     "slug": "thalassa.html",
     "accent": "var(--vt)",
-    "img": "assets/apt-vt-gallery-33.jpg",
     "curiosidad": {
-      "es": "Octubre es temporada alta de paso migratorio en el Salar de los Canos: además de los flamencos residentes, llegan otras aves limícolas que hacen escala camino de África. Desde la terraza panorámica del ático, con unos prismáticos, se puede seguir el ir y venir sobre la lámina de agua.",
-      "en": "October is peak migration season over the Salar de los Canos: alongside the resident flamingos, other wading birds stop over on their way to Africa. From the penthouse's panoramic terrace, with a pair of binoculars, you can watch them come and go over the water."
+      "es": "Cuando las tardes refrescan, el SPA comunitario de Thalassa se vuelve el plan: piscina climatizada, jacuzzi, sauna, pediluvio, gimnasio y zona de relax. Y arriba, la terraza con el Mediterráneo de frente y, hacia el interior, el Salar de los Canos.",
+      "en": "When the evenings cool down, the shared spa at Thalassa becomes the plan: heated pool, jacuzzi, sauna, foot bath, gym and relaxation area. And upstairs, the terrace with the Mediterranean ahead and, inland, the Salar de los Canos."
     },
     "reco": {
-      "es": "Con las noches ya frescas, el jacuzzi y la piscina climatizada de la urbanización dejan de ser un capricho de invierno: es el momento de reservarlos sin las colas del verano. Cierra el día con el spa cubierto, abierto en otoño.",
-      "en": "With the nights turning cool, the complex's jacuzzi and heated pool stop being a winter indulgence: this is when to use them without summer's queues. Close the day at the covered spa, open through autumn."
+      "es": "Dedica la mañana a la costa y deja el SPA para después: sauna y jacuzzi al caer la tarde saben distinto en noviembre. Si el mediodía acompaña, las pistas de pádel y tenis comunitarias también están a mano.",
+      "en": "Spend the morning on the coast and keep the spa for later: sauna and jacuzzi at the end of the day feel different in November. If midday is mild, the shared padel and tennis courts are close by too."
     }
   }, {
     "num": "03",
     "apt": "Hestía Salinas",
     "slug": "salinas.html",
     "accent": "var(--vs-dk)",
-    "img": "assets/apt-vs-gallery-33.jpg",
     "curiosidad": {
-      "es": "Octubre es pleno curso de la temporada de estancias largas (septiembre a junio), y en Salinas se nota: la fibra de 300 a 600 Mbps y la mesa de trabajo bajo petición hacen que un mes de teletrabajo con la reserva de aves de las Salinas de Puerto Rey a un paseo corto sea perfectamente viable.",
-      "en": "October is in full swing for the long-stay season (September to June), and it shows at Salinas: fibre from 300 to 600 Mbps and a work desk on request make a month of remote work with the Salinas de Puerto Rey bird reserve a short walk away entirely workable."
+      "es": "Noviembre es pleno invierno de estancia larga (de septiembre a junio, a partir de 29 noches) y Salinas, el más grande de los tres con 87 m², lo aprovecha: dos terrazas, grandes jardines con riachuelos, fibra de 300 a 600 Mbps y una mesa de trabajo bajo petición para teletrabajar con sol.",
+      "en": "November is deep into the long-stay season (September to June, from 29 nights) and Salinas, the largest of the three at 87 m², makes the most of it: two terraces, large gardens with streams, fibre from 300 to 600 Mbps and a work desk on request for remote work in the sun."
     },
     "reco": {
-      "es": "La ruta de los flamencos se recorre ahora a cualquier hora del día, sin el calor de agosto. Octubre además trae más aves de paso, así que merece la pena llevar prismáticos y caminar despacio.",
-      "en": "The flamingo trail can now be walked at any hour, without August's heat. October also brings more migratory birds passing through, so it's worth bringing binoculars and taking it slow."
+      "es": "Sal temprano hacia la reserva de aves de las Salinas de Puerto Rey, a un paseo corto, con prismáticos y una capa ligera. A media mañana el sol ya templa y el paseo de vuelta por los jardines cierra la ruta.",
+      "en": "Head out early to the Salinas de Puerto Rey bird reserve, a short walk away, with binoculars and a light layer. By mid-morning the sun is warm and the walk back through the gardens closes the route."
     }
   }],
   "territorio": [{
@@ -65,58 +62,35 @@ const NOTICIAS = {
     "icon": "🌊",
     "accent": "var(--sol)",
     "articles": [{
-      "months": [10],
+      "months": [11],
       "tag": {
         "es": "Playa",
         "en": "Beach"
       },
-      "icon": "umbrella",
       "titulo": {
-        "es": "Octubre en Vera Playa: el mar sigue templado, el ambiente se relaja",
-        "en": "October in Vera Playa: the sea stays mild, the mood relaxes"
+        "es": "Noviembre en Vera Playa: sol de invierno y la playa para ti",
+        "en": "November in Vera Playa: winter sun and the beach to yourself"
       },
       "cuerpo": {
-        "es": "Con el verano ya cerrado, Vera Playa entra en su temporada más agradecida: las máximas rondan los 25°C, el agua conserva el calor acumulado en los meses anteriores (sobre 21-22°C) y la arena vuelve a tener sitio de sobra a cualquier hora. Es el mes preferido de quienes venimos aquí a quedarnos, sin renunciar al baño.",
-        "en": "With summer wrapped up, Vera Playa enters its most rewarding season: highs sit around 25°C, the water holds onto the warmth built up over the previous months (around 21-22°C) and the sand has plenty of room again at any hour. It's the month favoured by those of us who come here to stay, without giving up the swim."
-      }
+        "es": "Con 320 días de sol al año, noviembre sigue siendo un mes de salir a la calle: las máximas rondan los 20°C y las mínimas los 12°C. La playa larga, de arena fina, se recorre a pie sin prisa y casi sin gente. Es un mes de abrigo ligero, no de bufanda.",
+        "en": "With 320 days of sunshine a year, November is still a month for being outdoors: highs hover around 20°C and lows around 12°C. The long fine-sand beach is a walk at your own pace, almost empty. A light jacket month, not a scarf one."
+      },
+      "icon": "umbrella"
     }, {
-      "months": [10],
+      "months": [11],
       "tag": {
-        "es": "Mercado",
-        "en": "Market"
+        "es": "Teletrabajo",
+        "en": "Remote work"
       },
-      "icon": "basket",
       "titulo": {
-        "es": "El mercado de abastos de Vera pueblo, en su mejor sábado de otoño",
-        "en": "Vera village's covered market, on its best autumn Saturday"
+        "es": "Noviembre, buen mes para trabajar desde la costa",
+        "en": "November, a good month to work from the coast"
       },
       "cuerpo": {
-        "es": "A 10 minutos de Hestía, el mercado de abastos de Vera pueblo tiene los sábados por la mañana su momento de más vida: fruta y verdura de la huerta almeriense, pescado de la lonja y carne de sierra, combinado con el mercadillo exterior en la misma plaza. Con las temperaturas de octubre, pasear entre puestos vuelve a ser un plan, no un trámite.",
-        "en": "10 minutes from Hestía, Vera village's covered market comes alive on Saturday mornings: fruit and vegetables from Almería's market gardens, fish from the auction and mountain-reared meat, alongside the outdoor stalls in the same square. With October's temperatures, browsing the stalls becomes a plan again, not a chore."
-      }
-    }]
-  }, {
-    "cat": {
-      "es": "Fiestas de pueblos cercanos",
-      "en": "Festivals in nearby towns"
-    },
-    "icon": "🎉",
-    "accent": "var(--vs)",
-    "articles": [{
-      "months": [10],
-      "tag": {
-        "es": "Feria",
-        "en": "Fair"
+        "es": "Las estancias largas de Hestía van de septiembre a junio y empiezan en 29 noches. Con fibra de 300 a 600 Mbps y una mesa de trabajo bajo petición, el invierno suave de Vera Playa convierte el teletrabajo en una rutina con sol. Mira las condiciones en la página de estancias largas.",
+        "en": "Hestía long stays run from September to June and start at 29 nights. With fibre from 300 to 600 Mbps and a work desk on request, Vera Playa's mild winter turns remote work into a routine with sunshine. Check the terms on the long stays page."
       },
-      "icon": "spark",
-      "titulo": {
-        "es": "Feria y Fiestas patronales de Huércal-Overa, del 16 al 20 de octubre",
-        "en": "Huércal-Overa's patron saint fair, 16 to 20 October"
-      },
-      "cuerpo": {
-        "es": "A 30 minutos de Hestía, Huércal-Overa celebra su feria mayor con caseta municipal, conciertos y procesión del 16 al 20 de octubre. Es la cabecera del valle del Almanzora y merece la visita también fuera de fiestas: casco histórico, Teatro Rapallo y buena gastronomía de comarca. Confirma el programa exacto en el ayuntamiento antes de ir, las fechas y actividades pueden variar.",
-        "en": "30 minutes from Hestía, Huércal-Overa holds its main fair with a municipal marquee, concerts and a procession from 16 to 20 October. It's the head town of the Almanzora valley and worth a visit outside fiesta season too: old town, Teatro Rapallo and good local food. Check the exact programme with the town hall before going, dates and activities can vary."
-      }
+      "icon": "coffee"
     }]
   }, {
     "cat": {
@@ -126,35 +100,35 @@ const NOTICIAS = {
     "icon": "🎤",
     "accent": "var(--vm)",
     "articles": [{
-      "months": [10],
+      "months": [11],
       "tag": {
-        "es": "Restaurante",
-        "en": "Restaurant"
+        "es": "Cine",
+        "en": "Film"
       },
-      "icon": "fork",
       "titulo": {
-        "es": "Asador La Chumbera, en Sopalmo: brasa y vistas al mar entre Mojácar y Agua Amarga",
-        "en": "Asador La Chumbera, in Sopalmo: fire-grilled food and sea views between Mojácar and Agua Amarga"
+        "es": "FICAL, el Festival de Cine de Almería, del 13 al 22 de noviembre",
+        "en": "FICAL, the Almería Film Festival, 13 to 22 November"
       },
       "cuerpo": {
-        "es": "En lo alto de Sopalmo, entre Mojácar y Agua Amarga, Asador La Chumbera cocina al fuego con una panorámica abierta sobre la costa. Cordero al horno de leña, lubina a la sal y chuletón de ternera, con el Mediterráneo de fondo. Con las tardes de octubre ya sin el calor de julio y agosto, cenar en la terraza al atardecer vuelve a ser un planazo.",
-        "en": "High above Sopalmo, between Mojácar and Agua Amarga, Asador La Chumbera cooks over fire with one of the coast's most spectacular views. Wood-oven lamb, salt-baked sea bass and mature beef chuletón, with the Mediterranean as a backdrop. With October evenings no longer carrying July and August's heat, dinner on the terrace at sunset is a great plan again."
-      }
+        "es": "El Festival Internacional de Cine de Almería llega a su 25.ª edición con sede principal en la Plaza Bendicho, en la capital. Son diez días de proyecciones en una provincia con larga relación con el cine. Las fechas están anunciadas, pero confirma el programa en la web del festival antes de ir.",
+        "en": "The Almería International Film Festival reaches its 25th edition with its main venue at Plaza Bendicho, in the capital. Ten days of screenings in a province with a long relationship with cinema. Dates are announced, but check the programme on the festival website before you go."
+      },
+      "icon": "ticket"
     }, {
-      "months": [10],
+      "months": [11],
       "tag": {
-        "es": "Mirador",
-        "en": "Viewpoint"
+        "es": "Naturaleza",
+        "en": "Nature"
       },
-      "icon": "mountain",
       "titulo": {
-        "es": "Mesa Roldán, en Carboneras: el mirador 360° que sale en Juego de Tronos",
-        "en": "Mesa Roldán, in Carboneras: the 360° lookout from Game of Thrones"
+        "es": "Flamencos en las Salinas de Cabo de Gata: el invierno es su temporada",
+        "en": "Flamingos at the Cabo de Gata salt flats: winter is their season"
       },
       "cuerpo": {
-        "es": "Un domo volcánico con faro y fortaleza, a un paseo corto desde el coche, con vistas panorámicas sobre la Playa de los Muertos y todo el litoral de Cabo de Gata. Octubre trae la temperatura ideal para subir sin sofocarse: aparca antes del último tramo y sube andando, el atardecer desde arriba es de los mejores de la provincia.",
-        "en": "A volcanic dome with a lighthouse and fortress, a short walk from the car, with panoramic views over Playa de los Muertos and the whole Cabo de Gata coastline. October brings the ideal temperature to climb up without overheating: park before the last stretch and walk up, the sunset from the top is one of the best in the province."
-      }
+        "es": "Las colonias de flamencos se ven en las salinas del Cabo de Gata durante todo el invierno, y algunos se quedan el año entero. Las mejores horas son el amanecer y el atardecer, cuando las aves se mueven más. Lleva prismáticos, una capa ligera y respeta los miradores señalizados.",
+        "en": "Flamingo colonies can be seen on the Cabo de Gata salt flats throughout winter, and some stay all year. The best hours are sunrise and sunset, when the birds are most active. Bring binoculars, a light layer and stay at the marked viewpoints."
+      },
+      "icon": "camera"
     }]
   }, {
     "cat": {
@@ -164,35 +138,20 @@ const NOTICIAS = {
     "icon": "⛵",
     "accent": "var(--vs-dk)",
     "articles": [{
-      "months": [10],
+      "months": [11],
       "tag": {
-        "es": "Restaurante",
-        "en": "Restaurant"
+        "es": "Fiestas",
+        "en": "Festival"
       },
-      "icon": "fish",
       "titulo": {
-        "es": "El Faro, en Águilas: el arroz caldero murciano a pie de puerto",
-        "en": "El Faro, in Águilas: Murcian caldero rice right by the harbour"
+        "es": "Fiestas del Milagro y Romería de Bolnuevo, en Mazarrón, del 13 al 22 de noviembre",
+        "en": "Fiestas del Milagro and Bolnuevo Pilgrimage, in Mazarrón, 13 to 22 November"
       },
       "cuerpo": {
-        "es": "A poco más de una hora de Hestía, El Faro sirve el arroz caldero murciano de referencia en Águilas, justo al lado del puerto. Salmonete y dorada a la sal completan la carta. Combínalo con un paseo por el paseo del puerto al atardecer, cuando octubre ya deja luz suave y temperatura perfecta para caminar.",
-        "en": "A little over an hour from Hestía, El Faro serves the go-to Murcian caldero rice in Águilas, right beside the harbour. Red mullet and salt-baked sea bream round out the menu. Pair it with a walk along the harbour front at sunset, when October brings soft light and perfect walking weather."
-      }
-    }, {
-      "months": [10],
-      "tag": {
-        "es": "Playa",
-        "en": "Beach"
+        "es": "Mazarrón anuncia sus Fiestas del Milagro con la Romería de Bolnuevo, con entrada libre, del 13 al 22 de noviembre. Bolnuevo es también la playa de Las Gredas que te recomendamos en octubre, así que es buena excusa para volver. Confirma el programa en el ayuntamiento, las fechas y actividades pueden variar.",
+        "en": "Mazarrón announces its Fiestas del Milagro with the Bolnuevo Pilgrimage, free to attend, from 13 to 22 November. Bolnuevo is also home to the Las Gredas beach we recommended in October, so it is a good excuse to return. Check the programme with the town hall, as dates and activities may change."
       },
-      "icon": "wave",
-      "titulo": {
-        "es": "Las Gredas de Bolnuevo, en Mazarrón: formaciones únicas con la luz de octubre",
-        "en": "Las Gredas de Bolnuevo, in Mazarrón: unique formations in October light"
-      },
-      "cuerpo": {
-        "es": "A hora y cuarto de Hestía, la Playa de Bolnuevo esconde Las Gredas: formaciones de arenisca erosionadas por el viento y el agua durante siglos, únicas en la costa murciana. Visítalas al atardecer, cuando la luz rasante saca todo el color ocre y octubre ya no aprieta con el calor del mediodía.",
-        "en": "An hour and a quarter from Hestía, Playa de Bolnuevo hides Las Gredas: sandstone formations eroded by wind and water over centuries, unique on the Murcia coast. Visit at sunset, when the low light brings out every shade of ochre and October no longer carries midday's heat."
-      }
+      "icon": "spark"
     }]
   }]
 };
