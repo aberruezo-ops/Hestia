@@ -1597,7 +1597,15 @@ const Footer = ({
     href: "estancias-largas.html"
   }, t.nav[9])), /*#__PURE__*/React.createElement("li", null, /*#__PURE__*/React.createElement("a", {
     href: "empresas.html"
-  }, lang === 'es' ? 'Para empresas' : 'For business')))), /*#__PURE__*/React.createElement("div", {
+  }, lang === 'es' ? 'Para empresas' : 'For business')), /*#__PURE__*/React.createElement("li", null, /*#__PURE__*/React.createElement("a", {
+    href: lang === 'es' ? '/vera-playa/apartamentos-con-mascotas/' : '/vera-playa/en/pet-friendly-apartments/'
+  }, lang === 'es' ? 'Con mascotas' : 'Pet-friendly')), /*#__PURE__*/React.createElement("li", null, /*#__PURE__*/React.createElement("a", {
+    href: lang === 'es' ? '/vera-playa/apartamentos-cerca-de-la-playa/' : '/vera-playa/en/apartments-near-the-beach/'
+  }, lang === 'es' ? 'Cerca de la playa' : 'Near the beach')), /*#__PURE__*/React.createElement("li", null, /*#__PURE__*/React.createElement("a", {
+    href: lang === 'es' ? '/vera-playa/apartamentos-con-piscina/' : '/vera-playa/en/apartments-with-pool/'
+  }, lang === 'es' ? 'Con piscina' : 'With a pool')), /*#__PURE__*/React.createElement("li", null, /*#__PURE__*/React.createElement("a", {
+    href: lang === 'es' ? '/vera-playa/invierno-en-vera-playa/' : '/vera-playa/en/winter-in-vera-playa/'
+  }, lang === 'es' ? 'Invierno en Vera Playa' : 'Winter in Vera Playa')))), /*#__PURE__*/React.createElement("div", {
     className: "col"
   }, /*#__PURE__*/React.createElement("h3", null, t.footer_hestia), /*#__PURE__*/React.createElement("ul", null, /*#__PURE__*/React.createElement("li", null, /*#__PURE__*/React.createElement("a", {
     href: "nosotros.html"

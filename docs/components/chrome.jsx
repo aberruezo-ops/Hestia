@@ -917,6 +917,10 @@ const Footer = ({ lang }) => {
             <li><a href="reservas.html">{t.cta_nav}</a></li>
             <li><a href="estancias-largas.html">{t.nav[9]}</a></li>
             <li><a href="empresas.html">{lang === 'es' ? 'Para empresas' : 'For business'}</a></li>
+            <li><a href={lang === 'es' ? '/vera-playa/apartamentos-con-mascotas/' : '/vera-playa/en/pet-friendly-apartments/'}>{lang === 'es' ? 'Con mascotas' : 'Pet-friendly'}</a></li>
+            <li><a href={lang === 'es' ? '/vera-playa/apartamentos-cerca-de-la-playa/' : '/vera-playa/en/apartments-near-the-beach/'}>{lang === 'es' ? 'Cerca de la playa' : 'Near the beach'}</a></li>
+            <li><a href={lang === 'es' ? '/vera-playa/apartamentos-con-piscina/' : '/vera-playa/en/apartments-with-pool/'}>{lang === 'es' ? 'Con piscina' : 'With a pool'}</a></li>
+            <li><a href={lang === 'es' ? '/vera-playa/invierno-en-vera-playa/' : '/vera-playa/en/winter-in-vera-playa/'}>{lang === 'es' ? 'Invierno en Vera Playa' : 'Winter in Vera Playa'}</a></li>
           </ul>
         </div>
         <div className="col">

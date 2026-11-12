@@ -1845,4 +1845,86 @@
   </url>
   <!-- noticias:end -->
 
+  <!-- landings:start -->
+  <url>
+    <loc>https://www.hestiayourhome.com/vera-playa/apartamentos-con-mascotas/</loc>
+    <lastmod>2026-11-12</lastmod>
+    <xhtml:link rel="alternate" hreflang="es" href="https://www.hestiayourhome.com/vera-playa/apartamentos-con-mascotas/"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://www.hestiayourhome.com/vera-playa/en/pet-friendly-apartments/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://www.hestiayourhome.com/vera-playa/apartamentos-con-mascotas/"/>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+
+  <url>
+    <loc>https://www.hestiayourhome.com/vera-playa/apartamentos-cerca-de-la-playa/</loc>
+    <lastmod>2026-11-12</lastmod>
+    <xhtml:link rel="alternate" hreflang="es" href="https://www.hestiayourhome.com/vera-playa/apartamentos-cerca-de-la-playa/"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://www.hestiayourhome.com/vera-playa/en/apartments-near-the-beach/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://www.hestiayourhome.com/vera-playa/apartamentos-cerca-de-la-playa/"/>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+
+  <url>
+    <loc>https://www.hestiayourhome.com/vera-playa/apartamentos-con-piscina/</loc>
+    <lastmod>2026-11-12</lastmod>
+    <xhtml:link rel="alternate" hreflang="es" href="https://www.hestiayourhome.com/vera-playa/apartamentos-con-piscina/"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://www.hestiayourhome.com/vera-playa/en/apartments-with-pool/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://www.hestiayourhome.com/vera-playa/apartamentos-con-piscina/"/>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+
+  <url>
+    <loc>https://www.hestiayourhome.com/vera-playa/invierno-en-vera-playa/</loc>
+    <lastmod>2026-11-12</lastmod>
+    <xhtml:link rel="alternate" hreflang="es" href="https://www.hestiayourhome.com/vera-playa/invierno-en-vera-playa/"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://www.hestiayourhome.com/vera-playa/en/winter-in-vera-playa/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://www.hestiayourhome.com/vera-playa/invierno-en-vera-playa/"/>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+
+  <url>
+    <loc>https://www.hestiayourhome.com/vera-playa/en/pet-friendly-apartments/</loc>
+    <lastmod>2026-11-12</lastmod>
+    <xhtml:link rel="alternate" hreflang="es" href="https://www.hestiayourhome.com/vera-playa/apartamentos-con-mascotas/"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://www.hestiayourhome.com/vera-playa/en/pet-friendly-apartments/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://www.hestiayourhome.com/vera-playa/apartamentos-con-mascotas/"/>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+
+  <url>
+    <loc>https://www.hestiayourhome.com/vera-playa/en/apartments-near-the-beach/</loc>
+    <lastmod>2026-11-12</lastmod>
+    <xhtml:link rel="alternate" hreflang="es" href="https://www.hestiayourhome.com/vera-playa/apartamentos-cerca-de-la-playa/"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://www.hestiayourhome.com/vera-playa/en/apartments-near-the-beach/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://www.hestiayourhome.com/vera-playa/apartamentos-cerca-de-la-playa/"/>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+
+  <url>
+    <loc>https://www.hestiayourhome.com/vera-playa/en/apartments-with-pool/</loc>
+    <lastmod>2026-11-12</lastmod>
+    <xhtml:link rel="alternate" hreflang="es" href="https://www.hestiayourhome.com/vera-playa/apartamentos-con-piscina/"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://www.hestiayourhome.com/vera-playa/en/apartments-with-pool/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://www.hestiayourhome.com/vera-playa/apartamentos-con-piscina/"/>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+
+  <url>
+    <loc>https://www.hestiayourhome.com/vera-playa/en/winter-in-vera-playa/</loc>
+    <lastmod>2026-11-12</lastmod>
+    <xhtml:link rel="alternate" hreflang="es" href="https://www.hestiayourhome.com/vera-playa/invierno-en-vera-playa/"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://www.hestiayourhome.com/vera-playa/en/winter-in-vera-playa/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://www.hestiayourhome.com/vera-playa/invierno-en-vera-playa/"/>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <!-- landings:end -->
+
 </urlset>
