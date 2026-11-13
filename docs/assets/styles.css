@@ -2570,7 +2570,7 @@ body.apt-bar-shown .cookies {
 .as-rating small { font-weight: 400; opacity: .75; }
 .as-avail { background: rgba(241,246,246,.94); color: var(--ink); }
 .as-avail-dot { width: 7px; height: 7px; border-radius: 50%; background: var(--ok); box-shadow: 0 0 0 3px color-mix(in srgb, var(--ok) 22%, transparent); }
-.as-body { display: flex; flex-direction: column; flex: 1; padding: 36px 22px 22px; --hoja-c: var(--as-accent); --hoja-x: 22px; --hoja-y: 15px; }
+.as-body { display: flex; flex-direction: column; flex: 1; padding: 46px 22px 34px; --ola-c: var(--as-accent); }
 .as-head { display: flex; align-items: baseline; justify-content: space-between; gap: 12px; }
 .as-name { margin: 0; font-family: var(--serif); font-size: clamp(26px, 2.2vw, 32px); font-weight: 400; line-height: 1.05; color: var(--as-ink); }
 .as-name-small { display: block; font-family: var(--sans); font-size: 11px; letter-spacing: .22em; text-transform: uppercase; color: var(--ink-soft); margin-bottom: 4px; }
@@ -3144,13 +3144,12 @@ body.apt-bar-shown .cookies {
     scroll-snap-align: start;
     background: var(--ber-dk);
     border-radius: 20px 0 20px 0;
-    padding: 40px 18px 24px;
+    padding: 46px 18px 24px;
     color: var(--crema);
-    --hoja-x: 18px; --hoja-y: 15px;
   }
-  .cc-card.cc-vm { --hoja-c: var(--vm); }
-  .cc-card.cc-vt { --hoja-c: var(--vt); }
-  .cc-card.cc-vs { --hoja-c: var(--vs); }
+  .cc-card.cc-vm { --ola-c: var(--vm); }
+  .cc-card.cc-vt { --ola-c: var(--vt); }
+  .cc-card.cc-vs { --ola-c: var(--vs); }
   .cc-card-head {
     display: flex; flex-direction: column; gap: 6px;
     margin-bottom: 18px; padding-bottom: 14px;
@@ -3554,10 +3553,10 @@ body.apt-bar-shown .cookies {
 }
 .rating-card {
   background: var(--crema);
-  padding: 40px 32px;
+  padding: 46px 32px 40px;
   border-radius: 10px 0 10px 0;
   text-align: left;
-  --hoja-c: var(--ber); --hoja-x: 32px;
+  --ola-c: var(--ber);
   transition: transform var(--dur-slow, .4s) var(--ease-out), box-shadow var(--dur-slow, .4s) var(--ease-out);
   transform: translateZ(0);
   will-change: transform;
@@ -4290,9 +4289,9 @@ footer .footer-brand .addr {
   max-width: 820px; margin: 32px auto 0;
   background: var(--crema);
   border: 1px solid rgba(42,15,46,.1);
-  --hoja-c: var(--req-accent, var(--sol)); --hoja-x: 32px;
+  --ola-c: var(--req-accent, var(--sol));
   border-radius: 10px 0 10px 0;
-  padding: 32px 32px 28px;
+  padding: 46px 32px 28px;
   box-shadow: 0 8px 48px rgba(42,15,46,.18);
   animation: req-in .35s cubic-bezier(.22,.68,0,1.2) both;
 }
@@ -6588,11 +6587,11 @@ body[data-apt="salinas"] a.apt-page-reserve-btn:hover {
 @media (max-width: 900px) { .apt-day-grid { grid-template-columns: 1fr; } }
 .apt-day-card {
   position: relative;
-  padding: 22px 22px 24px;
+  padding: 46px 22px 24px;
   background: #fff;
   border-radius: 4px 0 4px 0;
   border: 1px solid rgba(61,26,53,.08);
-  --hoja-c: var(--apt-accent); --hoja-x: 22px;
+  --ola-c: var(--apt-accent);
   display: flex;
   flex-direction: column;
   gap: 10px;
@@ -7272,8 +7271,8 @@ body[data-apt="salinas"] a.apt-page-reserve-btn:hover {
 .contacto-card {
   background: var(--crema);
   border-radius: 10px 0 10px 0;
-  padding: 40px 36px;
-  --hoja-c: var(--card-accent, var(--sol)); --hoja-x: 36px;
+  padding: 46px 36px 40px;
+  --ola-c: var(--card-accent, var(--sol));
   box-shadow: 0 8px 40px rgba(61,26,53,.07);
   display: flex;
   flex-direction: column;
@@ -9555,8 +9554,8 @@ body[data-apt="salinas"] a.apt-page-reserve-btn:hover {
 .reservas-person-card {
   background: var(--crema);
   border-radius: 10px 0 10px 0;
-  padding: 28px 24px;
-  --hoja-c: var(--card-accent, var(--sol)); --hoja-x: 24px;
+  padding: 46px 24px 28px;
+  --ola-c: var(--card-accent, var(--sol));
   box-shadow: 0 6px 28px rgba(61,26,53,.07);
   display: flex;
   flex-direction: column;
@@ -10810,9 +10809,9 @@ body[data-apt="salinas"] a.apt-page-reserve-btn:hover {
 .voz-card {
   background: rgba(223,235,236,.04);
   border: 1px solid rgba(223,235,236,.08);
-  --hoja-c: var(--voz-accent, var(--sol)); --hoja-x: 28px;
+  --ola-c: var(--voz-accent, var(--sol));
   border-radius: 10px 0 10px 0;
-  padding: 32px 28px 28px;
+  padding: 46px 28px 28px;
   display: flex;
   flex-direction: column;
   gap: 22px;
@@ -11046,8 +11045,8 @@ body[data-apt="salinas"] a.apt-page-reserve-btn:hover {
   align-items: start;
 }
 .noticias-mes-col {
-  padding-top: 34px;
-  --hoja-c: var(--ber); --hoja-x: 0px; --hoja-y: 8px;
+  padding-top: 48px;
+  --ola-c: var(--ber);
 }
 .noticias-mes-head {
   display: flex;
@@ -20956,8 +20955,8 @@ img[src$="photo-alex.jpg"]:not(.avatar-img):hover {
    la paleta del guide. */
 .ag-ave-curiosity {
   margin: 16px 0 6px;
-  padding: 36px 20px 18px;
-  --hoja-c: var(--vt2, #3AAABB); --hoja-x: 20px; --hoja-y: 13px;
+  padding: 46px 20px 18px;
+  --ola-c: var(--vt2, #3AAABB);
   background:
     linear-gradient(135deg,
       color-mix(in srgb, var(--vt2, #3AAABB) 14%, transparent),
@@ -24851,9 +24850,9 @@ img[src$="photo-alex.jpg"]:not(.avatar-img):hover {
   background: #fff;
   color: var(--ink);
   border: 1px solid rgba(42,15,46,.08);
-  --hoja-c: var(--sol); --hoja-x: 22px;
+  --ola-c: var(--sol);
   border-radius: 12px 0 12px 0;
-  padding: 24px 22px;
+  padding: 46px 22px 24px;
 }
 .emp-perk-icon { font-size: 26px; display: block; margin-bottom: 12px; }
 .emp-perk-t {
@@ -25810,37 +25809,58 @@ img[src$="photo-alex.jpg"]:not(.avatar-img):hover {
 }
 
 /* ============================================================
-   HOJA DE CASA · marca de tarjeta propia
-   La esquina asimétrica de la marca (10px 0 10px 0) llevada al límite
-   (100% 0 100% 0) es una hoja: la hoja de olivo / cresta de ola del
-   monograma. Gramática "Sello": la placa de color de la Hestía va
-   desplazada 3 px detrás de un contorno fino en color de texto, fuera
-   de registro. Sustituye al filo de color sobre las tarjetas (border-top
-   de 2 a 3 px), que no se debe volver a usar.
-   Cada tarjeta fija --hoja-c (color) y, si hace falta, --hoja-x/--hoja-y.
+   HORIZONTE · marca de tarjeta propia
+   Cuatro líneas finas de oleaje por el borde superior, que se
+   desvanecen hacia la izquierda: el mar de fondo del Levante en el
+   color de cada Hestía. Sustituye al filo de color sobre las tarjetas
+   (border-top de 2 a 3 px), que no se debe volver a usar.
+   Cada tarjeta fija --ola-c (color). La forma es una máscara SVG
+   (tres variantes que alternan entre hermanas para que no se repita);
+   se generan con scripts/lib/ola-mask.mjs.
+   En las tarjetas grandes de apartamento (.as-body) dos olas más
+   avanzan despacio al pie y suben un poco al pasar el ratón.
    ============================================================ */
+:root {
+  --ola-m1: url("data:image/svg+xml;utf8,%3Csvg%20xmlns%3D%27http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%27%20viewBox%3D%270%200%20420%2044%27%20preserveAspectRatio%3D%27none%27%3E%3Cdefs%3E%3ClinearGradient%20id%3D%27f%27%20gradientUnits%3D%27userSpaceOnUse%27%20x1%3D%270%27%20y1%3D%270%27%20x2%3D%27420%27%20y2%3D%270%27%3E%3Cstop%20offset%3D%27.06%27%20stop-color%3D%27%23fff%27%20stop-opacity%3D%270%27%2F%3E%3Cstop%20offset%3D%27.72%27%20stop-color%3D%27%23fff%27%2F%3E%3C%2FlinearGradient%3E%3C%2Fdefs%3E%3Cpath%20d%3D%27M0%209.4L5%2010.0L10%2010.6L15%2011.1L20%2011.5L25%2011.8L30%2011.9L35%2012.0L40%2011.9L45%2011.7L50%2011.4L55%2011.1L60%2010.8L65%2010.6L70%2010.4L75%2010.3L80%2010.2L85%2010.3L90%2010.4L95%2010.6L100%2010.8L105%2011.0L110%2011.2L115%2011.2L120%2011.2L125%2011.1L130%2010.8L135%2010.5L140%2010.0L145%209.4L150%208.8L155%208.1L160%207.5L165%206.9L170%206.4L175%206.0L180%205.7L185%205.6L190%205.6L195%205.7L200%205.9L205%206.3L210%206.6L215%207.0L220%207.4L225%207.7L230%207.9L235%208.0L240%208.1L245%208.1L250%208.0L255%207.9L260%207.7L265%207.6L270%207.5L275%207.5L280%207.6L285%207.8L290%208.2L295%208.6L300%209.1L305%209.7L310%2010.3L315%2011.0L320%2011.5L325%2012.0L330%2012.4L335%2012.7L340%2012.8L345%2012.7L350%2012.6L355%2012.3L360%2011.9L365%2011.5L370%2011.0L375%2010.5L380%2010.1L385%209.8L390%209.5L395%209.4L400%209.3L405%209.3L410%209.4L415%209.5L420%209.6%27%20stroke%3D%27url(%23f)%27%20stroke-width%3D%271%27%20fill%3D%27none%27%20stroke-linecap%3D%27round%27%20opacity%3D%270.95%27%2F%3E%3Cpath%20d%3D%27M0%2020.7L5%2021.0L10%2021.3L15%2021.4L20%2021.3L25%2021.1L30%2020.8L35%2020.4L40%2019.9L45%2019.4L50%2018.9L55%2018.5L60%2018.1L65%2017.8L70%2017.5L75%2017.4L80%2017.4L85%2017.5L90%2017.6L95%2017.7L100%2017.7L105%2017.8L110%2017.7L115%2017.6L120%2017.4L125%2017.1L130%2016.7L135%2016.2L140%2015.7L145%2015.1L150%2014.6L155%2014.2L160%2013.9L165%2013.7L170%2013.6L175%2013.7L180%2013.9L185%2014.3L190%2014.7L195%2015.3L200%2015.8L205%2016.4L210%2017.0L215%2017.4L220%2017.8L225%2018.1L230%2018.3L235%2018.4L240%2018.4L245%2018.3L250%2018.2L255%2018.1L260%2018.0L265%2018.0L270%2018.0L275%2018.1L280%2018.4L285%2018.7L290%2019.0L295%2019.5L300%2019.9L305%2020.3L310%2020.7L315%2021.0L320%2021.2L325%2021.2L330%2021.1L335%2020.8L340%2020.5L345%2020.0L350%2019.4L355%2018.8L360%2018.1L365%2017.5L370%2017.0L375%2016.5L380%2016.2L385%2015.9L390%2015.8L395%2015.8L400%2015.9L405%2016.0L410%2016.2L415%2016.3L420%2016.4%27%20stroke%3D%27url(%23f)%27%20stroke-width%3D%271.4%27%20fill%3D%27none%27%20stroke-linecap%3D%27round%27%20opacity%3D%270.8%27%2F%3E%3Cpath%20d%3D%27M0%2027.2L5%2027.6L10%2028.1L15%2028.6L20%2029.0L25%2029.4L30%2029.7L35%2029.8L40%2029.8L45%2029.6L50%2029.4L55%2028.9L60%2028.4L65%2027.9L70%2027.2L75%2026.6L80%2026.1L85%2025.6L90%2025.2L95%2024.9L100%2024.7L105%2024.7L110%2024.7L115%2024.8L120%2024.9L125%2025.0L130%2025.1L135%2025.2L140%2025.2L145%2025.1L150%2024.9L155%2024.6L160%2024.3L165%2023.9L170%2023.5L175%2023.1L180%2022.8L185%2022.6L190%2022.5L195%2022.5L200%2022.7L205%2023.0L210%2023.4L215%2024.0L220%2024.6L225%2025.2L230%2025.9L235%2026.5L240%2027.0L245%2027.5L250%2027.8L255%2028.0L260%2028.1L265%2028.1L270%2028.0L275%2027.8L280%2027.6L285%2027.5L290%2027.3L295%2027.2L300%2027.2L305%2027.3L310%2027.4L315%2027.7L320%2027.9L325%2028.3L330%2028.5L335%2028.8L340%2029.0L345%2029.1L350%2029.0L355%2028.8L360%2028.5L365%2028.1L370%2027.6L375%2026.9L380%2026.3L385%2025.6L390%2025.0L395%2024.4L400%2023.9L405%2023.5L410%2023.3L415%2023.2L420%2023.2%27%20stroke%3D%27url(%23f)%27%20stroke-width%3D%271%27%20fill%3D%27none%27%20stroke-linecap%3D%27round%27%20opacity%3D%270.6%27%2F%3E%3Cpath%20d%3D%27M0%2035.6L5%2035.7L10%2035.6L15%2035.5L20%2035.4L25%2035.3L30%2035.2L35%2035.2L40%2035.2L45%2035.4L50%2035.6L55%2035.9L60%2036.3L65%2036.7L70%2037.1L75%2037.5L80%2037.8L85%2038.0L90%2038.1L95%2038.0L100%2037.8L105%2037.5L110%2037.1L115%2036.5L120%2035.9L125%2035.2L130%2034.6L135%2034.0L140%2033.5L145%2033.1L150%2032.8L155%2032.6L160%2032.5L165%2032.6L170%2032.7L175%2032.8L180%2033.0L185%2033.2L190%2033.3L195%2033.3L200%2033.3L205%2033.2L210%2033.0L215%2032.7L220%2032.4L225%2032.1L230%2031.8L235%2031.6L240%2031.4L245%2031.3L250%2031.4L255%2031.6L260%2032.0L265%2032.4L270%2033.0L275%2033.6L280%2034.3L285%2034.9L290%2035.6L295%2036.1L300%2036.6L305%2036.9L310%2037.1L315%2037.2L320%2037.1L325%2037.0L330%2036.8L335%2036.5L340%2036.3L345%2036.1L350%2035.9L355%2035.8L360%2035.8L365%2035.9L370%2036.0L375%2036.2L380%2036.5L385%2036.7L390%2036.9L395%2037.0L400%2037.1L405%2037.0L410%2036.8L415%2036.5L420%2036.0%27%20stroke%3D%27url(%23f)%27%20stroke-width%3D%271%27%20fill%3D%27none%27%20stroke-linecap%3D%27round%27%20opacity%3D%270.4%27%2F%3E%3C%2Fsvg%3E");
+  --ola-m2: url("data:image/svg+xml;utf8,%3Csvg%20xmlns%3D%27http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%27%20viewBox%3D%270%200%20420%2044%27%20preserveAspectRatio%3D%27none%27%3E%3Cdefs%3E%3ClinearGradient%20id%3D%27f%27%20gradientUnits%3D%27userSpaceOnUse%27%20x1%3D%270%27%20y1%3D%270%27%20x2%3D%27420%27%20y2%3D%270%27%3E%3Cstop%20offset%3D%27.06%27%20stop-color%3D%27%23fff%27%20stop-opacity%3D%270%27%2F%3E%3Cstop%20offset%3D%27.72%27%20stop-color%3D%27%23fff%27%2F%3E%3C%2FlinearGradient%3E%3C%2Fdefs%3E%3Cpath%20d%3D%27M0%2010.7L5%2011.3L10%2011.7L15%2011.9L20%2012.1L25%2012.1L30%2012.0L35%2011.8L40%2011.5L45%2011.2L50%2010.9L55%2010.6L60%2010.4L65%2010.3L70%2010.2L75%2010.2L80%2010.3L85%2010.5L90%2010.7L95%2010.8L100%2011.0L105%2011.1L110%2011.0L115%2010.9L120%2010.7L125%2010.3L130%209.9L135%209.3L140%208.7L145%208.0L150%207.4L155%206.8L160%206.3L165%205.9L170%205.6L175%205.5L180%205.5L185%205.6L190%205.9L195%206.2L200%206.6L205%207.0L210%207.4L215%207.7L220%208.0L225%208.1L230%208.2L235%208.2L240%208.2L245%208.0L250%207.9L255%207.8L260%207.7L265%207.7L270%207.8L275%208.0L280%208.3L285%208.7L290%209.2L295%209.8L300%2010.4L305%2011.0L310%2011.6L315%2012.1L320%2012.5L325%2012.7L330%2012.8L335%2012.8L340%2012.6L345%2012.3L350%2011.9L355%2011.5L360%2011.0L365%2010.5L370%2010.1L375%209.7L380%209.4L385%209.2L390%209.1L395%209.1L400%209.2L405%209.3L410%209.4L415%209.4L420%209.5%27%20stroke%3D%27url(%23f)%27%20stroke-width%3D%271%27%20fill%3D%27none%27%20stroke-linecap%3D%27round%27%20opacity%3D%270.95%27%2F%3E%3Cpath%20d%3D%27M0%2017.8L5%2017.3L10%2016.9L15%2016.6L20%2016.4L25%2016.3L30%2016.3L35%2016.4L40%2016.5L45%2016.7L50%2016.8L55%2016.8L60%2016.8L65%2016.7L70%2016.5L75%2016.2L80%2015.8L85%2015.5L90%2015.0L95%2014.6L100%2014.3L105%2014.1L110%2013.9L115%2013.9L120%2014.0L125%2014.3L130%2014.7L135%2015.3L140%2015.8L145%2016.5L150%2017.1L155%2017.7L160%2018.3L165%2018.8L170%2019.1L175%2019.3L180%2019.4L185%2019.4L190%2019.4L195%2019.2L200%2019.0L205%2018.9L210%2018.7L215%2018.7L220%2018.7L225%2018.7L230%2018.9L235%2019.1L240%2019.4L245%2019.8L250%2020.1L255%2020.4L260%2020.6L265%2020.7L270%2020.6L275%2020.5L280%2020.2L285%2019.8L290%2019.3L295%2018.7L300%2018.0L305%2017.3L310%2016.7L315%2016.1L320%2015.6L325%2015.2L330%2015.0L335%2014.9L340%2014.9L345%2015.0L350%2015.1L355%2015.4L360%2015.6L365%2015.8L370%2016.0L375%2016.2L380%2016.2L385%2016.2L390%2016.0L395%2015.9L400%2015.6L405%2015.4L410%2015.2L415%2015.0L420%2014.9%27%20stroke%3D%27url(%23f)%27%20stroke-width%3D%271.4%27%20fill%3D%27none%27%20stroke-linecap%3D%27round%27%20opacity%3D%270.8%27%2F%3E%3Cpath%20d%3D%27M0%2022.9L5%2023.0L10%2023.3L15%2023.6L20%2023.9L25%2024.2L30%2024.5L35%2024.7L40%2024.8L45%2024.8L50%2024.8L55%2024.7L60%2024.5L65%2024.4L70%2024.2L75%2024.1L80%2024.0L85%2024.1L90%2024.2L95%2024.5L100%2024.9L105%2025.4L110%2026.0L115%2026.6L120%2027.3L125%2027.9L130%2028.5L135%2028.9L140%2029.3L145%2029.5L150%2029.6L155%2029.5L160%2029.4L165%2029.1L170%2028.7L175%2028.3L180%2027.9L185%2027.5L190%2027.2L195%2026.9L200%2026.8L205%2026.7L210%2026.7L215%2026.8L220%2026.9L225%2027.0L230%2027.1L235%2027.2L240%2027.2L245%2027.0L250%2026.8L255%2026.5L260%2026.0L265%2025.5L270%2024.9L275%2024.3L280%2023.7L285%2023.2L290%2022.8L295%2022.4L300%2022.2L305%2022.2L310%2022.2L315%2022.5L320%2022.8L325%2023.2L330%2023.7L335%2024.2L340%2024.7L345%2025.1L350%2025.5L355%2025.7L360%2025.9L365%2026.0L370%2026.0L375%2025.9L380%2025.8L385%2025.7L390%2025.6L395%2025.6L400%2025.7L405%2025.9L410%2026.1L415%2026.5L420%2026.9%27%20stroke%3D%27url(%23f)%27%20stroke-width%3D%271%27%20fill%3D%27none%27%20stroke-linecap%3D%27round%27%20opacity%3D%270.6%27%2F%3E%3Cpath%20d%3D%27M0%2035.8L5%2035.7L10%2035.6L15%2035.5L20%2035.4L25%2035.4L30%2035.4L35%2035.6L40%2035.8L45%2036.1L50%2036.5L55%2036.9L60%2037.2L65%2037.6L70%2037.8L75%2038.0L80%2038.0L85%2037.9L90%2037.6L95%2037.2L100%2036.7L105%2036.1L110%2035.5L115%2034.8L120%2034.2L125%2033.6L130%2033.1L135%2032.7L140%2032.5L145%2032.3L150%2032.3L155%2032.4L160%2032.5L165%2032.7L170%2032.9L175%2033.1L180%2033.2L185%2033.3L190%2033.2L195%2033.1L200%2032.9L205%2032.7L210%2032.4L215%2032.1L220%2031.8L225%2031.6L230%2031.5L235%2031.5L240%2031.6L245%2031.9L250%2032.3L255%2032.8L260%2033.4L265%2034.1L270%2034.7L275%2035.4L280%2036.0L285%2036.5L290%2036.9L295%2037.2L300%2037.3L305%2037.3L310%2037.3L315%2037.1L320%2036.8L325%2036.6L330%2036.3L335%2036.1L340%2035.9L345%2035.8L350%2035.8L355%2035.9L360%2036.0L365%2036.2L370%2036.4L375%2036.6L380%2036.8L385%2036.9L390%2036.9L395%2036.7L400%2036.5L405%2036.1L410%2035.6L415%2035.0L420%2034.4%27%20stroke%3D%27url(%23f)%27%20stroke-width%3D%271%27%20fill%3D%27none%27%20stroke-linecap%3D%27round%27%20opacity%3D%270.4%27%2F%3E%3C%2Fsvg%3E");
+  --ola-m3: url("data:image/svg+xml;utf8,%3Csvg%20xmlns%3D%27http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%27%20viewBox%3D%270%200%20420%2044%27%20preserveAspectRatio%3D%27none%27%3E%3Cdefs%3E%3ClinearGradient%20id%3D%27f%27%20gradientUnits%3D%27userSpaceOnUse%27%20x1%3D%270%27%20y1%3D%270%27%20x2%3D%27420%27%20y2%3D%270%27%3E%3Cstop%20offset%3D%27.06%27%20stop-color%3D%27%23fff%27%20stop-opacity%3D%270%27%2F%3E%3Cstop%20offset%3D%27.72%27%20stop-color%3D%27%23fff%27%2F%3E%3C%2FlinearGradient%3E%3C%2Fdefs%3E%3Cpath%20d%3D%27M0%208.2L5%207.9L10%207.6L15%207.1L20%206.7L25%206.2L30%205.8L35%205.5L40%205.3L45%205.3L50%205.3L55%205.5L60%205.9L65%206.4L70%206.9L75%207.5L80%208.2L85%208.8L90%209.3L95%209.8L100%2010.2L105%2010.4L110%2010.6L115%2010.6L120%2010.5L125%2010.4L130%2010.3L135%2010.1L140%2010.0L145%2010.0L150%2010.0L155%2010.1L160%2010.3L165%2010.5L170%2010.9L175%2011.2L180%2011.6L185%2011.9L190%2012.2L195%2012.4L200%2012.4L205%2012.3L210%2012.1L215%2011.7L220%2011.2L225%2010.6L230%2010.0L235%209.3L240%208.7L245%208.1L250%207.6L255%207.2L260%206.9L265%206.7L270%206.7L275%206.7L280%206.9L285%207.0L290%207.3L295%207.5L300%207.6L305%207.7L310%207.7L315%207.7L320%207.5L325%207.3L330%207.0L335%206.8L340%206.5L345%206.3L350%206.2L355%206.1L360%206.2L365%206.5L370%206.8L375%207.3L380%207.9L385%208.5L390%209.2L395%209.9L400%2010.5L405%2011.0L410%2011.5L415%2011.8L420%2011.9%27%20stroke%3D%27url(%23f)%27%20stroke-width%3D%271%27%20fill%3D%27none%27%20stroke-linecap%3D%27round%27%20opacity%3D%270.95%27%2F%3E%3Cpath%20d%3D%27M0%2015.4L5%2015.3L10%2015.4L15%2015.6L20%2015.9L25%2016.3L30%2016.9L35%2017.5L40%2018.1L45%2018.8L50%2019.4L55%2020.0L60%2020.4L65%2020.7L70%2020.9L75%2021.0L80%2020.9L85%2020.7L90%2020.4L95%2020.1L100%2019.7L105%2019.3L110%2019.0L115%2018.7L120%2018.5L125%2018.4L130%2018.3L135%2018.4L140%2018.5L145%2018.6L150%2018.8L155%2018.9L160%2018.9L165%2018.9L170%2018.7L175%2018.4L180%2018.0L185%2017.6L190%2017.0L195%2016.4L200%2015.8L205%2015.2L210%2014.7L215%2014.2L220%2013.9L225%2013.7L230%2013.7L235%2013.8L240%2014.1L245%2014.4L250%2014.8L255%2015.3L260%2015.8L265%2016.2L270%2016.6L275%2016.9L280%2017.1L285%2017.3L290%2017.3L295%2017.3L300%2017.2L305%2017.1L310%2017.0L315%2016.9L320%2016.9L325%2017.0L330%2017.2L335%2017.5L340%2017.9L345%2018.4L350%2019.0L355%2019.5L360%2020.1L365%2020.5L370%2020.9L375%2021.2L380%2021.4L385%2021.4L390%2021.2L395%2021.0L400%2020.6L405%2020.1L410%2019.6L415%2019.0L420%2018.5%27%20stroke%3D%27url(%23f)%27%20stroke-width%3D%271.4%27%20fill%3D%27none%27%20stroke-linecap%3D%27round%27%20opacity%3D%270.8%27%2F%3E%3Cpath%20d%3D%27M0%2025.6L5%2025.5L10%2025.4L15%2025.3L20%2025.2L25%2025.3L30%2025.4L35%2025.7L40%2026.0L45%2026.5L50%2027.0L55%2027.6L60%2028.1L65%2028.7L70%2029.1L75%2029.5L80%2029.8L85%2029.9L90%2029.9L95%2029.7L100%2029.4L105%2029.0L110%2028.5L115%2027.9L120%2027.4L125%2026.9L130%2026.5L135%2026.1L140%2025.8L145%2025.7L150%2025.6L155%2025.6L160%2025.7L165%2025.8L170%2025.9L175%2026.0L180%2026.0L185%2025.9L190%2025.7L195%2025.5L200%2025.1L205%2024.7L210%2024.2L215%2023.7L220%2023.2L225%2022.8L230%2022.5L235%2022.2L240%2022.2L245%2022.2L250%2022.4L255%2022.8L260%2023.2L265%2023.8L270%2024.4L275%2025.0L280%2025.5L285%2026.1L290%2026.5L295%2026.8L300%2027.1L305%2027.2L310%2027.2L315%2027.2L320%2027.0L325%2026.9L330%2026.8L335%2026.7L340%2026.7L345%2026.8L350%2026.9L355%2027.2L360%2027.5L365%2027.9L370%2028.3L375%2028.7L380%2029.1L385%2029.3L390%2029.5L395%2029.6L400%2029.5L405%2029.3L410%2028.9L415%2028.4L420%2027.9%27%20stroke%3D%27url(%23f)%27%20stroke-width%3D%271%27%20fill%3D%27none%27%20stroke-linecap%3D%27round%27%20opacity%3D%270.6%27%2F%3E%3Cpath%20d%3D%27M0%2037.0L5%2037.1L10%2037.0L15%2036.9L20%2036.6L25%2036.1L30%2035.6L35%2035.0L40%2034.4L45%2033.7L50%2033.0L55%2032.5L60%2032.0L65%2031.6L70%2031.4L75%2031.3L80%2031.3L85%2031.4L90%2031.7L95%2032.0L100%2032.3L105%2032.6L110%2032.9L115%2033.2L120%2033.3L125%2033.4L130%2033.4L135%2033.3L140%2033.2L145%2033.0L150%2032.8L155%2032.7L160%2032.7L165%2032.7L170%2032.8L175%2033.1L180%2033.5L185%2034.0L190%2034.5L195%2035.2L200%2035.8L205%2036.4L210%2037.0L215%2037.5L220%2037.8L225%2038.1L230%2038.2L235%2038.1L240%2037.9L245%2037.6L250%2037.3L255%2036.8L260%2036.4L265%2036.0L270%2035.7L275%2035.4L280%2035.2L285%2035.1L290%2035.1L295%2035.1L300%2035.2L305%2035.4L310%2035.5L315%2035.5L320%2035.5L325%2035.4L330%2035.2L335%2034.9L340%2034.5L345%2034.0L350%2033.4L355%2032.8L360%2032.2L365%2031.7L370%2031.2L375%2030.9L380%2030.7L385%2030.6L390%2030.7L395%2030.9L400%2031.3L405%2031.7L410%2032.2L415%2032.7L420%2033.2%27%20stroke%3D%27url(%23f)%27%20stroke-width%3D%271%27%20fill%3D%27none%27%20stroke-linecap%3D%27round%27%20opacity%3D%270.4%27%2F%3E%3C%2Fsvg%3E");
+  --ola-orilla: url("data:image/svg+xml;utf8,%3Csvg%20xmlns%3D%27http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%27%20viewBox%3D%270%200%20220%2040%27%3E%3Cpath%20d%3D%27M0%2024.0L4%2024.4L8%2024.7L12%2025.1L16%2025.4L20%2025.7L24%2026.0L28%2026.3L32%2026.5L36%2026.7L40%2026.9L44%2027.0L48%2027.1L52%2027.2L56%2027.2L60%2027.2L64%2027.1L68%2027.0L72%2026.8L76%2026.6L80%2026.4L84%2026.2L88%2025.9L92%2025.6L96%2025.2L100%2024.9L104%2024.5L108%2024.2L112%2023.8L116%2023.5L120%2023.1L124%2022.8L128%2022.4L132%2022.1L136%2021.8L140%2021.6L144%2021.4L148%2021.2L152%2021.0L156%2020.9L160%2020.8L164%2020.8L168%2020.8L172%2020.9L176%2021.0L180%2021.1L184%2021.3L188%2021.5L192%2021.7L196%2022.0L200%2022.3L204%2022.6L208%2022.9L212%2023.3L216%2023.6L220%2024.0%27%20stroke%3D%27%23fff%27%20stroke-width%3D%271%27%20fill%3D%27none%27%20opacity%3D%27.5%27%2F%3E%3Cpath%20d%3D%27M0%2034.3L4%2033.8L8%2033.3L12%2032.6L16%2031.8L20%2031.0L24%2030.2L28%2029.4L32%2028.7L36%2028.1L40%2027.7L44%2027.5L48%2027.4L52%2027.5L56%2027.8L60%2028.3L64%2028.9L68%2029.6L72%2030.4L76%2031.2L80%2032.0L84%2032.8L88%2033.4L92%2034.0L96%2034.4L100%2034.6L104%2034.6L108%2034.4L112%2034.1L116%2033.6L120%2032.9L124%2032.2L128%2031.4L132%2030.6L136%2029.8L140%2029.1L144%2028.4L148%2027.9L152%2027.6L156%2027.4L160%2027.4L164%2027.6L168%2028.0L172%2028.6L176%2029.2L180%2030.0L184%2030.8L188%2031.6L192%2032.4L196%2033.1L200%2033.7L204%2034.2L208%2034.5L212%2034.6L216%2034.5L220%2034.3%27%20stroke%3D%27%23fff%27%20stroke-width%3D%271%27%20fill%3D%27none%27%20opacity%3D%27.9%27%2F%3E%3C%2Fsvg%3E");
+}
 :is(.voz-card, .as-body, .cc-card, .rating-card, .req-panel, .apt-day-card,
     .contacto-card, .reservas-person-card, .noticias-mes-col, .ag-ave-curiosity, .emp-perk) {
   position: relative;
+  --ola-m: var(--ola-m1);
 }
 :is(.voz-card, .as-body, .cc-card, .rating-card, .req-panel, .apt-day-card,
-    .contacto-card, .reservas-person-card, .noticias-mes-col, .ag-ave-curiosity, .emp-perk)::before,
+    .contacto-card, .reservas-person-card, .noticias-mes-col, .ag-ave-curiosity, .emp-perk):nth-child(3n+2) { --ola-m: var(--ola-m2); }
 :is(.voz-card, .as-body, .cc-card, .rating-card, .req-panel, .apt-day-card,
-    .contacto-card, .reservas-person-card, .noticias-mes-col, .ag-ave-curiosity, .emp-perk)::after {
-  content: '';
-  position: absolute;
-  top: var(--hoja-y, -8px);
-  left: var(--hoja-x, 24px);
-  width: 16px; height: 16px;
-  border-radius: 100% 0 100% 0;
-  pointer-events: none;
-}
+    .contacto-card, .reservas-person-card, .noticias-mes-col, .ag-ave-curiosity, .emp-perk):nth-child(3n) { --ola-m: var(--ola-m3); }
 :is(.voz-card, .as-body, .cc-card, .rating-card, .req-panel, .apt-day-card,
     .contacto-card, .reservas-person-card, .noticias-mes-col, .ag-ave-curiosity, .emp-perk)::before {
-  background: var(--hoja-c, var(--sol));
-  transform: translate(3px, 3px);
+  content: '';
+  position: absolute;
+  top: 0; left: 0; right: 0;
+  height: 44px;
+  border-radius: inherit;
+  background: var(--ola-c, var(--sol));
+  -webkit-mask: var(--ola-m) no-repeat top left / 100% 100%;
+  mask: var(--ola-m) no-repeat top left / 100% 100%;
+  opacity: .9;
+  pointer-events: none;
 }
-:is(.voz-card, .as-body, .cc-card, .rating-card, .req-panel, .apt-day-card,
-    .contacto-card, .reservas-person-card, .noticias-mes-col, .ag-ave-curiosity, .emp-perk)::after {
-  border: 1.5px solid currentColor;
+.as-body::after {
+  content: '';
+  position: absolute;
+  left: 0; right: 0; bottom: 0;
+  height: 40px;
+  background: var(--ola-c, var(--sol));
+  -webkit-mask: var(--ola-orilla) repeat-x 0 100% / 220px 40px;
+  mask: var(--ola-orilla) repeat-x 0 100% / 220px 40px;
+  opacity: .8;
+  pointer-events: none;
+  animation: ola-orilla 36s linear infinite;
+  transition: transform .9s var(--ease-out, cubic-bezier(.23, 1, .32, 1));
 }
+.as-card:hover .as-body::after { transform: translateY(-6px); }
+@keyframes ola-orilla { to { -webkit-mask-position: -220px 100%; mask-position: -220px 100%; } }
+@media (prefers-reduced-motion: reduce) { .as-body::after { animation: none; } }

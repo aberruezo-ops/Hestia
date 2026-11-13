@@ -275,7 +275,7 @@ for (const lang of ['es', 'en']) {
 </section>`).join('');
     const aptos = ['mar', 'thalassa', 'salinas'].map(k => {
       const [nombre, cl, href] = APT[lang][k];
-      return `<div class="apt-nota" style="--hoja-c:${C[cl]}">
+      return `<div class="apt-nota" style="--ola-c:${C[cl]}">
   <h3><a href="${href}" style="color:${C[cl]}">${esc(nombre)}</a></h3>
   <p>${esc(c.apts[k])}</p>
 </div>`;
