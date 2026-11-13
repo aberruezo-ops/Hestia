@@ -339,7 +339,10 @@ html.js .reveal.is-in{opacity:1;transform:none;}
 .hero{background:linear-gradient(160deg,var(--ber-dk),var(--ber-deep));}
 .ficha h3 a{color:inherit;text-decoration:none;} .ficha h3 a:hover{color:var(--sol-txt);}
 .ficha .dist{font-size:15px;}
-.apt-nota{border-left:3px solid var(--ber);padding:4px 0 4px 16px;margin:0 0 22px;max-width:64ch;}
+.apt-nota{position:relative;padding:30px 0 4px;margin:0 0 22px;max-width:64ch;}
+.apt-nota::before,.apt-nota::after{content:'';position:absolute;top:6px;left:0;width:16px;height:16px;border-radius:100% 0 100% 0;pointer-events:none;}
+.apt-nota::before{background:var(--hoja-c,var(--sol));transform:translate(3px,3px);}
+.apt-nota::after{border:1.5px solid var(--ink);}
 .apt-nota h3{font-family:var(--serif);font-weight:400;font-size:22px;margin-bottom:8px;}
 .apt-nota .k{font-size:10.5px;letter-spacing:.16em;text-transform:uppercase;color:var(--ink-faint);margin:10px 0 2px;display:block;}
 .apt-nota p{font-size:15.5px;color:var(--ink-soft);margin:0;}
@@ -498,15 +501,15 @@ html.js .reveal.is-in{opacity:1;transform:none;}
 </header>
 <div class="wrap libro">
 <p class="migas"><a href="/">Inicio</a> › <a href="/noticias/">Noticias &amp; Blog</a> › Agosto 2026</p>
-<section class="grupo"><div class="grupo-head"><span class="grupo-n">00</span><h2>Desde cada Hestía este mes</h2></div><div class="apt-nota" style="border-color:#6B7A3A">
+<section class="grupo"><div class="grupo-head"><span class="grupo-n">00</span><h2>Desde cada Hestía este mes</h2></div><div class="apt-nota" style="--hoja-c:#6B7A3A">
   <h3 style="color:#6B7A3A">Hestía Mar</h3>
   <span class="k">Curiosidad del mes</span><p>Agosto es el mes más caliente del año en Vera Playa: el Mediterráneo roza los 26-27°C y el aire apenas baja de los 24°C ni de madrugada. La terraza esquinera de Hestía Mar es un respiro con la brisa del atardecer, cuando el calor por fin afloja y el olivar se tiñe de cobre.</p>
   <span class="k">Recomendación Hestía</span><p>En pleno agosto, la playa se llena pronto: llega antes de las 9h o espera a después de las 19h para tener sitio y sombra. A media tarde, mejor una siesta con el aire puesto que forzar la arena a las 3 de la tarde.</p>
-</div><div class="apt-nota" style="border-color:#B86A3C">
+</div><div class="apt-nota" style="--hoja-c:#B86A3C">
   <h3 style="color:#B86A3C">Hestía Thalassa</h3>
   <span class="k">Curiosidad del mes</span><p>La noche del 12 al 13 de agosto, las Perseidas alcanzan su pico máximo, y este año coincide con luna nueva: la oscuridad será total. Desde la terraza del ático, mirando al Salar de los Canos, la lluvia de estrellas se ve sin necesidad de moverse de la hamaca.</p>
   <span class="k">Recomendación Hestía</span><p>La mayor densidad de meteoros cae entre las 4h y las 6h de la madrugada del 13 de agosto. Pon el despertador, sube una manta fina y apaga las luces de la terraza: cuanto más oscuro, más estrellas.</p>
-</div><div class="apt-nota" style="border-color:#B08A24">
+</div><div class="apt-nota" style="--hoja-c:#B08A24">
   <h3 style="color:#B08A24">Hestía Salinas</h3>
   <span class="k">Curiosidad del mes</span><p>En agosto las Salinas de Puerto Rey mantienen su rojo más intenso del año, con las temperaturas más altas del verano acelerando la producción de betacaroteno del alga Dunaliella salina. A un paseo corto de Salinas, el paisaje parece de otro planeta a primera hora.</p>
   <span class="k">Recomendación Hestía</span><p>Con el calor de agosto, sal a la ruta de los flamencos nada más amanecer, antes de las 8h. Es el único momento en que el paisaje y la temperatura invitan a caminar sin prisa; después, mejor dejarlo para el día siguiente.</p>

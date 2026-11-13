@@ -187,6 +187,10 @@ Todos los iconos de la web salen del sprite propio (`IconSprite` en `shared.jsx`
 - Dentro del `<symbol>`, estilos solo por clase sin selector de ancestro (`.hi-plate`, `.hi-ln`, `.hi-fi`): los selectores anidados no alcanzan el contenido de un `<use>`.
 - Excepciones: logos de plataformas (Booking, Airbnb, Google, WhatsApp, redes) y piezas de marca (logo, Indalo), que conservan su dibujo.
 
+### Marca de tarjeta · la «hoja» (regla siempre)
+
+**Prohibido el filo de color sobre las tarjetas** (`border-top` de 2 a 3 px, barras `::before` arriba, rayas de acento en un lado): se lee a plantilla de IA. La marca de una tarjeta es la **hoja**: la esquina asimétrica de la marca (`10px 0 10px 0`) llevada al límite (`100% 0 100% 0`) es la hoja de olivo / cresta de ola del monograma. Va en la gramática "Sello": una placa del color de la Hestía (o del acento de la tarjeta) desplazada 3 px detrás de un contorno de 1,5 px en color de texto. Primitiva al final de `styles.css` ("HOJA DE CASA"): añade el selector de la tarjeta a las listas `:is(...)` y fija `--hoja-c` (color) y, si hace falta, `--hoja-x` / `--hoja-y` (por defecto a caballo del borde superior, a 24 px del lado). En las páginas estáticas (`scripts/lib/pagina-estatica.mjs`) es `.apt-nota` con `--hoja-c`. Una tarjeta, una hoja: nunca varias ni como decoración suelta.
+
 ### Contraste · regla preventiva (fondos oscuros)
 
 > El contraste oscuro-sobre-oscuro ha sido un fallo recurrente. Para que no vuelva a pasar:

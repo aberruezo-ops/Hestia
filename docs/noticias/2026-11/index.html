@@ -339,7 +339,10 @@ html.js .reveal.is-in{opacity:1;transform:none;}
 .hero{background:linear-gradient(160deg,var(--ber-dk),var(--ber-deep));}
 .ficha h3 a{color:inherit;text-decoration:none;} .ficha h3 a:hover{color:var(--sol-txt);}
 .ficha .dist{font-size:15px;}
-.apt-nota{border-left:3px solid var(--ber);padding:4px 0 4px 16px;margin:0 0 22px;max-width:64ch;}
+.apt-nota{position:relative;padding:30px 0 4px;margin:0 0 22px;max-width:64ch;}
+.apt-nota::before,.apt-nota::after{content:'';position:absolute;top:6px;left:0;width:16px;height:16px;border-radius:100% 0 100% 0;pointer-events:none;}
+.apt-nota::before{background:var(--hoja-c,var(--sol));transform:translate(3px,3px);}
+.apt-nota::after{border:1.5px solid var(--ink);}
 .apt-nota h3{font-family:var(--serif);font-weight:400;font-size:22px;margin-bottom:8px;}
 .apt-nota .k{font-size:10.5px;letter-spacing:.16em;text-transform:uppercase;color:var(--ink-faint);margin:10px 0 2px;display:block;}
 .apt-nota p{font-size:15.5px;color:var(--ink-soft);margin:0;}
@@ -450,15 +453,15 @@ html.js .reveal.is-in{opacity:1;transform:none;}
 </header>
 <div class="wrap libro">
 <p class="migas"><a href="/">Inicio</a> › <a href="/noticias/">Noticias &amp; Blog</a> › Noviembre 2026</p>
-<section class="grupo"><div class="grupo-head"><span class="grupo-n">00</span><h2>Desde cada Hestía este mes</h2></div><div class="apt-nota" style="border-color:#6B7A3A">
+<section class="grupo"><div class="grupo-head"><span class="grupo-n">00</span><h2>Desde cada Hestía este mes</h2></div><div class="apt-nota" style="--hoja-c:#6B7A3A">
   <h3 style="color:#6B7A3A">Hestía Mar</h3>
   <span class="k">Curiosidad del mes</span><p>Noviembre le sienta bien a la terraza esquinera de Hestía Mar. Con máximas en torno a los 20°C y la luz baja del otoño, se desayuna fuera entre palmeras, con vistas parciales al mar, y la playa, a 300–400 m, es un paseo tranquilo de cinco minutos.</p>
   <span class="k">Recomendación Hestía</span><p>Baja a la playa a media mañana, cuando el sol ya calienta, y camina la orilla hasta donde te apetezca. Vuelve a comer a la terraza: es el mes de la chaqueta fina y del mar sin prisa.</p>
-</div><div class="apt-nota" style="border-color:#B86A3C">
+</div><div class="apt-nota" style="--hoja-c:#B86A3C">
   <h3 style="color:#B86A3C">Hestía Thalassa</h3>
   <span class="k">Curiosidad del mes</span><p>Cuando las tardes refrescan, el SPA comunitario de Thalassa se vuelve el plan: piscina climatizada, jacuzzi, sauna, pediluvio, gimnasio y zona de relax. Y arriba, la terraza con el Mediterráneo de frente y, hacia el interior, el Salar de los Canos.</p>
   <span class="k">Recomendación Hestía</span><p>Dedica la mañana a la costa y deja el SPA para después: sauna y jacuzzi al caer la tarde saben distinto en noviembre. Si el mediodía acompaña, las pistas de pádel y tenis comunitarias también están a mano.</p>
-</div><div class="apt-nota" style="border-color:#B08A24">
+</div><div class="apt-nota" style="--hoja-c:#B08A24">
   <h3 style="color:#B08A24">Hestía Salinas</h3>
   <span class="k">Curiosidad del mes</span><p>Noviembre es pleno invierno de estancia larga (de septiembre a junio, a partir de 29 noches) y Salinas, el más grande de los tres con 87 m², lo aprovecha: dos terrazas, grandes jardines con riachuelos, fibra de 300 a 600 Mbps y una mesa de trabajo bajo petición para teletrabajar con sol.</p>
   <span class="k">Recomendación Hestía</span><p>Sal temprano hacia la reserva de aves de las Salinas de Puerto Rey, a un paseo corto, con prismáticos y una capa ligera. A media mañana el sol ya templa y el paseo de vuelta por los jardines cierra la ruta.</p>

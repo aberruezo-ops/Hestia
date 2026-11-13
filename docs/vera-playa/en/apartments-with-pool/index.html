@@ -339,7 +339,10 @@ html.js .reveal.is-in{opacity:1;transform:none;}
 .hero{background:linear-gradient(160deg,var(--ber-dk),var(--ber-deep));}
 .ficha h3 a{color:inherit;text-decoration:none;} .ficha h3 a:hover{color:var(--sol-txt);}
 .ficha .dist{font-size:15px;}
-.apt-nota{border-left:3px solid var(--ber);padding:4px 0 4px 16px;margin:0 0 22px;max-width:64ch;}
+.apt-nota{position:relative;padding:30px 0 4px;margin:0 0 22px;max-width:64ch;}
+.apt-nota::before,.apt-nota::after{content:'';position:absolute;top:6px;left:0;width:16px;height:16px;border-radius:100% 0 100% 0;pointer-events:none;}
+.apt-nota::before{background:var(--hoja-c,var(--sol));transform:translate(3px,3px);}
+.apt-nota::after{border:1.5px solid var(--ink);}
 .apt-nota h3{font-family:var(--serif);font-weight:400;font-size:22px;margin-bottom:8px;}
 .apt-nota .k{font-size:10.5px;letter-spacing:.16em;text-transform:uppercase;color:var(--ink-faint);margin:10px 0 2px;display:block;}
 .apt-nota p{font-size:15.5px;color:var(--ink-soft);margin:0;}
@@ -473,13 +476,13 @@ html.js .reveal.is-in{opacity:1;transform:none;}
   <p class="cuerpo">The shared pool and jacuzzi open in the summer season. The Thalassa spa, with its heated pool, opens in autumn, winter and spring, and its gym all year. If you have doubts about your dates, ask us before booking.</p>
   
 </section>
-<section class="grupo"><div class="grupo-head"><h2>The three Hestías</h2></div><div class="apt-nota" style="border-color:#6B7A3A">
+<section class="grupo"><div class="grupo-head"><h2>The three Hestías</h2></div><div class="apt-nota" style="--hoja-c:#6B7A3A">
   <h3><a href="/en/mar.html" style="color:#6B7A3A">Hestía Mar</a></h3>
   <p>Shared pool, jacuzzi and children's playground, 300–400 m from the beach.</p>
-</div><div class="apt-nota" style="border-color:#B86A3C">
+</div><div class="apt-nota" style="--hoja-c:#B86A3C">
   <h3><a href="/en/thalassa.html" style="color:#B86A3C">Hestía Thalassa</a></h3>
   <p>Two outdoor pools and the shared spa, with heated pool and sauna.</p>
-</div><div class="apt-nota" style="border-color:#B08A24">
+</div><div class="apt-nota" style="--hoja-c:#B08A24">
   <h3><a href="/en/salinas.html" style="color:#B08A24">Hestía Salinas</a></h3>
   <p>Pool, padel and tennis courts and large gardens with streams.</p>
 </div>

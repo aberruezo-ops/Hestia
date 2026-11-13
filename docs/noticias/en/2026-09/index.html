@@ -339,7 +339,10 @@ html.js .reveal.is-in{opacity:1;transform:none;}
 .hero{background:linear-gradient(160deg,var(--ber-dk),var(--ber-deep));}
 .ficha h3 a{color:inherit;text-decoration:none;} .ficha h3 a:hover{color:var(--sol-txt);}
 .ficha .dist{font-size:15px;}
-.apt-nota{border-left:3px solid var(--ber);padding:4px 0 4px 16px;margin:0 0 22px;max-width:64ch;}
+.apt-nota{position:relative;padding:30px 0 4px;margin:0 0 22px;max-width:64ch;}
+.apt-nota::before,.apt-nota::after{content:'';position:absolute;top:6px;left:0;width:16px;height:16px;border-radius:100% 0 100% 0;pointer-events:none;}
+.apt-nota::before{background:var(--hoja-c,var(--sol));transform:translate(3px,3px);}
+.apt-nota::after{border:1.5px solid var(--ink);}
 .apt-nota h3{font-family:var(--serif);font-weight:400;font-size:22px;margin-bottom:8px;}
 .apt-nota .k{font-size:10.5px;letter-spacing:.16em;text-transform:uppercase;color:var(--ink-faint);margin:10px 0 2px;display:block;}
 .apt-nota p{font-size:15.5px;color:var(--ink-soft);margin:0;}
@@ -462,15 +465,15 @@ html.js .reveal.is-in{opacity:1;transform:none;}
 </header>
 <div class="wrap libro">
 <p class="migas"><a href="/en/">Home</a> › <a href="/noticias/en/">News &amp; Blog</a> › September 2026</p>
-<section class="grupo"><div class="grupo-head"><span class="grupo-n">00</span><h2>From each Hestía this month</h2></div><div class="apt-nota" style="border-color:#6B7A3A">
+<section class="grupo"><div class="grupo-head"><span class="grupo-n">00</span><h2>From each Hestía this month</h2></div><div class="apt-nota" style="--hoja-c:#6B7A3A">
   <h3 style="color:#6B7A3A">Hestía Mar</h3>
   <span class="k">This month's curiosity</span><p>September is the month we in Vera Playa keep for ourselves. Highs settle around 28°C and nights stay above 20, the sea holds the warmth of the whole summer, and the beach, five minutes on foot from Hestía Mar, gets its quiet back. The corner terrace is yours morning, afternoon and night again, no waiting for the heat to ease.</p>
   <span class="k">Hestía recommendation</span><p>No need to get up early for a spot on the sand any more. Go down whenever you feel like it and, mid-morning, walk up to Puerto Rey: Pralex Maricielo makes artisan ice cream and good coffee, with a terrace looking out to sea.</p>
-</div><div class="apt-nota" style="border-color:#B86A3C">
+</div><div class="apt-nota" style="--hoja-c:#B86A3C">
   <h3 style="color:#B86A3C">Hestía Thalassa</h3>
   <span class="k">This month's curiosity</span><p>With milder evenings, the penthouse's panoramic terrace can be enjoyed in full, no hunting for shade. It's also the month when the shared spa and sauna stop feeling like a winter luxury and start closing the day: sea in the morning, steam at sunset, and the Salar de los Canos changing colour from above.</p>
   <span class="k">Hestía recommendation</span><p>Save one evening for Asador Martín Fierro in Las Negras, inside the Cabo de Gata Natural Park: Argentine grill, skirt steak, sweetbreads, empanadas and a bife de chorizo worth the drive. In September you eat outside without a jacket and without waiting for a table.</p>
-</div><div class="apt-nota" style="border-color:#B08A24">
+</div><div class="apt-nota" style="--hoja-c:#B08A24">
   <h3 style="color:#B08A24">Hestía Salinas</h3>
   <span class="k">This month's curiosity</span><p>September opens the long-stay season (September to June), and Hestía Salinas is the one that understands it best: the largest of the three, with two terraces, large gardens with streams and the Salinas de Puerto Rey bird reserve next door. Fibre from 300 to 600 Mbps and a work desk on request turn a week of remote work into a month.</p>
   <span class="k">Hestía recommendation</span><p>With the heat under control, the flamingo trail is no longer just for sunrise: mid-morning is comfortable walking and the light over the salt flats is still golden. Bring water and binoculars, and save the pool for when you're back.</p>

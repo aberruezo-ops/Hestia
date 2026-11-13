@@ -12,7 +12,10 @@ export const COMUN_CSS = `
 .hero{background:linear-gradient(160deg,var(--ber-dk),var(--ber-deep));}
 .ficha h3 a{color:inherit;text-decoration:none;} .ficha h3 a:hover{color:var(--sol-txt);}
 .ficha .dist{font-size:15px;}
-.apt-nota{border-left:3px solid var(--ber);padding:4px 0 4px 16px;margin:0 0 22px;max-width:64ch;}
+.apt-nota{position:relative;padding:30px 0 4px;margin:0 0 22px;max-width:64ch;}
+.apt-nota::before,.apt-nota::after{content:'';position:absolute;top:6px;left:0;width:16px;height:16px;border-radius:100% 0 100% 0;pointer-events:none;}
+.apt-nota::before{background:var(--hoja-c,var(--sol));transform:translate(3px,3px);}
+.apt-nota::after{border:1.5px solid var(--ink);}
 .apt-nota h3{font-family:var(--serif);font-weight:400;font-size:22px;margin-bottom:8px;}
 .apt-nota .k{font-size:10.5px;letter-spacing:.16em;text-transform:uppercase;color:var(--ink-faint);margin:10px 0 2px;display:block;}
 .apt-nota p{font-size:15.5px;color:var(--ink-soft);margin:0;}

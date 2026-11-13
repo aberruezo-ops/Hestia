@@ -339,7 +339,10 @@ html.js .reveal.is-in{opacity:1;transform:none;}
 .hero{background:linear-gradient(160deg,var(--ber-dk),var(--ber-deep));}
 .ficha h3 a{color:inherit;text-decoration:none;} .ficha h3 a:hover{color:var(--sol-txt);}
 .ficha .dist{font-size:15px;}
-.apt-nota{border-left:3px solid var(--ber);padding:4px 0 4px 16px;margin:0 0 22px;max-width:64ch;}
+.apt-nota{position:relative;padding:30px 0 4px;margin:0 0 22px;max-width:64ch;}
+.apt-nota::before,.apt-nota::after{content:'';position:absolute;top:6px;left:0;width:16px;height:16px;border-radius:100% 0 100% 0;pointer-events:none;}
+.apt-nota::before{background:var(--hoja-c,var(--sol));transform:translate(3px,3px);}
+.apt-nota::after{border:1.5px solid var(--ink);}
 .apt-nota h3{font-family:var(--serif);font-weight:400;font-size:22px;margin-bottom:8px;}
 .apt-nota .k{font-size:10.5px;letter-spacing:.16em;text-transform:uppercase;color:var(--ink-faint);margin:10px 0 2px;display:block;}
 .apt-nota p{font-size:15.5px;color:var(--ink-soft);margin:0;}
@@ -486,15 +489,15 @@ html.js .reveal.is-in{opacity:1;transform:none;}
 </header>
 <div class="wrap libro">
 <p class="migas"><a href="/">Inicio</a> › <a href="/noticias/">Noticias &amp; Blog</a> › Mayo 2026</p>
-<section class="grupo"><div class="grupo-head"><span class="grupo-n">00</span><h2>Desde cada Hestía este mes</h2></div><div class="apt-nota" style="border-color:#6B7A3A">
+<section class="grupo"><div class="grupo-head"><span class="grupo-n">00</span><h2>Desde cada Hestía este mes</h2></div><div class="apt-nota" style="--hoja-c:#6B7A3A">
   <h3 style="color:#6B7A3A">Hestía Mar</h3>
   <span class="k">Curiosidad del mes</span><p>Los olivos que rodean la urbanización llevan siglos aquí. En mayo florecen y las tardes huelen a miel y a hierba seca. Abre la terraza esquinera antes de que suba el viento del mar.</p>
   <span class="k">Recomendación Hestía</span><p>Mercado del sábado en Vera pueblo, detrás de la fortaleza. Llega antes de las 10h para el queso de Huércal-Overa, se agota antes de las 11. La parada del pan de pueblo es la tercera a mano izquierda.</p>
-</div><div class="apt-nota" style="border-color:#B86A3C">
+</div><div class="apt-nota" style="--hoja-c:#B86A3C">
   <h3 style="color:#B86A3C">Hestía Thalassa</h3>
   <span class="k">Curiosidad del mes</span><p>El Salar de los Canos, el espejo de agua que ves desde la terraza del ático, es una laguna costera protegida. Cada mayo llegan las primeras cigüeñuelas rosas. Si tienes prismáticos, llévalos.</p>
   <span class="k">Recomendación Hestía</span><p>Con viento de poniente y buena visibilidad, desde el ático se distingue la costa africana. No lo des por sabido, busca el momento en que el horizonte se vuelve doble y el perfil de Marruecos aparece.</p>
-</div><div class="apt-nota" style="border-color:#B08A24">
+</div><div class="apt-nota" style="--hoja-c:#B08A24">
   <h3 style="color:#B08A24">Hestía Salinas</h3>
   <span class="k">Curiosidad del mes</span><p>Las Salinas de Puerto Rey, a 50 metros de la puerta, están en plena faena en mayo. La salmuera empieza a concentrarse antes de la cosecha de agosto. Si ves al guarda, pregúntale si puedes asomarte, casi siempre dice que sí.</p>
   <span class="k">Recomendación Hestía</span><p>Pon el despertador el primer día. A las 6:30h el sol rasante tiñe las salinas de naranja, rosa y plata en cuestión de minutos. Es uno de los espectáculos naturales más brutales de Almería y no sale en ninguna guía.</p>

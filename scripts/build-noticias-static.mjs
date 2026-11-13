@@ -212,7 +212,7 @@ for (const lang of ['es', 'en']) {
       const titles = clip(ed.items.slice(0, 3).map(i => i.a.titulo[lang]).join('; '), 110);
       const voz = ed.voz.map(v => {
         const c = APT_CLASS[v.apt] || 'vm';
-        return `<div class="apt-nota" style="border-color:${APT_COLOR[c]}">
+        return `<div class="apt-nota" style="--hoja-c:${APT_COLOR[c]}">
   <h3 style="color:${APT_COLOR[c]}">${esc(v.apt)}</h3>
   <span class="k">${esc(t.curiosity)}</span><p>${esc(v.curiosidad[lang])}</p>
   <span class="k">${esc(t.reco)}</span><p>${esc(v.reco[lang])}</p>

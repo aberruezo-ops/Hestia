@@ -339,7 +339,10 @@ html.js .reveal.is-in{opacity:1;transform:none;}
 .hero{background:linear-gradient(160deg,var(--ber-dk),var(--ber-deep));}
 .ficha h3 a{color:inherit;text-decoration:none;} .ficha h3 a:hover{color:var(--sol-txt);}
 .ficha .dist{font-size:15px;}
-.apt-nota{border-left:3px solid var(--ber);padding:4px 0 4px 16px;margin:0 0 22px;max-width:64ch;}
+.apt-nota{position:relative;padding:30px 0 4px;margin:0 0 22px;max-width:64ch;}
+.apt-nota::before,.apt-nota::after{content:'';position:absolute;top:6px;left:0;width:16px;height:16px;border-radius:100% 0 100% 0;pointer-events:none;}
+.apt-nota::before{background:var(--hoja-c,var(--sol));transform:translate(3px,3px);}
+.apt-nota::after{border:1.5px solid var(--ink);}
 .apt-nota h3{font-family:var(--serif);font-weight:400;font-size:22px;margin-bottom:8px;}
 .apt-nota .k{font-size:10.5px;letter-spacing:.16em;text-transform:uppercase;color:var(--ink-faint);margin:10px 0 2px;display:block;}
 .apt-nota p{font-size:15.5px;color:var(--ink-soft);margin:0;}
@@ -462,15 +465,15 @@ html.js .reveal.is-in{opacity:1;transform:none;}
 </header>
 <div class="wrap libro">
 <p class="migas"><a href="/">Inicio</a> › <a href="/noticias/">Noticias &amp; Blog</a> › Octubre 2026</p>
-<section class="grupo"><div class="grupo-head"><span class="grupo-n">00</span><h2>Desde cada Hestía este mes</h2></div><div class="apt-nota" style="border-color:#6B7A3A">
+<section class="grupo"><div class="grupo-head"><span class="grupo-n">00</span><h2>Desde cada Hestía este mes</h2></div><div class="apt-nota" style="--hoja-c:#6B7A3A">
   <h3 style="color:#6B7A3A">Hestía Mar</h3>
   <span class="k">Curiosidad del mes</span><p>Octubre suaviza el termómetro sin apagar el verano: las máximas rondan los 25°C y el mar sigue tibio, sobre los 21-22°C, porque el Mediterráneo tarda semanas en enfriarse. Desde la terraza esquinera de Hestía Mar, el atardecer llega antes cada día (el cambio de hora es el último domingo de octubre) y las palmeras se encienden de ocre nada más ponerse el sol.</p>
   <span class="k">Recomendación Hestía</span><p>El paseo marítimo de Vera Playa está en su mejor momento: temperatura perfecta para caminar a cualquier hora, sin la multitud de agosto. Aprovecha para subir hasta Puerto Rey en bici o a pie, la ruta va en paralelo al mar casi todo el camino.</p>
-</div><div class="apt-nota" style="border-color:#B86A3C">
+</div><div class="apt-nota" style="--hoja-c:#B86A3C">
   <h3 style="color:#B86A3C">Hestía Thalassa</h3>
   <span class="k">Curiosidad del mes</span><p>Octubre es temporada alta de paso migratorio en el Salar de los Canos: además de los flamencos residentes, llegan otras aves limícolas que hacen escala camino de África. Desde la terraza panorámica del ático, con unos prismáticos, se puede seguir el ir y venir sobre la lámina de agua.</p>
   <span class="k">Recomendación Hestía</span><p>Con las noches ya frescas, el jacuzzi y la piscina climatizada de la urbanización dejan de ser un capricho de invierno: es el momento de reservarlos sin las colas del verano. Cierra el día con el spa cubierto, abierto en otoño.</p>
-</div><div class="apt-nota" style="border-color:#B08A24">
+</div><div class="apt-nota" style="--hoja-c:#B08A24">
   <h3 style="color:#B08A24">Hestía Salinas</h3>
   <span class="k">Curiosidad del mes</span><p>Octubre es pleno curso de la temporada de estancias largas (septiembre a junio), y en Salinas se nota: la fibra de 300 a 600 Mbps y la mesa de trabajo bajo petición hacen que un mes de teletrabajo con la reserva de aves de las Salinas de Puerto Rey a un paseo corto sea perfectamente viable.</p>
   <span class="k">Recomendación Hestía</span><p>La ruta de los flamencos se recorre ahora a cualquier hora del día, sin el calor de agosto. Octubre además trae más aves de paso, así que merece la pena llevar prismáticos y caminar despacio.</p>
