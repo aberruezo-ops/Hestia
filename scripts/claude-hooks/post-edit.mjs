@@ -34,6 +34,7 @@ if (file.endsWith('styles.css')) {
       if (s.includes(`styles.css?v=${curr}`)) writeFileSync(p, s.split(`styles.css?v=${curr}`).join(`styles.css?v=${next}`));
     }
     console.log(`CSS v${curr} → v${next}`);
+    execFileSync('node', [join(ROOT, 'scripts/build-en-pages.mjs')]);
   }
 }
 

@@ -746,7 +746,7 @@ const NoticiasPage = ({ lang }) => {
 
 // ── App wrapper ────────────────────────────────────────────────────
 const NoticiasPageApp = () => {
-  const [lang, setLang] = React.useState(() => localStorage.getItem('hestia-lang') || 'es');
+  const [lang, setLang] = React.useState(() => window.__HESTIA_LANG__ || localStorage.getItem('hestia-lang') || 'es');
   const { mode, scrolled } = useScrollMode();
   useReveal();
   React.useEffect(() => { localStorage.setItem('hestia-lang', lang); document.documentElement.lang = lang; }, [lang]);

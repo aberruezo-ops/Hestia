@@ -223,7 +223,7 @@ const Hero = ({
       checkout: hcOut,
       guests: '4'
     });
-    window.location.href = 'reservas.html?' + p.toString();
+    window.location.href = (window.__hestiaHref || String)('reservas.html?' + p.toString());
   };
 
   // Playlist aleatoria: mezcla Fisher-Yates una vez por sesión (useMemo

@@ -378,7 +378,7 @@ const LetreroContent = ({
 }, "·"), /*#__PURE__*/React.createElement("span", null, "Fran: +34 654 138 251"))))));
 const LegalPageApp = () => {
   const type = window.__LEGAL__ || 'privacidad';
-  const [lang, setLang] = React.useState(() => localStorage.getItem('hestia-lang') || 'es');
+  const [lang, setLang] = React.useState(() => window.__HESTIA_LANG__ || localStorage.getItem('hestia-lang') || 'es');
   const {
     mode,
     scrolled

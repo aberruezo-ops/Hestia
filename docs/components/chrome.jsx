@@ -27,7 +27,7 @@ const Topbar = ({ lang, setLang }) => (
       <div className="lang" role="group" aria-label="Language">
         <button
           className={lang === 'es' ? 'active' : ''}
-          onClick={() => setLang('es')}
+          onClick={() => { if (window.__hestiaSwitchLang) window.__hestiaSwitchLang('es'); setLang('es'); }}
           aria-pressed={lang === 'es'}
           aria-label="Español"
         >
@@ -37,7 +37,7 @@ const Topbar = ({ lang, setLang }) => (
         <span className="divider" aria-hidden="true">/</span>
         <button
           className={lang === 'en' ? 'active' : ''}
-          onClick={() => setLang('en')}
+          onClick={() => { if (window.__hestiaSwitchLang) window.__hestiaSwitchLang('en'); setLang('en'); }}
           aria-pressed={lang === 'en'}
           aria-label="English"
         >

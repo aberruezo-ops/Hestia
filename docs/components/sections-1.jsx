@@ -173,7 +173,7 @@ const Hero = ({ lang, onScrollDown }) => {
     // Sin apartamento (cualquier Hestía) y 4 huéspedes por defecto: /reservas
     // mostrará la disponibilidad de los 3 Hestías para esas fechas + opciones.
     const p = new URLSearchParams({ checkin: hcIn, checkout: hcOut, guests: '4' });
-    window.location.href = 'reservas.html?' + p.toString();
+    window.location.href = (window.__hestiaHref || String)('reservas.html?' + p.toString());
   };
 
   // Playlist aleatoria: mezcla Fisher-Yates una vez por sesión (useMemo

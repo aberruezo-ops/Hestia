@@ -144,3 +144,9 @@ export const migas = (lang, trail) => ({
 });
 export const migasHtml = trail => `<p class="migas">${trail.map(([n, u], i) => i === trail.length - 1 ? esc(n) : `<a href="${u}">${esc(n)}</a>`).join(' › ')}</p>`;
 
+
+// En las páginas inglesas los enlaces a las páginas principales van a su par /en/.
+const TWIN_RE = /href="\/(index|mar|thalassa|salinas|reservas|estancias-largas|opiniones|nosotros|empresas|contacto|normas|noticias)\.html/g;
+export const localize = (html, lang) => lang !== 'en' ? html : html
+  .replace(TWIN_RE, 'href="/en/$1.html')
+  .replace(/href="\/(\?[^"]*)?"/g, (m, q) => `href="/en/${q || ''}"`);

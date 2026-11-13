@@ -1721,7 +1721,7 @@ const ReservasAside = ({ lang }) => {
 };
 
 const ReservasPageApp = () => {
-  const [lang, setLang] = React.useState(() => localStorage.getItem('hestia-lang') || 'es');
+  const [lang, setLang] = React.useState(() => window.__HESTIA_LANG__ || localStorage.getItem('hestia-lang') || 'es');
   const { mode, scrolled } = useScrollMode();
   useReveal();
 

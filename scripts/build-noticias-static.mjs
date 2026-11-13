@@ -20,7 +20,7 @@
 import { readFileSync, writeFileSync, mkdirSync, rmSync, existsSync } from 'node:fs';
 import { join, dirname } from 'node:path';
 import { fileURLToPath } from 'node:url';
-import { cabecera as cabeceraBase, hero as heroBase, pie as pieBase, cta, migas, migasHtml, esc, clip } from './lib/pagina-estatica.mjs';
+import { cabecera as cabeceraBase, hero as heroBase, pie as pieBase, cta, migas, migasHtml, esc, clip, localize } from './lib/pagina-estatica.mjs';
 
 const ROOT = join(dirname(fileURLToPath(import.meta.url)), '..');
 const DOCS = join(ROOT, 'docs');
@@ -158,6 +158,7 @@ const hero = (lang, h1, intro) => heroBase(lang, h1, intro, T[lang].eyebrow);
 const pie = lang => pieBase(lang, T[lang].pieP1);
 
 function escribe(rel, html) {
+  html = localize(html, rel.startsWith('en/') || rel === 'en' ? 'en' : 'es');
   const dir = join(OUT, rel);
   mkdirSync(dir, { recursive: true });
   writeFileSync(join(dir, 'index.html'), html, 'utf8');

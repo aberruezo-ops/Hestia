@@ -1,7 +1,8 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-  <meta charset="UTF-8"/>  <link rel="icon" type="image/png" sizes="32x32" href="assets/favicon-32x32.png"/>
+  <meta charset="UTF-8"/>
+  <script src="/assets/lang-url.js"></script>  <link rel="icon" type="image/png" sizes="32x32" href="assets/favicon-32x32.png"/>
   <link rel="icon" type="image/png" sizes="16x16" href="assets/favicon-16x16.png"/>
   <link rel="apple-touch-icon" sizes="180x180" href="assets/apple-touch-icon.png"/>
   <script src="assets/vera-sol.js?v=1"></script>
@@ -15,7 +16,7 @@
   <link rel="canonical" href="https://www.hestiayourhome.com/nosotros.html"/>
   <link rel="alternate" type="text/markdown" href="https://www.hestiayourhome.com/md/nosotros.md" title="Markdown"/>
   <link rel="alternate" hreflang="es" href="https://www.hestiayourhome.com/nosotros.html"/>
-  <link rel="alternate" hreflang="en" href="https://www.hestiayourhome.com/nosotros.html"/>
+  <link rel="alternate" hreflang="en" href="https://www.hestiayourhome.com/en/nosotros.html"/>
   <link rel="alternate" hreflang="x-default" href="https://www.hestiayourhome.com/nosotros.html"/>
   <meta property="og:site_name" content="Hestía Your Home"/>
   <meta property="og:type"      content="website"/>
@@ -213,7 +214,7 @@
     } catch (e) { console.warn('prices.json fetch failed; using fallback', e); }
 
     for (const file of COMPONENT_FILES) {
-      const res = await fetch(file + '?cv=1e00be67d3');
+      const res = await fetch(file + '?cv=5593e6799b');
       if (!res.ok) throw new Error(`Failed to load ${file}: ${res.status}`);
       const code = await res.text();
       // eslint-disable-next-line no-eval

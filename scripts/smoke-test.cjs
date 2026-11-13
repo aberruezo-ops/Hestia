@@ -15,7 +15,8 @@ catch { ({ chromium } = require('/opt/node22/lib/node_modules/playwright')); }
 const BASE = process.env.BASE || 'http://localhost:8123';
 const DOCS = path.join(__dirname, '..', 'docs');
 const PAGES = (process.env.PAGES ? process.env.PAGES.split(',') :
-  fs.readdirSync(DOCS).filter(f => f.endsWith('.html') && f !== '404.html'))
+  [...fs.readdirSync(DOCS).filter(f => f.endsWith('.html') && f !== '404.html'),
+   ...fs.readdirSync(path.join(DOCS, 'en')).filter(f => f.endsWith('.html')).map(f => 'en/' + f)])
   .map(f => f.replace(/\.html$/, ''));
 const VIEWPORTS = [{ n: 'mobile', w: 390, h: 844, m: true }, { n: 'desktop', w: 1280, h: 900, m: false }];
 const IGNORE = /Failed to load resource|net::ERR|favicon|the server responded with a status/i;

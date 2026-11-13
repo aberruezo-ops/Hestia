@@ -108,6 +108,8 @@ if (fail === 0) {
     if (after !== before) { fs.writeFileSync(p, after); stamped++; }
   }
   console.log(`Component version cv=${cv}; hashed loaders escritos; cv stamped in ${stamped} HTMLs.`);
+  // Las páginas en inglés (docs/en/) se derivan del HTML en español ya sellado.
+  require('child_process').execFileSync('node', [path.join(__dirname, 'build-en-pages.mjs')], { stdio: 'inherit' });
 }
 
 process.exit(fail > 0 ? 1 : 0);

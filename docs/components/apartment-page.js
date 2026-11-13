@@ -1377,7 +1377,7 @@ const AptStickyBar = ({
 const ApartmentPageApp = () => {
   const aptId = window.__APT__ || 'vm';
   const apt = APT_DATA[aptId];
-  const [lang, setLang] = React.useState(() => localStorage.getItem('hestia-lang') || 'es');
+  const [lang, setLang] = React.useState(() => window.__HESTIA_LANG__ || localStorage.getItem('hestia-lang') || 'es');
   // Si el huésped acaba de validar el PIN en otra página vía
   // GuestAccessModal, sessionStorage tiene un flag 'hestia-guide-unlock-<apt>'.
   // Al montar abrimos la guía directamente y limpiamos el flag.

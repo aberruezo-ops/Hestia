@@ -52,7 +52,10 @@ const Topbar = ({
   "aria-label": "Language"
 }, /*#__PURE__*/React.createElement("button", {
   className: lang === 'es' ? 'active' : '',
-  onClick: () => setLang('es'),
+  onClick: () => {
+    if (window.__hestiaSwitchLang) window.__hestiaSwitchLang('es');
+    setLang('es');
+  },
   "aria-pressed": lang === 'es',
   "aria-label": "Español"
 }, /*#__PURE__*/React.createElement("span", {
@@ -66,7 +69,10 @@ const Topbar = ({
   "aria-hidden": "true"
 }, "/"), /*#__PURE__*/React.createElement("button", {
   className: lang === 'en' ? 'active' : '',
-  onClick: () => setLang('en'),
+  onClick: () => {
+    if (window.__hestiaSwitchLang) window.__hestiaSwitchLang('en');
+    setLang('en');
+  },
   "aria-pressed": lang === 'en',
   "aria-label": "English"
 }, /*#__PURE__*/React.createElement("span", {

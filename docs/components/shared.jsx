@@ -4157,7 +4157,7 @@ const GuestAccessModal = ({ lang, onClose }) => {
           window.dispatchEvent(new Event('hestia:open-guide-pin'));
           onClose();
         } else {
-          window.location.href = meta.slug + '.html';
+          window.location.href = (window.__hestiaHref || String)(meta.slug + '.html');
         }
       }, 360);
     } else {

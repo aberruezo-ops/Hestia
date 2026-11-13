@@ -18,7 +18,7 @@ import { readFileSync, writeFileSync, mkdirSync, rmSync } from 'node:fs';
 import { join, dirname } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { execFileSync } from 'node:child_process';
-import { BASE, esc, clip, cabecera, hero, cta, pie, migas, migasHtml } from './lib/pagina-estatica.mjs';
+import { BASE, esc, clip, cabecera, hero, cta, pie, migas, migasHtml, localize } from './lib/pagina-estatica.mjs';
 
 const ROOT = join(dirname(fileURLToPath(import.meta.url)), '..');
 const DOCS = join(ROOT, 'docs');
@@ -110,11 +110,11 @@ const PAGES = [
         { h2: 'Qué distancia hay a la playa', list: [
           'Hestía Mar: a 300–400 m, unos cinco minutos a pie desde la salida.',
           'Hestía Salinas: a unos 900 m del mar, con la playa a cinco minutos en coche.',
-          'Hestía Thalassa: el ático, con el Mediterráneo de frente desde la terraza. Pregúntanos la distancia exacta para tu plan.'] },
+          'Hestía Thalassa: el ático, a 1,5 km de la playa y con el Mediterráneo de frente desde la terraza.'] },
         { h2: 'Más allá de Vera Playa', p: [
           'Desde los tres Hestía tienes cerca las calas del Cabo de Gata, además de Garrucha y Mojácar. Si quieres un plan para cada día, mira la guía de la zona y las noticias del mes.'] },
       ],
-      apts: { mar: 'El más cercano a la playa, con terraza esquinera de 20 m² y vistas parciales al mar entre palmeras.', thalassa: 'Ático con terraza delantera de 18 m² y vistas panorámicas al mar.', salinas: 'El más grande de los tres, con dos terrazas y la playa a cinco minutos en coche.' },
+      apts: { mar: 'El más cercano a la playa, con terraza esquinera de 20 m² y vistas parciales al mar entre palmeras.', thalassa: 'Ático a 1,5 km de la playa, con terraza delantera de 18 m² y vistas panorámicas al mar.', salinas: 'El más grande de los tres, con dos terrazas y la playa a cinco minutos en coche.' },
       faqs: [
         ['¿Cuál es el apartamento más cercano a la playa?', 'Hestía Mar, a 300–400 m, unos cinco minutos a pie.'],
         ['¿Hay vistas al mar?', 'Desde Mar hay vistas parciales al mar entre palmeras. Desde Thalassa, vistas panorámicas al Mediterráneo.'],
@@ -131,11 +131,11 @@ const PAGES = [
         { h2: 'How far is the beach', list: [
           'Hestía Mar: 300–400 m, about a five-minute walk from the exit.',
           'Hestía Salinas: about 900 m from the sea, with the beach five minutes away by car.',
-          'Hestía Thalassa: the penthouse, with the Mediterranean ahead from the terrace. Ask us the exact distance for your plan.'] },
+          'Hestía Thalassa: the penthouse, 1.5 km from the beach and with the Mediterranean ahead from the terrace.'] },
         { h2: 'Beyond Vera Playa', p: [
           'From all three Hestías the Cabo de Gata coves are nearby, as are Garrucha and Mojácar. If you want a plan for each day, see the area guide and the news of the month.'] },
       ],
-      apts: { mar: 'The closest to the beach, with a 20 m² corner terrace and partial sea views among the palm trees.', thalassa: 'Penthouse with an 18 m² front terrace and panoramic sea views.', salinas: 'The largest of the three, with two terraces and the beach five minutes away by car.' },
+      apts: { mar: 'The closest to the beach, with a 20 m² corner terrace and partial sea views among the palm trees.', thalassa: 'Penthouse 1.5 km from the beach, with an 18 m² front terrace and panoramic sea views.', salinas: 'The largest of the three, with two terraces and the beach five minutes away by car.' },
       faqs: [
         ['Which apartment is closest to the beach?', 'Hestía Mar, 300–400 m away, about a five-minute walk.'],
         ['Are there sea views?', 'From Mar there are partial sea views among the palm trees. From Thalassa, panoramic views of the Mediterranean.'],
@@ -157,12 +157,12 @@ const PAGES = [
           'Hestía Thalassa: dos piscinas exteriores, jardines, parques, pistas de pádel y tenis y un SPA comunitario con piscina climatizada, jacuzzi, sauna, pediluvio, gimnasio y zona de relax.',
           'Hestía Salinas: piscina, pistas de pádel y tenis y grandes jardines con riachuelos.'] },
         { h2: 'Cuándo se usan', p: [
-          'La piscina y el jacuzzi comunitarios abren en la temporada de verano. Si tienes dudas sobre tus fechas, pregúntanos antes de reservar.'] },
+          'La piscina y el jacuzzi comunitarios abren en la temporada de verano. El SPA de Thalassa, con su piscina climatizada, abre en otoño, invierno y primavera, y su gimnasio, todo el año. Si tienes dudas sobre tus fechas, pregúntanos antes de reservar.'] },
       ],
       apts: { mar: 'Piscina, jacuzzi y parque infantil comunitarios, a 300–400 m de la playa.', thalassa: 'Dos piscinas exteriores y el SPA comunitario, con piscina climatizada y sauna.', salinas: 'Piscina, pistas de pádel y tenis y grandes jardines con riachuelos.' },
       faqs: [
         ['¿Todos los apartamentos tienen piscina?', 'Sí, los tres están en urbanizaciones con piscina comunitaria.'],
-        ['¿Hay piscina climatizada?', 'Sí, en Thalassa, dentro del SPA comunitario junto con jacuzzi, sauna, pediluvio, gimnasio y zona de relax.'],
+        ['¿Hay piscina climatizada?', 'Sí, en Thalassa, dentro del SPA comunitario junto con jacuzzi, sauna, pediluvio, gimnasio y zona de relax. El SPA abre en otoño, invierno y primavera.'],
         ['¿Cuándo está abierta la piscina?', 'La piscina y el jacuzzi comunitarios abren en la temporada de verano. Pregúntanos por tus fechas.'],
         ['¿Hay algo para niños?', 'En Mar hay un parque infantil comunitario, además de la piscina y el jacuzzi.'],
       ],
@@ -178,12 +178,12 @@ const PAGES = [
           'Hestía Thalassa: two outdoor pools, gardens, parks, padel and tennis courts and a shared spa with heated pool, jacuzzi, sauna, foot bath, gym and relaxation area.',
           'Hestía Salinas: pool, padel and tennis courts and large gardens with streams.'] },
         { h2: 'When you can use them', p: [
-          'The shared pool and jacuzzi open in the summer season. If you have doubts about your dates, ask us before booking.'] },
+          'The shared pool and jacuzzi open in the summer season. The Thalassa spa, with its heated pool, opens in autumn, winter and spring, and its gym all year. If you have doubts about your dates, ask us before booking.'] },
       ],
       apts: { mar: 'Shared pool, jacuzzi and children\'s playground, 300–400 m from the beach.', thalassa: 'Two outdoor pools and the shared spa, with heated pool and sauna.', salinas: 'Pool, padel and tennis courts and large gardens with streams.' },
       faqs: [
         ['Do all apartments have a pool?', 'Yes, all three are in complexes with a shared pool.'],
-        ['Is there a heated pool?', 'Yes, at Thalassa, inside the shared spa along with jacuzzi, sauna, foot bath, gym and relaxation area.'],
+        ['Is there a heated pool?', 'Yes, at Thalassa, inside the shared spa along with jacuzzi, sauna, foot bath, gym and relaxation area. The spa opens in autumn, winter and spring.'],
         ['When is the pool open?', 'The shared pool and jacuzzi open in the summer season. Ask us about your dates.'],
         ['Is there anything for children?', 'At Mar there is a shared children\'s playground, as well as the pool and jacuzzi.'],
       ],
@@ -204,11 +204,12 @@ const PAGES = [
           'WiFi de fibra de 300 a 600 Mbps y mesa de trabajo bajo petición.',
           'Cocina completamente equipada, ropa de cama y toallas incluidas.',
           'Aire acondicionado y calefacción.',
+          'En Thalassa, el SPA comunitario (piscina climatizada, jacuzzi y sauna) abre en otoño, invierno y primavera.',
           'Contrato formal, señal de ~20% al firmar y el resto a la llegada.'] },
         { h2: 'Tarifa mensual', p: [
           'La tarifa mensual depende de las fechas y del apartamento: la tienes en la página de estancias largas y te la cerramos por escrito en menos de 2 horas, de 9:00 a 22:00.'] },
       ],
-      apts: { mar: 'El más cercano a la playa, con terraza esquinera de 20 m².', thalassa: 'El ático, con un SPA comunitario con piscina climatizada y sauna.', salinas: 'El más grande, con 87 m², dos terrazas y grandes jardines.' },
+      apts: { mar: 'El más cercano a la playa, con terraza esquinera de 20 m².', thalassa: 'El ático, con SPA comunitario con piscina climatizada y sauna abierto en invierno.', salinas: 'El más grande, con 87 m², dos terrazas y grandes jardines.' },
       extra: { href: '/estancias-largas.html', es: 'Ver estancias largas', en: 'See long stays' },
       faqs: [
         ['¿Qué temperaturas hay en invierno?', `En diciembre, enero y febrero, máximas de ${wMax[0]} a ${wMax[1]}°C y mínimas de ${wMin[0]} a ${wMin[1]}°C, como media histórica orientativa.`],
@@ -231,11 +232,12 @@ const PAGES = [
           'Fibre WiFi from 300 to 600 Mbps and a work table on request.',
           'Fully equipped kitchen, bed linen and towels included.',
           'Air conditioning and heating.',
+          'At Thalassa, the shared spa (heated pool, jacuzzi and sauna) opens in autumn, winter and spring.',
           'Formal contract, ~20% deposit on signing and the rest on arrival.'] },
         { h2: 'Monthly rate', p: [
           'The monthly rate depends on your dates and the apartment: you will find it on the long stays page and we confirm it in writing within 2 hours, from 9:00 to 22:00.'] },
       ],
-      apts: { mar: 'The closest to the beach, with a 20 m² corner terrace.', thalassa: 'The penthouse, with a shared spa with heated pool and sauna.', salinas: 'The largest, at 87 m², with two terraces and large gardens.' },
+      apts: { mar: 'The closest to the beach, with a 20 m² corner terrace.', thalassa: 'The penthouse, with a shared spa with heated pool and sauna open in winter.', salinas: 'The largest, at 87 m², with two terraces and large gardens.' },
       extra: { href: '/estancias-largas.html', es: 'Ver estancias largas', en: 'See long stays' },
       faqs: [
         ['What are winter temperatures like?', `In December, January and February, highs of ${wMax[0]} to ${wMax[1]}°C and lows of ${wMin[0]} to ${wMin[1]}°C, as an indicative historical average.`],
@@ -301,7 +303,7 @@ ${pg.extra ? `<p class="cuerpo"><a href="${pg.extra.href}" style="color:var(--so
 <section class="grupo"><div class="grupo-head"><h2>${esc(t.related)}</h2></div><ul class="lista">${otras}</ul></section>${cta(lang)}${pie(lang)}`;
     const dir = join(OUT, lang === 'en' ? 'en' : '', pg.slug[lang]);
     mkdirSync(dir, { recursive: true });
-    writeFileSync(join(dir, 'index.html'), html, 'utf8');
+    writeFileSync(join(dir, 'index.html'), localize(html, lang), 'utf8');
     entries.push({ lang, loc: canonical, alt });
   }
 }
