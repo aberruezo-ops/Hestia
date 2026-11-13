@@ -14,7 +14,10 @@ export const COMUN_CSS = `
 .ficha h3 a{color:inherit;text-decoration:none;} .ficha h3 a:hover{color:var(--sol-txt);}
 .ficha .dist{font-size:15px;}
 .apt-nota{position:relative;padding:46px 0 4px;margin:0 0 22px;max-width:64ch;}
-.apt-nota::before{content:'';position:absolute;top:0;left:0;right:0;height:44px;background:var(--ola-c,var(--sol));-webkit-mask:${horizonte(7)} no-repeat top left/100% 100%;mask:${horizonte(7)} no-repeat top left/100% 100%;opacity:.9;pointer-events:none;}
+.apt-nota::before{content:'';position:absolute;top:0;left:0;right:0;height:44px;background:var(--ola-c,var(--sol));-webkit-mask-image:${horizonte(7)},linear-gradient(to right,transparent 6%,#000 72%);mask-image:${horizonte(7)},linear-gradient(to right,transparent 6%,#000 72%);-webkit-mask-size:420px 44px,100% 100%;mask-size:420px 44px,100% 100%;-webkit-mask-repeat:repeat-x,no-repeat;mask-repeat:repeat-x,no-repeat;-webkit-mask-composite:source-in;mask-composite:intersect;opacity:.85;pointer-events:none;transition:opacity .6s ease;animation:ola-flow 11s linear infinite paused;}
+.apt-nota:hover::before{opacity:1;animation-play-state:running;}
+@keyframes ola-flow{from{-webkit-mask-position:0 0,0 0;mask-position:0 0,0 0}to{-webkit-mask-position:420px 0,0 0;mask-position:420px 0,0 0}}
+@media (prefers-reduced-motion:reduce){.apt-nota::before{animation:none}}
 .apt-nota h3{font-family:var(--serif);font-weight:400;font-size:22px;margin-bottom:8px;}
 .apt-nota .k{font-size:10.5px;letter-spacing:.16em;text-transform:uppercase;color:var(--ink-faint);margin:10px 0 2px;display:block;}
 .apt-nota p{font-size:15.5px;color:var(--ink-soft);margin:0;}
