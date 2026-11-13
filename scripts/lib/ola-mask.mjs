@@ -11,19 +11,20 @@ function rng(a) {
 const uri = svg => `url("data:image/svg+xml;utf8,${encodeURIComponent(svg).replace(/'/g, '%27')}")`;
 const TAU = Math.PI * 2;
 
-// Cuatro líneas de oleaje por el borde superior, en baldosa de 420 x 44.
+// Una línea nítida de oleaje y dos de eco casi fantasma por el borde superior, en baldosa de 420 x 44.
 export function horizonte(seed) {
   const r = rng(seed);
-  const K1 = [2, 3, 2, 3], K2 = [5, 6, 7, 5];
+  const K1 = [2, 3, 2], K2 = [5, 6, 7];
+  const OP = [0.9, 0.28, 0.16], SW = [1.2, 0.9, 0.9];
   let g = '';
-  for (let i = 0; i < 4; i++) {
+  for (let i = 0; i < 3; i++) {
     const ph = r() * TAU, ph2 = r() * TAU;
     let d = '';
     for (let x = 0; x <= 420; x += 5) {
       const y = 9 + i * 8.5 + 2.6 * Math.sin(TAU * K1[i] * x / 420 + ph) + 1.3 * Math.sin(TAU * K2[i] * x / 420 + ph2);
       d += (x ? 'L' : 'M') + x + ' ' + y.toFixed(1);
     }
-    g += `<path d='${d}' stroke='#fff' stroke-width='${i === 1 ? 1.4 : 1}' fill='none' stroke-linecap='butt' opacity='${[0.95, 0.8, 0.6, 0.4][i]}'/>`;
+    g += `<path d='${d}' stroke='#fff' stroke-width='${SW[i]}' fill='none' stroke-linecap='butt' opacity='${OP[i]}'/>`;
   }
   return uri(`<svg xmlns='http://www.w3.org/2000/svg' width='420' height='44' viewBox='0 0 420 44'>${g}</svg>`);
 }
