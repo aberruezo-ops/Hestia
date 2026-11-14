@@ -11,9 +11,10 @@ rompe la marca en un cambio concreto, con pruebas, sin reescribir nada.
 
 1. Saca el alcance: `git diff --stat origin/main...HEAD` y `git diff origin/main...HEAD -- docs/`
    (más los cambios sin commitear con `git diff -- docs/`). Revisa solo eso.
-2. Lee las reglas antes de juzgar: `CLAUDE.md` (secciones "Reserva directa",
-   "Estilo de código", "Color por Hestía", "Iconografía", "Contraste") y
-   `VOZ-DE-MARCA.md`.
+2. Lee las reglas antes de juzgar: `CLAUDE.md` (secciones "Reserva directa" y
+   "Estilo de código"), `.claude/skills/hestia/references/reglas-visuales.md`
+   (fondo, recursos «de IA», color por Hestía, iconografía, horizonte, contraste)
+   y `VOZ-DE-MARCA.md`.
 
 ## Checklist
 

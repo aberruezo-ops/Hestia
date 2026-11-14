@@ -31,7 +31,7 @@ tocar. Mapa de zonas → qué leer primero:
 | **La guía del huésped** | `docs/components/apartment-guide.jsx` (es de ~6k líneas: usa `grep -n` para tu sección, no la leas entera) |
 | **El admin** | `docs/components/admin-page.jsx` + `docs/p-edit.html`. Login por PAT en memoria. |
 | **Un Worker / pagos / PII / secretos** | el `workers/<x>/index.js` entero + su `wrangler.toml`. **Activa antes la skill `chequeo-seguridad`.** |
-| **Estilos / color / contraste** | `docs/assets/styles.css` (24k líneas: `grep -n` la clase) + la regla `on-dark` de `CLAUDE.md` |
+| **Estilos / color / contraste** | `docs/assets/styles.css` (24k líneas: `grep -n` la clase) + `.claude/skills/hestia/references/reglas-visuales.md` (regla `on-dark`) |
 | **Iconos, voz de marca, layout** | la skill `hestia` (guía maestra) y `VOZ-DE-MARCA.md` |
 
 Comandos de exploración típicos:
@@ -46,7 +46,7 @@ Convenciones que ya existen y hay que respetar (no reinventar):
 - **Registro global**: un componente/func nuevo se expone al final del archivo
   con `Object.assign(window, { … })` (así lo ven los demás, no hay imports).
 - **Sin guion largo `—`** en texto visible; **sin comentarios redundantes**;
-  fondos oscuros llevan clase `on-dark`. (Todo en `CLAUDE.md`.)
+  fondos oscuros llevan clase `on-dark`. (Estilo en `CLAUDE.md`; visuales en `references/reglas-visuales.md` de la skill `hestia`.)
 - Los `.jsx` son la fuente; los `.js` se compilan y **se commitean**.
 
 ## Las preguntas obligatorias (antes de escribir el plan)

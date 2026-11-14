@@ -142,11 +142,11 @@ El `opacity: 1` explícito cancela cualquier `opacity: 0.5` heredado.
 
 Son la **cal viva**, y su matiz cambia con el scroll (`docs/assets/color-scroll.js`): usa siempre
 los tokens, nunca un hex de cal. Nada de arena, oro ni cobre mezclado en cabecera o secciones
-claras. Detalle en `CLAUDE.md` ("Fondo de la web").
+claras. Detalle en `references/reglas-visuales.md` ("Fondo de la web").
 
 **Sin rayas laterales de acento** (`border-left` de 2 px o más) en cajas, avisos, citas ni
 tarjetas: un aviso se distingue por fondo y texto. La marca de una tarjeta es el horizonte
-(`CLAUDE.md`, "Recursos gráficos «de IA»" y "Marca de tarjeta").
+(`references/reglas-visuales.md`, "Recursos gráficos «de IA»" y "Marca de tarjeta").
 
 ### Identidades de apartamentos
 
@@ -224,7 +224,7 @@ guía no reflejaba la práctica real del código y quedó corregida aquí.
 Todos los iconos salen del sprite de `shared.jsx` con `<HiIcon name="…"/>`: trazo
 fino en color de texto, esquina asimétrica de marca y placa de color desplazada.
 **El color de marca va en la placa, nunca en el trazo.** Nada de emojis ni glifos
-(`✓ ✦ ★`) como iconos. Reglas completas en `CLAUDE.md` ("Iconografía").
+(`✓ ✦ ★`) como iconos. Reglas completas en `references/reglas-visuales.md` ("Iconografía").
 
 ---
 

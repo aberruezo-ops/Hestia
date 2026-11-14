@@ -147,65 +147,16 @@ Aplica estas medidas a TODO el código nuevo y revisa lo existente cuando lo toq
 - **Edita lo existente** antes de crear archivos nuevos. Pregunta antes de añadir un módulo si no es estrictamente necesario.
 - **Sin backwards-compat** por defecto: si renombras o eliminas algo, hazlo limpio.
 
-### Fondo de la web · cal viva que respira (regla siempre)
+### Reglas visuales · resumen (detalle en `.claude/skills/hestia/references/reglas-visuales.md`)
 
-El fondo claro de la marca es **cal viva**: un blanco de cal casi neutro, apenas cálido (matiz 40°, saturación ~9 %). Decisión del propietario, nov 2026, tras probar el blanco azulado «sal y mar» y la arena / beis (ambos descartados; la arena se leía a plantilla de IA). Tokens:
+Antes de tocar estilos, componentes, iconos, logos o cualquier recurso gráfico, lee ese archivo y pasa el subagente `revisor-marca` antes de publicar cambios visibles. Lo que no se negocia:
 
-- `--crema` **#F6F5F4** (fondo de página y texto claro sobre oscuro) · `--arena` **#E6E4DF** · `--arena-dk` **#D7D3CB**. Los nombres no cambian; el valor base es la cal.
-- **El tono respira con el scroll**: `docs/assets/color-scroll.js` (cargado antes de `styles.css` en cada HTML) recalcula el matiz de los 8 tokens de cal (`--crema`, `--arena`, `--arena-dk`, `--crema-alba/dawn/noon/dusk/warm`) según los píxeles desplazados (0,07° por píxel, vuelta completa cada ~5.100 px; arriba del todo es la cal base, matiz 40°; después greige, salvia, bruma, azul pizarra, lila, rosa palo), con saturación baja (0,12) y luminosidad intacta, así el contraste no cambia. `styles.css` los registra con `@property` y un `transition` de 0,45 s en `:root` para suavizar el paso. Con `prefers-reduced-motion` no se mueve y queda la cal base. Los PDF, las páginas estáticas generadas y los valores base citados aquí son la cal fija. En CSS nuevo usa siempre los tokens, no un hex de cal, para que acompañe el cambio.
-- La cabecera de día es plana: `--crema` sin degradado, sin brillos dorados ni cobre, con un filete turquesa fino abajo. **Nunca** mezclar arena, oro o cobre en el fondo de la cabecera ni de una sección clara.
-- Los tonos `--crema-alba/dawn/noon/dusk/warm` (secciones de día) son variaciones de luminosidad de la misma cal, sin cambiar de matiz.
-- **Nunca** volver a la arena / beis ni al blanco azulado o gris frío como fondo claro de página, tarjeta, PDF o gráfico nuevo. Si necesitas un tono claro nuevo, deriva uno de la cal (matiz 40°, saturación baja) con la misma luminosidad.
-- Excepción: los vídeos ya publicados (`docs/assets/hestia-*.mp4` y `docs/assets/video/`) conservan su fondo azulado a propuesta del propietario; los nuevos que se hagan, en cal viva.
-- Los fondos de aviso (`--warn-bg` #F5E8D4 y #FFF3CD) siguen cálidos y más saturados, para que un aviso se distinga de un fondo de página.
-- Las paredes del plano 3D son materiales del piso real y conservan su tono; el fondo de la escena es #EDECE9.
-
-### Recursos gráficos «de IA» · prohibidos (regla siempre)
-
-Además del filo de color sobre tarjetas (ver «Marca de tarjeta»), **ninguna caja, aviso, cita ni tarjeta lleva raya de acento a un lado** (`border-left` de 2 px o más, o barra `::before` lateral), ni siquiera en avisos, errores, citas, KPI o el panel de admin. Un aviso se distingue por su fondo tintado y su texto, no por una barra. Tampoco: bordes de gradiente, texto con degradado, tarjetas de cristal con brillo, iconos dentro de círculo de color, emojis de adorno, ni cifras gigantes con subtítulo en mayúsculas. Si dudas de si algo «se lee a plantilla», no lo pongas.
-
-### Color por Hestía · identidad (regla siempre)
-
-Cada Hestía tiene SU color y debe llevarlo **siempre que se le nombre o represente**, para que el usuario asocie el color al apartamento:
-
-- **Mar** = olivo `--vm` (#6B7A3A · dk `--vm-dk` · claro `--vm2`)
-- **Thalassa** = cobre `--vt` (#B86A3C · dk `--vt-dk` · claro `--vt2`)
-- **Salinas** = dorado `--vs` (#D4A84A · dk `--vs-dk` · claro `--vs2`)
-
-Cómo aplicarlo, según el fondo (respeta la regla de contraste):
-- **Sobre fondo claro**: tinta el nombre/acento con el color del apartamento (`color: var(--vm|--vt|--vs)`), o su variante `-dk` si el color base no contrasta.
-- **Sobre fondo oscuro o cuando teñir el texto arriesga contraste**: usa el marcador `<span className="apt-dot" data-apt="vm|vt|vs"/>` junto al nombre (primitiva en styles.css, visible en cualquier fondo). Nunca uses un color de apartamento como texto sobre un fondo con el que no contraste.
-
-Siempre que añadas una zona que liste, enlace o compare los tres (footer, tabla, selector, alternativas, guía), cada uno lleva su color. Fuente única de los tokens: `styles.css` (`--vm/--vt/--vs`) y `_ALT_APTS` en `shared.jsx`.
-
-**Logo**: solo en seis versiones: blanco, teal del día (`--sol`), berenjena de noche (`--ber-dk`) y el color de cada Hestía (Mar, Thalassa, Salinas). Ficheros en `docs/assets/`: `logo-blanco.png`, `logo-teal-transparent.png`, `logo-berenjena.png`, `logo-mar.png`, `logo-thalassa.png`, `logo-salinas.png`. Ningún otro color, ni filtros que lo cambien. El ciclo animado de cabecera y pie (18 s) funde estos mismos PNG (`logo-*-160.png` en pequeño): teal, berenjena de noche (blanco si el fondo es oscuro), Thalassa, Salinas, Mar; nunca `hue-rotate`.
-
-**Marca de agua de las fotos de apartamento**: logo pequeño del color de cada Hestía (`logo-mar-160.png`, `logo-thalassa-160.png`, `logo-salinas-160.png`) con un halo crema fino para que se lea sobre cualquier foto, puesto con CSS, no horneado en los ficheros. Arriba a la derecha en la cabecera de la ficha, en el mosaico y en el visor; abajo a la derecha en las tarjetas de la portada (arriba está el chip de disponibilidad). El Indalo, abajo a la izquierda en la cabecera de la ficha. Mismo tamaño y mismo sitio en cada tipo de contenedor.
-
-### Iconografía · gramática "Sello" (regla siempre)
-
-Todos los iconos de la web salen del sprite propio (`IconSprite` en `shared.jsx`) y se pintan con `<HiIcon name="…"/>`. Gramática única:
-
-- **Trazo fino (1,5)** en `currentColor` y **esquina asimétrica de la marca** (sup-izq e inf-der redondeadas) en toda forma rectangular.
-- **Segunda tinta**: la masa principal del icono en color plano, desplazada 2 px (`.hi-plate`), como un sello impreso fuera de registro. En iconos de solo trazo abierto, el trazo desplazado (`.hi-plate-ln`).
-- **El color de marca vive en la placa, nunca en el trazo.** La placa usa `--hi-accent`, que sigue al apartamento si el contenedor define `--apt-accent`; para forzarlo en un sitio, `--hi-tint`. El trazo va en color de texto (tinta sobre claro, crema sobre oscuro). Trazo y placa del mismo tono = mancha: es un bug.
-- **Sin fichas ni círculos de fondo** detrás del icono: el sello ya es su soporte.
-- **Nada de emojis ni glifos (`✓ ✦ ★ ✗`) haciendo de icono** en la interfaz: usa `check`, `spark` (tesela), `star-fill`, `ban`… Solo quedan como texto donde no se puede pintar un icono (mensajes de WhatsApp, asuntos de email) y en controles tipográficos (`✕` de cerrar).
-- Dentro del `<symbol>`, estilos solo por clase sin selector de ancestro (`.hi-plate`, `.hi-ln`, `.hi-fi`): los selectores anidados no alcanzan el contenido de un `<use>`.
-- Excepciones: logos de plataformas (Booking, Airbnb, Google, WhatsApp, redes) y piezas de marca (logo, Indalo), que conservan su dibujo.
-
-### Marca de tarjeta · el «horizonte» (regla siempre)
-
-**Prohibido el filo de color sobre las tarjetas** (`border-top` de 2 a 3 px, barras `::before` arriba, rayas de acento en un lado): se lee a plantilla de IA. La marca de una tarjeta es el **horizonte**: una línea nítida de oleaje y dos de eco casi fantasma por el borde superior, en el color de la Hestía (o del acento de la tarjeta), que se desvanecen hacia la izquierda (menos líneas y más transparencia es siempre mejor que más). Es el mar de fondo del Levante, no un adorno suelto: sutil, sin curvas gruesas, con el texto a salvo. Primitiva al final de `styles.css` ("HORIZONTE"): añade el selector de la tarjeta a las listas `:is(...)`, fija `--ola-c` (color) y deja al menos 46 px de relleno superior. La forma es una máscara SVG que encaja consigo misma cada 420 px, con tres variantes que alternan entre hermanas (`:nth-child`), generadas con `scripts/lib/ola-mask.mjs`; quieta en reposo, al pasar el ratón por la tarjeta las olas fluyen despacio (bucle pausado, no reiniciado, para que al salir se queden donde estaban); en las páginas estáticas es `.apt-nota` (`scripts/lib/pagina-estatica.mjs`). Las tarjetas grandes de apartamento (`.as-body`) llevan además la «orilla»: dos olas finísimas al pie que avanzan despacio y suben un poco al pasar el ratón (todo el movimiento se apaga con `prefers-reduced-motion`; en táctil no hay ratón, así que las olas quedan quietas). Una marca por tarjeta; nunca hojas, sellos ni rayas.
-
-### Contraste · regla preventiva (fondos oscuros)
-
-> El contraste oscuro-sobre-oscuro ha sido un fallo recurrente. Para que no vuelva a pasar:
-
-- **Toda sección con fondo oscuro lleva la clase `on-dark`** (en `styles.css`: fija el color de texto por defecto en claro, `--crema`). Así, si un elemento olvida declarar su color, hereda claro (legible), no el oscuro de página.
-- **Contrapartida obligatoria**: toda superficie clara anidada (tarjeta blanca, input, píldora clara) sobre un fondo oscuro **declara su propio color de texto oscuro** (`color: var(--ink)`), para no heredar claro-sobre-blanco.
-- **Nunca** uses `--ink`, `--ink-soft` ni un acento oscuro (de marca) para texto que va directo sobre un fondo oscuro. Usa los tonos crema (`--crema`, `rgba(230,228,223,...)`).
-- **Cubre todos los estados**, no solo el inicial: `:hover`, `:focus`, `:disabled`, vacío, cargando y "no disponible". El audit de contraste solo recorre el estado inicial de cada página, así que los estados que aparecen tras interactuar (resultados, no disponible, desplegables) no los caza: revísalos a mano.
+- **Fondo**: cal viva (`--crema` #F6F5F4, `--arena` #E6E4DF, `--arena-dk` #D7D3CB), con el matiz cambiando con el scroll por `docs/assets/color-scroll.js`. Siempre los tokens, nunca un hex de cal. Nunca arena o beis, blanco azulado ni oro o cobre mezclado en la cabecera o en secciones claras. Excepción: los vídeos ya publicados.
+- **Sin recursos «de IA»**: ninguna caja, aviso, cita o tarjeta con raya de acento a un lado (`border-left` de 2 px o más) ni filo de color arriba; sin bordes de gradiente, texto con degradado, tarjetas de cristal, iconos en círculo de color ni emojis de adorno. La marca de una tarjeta es el horizonte.
+- **Color por Hestía**: Mar olivo `--vm`, Thalassa cobre `--vt`, Salinas dorado `--vs`, siempre que se nombre o represente; sobre fondo oscuro, el marcador `apt-dot`.
+- **Iconos**: solo `<HiIcon name="…"/>` del sprite propio; el color de marca va en la placa, nunca en el trazo; ni emojis ni glifos como icono.
+- **Logo**: solo sus seis versiones, sin filtros ni `hue-rotate`.
+- **Contraste**: toda sección oscura lleva `on-dark`; la superficie clara anidada declara su texto oscuro; nunca `--ink`, `--ink-soft` ni un acento oscuro directo sobre oscuro; cubre hover, focus, disabled, vacío y cargando.
 
 ## Tests y verificación
 
@@ -213,22 +164,16 @@ Todos los iconos de la web salen del sprite propio (`IconSprite` en `shared.jsx`
 - La CI (`.github/workflows/checks.yml`) en cada push/PR: **bloquea** si fallan las invariantes de precio (`test-pricing.mjs`), los tests de los Workers (`workers/*/test.mjs`, con KV simulado) o el smoke test (errores JS, pantalla en blanco, enlaces internos rotos); **reporta** sin bloquear la consistencia de precio, el desfase JSX/JS y el contraste WCAG.
 - Cuando toques algo crítico, además: compila, construye los PDFs si tocas la guía y **verifica en el navegador** antes de pushear (Playwright MCP, ver abajo).
 
-
 ---
 
 ## Claude Code en este proyecto
 
 - **Publicación**: tras cada cambio, commit en la rama de trabajo, push y **fusión directa en `main` sin preguntar** (decisión del propietario). La skill `/publicar` hace el ritual completo.
-- **Blog mensual** (`/noticias.html`): una tarea programada de Claude Code se ejecuta el día 1 de cada mes (09:00 hora de Madrid aprox.). Investiga en la web los eventos confirmados del mes, escribe `docs/data/noticias/<YYYY-MM>.json` con las mismas reglas que el resto de la web, lo valida e instala con `node scripts/gen-noticias-mes.mjs --month <YYYY-MM>` (que también regenera con `build-noticias-static.mjs` las páginas estáticas rastreables `/noticias/<YYYY-MM>/…` y `/noticias/en/…`, el bloque `noticias` del sitemap y el texto de `noticias.html`; los artículos que incumplen las reglas de texto no se publican como página), compila (`npm run build`), pasa el smoke test y fusiona en `main`. Solo hechos de `strategy/redes/` y de fuentes citables; un evento sin fecha confirmada lleva "confirma el programa". El `<lastmod>` del resto del sitemap sale de git con `npm run sitemap` (ejecútalo tras commitear cambios de contenido). Para rehacerla o adelantarla: ejecutar esa misma tarea a mano o `workflow_dispatch` de `noticias-mes.yml` (que ya no corre solo).
-- **Páginas de destino SEO** (`/vera-playa/<slug>/` y `/vera-playa/en/<slug>/`: mascotas, cerca de la playa, piscina, invierno): estáticas, generadas por `node scripts/build-landings.mjs` (`npm run landings`) con la plantilla de `scripts/lib/pagina-estatica.mjs`. El suplemento de mascota y el clima se leen de `prices.json` y `climate-monthly.json`: vuelve a ejecutarlo si cambian. Texto solo con hechos verificados (sección "Datos de cada Hestía"), sin precios de estancia ni tarifa mensual.
-- **Inglés con URL propia** (12 páginas principales: home, Mar, Thalassa, Salinas, reservas, estancias largas, opiniones, nosotros, empresas, contacto, normas, noticias): español en `/x.html` e inglés en `/en/x.html`. El HTML en español es la fuente; `node scripts/build-en-pages.mjs` (lo ejecuta `build-jsx.js` y el hook de CSS) genera `docs/en/*.html` con `<base href="/">`, título, descripción, OG, canonical, hreflang, JSON-LD y texto rastreable en inglés (textos en el propio script: añade ahí cualquier página nueva y su traducción). El idioma lo fija la URL (`assets/lang-url.js`: `window.__HESTIA_LANG__`, el botón ES/EN navega al par, los enlaces internos se reescriben a `/en/` y quien tenga guardado inglés en localStorage es redirigido desde la versión española; Googlebot no). Si cambias el `<head>` de una página en español, regenera. Las páginas de blog y de destino en inglés enlazan a `/en/` con `localize()`.
-- **Hooks** (`.claude/settings.json`, scripts en `scripts/claude-hooks/`):
-  - Antes de editar: `pre-edit-secrets.mjs` bloquea ficheros de secretos (`.env`, `.dev.vars`, `.pem`/`.key`) y tokens (GitHub, Anthropic, AWS, claves privadas).
-  - Después de editar: `post-edit.mjs` compila el JSX (y avisa si falla), sube `styles.css?v=` en los HTML y avisa si el texto nuevo de `docs/` trae un guion largo.
-  - Los hooks solo ven ediciones hechas con Edit/Write: si cambias JSX o CSS por script, compila y sube la versión del CSS a mano.
-- **Subagente `revisor-marca`** (`.claude/agents/`): revisa voz, color por apartamento, iconografía "Sello" y contraste antes de publicar cambios visibles.
-- **MCP** (`.mcp.json`): Playwright para verificar en el navegador; Cloudflare (observabilidad y bindings) para logs y KV de los Workers, con login de Cloudflare.
-- **GateGuard** (plugin ECC): exime `/tmp/**` y no frena el Bash rutinario; el control de comandos destructivos sigue activo.
+- **Blog mensual** (`/noticias.html`): tarea programada el día 1 de cada mes. Escribe `docs/data/noticias/<YYYY-MM>.json`, lo instala con `node scripts/gen-noticias-mes.mjs --month <YYYY-MM>`, compila (`npm run build`), pasa el smoke test y fusiona en `main`. Solo hechos de `strategy/redes/` y de fuentes citables; un evento sin fecha confirmada lleva "confirma el programa". Procedimiento completo en `.claude/skills/hestia/references/automatizaciones.md`.
+- **Páginas de destino SEO** (`/vera-playa/<slug>/`): estáticas, generadas con `npm run landings`; texto solo con hechos verificados, sin precios de estancia ni tarifa mensual.
+- **Inglés con URL propia**: el HTML en español es la fuente y `node scripts/build-en-pages.mjs` genera `docs/en/*.html`. Si cambias el `<head>` de una página en español, regenera. Detalle en la referencia.
+- **Hooks** (`.claude/settings.json`): bloquean secretos antes de editar y, después, compilan el JSX, suben `styles.css?v=` y avisan del guion largo. Solo ven ediciones con Edit/Write: si cambias JSX o CSS por script, compila y sube la versión del CSS a mano.
+- **Verificación**: Playwright para ver el cambio en el navegador antes de publicar.
 
 ---
 

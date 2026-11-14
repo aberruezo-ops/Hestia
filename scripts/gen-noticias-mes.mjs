@@ -1,7 +1,7 @@
 // gen-noticias-mes.mjs
 //
 // Agente mensual del blog (Noticias & Blog). La tarea programada del día 1
-// (ver CLAUDE.md, "Blog mensual") escribe docs/data/noticias/<YYYY-MM>.json y
+// (ver CLAUDE.md y .claude/skills/hestia/references/automatizaciones.md, "Blog mensual") escribe docs/data/noticias/<YYYY-MM>.json y
 // lo ejecuta para validarlo e instalarlo; el workflow noticias-mes.yml es el
 // disparo manual alternativo. Prepara la edición indicada:
 //

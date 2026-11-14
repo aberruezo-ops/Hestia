@@ -1,4 +1,4 @@
-// Máscaras SVG de la marca de tarjeta "Horizonte" (ver CLAUDE.md, "Marca de tarjeta").
+// Máscaras SVG de la marca de tarjeta "Horizonte" (ver .claude/skills/hestia/references/reglas-visuales.md, "Marca de tarjeta").
 // La máscara da la forma (líneas de oleaje) y el color lo pone `background: var(--ola-c)`.
 // El patrón encaja consigo mismo en 420 px (cada onda tiene un número entero de periodos),
 // así que se puede desplazar en bucle sin costura: al pasar el ratón las olas fluyen.
