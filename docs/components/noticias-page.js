@@ -490,7 +490,7 @@ const LEAF_COLORS = [{
 // Thalassa · cobre
 {
   face: '#D4A84A',
-  back: '#E8CD94'
+  back: '#C8C1B4'
 } // Salinas · dorado
 ];
 const _leafSprite = hex => {

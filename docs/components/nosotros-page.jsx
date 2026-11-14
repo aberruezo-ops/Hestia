@@ -140,8 +140,8 @@ const NosotrosTeam = ({ lang }) => {
     <svg viewBox="0 0 100 125" className="silhouette" preserveAspectRatio="xMidYMax meet">
       <defs>
         <linearGradient id={gradId} x1="0" x2="0" y1="0" y2="1">
-          <stop offset="0%" stopColor="rgba(240,232,213,0.25)"/>
-          <stop offset="100%" stopColor="rgba(240,232,213,0)"/>
+          <stop offset="0%" stopColor="rgba(230,228,223,0.25)"/>
+          <stop offset="100%" stopColor="rgba(230,228,223,0)"/>
         </linearGradient>
       </defs>
       <circle cx="50" cy="30" r="18" fill={`url(#${gradId})`}/>

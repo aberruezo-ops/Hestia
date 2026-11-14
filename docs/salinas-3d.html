@@ -3,8 +3,8 @@
 <title>Hestía Salinas en 3D</title>
 <meta name="robots" content="noindex">
 <style>
-:root{--ink:#2a0f2e;--crema:#faf6f0;--arena:#f0e8d5;--vs:#D4A84A;--vs-dk:#7A5E1A;--vs2:#E8C476;--line:rgba(42,15,46,.12)}
-*{box-sizing:border-box}html,body{margin:0;height:100%;background:#f4eee2;color:var(--ink);font-family:system-ui,-apple-system,"Segoe UI",Roboto,sans-serif}
+:root{--ink:#2a0f2e;--crema:#f6f5f4;--arena:#e6e4df;--vs:#D4A84A;--vs-dk:#7A5E1A;--vs2:#E8C476;--line:rgba(42,15,46,.12)}
+*{box-sizing:border-box}html,body{margin:0;height:100%;background:#edece9;color:var(--ink);font-family:system-ui,-apple-system,"Segoe UI",Roboto,sans-serif}
 #app{display:grid;grid-template-columns:260px 1fr;grid-template-rows:auto 1fr auto;height:100%}
 header{grid-column:1/3;padding:14px 18px 12px;background:var(--crema);border-bottom:1px solid var(--line);display:flex;align-items:center;gap:14px;flex-wrap:wrap}
 header .tt{flex:1;min-width:220px}
@@ -22,7 +22,7 @@ aside h3{margin:0 0 10px;font-size:11px;letter-spacing:.2em;text-transform:upper
 .room:before{content:"";width:8px;height:8px;border-radius:50%;background:var(--vs);flex:none}
 .room:hover{border-color:var(--vs)}.room.on{background:var(--vs-dk);color:var(--crema);border-color:var(--vs-dk)}
 #stage{position:relative;min-height:0;overflow:hidden}#stage canvas{display:block;width:100%;height:100%}
-#t-hint{position:absolute;left:12px;bottom:12px;font-size:12px;background:rgba(250,246,240,.9);padding:6px 10px;border-radius:8px 0 8px 0;pointer-events:none;color:rgba(42,15,46,.75)}
+#t-hint{position:absolute;left:12px;bottom:12px;font-size:12px;background:rgba(246,245,244,.9);padding:6px 10px;border-radius:8px 0 8px 0;pointer-events:none;color:rgba(42,15,46,.75)}
 #card{position:absolute;right:14px;top:14px;width:400px;max-height:calc(100% - 28px);overflow:auto;background:#fff;color:var(--ink);border-radius:14px 0 14px 0;box-shadow:0 12px 40px rgba(42,15,46,.18);padding:16px 16px 14px;border-top:4px solid var(--vs)}
 #card[hidden]{display:none}
 .card-h{display:flex;justify-content:space-between;align-items:flex-start;gap:10px}
@@ -35,9 +35,9 @@ aside h3{margin:0 0 10px;font-size:11px;letter-spacing:.2em;text-transform:upper
 .th{padding:0;border:0;background:#eee;aspect-ratio:1;overflow:hidden;border-radius:8px 0 8px 0}
 .th img{width:100%;height:100%;object-fit:cover;display:block;transition:transform .3s}
 .th:hover img{transform:scale(1.06)}
-.pv{position:relative;margin:-16px -16px 10px;aspect-ratio:4/3;background:#e9e2d4;overflow:hidden;border-radius:14px 0 0 0}
+.pv{position:relative;margin:-16px -16px 10px;aspect-ratio:4/3;background:#e2e0db;overflow:hidden;border-radius:14px 0 0 0}
 .pv img{width:100%;height:100%;object-fit:cover;display:block;cursor:zoom-in}
-.pv-nav{position:absolute;top:50%;transform:translateY(-50%);width:38px;height:38px;border:0;border-radius:10px 0 10px 0;background:rgba(250,246,240,.94);color:var(--ink);font-size:22px;line-height:1;box-shadow:0 4px 14px rgba(42,15,46,.25)}
+.pv-nav{position:absolute;top:50%;transform:translateY(-50%);width:38px;height:38px;border:0;border-radius:10px 0 10px 0;background:rgba(246,245,244,.94);color:var(--ink);font-size:22px;line-height:1;box-shadow:0 4px 14px rgba(42,15,46,.25)}
 .pv-prev{left:10px}.pv-next{right:10px}
 .pv-n{position:absolute;right:10px;bottom:10px;background:rgba(42,15,46,.75);color:var(--crema);font:700 12px system-ui,sans-serif;padding:4px 8px;border-radius:8px 0 8px 0}
 .pv-cap{margin:0 0 6px;font:italic 15px Georgia,serif;color:rgba(42,15,46,.78)}
@@ -156,11 +156,11 @@ footer{grid-column:1/3;padding:8px 18px 10px;background:var(--crema);border-top:
   renderer.outputEncoding = T.sRGBEncoding;
   renderer.toneMapping = T.NoToneMapping;
   host.appendChild(renderer.domElement);
-  var scene = new T.Scene(); scene.background = new T.Color(0xf4eee2);
+  var scene = new T.Scene(); scene.background = new T.Color(0xedece9);
   var camera = new T.PerspectiveCamera(36, 1, 0.1, 200);
-  scene.add(new T.HemisphereLight(0xfff8ee, 0xa8977a, 0.5));
+  scene.add(new T.HemisphereLight(0xf7f7f6, 0xa8977a, 0.5));
   var amb = new T.AmbientLight(0xffffff, 0.12); scene.add(amb);
-  var sun = new T.DirectionalLight(0xfff1dc, 0.72); sun.position.set(-7, 15, 11); sun.castShadow = true;
+  var sun = new T.DirectionalLight(0xefeeec, 0.72); sun.position.set(-7, 15, 11); sun.castShadow = true;
   sun.shadow.mapSize.set(2048, 2048); var sc = sun.shadow.camera; sc.left = -12; sc.right = 12; sc.top = 12; sc.bottom = -12; sc.far = 50;
   sun.shadow.bias = -0.0004; sun.shadow.radius = 3; sun.target.position.set(W / 2, 0, D / 2); scene.add(sun); scene.add(sun.target);
 
@@ -194,10 +194,10 @@ footer{grid-column:1/3;padding:8px 18px 10px;background:var(--crema);border-top:
   mat('floor', { color: 0xffffff, map: texTile('#d9b892', '#c09a72', 4), roughness: 0.32 });
   mat('terraFloor', { color: 0xffffff, map: texTile('#8f4632', '#6e3324', 6), roughness: 0.7 });
   mat('bathFloor', { color: 0xffffff, map: texTile('#d8c4a6', '#b9a481', 6), roughness: 0.35 });
-  mat('wall', { color: 0xf6f3ee }); mat('wallOut', { color: 0xf1ece3 }); mat('mustard', { color: 0xe3a51a, roughness: 0.6 });
+  mat('wall', { color: 0xf3f2f1 }); mat('wallOut', { color: 0xecebe8 }); mat('mustard', { color: 0xe3a51a, roughness: 0.6 });
   mat('mural', { color: 0xffffff, map: texMural, roughness: 0.7 }); mat('brick', { color: 0xffffff, map: texBrick, roughness: 0.3 });
-  mat('bathTileB', { color: 0xe7dccb, roughness: 0.4 });
-  mat('white', { color: 0xfbfaf6 }); mat('gloss', { color: 0xfdfdfb, roughness: 0.18 }); mat('black', { color: 0x1d1d1f, roughness: 0.45 });
+  mat('bathTileB', { color: 0xdedbd4, roughness: 0.4 });
+  mat('white', { color: 0xf9f9f8 }); mat('gloss', { color: 0xfcfcfc, roughness: 0.18 }); mat('black', { color: 0x1d1d1f, roughness: 0.45 });
   mat('steel', { color: 0xc4c8cb, metalness: 0.65, roughness: 0.32 }); mat('glass', { color: 0xbfe0ee, transparent: true, opacity: 0.3, roughness: 0.05 });
   mat('mirror', { color: 0xd5e4ea, metalness: 0.4, roughness: 0.06 }); mat('gold', { color: 0xc9a14a, metalness: 0.7, roughness: 0.3 });
   mat('oak', { color: 0xffffff, map: texWood('#c48f55', '120,75,35'), roughness: 0.55 });
@@ -205,11 +205,11 @@ footer{grid-column:1/3;padding:8px 18px 10px;background:var(--crema);border-top:
   mat('rustic', { color: 0xffffff, map: canvasTex(256, 128, function (g, w, h) { var cs = ['#7b5a3a', '#3f6f78', '#a27a46', '#5b4a3a', '#8a6b44']; for (var y = 0; y < h; y += 16) { g.fillStyle = cs[(y / 16) % cs.length]; g.fillRect(0, y, w, 15); } noise(g, w, h, 0.15, 500); }), roughness: 0.6 });
   mat('mustardFab', { color: 0xc99a1c, roughness: 0.95 }); mat('teal', { color: 0x0c5f69, roughness: 0.9 }); mat('tealLight', { color: 0x1a8f9c, roughness: 0.6 });
   mat('concrete', { color: 0x8d8c88, roughness: 0.9 }); mat('greyFab', { color: 0x6f7376, roughness: 0.95 });
-  mat('sheet', { color: 0xf8f8f4, roughness: 0.95 }); mat('navy', { color: 0x1d3150, roughness: 0.95 }); mat('brown', { color: 0x6a4a33, roughness: 0.95 });
-  mat('headboard', { color: 0xa7b3a6, roughness: 0.95 }); mat('cream', { color: 0xf2ead7 }); mat('lamp', { color: 0xfff3d0, emissive: 0xffe6a8, emissiveIntensity: 0.55 });
-  mat('plant', { color: 0x4f7a3a }); mat('pot', { color: 0xf3f0ea }); mat('painting', { color: 0xffffff, map: texPainting });
+  mat('sheet', { color: 0xf7f6f5, roughness: 0.95 }); mat('navy', { color: 0x1d3150, roughness: 0.95 }); mat('brown', { color: 0x6a4a33, roughness: 0.95 });
+  mat('headboard', { color: 0xa7b3a6, roughness: 0.95 }); mat('cream', { color: 0xe7e5e2 }); mat('lamp', { color: 0xeae8e5, emissive: 0xd9d5ce, emissiveIntensity: 0.55 });
+  mat('plant', { color: 0x4f7a3a }); mat('pot', { color: 0xf0efed }); mat('painting', { color: 0xffffff, map: texPainting });
   mat('letters', { color: 0xffffff, map: texLetters, transparent: true }); mat('screen', { color: 0xffffff, map: texScreen, emissive: 0x223355, emissiveIntensity: 0.25 });
-  mat('door', { color: 0xf3f1ec, roughness: 0.5 }); mat('pergola', { color: 0xf4f1ea, roughness: 0.7 }); mat('stringLight', { color: 0xffd27a, emissive: 0xffc04a, emissiveIntensity: 1 });
+  mat('door', { color: 0xf1f0ee, roughness: 0.5 }); mat('pergola', { color: 0xf1f0ed, roughness: 0.7 }); mat('stringLight', { color: 0xc7c0b2, emissive: 0xffc04a, emissiveIntensity: 1 });
 
   var root = new T.Group(); scene.add(root);
   var G = { shell: new T.Group(), walls: new T.Group(), furn: new T.Group(), decor: new T.Group(), labels: new T.Group() };
@@ -425,7 +425,7 @@ footer{grid-column:1/3;padding:8px 18px 10px;background:var(--crema);border-top:
     g.font = '600 44px system-ui,-apple-system,Segoe UI,sans-serif'; var w = Math.min(600, g.measureText(text).width + 60), x = (640 - w) / 2;
     g.fillStyle = sel ? 'rgba(122,94,26,0.96)' : 'rgba(42,15,46,0.88)';
     g.beginPath(); g.moveTo(x + 22, 18); g.lineTo(x + w, 18); g.lineTo(x + w, 80); g.lineTo(x + w - 22, 102); g.lineTo(x, 102); g.lineTo(x, 40); g.closePath(); g.fill();
-    g.fillStyle = '#D4A84A'; g.fillRect(x, 40, 7, 62); g.fillStyle = '#faf6f0'; g.textBaseline = 'middle'; g.fillText(text, x + 30, 61);
+    g.fillStyle = '#D4A84A'; g.fillRect(x, 40, 7, 62); g.fillStyle = '#f6f5f4'; g.textBaseline = 'middle'; g.fillText(text, x + 30, 61);
     var t = new T.CanvasTexture(c); t.encoding = T.sRGBEncoding; return t;
   }
   function buildLabels() {

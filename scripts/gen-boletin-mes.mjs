@@ -70,9 +70,9 @@ const agendaHtml = arts.map(a => `
 const html = `<!DOCTYPE html>
 <html lang="es"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="robots" content="noindex,nofollow">
 <title>Hestía · ${esc(N.edition.es)}</title></head>
-<body style="margin:0;background:#F5EFE4;">
-<table role="presentation" width="100%" cellspacing="0" cellpadding="0" style="background:#F5EFE4;"><tr><td align="center" style="padding:24px 12px;">
-<table role="presentation" width="600" cellspacing="0" cellpadding="0" style="max-width:600px;width:100%;background:#FFFCF6;border-radius:12px 0 12px 0;overflow:hidden;">
+<body style="margin:0;background:#EEEDEB;">
+<table role="presentation" width="100%" cellspacing="0" cellpadding="0" style="background:#EEEDEB;"><tr><td align="center" style="padding:24px 12px;">
+<table role="presentation" width="600" cellspacing="0" cellpadding="0" style="max-width:600px;width:100%;background:#FBFBFA;border-radius:12px 0 12px 0;overflow:hidden;">
   <tr><td style="background:#2A0F2E;padding:28px;text-align:center;">
     <div style="display:inline-block;width:40px;height:40px;line-height:40px;background:#C87A45;border-radius:10px 0 10px 0;color:#fff;font:600 20px Georgia,serif;">H</div>
     <p style="margin:10px 0 0;font:500 16px Georgia,serif;letter-spacing:.12em;color:#fff;">HESTÍA</p>

@@ -147,16 +147,22 @@ Aplica estas medidas a TODO el código nuevo y revisa lo existente cuando lo toq
 - **Edita lo existente** antes de crear archivos nuevos. Pregunta antes de añadir un módulo si no es estrictamente necesario.
 - **Sin backwards-compat** por defecto: si renombras o eliminas algo, hazlo limpio.
 
-### Fondo de la web · arena (regla siempre)
+### Fondo de la web · cal viva que respira (regla siempre)
 
-El fondo claro de la marca es **arena / beis cálido** (decisión del propietario, nov 2026: prefiere la arena al blanco azulado «sal y mar», que se probó y se descartó). Los tokens y sus valores:
+El fondo claro de la marca es **cal viva**: un blanco de cal casi neutro, apenas cálido (matiz 40°, saturación ~9 %). Decisión del propietario, nov 2026, tras probar el blanco azulado «sal y mar» y la arena / beis (ambos descartados; la arena se leía a plantilla de IA). Tokens:
 
-- `--crema` **#FAF6F0** (fondo de página y texto claro sobre oscuro) · `--arena` **#F0E8D5** · `--arena-dk` **#E4D9BE**.
-- Degradado de la cabecera de día (`--crema-alba/dawn/noon/dusk/warm`): de #F5E8DB a #E8D4A6, en la familia cálida de la arena.
-- **Nunca** volver a un blanco azulado o gris frío como fondo claro de página, tarjeta, PDF o gráfico nuevo. Si necesitas un tono claro nuevo, deriva uno de la arena con la misma luminosidad.
-- Excepción: los vídeos ya publicados (`docs/assets/hestia-*.mp4` y `docs/assets/video/`) conservan su fondo azulado a propuesta del propietario; los nuevos que se hagan, en arena.
-- Los fondos de aviso (`--warn-bg` #F5E8D4 y #FFF3CD) siguen cálidos pero algo más saturados, para que un aviso se distinga de un fondo de página.
-- Las paredes del plano 3D son materiales del piso real y conservan su tono; el fondo de la escena es #F4EEE2.
+- `--crema` **#F6F5F4** (fondo de página y texto claro sobre oscuro) · `--arena` **#E6E4DF** · `--arena-dk` **#D7D3CB**. Los nombres no cambian; el valor base es la cal.
+- **El tono respira**: `docs/assets/color-minuto.js` (cargado antes de `styles.css` en cada HTML) recalcula cada minuto el matiz de los 8 tokens de cal (`--crema`, `--arena`, `--arena-dk`, `--crema-alba/dawn/noon/dusk/warm`) a partir de la hora, igual para todos (6° por minuto, vuelta completa cada hora: greige, salvia, bruma, azul pizarra, lila, rosa palo), con saturación baja (0,12) y luminosidad intacta, así el contraste no cambia. `styles.css` los registra con `@property` y un `transition` de 24 s en `:root` para que se funda despacio (sin transición con `prefers-reduced-motion`). Los PDF, las páginas estáticas generadas y los valores base citados aquí son la cal fija. En CSS nuevo usa siempre los tokens, no un hex de cal, para que acompañe el cambio. Las pestañas ocultas repintan al volver.
+- La cabecera de día es plana: `--crema` sin degradado, sin brillos dorados ni cobre, con un filete turquesa fino abajo. **Nunca** mezclar arena, oro o cobre en el fondo de la cabecera ni de una sección clara.
+- Los tonos `--crema-alba/dawn/noon/dusk/warm` (secciones de día) son variaciones de luminosidad de la misma cal, sin cambiar de matiz.
+- **Nunca** volver a la arena / beis ni al blanco azulado o gris frío como fondo claro de página, tarjeta, PDF o gráfico nuevo. Si necesitas un tono claro nuevo, deriva uno de la cal (matiz 40°, saturación baja) con la misma luminosidad.
+- Excepción: los vídeos ya publicados (`docs/assets/hestia-*.mp4` y `docs/assets/video/`) conservan su fondo azulado a propuesta del propietario; los nuevos que se hagan, en cal viva.
+- Los fondos de aviso (`--warn-bg` #F5E8D4 y #FFF3CD) siguen cálidos y más saturados, para que un aviso se distinga de un fondo de página.
+- Las paredes del plano 3D son materiales del piso real y conservan su tono; el fondo de la escena es #EDECE9.
+
+### Recursos gráficos «de IA» · prohibidos (regla siempre)
+
+Además del filo de color sobre tarjetas (ver «Marca de tarjeta»), **ninguna caja, aviso, cita ni tarjeta lleva raya de acento a un lado** (`border-left` de 2 px o más, o barra `::before` lateral), ni siquiera en avisos, errores, citas, KPI o el panel de admin. Un aviso se distingue por su fondo tintado y su texto, no por una barra. Tampoco: bordes de gradiente, texto con degradado, tarjetas de cristal con brillo, iconos dentro de círculo de color, emojis de adorno, ni cifras gigantes con subtítulo en mayúsculas. Si dudas de si algo «se lee a plantilla», no lo pongas.
 
 ### Color por Hestía · identidad (regla siempre)
 
@@ -198,7 +204,7 @@ Todos los iconos de la web salen del sprite propio (`IconSprite` en `shared.jsx`
 
 - **Toda sección con fondo oscuro lleva la clase `on-dark`** (en `styles.css`: fija el color de texto por defecto en claro, `--crema`). Así, si un elemento olvida declarar su color, hereda claro (legible), no el oscuro de página.
 - **Contrapartida obligatoria**: toda superficie clara anidada (tarjeta blanca, input, píldora clara) sobre un fondo oscuro **declara su propio color de texto oscuro** (`color: var(--ink)`), para no heredar claro-sobre-blanco.
-- **Nunca** uses `--ink`, `--ink-soft` ni un acento oscuro (de marca) para texto que va directo sobre un fondo oscuro. Usa los tonos crema (`--crema`, `rgba(240,232,213,...)`).
+- **Nunca** uses `--ink`, `--ink-soft` ni un acento oscuro (de marca) para texto que va directo sobre un fondo oscuro. Usa los tonos crema (`--crema`, `rgba(230,228,223,...)`).
 - **Cubre todos los estados**, no solo el inicial: `:hover`, `:focus`, `:disabled`, vacío, cargando y "no disponible". El audit de contraste solo recorre el estado inicial de cada página, así que los estados que aparecen tras interactuar (resultados, no disponible, desplegables) no los caza: revísalos a mano.
 
 ## Tests y verificación

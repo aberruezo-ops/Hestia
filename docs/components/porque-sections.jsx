@@ -155,7 +155,7 @@ const BRAND_PALETTE = [
     es: { name: 'Siena', story: 'El crepúsculo sobre el Mediterráneo. Cuando el sol toca el agua el cielo se vuelve de este color exacto: naranja rojizo, cálido, irrepetible.' },
     en: { name: 'Sienna', story: 'Dusk over the Mediterranean. When the sun touches the water the sky turns this exact colour: red-orange, warm, unrepeatable.' },
   },
-  { hex: '#F0E8D5',
+  { hex: '#E6E4DF',
     es: { name: 'Arena', story: 'La calima y la arena del Sahara. El polvo fino que llega en verano convierte la luz en algo sólido. Hestía huele a esto: sal, arena, lino.' },
     en: { name: 'Sand', story: 'Calima and Saharan sand. The fine dust that arrives in summer turns the light solid. Hestía smells of this: salt, sand, linen.' },
   },

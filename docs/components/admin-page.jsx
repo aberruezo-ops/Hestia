@@ -2729,7 +2729,7 @@ ${clausulaSegunda}
   :root {
     --ber: #3D1A35; --ber-dk: #2A0F2E; --ber-lt: #4E2446;
     --sol: #3AAABB; --vt: #B86A3C; --vt-dk: #8A4A24;
-    --arena: #F0E8D5; --arena-dk: #E4D9BE;
+    --arena: #E6E4DF; --arena-dk: #D7D3CB;
   }
   /* ── Notification bar (excluded from pdf capture) ─── */
   #gen-bar {
@@ -2904,7 +2904,7 @@ ${clausulaSegunda}
     border-bottom: 0.3pt solid var(--arena-dk);
     color: var(--ber);
   }
-  tr:nth-child(even) td { background: rgba(240,232,213,0.40); }
+  tr:nth-child(even) td { background: rgba(230,228,223,0.40); }
   td.num { text-align: right; font-variant-numeric: tabular-nums; white-space: nowrap; font-weight: 600; color: var(--ber-dk); }
   td .ed { color: var(--ber-lt); font-size: 8.5pt; font-style: italic; }
 
@@ -2949,7 +2949,6 @@ ${clausulaSegunda}
     margin-top: 8mm;
     padding: 5mm;
     background: var(--arena);
-    border-left: 3pt solid var(--sol);
     border-radius: 1mm;
     font-family: 'Playfair Display', Georgia, serif;
     font-style: italic;
@@ -3598,7 +3597,7 @@ const APT_NAMES   = { vm: 'Mar', vt: 'Thalassa', vs: 'Salinas' };
 //   Salinas  → #D4A84A albero      (amarillo del amanecer)
 const APT_COLOR   = { vm: '#6B7A3A', vt: '#B86A3C', vs: '#D4A84A' };
 // Albero es claro: el chip necesita texto oscuro para legibilidad.
-const APT_TEXT    = { vm: '#FFFBF4', vt: '#FFFBF4', vs: '#3D1A35' };
+const APT_TEXT    = { vm: '#FAFAF9', vt: '#FAFAF9', vs: '#3D1A35' };
 
 // Tasas de comisión por defecto (% sobre ingreso_total). Editable
 // por reserva: la UI los usa solo como sugerencia inicial cuando
@@ -6025,7 +6024,7 @@ const ReservasTab = ({ token, refreshKey, onOpenContract }) => {
 
   // --- KPI Card helper ---
   const KpiCard = ({ label, value, sub, accent }) => (
-    <div className="rv-kpi" style={accent ? {borderLeftColor: accent} : null}>
+    <div className="rv-kpi">
       <div className="rv-kpi-label">{label}</div>
       <div className="rv-kpi-value">{value}</div>
       {sub && <div className="rv-kpi-sub">{sub}</div>}

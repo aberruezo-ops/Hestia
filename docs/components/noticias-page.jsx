@@ -393,7 +393,7 @@ const ArticleCardWithZone = ({ article, cat, lang }) => (
 const LEAF_COLORS = [
   { face: '#6B7A3A', back: '#9CA870' }, // Mar · olivo
   { face: '#B86A3C', back: '#D9A47E' }, // Thalassa · cobre
-  { face: '#D4A84A', back: '#E8CD94' }, // Salinas · dorado
+  { face: '#D4A84A', back: '#C8C1B4' }, // Salinas · dorado
 ];
 const _leafSprite = (hex) => {
   const c = document.createElement('canvas');

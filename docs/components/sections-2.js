@@ -126,10 +126,10 @@ const Team = ({
     y2: "1"
   }, /*#__PURE__*/React.createElement("stop", {
     offset: "0%",
-    stopColor: "rgba(240,232,213,0.25)"
+    stopColor: "rgba(230,228,223,0.25)"
   }), /*#__PURE__*/React.createElement("stop", {
     offset: "100%",
-    stopColor: "rgba(240,232,213,0)"
+    stopColor: "rgba(230,228,223,0)"
   }))), /*#__PURE__*/React.createElement("circle", {
     cx: "50",
     cy: "30",
@@ -184,10 +184,10 @@ const Team = ({
     y2: "1"
   }, /*#__PURE__*/React.createElement("stop", {
     offset: "0%",
-    stopColor: "rgba(240,232,213,0.25)"
+    stopColor: "rgba(230,228,223,0.25)"
   }), /*#__PURE__*/React.createElement("stop", {
     offset: "100%",
-    stopColor: "rgba(240,232,213,0)"
+    stopColor: "rgba(230,228,223,0)"
   }))), /*#__PURE__*/React.createElement("circle", {
     cx: "50",
     cy: "30",
@@ -362,7 +362,7 @@ const Ratings = ({
 };
 
 // --- RATINGS MARQUEE, cinta de plataformas/métricas bajo Ratings ---
-// Texto-only marquee: sin logos externos (cero deps). Arena #F0E8D5 sobre
+// Texto-only marquee: sin logos externos (cero deps). Arena #E6E4DF sobre
 // eggplant #2A0F2E (ratio ~11:1). Track duplicado para loop continuo.
 const RatingsMarquee = ({
   lang

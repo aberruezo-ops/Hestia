@@ -177,9 +177,9 @@ const CSS = `
 * { box-sizing: border-box; }
 
 :root {
-  --crema:      #FAF6F0;
-  --crema-warm: #F6E3C2;
-  --crema-dawn: #F2E6CE;
+  --crema:      #F6F5F4;
+  --crema-warm: #E0DDD8;
+  --crema-dawn: #E3E1DD;
   --ber:        #3D1A35;
   --ber-dk:     #2A0F2E;
   --ber-lt:     #4E2446;
@@ -295,7 +295,7 @@ a { color: var(--teal-dk); text-decoration: none; }
   filter: brightness(0) invert(1);
 }
 .logo--cream {
-  /* Convierte el teal a crema cálida (#F6E3C2) */
+  /* Convierte el teal a crema cálida (#E0DDD8) */
   filter: brightness(0) invert(1) sepia(60%) saturate(450%) hue-rotate(355deg) brightness(98%);
 }
 .logo--apt {
@@ -474,7 +474,6 @@ section.no-break {
   margin-top: 8mm;
   padding: 3mm 4mm;
   background: rgba(232, 194, 107, 0.10);
-  border-left: 1pt solid #3AAABB;
   break-inside: avoid;
   font-size: 9.5pt;
   line-height: 1.55;
@@ -1004,7 +1003,6 @@ section.no-break {
   line-height: 1.45;
   color: var(--ber-dk);
   background: rgba(232, 194, 107, 0.18);
-  border-left: 1pt solid var(--sol);
   border-radius: 1mm;
 }
 .place-level-tag {
@@ -1019,7 +1017,6 @@ section.no-break {
   margin: 4mm 0 5mm;
   padding: 3mm 4mm;
   background: rgba(141, 110, 99, 0.08);
-  border-left: 1pt solid var(--ber);
   border-radius: 1mm;
   page-break-inside: avoid;
 }
@@ -1039,7 +1036,7 @@ section.no-break {
 }
 
 .checkin-intro { margin: 0 0 4mm; font-size: 10pt; line-height: 1.6; color: var(--ink); }
-.checkin-notice { margin: 0 0 4mm; padding: 3mm 3.5mm; border-left: 1.2pt solid #3AAABB; background: rgba(58,170,187,.10); border-radius: 0 1.5mm 1.5mm 0; page-break-inside: avoid; }
+.checkin-notice { margin: 0 0 4mm; padding: 3mm 3.5mm; background: rgba(58,170,187,.10); border-radius: 0 1.5mm 1.5mm 0; page-break-inside: avoid; }
 .checkin-notice strong { display: block; margin-bottom: 1mm; font-size: 10.5pt; color: var(--ink); }
 .checkin-notice p { margin: 0; font-size: 9.5pt; line-height: 1.55; color: var(--ink); }
 .checkin-notice .checkin-notice-c { margin-top: 1.5mm; font-weight: 700; }
@@ -1062,7 +1059,7 @@ section.no-break {
   padding: 3mm 3.5mm;
   border: 0.5pt solid rgba(0,0,0,0.15);
   border-radius: 2mm;
-  background: rgba(255, 251, 244, 0.6);
+  background: rgba(250, 250, 249, 0.6);
   page-break-inside: avoid;
 }
 .checkin-mode-tag {
@@ -1087,7 +1084,6 @@ section.no-break {
   display: inline-block;
   padding: 2mm 4mm;
   background: rgba(232, 194, 107, 0.18);
-  border-left: 1pt solid var(--sol);
   border-radius: 1mm;
   margin: 1mm 0 1.5mm;
 }
@@ -1118,20 +1114,19 @@ section.no-break {
 }
 .airports-table { width: 100%; border-collapse: collapse; margin: 2mm 0 3mm; font-size: 9pt; }
 .airports-table th, .airports-table td { padding: 1.2mm 2mm; border-bottom: 0.3pt solid rgba(0,0,0,.15); text-align: left; vertical-align: top; }
-.airports-table th { font-size: 7.5pt; text-transform: uppercase; letter-spacing: 0.04em; color: var(--apt-c-dk); background: rgba(255,251,244,.6); }
+.airports-table th { font-size: 7.5pt; text-transform: uppercase; letter-spacing: 0.04em; color: var(--apt-c-dk); background: rgba(250,250,249,.6); }
 .airports-table td.num, .airports-table th.num { text-align: right; font-variant-numeric: tabular-nums; }
 .ap-code { font-family: monospace; font-weight: 700; color: var(--apt-c-dk); }
 .ap-notes { font-size: 8.5pt; color: var(--ink); line-height: 1.4; }
-.checkin-garbage { padding: 2mm 3mm; background: rgba(106,122,58,.08); border-left: 1pt solid #6B7A3A; border-radius: 1mm; margin-top: 1.5mm; }
+.checkin-garbage { padding: 2mm 3mm; background: rgba(106,122,58,.08); border-radius: 1mm; margin-top: 1.5mm; }
 .checkin-garbage p { margin: 0; font-size: 9pt; }
 .ae-route { margin: 3mm 0 0; }
 .ae-road { font-size: 9.5pt; font-weight: 700; color: var(--apt-c-dk); margin-bottom: 1.5mm; }
-.ae-item { margin: 0 0 2mm; padding-left: 3mm; border-left: 1pt solid var(--apt-c); }
+.ae-item { margin: 0 0 2mm; padding-left: 3mm; }
 .ae-item strong { font-size: 10pt; color: var(--ink); }
 .ae-town { font-size: 8.5pt; color: var(--ink-soft); }
 .ae-note { font-size: 9pt; color: var(--ink-soft); line-height: 1.5; }
 .ae-sublabel { font-size: 7.5pt; font-weight: 700; letter-spacing: .06em; text-transform: uppercase; color: var(--ink-soft); margin: 2mm 0 1.2mm; }
-.ae-item-break { border-left-color: #D69E2E; }
 .ae-kind { display: inline-block; font-size: 7pt; font-weight: 700; letter-spacing: .04em; text-transform: uppercase; color: #fff; background: var(--apt-c-dk); border-radius: 2mm; padding: 0.2mm 1.6mm; margin-right: 1.2mm; }
 .ae-kind-comprar { background: #B05A3C; }
 .ae-kind-descansar { background: #6E7F4E; }
@@ -1140,7 +1135,7 @@ section.no-break {
 .events-cal h3 { margin: 0 0 1.5mm; font-size: 12pt; color: var(--apt-c-dk); }
 .events-cal > p { font-size: 9.5pt; color: var(--ink-soft); margin: 0 0 3mm; }
 .events-cal-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 3mm; }
-.events-cal-month { border: 0.5pt solid rgba(0,0,0,.15); border-radius: 1.5mm; padding: 2mm 3mm; background: rgba(255,251,244,.5); page-break-inside: avoid; }
+.events-cal-month { border: 0.5pt solid rgba(0,0,0,.15); border-radius: 1.5mm; padding: 2mm 3mm; background: rgba(250,250,249,.5); page-break-inside: avoid; }
 .events-cal-head { display: flex; align-items: baseline; gap: 1.5mm; margin-bottom: 1mm; border-bottom: 0.3pt solid rgba(0,0,0,.1); padding-bottom: 1mm; }
 .events-cal-num { font-size: 8pt; color: var(--ink-soft); font-weight: 700; }
 .events-cal-name { font-size: 11pt; font-weight: 600; text-transform: capitalize; color: var(--apt-c-dk); }
@@ -1175,7 +1170,7 @@ section.no-break {
   border: 0.5pt solid rgba(0,0,0,0.15);
   border-radius: 2mm;
   padding: 3mm 3.5mm;
-  background: rgba(255, 251, 244, 0.6);
+  background: rgba(250, 250, 249, 0.6);
   page-break-inside: avoid;
 }
 .dish-head {
@@ -1217,7 +1212,6 @@ section.no-break {
   margin: 1.5mm 0;
   padding: 1.5mm 2.5mm;
   background: rgba(232, 194, 107, 0.14);
-  border-left: 1pt solid var(--sol);
   border-radius: 0.8mm;
   font-size: 8.5pt;
   line-height: 1.5;
@@ -1249,7 +1243,6 @@ section.no-break {
   margin-top: 2mm;
   padding: 2mm 3mm;
   background: rgba(var(--apt-rgb, 122, 90, 35), 0.04);
-  border-left: 2pt solid var(--apt-c-dk);
   border-radius: 8pt 0 8pt 0;
   break-inside: avoid;
   page-break-inside: avoid;
@@ -1340,7 +1333,6 @@ section.no-break {
   padding: 5mm 7mm;
   background: transparent;
   border: 0.8pt solid color-mix(in srgb, var(--apt-c) 30%, transparent);
-  border-left: 3pt solid var(--apt-c);
   border-radius: 6mm 0 6mm 0;
 }
 .dayplan-title {
@@ -1445,7 +1437,6 @@ section.no-break {
 .porque-quote {
   margin: 10mm 0 0;
   padding: 0 0 0 8mm;
-  border-left: 2pt solid var(--apt-c);
   break-inside: avoid;
 }
 .porque-quote p {
