@@ -39,7 +39,7 @@
   <link rel="preload" href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400..700;1,9..144,400..700&family=Hanken+Grotesk:wght@400;500;600;700&display=swap" as="style"/>
   <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400..700;1,9..144,400..700&family=Hanken+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet"/>
 <script src="/assets/color-scroll.js"></script>
-<link rel="stylesheet" href="assets/styles.css?v=1248"/>          <script type="application/ld+json">  {
+<link rel="stylesheet" href="assets/styles.css?v=1250"/>          <script type="application/ld+json">  {
   "@context": "https://schema.org",
   "@type": "FAQPage",
   "mainEntity": [
@@ -165,7 +165,7 @@
     } catch (e) { console.warn('reviews.json fetch failed', e); }
 
     for (const file of COMPONENT_FILES) {
-      const res = await fetch(file + '?cv=ccdf109aa6');
+      const res = await fetch(file + '?cv=89610260c1');
       if (!res.ok) throw new Error(`Failed to load ${file}: ${res.status}`);
       const code = await res.text();
       // eslint-disable-next-line no-eval
