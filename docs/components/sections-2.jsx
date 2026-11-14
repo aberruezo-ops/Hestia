@@ -81,8 +81,8 @@ const Team = ({ lang }) => {
               <svg viewBox="0 0 100 125" className="silhouette" preserveAspectRatio="xMidYMax meet">
                 <defs>
                   <linearGradient id="gA" x1="0" x2="0" y1="0" y2="1">
-                    <stop offset="0%" stopColor="rgba(223,235,236,0.25)"/>
-                    <stop offset="100%" stopColor="rgba(223,235,236,0)"/>
+                    <stop offset="0%" stopColor="rgba(240,232,213,0.25)"/>
+                    <stop offset="100%" stopColor="rgba(240,232,213,0)"/>
                   </linearGradient>
                 </defs>
                 <circle cx="50" cy="30" r="18" fill="url(#gA)"/>
@@ -106,8 +106,8 @@ const Team = ({ lang }) => {
               <svg viewBox="0 0 100 125" className="silhouette" preserveAspectRatio="xMidYMax meet">
                 <defs>
                   <linearGradient id="gF" x1="0" x2="0" y1="0" y2="1">
-                    <stop offset="0%" stopColor="rgba(223,235,236,0.25)"/>
-                    <stop offset="100%" stopColor="rgba(223,235,236,0)"/>
+                    <stop offset="0%" stopColor="rgba(240,232,213,0.25)"/>
+                    <stop offset="100%" stopColor="rgba(240,232,213,0)"/>
                   </linearGradient>
                 </defs>
                 <circle cx="50" cy="30" r="18" fill="url(#gF)"/>
@@ -226,7 +226,7 @@ const Ratings = ({ lang }) => {
 };
 
 // --- RATINGS MARQUEE, cinta de plataformas/métricas bajo Ratings ---
-// Texto-only marquee: sin logos externos (cero deps). Arena #DFEBEC sobre
+// Texto-only marquee: sin logos externos (cero deps). Arena #F0E8D5 sobre
 // eggplant #2A0F2E (ratio ~11:1). Track duplicado para loop continuo.
 const RatingsMarquee = ({ lang }) => {
   // Desglose por plataforma ('partial'), fuente única: platformScore (shared.jsx).

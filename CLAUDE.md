@@ -147,15 +147,16 @@ Aplica estas medidas a TODO el código nuevo y revisa lo existente cuando lo toq
 - **Edita lo existente** antes de crear archivos nuevos. Pregunta antes de añadir un módulo si no es estrictamente necesario.
 - **Sin backwards-compat** por defecto: si renombras o eliminas algo, hazlo limpio.
 
-### Fondo de la web · «sal y mar» (regla siempre)
+### Fondo de la web · arena (regla siempre)
 
-El fondo claro de la marca es **blanco azulado «sal y mar»**, no un crema cálido (el crema se leía a "web hecha por IA"). Los tokens conservan su nombre por compatibilidad, pero sus valores son estos:
+El fondo claro de la marca es **arena / beis cálido** (decisión del propietario, nov 2026: prefiere la arena al blanco azulado «sal y mar», que se probó y se descartó). Los tokens y sus valores:
 
-- `--crema` **#F1F6F6** (fondo de página y texto claro sobre oscuro) · `--arena` **#DFEBEC** · `--arena-dk` **#CCDEE1**.
-- Degradado de la cabecera de día (`--crema-alba/dawn/noon/dusk/warm`): de #EFF3F6 a #CFE3E8, todo en la familia del teal `--sol`.
-- **Nunca** reintroducir beiges, arenas ni cremas cálidos (tonos tipo #FAF6F0, #F0E8D5, #F5EFE4) en CSS, JSX, vídeos, PDFs ni gráficos. Si necesitas un tono claro nuevo, deriva uno del teal con la misma luminosidad.
-- Excepción deliberada: los fondos de aviso (`--warn-bg` #F5E8D4 y #FFF3CD) siguen cálidos para que un aviso se distinga de un fondo de página.
-- Las paredes del plano 3D son materiales del piso real y conservan su tono; el fondo de la escena sí es #E6EFF0.
+- `--crema` **#FAF6F0** (fondo de página y texto claro sobre oscuro) · `--arena` **#F0E8D5** · `--arena-dk` **#E4D9BE**.
+- Degradado de la cabecera de día (`--crema-alba/dawn/noon/dusk/warm`): de #F5E8DB a #E8D4A6, en la familia cálida de la arena.
+- **Nunca** volver a un blanco azulado o gris frío como fondo claro de página, tarjeta, PDF o gráfico nuevo. Si necesitas un tono claro nuevo, deriva uno de la arena con la misma luminosidad.
+- Excepción: los vídeos ya publicados (`docs/assets/hestia-*.mp4` y `docs/assets/video/`) conservan su fondo azulado a propuesta del propietario; los nuevos que se hagan, en arena.
+- Los fondos de aviso (`--warn-bg` #F5E8D4 y #FFF3CD) siguen cálidos pero algo más saturados, para que un aviso se distinga de un fondo de página.
+- Las paredes del plano 3D son materiales del piso real y conservan su tono; el fondo de la escena es #F4EEE2.
 
 ### Color por Hestía · identidad (regla siempre)
 
@@ -197,7 +198,7 @@ Todos los iconos de la web salen del sprite propio (`IconSprite` en `shared.jsx`
 
 - **Toda sección con fondo oscuro lleva la clase `on-dark`** (en `styles.css`: fija el color de texto por defecto en claro, `--crema`). Así, si un elemento olvida declarar su color, hereda claro (legible), no el oscuro de página.
 - **Contrapartida obligatoria**: toda superficie clara anidada (tarjeta blanca, input, píldora clara) sobre un fondo oscuro **declara su propio color de texto oscuro** (`color: var(--ink)`), para no heredar claro-sobre-blanco.
-- **Nunca** uses `--ink`, `--ink-soft` ni un acento oscuro (de marca) para texto que va directo sobre un fondo oscuro. Usa los tonos crema (`--crema`, `rgba(223,235,236,...)`).
+- **Nunca** uses `--ink`, `--ink-soft` ni un acento oscuro (de marca) para texto que va directo sobre un fondo oscuro. Usa los tonos crema (`--crema`, `rgba(240,232,213,...)`).
 - **Cubre todos los estados**, no solo el inicial: `:hover`, `:focus`, `:disabled`, vacío, cargando y "no disponible". El audit de contraste solo recorre el estado inicial de cada página, así que los estados que aparecen tras interactuar (resultados, no disponible, desplegables) no los caza: revísalos a mano.
 
 ## Tests y verificación

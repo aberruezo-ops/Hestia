@@ -768,7 +768,7 @@ const IndaloNeonMark = () => (
 );
 const IndaloBordadoMark = () => (
   <svg viewBox="0 0 24 24" fill="none" aria-hidden="true">
-    <rect x="1" y="1" width="22" height="22" rx="2" fill="#D2E2E5" opacity="0.14"/>
+    <rect x="1" y="1" width="22" height="22" rx="2" fill="#EFE3C8" opacity="0.14"/>
     <g stroke="#B86A3C" strokeWidth="1.4" strokeLinecap="butt" strokeDasharray="0.7 0.5">
       <path d={IND_ARCH}/><path d={IND_BODY}/><path d={IND_ARMS}/><path d={IND_LEGS}/>
     </g>

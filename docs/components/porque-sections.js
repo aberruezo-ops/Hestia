@@ -240,7 +240,7 @@ const BRAND_PALETTE = [{
     story: 'Dusk over the Mediterranean. When the sun touches the water the sky turns this exact colour: red-orange, warm, unrepeatable.'
   }
 }, {
-  hex: '#DFEBEC',
+  hex: '#F0E8D5',
   es: {
     name: 'Arena',
     story: 'La calima y la arena del Sahara. El polvo fino que llega en verano convierte la luz en algo sólido. Hestía huele a esto: sal, arena, lino.'

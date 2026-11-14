@@ -177,9 +177,9 @@ const CSS = `
 * { box-sizing: border-box; }
 
 :root {
-  --crema:      #F1F6F6;
-  --crema-warm: #DFEDEE;
-  --crema-dawn: #E6F1F2;
+  --crema:      #FAF6F0;
+  --crema-warm: #F6E3C2;
+  --crema-dawn: #F2E6CE;
   --ber:        #3D1A35;
   --ber-dk:     #2A0F2E;
   --ber-lt:     #4E2446;
@@ -295,7 +295,7 @@ a { color: var(--teal-dk); text-decoration: none; }
   filter: brightness(0) invert(1);
 }
 .logo--cream {
-  /* Convierte el teal a crema cálida (#DFEDEE) */
+  /* Convierte el teal a crema cálida (#F6E3C2) */
   filter: brightness(0) invert(1) sepia(60%) saturate(450%) hue-rotate(355deg) brightness(98%);
 }
 .logo--apt {
@@ -1062,7 +1062,7 @@ section.no-break {
   padding: 3mm 3.5mm;
   border: 0.5pt solid rgba(0,0,0,0.15);
   border-radius: 2mm;
-  background: rgba(248, 251, 251, 0.6);
+  background: rgba(255, 251, 244, 0.6);
   page-break-inside: avoid;
 }
 .checkin-mode-tag {
@@ -1118,7 +1118,7 @@ section.no-break {
 }
 .airports-table { width: 100%; border-collapse: collapse; margin: 2mm 0 3mm; font-size: 9pt; }
 .airports-table th, .airports-table td { padding: 1.2mm 2mm; border-bottom: 0.3pt solid rgba(0,0,0,.15); text-align: left; vertical-align: top; }
-.airports-table th { font-size: 7.5pt; text-transform: uppercase; letter-spacing: 0.04em; color: var(--apt-c-dk); background: rgba(248,251,251,.6); }
+.airports-table th { font-size: 7.5pt; text-transform: uppercase; letter-spacing: 0.04em; color: var(--apt-c-dk); background: rgba(255,251,244,.6); }
 .airports-table td.num, .airports-table th.num { text-align: right; font-variant-numeric: tabular-nums; }
 .ap-code { font-family: monospace; font-weight: 700; color: var(--apt-c-dk); }
 .ap-notes { font-size: 8.5pt; color: var(--ink); line-height: 1.4; }
@@ -1140,7 +1140,7 @@ section.no-break {
 .events-cal h3 { margin: 0 0 1.5mm; font-size: 12pt; color: var(--apt-c-dk); }
 .events-cal > p { font-size: 9.5pt; color: var(--ink-soft); margin: 0 0 3mm; }
 .events-cal-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 3mm; }
-.events-cal-month { border: 0.5pt solid rgba(0,0,0,.15); border-radius: 1.5mm; padding: 2mm 3mm; background: rgba(248,251,251,.5); page-break-inside: avoid; }
+.events-cal-month { border: 0.5pt solid rgba(0,0,0,.15); border-radius: 1.5mm; padding: 2mm 3mm; background: rgba(255,251,244,.5); page-break-inside: avoid; }
 .events-cal-head { display: flex; align-items: baseline; gap: 1.5mm; margin-bottom: 1mm; border-bottom: 0.3pt solid rgba(0,0,0,.1); padding-bottom: 1mm; }
 .events-cal-num { font-size: 8pt; color: var(--ink-soft); font-weight: 700; }
 .events-cal-name { font-size: 11pt; font-weight: 600; text-transform: capitalize; color: var(--apt-c-dk); }
@@ -1175,7 +1175,7 @@ section.no-break {
   border: 0.5pt solid rgba(0,0,0,0.15);
   border-radius: 2mm;
   padding: 3mm 3.5mm;
-  background: rgba(248, 251, 251, 0.6);
+  background: rgba(255, 251, 244, 0.6);
   page-break-inside: avoid;
 }
 .dish-head {
