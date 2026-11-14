@@ -22,10 +22,14 @@
     return '#' + f(h + 1 / 3) + f(h) + f(h - 1 / 3);
   }
 
+  var DEG_PER_PX = 0.07;
+  var quieto = window.matchMedia && matchMedia('(prefers-reduced-motion: reduce)').matches;
+  var pendiente = false;
+
   function paint() {
-    var d = new Date();
-    var minuto = d.getHours() * 60 + d.getMinutes();
-    var h = ((minuto * 6 + 40) % 360) / 360;
+    pendiente = false;
+    var y = Math.max(window.pageYOffset || 0, 0);
+    var h = ((40 + y * DEG_PER_PX) % 360) / 360;
     var st = document.documentElement.style;
     Object.keys(BASE).forEach(function (k) {
       var l = LIGHT[k];
@@ -33,11 +37,13 @@
     });
   }
 
-  function next() {
-    setTimeout(function () { paint(); next(); }, 60000 - (Date.now() % 60000) + 50);
+  function alScroll() {
+    if (!pendiente) { pendiente = true; requestAnimationFrame(paint); }
   }
 
-  paint();
-  next();
-  document.addEventListener('visibilitychange', function () { if (!document.hidden) paint(); });
+  if (!quieto) {
+    paint();
+    window.addEventListener('scroll', alScroll, { passive: true });
+    window.addEventListener('pageshow', paint);
+  }
 })();

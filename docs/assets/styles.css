@@ -141,7 +141,7 @@
   .vintro-skip { padding: 8px 14px; font-size: 11px; }
 }
 
-/* Cal viva que respira: color-minuto.js recalcula el tono cada minuto y estas propiedades registradas lo funden despacio. */
+/* Cal viva que respira: color-scroll.js desplaza el tono con el scroll y estas propiedades registradas suavizan el paso. */
 @property --crema { syntax: '<color>'; inherits: true; initial-value: #F6F5F4; }
 @property --arena { syntax: '<color>'; inherits: true; initial-value: #E6E4DF; }
 @property --arena-dk { syntax: '<color>'; inherits: true; initial-value: #D7D3CB; }
@@ -151,14 +151,14 @@
 @property --crema-dusk { syntax: '<color>'; inherits: true; initial-value: #CFCABF; }
 @property --crema-warm { syntax: '<color>'; inherits: true; initial-value: #E0DDD8; }
 :root {
-  transition: --crema 24s ease-in-out,
-              --arena 24s ease-in-out,
-              --arena-dk 24s ease-in-out,
-              --crema-alba 24s ease-in-out,
-              --crema-dawn 24s ease-in-out,
-              --crema-noon 24s ease-in-out,
-              --crema-dusk 24s ease-in-out,
-              --crema-warm 24s ease-in-out;
+  transition: --crema .45s ease-out,
+              --arena .45s ease-out,
+              --arena-dk .45s ease-out,
+              --crema-alba .45s ease-out,
+              --crema-dawn .45s ease-out,
+              --crema-noon .45s ease-out,
+              --crema-dusk .45s ease-out,
+              --crema-warm .45s ease-out;
 }
 @media (prefers-reduced-motion: reduce) { :root { transition: none; } }
 
@@ -952,7 +952,7 @@ p  { line-height: 1.65; font-weight: 300; }
     #1A0A1E 100%
   );
   background-size: 220% 220%;
-  animation: mmAuroraBase 24s ease-in-out infinite;
+  animation: mmAuroraBase .45s ease-out infinite;
   backdrop-filter: blur(20px);
   -webkit-backdrop-filter: blur(20px);
   color: var(--arena);
@@ -7911,7 +7911,7 @@ body[data-apt="salinas"] a.apt-page-reserve-btn:hover {
     radial-gradient(circle 1.5px at 53% 42%, rgba(230,228,223,1) 0%, transparent 100%);
   background-size: 100% 100%;
   opacity: 0;
-  animation: starsWink 24s ease-in-out infinite;
+  animation: starsWink .45s ease-out infinite;
   animation-delay: -4s;
 }
 
