@@ -1087,7 +1087,9 @@ const AptFloorPlan = ({
     className: "apt-fp-3d-note"
   }, es ? 'Toca una estancia para ver sus fotos. ' : 'Tap a room to see its photos. ', /*#__PURE__*/React.createElement("a", {
     href: full
-  }, es ? 'Abrir a pantalla completa' : 'Open full screen'))));
+  }, es ? 'Abrir a pantalla completa' : 'Open full screen')), /*#__PURE__*/React.createElement("p", {
+    className: "apt-fp-disclaimer"
+  }, /*#__PURE__*/React.createElement("strong", null, es ? 'Plano orientativo, no a escala.' : 'Approximate plan, not to scale.'), ' ', es ? 'Está hecho a partir de la distribución y de las fotos, y algunas dimensiones no se ajustan a la realidad. Sirve para que te hagas una idea de cómo se reparten las estancias, no como plano técnico ni con valor contractual. Si necesitas una medida concreta, pregúntanos.' : 'It is based on the layout and the photos, and some dimensions do not match reality. It is meant to give you an idea of how the rooms are arranged, not as a technical drawing or a contractual document. If you need a specific measurement, just ask us.')));
 };
 
 // --- Mini reseñas antes del calendario ---

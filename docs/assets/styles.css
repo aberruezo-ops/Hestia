@@ -6778,6 +6778,16 @@ body[data-apt="salinas"] a.apt-page-reserve-btn:hover {
   color: var(--ink-soft, #3D1A35);
 }
 .apt-fp-3d-note a { color: var(--sol-text, #176E80); font-weight: 600; }
+.apt-fp-disclaimer {
+  max-width: 62ch;
+  margin: 14px auto 0;
+  text-align: center;
+  font-size: 12.5px;
+  line-height: 1.6;
+  color: var(--ink-soft, #3D1A35);
+  opacity: .85;
+}
+.apt-fp-disclaimer strong { font-weight: 600; color: var(--ink, #2A0F2E); }
 @media (max-width: 600px) {
   .apt-floorplan { padding: 48px var(--page-pad); }
   .apt-fp-live { border-radius: 12px 0 12px 0; height: 420px; }
