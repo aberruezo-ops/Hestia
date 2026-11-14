@@ -6593,6 +6593,7 @@ const DirectBookingModal = ({
 // Banda compacta + trigger. Se coloca encima del calendario en cada
 // Hestía (y donde se quiera en el home). Al pulsar el botón, abre el
 // modal con carrusel y stat ribbon.
+const DIRECT_LEDGER = lang => lang === 'es' ? [['Comisiones', '0 %'], ['Tu precio', 'igualado y mejorado'], ['Respuesta', 'menos de 2 h'], ['Pago', 'señal ~20 %, resto a la llegada'], ['Ahorro', 'hasta un 10 % aprox.']] : [['Commissions', '0%'], ['Your price', 'matched and beaten'], ['Reply', 'under 2 h'], ['Payment', '~20% deposit, balance on arrival'], ['Saving', 'up to ~10%']];
 const DirectBookingPerks = ({
   lang
 }) => {
@@ -6602,34 +6603,49 @@ const DirectBookingPerks = ({
   // porque sino aparecían DOS modales superpuestos en home/apt y al
   // cerrar uno el otro quedaba bloqueando la página.
   return /*#__PURE__*/React.createElement(React.Fragment, null, /*#__PURE__*/React.createElement("section", {
-    className: "dbt-band dbt-band-animated"
+    className: "dbt-band"
   }, /*#__PURE__*/React.createElement("div", {
     className: "container dbt-inner"
+  }, /*#__PURE__*/React.createElement("div", {
+    className: "dbt-head reveal"
   }, /*#__PURE__*/React.createElement("span", {
     className: "eyebrow dbt-eyebrow"
-  }, /*#__PURE__*/React.createElement("span", {
-    className: "dbt-eyebrow-dot",
-    "aria-hidden": "true"
-  }), lang === 'es' ? 'Reserva directa' : 'Direct booking'), /*#__PURE__*/React.createElement("h3", {
+  }, lang === 'es' ? 'Reserva directa' : 'Direct booking'), /*#__PURE__*/React.createElement("h3", {
     className: "dbt-title"
-  }, lang === 'es' ? /*#__PURE__*/React.createElement(React.Fragment, null, "Reserva directa, ", /*#__PURE__*/React.createElement("em", null, "siempre"), " mejor.") : /*#__PURE__*/React.createElement(React.Fragment, null, "Booking direct is ", /*#__PURE__*/React.createElement("em", null, "always"), " better.")), /*#__PURE__*/React.createElement("div", {
+  }, lang === 'es' ? /*#__PURE__*/React.createElement(React.Fragment, null, "Reserva directa, ", /*#__PURE__*/React.createElement("em", null, "siempre"), " mejor.") : /*#__PURE__*/React.createElement(React.Fragment, null, "Booking direct is ", /*#__PURE__*/React.createElement("em", null, "always"), " better."))), /*#__PURE__*/React.createElement("div", {
+    className: "dbt-ledger on-dark reveal"
+  }, /*#__PURE__*/React.createElement("p", {
+    className: "dbt-ledger-cap"
+  }, lang === 'es' ? 'Lo que tienes al reservar con nosotros' : 'What you get booking with us'), /*#__PURE__*/React.createElement("ul", {
+    className: "dbt-rows"
+  }, DIRECT_LEDGER(lang).map(([k, v], i) => /*#__PURE__*/React.createElement("li", {
+    key: k,
+    className: "dbt-row",
+    style: {
+      '--i': i
+    }
+  }, /*#__PURE__*/React.createElement("span", {
+    className: "dbt-k"
+  }, k), /*#__PURE__*/React.createElement("span", {
+    className: "dbt-lead",
+    "aria-hidden": "true"
+  }), /*#__PURE__*/React.createElement("span", {
+    className: "dbt-v"
+  }, v)))), /*#__PURE__*/React.createElement("div", {
     className: "dbt-actions"
   }, /*#__PURE__*/React.createElement("button", {
     type: "button",
     className: "dbt-btn",
     onClick: () => setOpen(true),
     "aria-haspopup": "dialog"
-  }, /*#__PURE__*/React.createElement("span", {
-    className: "dbt-btn-pulse",
-    "aria-hidden": "true"
-  }), /*#__PURE__*/React.createElement("span", null, lang === 'es' ? 'Ver todas las ventajas' : 'See all perks'), /*#__PURE__*/React.createElement("span", {
+  }, /*#__PURE__*/React.createElement("span", null, lang === 'es' ? 'Ver todas las ventajas' : 'See all perks'), /*#__PURE__*/React.createElement("span", {
     className: "dbt-arrow",
     "aria-hidden": "true"
   }, "→")), /*#__PURE__*/React.createElement(DirectVideoLink, {
     lang: lang,
     button: true,
     className: "dbt-btn dbt-btn-ghost"
-  })))), open && /*#__PURE__*/React.createElement(DirectBookingModal, {
+  }))))), open && /*#__PURE__*/React.createElement(DirectBookingModal, {
     lang: lang,
     onClose: () => setOpen(false)
   }));

@@ -3537,6 +3537,20 @@ const DirectBookingModal = ({ lang, onClose }) => {
 // Banda compacta + trigger. Se coloca encima del calendario en cada
 // Hestía (y donde se quiera en el home). Al pulsar el botón, abre el
 // modal con carrusel y stat ribbon.
+const DIRECT_LEDGER = (lang) => lang === 'es' ? [
+  ['Comisiones', '0 %'],
+  ['Tu precio', 'igualado y mejorado'],
+  ['Respuesta', 'menos de 2 h'],
+  ['Pago', 'señal ~20 %, resto a la llegada'],
+  ['Ahorro', 'hasta un 10 % aprox.'],
+] : [
+  ['Commissions', '0%'],
+  ['Your price', 'matched and beaten'],
+  ['Reply', 'under 2 h'],
+  ['Payment', '~20% deposit, balance on arrival'],
+  ['Saving', 'up to ~10%'],
+];
+
 const DirectBookingPerks = ({ lang }) => {
   const [open, setOpen] = React.useState(false);
   // El listener global hestia:open-direct-perks vive en WidgetStack
@@ -3545,29 +3559,39 @@ const DirectBookingPerks = ({ lang }) => {
   // cerrar uno el otro quedaba bloqueando la página.
   return (
     <>
-      <section className="dbt-band dbt-band-animated">
+      <section className="dbt-band">
         <div className="container dbt-inner">
-          <span className="eyebrow dbt-eyebrow">
-            <span className="dbt-eyebrow-dot" aria-hidden="true"></span>
-            {lang === 'es' ? 'Reserva directa' : 'Direct booking'}
-          </span>
-          <h3 className="dbt-title">
-            {lang === 'es'
-              ? <>Reserva directa, <em>siempre</em> mejor.</>
-              : <>Booking direct is <em>always</em> better.</>}
-          </h3>
-          <div className="dbt-actions">
-            <button
-              type="button"
-              className="dbt-btn"
-              onClick={() => setOpen(true)}
-              aria-haspopup="dialog"
-            >
-              <span className="dbt-btn-pulse" aria-hidden="true"></span>
-              <span>{lang === 'es' ? 'Ver todas las ventajas' : 'See all perks'}</span>
-              <span className="dbt-arrow" aria-hidden="true">→</span>
-            </button>
-            <DirectVideoLink lang={lang} button className="dbt-btn dbt-btn-ghost" />
+          <div className="dbt-head reveal">
+            <span className="eyebrow dbt-eyebrow">{lang === 'es' ? 'Reserva directa' : 'Direct booking'}</span>
+            <h3 className="dbt-title">
+              {lang === 'es'
+                ? <>Reserva directa, <em>siempre</em> mejor.</>
+                : <>Booking direct is <em>always</em> better.</>}
+            </h3>
+          </div>
+          <div className="dbt-ledger on-dark reveal">
+            <p className="dbt-ledger-cap">{lang === 'es' ? 'Lo que tienes al reservar con nosotros' : 'What you get booking with us'}</p>
+            <ul className="dbt-rows">
+              {DIRECT_LEDGER(lang).map(([k, v], i) => (
+                <li key={k} className="dbt-row" style={{ '--i': i }}>
+                  <span className="dbt-k">{k}</span>
+                  <span className="dbt-lead" aria-hidden="true"></span>
+                  <span className="dbt-v">{v}</span>
+                </li>
+              ))}
+            </ul>
+            <div className="dbt-actions">
+              <button
+                type="button"
+                className="dbt-btn"
+                onClick={() => setOpen(true)}
+                aria-haspopup="dialog"
+              >
+                <span>{lang === 'es' ? 'Ver todas las ventajas' : 'See all perks'}</span>
+                <span className="dbt-arrow" aria-hidden="true">→</span>
+              </button>
+              <DirectVideoLink lang={lang} button className="dbt-btn dbt-btn-ghost" />
+            </div>
           </div>
         </div>
       </section>
