@@ -1,0 +1,45 @@
+{
+  "titulo": "Qué pasa este mes: noviembre 2026",
+  "accent": "#176E80",
+  "accentSoft": "#6FC4D1",
+  "fuente": "docs/data/noticias/2026-11.json (edición vigente de noviembre 2026).",
+  "beats": [
+    {
+      "text": "Noviembre en *Vera Playa:*",
+      "mode": "blurWords",
+      "size": 116
+    },
+    {
+      "text": "máximas en torno a *20 °C.*",
+      "mode": "greyToInk",
+      "size": 116
+    },
+    {
+      "text": "Del 13 al 22, *cine* en Almería.",
+      "mode": "blurWords",
+      "size": 104,
+      "sub": "FICAL, en la Plaza Bendicho",
+      "extraHold": 0.6
+    },
+    {
+      "text": "Del 13 al 22, *fiestas* en Mazarrón.",
+      "mode": "greyToInk",
+      "size": 104,
+      "sub": "Romería de Bolnuevo, entrada libre",
+      "extraHold": 0.6
+    },
+    {
+      "text": "*Flamencos* en Cabo de Gata, todo el invierno.",
+      "mode": "blurWords",
+      "size": 88,
+      "sub": "Al amanecer y al atardecer",
+      "extraHold": 0.6
+    }
+  ],
+  "close": {
+    "line1": "Qué pasa este mes",
+    "line2": "hestiayourhome.com/noticias.html",
+    "line3": "Confirma el programa en cada web oficial",
+    "hold": 3.0
+  }
+}

@@ -1,0 +1,49 @@
+{
+  "titulo": "Reseña real: Ignacio, Hestía Mar",
+  "accent": "#6B7A3A",
+  "accentSoft": "#8B9A52",
+  "fuente": "docs/data/reviews.json, id ab-021 (Airbnb, 2019-05, Hestía Mar). Texto literal.",
+  "beats": [
+    {
+      "text": "Para el hombre,",
+      "mode": "blurWords",
+      "size": 124
+    },
+    {
+      "text": "como para el pájaro,",
+      "mode": "greyToInk"
+    },
+    {
+      "text": "el mundo tiene muchos sitios",
+      "mode": "blurWords",
+      "size": 100
+    },
+    {
+      "text": "donde posarse,",
+      "mode": "lineBlur",
+      "size": 112
+    },
+    {
+      "text": "pero *nidos solamente uno.*",
+      "mode": "blurWords"
+    },
+    {
+      "text": "Hestía Vera ha sido nuestro *nido*",
+      "mode": "greyToInk"
+    },
+    {
+      "text": "y volveremos.",
+      "mode": "lineBlur",
+      "size": 112,
+      "extraHold": 1.2
+    }
+  ],
+  "attribution": "Ignacio · Airbnb, 2019 · Hestía Mar",
+  "close": {
+    "photo": "docs/assets/apt-vm-gallery-12.jpg",
+    "line1": "Hestía Mar",
+    "dot": true,
+    "line2": "hestiayourhome.com",
+    "hold": 2.6
+  }
+}
