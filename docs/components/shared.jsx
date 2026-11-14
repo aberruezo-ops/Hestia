@@ -3570,14 +3570,6 @@ const DirectBookingPerks = ({ lang }) => {
             </h3>
           </div>
           <div className="dbt-ledger on-dark reveal">
-            <svg width="0" height="0" style={{ position: 'absolute' }} aria-hidden="true" focusable="false">
-              <filter id="dbt-ink" x="-6%" y="-6%" width="112%" height="112%">
-                <feTurbulence type="fractalNoise" baseFrequency="0.85" numOctaves="2" seed="7" result="noise" />
-                <feColorMatrix in="noise" type="matrix" values="0 0 0 0 0  0 0 0 0 0  0 0 0 0 0  0 0 0 -9 7.1" result="speck" />
-                <feComposite in="SourceGraphic" in2="speck" operator="in" result="rough" />
-                <feDisplacementMap in="rough" in2="noise" scale="1.6" xChannelSelector="R" yChannelSelector="G" />
-              </filter>
-            </svg>
             <div className="dbt-stamp" aria-hidden="true">
               <span className="dbt-stamp-a">{lang === 'es' ? 'Directo' : 'Direct'}</span>
               <span className="dbt-stamp-b">{lang === 'es' ? '0 % comisiones' : '0% commissions'}</span>

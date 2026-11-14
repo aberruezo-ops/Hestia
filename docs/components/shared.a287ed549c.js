@@ -6614,43 +6614,7 @@ const DirectBookingPerks = ({
     className: "dbt-title"
   }, lang === 'es' ? /*#__PURE__*/React.createElement(React.Fragment, null, "Reserva directa, ", /*#__PURE__*/React.createElement("em", null, "siempre"), " mejor.") : /*#__PURE__*/React.createElement(React.Fragment, null, "Booking direct is ", /*#__PURE__*/React.createElement("em", null, "always"), " better."))), /*#__PURE__*/React.createElement("div", {
     className: "dbt-ledger on-dark reveal"
-  }, /*#__PURE__*/React.createElement("svg", {
-    width: "0",
-    height: "0",
-    style: {
-      position: 'absolute'
-    },
-    "aria-hidden": "true",
-    focusable: "false"
-  }, /*#__PURE__*/React.createElement("filter", {
-    id: "dbt-ink",
-    x: "-6%",
-    y: "-6%",
-    width: "112%",
-    height: "112%"
-  }, /*#__PURE__*/React.createElement("feTurbulence", {
-    type: "fractalNoise",
-    baseFrequency: "0.85",
-    numOctaves: "2",
-    seed: "7",
-    result: "noise"
-  }), /*#__PURE__*/React.createElement("feColorMatrix", {
-    in: "noise",
-    type: "matrix",
-    values: "0 0 0 0 0  0 0 0 0 0  0 0 0 0 0  0 0 0 -9 7.1",
-    result: "speck"
-  }), /*#__PURE__*/React.createElement("feComposite", {
-    in: "SourceGraphic",
-    in2: "speck",
-    operator: "in",
-    result: "rough"
-  }), /*#__PURE__*/React.createElement("feDisplacementMap", {
-    in: "rough",
-    in2: "noise",
-    scale: "1.6",
-    xChannelSelector: "R",
-    yChannelSelector: "G"
-  }))), /*#__PURE__*/React.createElement("div", {
+  }, /*#__PURE__*/React.createElement("div", {
     className: "dbt-stamp",
     "aria-hidden": "true"
   }, /*#__PURE__*/React.createElement("span", {

@@ -14552,70 +14552,58 @@ footer,
 }
 .dbt-row:last-child .dbt-v { color: var(--sol-lt); font-style: italic; }
 
-/* Sello: cae sobre el recibo al terminar de aparecer las líneas. Tinta
-   irregular (filtro SVG) y segunda tinta desplazada, fuera de registro. */
+/* Sello discreto: filete fino y casi recto, se asienta con un fundido suave
+   cuando terminan de aparecer las líneas del recibo. */
 .dbt-stamp {
   position: absolute;
-  top: 20px; right: clamp(16px, 4vw, 40px);
+  top: 22px; right: clamp(18px, 4vw, 40px);
   z-index: 2;
-  display: flex; flex-direction: column; align-items: center; gap: 3px;
-  padding: 8px 16px 7px;
+  display: flex; flex-direction: column; align-items: center; gap: 4px;
+  padding: 7px 14px 6px;
   color: var(--sol-lt);
-  border: 2px solid var(--sol-lt);
-  border-radius: 8px 0 8px 0;
-  box-shadow: 2px 2px 0 rgba(230, 228, 223, .22);
-  text-shadow: 1.5px 1.5px 0 rgba(230, 228, 223, .28);
-  filter: url(#dbt-ink);
-  transform: rotate(-7deg);
+  border: 1px solid color-mix(in srgb, var(--sol-lt) 70%, transparent);
+  border-radius: 6px 0 6px 0;
+  transform: rotate(-3deg);
   opacity: 0;
   cursor: default;
   user-select: none;
 }
 .dbt-stamp-a {
   font-family: var(--serif);
-  font-weight: 600;
-  font-size: clamp(20px, 3vw, 26px);
-  letter-spacing: .22em;
+  font-weight: 400;
+  font-size: 17px;
+  letter-spacing: .3em;
   text-transform: uppercase;
   line-height: 1;
-  padding-left: .22em;
+  padding-left: .3em;
 }
 .dbt-stamp-b {
   font-family: var(--sans);
-  font-weight: 700;
-  font-size: 9.5px;
-  letter-spacing: .2em;
+  font-weight: 500;
+  font-size: 8.5px;
+  letter-spacing: .22em;
   text-transform: uppercase;
   line-height: 1;
+  color: rgba(230, 228, 223, .7);
 }
-@keyframes dbt-thud {
-  0%   { opacity: 0; transform: translateY(-14px) scale(1.8) rotate(-15deg); }
-  50%  { opacity: .96; transform: translateY(0) scale(.94) rotate(-6deg); }
-  68%  { transform: scale(1.04) rotate(-7.5deg); }
-  100% { opacity: .94; transform: scale(1) rotate(-7deg); }
+@keyframes dbt-settle {
+  0%   { opacity: 0; transform: scale(1.07) rotate(-3deg); }
+  100% { opacity: .92; transform: scale(1) rotate(-3deg); }
 }
-@keyframes dbt-thud-b {
-  0%   { opacity: 0; transform: translateY(-14px) scale(1.8) rotate(-15deg); }
-  50%  { opacity: .96; transform: translateY(0) scale(.94) rotate(-6deg); }
-  68%  { transform: scale(1.04) rotate(-7.5deg); }
-  100% { opacity: .94; transform: scale(1) rotate(-7deg); }
+@keyframes dbt-settle-b {
+  0%   { opacity: .3; transform: scale(1.05) rotate(-3deg); }
+  100% { opacity: .92; transform: scale(1) rotate(-3deg); }
 }
-@keyframes dbt-hit {
-  0%, 100% { transform: translateY(0); }
-  35%      { transform: translateY(2px); }
-  65%      { transform: translateY(-1px); }
-}
-.dbt-ledger.in .dbt-stamp { animation: dbt-thud .55s cubic-bezier(.2,.8,.2,1) 1.9s both; }
-.dbt-ledger.in .dbt-stamp:hover { animation: dbt-thud-b .55s cubic-bezier(.2,.8,.2,1) both; }
-.dbt-ledger.in { animation: dbt-hit .32s ease-out 2.12s; }
+.dbt-ledger.in .dbt-stamp { animation: dbt-settle .9s var(--ease-out, cubic-bezier(.23,1,.32,1)) 1.8s both; }
+.dbt-ledger.in .dbt-stamp:hover { animation: dbt-settle-b .6s var(--ease-out, cubic-bezier(.23,1,.32,1)) both; }
 @media (max-width: 600px) {
-  .dbt-stamp { top: 14px; right: 14px; padding: 6px 11px 5px; }
-  .dbt-stamp-b { font-size: 8.5px; }
-  .dbt-ledger-cap { padding-right: 172px; min-height: 40px; }
+  .dbt-stamp { top: 16px; right: 16px; padding: 6px 11px 5px; }
+  .dbt-stamp-a { font-size: 15px; }
+  .dbt-ledger-cap { padding-right: 150px; min-height: 40px; }
 }
 @media (prefers-reduced-motion: reduce) {
-  .dbt-ledger.in, .dbt-ledger.in .dbt-stamp, .dbt-ledger.in .dbt-stamp:hover { animation: none; }
-  .dbt-stamp { opacity: .94; }
+  .dbt-ledger.in .dbt-stamp, .dbt-ledger.in .dbt-stamp:hover { animation: none; }
+  .dbt-stamp { opacity: .92; }
 }
 .dbt-actions { display: flex; flex-wrap: wrap; gap: 12px; }
 .dbt-btn {
