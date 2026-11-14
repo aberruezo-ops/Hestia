@@ -28,7 +28,7 @@ inventes hallazgos: la regla de oro (más abajo) manda sobre todo lo demás.
 - **JSX → JS**: los `.jsx` de `docs/components/` se compilan con
   `node scripts/build-jsx.js`. El navegador carga los `.js`. Todo el JS
   compilado es **público**: nada que esté ahí es secreto (ni los PIN de guía).
-- **6 Cloudflare Workers** en `workers/*` (el único backend real):
+- **8 Cloudflare Workers** en `workers/*` (el único backend real):
   | Worker | Qué toca | Secretos | Sensibilidad |
   |---|---|---|---|
   | `traveler-registry` | PII de viajeros (DNI, pasaporte) cifrada AES-GCM en KV, RD 933/2021 | `READ_SECRET`, `ENCRYPT_KEY` | **máxima** |
@@ -37,6 +37,8 @@ inventes hallazgos: la regla de oro (más abajo) manda sobre todo lo demás.
   | `social-publish` | Publica en IG/FB (Meta Graph) | `META_TOKEN`, `PUBLISH_SECRET`, `IG_USER_ID`, `FB_PAGE_ID` | alta |
   | `guide-access` | Registra accesos a la guía (sin PII) | `READ_SECRET` | media |
   | `analytics-proxy` | Proxy del beacon de CF Web Analytics | ninguno | baja |
+  | `reviews-submit` | Escribe reseñas `pending` en `docs/data/reviews.json` de la rama `main` por la API de GitHub; KV solo para el rate limit | `GITHUB_TOKEN` (PAT de grano fino, Contents RW sobre este repo) | alta |
+  | `agent-content` | Va DELANTE del dominio si se activa su ruta: negocia `text/markdown` y añade `Vary`; el resto pasa intacto a GitHub Pages | ninguno | media (si cae, cae todo el sitio) |
 - **Admin `/p-edit`** (`docs/components/admin-page.jsx`): login con **PAT de
   GitHub** que vive SOLO en memoria (`const REPO = 'aberruezo-ops/hestia'`,
   `const PRIVATE_REPO = 'aberruezo-ops/hestia-data'`). Lee/escribe la reserva
@@ -125,6 +127,11 @@ pregúntate qué puede hacer quien tenga ese secreto o ese token.
   Verifica que sigue exigiendo `token.length >= 16` y que tiene rate-limit
   (hoy 40/IP/15min). Si alguien baja ese mínimo o quita el rate-limit, se
   vuelve enumerable → alto.
+- **`reviews-submit` y su PAT** (`GITHUB_TOKEN`): quien lo robe escribe en `main` del
+  repo público (web defacement). Comprueba que el token sea de grano fino, solo
+  Contents RW y solo este repo. El PIN de reserva que valida el Worker es
+  fricción de UX, no autenticación: cualquiera puede enviar reseñas `pending`;
+  el límite real es el rate limit por IP y que nada se publica sin revisión en `/p-edit`.
 - **CORS**: cada Worker tiene su `ALLOWED_ORIGINS`. `pago` y `sheets-sync`
   además rechazan con 403 orígenes no permitidos (salvo localhost). Comprueba
   que un origen nuevo no se cuele y que el fallback
@@ -161,8 +168,9 @@ pregúntate qué puede hacer quien tenga ese secreto o ese token.
 
 ### 6. Dependencias con agujeros conocidos
 
-Este repo **no** tiene `package.json` committeado (está en `.gitignore`); las
-deps de build son efímeras (`npm install --no-save @babel/core …`). Por eso:
+El `package.json` de la raíz SÍ está versionado y fija las dependencias de
+desarrollo (`@babel/core`, `@babel/preset-react`, `axe-core`, `playwright`) con
+versión exacta. Ahí corre `npm audit` (no sirve `--no-save`). Por eso:
 
 - Los Workers tienen **cero dependencias** (Web Crypto puro). No hay superficie
   de supply-chain ahí.
@@ -170,8 +178,8 @@ deps de build son efímeras (`npm install --no-save @babel/core …`). Por eso:
   (`react@18.3.1`, `leaflet@1.9.4`). Comprueba que las versiones pinneadas no
   tengan CVE conocido y que el `onerror` de fallback apunte a los locales
   (`docs/assets/react*.js`), no a otro CDN.
-- Único `package.json` real: `remotion-video/`. Si vas a tocar ahí:
-  `cd remotion-video && npm audit`.
+- Otros `package.json`: `remotion-video/` y `videos/salinas-reel/` (solo
+  vídeo, no se publican). Si tocas ahí: `npm audit` en su carpeta.
 
 ## Regla de oro (esto manda)
 
@@ -236,13 +244,14 @@ Para comprobar que un arreglo no rompe nada:
 
 ```bash
 # Compilar JSX tras tocar componentes (obligatorio antes de commitear)
-npm install --no-save @babel/core @babel/preset-react   # si node_modules no está
+npm install   # si node_modules no está (versiones fijadas en package.json)
 node scripts/build-jsx.js
 
 # Servir y pasar el smoke test (bloquea si una página peta o tiene enlace roto)
 cd docs && python3 -m http.server 8123 &
 node scripts/smoke-test.cjs
 
-# Los Workers no tienen suite; se validan leyendo el código y, si hace falta,
-# con `wrangler dev` en la carpeta del worker (no committear secretos de prueba).
+# Los Workers con test.mjs (agent-content, analytics-proxy, pago…) se prueban con
+# KV simulado: `node workers/<nombre>/test.mjs`. El resto, leyendo el código y,
+# si hace falta, con `wrangler dev` (no committear secretos de prueba).
 ```

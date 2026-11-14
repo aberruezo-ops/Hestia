@@ -140,6 +140,14 @@ El `opacity: 1` explícito cancela cualquier `opacity: 0.5` heredado.
 --arena-dk: #D7D3CB;  /* cal viva aún más oscura */
 ```
 
+Son la **cal viva**, y su matiz cambia con el scroll (`docs/assets/color-scroll.js`): usa siempre
+los tokens, nunca un hex de cal. Nada de arena, oro ni cobre mezclado en cabecera o secciones
+claras. Detalle en `CLAUDE.md` ("Fondo de la web").
+
+**Sin rayas laterales de acento** (`border-left` de 2 px o más) en cajas, avisos, citas ni
+tarjetas: un aviso se distingue por fondo y texto. La marca de una tarjeta es el horizonte
+(`CLAUDE.md`, "Recursos gráficos «de IA»" y "Marca de tarjeta").
+
 ### Identidades de apartamentos
 
 ```css
@@ -240,7 +248,7 @@ docs/
   *.html              — páginas públicas (GitHub Pages sirve desde aquí)
   assets/styles.css   — CSS único, versionado con ?v=NNN en los HTMLs
   components/
-    *.jsx             — fuente React (Babel standalone en producción)
+    *.jsx             — fuente React (se compila a .js; sin Babel en el navegador)
     *.js              — compilados por build-jsx.js (NUNCA editar a mano)
   data/
     prices.json       — precios, configuración long-stay, reglas
@@ -264,7 +272,7 @@ Los componentes se exportan al `window` global (sin bundler):
 Object.assign(window, { ComponentName, OtherComponent });
 ```
 
-Los HTMLs cargan Babel standalone + los .js compilados en orden:
+Los HTMLs cargan los .js compilados (React por CDN con fallback local), en orden:
 ```html
 <script src="components/shared.js"></script>      <!-- primero: shared -->
 <script src="components/page-specific.js"></script>
@@ -276,7 +284,7 @@ window.PRICES_V2         // precios cargados desde prices.json
 window.AVAILABILITY_BLOCKS  // fechas bloqueadas
 ```
 
-**React sin bundler — no hay imports.** Usa `React.createElement` / JSX via Babel.
+**React sin bundler — no hay imports.** Escribe JSX en los `.jsx`; `build-jsx.js` lo compila.
 `useState`, `useEffect`, etc. se acceden como `React.useState`.
 
 ---

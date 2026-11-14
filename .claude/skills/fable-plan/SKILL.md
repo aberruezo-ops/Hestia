@@ -100,7 +100,7 @@ Paso 2 — …
 Elige según lo que tocaste:
 ```bash
 # 1. SIEMPRE que toques un .jsx — compila (o el navegador sirve .js viejo)
-node scripts/build-jsx.js        # necesita: npm install --no-save @babel/core @babel/preset-react
+node scripts/build-jsx.js        # necesita: npm install (versiones fijadas en package.json)
 
 # 2. Servir en local para mirar con ojo humano
 cd docs && python3 -m http.server 8123    # o :8731
