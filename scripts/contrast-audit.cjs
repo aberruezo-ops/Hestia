@@ -47,6 +47,9 @@ const VIEWPORTS = [
         await page.waitForTimeout(2500); // que React renderice
         const rootKids = await page.evaluate(() => (document.getElementById('root')?.children.length ?? document.body.children.length));
         if (!rootKids) { report.push({ page: slug, vp: vp.name, error: 'la página no renderizó (React no cargó?)' }); continue; }
+        // Estado final de las revelaciones al hacer scroll, para no medir a mitad de fundido.
+        await page.evaluate(() => document.querySelectorAll('.reveal, .reveal-section').forEach(e => e.classList.add('in')));
+        await page.waitForTimeout(1500);
         await page.evaluate(AXE);
         const res = await page.evaluate(async () => {
           return await window.axe.run(document, {
@@ -62,7 +65,8 @@ const VIEWPORTS = [
             const sel = node.target.join(' ');
             // Elementos deshabilitados/inactivos (días pasados del calendario, pasos
             // bloqueados del formulario): WCAG los exime. Se omiten del guardarraíl.
-            if (/\.past\b|\.is-locked\b/.test(sel)) continue;
+            // aria-hidden: decoración pura (numerales romanos, adornos), también exenta.
+            if (/\.past\b|\.is-locked\b|\[aria-hidden="true"\]/.test(sel)) continue;
             const d = (node.any && node.any[0] && node.any[0].data) || {};
             if (d.contrastRatio == null) continue; // indeterminado (bg imagen) — se ignora
             totalFails++;

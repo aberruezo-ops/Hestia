@@ -2647,7 +2647,7 @@ body.apt-bar-shown .cookies {
 }
 .apartments-intro h2 em {
   font-style: italic;
-  color: var(--sol-h);
+  color: var(--sol-text);
   font-weight: 300;
 }
 .apartments-intro p {
@@ -3049,7 +3049,7 @@ body.apt-bar-shown .cookies {
 }
 .compare .eyebrow { color: var(--ber); }
 .compare h2 { max-width: 16ch; margin-bottom: 60px; }
-.compare h2 em { font-style: italic; color: var(--sol-h); }
+.compare h2 em { font-style: italic; color: var(--sol-text); }
 
 .compare-grid {
   display: grid;
@@ -3537,7 +3537,7 @@ body.apt-bar-shown .cookies {
   text-align: center;
 }
 .ratings h2 { max-width: 18ch; margin: 0 auto 18px; }
-.ratings h2 em { font-style: italic; color: var(--sol-h); }
+.ratings h2 em { font-style: italic; color: var(--sol-text); }
 .ratings .eyebrow { color: var(--ber); margin-bottom: 18px; display: block; }
 .ratings p.ratings-sub {
   max-width: 540px; margin: 0 auto 60px;
@@ -4093,18 +4093,8 @@ footer .footer-brand .addr {
    la tarde). */
 .cal-cell.blk-after .c-n { color: var(--ber-dk); font-weight: 500; }
 .cal-cell.today:not(.blk) .c-n { color: var(--apt-accent-dk,var(--sol-text)); font-weight: 500; }
-/* .apt-avail y .home-search tienen fondo oscuro (ver CLAUDE.md): el número
-   de día bloqueado/hoy en tinta oscura de las reglas de arriba (pensadas
-   para el calendario claro de /reservas) quedaba invisible ahí. */
-.apt-avail .cal-cell.blk .c-n,
-.home-search .cal-cell.blk .c-n {
-  color: rgba(230,228,223,.55);
-  text-decoration-color: rgba(230,228,223,.35);
-}
-.apt-avail .cal-cell.blk-after .c-n,
-.home-search .cal-cell.blk-after .c-n {
-  color: rgba(230,228,223,.55);
-}
+/* .apt-avail y .home-search tienen fondo oscuro, pero el día bloqueado va sobre
+   la franja crema (.c-strip): su número conserva la tinta oscura de arriba. */
 .apt-avail .cal-cell.today:not(.blk) .c-n,
 .home-search .cal-cell.today:not(.blk) .c-n {
   color: var(--apt-accent2, var(--sol-lt));
@@ -7730,7 +7720,7 @@ body[data-apt="salinas"] a.apt-page-reserve-btn:hover {
   color: var(--ber);
   margin-top: 16px;
 }
-.nosotros-story-head h2 em { color: var(--sol-h); }
+.nosotros-story-head h2 em { color: var(--sol-text); }
 .nosotros-story-text p {
   font-size: clamp(15px, 1.5vw, 17px);
   color: var(--ink-soft);
@@ -11293,7 +11283,7 @@ body[data-apt="salinas"] a.apt-page-reserve-btn:hover {
 }
 .acto-txt { display: block; min-width: 0; }
 .acto-eyebrow {
-  display: block; color: var(--sol-text, #176E80); margin-bottom: 10px;
+  display: block; color: var(--sol-text, #176E80); opacity: 1; margin-bottom: 10px;
 }
 .acto-title {
   display: block;
@@ -17709,7 +17699,7 @@ a:focus-visible,
   transition: opacity 200ms var(--ease-out, cubic-bezier(.23,1,.32,1));
 }
 .rf-step:first-of-type { border-top: 0; padding-top: 8px; }
-.rf-step.is-locked { opacity: 0.42; pointer-events: none; }
+.rf-step.is-locked { opacity: 0.55; pointer-events: none; }
 .rf-step.is-locked .rf-step-title { color: var(--ink-soft); }
 
 .rf-step-head {
@@ -20218,7 +20208,7 @@ img[src$="photo-alex.jpg"]:not(.avatar-img):hover {
   font-weight: 700;
   padding: 4px 10px;
   border-radius: 999px;
-  background: var(--src-color);
+  background: color-mix(in srgb, var(--src-color) 78%, #000);
   color: #FFFFFF;
   white-space: nowrap;
   flex-shrink: 0;
