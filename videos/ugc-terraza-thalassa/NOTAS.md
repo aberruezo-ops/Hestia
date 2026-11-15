@@ -11,9 +11,10 @@ Pieza vertical de 8 s generada con IA a partir de una foto real de la terraza de
 - La persona no existe: es contenido generado con IA. Meta puede exigir la etiqueta «generado con IA». No presentarlo como una huésped ni como reseña real.
 - Salida en `renders/` (ignorada por git).
 
-## Versión de 15 s (escena 1 + copa en primer plano + logo)
-- Escena 2: Higgsfield `seedance_2_0_mini`, 9:16, 7 s, 7 créditos, trabajo `19e49301-27fa-437b-bb0a-c25fa8383966`. Parte del fotograma de los 2,0 s de la escena 1 (copa levantada) y hace un empuje hasta un primer plano de la copa.
-- Montaje con HyperFrames (`index.html`): escena 1 (8,04 s), corte con fundido de audio de 0,25 s y escena 2 (7 s). Logo blanco de Hestía abajo a la derecha (150 px, a 44 px del borde derecho y 120 px del inferior), con aparición suave.
-- Audio: el generado por el modelo, normalizado a -16 LUFS; no se ha oído.
+## Versión de 15 s (copa en primer plano, plano que se aleja, atardecer a noche, logo)
+- Parte A (0 a 7,04 s): la escena 2 original (empuje hasta la copa) montada del revés con ffmpeg (`reverse`/`areverse`). Empieza con la copa en primer plano contra el sol y se aleja hasta mostrar a la mujer de espaldas (`assets/video/escenaA.mp4`).
+- Parte C (7,04 a 15,04 s): Higgsfield `seedance_2_0_mini`, 9:16, 8 s, 8 créditos, trabajo `1898e5e3-6a71-4a52-85fb-559d7afd5ab2`. Parte del último fotograma de A para que no haya salto; time-lapse del cielo de morado y rojo a azul profundo y noche con estrellas, con la mujer mirando el horizonte (`assets/video/escenaC.mp4`).
+- Montaje con HyperFrames (`index.html`): A, C y el logo blanco de Hestía abajo a la derecha (150 px, a 44 px del borde derecho y 120 px del inferior), con aparición suave. Render a 1080x1920 y recodificado para Instagram (crf 19), audio a -16,9 LUFS.
+- Audio: el generado por el modelo; no se ha oído.
 - El logo queda en la zona donde Instagram dibuja los botones de la derecha y el texto del pie; si se tapa, subirlo o llevarlo a la izquierda.
-- Costes en créditos: 8 + 7 = 15.
+- Costes en créditos de esta versión: 8 (C). La escena 2 de la versión anterior (7) ya estaba generada.
