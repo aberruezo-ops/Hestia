@@ -11,10 +11,11 @@ Pieza vertical de 8 s generada con IA a partir de una foto real de la terraza de
 - La persona no existe: es contenido generado con IA. Meta puede exigir la etiqueta «generado con IA». No presentarlo como una huésped ni como reseña real.
 - Salida en `renders/` (ignorada por git).
 
-## Versión de 15 s (copa en primer plano, plano que se aleja, atardecer a noche, logo)
-- Parte A (0 a 7,04 s): la escena 2 original (empuje hasta la copa) montada del revés con ffmpeg (`reverse`/`areverse`). Empieza con la copa en primer plano contra el sol y se aleja hasta mostrar a la mujer de espaldas (`assets/video/escenaA.mp4`).
-- Parte C (7,04 a 15,04 s): Higgsfield `seedance_2_0_mini`, 9:16, 8 s, 8 créditos, trabajo `1898e5e3-6a71-4a52-85fb-559d7afd5ab2`. Parte del último fotograma de A para que no haya salto; time-lapse del cielo de morado y rojo a azul profundo y noche con estrellas, con la mujer mirando el horizonte (`assets/video/escenaC.mp4`).
-- Montaje con HyperFrames (`index.html`): A, C y el logo blanco de Hestía abajo a la derecha (150 px, a 44 px del borde derecho y 120 px del inferior), con aparición suave. Render a 1080x1920 y recodificado para Instagram (crf 19), audio a -16,9 LUFS.
+## Versión de 15 s en un solo plano (sin cortes)
+- Un único clip de Higgsfield `seedance_2_0_mini`, 9:16, 15 s, 720p, 15 créditos, trabajo `44708207-05a5-4968-9f67-a4b37e05dc3d` (`assets/video/ugc15.mp4`). Los montajes anteriores con dos partes (escena 1 + 2, y A + C) se descartaron: el corte se notaba.
+- Entradas: `start_image` con la copa en primer plano contra el sol (`assets/images/start-copa.jpg`) e `image_references` con la mujer y la terraza (`assets/images/ref-mujer.jpg`), ambas fotogramas de generaciones anteriores.
+- Prompt: plano continuo con pulso de móvil muy suave; empieza en primer plano de la copa, la cámara se aleja y descubre a la mujer de espaldas, que se acomoda en el sillón, bebe un sorbo y se queda mirando el horizonte; el cielo pasa de atardecer rojo y morado a violeta, azul profundo y noche con estrellas, se encienden las luces del pueblo y la lámpara.
+- Montaje con HyperFrames (`index.html`): el clip y el logo blanco de Hestía abajo a la derecha (150 px, a 44 px del borde derecho y 120 px del inferior), con aparición suave. Render 1080x1920 y recodificado para Instagram (crf 19), audio a -16 LUFS.
+- La persona no existe: es contenido generado con IA. Meta puede exigir la etiqueta «generado con IA». No presentarlo como huésped ni como reseña real.
 - Audio: el generado por el modelo; no se ha oído.
 - El logo queda en la zona donde Instagram dibuja los botones de la derecha y el texto del pie; si se tapa, subirlo o llevarlo a la izquierda.
-- Costes en créditos de esta versión: 8 (C). La escena 2 de la versión anterior (7) ya estaba generada.
