@@ -1,0 +1,94 @@
+<!doctype html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=1080, height=1920" />
+    <script src="assets/vendor/gsap.min.js"></script>
+    <style>
+      @font-face { font-family: "Fraunces"; font-weight: 500; src: url("assets/fonts/Fraunces-500.ttf"); }
+      @font-face { font-family: "Fraunces"; font-weight: 600; src: url("assets/fonts/Fraunces-600.ttf"); }
+      @font-face { font-family: "Hanken Grotesk"; font-weight: 400; src: url("assets/fonts/HankenGrotesk-400.ttf"); }
+      @font-face { font-family: "Hanken Grotesk"; font-weight: 600; src: url("assets/fonts/HankenGrotesk-600.ttf"); }
+      * { margin: 0; padding: 0; box-sizing: border-box; }
+      html, body { width: 1080px; height: 1920px; overflow: hidden; background: #2A0F2E; }
+      #root { position: relative; width: 1080px; height: 1920px; overflow: hidden; font-family: "Fraunces", serif; color: #F6F5F4; background: #2A0F2E; }
+      .win { position: absolute; inset: 0; overflow: hidden; }
+      .win img { position: absolute; left: 0; top: 0; width: 1080px; height: 1920px; object-fit: cover; }
+      #w2, #w3 { clip-path: inset(1420px 0px 440px 0px); }
+      .scrim { position: absolute; inset: 0; background: linear-gradient(180deg, rgba(42,15,46,0.72) 0%, rgba(42,15,46,0.5) 26%, rgba(42,15,46,0.18) 44%, rgba(42,15,46,0) 58%); }
+      .lab { position: absolute; left: 200px; width: 680px; top: 330px; text-align: center; }
+      .lab .n { font-weight: 500; font-size: 82px; line-height: 1.05; letter-spacing: -0.01em; white-space: nowrap; text-shadow: 0 2px 26px rgba(42,15,46,0.6); }
+      .lab .d { display: inline-block; width: 24px; height: 24px; border-radius: 50%; margin-right: 22px; vertical-align: 14px; }
+      .lab .s { margin-top: 22px; font-family: "Hanken Grotesk", sans-serif; font-weight: 400; font-size: 46px; line-height: 1.3; color: #F6F5F4; opacity: 0.96; text-shadow: 0 2px 22px rgba(42,15,46,0.7); }
+      #hook { position: absolute; left: 200px; width: 680px; top: 530px; text-align: center; font-weight: 600; font-size: 124px; line-height: 1.06; letter-spacing: -0.01em; text-wrap: balance; text-shadow: 0 2px 30px rgba(42,15,46,0.55); }
+      #hookscrim { position: absolute; inset: 0; background: radial-gradient(ellipse 60% 22% at 50% 38%, rgba(42,15,46,0.5), rgba(42,15,46,0) 100%); }
+      #close { position: absolute; inset: 0; }
+      #flood { position: absolute; inset: 0; background: #2A0F2E; opacity: 0; }
+      #cbox { position: absolute; left: 200px; width: 680px; top: 250px; height: 560px; display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center; }
+      #clogo { width: 150px; height: 150px; margin-bottom: 30px; }
+      #c1 { text-wrap: balance; font-weight: 500; font-size: 100px; line-height: 1.08; letter-spacing: -0.01em; }
+      #c2 { margin-top: 24px; font-family: "Hanken Grotesk", sans-serif; font-weight: 600; font-size: 38px; color: #E6E4DF; }
+    </style>
+  </head>
+  <body>
+    <div id="root" data-composition-id="main" data-start="0" data-duration="23.4" data-width="1080" data-height="1920">
+      <audio id="bed" src="assets/audio/ambiente-mar.mp3" data-start="0" data-duration="23.4" data-track-index="9" data-volume="1"></audio>
+
+      <div id="w1" class="win clip" data-start="0" data-duration="19.4" data-track-index="1">
+        <img id="p1" src="assets/images/mar.jpg" alt="Terraza de Hestía Mar" style="object-position: 50% 50%" />
+        <div class="scrim"></div>
+      </div>
+      <div id="w2" class="win clip" data-start="7" data-duration="12.4" data-track-index="2">
+        <img id="p2" src="assets/images/thalassa.jpg" alt="Terraza del ático de Hestía Thalassa" style="object-position: 42% 50%" />
+        <div class="scrim"></div>
+      </div>
+      <div id="w3" class="win clip" data-start="13" data-duration="6.4" data-track-index="3">
+        <img id="p3" src="assets/images/salinas.jpg" alt="Piscina de Hestía Salinas al atardecer" style="object-position: 50% 50%" />
+        <div class="scrim"></div>
+      </div>
+
+      <div id="hookscrim" class="clip" data-start="0" data-duration="2.4" data-track-index="4"></div>
+      <p id="hook" class="clip" data-start="0" data-duration="2.4" data-track-index="5">Sube el volumen.</p>
+
+      <div id="l1" class="lab clip" data-start="2.5" data-duration="4.4" data-track-index="6"><div class="in" id="l1-in"><p class="n"><span class="d" style="background:#8B9A52"></span>Hestía Mar</p><p class="s">La playa, a 300–400 m.</p></div></div>
+      <div id="l2" class="lab clip" data-start="7.5" data-duration="5.2" data-track-index="6"><div class="in" id="l2-in"><p class="n"><span class="d" style="background:#D08B5A"></span>Hestía Thalassa</p><p class="s">El ático, con SPA comunitario.</p></div></div>
+      <div id="l3" class="lab clip" data-start="13.5" data-duration="5.4" data-track-index="6"><div class="in" id="l3-in"><p class="n"><span class="d" style="background:#E8C476"></span>Hestía Salinas</p><p class="s">El más grande, 87 m².</p></div></div>
+
+      <div id="close" class="clip" data-start="19.2" data-duration="4.2" data-track-index="7">
+        <div id="flood"></div>
+        <div id="cbox">
+          <img id="clogo" src="assets/images/logo-blanco.png" alt="Hestía" />
+          <p id="c1">Tres casas en Vera Playa</p>
+          <p id="c2">hestiayourhome.com</p>
+        </div>
+      </div>
+    </div>
+    <script>
+      const tl = gsap.timeline({ paused: true });
+      // empuje lento y constante de cada foto
+      tl.fromTo("#p1", { scale: 1.0 }, { scale: 1.06, duration: 19.4, ease: "none", transformOrigin: "50% 60%" }, 0);
+      tl.fromTo("#p2", { scale: 1.0 }, { scale: 1.06, duration: 12.4, ease: "none", transformOrigin: "40% 55%" }, 7);
+      tl.fromTo("#p3", { scale: 1.0 }, { scale: 1.06, duration: 6.4, ease: "none", transformOrigin: "50% 60%" }, 13);
+      // gancho en el fotograma 0 y salida
+      tl.to("#hook", { opacity: 0, filter: "blur(8px)", duration: 0.25, ease: "power2.in" }, 2.1);
+      tl.to("#hookscrim", { opacity: 0, duration: 0.25, ease: "power2.in" }, 2.1);
+      // las fotos nuevas suben desde la línea del horizonte
+      tl.fromTo("#w2", { clipPath: "inset(1420px 0px 440px 0px)" }, { clipPath: "inset(0px 0px 0px 0px)", duration: 0.9, ease: "power3.inOut" }, 7);
+      tl.fromTo("#w3", { clipPath: "inset(1420px 0px 440px 0px)" }, { clipPath: "inset(0px 0px 0px 0px)", duration: 0.9, ease: "power3.inOut" }, 13);
+      // etiquetas
+      const lab = (id, t0, t1) => {
+        tl.fromTo(id + " .n", { opacity: 0, filter: "blur(6px)" }, { opacity: 1, filter: "blur(0px)", duration: 0.3, ease: "power4.out" }, t0);
+        tl.fromTo(id + " .s", { opacity: 0, filter: "blur(6px)" }, { opacity: 1, filter: "blur(0px)", duration: 0.3, ease: "power4.out" }, t0 + 0.35);
+        tl.to(id + "-in", { opacity: 0, filter: "blur(8px)", duration: 0.2, ease: "power2.in" }, t1);
+      };
+      lab("#l1", 2.5, 6.7);
+      lab("#l2", 7.6, 12.5);
+      lab("#l3", 13.6, 18.7);
+      // cierre: el fondo cambia a berenjena y entra el logo
+      tl.fromTo("#flood", { opacity: 0 }, { opacity: 1, duration: 0.45, ease: "power2.inOut" }, 19.2);
+      tl.fromTo("#cbox > *", { opacity: 0, filter: "blur(6px)" }, { opacity: 1, filter: "blur(0px)", duration: 0.4, stagger: 0.18, ease: "power4.out" }, 19.7);
+      window.__timelines["main"] = tl;
+      tl.seek(0);
+    </script>
+  </body>
+</html>
