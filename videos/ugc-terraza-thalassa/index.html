@@ -1,0 +1,28 @@
+<!doctype html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=1080, height=1920" />
+    <script src="assets/vendor/gsap.min.js"></script>
+    <style>
+      * { margin: 0; padding: 0; box-sizing: border-box; }
+      html, body { width: 1080px; height: 1920px; overflow: hidden; background: #2A0F2E; }
+      #root { position: relative; width: 1080px; height: 1920px; overflow: hidden; background: #2A0F2E; }
+      .v { position: absolute; left: 0; top: 0; width: 1080px; height: 1920px; object-fit: cover; }
+      #logo { position: absolute; width: 150px; height: 150px; right: 44px; bottom: 120px; filter: drop-shadow(0 2px 14px rgba(42, 15, 46, 0.55)); }
+    </style>
+  </head>
+  <body>
+    <div id="root" data-composition-id="main" data-start="0" data-duration="15.04" data-width="1080" data-height="1920">
+      <video id="s1" class="v clip" src="assets/video/escena1.mp4" data-start="0" data-duration="8.04" data-track-index="1" data-has-audio="true" data-fade-out="0.25" playsinline></video>
+      <video id="s2" class="v clip" src="assets/video/escena2.mp4" data-start="8.04" data-duration="7" data-track-index="2" data-has-audio="true" data-fade-in="0.25" playsinline></video>
+      <img id="logo" class="clip" src="assets/images/logo-blanco.png" alt="Hestía" data-start="0" data-duration="15.04" data-track-index="3" />
+    </div>
+    <script>
+      const tl = gsap.timeline({ paused: true });
+      tl.fromTo("#logo", { opacity: 0 }, { opacity: 0.95, duration: 0.8, ease: "power2.out" }, 0.4);
+      window.__timelines["main"] = tl;
+      tl.seek(0);
+    </script>
+  </body>
+</html>

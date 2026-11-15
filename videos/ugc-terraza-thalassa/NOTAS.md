@@ -10,3 +10,10 @@ Pieza vertical de 8 s generada con IA a partir de una foto real de la terraza de
 ## Para publicar
 - La persona no existe: es contenido generado con IA. Meta puede exigir la etiqueta «generado con IA». No presentarlo como una huésped ni como reseña real.
 - Salida en `renders/` (ignorada por git).
+
+## Versión de 15 s (escena 1 + copa en primer plano + logo)
+- Escena 2: Higgsfield `seedance_2_0_mini`, 9:16, 7 s, 7 créditos, trabajo `19e49301-27fa-437b-bb0a-c25fa8383966`. Parte del fotograma de los 2,0 s de la escena 1 (copa levantada) y hace un empuje hasta un primer plano de la copa.
+- Montaje con HyperFrames (`index.html`): escena 1 (8,04 s), corte con fundido de audio de 0,25 s y escena 2 (7 s). Logo blanco de Hestía abajo a la derecha (150 px, a 44 px del borde derecho y 120 px del inferior), con aparición suave.
+- Audio: el generado por el modelo, normalizado a -16 LUFS; no se ha oído.
+- El logo queda en la zona donde Instagram dibuja los botones de la derecha y el texto del pie; si se tapa, subirlo o llevarlo a la izquierda.
+- Costes en créditos: 8 + 7 = 15.
