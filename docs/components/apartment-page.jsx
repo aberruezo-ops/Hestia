@@ -112,6 +112,7 @@ const APT_DATA = {
     hero_img: 'assets/apt-vt-gallery-33.jpg',
     bedroom_img: 'assets/apt-vt-gallery-33.jpg',
     reveal_img: 'assets/apt-vt-gallery-20.jpg',
+    daynight: { day: 'assets/apt-vt-terraza-dia.jpg', night: 'assets/apt-vt-terraza-noche.jpg' },
     plan3d: 'thalassa-3d.html',
     floorplan_desc_es: 'Thalassa ocupa la tercera planta (desde el garaje) en una sola crujía: salón con terraza panorámica, cocina independiente, dos dormitorios, dos baños y vistas al Mediterráneo y al Salar de los Canos.',
     floorplan_desc_en: 'Thalassa occupies the third floor (from the garage) in a single open plan: living room with panoramic terrace, separate kitchen, two bedrooms, two bathrooms and views over the Mediterranean and the Salar de los Canos.',
@@ -706,6 +707,111 @@ const AptCinematicReveal = ({ apt, lang }) => {
       <div className="apt-reveal-tint"/>
       <div className="apt-reveal-content">
         <p className="apt-reveal-quote">« {d.concept} »</p>
+      </div>
+    </section>
+  );
+};
+
+// --- Terraza de día a noche ---
+// Foco suave que sigue al cursor y deja ver la misma terraza de noche. Las
+// dos imágenes son fotogramas con cámara fija del vídeo animado de la
+// terraza (recreación, no fotografía), por eso la leyenda lo dice. En táctil
+// y con teclado se usa el botón, que abre la noche entera.
+const AptDayNight = ({ apt, lang }) => {
+  const d = apt.daynight;
+  const stageRef = React.useRef(null);
+  const nightRef = React.useRef(false);
+  const kickRef = React.useRef(() => {});
+  const [night, setNight] = React.useState(false);
+
+  React.useEffect(() => {
+    const el = stageRef.current;
+    if (!el) return;
+    const fine = window.matchMedia('(hover: hover) and (pointer: fine)');
+    const calm = window.matchMedia('(prefers-reduced-motion: reduce)');
+    const s = { x: 0, y: 0, px: 0, py: 0, r: 0, inside: false, raf: 0 };
+    const spot = () => Math.min(260, Math.max(140, el.clientWidth * 0.34));
+    const whole = () => Math.hypot(el.clientWidth, el.clientHeight) * 2.6;
+    const tick = () => {
+      s.raf = 0;
+      const pe = calm.matches ? 1 : 0.1;
+      const re = calm.matches ? 1 : 0.14;
+      const nt = nightRef.current;
+      const tx = nt ? el.clientWidth / 2 : s.px;
+      const ty = nt ? el.clientHeight / 2 : s.py;
+      const tr = nt ? whole() : (s.inside ? spot() : 0);
+      s.x += (tx - s.x) * pe;
+      s.y += (ty - s.y) * pe;
+      s.r += (tr - s.r) * re;
+      el.style.setProperty('--dn-x', s.x.toFixed(1) + 'px');
+      el.style.setProperty('--dn-y', s.y.toFixed(1) + 'px');
+      el.style.setProperty('--dn-r', s.r.toFixed(1) + 'px');
+      if (Math.abs(tx - s.x) > 0.1 || Math.abs(ty - s.y) > 0.1 || Math.abs(tr - s.r) > 0.1) {
+        s.raf = requestAnimationFrame(tick);
+      }
+    };
+    const kick = () => { if (!s.raf) s.raf = requestAnimationFrame(tick); };
+    const aim = (e) => {
+      const b = el.getBoundingClientRect();
+      s.px = e.clientX - b.left;
+      s.py = e.clientY - b.top;
+      if (!s.inside && s.r < 0.5) { s.x = s.px; s.y = s.py; }
+      s.inside = true;
+    };
+    const onMove = (e) => { if (!fine.matches) return; aim(e); kick(); };
+    const onLeave = () => { s.inside = false; kick(); };
+    kickRef.current = kick;
+    el.addEventListener('pointerenter', onMove);
+    el.addEventListener('pointermove', onMove);
+    el.addEventListener('pointerleave', onLeave);
+    el.addEventListener('pointercancel', onLeave);
+    return () => {
+      if (s.raf) cancelAnimationFrame(s.raf);
+      el.removeEventListener('pointerenter', onMove);
+      el.removeEventListener('pointermove', onMove);
+      el.removeEventListener('pointerleave', onLeave);
+      el.removeEventListener('pointercancel', onLeave);
+    };
+  }, []);
+
+  React.useEffect(() => { nightRef.current = night; kickRef.current(); }, [night]);
+
+  if (!d) return null;
+  const es = lang === 'es';
+  const webp = (p) => p.replace(/\.(jpg|jpeg|png)$/i, '.webp');
+  return (
+    <section className="apt-dn" style={{ '--apt-accent': apt.accent, '--apt-accent-dk': apt.accent_dk }}>
+      <div className="apt-dn-inner">
+        <div className="apt-dn-copy">
+          <span className="eyebrow apt-dn-eyebrow">{es ? 'La terraza' : 'The terrace'}</span>
+          <h2 className="apt-dn-title">{es ? 'Del atardecer a la noche' : 'From sunset to night'}</h2>
+          <p className="apt-dn-text">
+            {es
+              ? 'Thalassa es el ático y su terraza es panorámica. Pasa el cursor por la imagen, o pulsa el botón, y verás cómo podría verse la terraza de noche.'
+              : 'Thalassa is the penthouse and its terrace is panoramic. Move your cursor over the image, or press the button, and you will see how the terrace could look at night.'}
+          </p>
+          <button type="button" className={'apt-dn-btn' + (night ? ' is-on' : '')} onClick={() => setNight(v => !v)}>
+            {night ? (es ? 'Ver al atardecer' : 'See at sunset') : (es ? 'Ver de noche' : 'See at night')}
+          </button>
+        </div>
+        <figure className="apt-dn-fig">
+          <div className="apt-dn-stage" ref={stageRef}>
+            <picture>
+              <source srcSet={webp(d.day)} type="image/webp"/>
+              <img className="apt-dn-img" src={d.day} width="720" height="960" loading="lazy" decoding="async"
+                alt={es ? 'Recreación de la terraza de Thalassa al atardecer, con la pérgola de madera, el tiesto y las vistas sobre la urbanización' : 'Recreation of the Thalassa terrace at sunset, with the wooden pergola, the plant pot and the view over the complex'}/>
+            </picture>
+            <picture>
+              <source srcSet={webp(d.night)} type="image/webp"/>
+              <img className="apt-dn-img apt-dn-img-night" src={d.night} width="720" height="960" loading="lazy" decoding="async" alt="" aria-hidden="true"/>
+            </picture>
+          </div>
+          <figcaption className="apt-dn-cap">
+            {es
+              ? 'Recreación del atardecer y de la noche a partir de la terraza real. No es una fotografía.'
+              : 'A recreation of sunset and night based on the real terrace. It is not a photograph.'}
+          </figcaption>
+        </figure>
       </div>
     </section>
   );
@@ -1356,6 +1462,7 @@ const ApartmentPageApp = () => {
             <AptFloorPlan apt={apt} lang={lang} />
             <AptVideoDesc apt={apt} lang={lang} />
             <AptCinematicReveal apt={apt} lang={lang} />
+            {apt.daynight && <AptDayNight apt={apt} lang={lang} />}
             <AptMiniReviews apt={apt} lang={lang} />
             <AptPriceTeaser apt={apt} lang={lang} />
             <AptCalendar aptId={aptId} lang={lang} accent={apt.accent} />
