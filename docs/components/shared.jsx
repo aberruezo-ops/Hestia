@@ -3686,7 +3686,47 @@ const AptDesktopSidebar = ({ lang, onGuideClick }) => {
   );
 };
 
-Object.assign(window, { DirectBookingPerks, DirectBookingModal, AptDesktopSidebar, DIRECT_PERKS, DIRECT_RIBBON, DIRECT_STEPS, DIRECT_VIDEO, DirectVideoLink, DirectVideoModal, openDirectVideo, _lsMinMonthly, _lsSavingsPct });
+// Vídeo corto de una página (mudo, con el texto dentro del propio vídeo). Se carga al
+// acercarse a la pantalla y se pausa al salir; con movimiento reducido no arranca solo.
+const PageVideo = ({ src, poster, eyebrow, title, text, label, note, transcript }) => {
+  const ref = React.useRef(null);
+  const userPaused = React.useRef(false);
+  const autoPaused = React.useRef(false);
+  const [near, setNear] = React.useState(false);
+  const calm = React.useMemo(() => window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches, []);
+  React.useEffect(() => {
+    const el = ref.current;
+    if (!el || !('IntersectionObserver' in window)) { setNear(true); return; }
+    const onPause = () => { if (!autoPaused.current) userPaused.current = true; autoPaused.current = false; };
+    const onPlay = () => { userPaused.current = false; };
+    el.addEventListener('pause', onPause);
+    el.addEventListener('play', onPlay);
+    const io = new IntersectionObserver(([e]) => {
+      if (e.isIntersecting) { setNear(true); if (!calm && !userPaused.current && el.play) el.play().catch(() => {}); }
+      else if (!el.paused) { autoPaused.current = true; el.pause(); }
+    }, { rootMargin: '200px 0px', threshold: 0.25 });
+    io.observe(el);
+    return () => { io.disconnect(); el.removeEventListener('pause', onPause); el.removeEventListener('play', onPlay); };
+  }, [calm]);
+  React.useEffect(() => { const el = ref.current; if (near && !calm && !userPaused.current && el && el.play) el.play().catch(() => {}); }, [near, calm]);
+  return (
+    <section className="page-video">
+      <div className="pv-inner">
+        <span className="eyebrow pv-eyebrow">{eyebrow}</span>
+        <h2 className="pv-title">{title}</h2>
+        <p className="pv-text">{text}</p>
+        <div className="pv-wrap">
+          <video ref={ref} className="pv-video" src={near ? src : undefined} poster={poster} preload="none"
+            muted loop playsInline controls aria-label={label} aria-describedby="pv-transcript"/>
+        </div>
+        <p className="pv-note">{note}</p>
+        <p id="pv-transcript" className="sr-only">{transcript}</p>
+      </div>
+    </section>
+  );
+};
+
+Object.assign(window, { PageVideo, DirectBookingPerks, DirectBookingModal, AptDesktopSidebar, DIRECT_PERKS, DIRECT_RIBBON, DIRECT_STEPS, DIRECT_VIDEO, DirectVideoLink, DirectVideoModal, openDirectVideo, _lsMinMonthly, _lsSavingsPct });
 
 // ================================================================
 // WidgetStack, pila de widgets flotantes independientes a la derecha

@@ -6733,7 +6733,95 @@ const AptDesktopSidebar = ({
     "aria-hidden": "true"
   }, "→"))));
 };
+
+// Vídeo corto de una página (mudo, con el texto dentro del propio vídeo). Se carga al
+// acercarse a la pantalla y se pausa al salir; con movimiento reducido no arranca solo.
+const PageVideo = ({
+  src,
+  poster,
+  eyebrow,
+  title,
+  text,
+  label,
+  note,
+  transcript
+}) => {
+  const ref = React.useRef(null);
+  const userPaused = React.useRef(false);
+  const autoPaused = React.useRef(false);
+  const [near, setNear] = React.useState(false);
+  const calm = React.useMemo(() => window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches, []);
+  React.useEffect(() => {
+    const el = ref.current;
+    if (!el || !('IntersectionObserver' in window)) {
+      setNear(true);
+      return;
+    }
+    const onPause = () => {
+      if (!autoPaused.current) userPaused.current = true;
+      autoPaused.current = false;
+    };
+    const onPlay = () => {
+      userPaused.current = false;
+    };
+    el.addEventListener('pause', onPause);
+    el.addEventListener('play', onPlay);
+    const io = new IntersectionObserver(([e]) => {
+      if (e.isIntersecting) {
+        setNear(true);
+        if (!calm && !userPaused.current && el.play) el.play().catch(() => {});
+      } else if (!el.paused) {
+        autoPaused.current = true;
+        el.pause();
+      }
+    }, {
+      rootMargin: '200px 0px',
+      threshold: 0.25
+    });
+    io.observe(el);
+    return () => {
+      io.disconnect();
+      el.removeEventListener('pause', onPause);
+      el.removeEventListener('play', onPlay);
+    };
+  }, [calm]);
+  React.useEffect(() => {
+    const el = ref.current;
+    if (near && !calm && !userPaused.current && el && el.play) el.play().catch(() => {});
+  }, [near, calm]);
+  return /*#__PURE__*/React.createElement("section", {
+    className: "page-video"
+  }, /*#__PURE__*/React.createElement("div", {
+    className: "pv-inner"
+  }, /*#__PURE__*/React.createElement("span", {
+    className: "eyebrow pv-eyebrow"
+  }, eyebrow), /*#__PURE__*/React.createElement("h2", {
+    className: "pv-title"
+  }, title), /*#__PURE__*/React.createElement("p", {
+    className: "pv-text"
+  }, text), /*#__PURE__*/React.createElement("div", {
+    className: "pv-wrap"
+  }, /*#__PURE__*/React.createElement("video", {
+    ref: ref,
+    className: "pv-video",
+    src: near ? src : undefined,
+    poster: poster,
+    preload: "none",
+    muted: true,
+    loop: true,
+    playsInline: true,
+    controls: true,
+    "aria-label": label,
+    "aria-describedby": "pv-transcript"
+  })), /*#__PURE__*/React.createElement("p", {
+    className: "pv-note"
+  }, note), /*#__PURE__*/React.createElement("p", {
+    id: "pv-transcript",
+    className: "sr-only"
+  }, transcript)));
+};
 Object.assign(window, {
+  PageVideo,
   DirectBookingPerks,
   DirectBookingModal,
   AptDesktopSidebar,

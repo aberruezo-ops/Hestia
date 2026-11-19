@@ -576,6 +576,15 @@ const EstanciasLargasPageApp = () => {
     lang: lang
   }), /*#__PURE__*/React.createElement(LsWho, {
     lang: lang
+  }), /*#__PURE__*/React.createElement(PageVideo, {
+    src: lang === 'es' ? 'assets/estancias-largas-video.mp4' : 'assets/estancias-largas-video-en.mp4',
+    poster: lang === 'es' ? 'assets/estancias-largas-video-poster.jpg' : 'assets/estancias-largas-video-en-poster.jpg',
+    transcript: lang === 'es' ? 'El vídeo muestra una terraza al atardecer y varias estancias de los apartamentos. De septiembre a junio, desde 29 noches. Tu base en Vera Playa: un mes, una temporada, lo que necesites. Apartamento completo, con cocina equipada, ropa de cama y toallas incluidas. Mesa de trabajo bajo petición y fibra de 300 a 600 Mbps. Terraza privada o con vistas, para cuando acaba la jornada. Escríbenos con tus fechas: contrato formal y respuesta en menos de 2 horas.' : 'The video shows a terrace at sunset and several rooms of the apartments. From September to June, from 29 nights. Your base in Vera Playa: one month, one season, as long as you need. A full apartment, with an equipped kitchen, bed linen and towels included. Work table on request and fibre from 300 to 600 Mbps. Private terrace or with views, for when the working day ends. Write to us with your dates: formal contract and a reply in under 2 hours.',
+    eyebrow: lang === 'es' ? 'En 28 segundos' : 'In 28 seconds',
+    title: lang === 'es' ? 'Tu base en Vera Playa, de septiembre a junio' : 'Your base in Vera Playa, September to June',
+    text: lang === 'es' ? 'Estancias desde 29 noches, con fibra de 300 a 600 Mbps y mesa de trabajo bajo petición.' : 'Stays from 29 nights, with fibre from 300 to 600 Mbps and a work table on request.',
+    label: lang === 'es' ? 'Vídeo: así son las estancias largas en Hestía' : 'Video: what a long stay at Hestía is like',
+    note: lang === 'es' ? 'Clips animados con IA a partir de fotos reales de los apartamentos; la luz y el movimiento son generados.' : 'Clips animated with AI from real photos of the apartments; the light and the movement are generated.'
   }), /*#__PURE__*/React.createElement(LsIncludes, {
     lang: lang
   }), /*#__PURE__*/React.createElement(LsPrices, {
