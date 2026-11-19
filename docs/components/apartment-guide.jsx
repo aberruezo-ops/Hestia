@@ -2561,24 +2561,77 @@ const GuideMap = ({ lang, apt }) => {
     const quieto = window.matchMedia && matchMedia('(prefers-reduced-motion: reduce)').matches;
     const dist = p => home ? Math.hypot(p.lat - home.lat, (p.lng - home.lng) * 0.8) : 0;
     const entradas = [];
-    PLACES.forEach(p => {
-      if (!p.lat || !p.lng) return;
+    const L = window.L;
+    const estilo = (p) => {
       const isHome = p.cat === 'home';
       const col = GUIDE_MAP_COLORS[p.cat] || { fill: '#3AAABB', border: '#2A8E9E' };
-      const ci = catLookup[p.cat] || {};
-      const section = CAT_TO_SECTION[p.cat];
-      const marker = window.L.circleMarker([p.lat, p.lng], {
-        className: 'ag-map-pin-in',
-        radius: isHome ? 10 : (p.featured ? 8 : 6),
-        fillColor: col.fill,
-        color: col.border,
-        weight: isHome ? 2.5 : 1.5,
-        opacity: 1,
-        fillOpacity: quieto ? (isHome ? 1 : (p.featured ? 0.9 : 0.75)) : 0,
-        opacity: quieto ? 1 : 0,
-      }).bindPopup(buildGuidePopup(p, col, ci, section, lang), { maxWidth: 220 })
-        .addTo(map);
-      entradas.push({ p, m: marker, isHome, fill: isHome ? 1 : (p.featured ? 0.9 : 0.75), d: dist(p) });
+      return {
+        isHome, col,
+        fill: isHome ? 1 : (p.featured ? 0.9 : 0.75),
+        opts: {
+          radius: isHome ? 10 : (p.featured ? 8 : 6),
+          fillColor: col.fill, color: col.border, weight: isHome ? 2.5 : 1.5,
+        },
+      };
+    };
+    const popupDe = (p, col) => buildGuidePopup(p, col, catLookup[p.cat] || {}, CAT_TO_SECTION[p.cat], lang);
+    const pinSolo = (p, latlng, animado) => {
+      const e = estilo(p);
+      return { e, m: L.circleMarker(latlng, {
+        ...e.opts, className: 'ag-map-pin-in', bubblingMouseEvents: false,
+        opacity: animado && !quieto ? 0 : 1, fillOpacity: animado && !quieto ? 0 : e.fill,
+      }).bindPopup(popupDe(p, e.col), { maxWidth: 220 }).addTo(map) };
+    };
+
+    // Lugares a menos de 60 m comparten un pin con contador: el punto exacto de un pueblo
+    // no es el de cada local, y apilados solo se veía uno. Al pulsarlo se abren en abanico.
+    const metros = (a, b) => Math.hypot((a.lat - b.lat) * 111320, (a.lng - b.lng) * 88700);
+    const grupos = [];
+    const lugares = PLACES.filter(p => p.lat && p.lng);
+    lugares.filter(p => p.cat === 'home').forEach(p => grupos.push({ c: p, ps: [p] }));
+    lugares.filter(p => p.cat !== 'home').forEach(p => {
+      const g = grupos.find(g => g.ps[0].cat !== 'home' && metros(g.c, p) < 60);
+      if (g) g.ps.push(p); else grupos.push({ c: p, ps: [p] });
+    });
+
+    let abierto = null;
+    const cerrar = () => { if (abierto) { map.removeLayer(abierto); abierto = null; } };
+    const abrir = (g) => {
+      cerrar();
+      const capa = L.layerGroup().addTo(map);
+      abierto = capa;
+      const centro = map.latLngToLayerPoint([g.c.lat, g.c.lng]);
+      // Anillos concéntricos (8, 14, 20…) para que un grupo grande no se salga del mapa.
+      const anillos = [];
+      for (let k = 0, resto = g.ps.length, cap = 8; resto > 0; k++, cap += 6) { anillos.push(Math.min(cap, resto)); resto -= cap; }
+      g.ps.forEach((p, i) => {
+        let k = 0, acc = 0;
+        while (i >= acc + anillos[k]) { acc += anillos[k]; k++; }
+        const ang = (2 * Math.PI * (i - acc)) / anillos[k] - Math.PI / 2 + k * 0.4;
+        const r = 36 + k * 30;
+        const ll = map.layerPointToLatLng(centro.add([Math.cos(ang) * r, Math.sin(ang) * r]));
+        L.polyline([[g.c.lat, g.c.lng], ll], { className: 'ag-map-pata', color: '#2A0F2E', weight: 1, opacity: 0.45, interactive: false }).addTo(capa);
+        const e = estilo(p);
+        L.circleMarker(ll, { ...e.opts, radius: 8, bubblingMouseEvents: false, opacity: 1, fillOpacity: 1 })
+          .bindPopup(popupDe(p, e.col), { maxWidth: 220 }).bindTooltip(p.name, { direction: 'top', offset: [0, -6] }).addTo(capa);
+      });
+    };
+    map.on('click zoomstart', cerrar);
+
+    grupos.forEach(g => {
+      const d = dist(g.c);
+      if (g.ps.length === 1) {
+        const { e, m } = pinSolo(g.ps[0], [g.c.lat, g.c.lng], true);
+        entradas.push({ d, show: () => m.setStyle({ opacity: 1, fillOpacity: e.fill }) });
+      } else {
+        const m = L.marker([g.c.lat, g.c.lng], {
+          icon: L.divIcon({ className: 'ag-map-marker', html: `<span class="ag-map-cluster">${g.ps.length}</span>`, iconSize: [28, 28] }),
+          title: lang === 'es' ? `${g.ps.length} lugares aquí` : `${g.ps.length} places here`,
+          opacity: quieto ? 1 : 0, bubblingMouseEvents: false,
+        }).addTo(map);
+        m.on('click', () => abrir(g));
+        entradas.push({ d, show: () => m.setOpacity(1) });
+      }
     });
 
     const playas = PLACES.filter(p => p.lat && p.lng && p.cat === 'beach');
@@ -2591,7 +2644,7 @@ const GuideMap = ({ lang, apt }) => {
     const entrar = () => {
       const paso = Math.min(22, 1600 / entradas.length);
       entradas.sort((a, b) => a.d - b.d).forEach((e, i) => {
-        timers.push(setTimeout(() => e.m.setStyle({ opacity: 1, fillOpacity: e.fill }), 120 + i * paso));
+        timers.push(setTimeout(e.show, 120 + i * paso));
       });
       if (ruta) timers.push(setTimeout(() => ruta.setStyle({ opacity: 0.9 }), 120 + entradas.length * paso));
     };
@@ -2601,7 +2654,7 @@ const GuideMap = ({ lang, apt }) => {
       io.observe(mapRef.current);
     }
 
-    return () => { if (io) io.disconnect(); timers.forEach(clearTimeout); if (mapInst.current) { mapInst.current.remove(); mapInst.current = null; } };
+    return () => { if (io) io.disconnect(); timers.forEach(clearTimeout); map.off('click zoomstart', cerrar); if (mapInst.current) { mapInst.current.remove(); mapInst.current = null; } };
   }, [leafletOk, lang, aptSlug]);
 
   const withCoords = PLACES.filter(p => p.lat && p.lng).length;

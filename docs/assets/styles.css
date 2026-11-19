@@ -26086,3 +26086,16 @@ padding-left: 8px;
 .pv-chap:focus-visible { outline: 2px solid var(--sol-text); outline-offset: 2px; }
 .pv-chap.is-on { background: var(--ber-dk); border-color: var(--ber-dk); color: var(--crema); }
 .pv-chap-t { font-variant-numeric: tabular-nums; font-size: 12px; opacity: .75; }
+
+/* Pin de grupo del mapa de la guía: contador de lugares que comparten punto. */
+.ag-map-cluster {
+  display: flex; align-items: center; justify-content: center;
+  width: 28px; height: 28px; border-radius: 50%;
+  background: var(--ber-dk); color: var(--crema);
+  border: 2px solid var(--crema);
+  box-shadow: 0 2px 6px rgba(42, 15, 46, .35);
+  font: 600 12px/1 var(--sans);
+  transition: transform .16s ease-out;
+}
+.leaflet-marker-icon:hover .ag-map-cluster, .leaflet-marker-icon:focus-visible .ag-map-cluster { transform: scale(1.12); }
+.leaflet-marker-icon.leaflet-marker-draggable, .leaflet-marker-icon:has(.ag-map-cluster) { transition: opacity .35s ease-out; }
