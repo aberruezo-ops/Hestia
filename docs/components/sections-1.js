@@ -407,7 +407,7 @@ const Hero = ({
   }, /*#__PURE__*/React.createElement("span", {
     className: "haq-thumb"
   }, /*#__PURE__*/React.createElement("picture", null, /*#__PURE__*/React.createElement("source", {
-    srcSet: a.img.replace(/\.(jpg|jpeg|png)$/i, '.webp'),
+    srcSet: a.img.replace(/^assets\//, 'assets/thumb/').replace(/\.(jpg|jpeg|png)$/i, '.webp'),
     type: "image/webp"
   }), /*#__PURE__*/React.createElement("img", {
     decoding: "async",

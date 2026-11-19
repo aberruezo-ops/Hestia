@@ -307,7 +307,7 @@ const Hero = ({ lang, onScrollDown }) => {
               <a key={a.id} href={`${a.slug}.html`} className={`haq-item ${a.id}`}>
                 <span className="haq-thumb">
                   <picture>
-                    <source srcSet={a.img.replace(/\.(jpg|jpeg|png)$/i, '.webp')} type="image/webp"/>
+                    <source srcSet={a.img.replace(/^assets\//, 'assets/thumb/').replace(/\.(jpg|jpeg|png)$/i, '.webp')} type="image/webp"/>
                     <img decoding="async" loading="lazy" src={a.img} alt="" width="72" height="72"/>
                   </picture>
                 </span>
