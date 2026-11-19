@@ -63,6 +63,15 @@ const APT_DATA = {
     hero_img: 'assets/apt-vm-gallery-26.jpg',
     bedroom_img: 'assets/apt-vm-gallery-26.jpg',
     reveal_img: 'assets/apt-vm-gallery-27.jpg',
+    daynight: {
+      day: 'assets/apt-vm-terraza-dia.jpg',
+      night: 'assets/apt-vm-terraza-noche.jpg',
+      title: ['De día a noche', 'From day to night'],
+      dayLabel: ['Ver de día', 'See by day'],
+      text: ['La terraza de Mar es de esquina y mide 20 m². Pasa el cursor por la imagen, o pulsa el botón, y verás cómo podría verse de noche.', 'The Mar terrace is a corner one and measures 20 m². Move your cursor over the image, or press the button, and you will see how it could look at night.'],
+      alt: ['Recreación de la terraza de Mar de día, con el toldo de rayas, la mesa y los sillones', 'Recreation of the Mar terrace by day, with the striped awning, the table and the armchairs'],
+      cap: ['Recreación del día y de la noche a partir de la terraza real. No es una fotografía.', 'A recreation of day and night based on the real terrace. It is not a photograph.']
+    },
     plan3d: 'mar-3d.html',
     floorplan_desc_es: 'Mar se distribuye en primera planta con terraza de esquina: salón-comedor abierto, cocina equipada, dos dormitorios y dos baños. La terraza en esquina recibe luz desde el amanecer hasta el atardecer.',
     floorplan_desc_en: 'Mar is on the first floor with a corner terrace: open living and dining room, equipped kitchen, two bedrooms and two bathrooms. The corner terrace catches light from sunrise to sunset.',
@@ -122,7 +131,12 @@ const APT_DATA = {
     reveal_img: 'assets/apt-vt-gallery-20.jpg',
     daynight: {
       day: 'assets/apt-vt-terraza-dia.jpg',
-      night: 'assets/apt-vt-terraza-noche.jpg'
+      night: 'assets/apt-vt-terraza-noche.jpg',
+      title: ['Del atardecer a la noche', 'From sunset to night'],
+      dayLabel: ['Ver al atardecer', 'See at sunset'],
+      text: ['Thalassa es el ático y su terraza es panorámica. Pasa el cursor por la imagen, o pulsa el botón, y verás cómo podría verse la terraza de noche.', 'Thalassa is the penthouse and its terrace is panoramic. Move your cursor over the image, or press the button, and you will see how the terrace could look at night.'],
+      alt: ['Recreación de la terraza de Thalassa al atardecer, con la pérgola de madera, el tiesto y las vistas sobre la urbanización', 'Recreation of the Thalassa terrace at sunset, with the wooden pergola, the plant pot and the view over the complex'],
+      cap: ['Recreación del atardecer y de la noche a partir de la terraza real. No es una fotografía.', 'A recreation of sunset and night based on the real terrace. It is not a photograph.']
     },
     plan3d: 'thalassa-3d.html',
     floorplan_desc_es: 'Thalassa ocupa la tercera planta (desde el garaje) en una sola crujía: salón con terraza panorámica, cocina independiente, dos dormitorios, dos baños y vistas al Mediterráneo y al Salar de los Canos.',
@@ -177,6 +191,15 @@ const APT_DATA = {
     hero_img: 'assets/apt-vs-gallery-33.jpg',
     bedroom_img: 'assets/apt-vs-gallery-33.jpg',
     reveal_img: 'assets/apt-vs-gallery-32.jpg',
+    daynight: {
+      day: 'assets/apt-vs-terraza-dia.jpg',
+      night: 'assets/apt-vs-terraza-noche.jpg',
+      title: ['De día a noche', 'From day to night'],
+      dayLabel: ['Ver de día', 'See by day'],
+      text: ['Salinas tiene dos terrazas. Pasa el cursor por la imagen, o pulsa el botón, y verás cómo podría verse una de ellas de noche.', 'Salinas has two terraces. Move your cursor over the image, or press the button, and you will see how one of them could look at night.'],
+      alt: ['Recreación de una terraza de Salinas de día, con muros blancos, sillones de madera y una mesa baja', 'Recreation of a Salinas terrace by day, with white walls, wooden armchairs and a low table'],
+      cap: ['Recreación del día y de la noche a partir de la terraza real. No es una fotografía.', 'A recreation of day and night based on the real terrace. It is not a photograph.']
+    },
     plan3d: 'salinas-3d.html',
     floorplan_desc_es: 'Salinas se distribuye en planta primera: salón-comedor, cocina equipada, dos dormitorios, dos baños y dos terrazas, la principal al sur con vistas a los jardines y la piscina de la urbanización.',
     floorplan_desc_en: 'Salinas is a first-floor apartment: living and dining room, equipped kitchen, two bedrooms, two bathrooms and two terraces, the main one faces south with views over the complex gardens and pool.',
@@ -883,6 +906,7 @@ const AptDayNight = ({
   }, [night]);
   if (!d) return null;
   const es = lang === 'es';
+  const pick = a => a[es ? 0 : 1];
   const webp = p => p.replace(/\.(jpg|jpeg|png)$/i, '.webp');
   return /*#__PURE__*/React.createElement("section", {
     className: "apt-dn",
@@ -898,13 +922,13 @@ const AptDayNight = ({
     className: "eyebrow apt-dn-eyebrow"
   }, es ? 'La terraza' : 'The terrace'), /*#__PURE__*/React.createElement("h2", {
     className: "apt-dn-title"
-  }, es ? 'Del atardecer a la noche' : 'From sunset to night'), /*#__PURE__*/React.createElement("p", {
+  }, pick(d.title)), /*#__PURE__*/React.createElement("p", {
     className: "apt-dn-text"
-  }, es ? 'Thalassa es el ático y su terraza es panorámica. Pasa el cursor por la imagen, o pulsa el botón, y verás cómo podría verse la terraza de noche.' : 'Thalassa is the penthouse and its terrace is panoramic. Move your cursor over the image, or press the button, and you will see how the terrace could look at night.'), /*#__PURE__*/React.createElement("button", {
+  }, pick(d.text)), /*#__PURE__*/React.createElement("button", {
     type: "button",
     className: 'apt-dn-btn' + (night ? ' is-on' : ''),
     onClick: () => setNight(v => !v)
-  }, night ? es ? 'Ver al atardecer' : 'See at sunset' : es ? 'Ver de noche' : 'See at night')), /*#__PURE__*/React.createElement("figure", {
+  }, night ? pick(d.dayLabel) : es ? 'Ver de noche' : 'See at night')), /*#__PURE__*/React.createElement("figure", {
     className: "apt-dn-fig"
   }, /*#__PURE__*/React.createElement("div", {
     className: "apt-dn-stage",
@@ -919,7 +943,7 @@ const AptDayNight = ({
     height: "960",
     loading: "lazy",
     decoding: "async",
-    alt: es ? 'Recreación de la terraza de Thalassa al atardecer, con la pérgola de madera, el tiesto y las vistas sobre la urbanización' : 'Recreation of the Thalassa terrace at sunset, with the wooden pergola, the plant pot and the view over the complex'
+    alt: pick(d.alt)
   })), /*#__PURE__*/React.createElement("picture", null, /*#__PURE__*/React.createElement("source", {
     srcSet: webp(d.night),
     type: "image/webp"
@@ -934,7 +958,7 @@ const AptDayNight = ({
     "aria-hidden": "true"
   }))), /*#__PURE__*/React.createElement("figcaption", {
     className: "apt-dn-cap"
-  }, es ? 'Recreación del atardecer y de la noche a partir de la terraza real. No es una fotografía.' : 'A recreation of sunset and night based on the real terrace. It is not a photograph.'))));
+  }, pick(d.cap)))));
 };
 
 // --- TrustStrip ---
