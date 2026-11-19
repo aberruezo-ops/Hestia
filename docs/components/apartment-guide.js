@@ -6073,6 +6073,9 @@ const GuideMap = ({
       attribution: '© <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a>',
       maxZoom: 19
     }).addTo(map);
+    const quieto = window.matchMedia && matchMedia('(prefers-reduced-motion: reduce)').matches;
+    const dist = p => home ? Math.hypot(p.lat - home.lat, (p.lng - home.lng) * 0.8) : 0;
+    const entradas = [];
     PLACES.forEach(p => {
       if (!p.lat || !p.lng) return;
       const isHome = p.cat === 'home';
@@ -6082,18 +6085,64 @@ const GuideMap = ({
       };
       const ci = catLookup[p.cat] || {};
       const section = CAT_TO_SECTION[p.cat];
-      window.L.circleMarker([p.lat, p.lng], {
+      const marker = window.L.circleMarker([p.lat, p.lng], {
+        className: 'ag-map-pin-in',
         radius: isHome ? 10 : p.featured ? 8 : 6,
         fillColor: col.fill,
         color: col.border,
         weight: isHome ? 2.5 : 1.5,
         opacity: 1,
-        fillOpacity: isHome ? 1 : p.featured ? 0.9 : 0.75
+        fillOpacity: quieto ? isHome ? 1 : p.featured ? 0.9 : 0.75 : 0,
+        opacity: quieto ? 1 : 0
       }).bindPopup(buildGuidePopup(p, col, ci, section, lang), {
         maxWidth: 220
       }).addTo(map);
+      entradas.push({
+        p,
+        m: marker,
+        isHome,
+        fill: isHome ? 1 : p.featured ? 0.9 : 0.75,
+        d: dist(p)
+      });
     });
+    const playas = PLACES.filter(p => p.lat && p.lng && p.cat === 'beach');
+    const playa = home && playas.length ? playas.reduce((a, b) => dist(b) < dist(a) ? b : a) : null;
+    const ruta = playa ? window.L.polyline([[home.lat, home.lng], [playa.lat, playa.lng]], {
+      className: 'ag-map-ruta',
+      color: '#3AAABB',
+      weight: 2.5,
+      dashArray: '2 7',
+      opacity: quieto ? 0.9 : 0,
+      interactive: false
+    }).addTo(map) : null;
+    let timers = [];
+    const entrar = () => {
+      const paso = Math.min(22, 1600 / entradas.length);
+      entradas.sort((a, b) => a.d - b.d).forEach((e, i) => {
+        timers.push(setTimeout(() => e.m.setStyle({
+          opacity: 1,
+          fillOpacity: e.fill
+        }), 120 + i * paso));
+      });
+      if (ruta) timers.push(setTimeout(() => ruta.setStyle({
+        opacity: 0.9
+      }), 120 + entradas.length * paso));
+    };
+    let io = null;
+    if (!quieto) {
+      io = new IntersectionObserver(([en]) => {
+        if (en.isIntersecting) {
+          io.disconnect();
+          entrar();
+        }
+      }, {
+        threshold: 0.35
+      });
+      io.observe(mapRef.current);
+    }
     return () => {
+      if (io) io.disconnect();
+      timers.forEach(clearTimeout);
       if (mapInst.current) {
         mapInst.current.remove();
         mapInst.current = null;

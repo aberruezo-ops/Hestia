@@ -26050,3 +26050,12 @@ padding-left: 8px;
 }
 @keyframes dr-pop { from { transform: translate(-50%, -50%) scale(.4); opacity: 0; } 60% { opacity: 1; } to { transform: translate(-50%, -50%) scale(1); opacity: 1; } }
 @keyframes dr-fill { from { transform: scaleX(0); opacity: 0; } to { transform: scaleX(1); opacity: .92; } }
+
+/* Mapa de la guía: los pines entran por distancia al apartamento (JS) y la ruta a la playa
+   más cercana aparece con un trazo que avanza. */
+.ag-map-ruta { transition: opacity .5s ease-out; }
+@media (prefers-reduced-motion: no-preference) {
+  .ag-map-ruta { animation: ag-ruta 1.6s linear infinite; }
+  .leaflet-interactive.ag-map-pin-in { transition: fill-opacity .35s ease-out, stroke-opacity .35s ease-out; }
+}
+@keyframes ag-ruta { to { stroke-dashoffset: -18; } }
