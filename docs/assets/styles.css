@@ -26059,3 +26059,30 @@ padding-left: 8px;
   .leaflet-interactive.ag-map-pin-in { transition: fill-opacity .35s ease-out, stroke-opacity .35s ease-out; }
 }
 @keyframes ag-ruta { to { stroke-dashoffset: -18; } }
+
+/* Títulos de sección: entran enfocándose, con una máscara que sube desde la línea base.
+   Sin cambio de ancho (desenfoque y desplazamiento, no peso ni espaciado) para no recolocar el texto. */
+@media (prefers-reduced-motion: no-preference) {
+  :is(.emp-h2, .lsl-h2, .avail-title, .apt-fp-title, .apt-dn-title, .pv-title, .lss-title, .hs-title, .faq-title, .mapa-section-title, .osc-title, .noticias-voz-title, .noticias-terr-title, .noticias-archivo-title, .ngp-title, .pe-section-title, .pq-valores-title)[data-ola] { transition: clip-path .9s var(--ease-out, cubic-bezier(.23,1,.32,1)), transform .9s var(--ease-out, cubic-bezier(.23,1,.32,1)), filter .9s var(--ease-out, cubic-bezier(.23,1,.32,1)); }
+  :is(.emp-h2, .lsl-h2, .avail-title, .apt-fp-title, .apt-dn-title, .pv-title, .lss-title, .hs-title, .faq-title, .mapa-section-title, .osc-title, .noticias-voz-title, .noticias-terr-title, .noticias-archivo-title, .ngp-title, .pe-section-title, .pq-valores-title)[data-ola="0"] { clip-path: inset(-.2em -.1em calc(100% - 2px) -.1em); transform: translateY(.3em); filter: blur(5px); }
+  :is(.emp-h2, .lsl-h2, .avail-title, .apt-fp-title, .apt-dn-title, .pv-title, .lss-title, .hs-title, .faq-title, .mapa-section-title, .osc-title, .noticias-voz-title, .noticias-terr-title, .noticias-archivo-title, .ngp-title, .pe-section-title, .pq-valores-title)[data-ola="1"] { clip-path: inset(-.2em -.1em -.2em -.1em); transform: none; filter: none; }
+}
+@media print { [data-ola] { clip-path: none !important; transform: none !important; filter: none !important; } }
+
+/* Capítulos del vídeo de página: botones que saltan a cada escena. */
+.pv-chapters { list-style: none; margin: 14px 0 0; padding: 0; display: flex; flex-wrap: wrap; gap: 8px; justify-content: center; }
+.pv-chap {
+  display: inline-flex; align-items: center; gap: 8px;
+  font-family: var(--sans); font-size: 13px; line-height: 1.2;
+  padding: 9px 14px; min-height: 44px;
+  border: 1px solid color-mix(in srgb, var(--ink) 22%, transparent);
+  border-radius: 10px 0 10px 0;
+  background: color-mix(in srgb, var(--crema) 70%, transparent);
+  -webkit-backdrop-filter: blur(8px); backdrop-filter: blur(8px);
+  color: var(--ink); cursor: pointer;
+  transition: background-color .2s ease-out, border-color .2s ease-out, transform .16s ease-out;
+}
+.pv-chap:hover { border-color: var(--sol-text); transform: translateY(-1px); }
+.pv-chap:focus-visible { outline: 2px solid var(--sol-text); outline-offset: 2px; }
+.pv-chap.is-on { background: var(--ber-dk); border-color: var(--ber-dk); color: var(--crema); }
+.pv-chap-t { font-variant-numeric: tabular-nums; font-size: 12px; opacity: .75; }

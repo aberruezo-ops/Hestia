@@ -757,6 +757,10 @@ const EmpresasPageApp = () => {
     src: lang === 'es' ? 'assets/empresas-video.mp4' : 'assets/empresas-video-en.mp4',
     poster: lang === 'es' ? 'assets/empresas-video-poster.jpg' : 'assets/empresas-video-en-poster.jpg',
     transcript: lang === 'es' ? 'El vídeo muestra una terraza al atardecer y varias estancias de los apartamentos. Alojamiento para tu equipo en Vera Playa. Hestía para empresas: tres apartamentos en Vera Playa. En lugar de una habitación de hotel, un apartamento con cocina, lavadora e independencia. Hasta 6 personas en cada uno, con dos dormitorios y cocina equipada. Tres apartamentos, cerca entre sí, con llegada autónoma, factura y contrato. Pide tu propuesta a medida: respondemos en menos de 2 horas, de 9:00 a 22:00.' : 'The video shows a terrace at sunset and several rooms of the apartments. Accommodation for your team in Vera Playa. Hestía for businesses: three apartments in Vera Playa. Instead of a hotel room, an apartment with a kitchen, washing machine and independence. Up to 6 people in each, with two bedrooms and an equipped kitchen. Three apartments, close to each other, with self check-in, invoice and contract. Request a proposal tailored to you: we reply in under 2 hours, 9:00 to 22:00.',
+    chapters: (lang === 'es' ? ['Hestía para empresas', 'En lugar de una habitación de hotel', 'Hasta 6 personas en cada uno', 'Tres apartamentos, cerca entre sí', 'Tu propuesta a medida'] : ['Hestía for businesses', 'Instead of a hotel room', 'Up to 6 people in each', 'Three apartments, close to each other', 'A proposal tailored to you']).map((label, i) => ({
+      t: [0, 7.2, 12.8, 18, 23.6][i],
+      label
+    })),
     eyebrow: lang === 'es' ? 'En 28 segundos' : 'In 28 seconds',
     title: lang === 'es' ? 'Así se aloja un equipo en Hestía' : 'How a team stays at Hestía',
     text: lang === 'es' ? 'Tres apartamentos en Vera Playa con cocina, lavadora, llegada autónoma, factura y contrato.' : 'Three apartments in Vera Playa with a kitchen, washing machine, self check-in, invoice and contract.',

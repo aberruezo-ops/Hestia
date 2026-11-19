@@ -612,20 +612,29 @@ const useReveal = () => {
     };
     // El horizonte de las tarjetas se dibuja al entrar en pantalla (sin movimiento reducido).
     const OLA = '.voz-card, .as-body, .cc-card, .rating-card, .req-panel, .apt-day-card, .contacto-card, .reservas-person-card, .noticias-mes-col, .ag-ave-curiosity, .emp-perk, .ag-note, .ag-wifi-card, .ag-arrival-notice, .ag-top5, .ag-day-plans, .dbt-ledger, .lsl-apt-card';
+    const TIT = '.emp-h2, .lsl-h2, .avail-title, .apt-fp-title, .apt-dn-title, .pv-title, .lss-title, .hs-title, .faq-title, .mapa-section-title, .osc-title, .noticias-voz-title, .noticias-terr-title, .noticias-archivo-title, .ngp-title, .pe-section-title, .pq-valores-title';
     const calm = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
     const olaIo = calm ? null : new IntersectionObserver((entries) => {
       entries.forEach(e => { if (e.isIntersecting) { e.target.setAttribute('data-ola', '1'); olaIo.unobserve(e.target); } });
     }, { threshold: 0.12 });
-    const olaWatch = (el) => { if (olaIo && !el.hasAttribute('data-ola')) { el.setAttribute('data-ola', '0'); olaIo.observe(el); } };
-    if (olaIo) document.querySelectorAll(OLA).forEach(olaWatch);
+    // El título parte recortado a una franja de 2px: el IntersectionObserver mide la zona visible, no el cuadro, así que umbral 0.
+    const titIo = calm ? null : new IntersectionObserver((entries) => {
+      entries.forEach(e => { if (e.isIntersecting) { e.target.setAttribute('data-ola', '1'); titIo.unobserve(e.target); } });
+    }, { threshold: 0, rootMargin: '0px 0px -12% 0px' });
+    const olaWatch = (el) => {
+      if (!olaIo || el.hasAttribute('data-ola')) return;
+      el.setAttribute('data-ola', '0');
+      (el.matches(TIT) ? titIo : olaIo).observe(el);
+    };
+    if (olaIo) document.querySelectorAll(OLA + ', ' + TIT).forEach(olaWatch);
     const mo = new MutationObserver((mutations) => {
       mutations.forEach(m => m.addedNodes.forEach(n => {
         observe(n);
-        if (olaIo && n instanceof Element) { if (n.matches(OLA)) olaWatch(n); n.querySelectorAll(OLA).forEach(olaWatch); }
+        if (olaIo && n instanceof Element) { if (n.matches(OLA + ', ' + TIT)) olaWatch(n); n.querySelectorAll(OLA + ', ' + TIT).forEach(olaWatch); }
       }));
     });
     mo.observe(document.body, { childList: true, subtree: true });
-    return () => { io.disconnect(); mo.disconnect(); if (olaIo) olaIo.disconnect(); };
+    return () => { io.disconnect(); mo.disconnect(); if (olaIo) olaIo.disconnect(); if (titIo) titIo.disconnect(); };
   }, []);
 };
 
@@ -3699,8 +3708,11 @@ const AptDesktopSidebar = ({ lang, onGuideClick }) => {
 
 // Vídeo corto de una página (mudo, con el texto dentro del propio vídeo). Se carga al
 // acercarse a la pantalla y se pausa al salir; con movimiento reducido no arranca solo.
-const PageVideo = ({ src, poster, eyebrow, title, text, label, note, transcript }) => {
+const PageVideo = ({ src, poster, eyebrow, title, text, label, note, transcript, chapters }) => {
   const ref = React.useRef(null);
+  const [chap, setChap] = React.useState(0);
+  const chapRef = React.useRef(chapters);
+  chapRef.current = chapters;
   const userPaused = React.useRef(false);
   const autoPaused = React.useRef(false);
   const [near, setNear] = React.useState(false);
@@ -3712,13 +3724,30 @@ const PageVideo = ({ src, poster, eyebrow, title, text, label, note, transcript 
     const onPlay = () => { userPaused.current = false; };
     el.addEventListener('pause', onPause);
     el.addEventListener('play', onPlay);
+    const onTime = () => {
+      const cs = chapRef.current;
+      if (!cs) return;
+      let k = 0;
+      cs.forEach((c, i) => { if (el.currentTime >= c.t - 0.05) k = i; });
+      setChap(k);
+    };
+    el.addEventListener('timeupdate', onTime);
     const io = new IntersectionObserver(([e]) => {
       if (e.isIntersecting) { setNear(true); if (!calm && !userPaused.current && el.play) el.play().catch(() => {}); }
       else if (!el.paused) { autoPaused.current = true; el.pause(); }
     }, { rootMargin: '200px 0px', threshold: 0.25 });
     io.observe(el);
-    return () => { io.disconnect(); el.removeEventListener('pause', onPause); el.removeEventListener('play', onPlay); };
+    return () => { io.disconnect(); el.removeEventListener('pause', onPause); el.removeEventListener('play', onPlay); el.removeEventListener('timeupdate', onTime); };
   }, [calm]);
+  const goChap = (i) => {
+    const el = ref.current; if (!el) return;
+    const to = chapters[i].t + 0.05;
+    if (el.readyState >= 1) el.currentTime = to;
+    else el.addEventListener('loadedmetadata', () => { el.currentTime = to; }, { once: true });
+    setChap(i);
+    userPaused.current = false;
+    if (el.play) el.play().catch(() => {});
+  };
   React.useEffect(() => { const el = ref.current; if (near && !calm && !userPaused.current && el && el.play) el.play().catch(() => {}); }, [near, calm]);
   return (
     <section className="page-video">
@@ -3730,6 +3759,17 @@ const PageVideo = ({ src, poster, eyebrow, title, text, label, note, transcript 
           <video ref={ref} className="pv-video" src={near ? src : undefined} poster={poster} preload="none"
             muted loop playsInline controls aria-label={label} aria-describedby="pv-transcript"/>
         </div>
+        {chapters && (
+          <ol className="pv-chapters" aria-label="Capítulos / Chapters">
+            {chapters.map((c, i) => (
+              <li key={i}>
+                <button type="button" className={'pv-chap' + (i === chap ? ' is-on' : '')} onClick={() => goChap(i)} aria-current={i === chap ? 'true' : undefined}>
+                  <span className="pv-chap-t">{Math.floor(c.t / 60)}:{String(Math.floor(c.t % 60)).padStart(2, '0')}</span>{c.label}
+                </button>
+              </li>
+            ))}
+          </ol>
+        )}
         <p className="pv-note">{note}</p>
         <p id="pv-transcript" className="sr-only">{transcript}</p>
       </div>
