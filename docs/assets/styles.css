@@ -526,6 +526,19 @@ p  { line-height: 1.65; font-weight: 300; }
   left: 0;
   right: 0;
 }
+@keyframes cta-cycle {
+  /* 8 colores de la paleta tintando un halo, no la bg sólida. El bg
+     se queda en glass y el tinte cicla detrás. */
+  0%,    6.25%  { --cta-tint: rgba(42, 15, 46, 0.55); }   /* berenjena */
+  12.5%, 18.75% { --cta-tint: rgba(123, 59, 107, 0.55); } /* violeta */
+  25%,   31.25% { --cta-tint: rgba(58, 170, 187, 0.55); } /* turquesa */
+  37.5%, 43.75% { --cta-tint: rgba(107, 122, 58, 0.55); } /* olivo */
+  50%,   56.25% { --cta-tint: rgba(212, 43, 128, 0.55); } /* buganvilla */
+  62.5%, 68.75% { --cta-tint: rgba(200, 151, 90, 0.55); } /* albero */
+  75%,   81.25% { --cta-tint: rgba(212, 168, 74, 0.55); } /* sol */
+  87.5%, 93.75% { --cta-tint: rgba(139, 74, 30, 0.55); }  /* siena */
+  100%          { --cta-tint: rgba(42, 15, 46, 0.55); }
+}
 /* RESERVA del header — efecto glass cult-ui sobre vidrio OSCURO.
    El header pasa de cream (idle) a transparent (scrolled) — un glass
    claro daría cream-on-cream. Usamos eggplant translúcido (#2A0F2E al
@@ -545,9 +558,14 @@ p  { line-height: 1.65; font-weight: 300; }
   text-transform: uppercase;
   opacity: 1;
   color: #E6E4DF !important;
-  background-color: rgba(42, 15, 46, 0.9) !important;
+  background-color: rgba(42, 15, 46, 0.62) !important;   /* eggplant translúcido */
   background-image: none !important;
-  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.22);
+  -webkit-backdrop-filter: blur(14px) saturate(1.6);
+          backdrop-filter: blur(14px) saturate(1.6);
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.28),
+    inset 0 -1px 0 rgba(0, 0, 0, 0.30),
+    0 6px 22px rgba(0, 0, 0, 0.28);
   overflow: hidden;
   isolation: isolate;
   animation: none;
@@ -557,7 +575,47 @@ p  { line-height: 1.65; font-weight: 300; }
   --mag-y: 0px;
   --cta-tint: rgba(58, 170, 187, 0.55);
 }
+/* Halo coloreado animado por debajo del cristal — sustituye al cycle de bg. */
+.header nav .cta::before {
+  content: '';
+  position: absolute;
+  inset: -30%;
+  z-index: -1;
+  background: radial-gradient(circle at 50% 50%, var(--cta-tint), transparent 65%);
+  filter: blur(14px);
+  opacity: 0.85;
+  pointer-events: none;
+  animation: cta-cycle 80s linear infinite;
+  animation-delay: var(--cta-delay, 0s);
+}
+/* Sheen — destello que pasa lentamente por la superficie. */
+.header nav .cta::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  background: linear-gradient(
+    115deg,
+    rgba(255, 255, 255, 0.0)  20%,
+    rgba(255, 255, 255, 0.22) 45%,
+    rgba(255, 255, 255, 0.0)  70%
+  );
+  background-size: 220% 100%;
+  background-position: 0% 0%;
+  pointer-events: none;
+  animation: ctaGlassSheen 9s ease-in-out infinite;
+  z-index: 1;
+}
+@keyframes ctaGlassSheen {
+  0%   { background-position: -50% 0%; }
+  55%  { background-position: 150% 0%; }
+  100% { background-position: 150% 0%; }
+}
 .header nav .cta .cta-text { z-index: 2; }
+@media (prefers-reduced-motion: reduce) {
+  .header nav .cta::before,
+  .header nav .cta::after { animation: none; }
+}
 .header nav .cta {
   --cta-lift: 0px;
   transform: translate3d(var(--mag-x), calc(var(--mag-y) + var(--cta-lift)), 0);
@@ -565,7 +623,11 @@ p  { line-height: 1.65; font-weight: 300; }
 }
 .header nav .cta:hover {
   background-color: rgba(42, 15, 46, 0.78) !important;
-  box-shadow: 0 8px 22px rgba(0, 0, 0, 0.3);
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.42),
+    inset 0 -1px 0 rgba(0, 0, 0, 0.32),
+    0 10px 32px rgba(0, 0, 0, 0.36),
+    0 0 0 1px rgba(230, 228, 223, 0.30);
 }
 .header nav .cta .cta-text {
   position: relative;
@@ -577,13 +639,68 @@ p  { line-height: 1.65; font-weight: 300; }
   transition: transform .25s cubic-bezier(.2, 1.4, .35, 1), letter-spacing .25s ease;
 }
 
+/* ── Animaciones premium del botón RESERVA ───────────────────────────── */
+@property --cta-angle { syntax: '<angle>'; initial-value: 0deg; inherits: false; }
+
+/* 1) Pulso de atención — el halo de color "respira" suavemente */
+.header nav .cta::before {
+  animation: cta-cycle 80s linear infinite, ctaBreathe 3.4s ease-in-out infinite;
+}
+@keyframes ctaBreathe {
+  0%, 100% { opacity: 0.6;  transform: scale(1); }
+  50%      { opacity: 1;    transform: scale(1.12); }
+}
+
+/* 2) Borde de luz animado — un trazo teal recorre el borde en bucle */
+.header nav .cta .cta-border {
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  padding: 1.5px;
+  pointer-events: none;
+  z-index: 1;
+  background: conic-gradient(from var(--cta-angle),
+    transparent 0deg, transparent 35deg,
+    var(--cta-tint) 70deg, #8FD3DE 92deg, var(--cta-tint) 114deg,
+    transparent 150deg, transparent 360deg);
+  -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
+          mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
+  -webkit-mask-composite: xor;
+          mask-composite: exclude;
+  animation: ctaBorderSpin 4.5s linear infinite;
+  opacity: 0.9;
+}
+@keyframes ctaBorderSpin { to { --cta-angle: 360deg; } }
+
 /* 3) Hover/tap mejorado — elevación + apertura de la letra */
 .header nav .cta:hover { --cta-lift: -2px; }
 .header nav .cta:hover .cta-text { letter-spacing: 0.2em; }
 
 /* 4) Press/ripple — feedback al pulsar (sobre todo en móvil) */
 .header nav .cta:active { --cta-lift: 1px; filter: brightness(1.1); transition-duration: .08s; }
+.header nav .cta .cta-text::after {
+  content: '';
+  position: absolute;
+  left: 50%; top: 50%;
+  width: 12px; height: 12px;
+  margin: -6px 0 0 -6px;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(230,228,223,.55), transparent 70%);
+  transform: scale(0);
+  opacity: 0;
+  pointer-events: none;
+}
+.header nav .cta:active .cta-text::after { animation: ctaRipple .55s ease-out; }
+@keyframes ctaRipple {
+  0%   { transform: scale(0);  opacity: 0.7; }
+  100% { transform: scale(16); opacity: 0; }
+}
 
+@media (prefers-reduced-motion: reduce) {
+  .header nav .cta::before { animation: none; }
+  .header nav .cta .cta-border { animation: none; opacity: 0.5; }
+  .header nav .cta .cta-text::after { animation: none; }
+}
 @media (prefers-reduced-motion: reduce) {
   .header nav .cta,
   .header nav .cta .cta-text { transform: none; transition: none; }
@@ -593,6 +710,54 @@ p  { line-height: 1.65; font-weight: 300; }
   position: relative;
   display: flex;
   align-items: center;
+}
+@keyframes hv-crystal {
+  0%   {
+    background: #2A0F2E;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.42),
+                inset 0 1px 0 rgba(230,228,223,0.10);
+    border-color: rgba(230,228,223,0.42);
+    color: #E6E4DF;
+  }
+  22%  {
+    background: #3D1A35;
+    box-shadow: 0 2px 14px rgba(61,26,53,0.55),
+                inset 0 1px 0 rgba(212,168,74,0.22),
+                0 0 10px rgba(212,168,74,0.20);
+    border-color: rgba(212,168,74,0.50);
+    color: #E6E4DF;
+  }
+  44%  {
+    background: #5D2A48;
+    box-shadow: 0 2px 22px rgba(93,42,72,0.52),
+                inset 0 2px 0 rgba(206,200,189,0.38),
+                0 0 18px rgba(212,168,74,0.44);
+    border-color: rgba(212,168,74,0.82);
+    color: #E1DED9;
+  }
+  66%  {
+    background: #4E2446;
+    box-shadow: 0 2px 16px rgba(78,36,70,0.48),
+                inset 0 1px 0 rgba(230,228,223,0.26),
+                0 0 12px rgba(212,168,74,0.26);
+    border-color: rgba(206,200,189,0.65);
+    color: #E6E4DF;
+  }
+  88%  {
+    background: #3D1A35;
+    box-shadow: 0 2px 12px rgba(0,0,0,0.38),
+                inset 0 1px 0 rgba(212,168,74,0.12),
+                0 0 6px rgba(212,168,74,0.12);
+    border-color: rgba(230,228,223,0.52);
+    color: #E6E4DF;
+  }
+  100% {
+    background: #2A0F2E;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.42),
+                inset 0 1px 0 rgba(230,228,223,0.10);
+    border-color: rgba(230,228,223,0.42);
+    color: #E6E4DF;
+  }
 }
 .hv-logo-btn {
   position: absolute;
@@ -615,6 +780,7 @@ p  { line-height: 1.65; font-weight: 300; }
   justify-content: center;
   z-index: 2;
   transition: transform 0.2s;
+  animation: hv-crystal 4.5s ease-in-out infinite;
 }
 @media (hover: hover) {
   .hv-logo-btn:hover {
@@ -768,13 +934,25 @@ p  { line-height: 1.65; font-weight: 300; }
 .header.day .hamburger-btn:hover { background: rgba(42,15,46,0.06); }
 
 /* -------- Mobile menu overlay -------- */
-/* Fondo sólido berenjena de la marca. */
+/* Fondo animado tipo aurora con la paleta de Hestía: berenjena de base
+   + tintes de violeta, sol turquesa, buganvilla, olivo y dorado que
+   respiran lentamente. Capas separadas (::before y ::after) para que
+   los gradientes se desplacen con tiempos distintos sin solaparse. */
 .mobile-menu {
   display: none;
   position: fixed;
   inset: 0;
   z-index: 97;
   background-color: #2A0F2E;       /* ber-dk literal — fallback sólido */
+  background-image: linear-gradient(
+    135deg,
+    #2A0F2E 0%,
+    #3D1A48 40%,
+    #2A0F2E 70%,
+    #1A0A1E 100%
+  );
+  background-size: 220% 220%;
+  animation: mmAuroraBase .45s ease-out infinite;
   backdrop-filter: blur(20px);
   -webkit-backdrop-filter: blur(20px);
   color: var(--arena);
@@ -792,9 +970,58 @@ p  { line-height: 1.65; font-weight: 300; }
   -webkit-overflow-scrolling: touch;
   isolation: isolate;
 }
+/* Capa 1 — manchas sol turquesa + violeta que respiran. */
+.mobile-menu::before {
+  content: '';
+  position: absolute;
+  inset: -20%;
+  z-index: -1;
+  pointer-events: none;
+  background:
+    radial-gradient(ellipse 50% 35% at 20% 18%, rgba(58, 170, 187, 0.30), transparent 65%),
+    radial-gradient(ellipse 45% 40% at 80% 35%, rgba(123, 59, 107, 0.32), transparent 70%),
+    radial-gradient(ellipse 60% 45% at 50% 90%, rgba(58, 170, 187, 0.18), transparent 70%);
+  filter: blur(12px);
+  animation: mmAuroraLayer1 18s ease-in-out infinite alternate;
+}
+/* Capa 2 — manchas buganvilla + olivo + dorado, ritmo más lento. */
+.mobile-menu::after {
+  content: '';
+  position: absolute;
+  inset: -20%;
+  z-index: -1;
+  pointer-events: none;
+  background:
+    radial-gradient(ellipse 40% 30% at 75% 75%, rgba(212, 43, 128, 0.20), transparent 70%),
+    radial-gradient(ellipse 50% 35% at 15% 65%, rgba(107, 122, 58, 0.18), transparent 70%),
+    radial-gradient(ellipse 35% 30% at 60% 25%, rgba(212, 168, 74, 0.16), transparent 70%);
+  filter: blur(18px);
+  animation: mmAuroraLayer2 28s ease-in-out infinite alternate-reverse;
+  mix-blend-mode: screen;
+}
 .mobile-menu.open {
   opacity: 1;
   pointer-events: auto;
+}
+@keyframes mmAuroraBase {
+  0%   { background-position: 0% 50%; }
+  50%  { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
+}
+@keyframes mmAuroraLayer1 {
+  0%   { transform: translate(0, 0)   scale(1);    opacity: 0.85; }
+  50%  { transform: translate(4%, -3%) scale(1.06); opacity: 1; }
+  100% { transform: translate(-3%, 4%) scale(0.96); opacity: 0.8; }
+}
+@keyframes mmAuroraLayer2 {
+  0%   { transform: translate(0, 0)    scale(1);    opacity: 0.7; }
+  50%  { transform: translate(-5%, 3%) scale(1.08); opacity: 1; }
+  100% { transform: translate(4%, -4%) scale(0.94); opacity: 0.65; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .mobile-menu,
+  .mobile-menu::before,
+  .mobile-menu::after { animation: none; }
 }
 /* -------- Menú móvil — diseño cristal -------- */
 @keyframes mnFadeUp {
@@ -820,6 +1047,8 @@ p  { line-height: 1.65; font-weight: 300; }
   background: rgba(255,255,255,0.055);
   border: 1px solid rgba(255,255,255,0.10);
   border-radius: 12px 0 12px 0;
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
   overflow: hidden;
   animation: mnFadeUp 0.40s cubic-bezier(0.22,1,0.36,1) both;
   transition: background 0.22s, box-shadow 0.22s;
@@ -891,6 +1120,8 @@ p  { line-height: 1.65; font-weight: 300; }
   background: rgba(255,255,255,0.04);
   border: 1px solid rgba(255,255,255,0.08);
   border-radius: 12px 0 12px 0;
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
   overflow: hidden;
   animation: mnFadeUp 0.40s cubic-bezier(0.22,1,0.36,1) both;
   animation-delay: 0.22s;
@@ -1545,6 +1776,8 @@ section {
   display: flex;
   align-items: center;
   justify-content: center;
+  backdrop-filter: blur(3px);
+  -webkit-backdrop-filter: blur(3px);
 }
 
 /* -------- Cookies banner --------
@@ -2332,7 +2565,7 @@ body.apt-bar-shown .cookies {
   border-radius: 10px 0 10px 0;
   font-family: var(--sans); font-size: 12.5px; font-weight: 700;
 }
-.as-rating { background: rgba(42,15,46,.78); color: var(--crema);  }
+.as-rating { background: rgba(42,15,46,.78); color: var(--crema); -webkit-backdrop-filter: blur(6px); backdrop-filter: blur(6px); }
 .as-rating small { font-weight: 400; opacity: .75; }
 .as-avail { background: rgba(246,245,244,.94); color: var(--ink); }
 .as-avail-dot { width: 7px; height: 7px; border-radius: 50%; background: var(--ok); box-shadow: 0 0 0 3px color-mix(in srgb, var(--ok) 22%, transparent); }
@@ -2495,6 +2728,42 @@ body.apt-bar-shown .cookies {
   syntax: '<angle>';
   initial-value: 0deg;
   inherits: false;
+}
+.apt-card::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  padding: 1.5px;
+  background: conic-gradient(from var(--apt-border-angle, 0deg),
+    rgba(230, 228, 223, 0) 0%,
+    var(--apt-border-c1, #3AAABB) 30%,
+    var(--apt-border-c2, #6FC4D1) 50%,
+    rgba(230, 228, 223, 0) 80%
+  );
+  -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
+          mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
+  -webkit-mask-composite: xor;
+          mask-composite: exclude;
+  z-index: 5;
+  pointer-events: none;
+  opacity: 0.55;                                /* visible siempre — móvil sin hover */
+  animation: aptBorderSpin 16s linear infinite;
+  transition: opacity .35s ease;
+}
+.apt-card.vm { --apt-border-c1: #6B7A3A; --apt-border-c2: #8B9A52; }
+.apt-card.vt { --apt-border-c1: #8A4A24; --apt-border-c2: #B86A3C; }
+.apt-card.vs { --apt-border-c1: #9E7A2C; --apt-border-c2: #D4A84A; }
+.apt-card:active::after { opacity: 0.85; }     /* feedback táctil al pulsar */
+@media (hover: hover) and (pointer: fine) {
+  .apt-card::after        { opacity: 0.45; }   /* base más baja en desktop, gana hover */
+  .apt-card:hover::after  { opacity: 0.95; }
+}
+@keyframes aptBorderSpin {
+  to { --apt-border-angle: 360deg; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .apt-card::after { animation: none; opacity: 0.55; }
 }
 
 /* Micro-tilt táctil al pulsar en móvil — sin mousemove, solo :active.
@@ -4252,9 +4521,15 @@ body[data-apt="salinas"]  .ag-nav-btn-primary {
   overflow: hidden;
   isolation: isolate;
   border-radius: 10px 0 10px 0 !important;
-  box-shadow: 0 6px 18px rgba(42, 15, 46, 0.22) !important;
+  -webkit-backdrop-filter: blur(6px) saturate(1.35);
+          backdrop-filter: blur(6px) saturate(1.35);
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.32),
+    inset 0 -1px 0 rgba(0, 0, 0, 0.20),
+    0 6px 22px var(--apt-glow, rgba(58, 170, 187, 0.45)) !important;
   border: 1px solid rgba(230, 228, 223, 0.22) !important;
-  background-size: 100% 100% !important;
+  animation: aptCtaFlow 9s ease-in-out infinite;
+  background-size: 220% 220% !important;
   transition: transform var(--dur-fast) var(--ease-out),
               box-shadow var(--dur-base) var(--ease-out);
 }
@@ -4267,8 +4542,9 @@ body[data-apt="mar"]      .widget-cta,
 body[data-apt="mar"]      .ads-btn,
 [data-apt="mar"]      .ag-nav-btn-primary,
 body[data-apt="mar"]      .ag-nav-btn-primary {
-  background-image: none !important;
-  background-color: #556330 !important;
+  background-image: linear-gradient(135deg,
+    #6B7A3A 0%, #8B9A52 32%, #6B7A3A 55%, #556330 78%, #6B7A3A 100%) !important;
+  background-color: #6B7A3A !important;
   color: #E6E4DF !important;
   --apt-glow: rgba(107, 122, 58, 0.55);
 }
@@ -4281,7 +4557,8 @@ body[data-apt="thalassa"] .widget-cta,
 body[data-apt="thalassa"] .ads-btn,
 [data-apt="thalassa"] .ag-nav-btn-primary,
 body[data-apt="thalassa"] .ag-nav-btn-primary {
-  background-image: none !important;
+  background-image: linear-gradient(135deg,
+    #8A4A24 0%, #B86A3C 32%, #8A4A24 55%, #6E3A1C 78%, #8A4A24 100%) !important;
   background-color: #8A4A24 !important;
   color: #E6E4DF !important;
   --apt-glow: rgba(184, 106, 60, 0.55);
@@ -4295,10 +4572,50 @@ body[data-apt="salinas"]  .widget-cta,
 body[data-apt="salinas"]  .ads-btn,
 [data-apt="salinas"]  .ag-nav-btn-primary,
 body[data-apt="salinas"]  .ag-nav-btn-primary {
-  background-image: none !important;
+  background-image: linear-gradient(135deg,
+    #9E7A2C 0%, #D4A84A 32%, #9E7A2C 55%, #7E6022 78%, #9E7A2C 100%) !important;
   background-color: #9E7A2C !important;
   color: #2A0F2E !important;
   --apt-glow: rgba(212, 168, 74, 0.55);
+}
+/* Sheen sweep — banda blanca 25% que cruza cada 8 s. Sin lavar el bg. */
+[data-apt="mar"]      .asb-cta::after,
+[data-apt="thalassa"] .asb-cta::after,
+[data-apt="salinas"]  .asb-cta::after,
+body[data-apt="mar"]      a.apt-page-reserve-btn::after,
+body[data-apt="thalassa"] a.apt-page-reserve-btn::after,
+body[data-apt="salinas"]  a.apt-page-reserve-btn::after,
+[data-apt="mar"]      .widget-cta::after,
+[data-apt="thalassa"] .widget-cta::after,
+[data-apt="salinas"]  .widget-cta::after,
+body[data-apt="mar"]      .widget-cta::after,
+body[data-apt="thalassa"] .widget-cta::after,
+body[data-apt="salinas"]  .widget-cta::after,
+[data-apt="mar"]      .ads-btn::after,
+[data-apt="thalassa"] .ads-btn::after,
+[data-apt="salinas"]  .ads-btn::after,
+body[data-apt="mar"]      .ads-btn::after,
+body[data-apt="thalassa"] .ads-btn::after,
+body[data-apt="salinas"]  .ads-btn::after,
+[data-apt="mar"]      .ag-nav-btn-primary::after,
+[data-apt="thalassa"] .ag-nav-btn-primary::after,
+[data-apt="salinas"]  .ag-nav-btn-primary::after,
+body[data-apt="mar"]      .ag-nav-btn-primary::after,
+body[data-apt="thalassa"] .ag-nav-btn-primary::after,
+body[data-apt="salinas"]  .ag-nav-btn-primary::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(115deg,
+    transparent 30%,
+    rgba(255, 255, 255, 0.22) 50%,
+    transparent 70%);
+  background-size: 240% 100%;
+  background-position: -50% 0%;
+  animation: aptCtaSheen 8s ease-in-out infinite;
+  pointer-events: none;
+  border-radius: inherit;
+  z-index: 1;
 }
 [data-apt="mar"]      .asb-cta > *,
 [data-apt="thalassa"] .asb-cta > *,
@@ -4325,7 +4642,7 @@ body[data-apt="mar"]      .ag-nav-btn-primary > *,
 body[data-apt="thalassa"] .ag-nav-btn-primary > *,
 body[data-apt="salinas"]  .ag-nav-btn-primary > * { position: relative; z-index: 2; }
 
-/* Hover */
+/* Hover — más glow */
 [data-apt="mar"]      .asb-cta:hover,
 [data-apt="thalassa"] .asb-cta:hover,
 [data-apt="salinas"]  .asb-cta:hover,
@@ -4351,7 +4668,10 @@ body[data-apt="mar"]      .ag-nav-btn-primary:hover,
 body[data-apt="thalassa"] .ag-nav-btn-primary:hover,
 body[data-apt="salinas"]  .ag-nav-btn-primary:hover {
   transform: translateY(-1px);
-  box-shadow: 0 8px 22px rgba(42, 15, 46, 0.28) !important;
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.48),
+    inset 0 -1px 0 rgba(0, 0, 0, 0.25),
+    0 10px 32px var(--apt-glow, rgba(58, 170, 187, 0.65)) !important;
 }
 /* Active — press feedback */
 [data-apt="mar"]      .asb-cta:active,
@@ -4372,6 +4692,15 @@ body[data-apt="salinas"]  .ag-nav-btn-primary:active {
   transform: translateY(0) scale(0.97);
 }
 
+@keyframes aptCtaFlow {
+  0%, 100% { background-position: 0% 0%; }
+  50%      { background-position: 100% 100%; }
+}
+@keyframes aptCtaSheen {
+  0%   { background-position: -50% 0%; }
+  55%  { background-position: 150% 0%; }
+  100% { background-position: 150% 0%; }
+}
 @media (prefers-reduced-motion: reduce) {
   [data-apt="mar"]      .asb-cta,
   [data-apt="thalassa"] .asb-cta,
@@ -4388,8 +4717,46 @@ body[data-apt="salinas"]  .ag-nav-btn-primary:active {
   [data-apt="mar"]      .ag-nav-btn-primary,
   [data-apt="thalassa"] .ag-nav-btn-primary,
   [data-apt="salinas"]  .ag-nav-btn-primary { animation: none; }
+  [data-apt="mar"]      .asb-cta::after,
+  [data-apt="thalassa"] .asb-cta::after,
+  [data-apt="salinas"]  .asb-cta::after,
+  body[data-apt="mar"]      a.apt-page-reserve-btn::after,
+  body[data-apt="thalassa"] a.apt-page-reserve-btn::after,
+  body[data-apt="salinas"]  a.apt-page-reserve-btn::after,
+  [data-apt="mar"]      .widget-cta::after,
+  [data-apt="thalassa"] .widget-cta::after,
+  [data-apt="salinas"]  .widget-cta::after,
+  [data-apt="mar"]      .ads-btn::after,
+  [data-apt="thalassa"] .ads-btn::after,
+  [data-apt="salinas"]  .ads-btn::after,
+  [data-apt="mar"]      .ag-nav-btn-primary::after,
+  [data-apt="thalassa"] .ag-nav-btn-primary::after,
+  [data-apt="salinas"]  .ag-nav-btn-primary::after { animation: none; }
 }
 
+/* Widget-mini plegados sobre apt — añadir sheen metálico encima del
+   ghost actual (cult-ui Family Button feel pero más sutil). El bg
+   ghost translúcido se mantiene; añadimos sólo la banda animada. */
+[data-apt="mar"]      .widget-mini::after,
+[data-apt="thalassa"] .widget-mini::after,
+[data-apt="salinas"]  .widget-mini::after,
+body[data-apt="mar"]      .widget-mini::after,
+body[data-apt="thalassa"] .widget-mini::after,
+body[data-apt="salinas"]  .widget-mini::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(115deg,
+    transparent 35%,
+    rgba(255, 255, 255, 0.18) 50%,
+    transparent 65%);
+  background-size: 240% 100%;
+  background-position: -50% 0%;
+  animation: aptCtaSheen 10s ease-in-out infinite;
+  pointer-events: none;
+  border-radius: inherit;
+  z-index: 0;
+}
 [data-apt="mar"]      .widget-mini,
 [data-apt="thalassa"] .widget-mini,
 [data-apt="salinas"]  .widget-mini,
@@ -4995,33 +5362,128 @@ body.no-stars .hero .stars { display: none; }
   --dur-liquid:  480ms;
 }
 
-.hero-title .it { color: var(--sol-lt); }
-/* ---- HEADER: filete inferior ---- */
+/* ---- Gradient text para itálicas del hero ---- */
+.hero-title .it {
+  /* Shimmer cult-ui — el italic mantiene sol-lt como base pero un
+     brillo crema más intenso lo cruza cada 6 s. Contraste base
+     #6FC4D1 sobre eggplant ~6.4 (AA). El brillo crema #E6E4DF da
+     ~10.5 (AAA) — nunca baja. */
+  background: linear-gradient(
+    100deg,
+    #6FC4D1 0%,
+    #6FC4D1 40%,
+    #E6E4DF 50%,
+    #6FC4D1 60%,
+    #6FC4D1 100%
+  );
+  background-size: 250% auto;
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  animation: heroItShimmer 7s ease-in-out infinite;
+}
+@keyframes heroItShimmer {
+  0%   { background-position: 100% center; }
+  100% { background-position: 0% center; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .hero-title .it {
+    background: none;
+    -webkit-text-fill-color: #6FC4D1;
+    animation: none;
+  }
+}
+/* ---- HERO: banda Aurora animada (sobre el wash, bajo el contenido) ---- */
+.hero::after {
+  content: '';
+  position: absolute;
+  width: 160%; height: 55%;
+  top: 0; left: -30%;
+  background: linear-gradient(
+    90deg,
+    transparent           0%,
+    rgba(58,170,187,.14)  20%,
+    rgba(111,196,209,.28) 40%,
+    rgba(58,170,187,.10)  58%,
+    transparent           75%
+  );
+  filter: blur(48px);
+  border-radius: 50%;
+  mix-blend-mode: screen;
+  animation: auroraMove 18s ease-in-out infinite;
+  pointer-events: none;
+  z-index: 2;
+}
+@keyframes auroraMove {
+  0%   { transform: translateX(-12%) scaleY(.9) rotate(-2deg); opacity: .6; }
+  50%  { transform: translateX(18%)  scaleY(1.3) rotate(2deg);  opacity: 1; }
+  100% { transform: translateX(-12%) scaleY(.9) rotate(-2deg); opacity: .6; }
+}
+
+/* ---- HEADER: shimmer line ---- */
 .header::after {
   content: '';
   position: absolute;
   bottom: 0; left: 0; right: 0;
   height: 1px;
-  background: rgba(111,196,209,.35);
+  background: linear-gradient(
+    90deg,
+    transparent               0%,
+    rgba(111,196,209,.65)    25%,
+    rgba(230,228,223,.40)    50%,
+    rgba(111,196,209,.65)    75%,
+    transparent              100%
+  );
+  background-size: 300% 100%;
+  animation: shimmerLine 7s linear infinite;
   transition: background .5s ease;
 }
 .header.day::after {
-  background: rgba(58,170,187,.35);
+  background: linear-gradient(90deg, transparent 0%, rgba(58,170,187,.35) 50%, transparent 100%);
+  background-size: 300% 100%;
+}
+@keyframes shimmerLine {
+  from { background-position: 200% center; }
+  to   { background-position: -200% center; }
 }
 
-/* ---- APARTAMENTOS: elevación al pasar el ratón ---- */
+/* ---- APARTAMENTOS: Liquid Glass hover + glow por color ---- */
+.apt-card.vm { --apt-glow: rgba(107,122,58,.45); }
+.apt-card.vt { --apt-glow: rgba(0,195,220,.5); }
 .apt-card.vt .apt-photo { filter: brightness(1.07) saturate(1.22) contrast(1.04); }
+.apt-card.vs { --apt-glow: rgba(212,168,74,.45); }
 
 @media (hover: hover) {
   .apt-card:hover {
-    transform: translateY(-6px) translateZ(0);
-    box-shadow: 0 28px 60px rgba(42,15,46,.32);
+    transform: translateY(-14px) scale(1.025) translateZ(0);
+    box-shadow:
+      0 64px 128px rgba(42,15,46,.55),
+      0 0   80px var(--apt-glow, rgba(58,170,187,.3)),
+      inset 0 1px 0 rgba(255,255,255,.14);
     transition:
       transform   var(--dur-liquid) var(--ease-liquid),
       box-shadow  var(--dur-liquid) var(--ease-liquid);
   }
 }
 
+/* Glass sheen sobre las tarjetas */
+.apt-card::after {
+  content: '';
+  position: absolute; inset: 0;
+  background: linear-gradient(
+    135deg,
+    rgba(255,255,255,.13) 0%,
+    rgba(255,255,255,.04) 40%,
+    transparent           60%
+  );
+  opacity: 0;
+  transition: opacity var(--dur-liquid) var(--ease-liquid);
+  z-index: 5;
+  pointer-events: none;
+}
+@media (hover: hover) {
+  .apt-card:hover::after { opacity: 1; }
+}
 
 /* Ken Burns en la foto de cada apartamento */
 .apt-card .apt-photo { transition: transform 9s ease; }
@@ -5029,16 +5491,33 @@ body.no-stars .hero .stars { display: none; }
   .apt-card:hover .apt-photo { transform: scale(1.09); }
 }
 
-/* ---- COUNTERS ---- */
-.counter .num { color: var(--sol-lt); }
+/* ---- COUNTERS: números con gradiente luminoso ---- */
+.counter .num {
+  background: linear-gradient(
+    135deg,
+    var(--sol-lt) 0%,
+    var(--arena)  55%,
+    var(--sol-lt) 100%
+  );
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  filter: drop-shadow(0 0 28px rgba(111,196,209,.38));
+}
 .counter .plus,
 .counter .unit {
-  color: var(--arena);
+  -webkit-text-fill-color: var(--arena);
+  filter: none;
   opacity: .65;
 }
 
-/* ---- MANIFEST: números romanos + hover slide ---- */
-.manifest .p-num { color: var(--sol-lt); }
+/* ---- MANIFEST: números romanos en gradiente + hover slide ---- */
+.manifest .p-num {
+  background: linear-gradient(135deg, var(--sol-lt), var(--arena));
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
 @media (hover: hover) {
   .manifest .principle { transition: transform var(--dur-liquid) var(--ease-liquid); }
   .manifest .principle:hover { transform: translateX(10px); }
@@ -5060,10 +5539,36 @@ body.no-stars .hero .stars { display: none; }
   filter: drop-shadow(0 0 18px rgba(58,170,187,.18));
 }
 
+/* ---- CONTACT CTA: fondo aurora animado ---- */
+.contact-cta {
+  /* background-image (no shorthand) para NO resetear el background-color
+     fallback definido en la regla anterior. */
+  background-image: linear-gradient(
+    -45deg,
+    var(--ber-void), #2A0F2E, #2A0F2E,
+    #2A0F2E, #2A0F2E, var(--ber-void)
+  );
+  background-size: 500% 500%;
+  animation: ctaAurora 15s ease infinite;
+}
+@keyframes ctaAurora {
+  0%   { background-position: 0% 50%; }
+  50%  { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
+}
+.contact-cta::before {
+  background:
+    radial-gradient(ellipse 55% 50% at 50% 50%, rgba(58,170,187,.14), transparent 70%),
+    radial-gradient(ellipse 30% 25% at 15% 75%, rgba(111,196,209,.07), transparent 60%);
+}
 
-/* ---- FLOATING CHAT ---- */
+/* ---- FLOATING CHAT: glass premium ---- */
 .float-chat .bubble-panel {
-  box-shadow: 0 30px 70px rgba(42,15,46,.32);
+  backdrop-filter: blur(28px) saturate(1.9);
+  -webkit-backdrop-filter: blur(28px) saturate(1.9);
+  box-shadow:
+    0 36px 90px rgba(42,15,46,.45),
+    inset 0 1px 0 rgba(255,255,255,.55);
 }
 
 /* ---- BOTONES: sheen + transición suave ---- */
@@ -5556,7 +6061,7 @@ a.apt-page-reserve-btn {
 a.apt-page-reserve-btn::before { display: none !important; }
 .apt-page-hero[data-apt="vm"] a.apt-page-reserve-btn,
 body[data-apt="mar"] a.apt-page-reserve-btn {
-  background-color: #556330 !important;        /* olivo Mar */
+  background-color: #6B7A3A !important;        /* olivo Mar */
   color: #E6E4DF !important;
   box-shadow: 0 4px 14px rgba(107,122,58,.38) !important;
 }
@@ -5568,7 +6073,7 @@ body[data-apt="mar"] a.apt-page-reserve-btn:hover {
 }
 .apt-page-hero[data-apt="vt"] a.apt-page-reserve-btn,
 body[data-apt="thalassa"] a.apt-page-reserve-btn {
-  background-color: #8A4A24 !important;        /* siena Thalassa */
+  background-color: #B86A3C !important;        /* siena Thalassa */
   color: #E6E4DF !important;
   box-shadow: 0 4px 14px rgba(184,106,60,.38) !important;
 }
@@ -7477,7 +7982,31 @@ body[data-apt="salinas"] a.apt-page-reserve-btn:hover {
   max-width: 480px;
 }
 
+/* ================================================================
+   LIQUID GLASS — páginas interiores (aurora en hero)
+   ================================================================ */
+.page-hero::after {
+  content: '';
+  position: absolute;
+  width: 160%; height: 55%;
+  top: 0; left: -30%;
+  background: linear-gradient(
+    90deg,
+    transparent           0%,
+    rgba(58,170,187,.08)  20%,
+    rgba(111,196,209,.18) 40%,
+    rgba(58,170,187,.06)  58%,
+    transparent           75%
+  );
+  filter: blur(48px);
+  border-radius: 50%;
+  mix-blend-mode: screen;
+  animation: auroraMove 18s ease-in-out infinite;
+  pointer-events: none;
+  z-index: 1;
+}
 @media (prefers-reduced-motion: reduce) {
+  .page-hero::after { animation: none; }
   /* Dark sections: static dark fallback so light text stays readable */
   .page-hero,
   footer,
@@ -7492,6 +8021,21 @@ body[data-apt="salinas"] a.apt-page-reserve-btn:hover {
   .section-day { animation: none; background: var(--crema); }
   .page-hero .stars,
   footer::before { animation: none; }
+}
+/* Override aurora on contact hero — replace with twinkling stars */
+.contacto-hero::after {
+  width: auto; height: auto; top: 0; left: 0;
+  filter: none; border-radius: 0; mix-blend-mode: normal;
+  background-image:
+    radial-gradient(circle 1.5px at  9% 21%, rgba(230,228,223,1) 0%, transparent 100%),
+    radial-gradient(circle 1px   at 37% 67%, rgba(111,196,209,1)  0%, transparent 100%),
+    radial-gradient(circle 1.5px at 68% 14%, rgba(230,228,223,1) 0%, transparent 100%),
+    radial-gradient(circle 1px   at 82% 73%, rgba(111,196,209,1)  0%, transparent 100%),
+    radial-gradient(circle 1.5px at 53% 42%, rgba(230,228,223,1) 0%, transparent 100%);
+  background-size: 100% 100%;
+  opacity: 0;
+  animation: starsWink .45s ease-out infinite;
+  animation-delay: -4s;
 }
 
 /* ================================================================
@@ -8079,6 +8623,38 @@ body[data-apt="salinas"] a.apt-page-reserve-btn:hover {
   transform: scale(1.12);
 }
 
+.pq-v4-wash-stack {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+  border-radius: inherit;
+  overflow: hidden;
+}
+.pq-v4-wash-layer {
+  position: absolute;
+  inset: 0;
+  background:
+    radial-gradient(900px 700px at 20% 25%, rgba(var(--hue), 0.30), transparent 60%),
+    radial-gradient(700px 600px at 80% 75%, rgba(var(--hue), 0.16), transparent 70%);
+  transition: opacity 900ms var(--pq-ease);
+  will-change: opacity;
+}
+
+/* Grain sutil */
+.pq-v4-grain {
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  pointer-events: none;
+  opacity: 0.05;
+  mix-blend-mode: overlay;
+  background-image:
+    radial-gradient(rgba(255,255,255,0.6) 0.5px, transparent 0.5px),
+    radial-gradient(rgba(0,0,0,0.4) 0.5px, transparent 0.5px);
+  background-size: 4px 4px, 5px 5px;
+  background-position: 0 0, 2px 2px;
+}
 
 /* Cuerpo principal */
 .pq-v4-main {
@@ -8125,78 +8701,114 @@ body[data-apt="salinas"] a.apt-page-reserve-btn:hover {
   font-size: clamp(160px, 22vw, 300px);
   line-height: 0.82;
   letter-spacing: -0.02em;
-  color: color-mix(in srgb, var(--sol-lt) 62%, transparent);
+  /* Cristalización — gradient multi-stop con highlights blancos en
+     posiciones diagonales + arena translúcida + sol-lt + dorado.
+     background-size 200% para animar shimmer cromático. */
+  background: linear-gradient(135deg,
+    rgba(255, 255, 255, 0.95) 0%,
+    var(--sol-lt) 18%,
+    rgba(255, 255, 255, 0.85) 35%,
+    var(--sol-h)  55%,
+    rgba(230, 228, 223, 0.75) 72%,
+    rgba(184, 122, 44, 0.88) 100%);
+  background-size: 220% 220%;
+  background-position: 0% 0%;
+  -webkit-background-clip: text;
+          background-clip: text;
+  -webkit-text-fill-color: transparent;
+          color: transparent;
+  /* Glass-like inner stroke vía text-shadow blanco mínimo */
+  text-shadow:
+    0 1px 0 rgba(255, 255, 255, 0.18),
+    0 -1px 0 rgba(0, 0, 0, 0.12);
 
   /* Estado base (cuando NO is-active): la letra está oculta */
   --pq-wght: 400;
   --pq-opsz: 14;
+  --pq-halo: 0.20;
   font-variation-settings: 'opsz' var(--pq-opsz), 'wght' var(--pq-wght);
-  filter: blur(14px);
+  filter: drop-shadow(0 30px 60px rgba(212, 168, 74, var(--pq-halo))) blur(14px);
   opacity: 0;
   transform: scale(0.96) translateY(4px);
   transition:
     opacity   1400ms cubic-bezier(0.22, 0.61, 0.36, 1),
     filter    1400ms cubic-bezier(0.22, 0.61, 0.36, 1),
     transform 1400ms cubic-bezier(0.22, 0.61, 0.36, 1);
-  will-change: opacity, filter, transform, font-variation-settings;
+  will-change: opacity, filter, transform, font-variation-settings, background-position;
 }
+/* Shimmer cromático sobre la letra activa — el gradient se desplaza
+   muy lentamente dando sensación de luz que pasa por cristal. */
 .pq-v4-glyph.is-active {
-  animation: pqV4LetterMorph 10000ms cubic-bezier(0.33, 0, 0.2, 1) forwards;
+  animation:
+    pqV4LetterMorph   10000ms cubic-bezier(0.33, 0, 0.2, 1) forwards,
+    pqV4GlyphShimmer  9000ms ease-in-out infinite;
+}
+@keyframes pqV4GlyphShimmer {
+  0%   { background-position: 0% 0%; }
+  50%  { background-position: 100% 100%; }
+  100% { background-position: 0% 0%; }
 }
 /* La letra activa corre una secuencia continua de 10 s que vuelve al
    estado inicial — síncrono con el setInterval del autoplay. El peso
    crece de 400 a 850 y la talla óptica de 14 a 120 antes de regresar.
-   La opacity se gestiona dentro
+   El halo dorado respira en paralelo. La opacity se gestiona dentro
    del keyframe (definida arriba con doble animation). */
 @keyframes pqV4LetterMorph {
   0% {
     --pq-wght: 400;
     --pq-opsz: 14;
+    --pq-halo: 0.18;
     opacity: 0;
     transform: scale(0.97) translateY(4px);
-    filter: blur(10px);
+    filter: drop-shadow(0 30px 60px rgba(212, 168, 74, 0.18)) blur(10px);
   }
   16% {
     --pq-wght: 480;
     --pq-opsz: 40;
+    --pq-halo: 0.36;
     opacity: 1;
     transform: scale(1.00) translateY(0);
-    filter: blur(0);
+    filter: drop-shadow(0 46px 90px rgba(212, 168, 74, 0.36)) blur(0);
   }
   32% {
     --pq-wght: 620;
     --pq-opsz: 80;
+    --pq-halo: 0.50;
     opacity: 1;
     transform: scale(1.02) translateY(-2px) rotate(-0.3deg);
-    filter: blur(0);
+    filter: drop-shadow(0 56px 110px rgba(212, 168, 74, 0.50)) blur(0);
   }
   50% {
     --pq-wght: 820;
     --pq-opsz: 120;
+    --pq-halo: 0.62;
     opacity: 1;
     transform: scale(1.035) translateY(0) rotate(0deg);
-    filter: blur(0);
+    filter: drop-shadow(0 66px 130px rgba(212, 168, 74, 0.62)) blur(0);
   }
   68% {
     --pq-wght: 620;
     --pq-opsz: 80;
+    --pq-halo: 0.50;
     opacity: 1;
     transform: scale(1.02) translateY(2px) rotate(0.3deg);
-    filter: blur(0);
+    filter: drop-shadow(0 56px 110px rgba(212, 168, 74, 0.50)) blur(0);
   }
   84% {
     --pq-wght: 480;
     --pq-opsz: 40;
+    --pq-halo: 0.34;
     opacity: 1;
     transform: scale(1.00) translateY(0) rotate(0deg);
-    filter: blur(0);
+    filter: drop-shadow(0 46px 90px rgba(212, 168, 74, 0.34)) blur(0);
   }
   100% {
     --pq-wght: 400;
     --pq-opsz: 14;
+    --pq-halo: 0.18;
     opacity: 0;
     transform: scale(0.97) translateY(-4px);
-    filter: blur(10px);
+    filter: drop-shadow(0 30px 60px rgba(212, 168, 74, 0.18)) blur(10px);
   }
 }
 
@@ -8306,6 +8918,17 @@ body[data-apt="salinas"] a.apt-page-reserve-btn:hover {
     transform  320ms var(--pq-ease),
     box-shadow 320ms var(--pq-ease);
 }
+.pq-v4-strip-btn::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border-radius: 12px 0 12px 0;
+  background: radial-gradient(circle, rgba(var(--hue), 0.35) 0%, transparent 70%);
+  opacity: 0;
+  transition: opacity 320ms var(--pq-ease);
+  z-index: -1;
+}
+.pq-v4-strip-btn:hover::before { opacity: 0.6; }
 .pq-v4-strip-btn:focus-visible {
   outline: 2px solid var(--sol-lt);
   outline-offset: 4px;
@@ -8325,8 +8948,12 @@ body[data-apt="salinas"] a.apt-page-reserve-btn:hover {
 }
 .pq-v4-strip-btn.is-active::before { opacity: 1; }
 .pq-v4-strip-btn.is-active .pq-v4-strip-letter {
-  color: var(--sol-lt);
+  background: linear-gradient(180deg, var(--sol-lt), var(--sol-h));
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
   transform: scale(1.18);
+  text-shadow: 0 8px 24px rgba(212, 168, 74, 0.45);
 }
 
 /* Ring de autoplay (SVG): se llena en autoplay-ms y se reinicia con key */
@@ -8385,6 +9012,7 @@ body[data-apt="salinas"] a.apt-page-reserve-btn:hover {
 }
 
 @media (prefers-reduced-motion: reduce) {
+  .pq-v4-wash-layer,
   .pq-v4-glyph,
   .pq-v4-strip-letter,
   .pq-v4-strip-btn {
@@ -8426,6 +9054,10 @@ body[data-apt="salinas"] a.apt-page-reserve-btn:hover {
 .pq-valores-closing em {
   font-style: italic;
   color: var(--sol-lt);
+  background: linear-gradient(180deg, var(--sol-lt), var(--sol-h));
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
 }
 
 /* (reduced-motion para v4 está dentro del bloque .pq-v4-* arriba) */
@@ -8541,6 +9173,23 @@ body[data-apt="salinas"] a.apt-page-reserve-btn:hover {
 }
 .nos-color-card:hover::before { clip-path: inset(0 0 0 0 round 20px 0 20px 0); }
 /* Crystalline idle glow — soft radial pulse of each card's own colour */
+.nos-color-card::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(ellipse 80% 70% at 28% 38%, var(--nc, #2A0F2E) 0%, transparent 68%);
+  opacity: 0;
+  pointer-events: none;
+  z-index: 2;
+  border-radius: inherit;
+  animation: nos-crystal-glow 4.2s ease-in-out infinite;
+  animation-delay: var(--crystal-delay, 0s);
+}
+@keyframes nos-crystal-glow {
+  0%, 100% { opacity: 0; }
+  50%       { opacity: 0.13; }
+}
+.nos-color-card:hover::after { animation: none; opacity: 0; }
 .nos-color-card > * { position: relative; z-index: 1; }
 .nos-color-hex,
 .nos-color-name,
@@ -11652,6 +12301,7 @@ footer,
   border-radius: 8px 0 8px 0;
   cursor: pointer;
   margin-bottom: 24px;
+  backdrop-filter: blur(6px);
   transition: background var(--dur-fast, 160ms) var(--ease-out, cubic-bezier(0.23, 1, 0.32, 1));
 }
 .ag-back:hover {
@@ -17656,6 +18306,8 @@ a:focus-visible,
   border: 1px solid color-mix(in srgb, var(--ber) 12%, transparent);
   border-radius: 12px 0 12px 0;
   background: color-mix(in srgb, var(--crema, #F6F5F4) 97%, transparent);
+  -webkit-backdrop-filter: blur(10px);
+  backdrop-filter: blur(10px);
   box-shadow: 0 12px 26px -20px rgba(42, 15, 46, .55);
 }
 .rf-ps {
@@ -24250,6 +24902,46 @@ padding-left: 8px;
 }
 .emp-step-d { font-size: 14px; line-height: 1.55; color: var(--ink-soft); margin: 0; }
 
+/* Cómo trabajamos: una línea fina une los cuatro números y se va llenando con el scroll.
+   Solo con cuatro columnas; sin soporte o con movimiento reducido se ve completa. */
+@media (min-width: 960px) {
+  .emp-step { position: relative; }
+  .emp-step:not(:last-child)::before,
+  .emp-step:not(:last-child)::after {
+    content: '';
+    position: absolute;
+    top: 40px;
+    left: 66px;
+    width: calc(100% - 36px);
+    height: 1px;
+    pointer-events: none;
+  }
+  .emp-step:not(:last-child)::after { background: color-mix(in srgb, var(--ber) 16%, transparent); }
+  .emp-step:not(:last-child)::before { background: var(--sol); z-index: 1; transform-origin: left center; }
+}
+@supports (animation-timeline: view()) {
+  @media (min-width: 960px) and (prefers-reduced-motion: no-preference) {
+    .emp-steps-grid { view-timeline: --emp-steps block; }
+    .emp-step:not(:last-child)::before {
+      animation: emp-step-line linear both;
+      animation-timeline: --emp-steps;
+    }
+    .emp-step:nth-child(1)::before { animation-range: cover 14% cover 30%; }
+    .emp-step:nth-child(2)::before { animation-range: cover 24% cover 40%; }
+    .emp-step:nth-child(3)::before { animation-range: cover 34% cover 50%; }
+    .emp-step-n { animation: emp-step-on linear both; animation-timeline: --emp-steps; }
+    .emp-step:nth-child(1) .emp-step-n { animation-range: cover 8% cover 18%; }
+    .emp-step:nth-child(2) .emp-step-n { animation-range: cover 22% cover 32%; }
+    .emp-step:nth-child(3) .emp-step-n { animation-range: cover 32% cover 42%; }
+    .emp-step:nth-child(4) .emp-step-n { animation-range: cover 42% cover 52%; }
+  }
+}
+@keyframes emp-step-line { from { transform: scaleX(0); } to { transform: scaleX(1); } }
+@keyframes emp-step-on {
+  from { background: color-mix(in srgb, var(--sol) 22%, #fff); color: var(--ber); }
+  to   { background: var(--sol); color: var(--ber-dk); }
+}
+
 .emp-perks-sec {
   background: var(--crema);
   padding: clamp(56px, 8vw, 88px) var(--page-pad);
@@ -25137,7 +25829,7 @@ padding-left: 8px;
   appearance: none; display: inline-flex; align-items: center; gap: 12px; text-align: left;
   padding: 9px 16px 9px 12px; cursor: pointer;
   color: var(--crema, #F6F5F4);
-  background: rgba(31, 10, 34, .86);
+  background: rgba(31, 10, 34, .62); -webkit-backdrop-filter: blur(10px); backdrop-filter: blur(10px);
   border: 1px solid rgba(230, 228, 223, .28); border-radius: 10px 0 10px 0;
   font-family: var(--sans); transition: background .2s ease, border-color .2s ease;
 }

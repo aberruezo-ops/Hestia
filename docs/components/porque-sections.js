@@ -504,6 +504,19 @@ const PorqueValores = ({
       opacity: i === activeIdx ? 1 : 0
     }
   }))), /*#__PURE__*/React.createElement("div", {
+    className: "pq-v4-wash-stack",
+    "aria-hidden": "true"
+  }, t.values.map((vv, i) => /*#__PURE__*/React.createElement("div", {
+    key: i,
+    className: "pq-v4-wash-layer",
+    style: {
+      '--hue': PORQUE_V4_HUES[vv.letter] || '212, 168, 74',
+      opacity: i === activeIdx ? 1 : 0
+    }
+  }))), /*#__PURE__*/React.createElement("div", {
+    className: "pq-v4-grain",
+    "aria-hidden": "true"
+  }), /*#__PURE__*/React.createElement("div", {
     className: "pq-v4-main"
   }, /*#__PURE__*/React.createElement("div", {
     className: "pq-v4-letter",
