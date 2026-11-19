@@ -200,7 +200,6 @@
     'components/chrome.js',
     'components/sections-2.js',
     'components/calendar.js',
-    'components/apartment-guide.js',
     'components/apartment-page.js',
   ];
 
@@ -235,12 +234,27 @@
       if (pp.ok) window.PHOTO_POS = await pp.json();
     } catch (e) { console.warn('photo-positions.json fetch failed', e); }
 
-    for (const file of COMPONENT_FILES) {
-      const res = await fetch(file + '?cv=859e03c189');
+    // La guía (0,6 MB) no hace falta para pintar la ficha: se evalúa después y avisa al render.
+    // Si la visita llega ya con la guía abierta (enlace de acceso o PIN validado en otra página), va antes.
+    const GUIDE = 'components/apartment-guide.js';
+    let guideNow = /[?&]acceso=/.test(location.search);
+    try { guideNow = guideNow || Object.keys(sessionStorage).some(k => k.indexOf('hestia-guide-unlock') === 0); } catch (e) {}
+    const files = guideNow ? COMPONENT_FILES.slice(0, -1).concat(GUIDE, COMPONENT_FILES.slice(-1)) : COMPONENT_FILES;
+    for (const file of files) {
+      const res = await fetch(file + '?cv=08263b9c2a');
       if (!res.ok) throw new Error(`Failed to load ${file}: ${res.status}`);
       const code = await res.text();
       // eslint-disable-next-line no-eval
       eval(code);
+    }
+    if (!guideNow) {
+      const late = async () => {
+        const res = await fetch(GUIDE + '?cv=08263b9c2a');
+        if (!res.ok) throw new Error('No cargó ' + GUIDE);
+        eval(await res.text());
+        window.dispatchEvent(new Event('hestia:guide-ready'));
+      };
+      (window.requestIdleCallback || (fn => setTimeout(fn, 600)))(() => late().catch(console.error));
     }
   }
 

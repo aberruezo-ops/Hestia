@@ -66,3 +66,36 @@
     window.addEventListener('pageshow', paint);
   }
 })();
+
+// Presupuesto de movimiento: las animaciones infinitas (auroras, destellos, halos) solo corren
+// mientras su elemento está en pantalla. Fuera, se pausan; en una portada pasan de unas 40
+// simultáneas a las que se ven, y los fondos animados dejan de repintar el resto de la página.
+(function () {
+  if (!window.IntersectionObserver || !document.getAnimations) return;
+  if (window.matchMedia && matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+  var vistos = new WeakSet(), io;
+  function infinita(a) {
+    var t = a.effect && a.effect.getTiming && a.effect.getTiming();
+    return a instanceof CSSAnimation && t && t.iterations === Infinity && a.effect.target;
+  }
+  function aplicar(el, on) {
+    document.getAnimations().forEach(function (a) {
+      if (!infinita(a) || a.effect.target !== el) return;
+      if (on && a.__pausada) { a.__pausada = false; a.play(); }
+      else if (!on && a.playState === 'running') { a.__pausada = true; a.pause(); }
+    });
+  }
+  function revisar() {
+    if (!io) io = new IntersectionObserver(function (es) {
+      es.forEach(function (e) { aplicar(e.target, e.isIntersecting); });
+    }, { rootMargin: '120px 0px' });
+    document.getAnimations().forEach(function (a) {
+      var el = infinita(a) && a.effect.target;
+      if (el && !vistos.has(el)) { vistos.add(el); io.observe(el); }
+    });
+  }
+  var t;
+  function luego() { clearTimeout(t); t = setTimeout(revisar, 600); }
+  window.addEventListener('load', function () { setTimeout(revisar, 800); });
+  window.addEventListener('scroll', luego, { passive: true });
+})();

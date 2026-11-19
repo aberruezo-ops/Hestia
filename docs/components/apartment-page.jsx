@@ -1439,6 +1439,13 @@ const ApartmentPageApp = () => {
 
   // La guía vive DENTRO de la página: header y footer del portal se mantienen,
   // y solo el contenido de <main> se sustituye por la guía con su nav lateral.
+  // La guía se carga tras pintar la ficha (ver el cargador del HTML): al llegar, se vuelve a pintar.
+  const [, setGuideReady] = React.useState(0);
+  React.useEffect(() => {
+    const f = () => setGuideReady(n => n + 1);
+    window.addEventListener('hestia:guide-ready', f);
+    return () => window.removeEventListener('hestia:guide-ready', f);
+  }, []);
   const showGuide = renderGuide && typeof AptGuideView !== 'undefined';
 
   // Observa si el checker de disponibilidad está en pantalla (para ocultar el sticky).
