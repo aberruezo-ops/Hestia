@@ -1,0 +1,35 @@
+{
+  "fps": 30,
+  "seams": [
+    {
+      "id": "#w1→#w2",
+      "cut": 7.2,
+      "technique": "cut-the-curve LEFT",
+      "exit": {
+        "selector": "#w1",
+        "axis": "x",
+        "dir": -1
+      },
+      "entry": {
+        "selector": "#w2",
+        "axis": "x",
+        "dir": -1
+      }
+    },
+    {
+      "id": "#w2→#cw",
+      "cut": 12.8,
+      "technique": "cut-the-curve LEFT",
+      "exit": {
+        "selector": "#w2",
+        "axis": "x",
+        "dir": -1
+      },
+      "entry": {
+        "selector": "#cw",
+        "axis": "x",
+        "dir": -1
+      }
+    }
+  ]
+}

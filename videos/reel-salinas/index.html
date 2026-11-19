@@ -1,0 +1,111 @@
+<!doctype html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=1080, height=1920" />
+    <script src="assets/vendor/gsap.min.js"></script>
+    <style>
+      @font-face { font-family: "Fraunces"; font-weight: 500; src: url("assets/fonts/Fraunces-500.ttf"); }
+      @font-face { font-family: "Fraunces"; font-weight: 600; src: url("assets/fonts/Fraunces-600.ttf"); }
+      @font-face { font-family: "Hanken Grotesk"; font-weight: 400; src: url("assets/fonts/HankenGrotesk-400.ttf"); }
+      @font-face { font-family: "Hanken Grotesk"; font-weight: 600; src: url("assets/fonts/HankenGrotesk-600.ttf"); }
+      * { margin: 0; padding: 0; box-sizing: border-box; }
+      html, body { width: 1080px; height: 1920px; overflow: hidden; background: #2A0F2E; }
+      #root { position: relative; width: 1080px; height: 1920px; overflow: hidden; font-family: "Fraunces", serif; color: #F6F5F4; background: #2A0F2E; }
+      .win { position: absolute; inset: 0; overflow: hidden; }
+      .win video { position: absolute; left: 0; top: 0; width: 1080px; height: 1920px; object-fit: cover; }
+      .win .cg0 { position: absolute; left: 0; top: 0; width: 1080px; height: 1920px; object-fit: cover; }
+      .msk { position: absolute; inset: 0; --cg: 30%; -webkit-mask-image: linear-gradient(to bottom, #000 0, #000 var(--cg), transparent calc(var(--cg) + 12%)); mask-image: linear-gradient(to bottom, #000 0, #000 var(--cg), transparent calc(var(--cg) + 12%)); }
+      .lab { position: absolute; left: 200px; width: 680px; top: 330px; text-align: center; isolation: isolate; }
+      .lab .in::before { content: ''; position: absolute; left: -110px; right: -110px; top: -70px; bottom: -70px; background: radial-gradient(closest-side at 50% 50%, rgba(42,15,46,0.74) 0%, rgba(42,15,46,0.5) 55%, rgba(42,15,46,0) 100%); }
+      .lab .in { position: relative; }
+      .lab .n, .lab .s { position: relative; }
+      .lab .n { font-weight: 500; font-size: 82px; line-height: 1.05; letter-spacing: -0.01em; white-space: nowrap; text-shadow: 0 2px 26px rgba(42,15,46,0.6); }
+      .lab .d { display: inline-block; width: 24px; height: 24px; border-radius: 50%; margin-right: 22px; vertical-align: 14px; }
+      .lab .s { margin-top: 22px; font-family: "Hanken Grotesk", sans-serif; font-weight: 400; font-size: 46px; line-height: 1.3; color: #F6F5F4; opacity: 0.96; text-shadow: 0 2px 22px rgba(42,15,46,0.7); text-wrap: balance; }
+      #hook { position: absolute; left: 200px; width: 680px; top: 530px; text-align: center; font-weight: 600; font-size: 124px; line-height: 1.06; letter-spacing: -0.01em; text-wrap: balance; text-shadow: 0 2px 30px rgba(42,15,46,0.55); }
+      #hookscrim { position: absolute; inset: 0; background: radial-gradient(ellipse 60% 22% at 50% 38%, rgba(42,15,46,0.68), rgba(42,15,46,0) 100%); }
+      #close { position: absolute; inset: 0; }
+      #flood { position: absolute; inset: 0; background: #2A0F2E; opacity: 0; }
+      #cbox { position: absolute; left: 200px; width: 680px; top: 250px; height: 560px; display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center; }
+      #clogo { width: 150px; height: 150px; margin-bottom: 30px; }
+      #c1 { white-space: nowrap; font-weight: 500; font-size: 92px; line-height: 1.08; letter-spacing: -0.01em; }
+      #c1 .d { display: inline-block; width: 24px; height: 24px; border-radius: 50%; margin-right: 20px; vertical-align: 16px; }
+      #c2 { margin-top: 24px; font-family: "Hanken Grotesk", sans-serif; font-weight: 600; font-size: 38px; color: #E6E4DF; }
+    </style>
+  </head>
+  <body>
+    <div id="root" data-composition-id="main" data-start="0" data-duration="22.2" data-width="1080" data-height="1920">
+      <audio id="bed" src="assets/audio/ambiente-mar.mp3" data-start="0" data-duration="22.2" data-track-index="9" data-volume="1"></audio>
+
+      <div id="w1" class="win" data-layout-ignore>
+        <img id="cg0" class="cg0" src="assets/images/terraza-f0.jpg" alt="" />
+        <div id="m1" class="msk"><video id="v1" class="clip" src="assets/video/terraza.mp4" data-start="0" data-duration="7.3" data-playback-rate="0.69" data-track-index="1" muted playsinline></video></div>
+      </div>
+      <div id="w2" class="win" data-layout-ignore>
+        <video id="v2" class="clip" src="assets/video/piscina.mp4" data-start="7.2" data-duration="5.6" data-playback-rate="0.9" data-track-index="2" muted playsinline></video>
+      </div>
+      <div id="w3" class="win" data-layout-ignore>
+        <video id="v3" class="clip" src="assets/video/comedor.mp4" data-start="12.8" data-duration="5.2" data-playback-rate="0.97" data-track-index="3" muted playsinline></video>
+      </div>
+
+      <div id="hookscrim" class="clip" data-start="0" data-duration="2.4" data-track-index="4"></div>
+      <p id="hook" class="clip" data-start="0" data-duration="2.4" data-track-index="5">Sube el volumen.</p>
+
+      <div id="l1" class="lab clip" data-hold data-start="2.5" data-duration="4.5" data-track-index="6"><div class="in" id="l1-in"><p class="n"><span class="d" style="background:#E8C476"></span>Hestía Salinas</p><p class="s">Dos terrazas, a 900 m de la playa.</p></div></div>
+      <div id="l2" class="lab clip" data-hold data-start="7.6" data-duration="4.9" data-track-index="6"><div class="in" id="l2-in"><p class="n"><span class="d" style="background:#E8C476"></span>La piscina</p><p class="s">Comunitaria, con pistas de pádel y tenis</p></div></div>
+      <div id="l3" style="top:665px" class="lab clip" data-hold data-start="13.2" data-duration="4.7" data-track-index="6"><div class="in" id="l3-in"><p class="n"><span class="d" style="background:#E8C476"></span>Salón comedor</p><p class="s">El más grande de los tres, 87 m²</p></div></div>
+
+      <div id="cw" class="win" data-layout-ignore>
+        <div id="close" class="clip" data-start="18.0" data-duration="4.2" data-track-index="7">
+          <div id="flood"></div>
+          <div id="cbox">
+            <img id="clogo" src="assets/images/logo-blanco.png" alt="Hestía" />
+            <p id="c1"><span class="d" style="background:#E8C476"></span>Hestía Salinas</p>
+            <p id="c2">hestiayourhome.com</p>
+          </div>
+        </div>
+      </div>
+    </div>
+    <script>
+      const tl = gsap.timeline({ paused: true });
+      tl.to("#hook", { opacity: 0, filter: "blur(8px)", duration: 0.25, ease: "power2.in" }, 2.1);
+      tl.to("#hookscrim", { opacity: 0, duration: 0.25, ease: "power2.in" }, 2.1);
+      tl.fromTo("#m1", { "--cg": "30%" }, { "--cg": "125%", duration: 1.6, ease: "power2.inOut" }, 1.8);
+      const lab = (id, t0, t1) => {
+        tl.fromTo(id + " .n", { opacity: 0, filter: "blur(6px)" }, { opacity: 1, filter: "blur(0px)", duration: 0.3, ease: "power4.out" }, t0);
+        tl.fromTo(id + " .s", { opacity: 0, filter: "blur(6px)" }, { opacity: 1, filter: "blur(0px)", duration: 0.3, ease: "power4.out" }, t0 + 0.35);
+        tl.to(id + "-in", { opacity: 0, filter: "blur(8px)", duration: 0.2, ease: "power2.in" }, t1);
+      };
+      lab("#l1", 2.60, 6.70);
+      lab("#l2", 7.70, 12.20);
+      lab("#l3", 13.30, 17.60);
+      tl.fromTo("#flood", { opacity: 0 }, { opacity: 1, duration: 0.45, ease: "power2.inOut" }, 18.0);
+      tl.fromTo("#cbox > *", { opacity: 0, filter: "blur(6px)" }, { opacity: 1, filter: "blur(0px)", duration: 0.4, stagger: 0.18, ease: "power4.out" }, 18.40);
+      window.__timelines["main"] = tl;
+
+      // <seams:auto> — generated by seam-stamp.mjs from ledger.json; do not hand-edit.
+      // Regenerate: node <motion-doctrine>/scripts/seam-stamp.mjs --ledger ledger.json --write index.html
+      gsap.set("#w1", { autoAlpha: 1, xPercent: 0, yPercent: 0, scale: 1, filter: "blur(0px)", transformOrigin: "50% 50%" });
+      gsap.set(["#w2","#w3","#cw"], { autoAlpha: 0, xPercent: 0, yPercent: 0, scale: 1, filter: "blur(0px)", transformOrigin: "50% 50%" });
+      
+      // SEAM — #w1→#w2 : cut-the-curve LEFT (cut @7.2)
+      tl.to("#w1", { xPercent: -12, autoAlpha: 0, duration: 0.34, ease: "power3.in" }, 6.86);
+      tl.set("#w1", { autoAlpha: 0 }, 7.2);
+      tl.fromTo("#w2", { xPercent: 10, autoAlpha: 0.35 }, { xPercent: 0, autoAlpha: 1, duration: 0.42, ease: "power4.out", immediateRender: false }, 7.2);
+      
+      // SEAM — #w2→#w3 : cut-the-curve LEFT (cut @12.8)
+      tl.to("#w2", { xPercent: -12, autoAlpha: 0, duration: 0.34, ease: "power3.in" }, 12.46);
+      tl.set("#w2", { autoAlpha: 0 }, 12.8);
+      tl.fromTo("#w3", { xPercent: 10, autoAlpha: 0.35 }, { xPercent: 0, autoAlpha: 1, duration: 0.42, ease: "power4.out", immediateRender: false }, 12.8);
+      
+      // SEAM — #w3→#cw : cut-the-curve LEFT (cut @18)
+      tl.to("#w3", { xPercent: -12, autoAlpha: 0, duration: 0.34, ease: "power3.in" }, 17.66);
+      tl.set("#w3", { autoAlpha: 0 }, 18);
+      tl.fromTo("#cw", { xPercent: 10, autoAlpha: 0.35 }, { xPercent: 0, autoAlpha: 1, duration: 0.42, ease: "power4.out", immediateRender: false }, 18);
+      
+      // </seams:auto>
+      tl.seek(0);
+    </script>
+  </body>
+</html>
