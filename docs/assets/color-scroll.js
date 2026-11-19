@@ -4,7 +4,6 @@
     '--crema-alba': '#EAE9E6', '--crema-dawn': '#E3E1DD', '--crema-noon': '#F2F1EF',
     '--crema-dusk': '#CDC9C1', '--crema-warm': '#E0DDD9'
   };
-  var SAT = 0.10;
   var LIGHT = {};
   Object.keys(BASE).forEach(function (k) {
     var h = BASE[k];
@@ -22,18 +21,36 @@
     return '#' + f(h + 1 / 3) + f(h) + f(h - 1 / 3);
   }
 
-  var DEG_PER_PX = 0.07;
+  // Un día en Vera repartido por la altura de la página: la cal es la base al
+  // empezar (alba) y el matiz recorre mañana, mediodía, atardecer y crepúsculo
+  // hasta una noche azul pizarra al llegar al pie. La saturación sube un poco
+  // en el atardecer y la noche; la luminosidad no cambia, así que el contraste tampoco.
+  var DIA = [[0, 40, 0.10], [0.3, 46, 0.09], [0.55, 52, 0.08], [0.75, 22, 0.17], [0.9, 335, 0.16], [1, 235, 0.15]];
+
+  function tonoDelDia(p) {
+    for (var i = 1; i < DIA.length; i++) {
+      if (p <= DIA[i][0]) {
+        var a = DIA[i - 1], b = DIA[i];
+        var t = (p - a[0]) / (b[0] - a[0]);
+        var d = ((b[1] - a[1] + 540) % 360) - 180;
+        return { h: ((a[1] + d * t + 360) % 360) / 360, s: a[2] + (b[2] - a[2]) * t };
+      }
+    }
+    var u = DIA[DIA.length - 1];
+    return { h: u[1] / 360, s: u[2] };
+  }
+
   var quieto = window.matchMedia && matchMedia('(prefers-reduced-motion: reduce)').matches;
   var pendiente = false;
 
   function paint() {
     pendiente = false;
     var y = Math.max(window.pageYOffset || 0, 0);
-    var h = ((40 + y * DEG_PER_PX) % 360) / 360;
-    var st = document.documentElement.style;
+    var de = document.documentElement;
+    var largo = Math.max((de.scrollHeight || 0) - (window.innerHeight || 0), 1);
+    var d = tonoDelDia(Math.min(y / largo, 1));
     Object.keys(BASE).forEach(function (k) {
-      var l = LIGHT[k];
-      st.setProperty(k, hex(h, SAT, l));
+      de.style.setProperty(k, hex(d.h, d.s, LIGHT[k]));
     });
   }
 
@@ -44,6 +61,8 @@
   if (!quieto) {
     paint();
     window.addEventListener('scroll', alScroll, { passive: true });
+    window.addEventListener('resize', alScroll);
+    window.addEventListener('load', alScroll);
     window.addEventListener('pageshow', paint);
   }
 })();

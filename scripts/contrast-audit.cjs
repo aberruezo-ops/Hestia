@@ -50,6 +50,9 @@ const VIEWPORTS = [
         // Estado final de las revelaciones al hacer scroll, para no medir a mitad de fundido.
         await page.evaluate(() => document.querySelectorAll('.reveal, .reveal-section').forEach(e => e.classList.add('in')));
         await page.waitForTimeout(1500);
+        // Termina las animaciones de entrada que sigan a medio fundido: medir un color a media opacidad da falsos fallos.
+        await page.evaluate(() => document.getAnimations().forEach(a => { try { a.finish(); } catch (_) {} }));
+        await page.waitForTimeout(150);
         await page.evaluate(AXE);
         const res = await page.evaluate(async () => {
           return await window.axe.run(document, {
