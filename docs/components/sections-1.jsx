@@ -385,6 +385,8 @@ const APT_SHOWCASE = {
   vt: ['apt-vt-gallery-33', 'apt-vt-gallery-34', 'apt-vt-gallery-01', 'apt-vt-gallery-17', 'apt-vt-gallery-30'],
   vs: ['apt-vs-gallery-33', 'apt-vs-gallery-20', 'apt-vs-gallery-4', 'apt-vs-gallery-32', 'apt-vs-gallery-13'],
 };
+// Vista previa de la terraza de cada Hestía pasando de día a noche (recreación, 5 s).
+const APT_PREVIEW = { vm: 'assets/preview/vm.mp4', vt: 'assets/preview/vt.mp4', vs: 'assets/preview/vs.mp4' };
 // Las tres fotos del dormitorio principal se encuadran distinto. Zoom (s) y
 // desplazamiento (% del lado de la tarjeta) por foto para que, juntas, tengan
 // la parte alta de las lámparas y el borde de los cojines a la misma altura.
@@ -408,6 +410,35 @@ const AptShowcaseMedia = ({ apt, lang }) => {
   const ref = React.useRef(null);
   const [idx, setIdx] = React.useState(0);
   const photos = APT_SHOWCASE[apt.id] || [];
+  const mediaRef = React.useRef(null);
+  const vidRef = React.useRef(null);
+  const wantRef = React.useRef(false);
+  const [on, setOn] = React.useState(false);
+  const canPreview = React.useMemo(() => !((window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches) || (navigator.connection && navigator.connection.saveData)), []);
+  const play = () => {
+    const v = vidRef.current;
+    if (!v || !canPreview) return;
+    wantRef.current = true;
+    if (!v.getAttribute('src')) v.src = APT_PREVIEW[apt.id];
+    v.currentTime = 0;
+    const r = v.play();
+    if (r && r.catch) r.catch(() => setOn(false));
+    setOn(true);
+  };
+  const halt = () => {
+    wantRef.current = false;
+    setOn(false);
+    setTimeout(() => { const v = vidRef.current; if (v && !wantRef.current) v.pause(); }, 700);
+  };
+  // En táctil no hay ratón: la vista previa arranca cuando la tarjeta queda a la vista.
+  React.useEffect(() => {
+    const el = mediaRef.current;
+    const coarse = window.matchMedia && window.matchMedia('(hover: none)').matches;
+    if (!el || !canPreview || !coarse || !('IntersectionObserver' in window)) return;
+    const io = new IntersectionObserver(([e]) => { if (e.isIntersecting) play(); else halt(); }, { threshold: 0.75 });
+    io.observe(el);
+    return () => io.disconnect();
+  }, []);
   const onScroll = () => {
     const el = ref.current;
     if (el) setIdx(Math.round(el.scrollLeft / el.clientWidth));
@@ -419,7 +450,8 @@ const AptShowcaseMedia = ({ apt, lang }) => {
     el.scrollTo({ left: n * el.clientWidth, behavior: 'smooth' });
   };
   return (
-    <div className="as-media">
+    <div className={'as-media' + (on ? ' is-previewing' : '')} ref={mediaRef}
+         onMouseEnter={() => { if (window.matchMedia && window.matchMedia('(hover: hover)').matches) play(); }} onMouseLeave={halt}>
       <div className="as-track" ref={ref} onScroll={onScroll}>
         {photos.map((f, i) => (
           <a key={f} className="as-slide" href={`${apt.slug}.html`} tabIndex={i === 0 ? 0 : -1}
@@ -433,6 +465,8 @@ const AptShowcaseMedia = ({ apt, lang }) => {
           </a>
         ))}
       </div>
+      <video ref={vidRef} className="as-preview" muted playsInline preload="none" aria-hidden="true" tabIndex={-1} onEnded={halt}/>
+      <span className="as-preview-note" aria-hidden="true">{lang === 'es' ? 'Recreación' : 'Recreation'}</span>
       <button type="button" className="as-nav as-prev" onClick={() => go(-1)} disabled={idx === 0}
               aria-label={lang === 'es' ? 'Foto anterior' : 'Previous photo'}>‹</button>
       <button type="button" className="as-nav as-next" onClick={() => go(1)} disabled={idx >= photos.length - 1}
