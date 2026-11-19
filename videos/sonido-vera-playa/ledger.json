@@ -1,0 +1,14 @@
+{
+  "fps": 30,
+  "seams": [
+    { "id": "mar→thalassa", "cut": 7.2, "technique": "cut-the-curve LEFT",
+      "exit": { "selector": "#w1", "axis": "x", "dir": -1 },
+      "entry": { "selector": "#w2", "axis": "x", "dir": -1 } },
+    { "id": "thalassa→salinas", "cut": 13.2, "technique": "cut-the-curve LEFT",
+      "exit": { "selector": "#w2", "axis": "x", "dir": -1 },
+      "entry": { "selector": "#w3", "axis": "x", "dir": -1 } },
+    { "id": "salinas→cierre", "cut": 19.4, "technique": "cut-the-curve LEFT",
+      "exit": { "selector": "#w3", "axis": "x", "dir": -1 },
+      "entry": { "selector": "#cw", "axis": "x", "dir": -1 } }
+  ]
+}

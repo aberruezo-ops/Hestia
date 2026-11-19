@@ -21,3 +21,13 @@ Reel vertical 1080x1920, 30 fps, 23,4 s, con sonido ambiente de mar y sin músic
 
 ## Punto más débil
 El sonido: es un bucle genérico de mar. Con 20 s grabadas en cada terraza y piscina sería la pieza que pedía la idea.
+
+## v2 (19 nov 2026): cinemagraph y transiciones con velocidad igualada
+
+- Gancho en cinemagraph: la terraza de Mar queda congelada (`assets/images/mar-f0.jpg`, fotograma 0 del clip) y solo el cielo evoluciona a través de una ventana con borde difuminado (máscara en `#m1`, variable `--cg`). La ventana baja entre 1,8 y 3,4 s hasta abrir el plano completo, y el clip sigue desde ahí.
+- Las tres uniones (Mar a Thalassa a 7,2 s, Thalassa a Salinas a 13,2 s y Salinas a cierre a 19,4 s) son «cut the curve» hacia la izquierda, estampadas con `seam-stamp.mjs` de la skill `motion-doctrine` desde `ledger.json`: la escena que sale acelera con `power3.in` y la que entra recoge el movimiento con `power4.out`, sin disolver. Sustituyen la subida desde la línea del horizonte (recorte con `clip-path`).
+- El cierre va dentro del contenedor `#cw` porque la regla de lint no deja animar `autoAlpha` sobre un clip.
+- `seam-gate.mjs verify` falla en las tres uniones porque no ve la línea de tiempo en este entorno (la sonda no detecta ningún movimiento aunque el render sí lo tiene). La verificación se hizo con `hyperframes snapshot` y con fotogramas del render final alrededor de cada corte.
+- Velo del gancho subido a 0,68 para que «Sube el volumen.» mantenga contraste sobre el cielo claro del cinemagraph.
+- Audio sin cambios: el mismo ambiente de mar (−17,9 LUFS medido). Pendiente: la procedencia de `sea-ambient.mp3`.
+- Salida: `renders/sonido-vera-playa-v2-ig.mp4` (1080x1920, 23,4 s, crf 19).
