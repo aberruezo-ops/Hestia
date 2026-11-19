@@ -1,10 +1,10 @@
 (function () {
   var BASE = {
-    '--crema': '#F6F5F4', '--arena': '#E6E4DF', '--arena-dk': '#D7D3CB',
+    '--crema': '#F6F5F4', '--arena': '#E5E3E0', '--arena-dk': '#D6D3CC',
     '--crema-alba': '#EAE9E6', '--crema-dawn': '#E3E1DD', '--crema-noon': '#F2F1EF',
-    '--crema-dusk': '#CFCABF', '--crema-warm': '#E0DDD8'
+    '--crema-dusk': '#CDC9C1', '--crema-warm': '#E0DDD9'
   };
-  var SAT = 0.12;
+  var SAT = 0.10;
   var LIGHT = {};
   Object.keys(BASE).forEach(function (k) {
     var h = BASE[k];
@@ -33,7 +33,7 @@
     var st = document.documentElement.style;
     Object.keys(BASE).forEach(function (k) {
       var l = LIGHT[k];
-      st.setProperty(k, hex(h, Math.min(SAT * (1 + (0.955 - l) / 0.11 * 0.2), 0.3), l));
+      st.setProperty(k, hex(h, SAT, l));
     });
   }
 

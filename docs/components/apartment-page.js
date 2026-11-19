@@ -1242,11 +1242,7 @@ const AptFloorPlan = ({
 // --- Mini reseñas antes del calendario ---
 // 3 citas reales de huéspedes (campo highlight) del mismo apartamento.
 // Idioma preferido = lang de la página; fallback a cualquier idioma.
-const _amrFlag = cc => {
-  if (!cc || cc.length !== 2) return '';
-  const b = 0x1F1E6;
-  return String.fromCodePoint(b + cc.toUpperCase().charCodeAt(0) - 65) + String.fromCodePoint(b + cc.toUpperCase().charCodeAt(1) - 65);
-};
+const _amrFlag = cc => cc && cc.length === 2 ? cc.toUpperCase() : '';
 // Icono de estrella sin fracción al lado: cuenta de 0 a 5 (visual, no expone
 // escala), derivada de ratingNorm (shared.jsx) para que la normalización
 // Booking/Airbnb/Google/web se calcule en un único sitio.

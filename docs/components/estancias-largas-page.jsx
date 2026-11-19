@@ -270,7 +270,7 @@ const LsSearch = ({ lang }) => {
   // Precio de estancia larga: SIEMPRE _calcLsTotal (shared.jsx), fuente única
   // compartida con el motor de precios del resto del sitio. No se recalcula
   // aquí aparte, para que un cambio de tarifas no pueda desincronizar esta
-  // página del resto (ver CLAUDE.md, invariantes de estancias largas).
+  // página del resto (ver las reglas de negocio de estancias largas).
 
   React.useEffect(() => {
     if (checkin && checkout && nights >= 29) {

@@ -6079,7 +6079,7 @@ const DIRECT_PERKS = {
     icon: '🗝',
     stat: '24/7',
     t: 'Guía privada y trato cercano.',
-    d: 'Más que una lista: Alex y Fran te preparan la llegada, te acompañan toda la estancia (recomendaciones, restaurantes, calas, rutas e instrucciones de Hestía) y te echan una mano también a la salida si hace falta. Siempre a un mensaje.'
+    d: 'Alex y Fran te preparan la llegada, te acompañan toda la estancia (recomendaciones, restaurantes, calas, rutas e instrucciones de Hestía) y te echan una mano también a la salida si hace falta. Siempre a un mensaje.'
   }, {
     id: 'aliados',
     icon: '🤝',
@@ -6144,7 +6144,7 @@ const DIRECT_PERKS = {
     icon: '🗝',
     stat: '24/7',
     t: 'Private guide, personal care.',
-    d: 'More than a list: Alex & Fran set up your arrival, stay with you all through the trip (recommendations, restaurants, coves, routes and Hestía instructions) and give you a hand at check-out too if needed. Always one message away.'
+    d: 'Alex & Fran set up your arrival, stay with you all through the trip (recommendations, restaurants, coves, routes and Hestía instructions) and give you a hand at check-out too if needed. Always one message away.'
   }, {
     id: 'aliados',
     icon: '🤝',

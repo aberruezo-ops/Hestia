@@ -178,7 +178,7 @@ const CSS = `
 
 :root {
   --crema:      #F6F5F4;
-  --crema-warm: #E0DDD8;
+  --crema-warm: #E0DDD9;
   --crema-dawn: #E3E1DD;
   --ber:        #3D1A35;
   --ber-dk:     #2A0F2E;
@@ -295,7 +295,7 @@ a { color: var(--teal-dk); text-decoration: none; }
   filter: brightness(0) invert(1);
 }
 .logo--cream {
-  /* Convierte el teal a crema cálida (#E0DDD8) */
+  /* Convierte el teal a crema cálida (#E0DDD9) */
   filter: brightness(0) invert(1) sepia(60%) saturate(450%) hue-rotate(355deg) brightness(98%);
 }
 .logo--apt {

@@ -3,7 +3,7 @@ export const ESTILO = `
 :root{
   --ber:#3D1A35; --ber-dk:#2A0F2E; --ber-deep:#1E0722;
   --sol:#3AAABB; --sol-lt:#6FC4D1; --sol-txt:#176E80;
-  --crema:#F6F5F4; --arena:#E6E4DF; --arena-dk:#D7D3CB;
+  --crema:#F6F5F4; --arena:#E5E3E0; --arena-dk:#D6D3CC;
   --ink:#2A0F2E; --ink-soft:#5A4459; --ink-faint:#8B7A8A;
   --rule:#E6DCDF; --vm:#6B7A3A; --vt:#B86A3C; --vs:#B08A24;
   --r:10px 0 10px 0; --r-lg:16px 0 16px 0;

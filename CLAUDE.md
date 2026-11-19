@@ -151,8 +151,8 @@ Aplica estas medidas a TODO el código nuevo y revisa lo existente cuando lo toq
 
 Antes de tocar estilos, componentes, iconos, logos o cualquier recurso gráfico, lee ese archivo y pasa el subagente `revisor-marca` antes de publicar cambios visibles. Lo que no se negocia:
 
-- **Fondo**: cal viva (`--crema` #F6F5F4, `--arena` #E6E4DF, `--arena-dk` #D7D3CB), con el matiz cambiando con el scroll por `docs/assets/color-scroll.js`. Siempre los tokens, nunca un hex de cal. Nunca arena o beis, blanco azulado ni oro o cobre mezclado en la cabecera o en secciones claras. Excepción: los vídeos ya publicados.
-- **Sin recursos «de IA»**: ninguna caja, aviso, cita o tarjeta con raya de acento a un lado (`border-left` de 2 px o más) ni filo de color arriba; sin bordes de gradiente, texto con degradado, tarjetas de cristal, iconos en círculo de color ni emojis de adorno. La marca de una tarjeta es el horizonte.
+- **Fondo**: cal viva (`--crema` #F6F5F4, `--arena` #E5E3E0, `--arena-dk` #D6D3CC), con el matiz cambiando con el scroll por `docs/assets/color-scroll.js`. Siempre los tokens, nunca un hex de cal. Nunca arena o beis, blanco azulado ni oro o cobre mezclado en la cabecera o en secciones claras. Excepción: los vídeos ya publicados.
+- **Sin recursos «de IA»**: ninguna caja, aviso, cita o tarjeta con raya de acento a un lado (`border-left` de 2 px o más, ni con `box-shadow: inset`) ni filo de color arriba; sin bordes de gradiente, texto con degradado, cristal en chips y botones, destellos o halos animados, fondos «aurora», iconos en círculo de color ni emojis de adorno. La marca de una tarjeta es el horizonte.
 - **Color por Hestía**: Mar olivo `--vm`, Thalassa cobre `--vt`, Salinas dorado `--vs`, siempre que se nombre o represente; sobre fondo oscuro, el marcador `apt-dot`.
 - **Iconos**: solo `<HiIcon name="…"/>` del sprite propio; el color de marca va en la placa, nunca en el trazo; ni emojis ni glifos como icono.
 - **Logo**: solo sus seis versiones, sin filtros ni `hue-rotate`.
