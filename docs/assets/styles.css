@@ -19951,7 +19951,7 @@ img[src$="photo-alex.jpg"]:not(.avatar-img):hover {
   gap: 7px;
   margin-top: 4px;
 }
-.amr-flag { font-size: 11px; line-height: 1; font-weight: 600; letter-spacing: .08em; color: var(--ink-soft); }
+.amr-flag { font-size: 15px; line-height: 1; }
 .amr-name {
   font-family: var(--sans);
   font-size: 12px;
