@@ -249,6 +249,8 @@ const Hero = ({
   React.useEffect(() => {
     setVidIdx(0);
   }, [fase]);
+  // Móvil o ahorro de datos: versión de 540 p (de 1 a 2 MB en vez de 3 a 5 MB).
+  const narrow = React.useMemo(() => !!(window.matchMedia && window.matchMedia('(max-width: 768px)').matches || navigator.connection && navigator.connection.saveData), []);
   const pick = playlist[vidIdx];
 
   // prefers-reduced-motion: se queda con el poster fijo, sin autoplay ni reintentos.
@@ -325,7 +327,7 @@ const Hero = ({
     } : undefined,
     onEnded: () => setVidIdx(i => (i + 1) % playlist.length)
   }, /*#__PURE__*/React.createElement("source", {
-    src: `${pick.src}?v=${VIDEO_V}`,
+    src: `${narrow ? pick.src.replace('.mp4', '-m.mp4') : pick.src}?v=${VIDEO_V}`,
     type: "video/mp4"
   })), /*#__PURE__*/React.createElement("div", {
     className: "hero-sol-sky",
@@ -591,7 +593,7 @@ const AptShowcaseMedia = ({
     tabIndex: i === 0 ? 0 : -1,
     "aria-label": i === 0 ? lang === 'es' ? `Ver ${apt.name}` : `See ${apt.name}` : undefined
   }, /*#__PURE__*/React.createElement("picture", null, /*#__PURE__*/React.createElement("source", {
-    srcSet: `assets/${f}.webp`,
+    srcSet: `assets/card/${f}.webp`,
     type: "image/webp"
   }), /*#__PURE__*/React.createElement("img", {
     src: `assets/${f}.jpg`,

@@ -97,10 +97,14 @@ const App = () => {
   });
   const seaRef = React.useRef(null);
   React.useEffect(() => {
-    const audio = new Audio('assets/sea-ambient.mp3');
+    // El mp3 (0,5 MB) solo se pide si el visitante ya lo activó o lo activa ahora.
+    const audio = new Audio();
     audio.volume = 0;
-    audio.preload = 'auto';
     audio.playsInline = true;
+    let pedido = false;
+    try { pedido = localStorage.getItem('hestia-sound') === 'on'; } catch (_) {}
+    if (pedido) { audio.preload = 'auto'; audio.src = 'assets/sea-ambient.mp3'; }
+    else audio.preload = 'none';
     seaRef.current = audio;
     const wanted = () => { try { return localStorage.getItem('hestia-sound') === 'on'; } catch (_) { return false; } };
     // Fundido de salida en los ~2.5 s finales de cada vuelta: el mar se apaga suave, no de golpe.
@@ -139,7 +143,7 @@ const App = () => {
       try { localStorage.setItem('hestia-sound', next ? 'on' : 'off'); } catch (_) {}
       const a = seaRef.current;
       if (a) {
-        if (next) { a.volume = 0; a.currentTime = 0; a.play().catch(() => {}); _fadeTo(a, _SEA_VOL, 600); }
+        if (next) { if (!a.src) { a.preload = 'auto'; a.src = 'assets/sea-ambient.mp3'; } a.volume = 0; a.currentTime = 0; a.play().catch(() => {}); _fadeTo(a, _SEA_VOL, 600); }
         else { _fadeTo(a, 0, 1000, () => a.pause()); } // fade-out suave al silenciar
       }
       return next;

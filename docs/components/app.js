@@ -127,10 +127,18 @@ const App = () => {
   });
   const seaRef = React.useRef(null);
   React.useEffect(() => {
-    const audio = new Audio('assets/sea-ambient.mp3');
+    // El mp3 (0,5 MB) solo se pide si el visitante ya lo activó o lo activa ahora.
+    const audio = new Audio();
     audio.volume = 0;
-    audio.preload = 'auto';
     audio.playsInline = true;
+    let pedido = false;
+    try {
+      pedido = localStorage.getItem('hestia-sound') === 'on';
+    } catch (_) {}
+    if (pedido) {
+      audio.preload = 'auto';
+      audio.src = 'assets/sea-ambient.mp3';
+    } else audio.preload = 'none';
     seaRef.current = audio;
     const wanted = () => {
       try {
@@ -193,6 +201,10 @@ const App = () => {
       const a = seaRef.current;
       if (a) {
         if (next) {
+          if (!a.src) {
+            a.preload = 'auto';
+            a.src = 'assets/sea-ambient.mp3';
+          }
           a.volume = 0;
           a.currentTime = 0;
           a.play().catch(() => {});

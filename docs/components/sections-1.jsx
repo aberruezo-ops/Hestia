@@ -195,6 +195,8 @@ const Hero = ({ lang, onScrollDown }) => {
   }, [fase]);
   const [vidIdx, setVidIdx] = React.useState(0);
   React.useEffect(() => { setVidIdx(0); }, [fase]);
+  // Móvil o ahorro de datos: versión de 540 p (de 1 a 2 MB en vez de 3 a 5 MB).
+  const narrow = React.useMemo(() => !!((window.matchMedia && window.matchMedia('(max-width: 768px)').matches) || (navigator.connection && navigator.connection.saveData)), []);
   const pick = playlist[vidIdx];
 
   // prefers-reduced-motion: se queda con el poster fijo, sin autoplay ni reintentos.
@@ -260,7 +262,7 @@ const Hero = ({ lang, onScrollDown }) => {
         style={pick.pos ? { objectPosition: pick.pos } : undefined}
         onEnded={() => setVidIdx(i => (i + 1) % playlist.length)}
       >
-        <source src={`${pick.src}?v=${VIDEO_V}`} type="video/mp4"/>
+        <source src={`${narrow ? pick.src.replace('.mp4', '-m.mp4') : pick.src}?v=${VIDEO_V}`} type="video/mp4"/>
       </video>
       <div className="hero-sol-sky" aria-hidden="true"/>
       <div className="hero-sol-wrap"><SolChip lang={lang} /></div>
@@ -423,7 +425,7 @@ const AptShowcaseMedia = ({ apt, lang }) => {
           <a key={f} className="as-slide" href={`${apt.slug}.html`} tabIndex={i === 0 ? 0 : -1}
              aria-label={i === 0 ? (lang === 'es' ? `Ver ${apt.name}` : `See ${apt.name}`) : undefined}>
             <picture>
-              <source srcSet={`assets/${f}.webp`} type="image/webp"/>
+              <source srcSet={`assets/card/${f}.webp`} type="image/webp"/>
               <img src={`assets/${f}.jpg`} alt={i === 0 ? apt.name : ''} decoding="async"
                    loading={i === 0 ? 'eager' : 'lazy'} draggable="false"
                    style={i === 0 && APT_COVER_FIT[apt.id] ? { transformOrigin: '0 0', transform: `translate(${APT_COVER_FIT[apt.id].x}%, ${APT_COVER_FIT[apt.id].y}%) scale(${APT_COVER_FIT[apt.id].s})` } : undefined}/>

@@ -237,7 +237,6 @@
     }
   }
 }</script>
-  <link rel="preload" as="image" href="assets/hero-terrace-night.jpg" fetchpriority="high"/>
   
   <!-- GA4: cuando tengas el Measurement ID, descomenta y reemplaza G-XXXXXXXXXX
        Google Analytics → Admin → Propiedad → Flujos de datos → tu dominio → Measurement ID
@@ -312,7 +311,7 @@
     } catch (e) { console.warn('reviews.json fetch failed', e); }
 
     for (const file of COMPONENT_FILES) {
-      const res = await fetch(file + '?cv=71275107fe');
+      const res = await fetch(file + '?cv=c4e9bd0897');
       if (!res.ok) throw new Error(`Failed to load ${file}: ${res.status}`);
       const code = await res.text();
       // eslint-disable-next-line no-eval
