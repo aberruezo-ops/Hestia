@@ -26037,3 +26037,16 @@ padding-left: 8px;
         .contacto-card, .reservas-person-card, .noticias-mes-col, .ag-ave-curiosity, .emp-perk,
         .ag-note, .ag-wifi-card, .ag-arrival-notice, .ag-top5, .ag-day-plans, .dbt-ledger, .lsl-apt-card)[data-ola="1"]::before { clip-path: inset(0 0 0 0); }
 }
+
+/* Calendario táctil: el círculo de entrada y salida salta al elegirlo y la franja del rango se
+   desliza desde el check-in. Solo en elementos recién montados, así que no se repite al pasar el ratón. */
+@media (prefers-reduced-motion: no-preference) {
+  .c-circ.c-sel-circ { animation: dr-pop .42s cubic-bezier(.34, 1.56, .64, 1) both; }
+  .c-strip.c-sel-strip { animation: dr-fill .36s var(--ease-out, cubic-bezier(.23, 1, .32, 1)) both; transform-origin: left center; }
+  .c-strip.c-sel-strip.c-sl { transform-origin: left center; }
+  .cal-cell.clickable .c-n { transition: color .18s var(--ease-out, ease-out); }
+  .cal-cell.clickable:active .c-n { transform: scale(.88); }
+  .cal-cell .c-n { display: inline-block; transition: color .18s ease-out, transform .16s ease-out; }
+}
+@keyframes dr-pop { from { transform: translate(-50%, -50%) scale(.4); opacity: 0; } 60% { opacity: 1; } to { transform: translate(-50%, -50%) scale(1); opacity: 1; } }
+@keyframes dr-fill { from { transform: scaleX(0); opacity: 0; } to { transform: scaleX(1); opacity: .92; } }
