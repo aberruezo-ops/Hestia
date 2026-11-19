@@ -767,8 +767,8 @@ const PLACES = [
   { id: 'cs-vera',        name: 'Centro de Salud de Vera (base 061)',
     desc: 'Centro de salud y base de urgencias 061 que cubre Vera, Garrucha, Mojácar, Turre, Pulpí, Los Gallardos y Cuevas del Almanzora. Es la primera referencia ante cualquier urgencia que no requiera hospital.',
     tip: 'Teléfono de cita previa: 902 505 060. Urgencias 24h: 061 (gratuito desde móvil).',
-    cat: 'health', url: 'https://www.google.com/maps/search/?api=1&query=Centro+de+Salud+Vera+Almeria',
-    lat: 37.2480, lng: -1.8620, featuredOrder: 1 },
+    cat: 'health', url: 'https://goo.gl/maps/ei7cMoTYLmWLnWZj7',
+    lat: 37.2473, lng: -1.8612, featuredOrder: 1 },
   { id: 'cs-garrucha',    name: 'Centro de Salud de Garrucha',
     desc: 'Consultorio principal de Garrucha. Atención primaria. Para urgencias fuera de horario derivan al centro de Vera o al 061.',
     cat: 'health', url: 'https://www.google.com/maps/search/?api=1&query=Centro+de+Salud+Garrucha',
@@ -873,7 +873,6 @@ const PLACES = [
     tip: 'Reserva previa obligatoria, las visitas salen a las 11:00 todos los días (950 51 35 62). Está en la carretera de Laujar a Órgiva, km 4, paraje de Ojancos: el punto del mapa es orientativo, guíate por la carretera. Súbete el día entero y come en Laujar.',
     cat: 'bodega', url: 'https://cortijoelcura.com/',
     lat: 36.9850, lng: -2.9350 },
-  { id: 'cs-vera',        name: 'Centro de Salud de Vera', cat: 'health',   url: 'https://goo.gl/maps/ei7cMoTYLmWLnWZj7', lat: 37.2473, lng: -1.8612 },
   { id: 'virgen-alcazar', name: 'Virgen del Alcázar', desc: 'Privado.',     cat: 'health', url: 'https://goo.gl/maps/AXJ74Goy1ESTtBVy7', lat: 37.6850, lng: -1.7060 },
 
   // Coworking y teletrabajo. El enlace abre una búsqueda en vivo en Maps,

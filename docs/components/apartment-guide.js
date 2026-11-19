@@ -2373,9 +2373,9 @@ const PLACES = [
   desc: 'Centro de salud y base de urgencias 061 que cubre Vera, Garrucha, Mojácar, Turre, Pulpí, Los Gallardos y Cuevas del Almanzora. Es la primera referencia ante cualquier urgencia que no requiera hospital.',
   tip: 'Teléfono de cita previa: 902 505 060. Urgencias 24h: 061 (gratuito desde móvil).',
   cat: 'health',
-  url: 'https://www.google.com/maps/search/?api=1&query=Centro+de+Salud+Vera+Almeria',
-  lat: 37.2480,
-  lng: -1.8620,
+  url: 'https://goo.gl/maps/ei7cMoTYLmWLnWZj7',
+  lat: 37.2473,
+  lng: -1.8612,
   featuredOrder: 1
 }, {
   id: 'cs-garrucha',
@@ -2565,13 +2565,6 @@ const PLACES = [
   url: 'https://cortijoelcura.com/',
   lat: 36.9850,
   lng: -2.9350
-}, {
-  id: 'cs-vera',
-  name: 'Centro de Salud de Vera',
-  cat: 'health',
-  url: 'https://goo.gl/maps/ei7cMoTYLmWLnWZj7',
-  lat: 37.2473,
-  lng: -1.8612
 }, {
   id: 'virgen-alcazar',
   name: 'Virgen del Alcázar',

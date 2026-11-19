@@ -843,8 +843,8 @@
     "id": "cs-vera",
     "name": "Centro de Salud de Vera (base 061)",
     "cat": "health",
-    "lat": 37.248,
-    "lng": -1.862
+    "lat": 37.2473,
+    "lng": -1.8612
   },
   {
     "id": "cs-garrucha",
@@ -964,13 +964,6 @@
     "cat": "bodega",
     "lat": 36.985,
     "lng": -2.935
-  },
-  {
-    "id": "cs-vera",
-    "name": "Centro de Salud de Vera",
-    "cat": "health",
-    "lat": 37.2473,
-    "lng": -1.8612
   },
   {
     "id": "virgen-alcazar",
