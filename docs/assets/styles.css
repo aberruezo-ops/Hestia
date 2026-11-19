@@ -6174,6 +6174,23 @@ body[data-apt="salinas"] a.apt-page-reserve-btn:hover {
   text-wrap: balance;
 }
 
+/* --- Barra fina de lectura (sigue el scroll; en las fichas, con el color de cada Hestía) --- */
+@supports (animation-timeline: scroll()) {
+  html::before {
+    content: '';
+    position: fixed; top: 0; left: 0; right: 0; height: 3px; z-index: 1200;
+    background: var(--sol);
+    transform: scaleX(0); transform-origin: left center;
+    animation: lectura-barra linear both;
+    animation-timeline: scroll(root block);
+    pointer-events: none;
+  }
+  html:has(body[data-apt="mar"])::before { background: var(--vm); }
+  html:has(body[data-apt="thalassa"])::before { background: var(--vt); }
+  html:has(body[data-apt="salinas"])::before { background: var(--vs); }
+}
+@keyframes lectura-barra { from { transform: scaleX(0); } to { transform: scaleX(1); } }
+
 /* --- Vídeo corto de una página (empresas, estancias largas) --- */
 .page-video {
   position: relative;
@@ -26004,4 +26021,19 @@ padding-left: 8px;
   :is(.voz-card, .as-body, .cc-card, .rating-card, .req-panel, .apt-day-card,
     .contacto-card, .reservas-person-card, .noticias-mes-col, .ag-ave-curiosity, .emp-perk,
     .ag-note, .ag-wifi-card, .ag-arrival-notice, .ag-top5, .ag-day-plans, .dbt-ledger, .lsl-apt-card)::before, .as-body::after { animation: none; }
+}
+
+/* --- El horizonte de las tarjetas se dibuja al entrar en pantalla (data-ola lo pone useReveal) --- */
+@media (prefers-reduced-motion: no-preference) {
+  :is(.voz-card, .as-body, .cc-card, .rating-card, .req-panel, .apt-day-card,
+        .contacto-card, .reservas-person-card, .noticias-mes-col, .ag-ave-curiosity, .emp-perk,
+        .ag-note, .ag-wifi-card, .ag-arrival-notice, .ag-top5, .ag-day-plans, .dbt-ledger, .lsl-apt-card)[data-ola]::before {
+    transition: clip-path 1.2s var(--ease-out, cubic-bezier(.23, 1, .32, 1)), opacity .6s ease;
+  }
+  :is(.voz-card, .as-body, .cc-card, .rating-card, .req-panel, .apt-day-card,
+        .contacto-card, .reservas-person-card, .noticias-mes-col, .ag-ave-curiosity, .emp-perk,
+        .ag-note, .ag-wifi-card, .ag-arrival-notice, .ag-top5, .ag-day-plans, .dbt-ledger, .lsl-apt-card)[data-ola="0"]::before { clip-path: inset(0 100% 0 0); }
+  :is(.voz-card, .as-body, .cc-card, .rating-card, .req-panel, .apt-day-card,
+        .contacto-card, .reservas-person-card, .noticias-mes-col, .ag-ave-curiosity, .emp-perk,
+        .ag-note, .ag-wifi-card, .ag-arrival-notice, .ag-top5, .ag-day-plans, .dbt-ledger, .lsl-apt-card)[data-ola="1"]::before { clip-path: inset(0 0 0 0); }
 }

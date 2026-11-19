@@ -610,11 +610,22 @@ const useReveal = () => {
       if (isReveal) io.observe(node);
       node.querySelectorAll && node.querySelectorAll(SELECTOR).forEach(el => io.observe(el));
     };
+    // El horizonte de las tarjetas se dibuja al entrar en pantalla (sin movimiento reducido).
+    const OLA = '.voz-card, .as-body, .cc-card, .rating-card, .req-panel, .apt-day-card, .contacto-card, .reservas-person-card, .noticias-mes-col, .ag-ave-curiosity, .emp-perk, .ag-note, .ag-wifi-card, .ag-arrival-notice, .ag-top5, .ag-day-plans, .dbt-ledger, .lsl-apt-card';
+    const calm = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    const olaIo = calm ? null : new IntersectionObserver((entries) => {
+      entries.forEach(e => { if (e.isIntersecting) { e.target.setAttribute('data-ola', '1'); olaIo.unobserve(e.target); } });
+    }, { threshold: 0.12 });
+    const olaWatch = (el) => { if (olaIo && !el.hasAttribute('data-ola')) { el.setAttribute('data-ola', '0'); olaIo.observe(el); } };
+    if (olaIo) document.querySelectorAll(OLA).forEach(olaWatch);
     const mo = new MutationObserver((mutations) => {
-      mutations.forEach(m => m.addedNodes.forEach(observe));
+      mutations.forEach(m => m.addedNodes.forEach(n => {
+        observe(n);
+        if (olaIo && n instanceof Element) { if (n.matches(OLA)) olaWatch(n); n.querySelectorAll(OLA).forEach(olaWatch); }
+      }));
     });
     mo.observe(document.body, { childList: true, subtree: true });
-    return () => { io.disconnect(); mo.disconnect(); };
+    return () => { io.disconnect(); mo.disconnect(); if (olaIo) olaIo.disconnect(); };
   }, []);
 };
 
