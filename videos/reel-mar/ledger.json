@@ -17,11 +17,26 @@
       }
     },
     {
-      "id": "#w2→#cw",
+      "id": "#w2→#w3",
       "cut": 12.8,
       "technique": "cut-the-curve LEFT",
       "exit": {
         "selector": "#w2",
+        "axis": "x",
+        "dir": -1
+      },
+      "entry": {
+        "selector": "#w3",
+        "axis": "x",
+        "dir": -1
+      }
+    },
+    {
+      "id": "#w3→#cw",
+      "cut": 18.0,
+      "technique": "cut-the-curve LEFT",
+      "exit": {
+        "selector": "#w3",
         "axis": "x",
         "dir": -1
       },
