@@ -29,8 +29,8 @@
       #skyDawn  { background: linear-gradient(to bottom, #3d6fb0 0%, #8fb4d8 38%, #f2b48a 74%, #ffd6a0 100%); }
       #skyDusk  { background: linear-gradient(to bottom, #3a4f94 0%, #7b6aa8 40%, #ee8d78 76%, #ffc07a 100%); }
       #seaNight { background: linear-gradient(to bottom, #0a1030, #14204a); opacity: 0.92; }
-      #seaDawn  { background: linear-gradient(to bottom, #f0a981, #b8806f); opacity: 0; }
-      #seaDusk  { background: linear-gradient(to bottom, #e58c72, #8b5a74); opacity: 0; }
+      #seaDawn  { background: radial-gradient(ellipse 300px 34px at 1085px 712px, rgba(255,208,150,0.98), rgba(255,190,130,0) 100%), linear-gradient(to bottom, #7d8fae, #556894); opacity: 0; }
+      #seaDusk  { background: linear-gradient(to bottom, #b58aa0, #6f5a80); opacity: 0; }
       #glitter { clip-path: path("M718 706 L878 704 L878 736 L760 738 Z M918 703 L1258 686 L1262 716 L918 735 Z"); mix-blend-mode: screen; opacity: 0; }
       #glitterCol { position: absolute; left: 1030px; top: 690px; width: 130px; height: 50px;
         background: repeating-linear-gradient(to bottom, rgba(255,226,170,0.95) 0 3px, rgba(255,226,170,0) 3px 7px);
@@ -96,7 +96,7 @@
       tl.to("#skyDawn", { opacity: 1, duration: 3.4, ease: E }, 1.6);
       tl.to("#skyNight", { opacity: 0, duration: 3.4, ease: E }, 1.6);
       tl.to("#seaNight", { opacity: 0, duration: 3.2, ease: E }, 1.8);
-      tl.to("#seaDawn", { opacity: 0.8, duration: 3, ease: E }, 1.8);
+      tl.to("#seaDawn", { opacity: 0.92, duration: 3, ease: E }, 1.8);
       tl.to("#sun", { y: -170, duration: 5.4, ease: "power1.out" }, 2.4);
       tl.to("#sun", { x: 90, duration: 9, ease: "none" }, 2.4);
       tl.to("#glitter", { opacity: 0.9, duration: 1.6, ease: E }, 3.2);
