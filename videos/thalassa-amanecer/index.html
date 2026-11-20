@@ -1,0 +1,141 @@
+<!doctype html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=1920, height=1080" />
+    <script src="assets/vendor/gsap.min.js"></script>
+    <style>
+      * { margin: 0; padding: 0; box-sizing: border-box; }
+      html, body { width: 1920px; height: 1080px; overflow: hidden; background: #0a1030; }
+      #root { position: relative; width: 1920px; height: 1080px; overflow: hidden; background: #0a1030; }
+      #cam { position: absolute; left: 0; top: 0; width: 1920px; height: 1080px; overflow: hidden; }
+      /* La foto se escala a 1920 de ancho y se recorta a 16:9 desde y=275 (cielo y cristal del balcón) */
+      #st { position: absolute; left: 0; top: -264px; width: 2000px; height: 1500px; transform: scale(0.96); transform-origin: 0 0; }
+      #st > * { position: absolute; left: 0; top: 0; width: 2000px; height: 1500px; }
+      #base { display: block; }
+
+      /* Cristal del balcón: panel izquierdo y derecho, sin el montante central */
+      .glass { clip-path: path("M592 487 L878 484 L878 1400 L560 1400 L548 1000 L585 700 Z M918 478 L1205 474 L1258 700 L1285 1000 L1290 1400 L945 1400 Z"); }
+      /* Cielo: sobre la línea del horizonte, ligeramente inclinada como en la foto */
+      .sky { clip-path: path("M592 487 L878 484 L878 704 L592 708 Z M918 478 L1205 474 L1258 686 L918 703 Z"); }
+      /* Mar: franja entre el horizonte y la urbanización */
+      .sea { clip-path: path("M718 706 L878 704 L878 736 L760 738 Z M918 703 L1258 686 L1262 716 L918 735 Z"); }
+
+      #night { background: #0b1233; mix-blend-mode: multiply; opacity: 0.74; }
+      #nightOut { background: #06092a; mix-blend-mode: multiply; opacity: 0.8; }
+      #gold { background: #ff9a3c; mix-blend-mode: overlay; opacity: 0; }
+      .skyL { opacity: 0; }
+      #skyNight { background: linear-gradient(to bottom, #060b24 0%, #0d1a46 55%, #2b2a58 85%, #5b3a62 100%); opacity: 1; }
+      #skyDawn  { background: linear-gradient(to bottom, #3d6fb0 0%, #8fb4d8 38%, #f2b48a 74%, #ffd6a0 100%); }
+      #skyDusk  { background: linear-gradient(to bottom, #3a4f94 0%, #7b6aa8 40%, #ee8d78 76%, #ffc07a 100%); }
+      #seaNight { background: linear-gradient(to bottom, #0a1030, #14204a); opacity: 0.92; }
+      #seaDawn  { background: linear-gradient(to bottom, #f0a981, #b8806f); opacity: 0; }
+      #seaDusk  { background: linear-gradient(to bottom, #e58c72, #8b5a74); opacity: 0; }
+      #glitter { clip-path: path("M718 706 L878 704 L878 736 L760 738 Z M918 703 L1258 686 L1262 716 L918 735 Z"); mix-blend-mode: screen; opacity: 0; }
+      #glitterCol { position: absolute; left: 1030px; top: 690px; width: 130px; height: 50px;
+        background: repeating-linear-gradient(to bottom, rgba(255,226,170,0.95) 0 3px, rgba(255,226,170,0) 3px 7px);
+        -webkit-mask-image: radial-gradient(ellipse 50% 60% at 50% 50%, #000 0%, transparent 100%); mask-image: radial-gradient(ellipse 50% 60% at 50% 50%, #000 0%, transparent 100%); }
+      #sunbox { mix-blend-mode: screen; }
+      #sun { position: absolute; left: 780px; top: 440px; width: 600px; height: 600px; border-radius: 50%;
+        background: radial-gradient(circle at 50% 50%, #fffdf3 0 10%, #ffe6b4 11%, rgba(255,184,102,0.92) 14%, rgba(255,150,86,0.5) 26%, rgba(255,128,80,0.16) 44%, rgba(255,128,80,0) 62%); }
+      #warm { background: radial-gradient(ellipse 52% 46% at 47% 54%, rgba(255,176,104,0.95), rgba(255,176,104,0) 72%); mix-blend-mode: soft-light; opacity: 0; }
+      #lamp { background: radial-gradient(circle 460px at 957px 1268px, rgba(255,206,130,0.95) 0%, rgba(255,184,96,0.5) 30%, rgba(255,160,70,0) 100%); mix-blend-mode: screen; opacity: 1; }
+      .win { width: 7px !important; height: 7px !important; border-radius: 50%; background: #ffd58a; box-shadow: 0 0 12px 4px rgba(255,200,110,0.7); opacity: 0; }
+    </style>
+  </head>
+  <body>
+    <div id="root" data-composition-id="main" data-start="0" data-duration="24" data-width="1920" data-height="1080">
+      <div id="cam">
+        <div id="st">
+          <img id="base" src="assets/images/base.jpg" alt="" width="2000" height="1500" />
+          <div id="night"></div>
+          <div id="warm"></div>
+          <div id="nightOut" class="glass"></div>
+          <div id="gold" class="glass"></div>
+          <div id="skyA" class="sky">
+            <div id="skyNight" class="skyL" style="position:absolute;inset:0;width:2000px;height:1500px"></div>
+            <div id="skyDawn" class="skyL" style="position:absolute;inset:0;width:2000px;height:1500px"></div>
+            <div id="skyDusk" class="skyL" style="position:absolute;inset:0;width:2000px;height:1500px"></div>
+          </div>
+          <div id="sunbox" class="sky"><div id="sun"></div></div>
+          <div id="seaA" class="sea">
+            <div id="seaNight" style="position:absolute;inset:0;width:2000px;height:1500px"></div>
+            <div id="seaDawn" style="position:absolute;inset:0;width:2000px;height:1500px"></div>
+            <div id="seaDusk" style="position:absolute;inset:0;width:2000px;height:1500px"></div>
+          </div>
+          <div id="glitter"><div id="glitterCol"></div></div>
+          <div id="lamp"></div>
+          <div id="lights">
+            <div class="win" style="left:640px;top:780px"></div><div class="win" style="left:690px;top:770px"></div>
+            <div class="win" style="left:760px;top:790px"></div><div class="win" style="left:822px;top:776px"></div>
+            <div class="win" style="left:1010px;top:766px"></div><div class="win" style="left:1070px;top:771px"></div>
+            <div class="win" style="left:1130px;top:760px"></div><div class="win" style="left:1182px;top:776px"></div>
+            <div class="win" style="left:1224px;top:790px"></div><div class="win" style="left:984px;top:822px"></div>
+            <div class="win" style="left:1100px;top:832px"></div><div class="win" style="left:704px;top:832px"></div>
+            <div class="win" style="left:1152px;top:862px"></div><div class="win" style="left:1024px;top:884px"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <script>
+      window.__timelines = window.__timelines || {};
+      const tl = gsap.timeline({ paused: true });
+      const E = "sine.inOut";
+
+      // Estado inicial = estado final (bucle): antes del alba, cielo azul noche con un hilo rosa y la lámpara encendida
+      gsap.set("#sun", { x: 0, y: 30 });
+      gsap.set("#lamp", { opacity: 1 });
+      gsap.set("#night", { opacity: 0.74 });
+      gsap.set("#nightOut", { opacity: 0.8 });
+
+      // Cámara: un empuje lento hacia la ventana y vuelta
+      tl.fromTo("#cam", { scale: 1, transformOrigin: "47% 52%" }, { scale: 1.06, duration: 12, ease: E }, 0);
+      tl.to("#cam", { scale: 1, duration: 12, ease: E }, 12);
+
+      // ALBA (1.5 a 7): el cielo se enciende por el horizonte y el sol sale del mar
+      tl.to("#skyDawn", { opacity: 1, duration: 3.4, ease: E }, 1.6);
+      tl.to("#skyNight", { opacity: 0, duration: 3.4, ease: E }, 1.6);
+      tl.to("#seaNight", { opacity: 0, duration: 3.2, ease: E }, 1.8);
+      tl.to("#seaDawn", { opacity: 0.8, duration: 3, ease: E }, 1.8);
+      tl.to("#sun", { y: -170, duration: 5.4, ease: "power1.out" }, 2.4);
+      tl.to("#sun", { x: 90, duration: 9, ease: "none" }, 2.4);
+      tl.to("#glitter", { opacity: 0.9, duration: 1.6, ease: E }, 3.2);
+      tl.to("#glitterCol", { x: 40, duration: 4, ease: "none" }, 3.2);
+      tl.to("#glitter", { opacity: 0, duration: 2.4, ease: E }, 6.4);
+      tl.to("#night", { opacity: 0, duration: 5, ease: E }, 1.5);
+      tl.to("#nightOut", { opacity: 0, duration: 4.6, ease: E }, 2.6);
+      tl.to("#lamp", { opacity: 0, duration: 2.4, ease: E }, 1.6);
+      tl.to("#warm", { opacity: 0.8, duration: 2.6, ease: E }, 2.6);
+      tl.to("#warm", { opacity: 0, duration: 3.6, ease: E }, 7);
+
+      // MAÑANA y DÍA (7 a 16): el sol sube y sale por arriba del cristal; el cielo vuelve al de la foto
+      tl.to("#sun", { y: -440, duration: 4.6, ease: "power1.inOut" }, 7.8);
+      tl.to("#skyDawn", { opacity: 0, duration: 3.4, ease: E }, 7.4);
+      tl.to("#seaDawn", { opacity: 0, duration: 3.2, ease: E }, 7.4);
+
+      // TARDE (16 a 20): el sol se mete por detrás, fuera de plano; la luz dorada entra y el cielo se enciende por el lado contrario
+      tl.to("#skyDusk", { opacity: 1, duration: 3.6, ease: E }, 16);
+      tl.to("#seaDusk", { opacity: 0.85, duration: 3.4, ease: E }, 16.2);
+      tl.to("#gold", { opacity: 0.55, duration: 3.4, ease: E }, 16);
+      tl.to("#warm", { opacity: 0.75, duration: 3, ease: E }, 16.4);
+
+      // ANOCHECER (20 a 23): del rosa al azul noche, se encienden la lámpara y las luces de la urbanización
+      tl.to("#skyNight", { opacity: 1, duration: 3, ease: E }, 20);
+      tl.to("#skyDusk", { opacity: 0, duration: 3, ease: E }, 20);
+      tl.to("#seaNight", { opacity: 0.92, duration: 3, ease: E }, 20);
+      tl.to("#seaDusk", { opacity: 0, duration: 3, ease: E }, 20);
+      tl.to("#gold", { opacity: 0, duration: 2.6, ease: E }, 20);
+      tl.to("#warm", { opacity: 0, duration: 2.6, ease: E }, 20);
+      tl.to("#night", { opacity: 0.74, duration: 3, ease: E }, 20);
+      tl.to("#nightOut", { opacity: 0.8, duration: 3, ease: E }, 20.4);
+      tl.to("#lamp", { opacity: 1, duration: 2.6, ease: E }, 20.6);
+      document.querySelectorAll("#lights .win").forEach((el, i) => {
+        tl.to(el, { opacity: 0.95, duration: 0.7, ease: "power2.out" }, 20.8 + i * 0.12);
+        tl.to(el, { opacity: 0, duration: 0.5, ease: "power1.in" }, 23.45);
+      });
+
+      window.__timelines["main"] = tl;
+      tl.seek(0);
+    </script>
+  </body>
+</html>
