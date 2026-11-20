@@ -111,6 +111,7 @@ function loadGuideData() {
     GUIDE_SECTIONS:  sandbox.GUIDE_SECTIONS,
     APT_DATA:        sandbox.APT_DATA,
     ARRIVAL_EATS:    sandbox.ARRIVAL_EATS,
+    HESTIA_RULES:    sandbox.HESTIA_RULES,
   };
 }
 
@@ -2557,6 +2558,84 @@ async function generate(aptId, lang, data) {
   return outPath;
 }
 
+
+// ---------------------------------------------------------------
+// 6b) Normas de Hestía en una sola hoja A4 (para imprimir)
+//     Logo de marca como marca de agua centrada y bandera del idioma.
+//     Uso: node scripts/build-pdf.mjs normas [es|en]
+// ---------------------------------------------------------------
+const FLAG_SVG = {
+  es: '<svg viewBox="0 0 60 40" width="34" height="23" aria-label="Español"><rect width="60" height="40" fill="#AA151B"/><rect y="10" width="60" height="20" fill="#F1BF00"/></svg>',
+  en: '<svg viewBox="0 0 60 30" width="34" height="17" aria-label="English"><clipPath id="s"><path d="M0,0 v30 h60 v-30 z"/></clipPath><clipPath id="t"><path d="M30,15 h30 v15 z v15 h-30 z h-30 v-15 z v-15 h30 z"/></clipPath><g clip-path="url(#s)"><path d="M0,0 v30 h60 v-30 z" fill="#012169"/><path d="M0,0 L60,30 M60,0 L0,30" stroke="#fff" stroke-width="6"/><path d="M0,0 L60,30 M60,0 L0,30" clip-path="url(#t)" stroke="#C8102E" stroke-width="4"/><path d="M30,0 v30 M0,15 h60" stroke="#fff" stroke-width="10"/><path d="M30,0 v30 M0,15 h60" stroke="#C8102E" stroke-width="6"/></g></svg>',
+};
+
+function buildNormasHTML(lang, data) {
+  const r = data.HESTIA_RULES[lang];
+  const label = lang === 'es' ? 'Español' : 'English';
+  return `<!doctype html>
+<html lang="${lang}"><head><meta charset="utf-8"/><title>${esc(r.title)}</title>
+<style>
+  @page { size: A4; margin: 0; }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  html, body { width: 210mm; height: 297mm; }
+  body { font-family: 'Hanken Grotesk', Inter, Arial, sans-serif; color: #2A0F2E; position: relative; overflow: hidden; }
+  .wm { position: absolute; left: 50%; top: 50%; width: 120mm; transform: translate(-50%, -50%); opacity: .08; z-index: 0; }
+  .page { position: absolute; inset: 22mm 24mm; z-index: 1; display: flex; flex-direction: column; }
+  header { display: flex; justify-content: space-between; align-items: center; padding-bottom: 5mm; border-bottom: .3mm solid rgba(42,15,46,.25); margin-bottom: 5mm; }
+  h1 { font-family: Fraunces, Georgia, serif; font-weight: 500; font-size: 22pt; letter-spacing: -.01em; }
+  .lang { display: flex; align-items: center; gap: 2.4mm; font-size: 8.5pt; letter-spacing: .14em; text-transform: uppercase; }
+  .lang svg { display: block; border: .2mm solid rgba(42,15,46,.35); }
+  .intro { font-size: 9pt; line-height: 1.45; margin-bottom: 4.5mm; }
+  #fit { column-count: 2; column-gap: 9mm; font-size: 8.6pt; line-height: 1.34; }
+  .rule { break-inside: avoid; margin-bottom: 2.7mm; }
+  .rule b { display: block; font-weight: 600; font-size: 1em; color: #2A0F2E; }
+  .rule span { color: #3a2a3e; }
+  footer { margin-top: auto; padding-top: 4mm; border-top: .3mm solid rgba(42,15,46,.25); display: flex; justify-content: space-between; font-size: 7.5pt; letter-spacing: .08em; color: #5a4a5e; }
+</style></head><body>
+  <img class="wm" src="${fileUrl('assets/logo-teal-transparent.png')}" alt=""/>
+  <div class="page">
+    <header><h1>${esc(r.title)}</h1><div class="lang">${FLAG_SVG[lang]}<span>${label}</span></div></header>
+    <p class="intro">${esc(r.intro)}</p>
+    <div id="fit">${r.items.map(i => `<div class="rule"><b>${esc(i.t)}</b><span>${esc(i.d)}</span></div>`).join('')}</div>
+    <footer><span>Hestía Your Home</span><span>hestiayourhome.com</span></footer>
+  </div>
+</body></html>`;
+}
+
+async function generateNormas(lang, data) {
+  const fname = `Hestia-Normas${lang === 'en' ? '-EN' : ''}.pdf`;
+  const outPath = join(OUT, fname);
+  const htmlPath = join(OUT, `.build-normas-${lang}.html`);
+  writeFileSync(htmlPath, buildNormasHTML(lang, data));
+  const browser = await chromium.launch({ args: ['--allow-file-access-from-files'] });
+  const page = await browser.newPage();
+  try {
+    await page.goto(pathToFileURL(htmlPath).href, { waitUntil: 'networkidle' });
+    await page.evaluate(async () => { if (document.fonts && document.fonts.ready) await document.fonts.ready; });
+    // Reduce el cuerpo hasta que el texto cabe en la hoja con sus márgenes
+    const fit = await page.evaluate(() => {
+      const el = document.getElementById('fit');
+      const box = document.querySelector('.page');
+      const foot = document.querySelector('footer');
+      let pt = 9.4;
+      const over = () => {
+        const room = foot.getBoundingClientRect().top - 8 - el.getBoundingClientRect().top;
+        return el.scrollHeight > room + 1 || el.scrollWidth > el.clientWidth + 1;
+      };
+      el.style.fontSize = pt + 'pt';
+      while (over() && pt > 6.8) { pt -= 0.1; el.style.fontSize = pt.toFixed(1) + 'pt'; }
+      return { pt: +pt.toFixed(1), fits: !over() };
+    });
+    console.log(`   cuerpo ${fit.pt} pt${fit.fits ? '' : ' (NO CABE: recorta el texto)'}`);
+    await page.pdf({ path: outPath, format: 'A4', printBackground: true, preferCSSPageSize: true });
+  } finally {
+    await browser.close();
+    try { await import('node:fs').then(m => m.promises.unlink(htmlPath)); } catch (_) {}
+  }
+  console.log(`   ✓ ${fname} → ${outPath}`);
+  return outPath;
+}
+
 // ---------------------------------------------------------------
 // 7) CLI
 // ---------------------------------------------------------------
@@ -2570,6 +2649,12 @@ const langs = langArg ? [langArg] : ['es', 'en'];
   console.log('Cargando datos de guías…');
   const data = loadGuideData();
   console.log('Datos cargados. Generando PDFs…\n');
+
+  if (aptArg === 'normas') {
+    for (const lang of (langArg ? [langArg] : ['es', 'en'])) await generateNormas(lang, data);
+    console.log('\n✓ Hecho.');
+    return;
+  }
 
   for (const apt of apts) {
     for (const lang of langs) {
