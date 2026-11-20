@@ -85,7 +85,7 @@ const PAGES = {
   <p>Hestía Salinas is the largest of the three apartments, in Vera Playa (Almería). It has two terraces: an 18 m² one for sun and moonlight, and a 14 m² one facing the sunset.</p>
   <p>It is next to the Salinas de Puerto Rey bird reserve, a short walk away. The beach is 900 metres away.</p>
   <p>Two bedrooms and space for 6 guests plus a baby. A bathtub with hydromassage and a hydromassage shower cabin. Full kitchen with dishwasher and washing machine, heating and cooling air conditioning, and fibre WiFi.</p>
-  <p>A 55-inch Smart TV with Ambilight and streaming included: SkyShowtime, HBO Max, Prime Video and Disney+.</p>
+  <p>A 55-inch Smart TV with Ambilight and streaming included: SkyShowtime, HBO Max, Prime Video and Movistar Plus.</p>
   <p>The complex has a pool, padel and tennis courts and large gardens with streams. The main bedroom has a feather duvet and a hypoallergenic alternative.</p>
   <p>Pets are welcome on prior request, with a moderate supplement per night. There is a minimum stay, a little higher in peak season.</p>
   <p>Tourist licence VFT/AL/07056.</p>`,

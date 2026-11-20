@@ -196,7 +196,7 @@
   <p>Hestía Salinas is the largest of the three apartments, in Vera Playa (Almería). It has two terraces: an 18 m² one for sun and moonlight, and a 14 m² one facing the sunset.</p>
   <p>It is next to the Salinas de Puerto Rey bird reserve, a short walk away. The beach is 900 metres away.</p>
   <p>Two bedrooms and space for 6 guests plus a baby. A bathtub with hydromassage and a hydromassage shower cabin. Full kitchen with dishwasher and washing machine, heating and cooling air conditioning, and fibre WiFi.</p>
-  <p>A 55-inch Smart TV with Ambilight and streaming included: SkyShowtime, HBO Max, Prime Video and Disney+.</p>
+  <p>A 55-inch Smart TV with Ambilight and streaming included: SkyShowtime, HBO Max, Prime Video and Movistar Plus.</p>
   <p>The complex has a pool, padel and tennis courts and large gardens with streams. The main bedroom has a feather duvet and a hypoallergenic alternative.</p>
   <p>Pets are welcome on prior request, with a moderate supplement per night. There is a minimum stay, a little higher in peak season.</p>
   <p>Tourist licence VFT/AL/07056.</p>
@@ -259,7 +259,7 @@
     try { guideNow = guideNow || Object.keys(sessionStorage).some(k => k.indexOf('hestia-guide-unlock') === 0); } catch (e) {}
     const files = guideNow ? COMPONENT_FILES.slice(0, -1).concat(GUIDE, COMPONENT_FILES.slice(-1)) : COMPONENT_FILES;
     for (const file of files) {
-      const res = await fetch(file + '?cv=fcfc09820d');
+      const res = await fetch(file + '?cv=cad3d97082');
       if (!res.ok) throw new Error(`Failed to load ${file}: ${res.status}`);
       const code = await res.text();
       // eslint-disable-next-line no-eval
@@ -267,7 +267,7 @@
     }
     if (!guideNow) {
       const late = async () => {
-        const res = await fetch(GUIDE + '?cv=fcfc09820d');
+        const res = await fetch(GUIDE + '?cv=cad3d97082');
         if (!res.ok) throw new Error('No cargó ' + GUIDE);
         eval(await res.text());
         window.dispatchEvent(new Event('hestia:guide-ready'));

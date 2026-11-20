@@ -178,7 +178,7 @@
   <p>Hestía Salinas es el más grande de los tres apartamentos, en Vera Playa (Almería). Tiene dos terrazas: una de 18 m² para el sol y la luna, y otra de 14 m² orientada al atardecer.</p>
   <p>Está junto a la reserva de aves de las Salinas de Puerto Rey, a un paseo corto. La playa queda a 900 metros.</p>
   <p>Dos habitaciones y capacidad para 6 personas más bebé. Bañera con hidromasaje y cabina de ducha con hidromasaje. Cocina completa con lavavajillas y lavadora, aire acondicionado frío y calor, y WiFi de fibra.</p>
-  <p>Smart TV de 55 pulgadas con Ambilight y streaming incluido: SkyShowtime, HBO Max, Prime Video y Disney+.</p>
+  <p>Smart TV de 55 pulgadas con Ambilight y streaming incluido: SkyShowtime, HBO Max, Prime Video y Movistar Plus.</p>
   <p>La urbanización tiene piscina, pistas de pádel y tenis y grandes jardines con riachuelos. En el dormitorio principal hay nórdico de plumas y alternativa antialérgica.</p>
   <p>Mascotas bienvenidas con petición previa y un suplemento moderado por noche. Hay una estancia mínima, algo más alta en temporada crítica.</p>
   <p>Licencia turística VFT/AL/07056.</p>
@@ -241,7 +241,7 @@
     try { guideNow = guideNow || Object.keys(sessionStorage).some(k => k.indexOf('hestia-guide-unlock') === 0); } catch (e) {}
     const files = guideNow ? COMPONENT_FILES.slice(0, -1).concat(GUIDE, COMPONENT_FILES.slice(-1)) : COMPONENT_FILES;
     for (const file of files) {
-      const res = await fetch(file + '?cv=fcfc09820d');
+      const res = await fetch(file + '?cv=cad3d97082');
       if (!res.ok) throw new Error(`Failed to load ${file}: ${res.status}`);
       const code = await res.text();
       // eslint-disable-next-line no-eval
@@ -249,7 +249,7 @@
     }
     if (!guideNow) {
       const late = async () => {
-        const res = await fetch(GUIDE + '?cv=fcfc09820d');
+        const res = await fetch(GUIDE + '?cv=cad3d97082');
         if (!res.ok) throw new Error('No cargó ' + GUIDE);
         eval(await res.text());
         window.dispatchEvent(new Event('hestia:guide-ready'));

@@ -402,13 +402,13 @@ const APT_EQUIP = {
     daily_es: {
       eyebrow: 'Tu día en Hestía Salinas',
       morning: 'La luz dorada del amanecer entra por la terraza grande de 18 m², con la reserva de aves de las Salinas de Puerto Rey a un paseo corto. Café y desayuno al sol; luego paseas hasta la playa o por el jardín de la urbanización.',
-      core: 'Dos terrazas: la de 18 m² para sol y luna, la de 14 m² para el atardecer. Piscina, pistas de pádel y tenis y grandes jardines con riachuelos en la urbanización. Smart TV 55" con Ambilight y streaming (SkyShowtime, HBO Max, Prime Video y Disney+ siempre activas, además de apps gratuitas), cocina completa y A/C frío-calor.',
+      core: 'Dos terrazas: la de 18 m² para sol y luna, la de 14 m² para el atardecer. Piscina, pistas de pádel y tenis y grandes jardines con riachuelos en la urbanización. Smart TV 55" con Ambilight y streaming (SkyShowtime, HBO Max, Prime Video y Movistar Plus siempre activas, además de apps gratuitas), cocina completa y A/C frío-calor.',
       behind: 'Antes de tu llegada: sábanas de 200 hilos planchadas, toallas de 600 g/m², nórdicos de plumas más alternativa antialérgica en el dormitorio principal, cuna y trona si las pediste. La cafetera Nespresso cargada y los aromas elegidos según la estación.',
     },
     daily_en: {
       eyebrow: 'A day at Hestía Salinas',
       morning: 'Golden morning light pours in through the 18 m² main terrace, with the Puerto Rey salt flats, the Puerto Rey bird reserve, a short walk away. Coffee and breakfast in the sun; then a walk to the beach or through the complex gardens.',
-      core: 'Two terraces: the 18 m² for sun and moon, the 14 m² for sunset. Pool, padel and tennis courts and large gardens with streams in the complex. 55" Ambilight Smart TV with streaming (SkyShowtime, HBO Max, Prime Video and Disney+ always active, plus free apps), full kitchen and heat-cool A/C.',
+      core: 'Two terraces: the 18 m² for sun and moon, the 14 m² for sunset. Pool, padel and tennis courts and large gardens with streams in the complex. 55" Ambilight Smart TV with streaming (SkyShowtime, HBO Max, Prime Video and Movistar Plus always active, plus free apps), full kitchen and heat-cool A/C.',
       behind: 'Before you arrive: 200-thread sheets ironed, 600 g/m² towels, down duvets plus a hypoallergenic alternative in the master bedroom, cot and high chair if you booked them. Nespresso machine loaded and aromas chosen by season.',
     },
     es: {
@@ -417,7 +417,7 @@ const APT_EQUIP = {
         ['🌊', 'Playa a 5 min en coche'], ['☀️', 'Terraza 18m² · sol y luna'], ['🌅', 'Terraza 14m² · atardecer'],
         ['🏊', 'Piscina'], ['🌿', 'Grandes jardines · riachuelos'],
         ['🎾', 'Pistas de pádel y tenis'], ['🛋', 'Chill out'], ['🏞', 'Salinas de Puerto Rey'],
-        ['📺', 'Smart TV 55" · Ambilight'], ['🎬', 'Streaming: SkyShowtime · HBO Max · Prime Video · Disney+'], ['📶', 'WIFI fibra'],
+        ['📺', 'Smart TV 55" · Ambilight'], ['🎬', 'Streaming: SkyShowtime · HBO Max · Prime Video · Movistar Plus'], ['📶', 'WIFI fibra'],
         ['❄️', 'A/C frío y calor'], ['🍳', 'Cocina completa'], ['🍽', 'Lavavajillas'],
         ['🧺', 'Lavadora · alta gama'], ['☕', 'Nespresso + cafetera goteo'],
         ['🛁', 'Bañera + hidromasaje'], ['🚿', 'Cabina ducha + hidromasaje'],
@@ -433,7 +433,7 @@ const APT_EQUIP = {
         ['🌊', 'Beach 5 min by car'], ['☀️', '18m² terrace · sun & moon'], ['🌅', '14m² terrace · sunsets'],
         ['🏊', 'Pool'], ['🌿', 'Large gardens · streams'],
         ['🎾', 'Padel and tennis courts'], ['🛋', 'Chill-out'], ['🏞', 'Puerto Rey Salt Flats'],
-        ['📺', '55" Smart TV · Ambilight'], ['🎬', 'Streaming: SkyShowtime · HBO Max · Prime Video · Disney+'], ['📶', 'Fibre WIFI'],
+        ['📺', '55" Smart TV · Ambilight'], ['🎬', 'Streaming: SkyShowtime · HBO Max · Prime Video · Movistar Plus'], ['📶', 'Fibre WIFI'],
         ['❄️', 'A/C heat & cool'], ['🍳', 'Full premium kitchen'], ['🍽', 'Dishwasher'],
         ['🧺', 'Washing machine · premium'], ['☕', 'Nespresso + drip coffee maker'],
         ['🛁', 'Bath + hydro-massage'], ['🚿', 'Shower cabin + hydro-massage'],
