@@ -241,7 +241,7 @@
     try { guideNow = guideNow || Object.keys(sessionStorage).some(k => k.indexOf('hestia-guide-unlock') === 0); } catch (e) {}
     const files = guideNow ? COMPONENT_FILES.slice(0, -1).concat(GUIDE, COMPONENT_FILES.slice(-1)) : COMPONENT_FILES;
     for (const file of files) {
-      const res = await fetch(file + '?cv=3cb8575867');
+      const res = await fetch(file + '?cv=a44b2d29cb');
       if (!res.ok) throw new Error(`Failed to load ${file}: ${res.status}`);
       const code = await res.text();
       // eslint-disable-next-line no-eval
@@ -249,7 +249,7 @@
     }
     if (!guideNow) {
       const late = async () => {
-        const res = await fetch(GUIDE + '?cv=3cb8575867');
+        const res = await fetch(GUIDE + '?cv=a44b2d29cb');
         if (!res.ok) throw new Error('No cargó ' + GUIDE);
         eval(await res.text());
         window.dispatchEvent(new Event('hestia:guide-ready'));
