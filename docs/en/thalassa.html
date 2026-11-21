@@ -201,7 +201,7 @@
   <p>Hestía Thalassa is the penthouse of the Al Andalus Thalassa complex, in Vera Playa (Almería). From its 18 m² panoramic terrace you see the Mediterranean on one side and the Salar de los Canos on the other.</p>
   <p>The complex has two outdoor pools (north and south), gardens, parks and padel and tennis courts, and a shared spa with heated pool, jacuzzi, sauna, foot bath, gym and relaxation area (the spa opens in autumn, winter and spring; the gym all year).</p>
   <p>Two bedrooms and space for 6 guests plus a baby. Two en-suite bathrooms with hydromassage columns and a full kitchen with a high-end dishwasher and washing machine. Air conditioning in the living room and bedrooms, fibre WiFi and a Nespresso machine.</p>
-  <p>It is the apartment with the most streaming platforms: SkyShowtime, HBO Max, Prime Video, Movistar Plus and Disney+, all active.</p>
+  <p>It is the apartment with the most streaming platforms: SkyShowtime, HBO Max, Prime Video, Netflix, Movistar Plus and Disney+, all active.</p>
   <p>The beach is 1.5 kilometres away. Pets are welcome on prior request, with a moderate supplement per night. There is a minimum stay, a little higher in peak season.</p>
   <p>Tourist licence VFT/AL/05535.</p>
   <nav aria-label="Hestía"><a href="/en/">Home</a> · <a href="/en/mar.html">Hestía Mar</a> · <a href="/en/thalassa.html">Hestía Thalassa</a> · <a href="/en/salinas.html">Hestía Salinas</a> · <a href="/en/reservas.html">Book</a> · <a href="/en/estancias-largas.html">Long stays</a> · <a href="/en/opiniones.html">Reviews</a> · <a href="/en/nosotros.html">About us</a> · <a href="/en/contacto.html">Contact</a> · <a href="/guia-vera/en/">Guide extract</a></nav>
@@ -263,7 +263,7 @@
     try { guideNow = guideNow || Object.keys(sessionStorage).some(k => k.indexOf('hestia-guide-unlock') === 0); } catch (e) {}
     const files = guideNow ? COMPONENT_FILES.slice(0, -1).concat(GUIDE, COMPONENT_FILES.slice(-1)) : COMPONENT_FILES;
     for (const file of files) {
-      const res = await fetch(file + '?cv=3cb8575867');
+      const res = await fetch(file + '?cv=a44b2d29cb');
       if (!res.ok) throw new Error(`Failed to load ${file}: ${res.status}`);
       const code = await res.text();
       // eslint-disable-next-line no-eval
@@ -271,7 +271,7 @@
     }
     if (!guideNow) {
       const late = async () => {
-        const res = await fetch(GUIDE + '?cv=3cb8575867');
+        const res = await fetch(GUIDE + '?cv=a44b2d29cb');
         if (!res.ok) throw new Error('No cargó ' + GUIDE);
         eval(await res.text());
         window.dispatchEvent(new Event('hestia:guide-ready'));

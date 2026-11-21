@@ -887,7 +887,7 @@ const Compare = ({
   }, {
     label: 'Streaming',
     vm: 'SkyShowtime · HBO Max · Prime · Disney+',
-    vt: 'SkyShowtime · HBO Max · Prime · Movistar Plus · Disney+',
+    vt: 'SkyShowtime · HBO Max · Prime · Netflix · Movistar Plus · Disney+',
     vs: 'SkyShowtime · HBO Max · Prime · Movistar Plus'
   }, {
     label: 'Extra',
@@ -959,7 +959,7 @@ const Compare = ({
   }, {
     label: 'Streaming',
     vm: 'SkyShowtime · HBO Max · Prime · Disney+',
-    vt: 'SkyShowtime · HBO Max · Prime · Movistar Plus · Disney+',
+    vt: 'SkyShowtime · HBO Max · Prime · Netflix · Movistar Plus · Disney+',
     vs: 'SkyShowtime · HBO Max · Prime · Movistar Plus'
   }, {
     label: 'Extra',

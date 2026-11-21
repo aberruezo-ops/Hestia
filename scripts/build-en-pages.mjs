@@ -73,7 +73,7 @@ const PAGES = {
   <p>Hestía Thalassa is the penthouse of the Al Andalus Thalassa complex, in Vera Playa (Almería). From its 18 m² panoramic terrace you see the Mediterranean on one side and the Salar de los Canos on the other.</p>
   <p>The complex has two outdoor pools (north and south), gardens, parks and padel and tennis courts, and a shared spa with heated pool, jacuzzi, sauna, foot bath, gym and relaxation area (the spa opens in autumn, winter and spring; the gym all year).</p>
   <p>Two bedrooms and space for 6 guests plus a baby. Two en-suite bathrooms with hydromassage columns and a full kitchen with a high-end dishwasher and washing machine. Air conditioning in the living room and bedrooms, fibre WiFi and a Nespresso machine.</p>
-  <p>It is the apartment with the most streaming platforms: SkyShowtime, HBO Max, Prime Video, Movistar Plus and Disney+, all active.</p>
+  <p>It is the apartment with the most streaming platforms: SkyShowtime, HBO Max, Prime Video, Netflix, Movistar Plus and Disney+, all active.</p>
   <p>The beach is 1.5 kilometres away. Pets are welcome on prior request, with a moderate supplement per night. There is a minimum stay, a little higher in peak season.</p>
   <p>Tourist licence VFT/AL/05535.</p>`,
   },
