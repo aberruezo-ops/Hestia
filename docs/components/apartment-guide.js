@@ -11317,6 +11317,130 @@ const DayPlans = ({
 // AptGuideView, guía integrada en la página de Hestía
 // (se renderiza dentro del Header / Footer del portal)
 // ================================================================
+// ================================================================
+// Presencia en la guía: estado de la casa, «Hoy en Vera» y resumen de salida.
+// El estado de la casa lo marca Alex o Fran en /p-edit (docs/data/estado-casas.json,
+// sin datos personales) y caduca a las 36 h: nunca se enseña un «lista» viejo.
+// ================================================================
+const GuideCasaEstado = ({
+  apt,
+  lang
+}) => {
+  const [st, setSt] = React.useState(undefined);
+  React.useEffect(() => {
+    let off = false;
+    fetch('data/estado-casas.json?t=' + Date.now(), {
+      cache: 'no-store'
+    }).then(r => r.ok ? r.json() : null).then(j => {
+      if (!off) setSt(j && j[apt.id] || null);
+    }).catch(() => {
+      if (!off) setSt(null);
+    });
+    return () => {
+      off = true;
+    };
+  }, [apt.id]);
+  if (st === undefined) return null;
+  const es = lang === 'es';
+  const t = st && st.actualizado ? new Date(st.actualizado).getTime() : NaN;
+  const lista = !!(st && st.lista && Number.isFinite(t) && (Date.now() - t) / 36e5 <= 36);
+  const cuando = lista ? new Date(t).toLocaleString(es ? 'es-ES' : 'en-GB', {
+    day: 'numeric',
+    month: 'short',
+    hour: '2-digit',
+    minute: '2-digit',
+    timeZone: 'Europe/Madrid'
+  }) : '';
+  return /*#__PURE__*/React.createElement("p", {
+    className: 'ag-casa no-print' + (lista ? ' is-lista' : ''),
+    role: "status"
+  }, /*#__PURE__*/React.createElement("span", {
+    className: "ag-casa-l"
+  }, /*#__PURE__*/React.createElement("span", {
+    className: "ag-casa-dot",
+    "aria-hidden": "true"
+  }), lista ? es ? 'Tu casa está lista.' : 'Your home is ready.' : es ? 'Estamos pendientes de ti.' : 'We are on hand for you.'), /*#__PURE__*/React.createElement("span", {
+    className: "ag-casa-s"
+  }, lista ? es ? `Actualizado el ${cuando} (hora de España).` : `Updated ${cuando} (Spain time).` : es ? 'Escríbenos cuando quieras: te acompañamos en todo momento, desde tu primer mensaje.' : 'Message us any time: we are with you every step of the way, from your very first message.'));
+};
+const _DIAS_ES = ['domingo', 'lunes', 'martes', 'miércoles', 'jueves', 'viernes', 'sábado'];
+const GuideHoyEnVera = ({
+  lang
+}) => {
+  const es = lang === 'es';
+  const [wx, setWx] = React.useState(null);
+  React.useEffect(() => {
+    let off = false;
+    try {
+      const c = JSON.parse(sessionStorage.getItem('hestia-guide-forecast14-v1') || 'null');
+      if (c && Date.now() - c.t < 36e5 && c.v && c.v[0]) {
+        setWx(c.v[0]);
+        return;
+      }
+    } catch (_) {}
+    const url = `https://api.open-meteo.com/v1/forecast?latitude=${_VERA_LAT}&longitude=${_VERA_LON}&daily=temperature_2m_max,temperature_2m_min,weather_code&timezone=Europe%2FMadrid&forecast_days=1`;
+    fetch(url).then(r => r.ok ? r.json() : null).then(j => {
+      if (off || !j || !j.daily) return;
+      setWx({
+        max: Math.round(j.daily.temperature_2m_max[0]),
+        min: Math.round(j.daily.temperature_2m_min[0]),
+        code: j.daily.weather_code[0]
+      });
+    }).catch(() => {});
+    return () => {
+      off = true;
+    };
+  }, []);
+  const V = window.VeraSol;
+  const sol = V ? V.estado() : null;
+  const dia = _DIAS_ES[new Date(new Date().toLocaleString('en-US', {
+    timeZone: 'Europe/Madrid'
+  })).getDay()];
+  const mercado = PLACES.find(p => /^m-/.test(p.id) && p.name.toLowerCase().includes('(' + dia));
+  const sky = wx ? _WMO_SKY(wx.code) : null;
+  const filas = [];
+  if (wx) filas.push([es ? 'El tiempo' : 'Weather', `${wx.min}–${wx.max} °C, ${sky[lang]}`]);
+  if (sol) filas.push([es ? 'El sol' : 'The sun', es ? `Sale a las ${V.hora(sol.sale)} y se pone a las ${V.hora(sol.pone)}` : `Rises at ${V.hora(sol.sale)}, sets at ${V.hora(sol.pone)}`]);
+  if (mercado) filas.push([es ? 'Mercadillo de hoy' : 'Street market today', mercado.name.replace(/ \(.*\)$/, '')]);
+  if (!filas.length) return null;
+  return /*#__PURE__*/React.createElement("div", {
+    className: "ag-hoy no-print"
+  }, /*#__PURE__*/React.createElement("span", {
+    className: "ag-cat-label"
+  }, es ? 'Hoy en Vera' : 'Today in Vera'), /*#__PURE__*/React.createElement("dl", {
+    className: "ag-hoy-list"
+  }, filas.map(([k, v]) => /*#__PURE__*/React.createElement("div", {
+    key: k
+  }, /*#__PURE__*/React.createElement("dt", null, k), /*#__PURE__*/React.createElement("dd", null, v)))));
+};
+const GuideAntesDeSalir = ({
+  apt,
+  lang
+}) => {
+  const es = lang === 'es';
+  const pasos = es ? ['La salida es antes de las 11:00.', 'Deja las llaves donde Fran te indique.', 'Baja la basura al contenedor, fuera de la urbanización.', 'Toallas y sábanas, sobre la cama.'] : ['Check-out is before 11:00.', 'Leave the keys where Fran tells you.', 'Take the rubbish to the bins outside the complex.', 'Towels and sheets on the bed.'];
+  return /*#__PURE__*/React.createElement("div", {
+    className: "ag-salida no-print"
+  }, /*#__PURE__*/React.createElement("span", {
+    className: "ag-cat-label"
+  }, es ? 'Antes de salir' : 'Before you leave'), /*#__PURE__*/React.createElement("ol", {
+    className: "ag-salida-pasos"
+  }, pasos.map((p, i) => /*#__PURE__*/React.createElement("li", {
+    key: i
+  }, p))), /*#__PURE__*/React.createElement("p", {
+    className: "ag-salida-cierre"
+  }, es ? 'Cuéntanos cómo te fue y, si quieres volver, reserva directo con nosotros (hasta un 10 % aprox. de ahorro).' : 'Tell us how it went and, if you want to come back, book direct with us (up to ~10% saving).'), /*#__PURE__*/React.createElement("div", {
+    className: "ag-salida-btns"
+  }, /*#__PURE__*/React.createElement("a", {
+    className: "btn btn-primary",
+    href: "escribir-opinion.html"
+  }, es ? 'Escribir mi opinión' : 'Write my review', " ", /*#__PURE__*/React.createElement("span", {
+    className: "arrow"
+  }, "→")), /*#__PURE__*/React.createElement("a", {
+    className: "btn btn-ghost-dark",
+    href: `reservas.html?apt=${apt.id}`
+  }, es ? 'Reservar de nuevo' : 'Book again')));
+};
 const AptGuideView = ({
   apt,
   lang,
@@ -11746,7 +11870,10 @@ const AptGuideView = ({
     className: "ag-section-num"
   }), /*#__PURE__*/React.createElement("h2", {
     className: "ag-h2"
-  }, s.welcome.title), s.welcome.paras.map((p, i) => /*#__PURE__*/React.createElement("p", {
+  }, s.welcome.title), /*#__PURE__*/React.createElement(GuideCasaEstado, {
+    apt: apt,
+    lang: lang
+  }), s.welcome.paras.map((p, i) => /*#__PURE__*/React.createElement("p", {
     key: i,
     className: "ag-para"
   }, p)), /*#__PURE__*/React.createElement("p", {
@@ -11839,7 +11966,9 @@ const AptGuideView = ({
     className: "ag-section-num"
   }), /*#__PURE__*/React.createElement("h2", {
     className: "ag-h2"
-  }, s.tiempo.title), /*#__PURE__*/React.createElement(GuideWeather14d, {
+  }, s.tiempo.title), /*#__PURE__*/React.createElement(GuideHoyEnVera, {
+    lang: lang
+  }), /*#__PURE__*/React.createElement(GuideWeather14d, {
     lang: lang
   }), /*#__PURE__*/React.createElement(GuideClimateChart, {
     lang: lang
@@ -12560,7 +12689,10 @@ const AptGuideView = ({
     className: "ag-section-num"
   }), /*#__PURE__*/React.createElement("h2", {
     className: "ag-h2"
-  }, s.feedback.title), /*#__PURE__*/React.createElement("h3", {
+  }, s.feedback.title), /*#__PURE__*/React.createElement(GuideAntesDeSalir, {
+    apt: apt,
+    lang: lang
+  }), /*#__PURE__*/React.createElement("h3", {
     className: "ag-h3"
   }, s.feedback.checkoutTitle), /*#__PURE__*/React.createElement("p", {
     className: "ag-para"

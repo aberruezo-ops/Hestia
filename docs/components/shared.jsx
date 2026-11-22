@@ -3246,7 +3246,7 @@ const HESTIA_RULES = {
 window.HESTIA_RULES = HESTIA_RULES;
 
 // ================================================================
-// DirectBookingPerks, sección "Reserva directa, una mejor manera"
+// DirectBookingPerks, sección "Reserva directa: hablas con nosotros"
 // Stat ribbon (4 cifras destacadas) + botón → rejilla de 8 cards
 // ricos con icono, cifra, título y descripción. Reutilizable en
 // home y cada Hestía; mismo copy ES + EN, una sola fuente.
@@ -3485,8 +3485,8 @@ const DirectBookingModal = ({ lang, onClose }) => {
           </span>
           <h3 id="dbm-title" className="dbm-title">
             {lang === 'es'
-              ? <>La <em>mejor manera</em> de reservar</>
-              : <>The <em>best way</em> to book</>}
+              ? <>Hablas con <em>nosotros</em>, no con una plataforma</>
+              : <>You talk to <em>us</em>, not to a platform</>}
           </h3>
         </div>
 
@@ -3662,8 +3662,8 @@ const AptDesktopSidebar = ({ lang, onGuideClick }) => {
         <span className="eyebrow">{lang === 'es' ? 'Reserva directa' : 'Direct booking'}</span>
         <h4 className="ads-title">
           {lang === 'es'
-            ? <>La <em>mejor manera</em> de reservar</>
-            : <>The <em>best way</em> to book</>}
+            ? <>Hablas con <em>nosotros</em>, no con una plataforma</>
+            : <>You talk to <em>us</em>, not to a platform</>}
         </h4>
         <ul className="ads-stats">
           {ribbon.map((s, i) => (
@@ -3904,8 +3904,8 @@ const WidgetDirectBooking = ({ lang }) => {
       <span className="eyebrow">{lang === 'es' ? 'Reserva directa' : 'Direct booking'}</span>
       <h4 className="widget-title">
         {lang === 'es'
-          ? <>La <em>mejor manera</em> de reservar</>
-          : <>The <em>best way</em> to book</>}
+          ? <>Hablas con <em>nosotros</em>, no con una plataforma</>
+          : <>You talk to <em>us</em>, not to a platform</>}
       </h4>
       <ul className="widget-stats">
         {ribbon.map((s, i) => (

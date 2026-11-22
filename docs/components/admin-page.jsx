@@ -3750,6 +3750,70 @@ const fmtDelta = (cur, prev) => {
 };
 
 // ── BloquesTab ── manual blocked ranges for direct bookings ──────────────────
+// ================================================================
+// CasasTab: marca «Tu casa está lista» para cada Hestía (docs/data/estado-casas.json).
+// Es público y no lleva datos personales; la guía lo oculta pasadas 36 h.
+// ================================================================
+const CASAS_PATH = 'docs/data/estado-casas.json';
+const CasasTab = ({ token }) => {
+  const [data, setData] = React.useState(null);
+  const [sha, setSha] = React.useState(null);
+  const [err, setErr] = React.useState(null);
+  const [msg, setMsg] = React.useState(null);
+  const [busy, setBusy] = React.useState(false);
+  React.useEffect(() => {
+    fetch(`${API}/repos/${REPO}/contents/${CASAS_PATH}?ref=${BRANCH}`, { headers: apiHeaders(token) })
+      .then(r => r.json())
+      .then(j => { if (j.message) throw new Error(j.message); setSha(j.sha); setData(JSON.parse(b64ToUtf8(j.content))); })
+      .catch(e => setErr('Error cargando el estado: ' + e.message));
+  }, [token]);
+  const marcar = async (apt, lista) => {
+    if (!data || !sha) return;
+    setBusy(true); setMsg(null);
+    try {
+      const next = { ...data, [apt]: { lista, actualizado: lista ? new Date().toISOString() : null } };
+      const res = await fetch(`${API}/repos/${REPO}/contents/${CASAS_PATH}`, {
+        method: 'PUT',
+        headers: { ...apiHeaders(token), 'Content-Type': 'application/json' },
+        body: JSON.stringify({ message: 'admin: estado de la casa', content: utf8ToB64(JSON.stringify(next, null, 2) + '\n'), sha, branch: BRANCH }),
+      });
+      const j = await res.json();
+      if (j.message && !j.content) throw new Error(j.message);
+      setSha(j.content.sha); setData(next);
+      setMsg('Guardado. La guía lo muestra en uno o dos minutos.');
+    } catch (e) { setMsg('Error al guardar: ' + e.message); }
+    finally { setBusy(false); }
+  };
+  if (err) return <div className="pe-error">{err}</div>;
+  if (!data) return <div className="pe-card"><p>Cargando…</p></div>;
+  const APTS = [{ id: 'vm', label: 'Hestía Vera Mar' }, { id: 'vt', label: 'Hestía Vera Thalassa' }, { id: 'vs', label: 'Hestía Vera Salinas' }];
+  const cuando = (iso) => iso ? new Date(iso).toLocaleString('es-ES', { day: 'numeric', month: 'short', hour: '2-digit', minute: '2-digit' }) : '';
+  return (
+    <div className="pe-card">
+      <h2 className="pe-section-title">Estado de las casas</h2>
+      <p className="blk-desc">
+        Marca <strong>«lista»</strong> cuando la casa esté preparada para la llegada. Los huéspedes lo ven en su guía como
+        «Tu casa está lista». Caduca a las 36 h: si no lo actualizas, la guía vuelve a un texto neutro y no enseña nada falso.
+        Es un fichero público y no lleva datos de huéspedes.
+      </p>
+      {APTS.map(({ id, label }) => {
+        const st = data[id] || {};
+        return (
+          <div key={id} className="blk-apt-block">
+            <h3 className="blk-apt-name">{label}</h3>
+            <p className="blk-desc">{st.lista ? `Lista · marcada el ${cuando(st.actualizado)}` : 'Sin marcar'}</p>
+            <div className="pe-actions">
+              <button type="button" className="pe-btn pe-btn-primary" disabled={busy} onClick={() => marcar(id, true)}>Marcar lista ahora</button>
+              {st.lista && <button type="button" className="pe-btn pe-btn-ghost" disabled={busy} onClick={() => marcar(id, false)}>Quitar</button>}
+            </div>
+          </div>
+        );
+      })}
+      {msg && <p className="blk-desc" role="status">{msg}</p>}
+    </div>
+  );
+};
+
 const BloquesTab = ({ token }) => {
   const [pData,   setPData]   = React.useState(null);
   const [sha,     setSha]     = React.useState(null);
@@ -9091,6 +9155,11 @@ const AdminApp = () => {
           })()}
         </button>
         <button type="button"
+          className={`pe-tab${mode === 'casas' ? ' is-active' : ''}`}
+          onClick={() => { setMode('casas'); setError(null); setSuccess(null); }}>
+          <HiIcon name="home" size={18} className="pe-tab-ic" /><span className="pe-tab-label"> Casas</span>
+        </button>
+        <button type="button"
           className={`pe-tab${mode === 'mapa' ? ' is-active' : ''}`}
           onClick={() => { setMode('mapa'); setError(null); setSuccess(null); }}>
           <HiIcon name="pin" size={18} className="pe-tab-ic" /><span className="pe-tab-label"> Mapa</span>
@@ -9110,7 +9179,7 @@ const AdminApp = () => {
       {success && <div className="pe-success">{success}</div>}
       {error   && <div className="pe-error">{error}</div>}
 
-      {mode === 'registro' ? <TravelerRegistryTab /> : mode === 'social' ? <SocialTab token={token} /> : mode === 'mapa' ? <PinsTab /> : mode === 'huecos' ? <HuecosTab token={token} pricesData={data} onPricesUpdated={(d, s) => { setData(d); setSha(s); }} /> : mode === 'inteligencia' ? <IntelligenciaTab token={token} onNavigate={tab => { setMode(tab); setError(null); setSuccess(null); }} /> : mode === 'contract' ? <ContractTab pricesData={data} prefill={contractPrefill} token={token} /> : mode === 'prereservas' ? <PrereservasTab token={token} refreshKey={refreshKey} /> : mode === 'reservas' ? <ReservasTab token={token} refreshKey={refreshKey} onOpenContract={r => { setContractPrefill(r); setMode('contract'); }} /> : mode === 'bloqueos' ? <BloquesTab token={token} /> : mode === 'leila' ? <LeilaTab token={token} /> : mode === 'facturas' ? <FacturasTab token={token} /> : mode === 'reviews' ? renderReviewsTab() : (
+      {mode === 'registro' ? <TravelerRegistryTab /> : mode === 'social' ? <SocialTab token={token} /> : mode === 'casas' ? <CasasTab token={token} /> : mode === 'mapa' ? <PinsTab /> : mode === 'huecos' ? <HuecosTab token={token} pricesData={data} onPricesUpdated={(d, s) => { setData(d); setSha(s); }} /> : mode === 'inteligencia' ? <IntelligenciaTab token={token} onNavigate={tab => { setMode(tab); setError(null); setSuccess(null); }} /> : mode === 'contract' ? <ContractTab pricesData={data} prefill={contractPrefill} token={token} /> : mode === 'prereservas' ? <PrereservasTab token={token} refreshKey={refreshKey} /> : mode === 'reservas' ? <ReservasTab token={token} refreshKey={refreshKey} onOpenContract={r => { setContractPrefill(r); setMode('contract'); }} /> : mode === 'bloqueos' ? <BloquesTab token={token} /> : mode === 'leila' ? <LeilaTab token={token} /> : mode === 'facturas' ? <FacturasTab token={token} /> : mode === 'reviews' ? renderReviewsTab() : (
       <>
       <div className="pe-card">
         <h2>Precios base por noche · 2 huéspedes · temporada baja</h2>
