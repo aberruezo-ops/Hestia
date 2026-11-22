@@ -6068,7 +6068,7 @@ const HESTIA_RULES = {
 window.HESTIA_RULES = HESTIA_RULES;
 
 // ================================================================
-// DirectBookingPerks, sección "Reserva directa, una mejor manera"
+// DirectBookingPerks, sección "Reserva directa: hablas con nosotros"
 // Stat ribbon (4 cifras destacadas) + botón → rejilla de 8 cards
 // ricos con icono, cifra, título y descripción. Reutilizable en
 // home y cada Hestía; mismo copy ES + EN, una sola fuente.
@@ -6546,7 +6546,7 @@ const DirectBookingModal = ({
   }, lang === 'es' ? 'Reserva directa' : 'Direct booking'), /*#__PURE__*/React.createElement("h3", {
     id: "dbm-title",
     className: "dbm-title"
-  }, lang === 'es' ? /*#__PURE__*/React.createElement(React.Fragment, null, "La ", /*#__PURE__*/React.createElement("em", null, "mejor manera"), " de reservar") : /*#__PURE__*/React.createElement(React.Fragment, null, "The ", /*#__PURE__*/React.createElement("em", null, "best way"), " to book"))), /*#__PURE__*/React.createElement("button", {
+  }, lang === 'es' ? /*#__PURE__*/React.createElement(React.Fragment, null, "Hablas con ", /*#__PURE__*/React.createElement("em", null, "nosotros"), ", no con una plataforma") : /*#__PURE__*/React.createElement(React.Fragment, null, "You talk to ", /*#__PURE__*/React.createElement("em", null, "us"), ", not to a platform"))), /*#__PURE__*/React.createElement("button", {
     type: "button",
     className: "dbm-video",
     onClick: () => {
@@ -6742,7 +6742,7 @@ const AptDesktopSidebar = ({
     className: "eyebrow"
   }, lang === 'es' ? 'Reserva directa' : 'Direct booking'), /*#__PURE__*/React.createElement("h4", {
     className: "ads-title"
-  }, lang === 'es' ? /*#__PURE__*/React.createElement(React.Fragment, null, "La ", /*#__PURE__*/React.createElement("em", null, "mejor manera"), " de reservar") : /*#__PURE__*/React.createElement(React.Fragment, null, "The ", /*#__PURE__*/React.createElement("em", null, "best way"), " to book")), /*#__PURE__*/React.createElement("ul", {
+  }, lang === 'es' ? /*#__PURE__*/React.createElement(React.Fragment, null, "Hablas con ", /*#__PURE__*/React.createElement("em", null, "nosotros"), ", no con una plataforma") : /*#__PURE__*/React.createElement(React.Fragment, null, "You talk to ", /*#__PURE__*/React.createElement("em", null, "us"), ", not to a platform")), /*#__PURE__*/React.createElement("ul", {
     className: "ads-stats"
   }, ribbon.map((s, i) => /*#__PURE__*/React.createElement("li", {
     key: i,
@@ -7092,7 +7092,7 @@ const WidgetDirectBooking = ({
     className: "eyebrow"
   }, lang === 'es' ? 'Reserva directa' : 'Direct booking'), /*#__PURE__*/React.createElement("h4", {
     className: "widget-title"
-  }, lang === 'es' ? /*#__PURE__*/React.createElement(React.Fragment, null, "La ", /*#__PURE__*/React.createElement("em", null, "mejor manera"), " de reservar") : /*#__PURE__*/React.createElement(React.Fragment, null, "The ", /*#__PURE__*/React.createElement("em", null, "best way"), " to book")), /*#__PURE__*/React.createElement("ul", {
+  }, lang === 'es' ? /*#__PURE__*/React.createElement(React.Fragment, null, "Hablas con ", /*#__PURE__*/React.createElement("em", null, "nosotros"), ", no con una plataforma") : /*#__PURE__*/React.createElement(React.Fragment, null, "You talk to ", /*#__PURE__*/React.createElement("em", null, "us"), ", not to a platform")), /*#__PURE__*/React.createElement("ul", {
     className: "widget-stats"
   }, ribbon.map((s, i) => /*#__PURE__*/React.createElement("li", {
     key: i,
