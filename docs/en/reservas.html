@@ -40,7 +40,7 @@
   <link rel="preload" href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400..700;1,9..144,400..700&family=Hanken+Grotesk:wght@400;500;600;700&display=swap" as="style"/>
   <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400..700;1,9..144,400..700&family=Hanken+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet"/>
 <script src="/assets/color-scroll.js"></script>
-<link rel="stylesheet" href="assets/styles.css?v=1275"/>          
+<link rel="stylesheet" href="assets/styles.css?v=1280"/>          
   <script type="application/ld+json">{
   "@context": "https://schema.org",
   "@type": "BreadcrumbList",
@@ -76,7 +76,7 @@
   <h1>Book · Hestía Your Home · Vera Playa</h1>
   <p>Check availability and price for the three Hestía apartments in Vera Playa (Almería): Mar, Thalassa and Salinas.</p>
   <p>When you book direct we don't just match the price you find on Booking, Airbnb or any other portal, we improve on it. 0% commission, because there is no intermediary taking a cut.</p>
-  <p>The process is simple: you pick your dates, we confirm availability and price, you sign the contract with a deposit and pay the rest on arrival. The reply is human and arrives within two hours, usually within minutes.</p>
+  <p>The process is simple: you pick your dates, we confirm availability and price, you sign the contract with a deposit and pay the rest on arrival. The reply is human and arrives right away, usually within minutes.</p>
   <p>There is a minimum stay, a little higher in peak season. An additional guest and pets carry a small supplement per night. The conditions and the exact amount appear when you choose dates.</p>
   <p>For stays of a month or more, see the long stays: a fixed monthly rate, available from September to June.</p>
   <p>All overnight guests are registered on the traveller register, as Spanish regulations require.</p>
@@ -126,7 +126,7 @@
     } catch (e) { console.warn('reviews.json fetch failed', e); }
 
     for (const file of COMPONENT_FILES) {
-      const res = await fetch(file + '?cv=a44b2d29cb');
+      const res = await fetch(file + '?cv=fc50526cd0');
       if (!res.ok) throw new Error(`Failed to load ${file}: ${res.status}`);
       const code = await res.text();
       // eslint-disable-next-line no-eval

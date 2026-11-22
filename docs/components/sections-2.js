@@ -433,7 +433,9 @@ const ContactCTA = ({
     className: "inner"
   }, /*#__PURE__*/React.createElement("div", {
     className: "eyebrow"
-  }, t.contact_eyebrow), /*#__PURE__*/React.createElement("h2", null, t.contact_title), /*#__PURE__*/React.createElement("p", null, t.contact_sub), /*#__PURE__*/React.createElement("div", {
+  }, t.contact_eyebrow), /*#__PURE__*/React.createElement("h2", null, t.contact_title), /*#__PURE__*/React.createElement("p", null, t.contact_sub), /*#__PURE__*/React.createElement(AhoraRespondemos, {
+    lang: lang
+  }), /*#__PURE__*/React.createElement("div", {
     className: "ctas"
   }, /*#__PURE__*/React.createElement("a", {
     href: t.contact_cta_wa_href,
@@ -464,11 +466,71 @@ const ContactCTA = ({
     className: "address"
   }, "Calle Islas Canarias 7 · 04621 Vera Playa · Almería")));
 };
+
+// --- «Se sintieron en casa»: prueba real de la promesa de la marca ---
+// La cifra se calcula de reviews.json (reseñas publicadas con una expresión clara de sentirse en casa)
+// y las citas son el texto literal de reseñas destacadas. Nada se escribe a mano.
+const _CASA_RX = /como en (su |tu |mi |nuestra |vuestra )?(propia )?casa|como (si )?(estuvi[a-záéíóúñü]+|estar) en (tu|nuestra|su) (propia )?casa|sent[a-záéíóúñü]+ en casa|sientes? como en|sent[a-záéíóúñü]+ como en casa|como en un hogar|tu propio hogar|una segunda casa|home from home|(feel|felt|feeling) (right )?at home|como volver a casa/i;
+const _CASA_APT = {
+  vm: 'Hestía Mar',
+  vt: 'Hestía Thalassa',
+  vs: 'Hestía Salinas'
+};
+const _CASA_SRC = {
+  booking: 'Booking',
+  airbnb: 'Airbnb',
+  google: 'Google',
+  web: 'Hestía'
+};
+const CasaProof = ({
+  lang,
+  link
+}) => {
+  const all = window.REVIEWS && window.REVIEWS.items || [];
+  const pub = all.filter(r => r.status === 'published' && _CASA_RX.test(r.text || ''));
+  if (pub.length < 5) return null;
+  const pool = pub.filter(r => r.highlight && r.lang === lang && (r.text || '').length <= 260).sort((a, b) => b.date > a.date ? 1 : -1);
+  const picks = [];
+  pool.forEach(r => {
+    if (picks.length < 3 && !picks.some(x => x.apt === r.apt)) picks.push(r);
+  });
+  pool.forEach(r => {
+    if (picks.length < 3 && !picks.includes(r)) picks.push(r);
+  });
+  const es = lang === 'es';
+  return /*#__PURE__*/React.createElement("section", {
+    className: "casa-proof",
+    "aria-labelledby": "casa-proof-h"
+  }, /*#__PURE__*/React.createElement("div", {
+    className: "container"
+  }, /*#__PURE__*/React.createElement("div", {
+    className: "eyebrow"
+  }, es ? 'Lo que dicen quienes se alojaron' : 'What guests say'), /*#__PURE__*/React.createElement("h2", {
+    id: "casa-proof-h"
+  }, es ? /*#__PURE__*/React.createElement(React.Fragment, null, "Se sintieron ", /*#__PURE__*/React.createElement("em", null, "en casa.")) : /*#__PURE__*/React.createElement(React.Fragment, null, "They felt ", /*#__PURE__*/React.createElement("em", null, "at home."))), /*#__PURE__*/React.createElement("p", {
+    className: "casa-proof-stat"
+  }, /*#__PURE__*/React.createElement("strong", null, pub.length), ' ', es ? 'reseñas publicadas hablan de sentirse como en casa.' : 'published reviews talk about feeling at home.'), picks.length > 0 && /*#__PURE__*/React.createElement("div", {
+    className: "casa-proof-grid"
+  }, picks.map((r, i) => /*#__PURE__*/React.createElement("figure", {
+    key: i,
+    className: "casa-proof-q"
+  }, /*#__PURE__*/React.createElement("blockquote", null, "«", r.text, "»"), /*#__PURE__*/React.createElement("figcaption", null, _shortGuestName(r.name), " · ", /*#__PURE__*/React.createElement("span", {
+    className: "apt-dot",
+    "data-apt": r.apt,
+    "aria-hidden": "true"
+  }), _CASA_APT[r.apt] || '', " · ", _CASA_SRC[r.source] || r.source)))), link && /*#__PURE__*/React.createElement("a", {
+    className: "casa-proof-link",
+    href: "opiniones.html"
+  }, es ? 'Leer todas las opiniones' : 'Read all reviews', " ", /*#__PURE__*/React.createElement("span", {
+    "aria-hidden": "true"
+  }, "→"))));
+};
 Object.assign(window, {
   Counters,
   Team,
   Manifest,
   Ratings,
   RatingsMarquee,
-  ContactCTA
+  ContactCTA,
+  CasaProof
 });

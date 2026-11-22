@@ -203,6 +203,14 @@
     .result-title { font-family: var(--serif); font-size: 22px; color: var(--ber); margin-bottom: 8px; }
     .result-sub { font-size: 14px; color: var(--ink-soft); line-height: 1.6; margin-bottom: 20px; }
     .result-sub strong { color: var(--ink); }
+    .next-steps { margin-top: 22px; text-align: left; border-top: 1px solid var(--accent-lt); padding-top: 18px; }
+    .next-title { font-family: var(--serif); font-size: 17px; color: var(--ink); margin-bottom: 10px; }
+    .next-steps ol { list-style: none; counter-reset: paso; display: grid; gap: 10px; }
+    .next-steps li { counter-increment: paso; position: relative; padding-left: 26px; font-size: 13.5px; line-height: 1.55; color: var(--ink-soft); }
+    .next-steps li::before { content: counter(paso); position: absolute; left: 0; top: 0; font-family: var(--serif); font-size: 15px; color: var(--accent-dk); font-variant-numeric: tabular-nums; }
+    .next-steps li strong { color: var(--ink); font-weight: 600; }
+    .next-note { margin-top: 14px; font-size: 13px; line-height: 1.55; color: var(--ink); }
+    .next-note a { color: var(--accent-dk); font-weight: 600; }
     .result-summary { background: var(--crema-dk); border-radius: 8px 0 8px 0; padding: 14px 18px; font-size: 13px; color: var(--ink); line-height: 1.7; text-align: left; }
     /* Error screen */
     .error-card { background: white; border-radius: var(--r); box-shadow: var(--shadow); padding: 32px 28px; text-align: center; animation: fadeUp .4s ease both; }
@@ -364,7 +372,7 @@
           </div>
         </div>
         <div class="manual-alert">
-          Envía el Bizum al número indicado y <strong>pulsa el botón de abajo</strong> para avisarnos. Confirmamos en menos de 2 horas en horario de 9:00–22:00.
+          Envía el Bizum al número indicado y <strong>pulsa el botón de abajo</strong> para avisarnos. Confirmamos enseguida en horario de 9:00–22:00.
         </div>
         <button class="manual-confirm-btn" id="biz-btn" onclick="notifyManual('Bizum')">
           <span id="biz-btn-txt">He enviado el Bizum ✓</span>
@@ -456,6 +464,17 @@
       <p class="result-title">Pago confirmado</p>
       <p class="result-sub">Hemos recibido tu señal de <strong id="ok-deposit">–</strong>. En breve te enviamos la confirmación de reserva y el contrato firmado por nuestra parte con todas las condiciones.</p>
       <div class="result-summary" id="ok-summary">–</div>
+      <div class="next-steps">
+        <p class="next-title">Qué pasa ahora</p>
+        <ol>
+          <li><strong>Confirmación y contrato.</strong> Te enviamos la confirmación de reserva y el contrato firmado por nuestra parte.</li>
+          <li><strong>Tu guía privada.</strong> Incluye el registro de viajeros, necesario para la llegada.</li>
+          <li><strong>Tu hora de llegada.</strong> Con días de antelación nos dices la hora aproximada, para tener la casa lista.</li>
+          <li><strong>La llegada.</strong> Autónoma por defecto, desde las 15:00 y también pasadas las 19:00. Si prefieres que te recibamos, es sin coste entre las 15:00 y las 19:00, y lo acordamos antes con Fran.</li>
+          <li><strong>El resto del pago.</strong> Se abona a la llegada, como indica tu contrato.</li>
+        </ol>
+        <p class="next-note">Te acompañamos en todo momento, desde tu primer mensaje. Escríbenos por <a href="https://wa.me/34620316370" target="_blank" rel="noopener">WhatsApp</a> cuando quieras.</p>
+      </div>
     </div>
   </div>
 
@@ -469,6 +488,17 @@
       <p class="result-sub" id="pending-sub">Verificaremos el pago y te confirmamos la reserva en breve.</p>
       <p style="font-size:12.5px;color:var(--ink-soft);margin-top:10px;line-height:1.6">En cuanto confirmemos la recepción del pago te enviamos la confirmación de reserva y el contrato firmado por nuestra parte con todas las condiciones.</p>
       <div class="result-summary" id="pending-summary">–</div>
+      <div class="next-steps">
+        <p class="next-title">Qué pasa ahora</p>
+        <ol>
+          <li><strong>Confirmación y contrato.</strong> Te enviamos la confirmación de reserva y el contrato firmado por nuestra parte.</li>
+          <li><strong>Tu guía privada.</strong> Incluye el registro de viajeros, necesario para la llegada.</li>
+          <li><strong>Tu hora de llegada.</strong> Con días de antelación nos dices la hora aproximada, para tener la casa lista.</li>
+          <li><strong>La llegada.</strong> Autónoma por defecto, desde las 15:00 y también pasadas las 19:00. Si prefieres que te recibamos, es sin coste entre las 15:00 y las 19:00, y lo acordamos antes con Fran.</li>
+          <li><strong>El resto del pago.</strong> Se abona a la llegada, como indica tu contrato.</li>
+        </ol>
+        <p class="next-note">Te acompañamos en todo momento, desde tu primer mensaje. Escríbenos por <a href="https://wa.me/34620316370" target="_blank" rel="noopener">WhatsApp</a> cuando quieras.</p>
+      </div>
     </div>
   </div>
 
@@ -850,7 +880,7 @@
     document.getElementById('pay-screen').hidden      = true;
     document.getElementById('pending-screen').hidden  = false;
     const sub = method === 'Bizum'
-      ? `Verificaremos tu Bizum en menos de 2 horas (9:00–21:00) y te enviamos la confirmación de reserva y el contrato firmado.`
+      ? `Verificaremos tu Bizum enseguida (9:00–21:00) y te enviamos la confirmación de reserva y el contrato firmado.`
       : `Verificaremos tu transferencia en 1–2 días hábiles al recibir el ingreso y te enviamos la confirmación y el contrato firmado.`;
     document.getElementById('pending-sub').textContent    = sub;
     document.getElementById('pending-summary').innerHTML  = buildSummary();

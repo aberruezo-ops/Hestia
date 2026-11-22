@@ -169,6 +169,7 @@ const App = () => {
         <Team lang={lang} />
         <Manifest lang={lang} />
         <Ratings lang={lang} />
+        <CasaProof lang={lang} link />
         <HomeGuideTeaser lang={lang} />
         <QuickFAQ lang={lang} pageId="home" />
         <ContactCTA lang={lang} availHref="#buscar" />

@@ -207,7 +207,7 @@ const PAGES = [
           'En Thalassa, el SPA comunitario (piscina climatizada, jacuzzi y sauna) abre en otoño, invierno y primavera.',
           'Contrato formal, señal de ~20% al firmar y el resto a la llegada.'] },
         { h2: 'Tarifa mensual', p: [
-          'La tarifa mensual depende de las fechas y del apartamento: la tienes en la página de estancias largas y te la cerramos por escrito en menos de 2 horas, de 9:00 a 22:00.'] },
+          'La tarifa mensual depende de las fechas y del apartamento: la tienes en la página de estancias largas y te la cerramos por escrito enseguida, de 9:00 a 22:00.'] },
       ],
       apts: { mar: 'El más cercano a la playa, con terraza esquinera de 20 m².', thalassa: 'El ático, con SPA comunitario con piscina climatizada y sauna abierto en invierno.', salinas: 'El más grande, con 87 m², dos terrazas y grandes jardines.' },
       extra: { href: '/estancias-largas.html', es: 'Ver estancias largas', en: 'See long stays' },
@@ -235,7 +235,7 @@ const PAGES = [
           'At Thalassa, the shared spa (heated pool, jacuzzi and sauna) opens in autumn, winter and spring.',
           'Formal contract, ~20% deposit on signing and the rest on arrival.'] },
         { h2: 'Monthly rate', p: [
-          'The monthly rate depends on your dates and the apartment: you will find it on the long stays page and we confirm it in writing within 2 hours, from 9:00 to 22:00.'] },
+          'The monthly rate depends on your dates and the apartment: you will find it on the long stays page and we confirm it in writing right away, from 9:00 to 22:00.'] },
       ],
       apts: { mar: 'The closest to the beach, with a 20 m² corner terrace.', thalassa: 'The penthouse, with a shared spa with heated pool and sauna open in winter.', salinas: 'The largest, at 87 m², with two terraces and large gardens.' },
       extra: { href: '/estancias-largas.html', es: 'Ver estancias largas', en: 'See long stays' },

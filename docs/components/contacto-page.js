@@ -29,7 +29,7 @@ const CONTACTO_COPY = {
     faq_title: 'Preguntas frecuentes',
     faqs: [{
       q: '¿Cuándo podéis responder?',
-      a: 'En menos de dos horas, de 9:00 a 22:00 todos los días, y normalmente en minutos. Alex responde en español, Fran en inglés.'
+      a: 'Enseguida, de 9:00 a 22:00 todos los días, y normalmente en minutos. Alex responde en español, Fran en inglés.'
     }, {
       q: '¿Puedo llamar o solo WhatsApp?',
       a: 'Puedes llamar, pero el WhatsApp es más rápido. Alex: +34 620 316 370. Fran: +34 654 138 251.'
@@ -88,7 +88,7 @@ const CONTACTO_COPY = {
     faq_title: 'Frequently asked questions',
     faqs: [{
       q: 'When can you reply?',
-      a: 'Within two hours, 9am to 10pm every day, and usually within minutes. Alex replies in Spanish, Fran in English.'
+      a: 'Right away, 9am to 10pm every day, and usually within minutes. Alex replies in Spanish, Fran in English.'
     }, {
       q: 'Can I call or only WhatsApp?',
       a: 'You can call, but WhatsApp is faster. Alex: +34 620 316 370. Fran: +34 654 138 251.'
@@ -232,7 +232,9 @@ const ContactoPersons = ({
     className: "sr-only"
   }, lang === 'es' ? 'Contacta directamente con Alex y Fran' : 'Contact Alex and Fran directly'), /*#__PURE__*/React.createElement("p", {
     className: "contacto-intro"
-  }, t.intro), /*#__PURE__*/React.createElement("div", {
+  }, t.intro), /*#__PURE__*/React.createElement(AhoraRespondemos, {
+    lang: lang
+  }), /*#__PURE__*/React.createElement("div", {
     className: "contacto-persons-grid"
   }, /*#__PURE__*/React.createElement(PersonCard, {
     name: t.alex_title,

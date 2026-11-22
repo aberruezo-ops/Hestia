@@ -26099,3 +26099,53 @@ padding-left: 8px;
 }
 .leaflet-marker-icon:hover .ag-map-cluster, .leaflet-marker-icon:focus-visible .ag-map-cluster { transform: scale(1.12); }
 .leaflet-marker-icon.leaflet-marker-draggable, .leaflet-marker-icon:has(.ag-map-cluster) { transition: opacity .35s ease-out; }
+
+/* Presencia: indicador de respuesta según la hora de España. */
+.ahora { display: flex; flex-direction: column; gap: 2px; width: fit-content; max-width: 100%; margin: 14px auto 0; padding: 10px 16px; border-radius: 10px 0 10px 0;
+  background: color-mix(in srgb, var(--crema) 72%, transparent); border: 1px solid color-mix(in srgb, var(--ink) 16%, transparent);
+  color: var(--ink); text-align: left; font-family: var(--sans); font-size: 14px; line-height: 1.45; }
+.ahora-l { display: flex; align-items: center; gap: 8px; font-weight: 600; }
+.ahora-s { color: var(--ink-soft); }
+.ahora-dot { flex: none; width: 8px; height: 8px; border-radius: 50%; background: var(--ok, #6B7A3A); }
+.ahora.is-off .ahora-dot { background: var(--warn, #C8975A); }
+.on-dark .ahora { background: rgba(246, 245, 244, .08); border-color: rgba(246, 245, 244, .24); color: var(--crema); }
+.on-dark .ahora-s { color: rgba(246, 245, 244, .8); }
+.on-dark .ahora-dot { background: var(--sol-lt, #6FC4D1); }
+.on-dark .ahora.is-off .ahora-dot { background: var(--arena, #E5E3E0); }
+.contacto-persons .ahora, .reservas-aside .ahora { margin: 12px 0 18px; }
+@media (prefers-reduced-motion: no-preference) {
+  .ahora:not(.is-off) .ahora-dot { animation: ahora-pulso 2.6s ease-out infinite; }
+}
+@keyframes ahora-pulso { 0% { box-shadow: 0 0 0 0 rgba(107, 122, 58, .45); } 100% { box-shadow: 0 0 0 9px rgba(107, 122, 58, 0); } }
+.on-dark .ahora:not(.is-off) .ahora-dot { animation-name: ahora-pulso-claro; }
+@keyframes ahora-pulso-claro { 0% { box-shadow: 0 0 0 0 rgba(111, 196, 209, .5); } 100% { box-shadow: 0 0 0 9px rgba(111, 196, 209, 0); } }
+.contact-cta .ahora, .contact-cta .inner p.ahora { max-width: min(100%, 640px); }
+
+/* Prueba real de «sentirse en casa»: cifra y citas literales de reviews.json. */
+.casa-proof { padding: 72px var(--page-pad); background: var(--crema); color: var(--ink); text-align: center; }
+.casa-proof .eyebrow { color: var(--sol-text); opacity: 1; margin-bottom: 12px; }
+.casa-proof h2 { margin: 0 0 14px; }
+.casa-proof-stat { font-size: 18px; line-height: 1.5; color: var(--ink); margin: 0 auto 34px; max-width: 60ch; }
+.casa-proof-stat strong { font-family: var(--serif); font-size: 1.7em; font-weight: 500; margin-right: 4px; }
+.casa-proof-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 18px; max-width: 1040px; margin: 0 auto; text-align: left; }
+.casa-proof-q { margin: 0; padding: 22px 22px 18px; background: var(--arena); border-radius: 10px 0 10px 0; display: flex; flex-direction: column; gap: 14px; }
+.casa-proof-q blockquote { margin: 0; font-family: var(--serif); font-size: 17px; line-height: 1.55; color: var(--ink); }
+.casa-proof-q figcaption { font-size: 13px; color: var(--ink-soft); display: flex; align-items: center; flex-wrap: wrap; gap: 6px; }
+.casa-proof-link { display: inline-block; margin-top: 28px; color: var(--sol-text); font-weight: 600; text-decoration: none; border-bottom: 1px solid currentColor; }
+.casa-proof-link:hover, .casa-proof-link:focus-visible { color: var(--ink); }
+
+/* «Hestía en tres gestos» y «Quién te responde» (nosotros). */
+.pq-gestos-list { list-style: none; margin: 34px 0 0; padding: 0; display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 28px; }
+.pq-gesto { position: relative; padding-top: 6px; }
+.pq-gesto-n { display: block; font-family: var(--serif); font-size: 44px; line-height: 1; color: var(--ber-lt, #4E2446); font-variant-numeric: tabular-nums; margin-bottom: 8px; }
+.pq-gesto h3 { margin: 0 0 8px; font-size: 22px; }
+.pq-gesto p { margin: 0; line-height: 1.65; color: var(--ink); }
+.nos-responde { padding: 64px var(--page-pad); color: var(--ink); }
+.nos-responde .eyebrow { color: var(--sol-text); opacity: 1; }
+.nos-responde-list { list-style: none; margin: 26px 0 0; padding: 0; display: grid; gap: 14px; max-width: 780px; }
+.nos-responde-list li { display: grid; grid-template-columns: 180px 1fr; gap: 18px; align-items: baseline; padding-bottom: 14px; border-bottom: 1px solid color-mix(in srgb, var(--ink) 14%, transparent); }
+.nos-responde-who { font-family: var(--serif); font-size: 20px; color: var(--ink); }
+.nos-responde-lang { font-family: var(--sans); font-size: 13px; color: var(--ink-soft); }
+.nos-responde-what { line-height: 1.6; }
+.nos-responde-hours { margin: 22px 0 0; max-width: 780px; line-height: 1.65; color: var(--ink); }
+@media (max-width: 640px) { .nos-responde-list li { grid-template-columns: 1fr; gap: 4px; } }

@@ -1661,6 +1661,7 @@ const ReservasAside = ({ lang }) => {
   return (
     <aside className="reservas-aside">
       <h2 className="reservas-aside-title">{t.aside_title}</h2>
+      <AhoraRespondemos lang={lang} />
       <div className="reservas-person-card" style={{ '--card-accent': 'var(--sol)' }}>
         <div className="r-avatar">
           <img decoding="async" src="assets/photo-alex.jpg" alt="Alex Berruezo" width="1195" height="1600" loading="lazy" onError={e => { e.currentTarget.style.display='none'; }}/>
@@ -1697,8 +1698,8 @@ const ReservasAside = ({ lang }) => {
         <div className="rg-title">{t.guarantee_title}</div>
         <p className="rg-lede">
           {lang === 'es'
-            ? 'Reservando directo te ahorras hasta un 10 % aprox.: no solo igualamos el precio de Booking o Airbnb, lo mejoramos, con 0% de comisiones y respuesta humana en menos de dos horas.'
-            : 'Book direct and save up to ~10%: we do not just match the Booking or Airbnb price, we beat it, with 0% commission and a human reply within two hours.'}
+            ? 'Reservando directo te ahorras hasta un 10 % aprox.: no solo igualamos el precio de Booking o Airbnb, lo mejoramos, con 0% de comisiones y respuesta humana enseguida.'
+            : 'Book direct and save up to ~10%: we do not just match the Booking or Airbnb price, we beat it, with 0% commission and a human reply right away.'}
         </p>
         <p className="rg-disclaimer">
           {lang === 'es'

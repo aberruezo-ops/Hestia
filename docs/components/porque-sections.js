@@ -397,6 +397,66 @@ const PorqueNombre = ({
   }, t.name_quote), /*#__PURE__*/React.createElement("cite", null, t.name_quote_attr))));
 };
 
+// «Hestía en tres gestos»: el ritual de la llama (al llegar, mientras, al despedirte) convertido en servicio real.
+const PORQUE_GESTOS = {
+  es: {
+    eyebrow: 'Tres gestos',
+    title: /*#__PURE__*/React.createElement(React.Fragment, null, "Hestía en tres gestos:", /*#__PURE__*/React.createElement("br", null), /*#__PURE__*/React.createElement("em", null, "llegada, estancia y despedida.")),
+    lede: 'En la antigua Grecia se honraba la llama antes de un viaje y al volver. Nosotros lo hacemos con tres gestos concretos.',
+    items: [{
+      t: 'Al llegar',
+      d: 'La casa te espera preparada. Con días de antelación nos dices tu hora aproximada. La llegada es autónoma por defecto, y presencial, sin coste, si lo acordamos antes con Fran.'
+    }, {
+      t: 'Mientras estás',
+      d: 'Alex, Fran y Leila estamos pendientes. Te acompañamos en todo momento, desde tu primer mensaje, y respondemos enseguida, de 9:00 a 22:00.'
+    }, {
+      t: 'Al despedirte',
+      d: 'Dejas la casa como la encontraste y nos cuentas cómo te fue. Si quieres volver, reservas directo con nosotros.'
+    }]
+  },
+  en: {
+    eyebrow: 'Three gestures',
+    title: /*#__PURE__*/React.createElement(React.Fragment, null, "Hestía in three gestures:", /*#__PURE__*/React.createElement("br", null), /*#__PURE__*/React.createElement("em", null, "arrival, stay and farewell.")),
+    lede: 'In ancient Greece the flame was honoured before a journey and on returning. We do it through three concrete gestures.',
+    items: [{
+      t: 'On arrival',
+      d: 'The home is ready for you. Days ahead you tell us your approximate arrival time. Arrival is self check-in by default, and in person, at no cost, if we agree it beforehand with Fran.'
+    }, {
+      t: 'While you stay',
+      d: 'Alex, Fran and Leila are on hand. We are with you every step of the way, from your very first message, and we reply right away, from 9:00 to 22:00.'
+    }, {
+      t: 'When you leave',
+      d: 'You leave the home as you found it and tell us how it went. If you want to come back, you book direct with us.'
+    }]
+  }
+};
+const PorqueGestos = ({
+  lang
+}) => {
+  const t = PORQUE_GESTOS[lang];
+  return /*#__PURE__*/React.createElement("section", {
+    className: "nos-why pq-gestos section-cream",
+    "aria-labelledby": "pq-gestos-h"
+  }, /*#__PURE__*/React.createElement("div", {
+    className: "container"
+  }, /*#__PURE__*/React.createElement("div", {
+    className: "eyebrow"
+  }, t.eyebrow), /*#__PURE__*/React.createElement("h2", {
+    id: "pq-gestos-h",
+    className: "reveal"
+  }, t.title), /*#__PURE__*/React.createElement("p", {
+    className: "nos-why-p reveal delay-1"
+  }, t.lede), /*#__PURE__*/React.createElement("ol", {
+    className: "pq-gestos-list"
+  }, t.items.map((it, i) => /*#__PURE__*/React.createElement("li", {
+    key: i,
+    className: "pq-gesto reveal delay-2"
+  }, /*#__PURE__*/React.createElement("span", {
+    className: "pq-gesto-n",
+    "aria-hidden": "true"
+  }, i + 1), /*#__PURE__*/React.createElement("h3", null, it.t), /*#__PURE__*/React.createElement("p", null, it.d))))));
+};
+
 // PorqueValores v4, sección "Nuestros valores", una pantalla interactiva.
 // Sin scroll choreography ni sticky. Stage compacto con letra gigante
 // a la izquierda (Playfair Display variable: opsz + wght animados en
@@ -669,6 +729,7 @@ const PorqueViajero = ({
   }, v.d))))));
 };
 Object.assign(window, {
+  PorqueGestos,
   PorqueOrigen,
   PorqueLogo,
   PorqueEvolucion,

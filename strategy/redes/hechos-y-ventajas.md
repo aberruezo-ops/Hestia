@@ -46,7 +46,7 @@
 - Sin precios ni disponibilidad concretos en las redes.
 
 ## Ventajas (reales, no exagerar)
-- Reserva directa, **0% comisiones**. Respuesta humana en menos de 2 horas, de
+- Reserva directa, **0% comisiones**. Respuesta humana enseguida, de
   9:00 a 22:00 (normalmente en minutos).
 - Promesa de precio: **"no solo igualamos, lo mejoramos"**. Ahorro ~10% aprox.
 - **Mascotas bienvenidas en los tres**, con petición previa.
