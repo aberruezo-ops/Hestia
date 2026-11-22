@@ -70,6 +70,6 @@ Regla final: antes de publicar, lee la frase en voz alta. Si suena a folleto o a
 Hestía, la diosa del hogar, no es un personaje: es el criterio de cómo atendemos.
 
 1. **Presencia, no plazos.** Decimos «respondemos enseguida» y «te acompañamos en todo momento, desde tu primer mensaje». No prometemos horas ni minutos concretos; el horario sí (9:00 a 22:00, hora de España).
-2. **Tres gestos.** Al llegar, mientras estás y al despedirte: cada uno con un hecho real (llegada acordada, alguien pendiente, vuelta por reserva directa).
+2. **Contigo, desde tu reserva.** Antes, durante y después de la estancia: cada momento con un hecho real (llegada acordada, alguien pendiente, vuelta por reserva directa).
 3. **Prueba antes que mito.** El nombre se explica en una línea; lo demás lo prueban datos y reseñas literales (por ejemplo, cuántas reseñas hablan de sentirse como en casa).
 4. **Nada decorativo.** Sin imágenes de la diosa, sin iconos de llama en círculo y sin «rincón mágico».

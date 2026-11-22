@@ -400,32 +400,32 @@ const PorqueNombre = ({
 // «Hestía en tres gestos»: el ritual de la llama (al llegar, mientras, al despedirte) convertido en servicio real.
 const PORQUE_GESTOS = {
   es: {
-    eyebrow: 'Tres gestos',
-    title: /*#__PURE__*/React.createElement(React.Fragment, null, "Hestía en tres gestos:", /*#__PURE__*/React.createElement("br", null), /*#__PURE__*/React.createElement("em", null, "llegada, estancia y despedida.")),
-    lede: 'En la antigua Grecia se honraba la llama antes de un viaje y al volver. Nosotros lo hacemos con tres gestos concretos.',
+    eyebrow: 'Contigo',
+    title: /*#__PURE__*/React.createElement(React.Fragment, null, "Desde tu reserva,", /*#__PURE__*/React.createElement("br", null), /*#__PURE__*/React.createElement("em", null, "antes, durante y después contigo.")),
+    lede: 'En la antigua Grecia se honraba la llama antes de un viaje y al volver. Nosotros lo hacemos en tres momentos concretos.',
     items: [{
-      t: 'Al llegar',
+      t: 'Antes de llegar',
       d: 'La casa te espera preparada. Con días de antelación nos dices tu hora aproximada. La llegada es autónoma por defecto, y presencial, sin coste, si lo acordamos antes con Fran.'
     }, {
-      t: 'Mientras estás',
+      t: 'Durante tu estancia',
       d: 'Alex, Fran y Leila estamos pendientes. Te acompañamos en todo momento, desde tu primer mensaje, y respondemos enseguida, de 9:00 a 22:00.'
     }, {
-      t: 'Al despedirte',
+      t: 'Después de irte',
       d: 'Dejas la casa como la encontraste y nos cuentas cómo te fue. Si quieres volver, reservas directo con nosotros.'
     }]
   },
   en: {
-    eyebrow: 'Three gestures',
-    title: /*#__PURE__*/React.createElement(React.Fragment, null, "Hestía in three gestures:", /*#__PURE__*/React.createElement("br", null), /*#__PURE__*/React.createElement("em", null, "arrival, stay and farewell.")),
-    lede: 'In ancient Greece the flame was honoured before a journey and on returning. We do it through three concrete gestures.',
+    eyebrow: 'With you',
+    title: /*#__PURE__*/React.createElement(React.Fragment, null, "From your booking,", /*#__PURE__*/React.createElement("br", null), /*#__PURE__*/React.createElement("em", null, "before, during and after, with you.")),
+    lede: 'In ancient Greece the flame was honoured before a journey and on returning. We do it at three concrete moments.',
     items: [{
-      t: 'On arrival',
+      t: 'Before you arrive',
       d: 'The home is ready for you. Days ahead you tell us your approximate arrival time. Arrival is self check-in by default, and in person, at no cost, if we agree it beforehand with Fran.'
     }, {
-      t: 'While you stay',
+      t: 'During your stay',
       d: 'Alex, Fran and Leila are on hand. We are with you every step of the way, from your very first message, and we reply right away, from 9:00 to 22:00.'
     }, {
-      t: 'When you leave',
+      t: 'After you leave',
       d: 'You leave the home as you found it and tell us how it went. If you want to come back, you book direct with us.'
     }]
   }
