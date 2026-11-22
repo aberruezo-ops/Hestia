@@ -25,7 +25,7 @@ const LS_COPY = {
       'Sin gastos de agencia · trato directo',
       'Contrato de arrendamiento formal',
       'Señal de ~20% al firmar el contrato, resto a la llegada',
-      'Te respondemos en menos de dos horas',
+      'Te respondemos enseguida',
     ],
     prices_title: 'Tarifa mensual',
     prices_note:  'Precio por apartamento completo. Navidad (23 dic–6 ene) y Semana Santa llevan suplemento. El importe exacto depende de las fechas y del Hestía: pregúntanos y te lo cerramos.',
@@ -37,14 +37,14 @@ const LS_COPY = {
     faqs: [
       { q: '¿Cuántas noches es el mínimo?', a: 'El mínimo considerado son 29 noches. No hay máximo: si quieres quedarte más tiempo, lo acordamos.' },
       { q: '¿Hay contrato?', a: 'Sí. Firmamos un contrato de arrendamiento de temporada con los datos de todos los huéspedes. Recibirás el contrato antes de pagar la señal.' },
-      { q: '¿Cómo se reserva?', a: <>Escríbenos por WhatsApp o email con las fechas y el apartamento que te interesa. Te respondemos en menos de dos horas (normalmente en minutos) para confirmar disponibilidad y enviarte el contrato. <DirectVideoLink lang="es" /></> },
+      { q: '¿Cómo se reserva?', a: <>Escríbenos por WhatsApp o email con las fechas y el apartamento que te interesa. Te respondemos enseguida (normalmente en minutos) para confirmar disponibilidad y enviarte el contrato. <DirectVideoLink lang="es" /></> },
       { q: '¿Hay que pagar todo al reservar?', a: 'Una señal de ~20% al firmar el contrato; el resto, a la llegada.' },
       { q: '¿Está disponible en verano?', a: 'No. Los apartamentos están en máxima demanda en julio y agosto. La larga estancia está disponible de septiembre a junio.' },
       { q: '¿Se pueden registrar varias personas?', a: 'Sí, hasta 6 personas más bebé en cualquiera de los tres Hestías. Todos los huéspedes que pernocten deben estar en el contrato y se registran en el parte de entrada del SES.' },
       { q: '¿Puedo pedir servicios extra durante la estancia?', a: 'Sí, bajo un pequeño cargo: limpieza a mitad de mes, recepción de paquetería o renovar mes a mes. Si teletrabajas, te llevamos una mesa de trabajo al apartamento. Dinos qué necesitas y lo organizamos.' },
     ],
     cta_title:   'Escríbenos con tus fechas',
-    cta_body:    'Escríbenos con tus fechas y te enviamos disponibilidad y contrato en menos de dos horas.',
+    cta_body:    'Escríbenos con tus fechas y te enviamos disponibilidad y contrato enseguida.',
     cta_wa:      'WhatsApp Alex',
     cta_mail:    'info@hestiayourhome.com',
   },
@@ -71,7 +71,7 @@ const LS_COPY = {
       'No agency fees · direct deal',
       'Formal rental contract',
       '~20% deposit on signing, the rest on arrival',
-      'We reply within two hours',
+      'We reply right away',
     ],
     prices_title: 'Monthly rate',
     prices_note:  'Full apartment price. Christmas (Dec 23–Jan 6) and Easter carry a supplement. The exact amount depends on your dates and the Hestía: ask us and we will confirm it.',
@@ -83,14 +83,14 @@ const LS_COPY = {
     faqs: [
       { q: 'What is the minimum stay?', a: 'The minimum considered is 29 nights. There is no maximum: if you want to stay longer, we arrange it.' },
       { q: 'Is there a contract?', a: "Yes. We sign a seasonal rental agreement with all guests' details. You receive the contract before paying the deposit." },
-      { q: 'How do I book?', a: <>Message us on WhatsApp or email with your dates and chosen apartment. We reply within two hours (usually within minutes) to confirm availability and send the contract. <DirectVideoLink lang="en" /></> },
+      { q: 'How do I book?', a: <>Message us on WhatsApp or email with your dates and chosen apartment. We reply right away (usually within minutes) to confirm availability and send the contract. <DirectVideoLink lang="en" /></> },
       { q: 'Do I pay everything upfront?', a: 'A ~20% deposit on signing the contract; the rest on arrival.' },
       { q: 'Available in summer?', a: 'No. The apartments are in peak demand in July and August. Long stays are available September to June.' },
       { q: 'Can several people stay?', a: 'Yes, up to 6 people plus a baby in any of the three Hestías. All overnight guests must appear on the contract and be registered on the SES entry form.' },
       { q: 'Can I request extra services during my stay?', a: 'Yes, for a small charge: mid-month cleaning, parcel reception or month-to-month renewal. If you work remotely, we bring a work table to your apartment. Tell us what you need and we sort it out.' },
     ],
     cta_title:   'Write to us with your dates',
-    cta_body:    'Message us with your dates and we will send availability and contract within two hours.',
+    cta_body:    'Message us with your dates and we will send availability and contract right away.',
     cta_wa:      'WhatsApp Alex',
     cta_mail:    'info@hestiayourhome.com',
   },
@@ -458,8 +458,8 @@ const EstanciasLargasPageApp = () => {
           src={lang === 'es' ? 'assets/estancias-largas-video.mp4' : 'assets/estancias-largas-video-en.mp4'}
           poster={lang === 'es' ? 'assets/estancias-largas-video-poster.jpg' : 'assets/estancias-largas-video-en-poster.jpg'}
           transcript={lang === 'es'
-            ? 'El vídeo muestra una terraza al atardecer y varias estancias de los apartamentos. De septiembre a junio, desde 29 noches. Tu base en Vera Playa: un mes, una temporada, lo que necesites. Apartamento completo, con cocina equipada, ropa de cama y toallas incluidas. Mesa de trabajo bajo petición y fibra de 300 a 600 Mbps. Terraza privada o con vistas, para cuando acaba la jornada. Escríbenos con tus fechas: contrato formal y respuesta en menos de 2 horas.'
-            : 'The video shows a terrace at sunset and several rooms of the apartments. From September to June, from 29 nights. Your base in Vera Playa: one month, one season, as long as you need. A full apartment, with an equipped kitchen, bed linen and towels included. Work table on request and fibre from 300 to 600 Mbps. Private terrace or with views, for when the working day ends. Write to us with your dates: formal contract and a reply in under 2 hours.'}
+            ? 'El vídeo muestra una terraza al atardecer y varias estancias de los apartamentos. De septiembre a junio, desde 29 noches. Tu base en Vera Playa: un mes, una temporada, lo que necesites. Apartamento completo, con cocina equipada, ropa de cama y toallas incluidas. Mesa de trabajo bajo petición y fibra de 300 a 600 Mbps. Terraza privada o con vistas, para cuando acaba la jornada. Escríbenos con tus fechas: contrato formal y respuesta enseguida.'
+            : 'The video shows a terrace at sunset and several rooms of the apartments. From September to June, from 29 nights. Your base in Vera Playa: one month, one season, as long as you need. A full apartment, with an equipped kitchen, bed linen and towels included. Work table on request and fibre from 300 to 600 Mbps. Private terrace or with views, for when the working day ends. Write to us with your dates: formal contract and a reply right away.'}
           chapters={(lang === 'es' ? ['Tu base en Vera Playa', 'Apartamento completo', 'Mesa de trabajo bajo petición', 'Terraza privada o con vistas', 'Escríbenos con tus fechas'] : ['Your base in Vera Playa', 'A full apartment', 'Work table on request', 'Private terrace or with views', 'Write to us with your dates']).map((label, i) => ({ t: [0, 7.2, 12.8, 18, 23.6][i], label }))}
           eyebrow={lang === 'es' ? 'En 28 segundos' : 'In 28 seconds'}
           title={lang === 'es' ? 'Tu base en Vera Playa, de septiembre a junio' : 'Your base in Vera Playa, September to June'}

@@ -781,7 +781,7 @@ const QUICK_FAQ = {
       { q: '¿Y si veo un precio más barato en una plataforma?',
         a: <>Puede pasar en momentos puntuales: Booking o Airbnb lanzan sus propios descuentos y programas (ofertas de última hora, niveles de fidelidad, cupones…) que nosotros no controlamos, así que a veces su precio baja del que damos por defecto. No es que te cobremos de más: es su promoción, no nuestro precio real. Si te ocurre, escríbenos con el precio que ves: nos adaptamos y hacemos todo lo posible por mejorarlo.</> },
       { q: '¿Cuánto tardáis en confirmar la reserva?',
-        a: <>Respondemos en menos de dos horas, de 9:00 a 22:00, y normalmente en minutos.</> },
+        a: <>Respondemos enseguida, de 9:00 a 22:00, y normalmente en minutos.</> },
       { q: '¿Qué pasa si necesito cambiar las fechas?',
         a: <>Escríbenos. Los cambios de fecha los hablamos contigo, sin formularios ni plataformas de por medio: es una conversación entre personas. Las cancelaciones siguen la política de abajo.</> },
       { q: '¿Tenéis política de cancelación?',
@@ -793,7 +793,7 @@ const QUICK_FAQ = {
       { q: 'What if I see a cheaper price on a platform?',
         a: <>It can happen at certain moments: Booking or Airbnb run their own discounts and programs (last-minute deals, loyalty tiers, coupons…) that we don't control, so sometimes their price dips below our default one. It doesn't mean we're overcharging, it's their promotion, not our real price. If it happens, write to us with the price you see: we'll adapt and do everything we can to beat it.</> },
       { q: 'How long does confirmation take?',
-        a: <>Within two hours, 9:00 to 22:00, usually within minutes.</> },
+        a: <>Right away, 9:00 to 22:00, usually within minutes.</> },
       { q: 'What if I need to change my dates?',
         a: <>Write to us. We work out date changes with you, with no forms or platforms in between: it is a conversation between people. Cancellations follow the policy below.</> },
       { q: 'Do you have a cancellation policy?',
@@ -3255,7 +3255,7 @@ const DIRECT_PERKS = {
   es: [
     { id:'precio',    icon:'💰', stat:'✓',       t:'No solo igualamos, mejoramos.',   d:'El precio de la web es el directo, sin comisiones de plataforma, así que casi siempre es más barato. Las plataformas a veces hacen promociones que no controlamos; si encuentras uno más bajo, tráenoslo: no solo te lo igualamos, te lo mejoramos.' },
     { id:'comision',  icon:'🚫', stat:'~10%',    t:'Reservando directo te ahorras hasta un 10 % aprox.',    d:'Las plataformas como Booking o Airbnb añaden comisiones y cargos de servicio que aquí no existen: pagas el precio real, no el inflado por intermediarios. El ahorro exacto depende de si la plataforma ya está aplicando descuentos o programas propios que no podemos conocer, por eso decimos «hasta un 10 % aprox.».' },
-    { id:'respuesta', icon:'⏱',  stat:'<2 h',    t:'Respuesta humana, no un bot.',                    d:'Hablas directamente con Alex o Fran. Respondemos en menos de dos horas, de 9:00 a 22:00, y normalmente en minutos.' },
+    { id:'respuesta', icon:'⏱',  stat:'Enseguida', t:'Respuesta humana, no un bot.',                    d:'Hablas directamente con Alex o Fran. Respondemos enseguida, de 9:00 a 22:00, y normalmente en minutos.' },
     { id:'cancel',    icon:'🔓', stat:'✓',       t:'Cancelación gratuita hasta 30 días antes.',        d:'Más de 30 días, devolución completa de la señal; de 14 a 30 días, el 50 %. Sin formularios eternos, sin sanciones ocultas.' },
     { id:'pago',      icon:'💳', stat:'✓',       t:'Pago seguro y directo.',                         d:'Sin pre-autorizaciones que bloqueen tu tarjeta. Señal de ~20% al firmar y el resto a la llegada. Pago directo, sin intermediarios.' },
     { id:'descuento', icon:'🎁', stat:'desde −{PCT}%', t:'Precio cerrado para estancias largas.',             d:'Mínimo 29 noches · septiembre a junio (no disponible en julio ni agosto). Desde {LS} €/mes, sin comisión, con contrato de arrendamiento firmado y trato 100 % directo.', link: { href: 'estancias-largas.html', label: 'Ver tarifas y disponibilidad →' } },
@@ -3267,7 +3267,7 @@ const DIRECT_PERKS = {
   en: [
     { id:'precio',    icon:'💰', stat:'✓',       t:'We don\'t just match, we beat any price.',        d:'The website price is the direct one, with no platform commission, so it\'s almost always cheaper. Platforms sometimes run promos we don\'t control; if you find a lower one, bring it to us: we don\'t just match it, we beat it.' },
     { id:'comision',  icon:'🚫', stat:'~10%',    t:'Book direct and save up to ~10%.',                  d:'Platforms like Booking or Airbnb add commissions and service fees that simply don\'t exist here: you pay the real price, not the inflated one. The exact saving depends on whether the platform is already applying its own discounts or programmes we can\'t know, that\'s why we say "up to ~10%".' },
-    { id:'respuesta', icon:'⏱',  stat:'<2 h',    t:'Human reply, not a bot.',                         d:'You talk directly to Alex or Fran. We reply within two hours, 9:00 to 22:00, and usually within minutes.' },
+    { id:'respuesta', icon:'⏱',  stat:'Right away', t:'Human reply, not a bot.',                         d:'You talk directly to Alex or Fran. We reply right away, 9:00 to 22:00, and usually within minutes.' },
     { id:'cancel',    icon:'🔓', stat:'✓',       t:'Free cancellation up to 30 days before.',          d:'Over 30 days, full refund of the deposit; 14 to 30 days, 50%. No endless forms, no hidden penalties.' },
     { id:'pago',      icon:'💳', stat:'✓',       t:'Safe, direct payment.',                            d:'No pre-authorisations blocking your card. ~20% deposit when you sign and the balance on arrival. Direct payment, no middleman.' },
     { id:'descuento', icon:'🎁', stat:'from −{PCT}%', t:'A fixed price for long stays.',                   d:'Minimum 29 nights · September to June (not available July or August). From €{LS}/month, no commission, formal lease signed by both parties, 100% direct contact.', link: { href: 'estancias-largas.html', label: 'See rates and availability →' } },
@@ -3286,12 +3286,12 @@ const DIRECT_RIBBON = (lang) => {
   return lang === 'es' ? [
     { num:'✓',     label:'igualamos y mejoramos' },
     { num:'0%',    label:'comisiones' },
-    { num:'<2 h',  label:'respuesta' },
+    { num:'Enseguida',  label:'respuesta' },
     { num:pct,     label:'estancia larga' },
   ] : [
     { num:'✓',     label:'better price' },
     { num:'0%',    label:'commissions' },
-    { num:'<2 h',  label:'reply' },
+    { num:'Right away',  label:'reply' },
     { num:pct,     label:'long stay' },
   ];
 };
@@ -3302,7 +3302,7 @@ const DIRECT_STEPS = {
   es: [
     { t: 'Fechas y Hestía',    d: 'Eliges tus fechas y la Hestía que quieres vivir: Mar, Thalassa o Salinas.' },
     { t: 'Pides la reserva',   d: 'Se la pides directamente a Alex y a Fran, con 0 % comisiones.' },
-    { t: 'Te respondemos',     d: 'Respondemos normalmente en minutos, siempre en menos de 2 horas, de 9:00 a 22:00.' },
+    { t: 'Te respondemos',     d: 'Respondemos enseguida, normalmente en minutos, de 9:00 a 22:00.' },
     { t: 'Contrato y señal',   d: 'Firmas el contrato y pagas una señal de ~20 %. El resto, a la llegada.' },
     { t: 'Tu hora de llegada', d: 'Nos dices tu hora aproximada con días de antelación y mantienes contacto con Fran y con Leila ese día.' },
     { t: 'Llegada',            d: 'Autónoma por defecto, desde las 15:00 y también de noche. Presencial, de 15:00 a 19:00, si lo acordamos.' },
@@ -3310,7 +3310,7 @@ const DIRECT_STEPS = {
   en: [
     { t: 'Dates and Hestía',    d: 'You pick your dates and the Hestía you want to live in: Mar, Thalassa or Salinas.' },
     { t: 'Request your booking', d: 'You send it straight to Alex and Fran, with 0% commission.' },
-    { t: 'We reply',            d: 'We usually reply within minutes, always within 2 hours, from 9:00 to 22:00.' },
+    { t: 'We reply',            d: 'We reply right away, usually within minutes, from 9:00 to 22:00.' },
     { t: 'Contract and deposit', d: 'You sign the contract and pay a ~20% deposit. The rest on arrival.' },
     { t: 'Your arrival time',   d: 'Tell us your approximate arrival time days ahead and stay in touch with Fran and Leila that day.' },
     { t: 'Arrival',             d: 'Self check-in by default, from 15:00 and also at night. In person, from 15:00 to 19:00, if we agree it.' },
@@ -3560,13 +3560,13 @@ const DirectBookingModal = ({ lang, onClose }) => {
 const DIRECT_LEDGER = (lang) => lang === 'es' ? [
   ['Comisiones', '0 %'],
   ['Tu precio', 'igualado y mejorado'],
-  ['Respuesta', 'menos de 2 h'],
+  ['Respuesta', 'enseguida'],
   ['Pago', 'señal ~20 %, resto a la llegada'],
   ['Ahorro', 'hasta un 10 % aprox.'],
 ] : [
   ['Commissions', '0%'],
   ['Your price', 'matched and beaten'],
-  ['Reply', 'under 2 h'],
+  ['Reply', 'right away'],
   ['Payment', '~20% deposit, balance on arrival'],
   ['Saving', 'up to ~10%'],
 ];

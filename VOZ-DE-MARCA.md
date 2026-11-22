@@ -22,7 +22,7 @@ por WhatsApp a un huésped real, no va en la web.
 3. **Sensación + hecho, en ese orden o al revés, pero siempre ambos**: "Desayunar viendo amanecer sobre las salinas" (sensación) + "terraza orientada al este" (hecho).
 4. **Nombres de sitio reales**: Salar de los Canos, Cabo de Gata, Vera Playa, Garrucha. Anclan el texto a un lugar que existe.
 5. **Verbos de vivir, no de visitar**: desayunar, bajar andando, dejar las chanclas en la puerta, volver de la playa. El huésped habita, no "descubre".
-6. **La ventaja directa siempre en términos del huésped**: "hablas con nosotros, no con un call center", "te respondemos en menos de dos horas". Beneficio, no argumentario.
+6. **La ventaja directa siempre en términos del huésped**: "hablas con nosotros, no con un call center", "te respondemos enseguida". Beneficio, no argumentario.
 7. **Microcopy útil**: cada pie de foto, tooltip o estado vacío responde a una pregunta que el huésped se haría de verdad.
 8. **Admitir límites con naturalidad**: "en julio y agosto no hacemos estancias largas" dicho tal cual, sin rodeos ni disculpas.
 
@@ -64,3 +64,12 @@ por WhatsApp a un huésped real, no va en la web.
 ---
 
 Regla final: antes de publicar, lee la frase en voz alta. Si suena a folleto o a IA, reescríbela; si suena a Alex o Fran contándolo, publícala.
+
+## La diosa en la web (decisión del propietario, nov 2026)
+
+Hestía, la diosa del hogar, no es un personaje: es el criterio de cómo atendemos.
+
+1. **Presencia, no plazos.** Decimos «respondemos enseguida» y «te acompañamos en todo momento, desde tu primer mensaje». No prometemos horas ni minutos concretos; el horario sí (9:00 a 22:00, hora de España).
+2. **Tres gestos.** Al llegar, mientras estás y al despedirte: cada uno con un hecho real (llegada acordada, alguien pendiente, vuelta por reserva directa).
+3. **Prueba antes que mito.** El nombre se explica en una línea; lo demás lo prueban datos y reseñas literales (por ejemplo, cuántas reseñas hablan de sentirse como en casa).
+4. **Nada decorativo.** Sin imágenes de la diosa, sin iconos de llama en círculo y sin «rincón mágico».

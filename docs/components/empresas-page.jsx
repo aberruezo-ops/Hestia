@@ -19,7 +19,7 @@ const EMP_COPY = {
       { icon: '📍', t: 'Conocemos la zona', d: 'Llevamos años en Vera Playa. Te ayudamos con traslados, servicios y recomendaciones para que la estancia salga rodada.' },
       { icon: '📅', t: 'Estancias cortas y largas', d: 'Desde unas pocas noches a varios meses (las estancias largas, de septiembre a junio): te preparamos una propuesta con el precio directo según las fechas.' },
       { icon: '🤝', t: '0% comisiones', d: 'Reserva directa con nosotros, los propietarios. Sin intermediarios ni cargos de plataforma.' },
-      { icon: '⏱️', t: 'Trato directo con los dueños', d: 'Hablas directamente con Alex y Fran, de la reserva a la salida: coordinamos llegadas, servicios y necesidades especiales, con respuesta en menos de dos horas.' },
+      { icon: '⏱️', t: 'Trato directo con los dueños', d: 'Hablas directamente con Alex y Fran, de la reserva a la salida: coordinamos llegadas, servicios y necesidades especiales, con respuesta enseguida.' },
       { icon: '🏠', t: 'Tres apartamentos a 2 km', d: 'Hasta tres equipos o familias alojados cerca, en la misma zona de Vera Playa.' },
       { icon: '📶', t: 'Listos para entrar', d: 'WiFi de fibra, cocina equipada, lavadora, terraza y limpieza coordinada. Listos para vivir o para teletrabajar.' },
     ],
@@ -43,7 +43,7 @@ const EMP_COPY = {
     stepsTitle: 'Cómo trabajamos',
     steps: [
       { n: '1', t: 'Nos cuentas qué necesitas', d: 'Fechas, número de personas y qué hace falta: factura, contrato, varias unidades o servicios.' },
-      { n: '2', t: 'Te enviamos una propuesta', d: 'A medida y rápida, normalmente en menos de dos horas, con precio cerrado y condiciones claras.' },
+      { n: '2', t: 'Te enviamos una propuesta', d: 'A medida y rápida, normalmente enseguida, con precio cerrado y condiciones claras.' },
       { n: '3', t: 'Confirmas la reserva', d: 'Una señal para reservar y el resto a la llegada. Te lo dejamos todo por escrito y sin comisiones.' },
       { n: '4', t: 'Os acompañamos durante la estancia', d: 'Llegada autónoma, servicios locales y lo que surja. Estamos a un mensaje.' },
     ],
@@ -86,7 +86,7 @@ const EMP_COPY = {
     submit: 'Enviar solicitud',
     sending: 'Enviando…',
     success_title: 'Gracias, hemos recibido tu solicitud.',
-    success_text: 'Te responderemos con una propuesta lo antes posible, normalmente en menos de dos horas. Si prefieres ir más rápido, escríbenos directamente por WhatsApp.',
+    success_text: 'Te responderemos con una propuesta lo antes posible, normalmente enseguida. Si prefieres ir más rápido, escríbenos directamente por WhatsApp.',
     success_wa: 'Escribir por WhatsApp',
     success_back: '← Volver al inicio',
     error_generic: 'No hemos podido enviar tu solicitud. Inténtalo de nuevo en un minuto, o escríbenos por WhatsApp.',
@@ -132,7 +132,7 @@ const EMP_COPY = {
     stepsTitle: 'How we work',
     steps: [
       { n: '1', t: 'You tell us what you need', d: 'Dates, number of people and what is required: invoice, contract, several units or services.' },
-      { n: '2', t: 'We send you a proposal', d: 'Tailored and fast, usually within two hours, with a closed price and clear terms.' },
+      { n: '2', t: 'We send you a proposal', d: 'Tailored and fast, usually right away, with a closed price and clear terms.' },
       { n: '3', t: 'You confirm the booking', d: 'A deposit to book and the rest on arrival. We put everything in writing, with no commissions.' },
       { n: '4', t: 'We support you throughout the stay', d: 'Self check-in, local services and whatever comes up. We are one message away.' },
     ],
@@ -175,7 +175,7 @@ const EMP_COPY = {
     submit: 'Send request',
     sending: 'Sending…',
     success_title: 'Thank you, we have received your request.',
-    success_text: 'We will reply with a proposal as soon as possible, usually within two hours. If you would rather go faster, message us directly on WhatsApp.',
+    success_text: 'We will reply with a proposal as soon as possible, usually right away. If you would rather go faster, message us directly on WhatsApp.',
     success_wa: 'Message on WhatsApp',
     success_back: '← Back to home',
     error_generic: 'We could not send your request. Try again in a minute, or message us on WhatsApp.',
@@ -535,7 +535,7 @@ const EmpresasPageApp = () => {
           poster={lang === 'es' ? 'assets/empresas-video-poster.jpg' : 'assets/empresas-video-en-poster.jpg'}
           transcript={lang === 'es'
             ? 'El vídeo muestra una terraza al atardecer y varias estancias de los apartamentos. Alojamiento para tu equipo en Vera Playa. Hestía para empresas: tres apartamentos en Vera Playa. En lugar de una habitación de hotel, un apartamento con cocina, lavadora e independencia. Hasta 6 personas en cada uno, con dos dormitorios y cocina equipada. Tres apartamentos, cerca entre sí, con llegada autónoma, factura y contrato. Pide tu propuesta a medida: respondemos en menos de 2 horas, de 9:00 a 22:00.'
-            : 'The video shows a terrace at sunset and several rooms of the apartments. Accommodation for your team in Vera Playa. Hestía for businesses: three apartments in Vera Playa. Instead of a hotel room, an apartment with a kitchen, washing machine and independence. Up to 6 people in each, with two bedrooms and an equipped kitchen. Three apartments, close to each other, with self check-in, invoice and contract. Request a proposal tailored to you: we reply in under 2 hours, 9:00 to 22:00.'}
+            : 'The video shows a terrace at sunset and several rooms of the apartments. Accommodation for your team in Vera Playa. Hestía for businesses: three apartments in Vera Playa. Instead of a hotel room, an apartment with a kitchen, washing machine and independence. Up to 6 people in each, with two bedrooms and an equipped kitchen. Three apartments, close to each other, with self check-in, invoice and contract. Request a proposal tailored to you: we reply right away, 9:00 to 22:00.'}
           chapters={(lang === 'es' ? ['Hestía para empresas', 'En lugar de una habitación de hotel', 'Hasta 6 personas en cada uno', 'Tres apartamentos, cerca entre sí', 'Tu propuesta a medida'] : ['Hestía for businesses', 'Instead of a hotel room', 'Up to 6 people in each', 'Three apartments, close to each other', 'A proposal tailored to you']).map((label, i) => ({ t: [0, 7.2, 12.8, 18, 23.6][i], label }))}
           eyebrow={lang === 'es' ? 'En 28 segundos' : 'In 28 seconds'}
           title={lang === 'es' ? 'Así se aloja un equipo en Hestía' : 'How a team stays at Hestía'}

@@ -68,7 +68,7 @@
       {
         "@type": "Question",
         "name": "¿Cómo se reserva una estancia larga?",
-        "acceptedAnswer": { "@type": "Answer", "text": "Escríbenos por WhatsApp o email con las fechas y el apartamento que te interesa. Te respondemos en menos de dos horas (normalmente en minutos) para confirmar disponibilidad y enviarte el contrato." }
+        "acceptedAnswer": { "@type": "Answer", "text": "Escríbenos por WhatsApp o email con las fechas y el apartamento que te interesa. Te respondemos enseguida (normalmente en minutos) para confirmar disponibilidad y enviarte el contrato." }
       },
       {
         "@type": "Question",
@@ -160,7 +160,7 @@
     } catch (e) { console.warn('prices.json fetch failed', e); }
 
     for (const file of COMPONENT_FILES) {
-      const res = await fetch(file + '?cv=0ad968f8c9');
+      const res = await fetch(file + '?cv=a9ce25515a');
       if (!res.ok) throw new Error(`Failed to load ${file}: ${res.status}`);
       eval(await res.text());
     }

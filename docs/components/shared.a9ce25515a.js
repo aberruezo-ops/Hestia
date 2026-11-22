@@ -2602,7 +2602,7 @@ const QUICK_FAQ = {
       a: /*#__PURE__*/React.createElement(React.Fragment, null, "Puede pasar en momentos puntuales: Booking o Airbnb lanzan sus propios descuentos y programas (ofertas de última hora, niveles de fidelidad, cupones…) que nosotros no controlamos, así que a veces su precio baja del que damos por defecto. No es que te cobremos de más: es su promoción, no nuestro precio real. Si te ocurre, escríbenos con el precio que ves: nos adaptamos y hacemos todo lo posible por mejorarlo.")
     }, {
       q: '¿Cuánto tardáis en confirmar la reserva?',
-      a: /*#__PURE__*/React.createElement(React.Fragment, null, "Respondemos en menos de dos horas, de 9:00 a 22:00, y normalmente en minutos.")
+      a: /*#__PURE__*/React.createElement(React.Fragment, null, "Respondemos enseguida, de 9:00 a 22:00, y normalmente en minutos.")
     }, {
       q: '¿Qué pasa si necesito cambiar las fechas?',
       a: /*#__PURE__*/React.createElement(React.Fragment, null, "Escríbenos. Los cambios de fecha los hablamos contigo, sin formularios ni plataformas de por medio: es una conversación entre personas. Las cancelaciones siguen la política de abajo.")
@@ -2620,7 +2620,7 @@ const QUICK_FAQ = {
       a: /*#__PURE__*/React.createElement(React.Fragment, null, "It can happen at certain moments: Booking or Airbnb run their own discounts and programs (last-minute deals, loyalty tiers, coupons…) that we don't control, so sometimes their price dips below our default one. It doesn't mean we're overcharging, it's their promotion, not our real price. If it happens, write to us with the price you see: we'll adapt and do everything we can to beat it.")
     }, {
       q: 'How long does confirmation take?',
-      a: /*#__PURE__*/React.createElement(React.Fragment, null, "Within two hours, 9:00 to 22:00, usually within minutes.")
+      a: /*#__PURE__*/React.createElement(React.Fragment, null, "Right away, 9:00 to 22:00, usually within minutes.")
     }, {
       q: 'What if I need to change my dates?',
       a: /*#__PURE__*/React.createElement(React.Fragment, null, "Write to us. We work out date changes with you, with no forms or platforms in between: it is a conversation between people. Cancellations follow the policy below.")
@@ -6089,9 +6089,9 @@ const DIRECT_PERKS = {
   }, {
     id: 'respuesta',
     icon: '⏱',
-    stat: '<2 h',
+    stat: 'Enseguida',
     t: 'Respuesta humana, no un bot.',
-    d: 'Hablas directamente con Alex o Fran. Respondemos en menos de dos horas, de 9:00 a 22:00, y normalmente en minutos.'
+    d: 'Hablas directamente con Alex o Fran. Respondemos enseguida, de 9:00 a 22:00, y normalmente en minutos.'
   }, {
     id: 'cancel',
     icon: '🔓',
@@ -6154,9 +6154,9 @@ const DIRECT_PERKS = {
   }, {
     id: 'respuesta',
     icon: '⏱',
-    stat: '<2 h',
+    stat: 'Right away',
     t: 'Human reply, not a bot.',
-    d: 'You talk directly to Alex or Fran. We reply within two hours, 9:00 to 22:00, and usually within minutes.'
+    d: 'You talk directly to Alex or Fran. We reply right away, 9:00 to 22:00, and usually within minutes.'
   }, {
     id: 'cancel',
     icon: '🔓',
@@ -6218,7 +6218,7 @@ const DIRECT_RIBBON = lang => {
     num: '0%',
     label: 'comisiones'
   }, {
-    num: '<2 h',
+    num: 'Enseguida',
     label: 'respuesta'
   }, {
     num: pct,
@@ -6230,7 +6230,7 @@ const DIRECT_RIBBON = lang => {
     num: '0%',
     label: 'commissions'
   }, {
-    num: '<2 h',
+    num: 'Right away',
     label: 'reply'
   }, {
     num: pct,
@@ -6249,7 +6249,7 @@ const DIRECT_STEPS = {
     d: 'Se la pides directamente a Alex y a Fran, con 0 % comisiones.'
   }, {
     t: 'Te respondemos',
-    d: 'Respondemos normalmente en minutos, siempre en menos de 2 horas, de 9:00 a 22:00.'
+    d: 'Respondemos enseguida, normalmente en minutos, de 9:00 a 22:00.'
   }, {
     t: 'Contrato y señal',
     d: 'Firmas el contrato y pagas una señal de ~20 %. El resto, a la llegada.'
@@ -6268,7 +6268,7 @@ const DIRECT_STEPS = {
     d: 'You send it straight to Alex and Fran, with 0% commission.'
   }, {
     t: 'We reply',
-    d: 'We usually reply within minutes, always within 2 hours, from 9:00 to 22:00.'
+    d: 'We reply right away, usually within minutes, from 9:00 to 22:00.'
   }, {
     t: 'Contract and deposit',
     d: 'You sign the contract and pay a ~20% deposit. The rest on arrival.'
@@ -6633,7 +6633,7 @@ const DirectBookingModal = ({
 // Banda compacta + trigger. Se coloca encima del calendario en cada
 // Hestía (y donde se quiera en el home). Al pulsar el botón, abre el
 // modal con carrusel y stat ribbon.
-const DIRECT_LEDGER = lang => lang === 'es' ? [['Comisiones', '0 %'], ['Tu precio', 'igualado y mejorado'], ['Respuesta', 'menos de 2 h'], ['Pago', 'señal ~20 %, resto a la llegada'], ['Ahorro', 'hasta un 10 % aprox.']] : [['Commissions', '0%'], ['Your price', 'matched and beaten'], ['Reply', 'under 2 h'], ['Payment', '~20% deposit, balance on arrival'], ['Saving', 'up to ~10%']];
+const DIRECT_LEDGER = lang => lang === 'es' ? [['Comisiones', '0 %'], ['Tu precio', 'igualado y mejorado'], ['Respuesta', 'enseguida'], ['Pago', 'señal ~20 %, resto a la llegada'], ['Ahorro', 'hasta un 10 % aprox.']] : [['Commissions', '0%'], ['Your price', 'matched and beaten'], ['Reply', 'right away'], ['Payment', '~20% deposit, balance on arrival'], ['Saving', 'up to ~10%']];
 const DirectBookingPerks = ({
   lang
 }) => {

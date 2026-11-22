@@ -260,7 +260,7 @@
   <h2>The area: Vera Playa and the Almería Levante</h2>
   <p>Vera Playa is the base for exploring the Almería Levante: Mojácar, Garrucha, the Cabo de Gata Natural Park, the Tabernas Desert and the beaches of Villaricos and Palomares.</p>
   <h2>Direct booking</h2>
-  <p>When you book direct we don't just match the price you find on another portal, we improve on it, with 0% commission and a human reply within two hours. Hundreds of guest reviews with an outstanding average.</p>
+  <p>When you book direct we don't just match the price you find on another portal, we improve on it, with 0% commission and a human reply right away. Hundreds of guest reviews with an outstanding average.</p>
   <p>Tourist licences VFT/AL/01580, VFT/AL/05535 and VFT/AL/07056.</p>
   <nav aria-label="Hestía"><a href="/en/">Home</a> · <a href="/en/mar.html">Hestía Mar</a> · <a href="/en/thalassa.html">Hestía Thalassa</a> · <a href="/en/salinas.html">Hestía Salinas</a> · <a href="/en/reservas.html">Book</a> · <a href="/en/estancias-largas.html">Long stays</a> · <a href="/en/opiniones.html">Reviews</a> · <a href="/en/nosotros.html">About us</a> · <a href="/en/contacto.html">Contact</a> · <a href="/guia-vera/en/">Guide extract</a></nav>
 </div></div>
@@ -311,7 +311,7 @@
     } catch (e) { console.warn('reviews.json fetch failed', e); }
 
     for (const file of COMPONENT_FILES) {
-      const res = await fetch(file + '?cv=0ad968f8c9');
+      const res = await fetch(file + '?cv=a9ce25515a');
       if (!res.ok) throw new Error(`Failed to load ${file}: ${res.status}`);
       const code = await res.text();
       // eslint-disable-next-line no-eval

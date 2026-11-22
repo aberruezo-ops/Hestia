@@ -50,7 +50,7 @@ const PAGES = {
   <h2>The area: Vera Playa and the Almería Levante</h2>
   <p>Vera Playa is the base for exploring the Almería Levante: Mojácar, Garrucha, the Cabo de Gata Natural Park, the Tabernas Desert and the beaches of Villaricos and Palomares.</p>
   <h2>Direct booking</h2>
-  <p>When you book direct we don't just match the price you find on another portal, we improve on it, with 0% commission and a human reply within two hours. Hundreds of guest reviews with an outstanding average.</p>
+  <p>When you book direct we don't just match the price you find on another portal, we improve on it, with 0% commission and a human reply right away. Hundreds of guest reviews with an outstanding average.</p>
   <p>Tourist licences VFT/AL/01580, VFT/AL/05535 and VFT/AL/07056.</p>`,
   },
   mar: {
@@ -96,7 +96,7 @@ const PAGES = {
     fb: `<h1>Book · Hestía Your Home · Vera Playa</h1>
   <p>Check availability and price for the three Hestía apartments in Vera Playa (Almería): Mar, Thalassa and Salinas.</p>
   <p>When you book direct we don't just match the price you find on Booking, Airbnb or any other portal, we improve on it. 0% commission, because there is no intermediary taking a cut.</p>
-  <p>The process is simple: you pick your dates, we confirm availability and price, you sign the contract with a deposit and pay the rest on arrival. The reply is human and arrives within two hours, usually within minutes.</p>
+  <p>The process is simple: you pick your dates, we confirm availability and price, you sign the contract with a deposit and pay the rest on arrival. The reply is human and arrives right away, usually within minutes.</p>
   <p>There is a minimum stay, a little higher in peak season. An additional guest and pets carry a small supplement per night. The conditions and the exact amount appear when you choose dates.</p>
   <p>For stays of a month or more, see the long stays: a fixed monthly rate, available from September to June.</p>
   <p>All overnight guests are registered on the traveller register, as Spanish regulations require.</p>`,
@@ -148,14 +148,14 @@ const PAGES = {
   <p>All three apartments have 2 bedrooms and space for 6 people, fibre WiFi, a full kitchen and room to work, which makes them practical for relocated teams, film shoots, building works or seasonal projects in the Almería Levante.</p>
   <p>We work with invoices, a contract and terms agreed in writing. For long stays, from one month onwards, we apply a fixed monthly rate.</p>
   <p>The area concentrates intensive agriculture, energy and construction, as well as film shoots in the Tabernas Desert, about 30 minutes by car.</p>
-  <p>Direct management with Alex and Fran, no intermediaries, with a reply in under two hours. Tell us your dates, number of people and needs and we will prepare a proposal.</p>`,
+  <p>Direct management with Alex and Fran, no intermediaries, with a reply right away. Tell us your dates, number of people and needs and we will prepare a proposal.</p>`,
   },
   contacto: {
     title: 'Contact · Hestía Your Home · Vera Playa',
     desc: 'Book direct with no intermediaries. Talk to Alex or Fran by WhatsApp, phone or email. Hestía Your Home, Vera Playa, Almería.',
     fb: `<h1>Contact · Hestía Your Home · Vera Playa</h1>
   <p>Talk directly to Alex and Fran, who run the three Hestía apartments in Vera Playa (Almería).</p>
-  <p>We reply within two hours, from 9:00 to 22:00, and usually within minutes. There is no switchboard or form that gets lost: you write and a person answers.</p>
+  <p>We reply right away, from 9:00 to 22:00, and usually within minutes. There is no switchboard or form that gets lost: you write and a person answers.</p>
   <p>Email: info@hestiayourhome.com. Phone and WhatsApp: +34 654 138 251 (Fran, English) and +34 620 316 370 (Alex, Spanish).</p>
   <p>Write to us to check availability and price, to ask questions before booking, to request a cot, high chair or garage space, to let us know you travel with a pet, or to ask anything about the area.</p>
   <p>We are in Vera, Almería (04621), on the Almería Levante coast, between Garrucha and Villaricos.</p>

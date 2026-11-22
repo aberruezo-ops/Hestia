@@ -74,7 +74,7 @@
 <div id="root"><div class="container seo-fallback">
   <h1>Contact · Hestía Your Home · Vera Playa</h1>
   <p>Talk directly to Alex and Fran, who run the three Hestía apartments in Vera Playa (Almería).</p>
-  <p>We reply within two hours, from 9:00 to 22:00, and usually within minutes. There is no switchboard or form that gets lost: you write and a person answers.</p>
+  <p>We reply right away, from 9:00 to 22:00, and usually within minutes. There is no switchboard or form that gets lost: you write and a person answers.</p>
   <p>Email: info@hestiayourhome.com. Phone and WhatsApp: +34 654 138 251 (Fran, English) and +34 620 316 370 (Alex, Spanish).</p>
   <p>Write to us to check availability and price, to ask questions before booking, to request a cot, high chair or garage space, to let us know you travel with a pet, or to ask anything about the area.</p>
   <p>We are in Vera, Almería (04621), on the Almería Levante coast, between Garrucha and Villaricos.</p>
@@ -120,7 +120,7 @@
     } catch (e) { console.warn('prices.json fetch failed; using fallback', e); }
 
     for (const file of COMPONENT_FILES) {
-      const res = await fetch(file + '?cv=0ad968f8c9');
+      const res = await fetch(file + '?cv=a9ce25515a');
       if (!res.ok) throw new Error(`Failed to load ${file}: ${res.status}`);
       const code = await res.text();
       // eslint-disable-next-line no-eval

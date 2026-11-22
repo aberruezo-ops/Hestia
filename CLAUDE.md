@@ -55,7 +55,7 @@ Hestía es un sitio estático (GitHub Pages, sirviendo desde `docs/`) con:
 ### Reserva directa (copy comercial — debe ser coherente en TODA la web)
 - Ahorro: **"hasta un 10% aprox."** (no un número fijo distinto). [shared `DIRECT_PERKS`/`DIRECT_RIBBON`]
 - Promesa de precio: **"no solo igualamos, mejoramos"** + **0% comisiones**. No prometer otra cosa.
-- Pago: **señal ~20%** al firmar el contrato, **resto a la llegada**. Respuesta humana en **menos de 2 horas, de 9:00 a 22:00** (normalmente en minutos).
+- Pago: **señal ~20%** al firmar el contrato, **resto a la llegada**. Respuesta humana **enseguida, de 9:00 a 22:00** (normalmente en minutos). Decisión del propietario (nov 2026): no prometer plazos en horas; se dice «enseguida» y «te acompañamos en todo momento, desde tu primer mensaje».
 - Cancelación (política por defecto, la de `pago.html`): más de 30 días antes, gratis y devolución completa de la señal; entre 14 y 30 días, se devuelve el 50 %; con menos de 14 días la señal no es reembolsable (si se re-alquilan esas fechas, se devuelve íntegra). Nada de "cancelación flexible" ni "mejoramos las condiciones".
 
 ### Datos y secretos (ver también sección Seguridad)
