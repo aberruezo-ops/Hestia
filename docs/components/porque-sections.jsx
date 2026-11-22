@@ -276,6 +276,51 @@ const PorqueNombre = ({ lang }) => {
   );
 };
 
+// «Hestía en tres gestos»: el ritual de la llama (al llegar, mientras, al despedirte) convertido en servicio real.
+const PORQUE_GESTOS = {
+  es: {
+    eyebrow: 'Tres gestos',
+    title: (<>Hestía en tres gestos:<br/><em>llegada, estancia y despedida.</em></>),
+    lede: 'En la antigua Grecia se honraba la llama antes de un viaje y al volver. Nosotros lo hacemos con tres gestos concretos.',
+    items: [
+      { t: 'Al llegar', d: 'La casa te espera preparada. Con días de antelación nos dices tu hora aproximada. La llegada es autónoma por defecto, y presencial, sin coste, si lo acordamos antes con Fran.' },
+      { t: 'Mientras estás', d: 'Alex, Fran y Leila estamos pendientes. Te acompañamos en todo momento, desde tu primer mensaje, y respondemos enseguida, de 9:00 a 22:00.' },
+      { t: 'Al despedirte', d: 'Dejas la casa como la encontraste y nos cuentas cómo te fue. Si quieres volver, reservas directo con nosotros.' },
+    ],
+  },
+  en: {
+    eyebrow: 'Three gestures',
+    title: (<>Hestía in three gestures:<br/><em>arrival, stay and farewell.</em></>),
+    lede: 'In ancient Greece the flame was honoured before a journey and on returning. We do it through three concrete gestures.',
+    items: [
+      { t: 'On arrival', d: 'The home is ready for you. Days ahead you tell us your approximate arrival time. Arrival is self check-in by default, and in person, at no cost, if we agree it beforehand with Fran.' },
+      { t: 'While you stay', d: 'Alex, Fran and Leila are on hand. We are with you every step of the way, from your very first message, and we reply right away, from 9:00 to 22:00.' },
+      { t: 'When you leave', d: 'You leave the home as you found it and tell us how it went. If you want to come back, you book direct with us.' },
+    ],
+  },
+};
+const PorqueGestos = ({ lang }) => {
+  const t = PORQUE_GESTOS[lang];
+  return (
+    <section className="nos-why pq-gestos section-cream" aria-labelledby="pq-gestos-h">
+      <div className="container">
+        <div className="eyebrow">{t.eyebrow}</div>
+        <h2 id="pq-gestos-h" className="reveal">{t.title}</h2>
+        <p className="nos-why-p reveal delay-1">{t.lede}</p>
+        <ol className="pq-gestos-list">
+          {t.items.map((it, i) => (
+            <li key={i} className="pq-gesto reveal delay-2">
+              <span className="pq-gesto-n" aria-hidden="true">{i + 1}</span>
+              <h3>{it.t}</h3>
+              <p>{it.d}</p>
+            </li>
+          ))}
+        </ol>
+      </div>
+    </section>
+  );
+};
+
 // PorqueValores v4, sección "Nuestros valores", una pantalla interactiva.
 // Sin scroll choreography ni sticky. Stage compacto con letra gigante
 // a la izquierda (Playfair Display variable: opsz + wght animados en
@@ -540,6 +585,7 @@ const PorqueViajero = ({ lang }) => {
 };
 
 Object.assign(window, {
+  PorqueGestos,
   PorqueOrigen, PorqueLogo, PorqueEvolucion, PorqueNombre,
   PorqueValores, PorqueColores, PorqueViajero,
 });

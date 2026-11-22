@@ -134,6 +134,50 @@ const NosotrosAlmeria = ({ lang }) => {
   );
 };
 
+// «Quién te responde y cuándo»: lo que cada persona atiende y el horario, con los datos que ya publicamos.
+const NOSOTROS_RESPONDE = {
+  es: {
+    eyebrow: 'Quién te responde',
+    title: (<>Quién te responde, <em>y cuándo.</em></>),
+    hours: 'Todos los días, de 9:00 a 22:00 (hora de España). Respondemos enseguida y te acompañamos en todo momento, desde tu primer mensaje.',
+    rows: [
+      { who: 'Alex', lang: 'Español', what: 'Tu reserva y todo lo que necesitas saber antes de llegar.' },
+      { who: 'Fran', lang: 'English', what: 'Tu estancia y, si lo acordamos antes, tu llegada en persona.' },
+      { who: 'Leila', lang: '', what: 'El día de tu llegada, junto a Fran: atenta para llamar y darte información y soporte.' },
+    ],
+  },
+  en: {
+    eyebrow: 'Who replies',
+    title: (<>Who replies to you, <em>and when.</em></>),
+    hours: 'Every day, from 9:00 to 22:00 (Spain time). We reply right away and we are with you every step of the way, from your very first message.',
+    rows: [
+      { who: 'Alex', lang: 'Español', what: 'Your booking and everything you need to know before you arrive.' },
+      { who: 'Fran', lang: 'English', what: 'Your stay and, if agreed beforehand, your arrival in person.' },
+      { who: 'Leila', lang: '', what: 'On your arrival day, alongside Fran: on hand to call and give you information and support.' },
+    ],
+  },
+};
+const NosotrosResponde = ({ lang }) => {
+  const t = NOSOTROS_RESPONDE[lang];
+  return (
+    <section className="nos-responde section-cream" aria-labelledby="nos-responde-h">
+      <div className="container">
+        <div className="eyebrow">{t.eyebrow}</div>
+        <h2 id="nos-responde-h" className="reveal">{t.title}</h2>
+        <ul className="nos-responde-list">
+          {t.rows.map((r, i) => (
+            <li key={i} className="reveal delay-1">
+              <span className="nos-responde-who">{r.who}{r.lang && <span className="nos-responde-lang"> · {r.lang}</span>}</span>
+              <span className="nos-responde-what">{r.what}</span>
+            </li>
+          ))}
+        </ul>
+        <p className="nos-responde-hours">{t.hours}</p>
+      </div>
+    </section>
+  );
+};
+
 const NosotrosTeam = ({ lang }) => {
   const t = NOSOTROS_COPY[lang];
   const SilhouetteSVG = ({ gradId }) => (
@@ -288,6 +332,7 @@ const NosotrosPageApp = () => {
 
         <Acto lang={lang} i={1} id="por-que-hestia" />
         <PorqueNombre lang={lang} />
+        <PorqueGestos lang={lang} />
         <PorqueLogo lang={lang} />
         <PorqueEvolucion lang={lang} />
 
@@ -297,6 +342,7 @@ const NosotrosPageApp = () => {
 
         <Acto lang={lang} i={3} />
         <NosotrosTeam lang={lang} />
+        <NosotrosResponde lang={lang} />
         <PorqueValores lang={lang} />
 
         <Acto lang={lang} i={4} />

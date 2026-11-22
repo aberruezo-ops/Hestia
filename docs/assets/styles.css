@@ -26133,3 +26133,19 @@ padding-left: 8px;
 .casa-proof-q figcaption { font-size: 13px; color: var(--ink-soft); display: flex; align-items: center; flex-wrap: wrap; gap: 6px; }
 .casa-proof-link { display: inline-block; margin-top: 28px; color: var(--sol-text); font-weight: 600; text-decoration: none; border-bottom: 1px solid currentColor; }
 .casa-proof-link:hover, .casa-proof-link:focus-visible { color: var(--ink); }
+
+/* «Hestía en tres gestos» y «Quién te responde» (nosotros). */
+.pq-gestos-list { list-style: none; margin: 34px 0 0; padding: 0; display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 28px; }
+.pq-gesto { position: relative; padding-top: 6px; }
+.pq-gesto-n { display: block; font-family: var(--serif); font-size: 44px; line-height: 1; color: var(--ber-lt, #4E2446); font-variant-numeric: tabular-nums; margin-bottom: 8px; }
+.pq-gesto h3 { margin: 0 0 8px; font-size: 22px; }
+.pq-gesto p { margin: 0; line-height: 1.65; color: var(--ink); }
+.nos-responde { padding: 64px var(--page-pad); color: var(--ink); }
+.nos-responde .eyebrow { color: var(--sol-text); opacity: 1; }
+.nos-responde-list { list-style: none; margin: 26px 0 0; padding: 0; display: grid; gap: 14px; max-width: 780px; }
+.nos-responde-list li { display: grid; grid-template-columns: 180px 1fr; gap: 18px; align-items: baseline; padding-bottom: 14px; border-bottom: 1px solid color-mix(in srgb, var(--ink) 14%, transparent); }
+.nos-responde-who { font-family: var(--serif); font-size: 20px; color: var(--ink); }
+.nos-responde-lang { font-family: var(--sans); font-size: 13px; color: var(--ink-soft); }
+.nos-responde-what { line-height: 1.6; }
+.nos-responde-hours { margin: 22px 0 0; max-width: 780px; line-height: 1.65; color: var(--ink); }
+@media (max-width: 640px) { .nos-responde-list li { grid-template-columns: 1fr; gap: 4px; } }

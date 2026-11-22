@@ -150,6 +150,75 @@ const NosotrosAlmeria = ({
     className: "nos-bq-text"
   }, t.almeria_quote), /*#__PURE__*/React.createElement("cite", null, t.almeria_quote_attr))));
 };
+
+// «Quién te responde y cuándo»: lo que cada persona atiende y el horario, con los datos que ya publicamos.
+const NOSOTROS_RESPONDE = {
+  es: {
+    eyebrow: 'Quién te responde',
+    title: /*#__PURE__*/React.createElement(React.Fragment, null, "Quién te responde, ", /*#__PURE__*/React.createElement("em", null, "y cuándo.")),
+    hours: 'Todos los días, de 9:00 a 22:00 (hora de España). Respondemos enseguida y te acompañamos en todo momento, desde tu primer mensaje.',
+    rows: [{
+      who: 'Alex',
+      lang: 'Español',
+      what: 'Tu reserva y todo lo que necesitas saber antes de llegar.'
+    }, {
+      who: 'Fran',
+      lang: 'English',
+      what: 'Tu estancia y, si lo acordamos antes, tu llegada en persona.'
+    }, {
+      who: 'Leila',
+      lang: '',
+      what: 'El día de tu llegada, junto a Fran: atenta para llamar y darte información y soporte.'
+    }]
+  },
+  en: {
+    eyebrow: 'Who replies',
+    title: /*#__PURE__*/React.createElement(React.Fragment, null, "Who replies to you, ", /*#__PURE__*/React.createElement("em", null, "and when.")),
+    hours: 'Every day, from 9:00 to 22:00 (Spain time). We reply right away and we are with you every step of the way, from your very first message.',
+    rows: [{
+      who: 'Alex',
+      lang: 'Español',
+      what: 'Your booking and everything you need to know before you arrive.'
+    }, {
+      who: 'Fran',
+      lang: 'English',
+      what: 'Your stay and, if agreed beforehand, your arrival in person.'
+    }, {
+      who: 'Leila',
+      lang: '',
+      what: 'On your arrival day, alongside Fran: on hand to call and give you information and support.'
+    }]
+  }
+};
+const NosotrosResponde = ({
+  lang
+}) => {
+  const t = NOSOTROS_RESPONDE[lang];
+  return /*#__PURE__*/React.createElement("section", {
+    className: "nos-responde section-cream",
+    "aria-labelledby": "nos-responde-h"
+  }, /*#__PURE__*/React.createElement("div", {
+    className: "container"
+  }, /*#__PURE__*/React.createElement("div", {
+    className: "eyebrow"
+  }, t.eyebrow), /*#__PURE__*/React.createElement("h2", {
+    id: "nos-responde-h",
+    className: "reveal"
+  }, t.title), /*#__PURE__*/React.createElement("ul", {
+    className: "nos-responde-list"
+  }, t.rows.map((r, i) => /*#__PURE__*/React.createElement("li", {
+    key: i,
+    className: "reveal delay-1"
+  }, /*#__PURE__*/React.createElement("span", {
+    className: "nos-responde-who"
+  }, r.who, r.lang && /*#__PURE__*/React.createElement("span", {
+    className: "nos-responde-lang"
+  }, " · ", r.lang)), /*#__PURE__*/React.createElement("span", {
+    className: "nos-responde-what"
+  }, r.what)))), /*#__PURE__*/React.createElement("p", {
+    className: "nos-responde-hours"
+  }, t.hours)));
+};
 const NosotrosTeam = ({
   lang
 }) => {
@@ -410,6 +479,8 @@ const NosotrosPageApp = () => {
     id: "por-que-hestia"
   }), /*#__PURE__*/React.createElement(PorqueNombre, {
     lang: lang
+  }), /*#__PURE__*/React.createElement(PorqueGestos, {
+    lang: lang
   }), /*#__PURE__*/React.createElement(PorqueLogo, {
     lang: lang
   }), /*#__PURE__*/React.createElement(PorqueEvolucion, {
@@ -425,6 +496,8 @@ const NosotrosPageApp = () => {
     lang: lang,
     i: 3
   }), /*#__PURE__*/React.createElement(NosotrosTeam, {
+    lang: lang
+  }), /*#__PURE__*/React.createElement(NosotrosResponde, {
     lang: lang
   }), /*#__PURE__*/React.createElement(PorqueValores, {
     lang: lang
