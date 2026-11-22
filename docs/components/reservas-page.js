@@ -1741,7 +1741,9 @@ const ReservasAside = ({
     className: "reservas-aside"
   }, /*#__PURE__*/React.createElement("h2", {
     className: "reservas-aside-title"
-  }, t.aside_title), /*#__PURE__*/React.createElement("div", {
+  }, t.aside_title), /*#__PURE__*/React.createElement(AhoraRespondemos, {
+    lang: lang
+  }), /*#__PURE__*/React.createElement("div", {
     className: "reservas-person-card",
     style: {
       '--card-accent': 'var(--sol)'

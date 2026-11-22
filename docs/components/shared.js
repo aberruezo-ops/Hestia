@@ -6900,7 +6900,48 @@ const PageVideo = ({
     className: "sr-only"
   }, transcript)));
 };
+
+// Presencia: cuándo se responde, según la hora de España. Sin prometer plazos: "enseguida".
+const _horaMadrid = () => {
+  try {
+    const p = new Intl.DateTimeFormat('en-GB', {
+      timeZone: 'Europe/Madrid',
+      hour: 'numeric',
+      minute: 'numeric',
+      hour12: false
+    }).formatToParts(new Date());
+    return +p.find(x => x.type === 'hour').value % 24 + +p.find(x => x.type === 'minute').value / 60;
+  } catch (e) {
+    return null;
+  }
+};
+const AhoraRespondemos = ({
+  lang
+}) => {
+  const [h, setH] = React.useState(_horaMadrid);
+  React.useEffect(() => {
+    const id = setInterval(() => setH(_horaMadrid()), 60000);
+    return () => clearInterval(id);
+  }, []);
+  if (h === null) return null;
+  const on = h >= 9 && h < 22;
+  const es = lang === 'es';
+  const l1 = on ? es ? 'Respondemos ahora, enseguida.' : 'We are online now and reply right away.' : es ? `Te respondemos ${h < 9 ? 'hoy' : 'mañana'} desde las 9:00 (hora de España).` : `We reply from 9:00 ${h < 9 ? 'today' : 'tomorrow'} (Spain time).`;
+  const l2 = es ? 'Te acompañamos en todo momento, desde tu primer mensaje.' : 'We are with you every step of the way, from your very first message.';
+  return /*#__PURE__*/React.createElement("p", {
+    className: 'ahora' + (on ? '' : ' is-off'),
+    role: "status"
+  }, /*#__PURE__*/React.createElement("span", {
+    className: "ahora-l"
+  }, /*#__PURE__*/React.createElement("span", {
+    className: "ahora-dot",
+    "aria-hidden": "true"
+  }), l1), /*#__PURE__*/React.createElement("span", {
+    className: "ahora-s"
+  }, l2));
+};
 Object.assign(window, {
+  AhoraRespondemos,
   PageVideo,
   DirectBookingPerks,
   DirectBookingModal,

@@ -1661,6 +1661,7 @@ const ReservasAside = ({ lang }) => {
   return (
     <aside className="reservas-aside">
       <h2 className="reservas-aside-title">{t.aside_title}</h2>
+      <AhoraRespondemos lang={lang} />
       <div className="reservas-person-card" style={{ '--card-accent': 'var(--sol)' }}>
         <div className="r-avatar">
           <img decoding="async" src="assets/photo-alex.jpg" alt="Alex Berruezo" width="1195" height="1600" loading="lazy" onError={e => { e.currentTarget.style.display='none'; }}/>

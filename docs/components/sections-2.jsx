@@ -300,6 +300,7 @@ const ContactCTA = ({ lang, availHref }) => {
         <div className="eyebrow">{t.contact_eyebrow}</div>
         <h2>{t.contact_title}</h2>
         <p>{t.contact_sub}</p>
+        <AhoraRespondemos lang={lang} />
         <div className="ctas">
           <a href={t.contact_cta_wa_href} className="btn btn-primary cta-wa-btn" target="_blank" rel="noopener">
             {t.contact_cta_wa} <span className="arrow">→</span>

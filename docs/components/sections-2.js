@@ -433,7 +433,9 @@ const ContactCTA = ({
     className: "inner"
   }, /*#__PURE__*/React.createElement("div", {
     className: "eyebrow"
-  }, t.contact_eyebrow), /*#__PURE__*/React.createElement("h2", null, t.contact_title), /*#__PURE__*/React.createElement("p", null, t.contact_sub), /*#__PURE__*/React.createElement("div", {
+  }, t.contact_eyebrow), /*#__PURE__*/React.createElement("h2", null, t.contact_title), /*#__PURE__*/React.createElement("p", null, t.contact_sub), /*#__PURE__*/React.createElement(AhoraRespondemos, {
+    lang: lang
+  }), /*#__PURE__*/React.createElement("div", {
     className: "ctas"
   }, /*#__PURE__*/React.createElement("a", {
     href: t.contact_cta_wa_href,

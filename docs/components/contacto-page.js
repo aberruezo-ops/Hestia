@@ -232,7 +232,9 @@ const ContactoPersons = ({
     className: "sr-only"
   }, lang === 'es' ? 'Contacta directamente con Alex y Fran' : 'Contact Alex and Fran directly'), /*#__PURE__*/React.createElement("p", {
     className: "contacto-intro"
-  }, t.intro), /*#__PURE__*/React.createElement("div", {
+  }, t.intro), /*#__PURE__*/React.createElement(AhoraRespondemos, {
+    lang: lang
+  }), /*#__PURE__*/React.createElement("div", {
     className: "contacto-persons-grid"
   }, /*#__PURE__*/React.createElement(PersonCard, {
     name: t.alex_title,

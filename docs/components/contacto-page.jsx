@@ -150,6 +150,7 @@ const ContactoPersons = ({ lang }) => {
           {lang === 'es' ? 'Contacta directamente con Alex y Fran' : 'Contact Alex and Fran directly'}
         </h2>
         <p className="contacto-intro">{t.intro}</p>
+        <AhoraRespondemos lang={lang} />
         <div className="contacto-persons-grid">
           <PersonCard
             name={t.alex_title}

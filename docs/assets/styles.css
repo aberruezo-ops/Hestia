@@ -26099,3 +26099,24 @@ padding-left: 8px;
 }
 .leaflet-marker-icon:hover .ag-map-cluster, .leaflet-marker-icon:focus-visible .ag-map-cluster { transform: scale(1.12); }
 .leaflet-marker-icon.leaflet-marker-draggable, .leaflet-marker-icon:has(.ag-map-cluster) { transition: opacity .35s ease-out; }
+
+/* Presencia: indicador de respuesta según la hora de España. */
+.ahora { display: flex; flex-direction: column; gap: 2px; width: fit-content; max-width: 100%; margin: 14px auto 0; padding: 10px 16px; border-radius: 10px 0 10px 0;
+  background: color-mix(in srgb, var(--crema) 72%, transparent); border: 1px solid color-mix(in srgb, var(--ink) 16%, transparent);
+  color: var(--ink); text-align: left; font-family: var(--sans); font-size: 14px; line-height: 1.45; }
+.ahora-l { display: flex; align-items: center; gap: 8px; font-weight: 600; }
+.ahora-s { color: var(--ink-soft); }
+.ahora-dot { flex: none; width: 8px; height: 8px; border-radius: 50%; background: var(--ok, #6B7A3A); }
+.ahora.is-off .ahora-dot { background: var(--warn, #C8975A); }
+.on-dark .ahora { background: rgba(246, 245, 244, .08); border-color: rgba(246, 245, 244, .24); color: var(--crema); }
+.on-dark .ahora-s { color: rgba(246, 245, 244, .8); }
+.on-dark .ahora-dot { background: var(--sol-lt, #6FC4D1); }
+.on-dark .ahora.is-off .ahora-dot { background: var(--arena, #E5E3E0); }
+.contacto-persons .ahora, .reservas-aside .ahora { margin: 12px 0 18px; }
+@media (prefers-reduced-motion: no-preference) {
+  .ahora:not(.is-off) .ahora-dot { animation: ahora-pulso 2.6s ease-out infinite; }
+}
+@keyframes ahora-pulso { 0% { box-shadow: 0 0 0 0 rgba(107, 122, 58, .45); } 100% { box-shadow: 0 0 0 9px rgba(107, 122, 58, 0); } }
+.on-dark .ahora:not(.is-off) .ahora-dot { animation-name: ahora-pulso-claro; }
+@keyframes ahora-pulso-claro { 0% { box-shadow: 0 0 0 0 rgba(111, 196, 209, .5); } 100% { box-shadow: 0 0 0 9px rgba(111, 196, 209, 0); } }
+.contact-cta .ahora, .contact-cta .inner p.ahora { max-width: min(100%, 640px); }
