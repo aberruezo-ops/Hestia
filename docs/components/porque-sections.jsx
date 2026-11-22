@@ -279,23 +279,23 @@ const PorqueNombre = ({ lang }) => {
 // «Hestía en tres gestos»: el ritual de la llama (al llegar, mientras, al despedirte) convertido en servicio real.
 const PORQUE_GESTOS = {
   es: {
-    eyebrow: 'Tres gestos',
-    title: (<>Hestía en tres gestos:<br/><em>llegada, estancia y despedida.</em></>),
-    lede: 'En la antigua Grecia se honraba la llama antes de un viaje y al volver. Nosotros lo hacemos con tres gestos concretos.',
+    eyebrow: 'Contigo',
+    title: (<>Desde tu reserva,<br/><em>antes, durante y después contigo.</em></>),
+    lede: 'En la antigua Grecia se honraba la llama antes de un viaje y al volver. Nosotros lo hacemos en tres momentos concretos.',
     items: [
-      { t: 'Al llegar', d: 'La casa te espera preparada. Con días de antelación nos dices tu hora aproximada. La llegada es autónoma por defecto, y presencial, sin coste, si lo acordamos antes con Fran.' },
-      { t: 'Mientras estás', d: 'Alex, Fran y Leila estamos pendientes. Te acompañamos en todo momento, desde tu primer mensaje, y respondemos enseguida, de 9:00 a 22:00.' },
-      { t: 'Al despedirte', d: 'Dejas la casa como la encontraste y nos cuentas cómo te fue. Si quieres volver, reservas directo con nosotros.' },
+      { t: 'Antes de llegar', d: 'La casa te espera preparada. Con días de antelación nos dices tu hora aproximada. La llegada es autónoma por defecto, y presencial, sin coste, si lo acordamos antes con Fran.' },
+      { t: 'Durante tu estancia', d: 'Alex, Fran y Leila estamos pendientes. Te acompañamos en todo momento, desde tu primer mensaje, y respondemos enseguida, de 9:00 a 22:00.' },
+      { t: 'Después de irte', d: 'Dejas la casa como la encontraste y nos cuentas cómo te fue. Si quieres volver, reservas directo con nosotros.' },
     ],
   },
   en: {
-    eyebrow: 'Three gestures',
-    title: (<>Hestía in three gestures:<br/><em>arrival, stay and farewell.</em></>),
-    lede: 'In ancient Greece the flame was honoured before a journey and on returning. We do it through three concrete gestures.',
+    eyebrow: 'With you',
+    title: (<>From your booking,<br/><em>before, during and after, with you.</em></>),
+    lede: 'In ancient Greece the flame was honoured before a journey and on returning. We do it at three concrete moments.',
     items: [
-      { t: 'On arrival', d: 'The home is ready for you. Days ahead you tell us your approximate arrival time. Arrival is self check-in by default, and in person, at no cost, if we agree it beforehand with Fran.' },
-      { t: 'While you stay', d: 'Alex, Fran and Leila are on hand. We are with you every step of the way, from your very first message, and we reply right away, from 9:00 to 22:00.' },
-      { t: 'When you leave', d: 'You leave the home as you found it and tell us how it went. If you want to come back, you book direct with us.' },
+      { t: 'Before you arrive', d: 'The home is ready for you. Days ahead you tell us your approximate arrival time. Arrival is self check-in by default, and in person, at no cost, if we agree it beforehand with Fran.' },
+      { t: 'During your stay', d: 'Alex, Fran and Leila are on hand. We are with you every step of the way, from your very first message, and we reply right away, from 9:00 to 22:00.' },
+      { t: 'After you leave', d: 'You leave the home as you found it and tell us how it went. If you want to come back, you book direct with us.' },
     ],
   },
 };
