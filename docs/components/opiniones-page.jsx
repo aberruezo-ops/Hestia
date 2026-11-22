@@ -557,6 +557,7 @@ const OpinionesPageApp = () => {
         <OpinionesHero lang={lang} />
         <FraseHogar lang={lang} />
         <OpinionesRatings lang={lang} />
+        <CasaProof lang={lang} />
         <OpinionesQuotesMarquee lang={lang} />
         <OpinionesTestimonials lang={lang} />
         <section className="opiniones-share-cta on-dark">

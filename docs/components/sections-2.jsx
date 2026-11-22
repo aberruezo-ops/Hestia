@@ -330,4 +330,51 @@ const ContactCTA = ({ lang, availHref }) => {
   );
 };
 
-Object.assign(window, { Counters, Team, Manifest, Ratings, RatingsMarquee, ContactCTA });
+// --- «Se sintieron en casa»: prueba real de la promesa de la marca ---
+// La cifra se calcula de reviews.json (reseñas publicadas con una expresión clara de sentirse en casa)
+// y las citas son el texto literal de reseñas destacadas. Nada se escribe a mano.
+const _CASA_RX = /como en (su |tu |mi |nuestra |vuestra )?(propia )?casa|como (si )?(estuvi[a-záéíóúñü]+|estar) en (tu|nuestra|su) (propia )?casa|sent[a-záéíóúñü]+ en casa|sientes? como en|sent[a-záéíóúñü]+ como en casa|como en un hogar|tu propio hogar|una segunda casa|home from home|(feel|felt|feeling) (right )?at home|como volver a casa/i;
+const _CASA_APT = { vm: 'Hestía Mar', vt: 'Hestía Thalassa', vs: 'Hestía Salinas' };
+const _CASA_SRC = { booking: 'Booking', airbnb: 'Airbnb', google: 'Google', web: 'Hestía' };
+const CasaProof = ({ lang, link }) => {
+  const all = (window.REVIEWS && window.REVIEWS.items) || [];
+  const pub = all.filter(r => r.status === 'published' && _CASA_RX.test(r.text || ''));
+  if (pub.length < 5) return null;
+  const pool = pub.filter(r => r.highlight && r.lang === lang && (r.text || '').length <= 260)
+                  .sort((a, b) => (b.date > a.date ? 1 : -1));
+  const picks = [];
+  pool.forEach(r => { if (picks.length < 3 && !picks.some(x => x.apt === r.apt)) picks.push(r); });
+  pool.forEach(r => { if (picks.length < 3 && !picks.includes(r)) picks.push(r); });
+  const es = lang === 'es';
+  return (
+    <section className="casa-proof" aria-labelledby="casa-proof-h">
+      <div className="container">
+        <div className="eyebrow">{es ? 'Lo que dicen quienes se alojaron' : 'What guests say'}</div>
+        <h2 id="casa-proof-h">{es ? <>Se sintieron <em>en casa.</em></> : <>They felt <em>at home.</em></>}</h2>
+        <p className="casa-proof-stat">
+          <strong>{pub.length}</strong>{' '}
+          {es ? 'reseñas publicadas hablan de sentirse como en casa.' : 'published reviews talk about feeling at home.'}
+        </p>
+        {picks.length > 0 && (
+          <div className="casa-proof-grid">
+            {picks.map((r, i) => (
+              <figure key={i} className="casa-proof-q">
+                <blockquote>«{r.text}»</blockquote>
+                <figcaption>
+                  {_shortGuestName(r.name)} · <span className="apt-dot" data-apt={r.apt} aria-hidden="true"/>{_CASA_APT[r.apt] || ''} · {_CASA_SRC[r.source] || r.source}
+                </figcaption>
+              </figure>
+            ))}
+          </div>
+        )}
+        {link && (
+          <a className="casa-proof-link" href="opiniones.html">
+            {es ? 'Leer todas las opiniones' : 'Read all reviews'} <span aria-hidden="true">→</span>
+          </a>
+        )}
+      </div>
+    </section>
+  );
+};
+
+Object.assign(window, { Counters, Team, Manifest, Ratings, RatingsMarquee, ContactCTA, CasaProof });

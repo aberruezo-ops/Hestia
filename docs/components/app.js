@@ -252,6 +252,9 @@ const App = () => {
     lang: lang
   }), /*#__PURE__*/React.createElement(Ratings, {
     lang: lang
+  }), /*#__PURE__*/React.createElement(CasaProof, {
+    lang: lang,
+    link: true
   }), /*#__PURE__*/React.createElement(HomeGuideTeaser, {
     lang: lang
   }), /*#__PURE__*/React.createElement(QuickFAQ, {

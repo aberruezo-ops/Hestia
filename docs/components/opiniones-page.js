@@ -744,6 +744,8 @@ const OpinionesPageApp = () => {
     lang: lang
   }), /*#__PURE__*/React.createElement(OpinionesRatings, {
     lang: lang
+  }), /*#__PURE__*/React.createElement(CasaProof, {
+    lang: lang
   }), /*#__PURE__*/React.createElement(OpinionesQuotesMarquee, {
     lang: lang
   }), /*#__PURE__*/React.createElement(OpinionesTestimonials, {
