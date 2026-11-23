@@ -502,7 +502,7 @@ const _radioKeyNav = (e) => {
 const ReservasForm = ({ lang }) => {
   const t = RESERVAS_COPY[lang];
   const aptNames = { vm: 'Hestía Mar', vt: 'Hestía Thalassa', vs: 'Hestía Salinas' };
-  const aptAccents = { vm: '#07A28A', vt: '#B86A3C', vs: '#D4A84A' };
+  const aptAccents = { vm: '#0B7D5E', vt: '#B86A3C', vs: '#D4A84A' };
   // Formato ES: "16 may 2026" · EN: "May 16, 2026"
   const fmtResDate = (iso) => {
     if (!iso) return '';
@@ -1086,7 +1086,7 @@ const ReservasForm = ({ lang }) => {
               <label>{t.f_apt}</label>
               <div className="rf-apt-pick" role="radiogroup" aria-label={t.f_apt}>
                 {[
-                  { id: 'vm', name: 'Hestía Mar',      accent: '#07A28A' },
+                  { id: 'vm', name: 'Hestía Mar',      accent: '#0B7D5E' },
                   { id: 'vt', name: 'Hestía Thalassa', accent: '#B86A3C' },
                   { id: 'vs', name: 'Hestía Salinas',  accent: '#D4A84A' },
                 ].map(o => (
@@ -1118,7 +1118,7 @@ const ReservasForm = ({ lang }) => {
                   ? Object.values(window.PRICES_V2.gapOverrides).filter(o => o && o.apt === apt)
                   : []}
                 accent={
-                  apt === 'vm' ? '#07A28A'
+                  apt === 'vm' ? '#0B7D5E'
                   : apt === 'vt' ? '#B86A3C'
                   : apt === 'vs' ? '#D4A84A'
                   : '#3AAABB'
@@ -1258,7 +1258,7 @@ const ReservasForm = ({ lang }) => {
                 </p>
                 <div className="rf-apt-avail-grid">
                   {[
-                    { id: 'vm', name: 'Hestía Mar',      slug: 'mar',      color: '#07A28A' },
+                    { id: 'vm', name: 'Hestía Mar',      slug: 'mar',      color: '#0B7D5E' },
                     { id: 'vt', name: 'Hestía Thalassa', slug: 'thalassa', color: '#B86A3C' },
                     { id: 'vs', name: 'Hestía Salinas',  slug: 'salinas',  color: '#D4A84A' },
                   ].map(a => {

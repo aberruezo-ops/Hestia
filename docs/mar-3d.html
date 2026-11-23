@@ -3,7 +3,7 @@
 <title>Hestía Mar en 3D</title>
 <meta name="robots" content="noindex">
 <style>
-:root{--ink:#2a0f2e;--crema:#f6f5f4;--arena:#e6e4df;--vs:#07A28A;--vs-dk:#056656;--vs2:#2DBBA3;--line:rgba(42,15,46,.12)}
+:root{--ink:#2a0f2e;--crema:#f6f5f4;--arena:#e6e4df;--vs:#0B7D5E;--vs-dk:#075A43;--vs2:#3CC596;--line:rgba(42,15,46,.12)}
 *{box-sizing:border-box}html,body{margin:0;height:100%;background:#edece9;color:var(--ink);font-family:system-ui,-apple-system,"Segoe UI",Roboto,sans-serif}
 #app{display:grid;grid-template-columns:260px 1fr;grid-template-rows:auto 1fr auto;height:100%}
 header{grid-column:1/3;padding:14px 18px 12px;background:var(--crema);border-bottom:1px solid var(--line);display:flex;align-items:center;gap:14px;flex-wrap:wrap}
@@ -533,9 +533,9 @@ footer{grid-column:1/3;padding:8px 18px 10px;background:var(--crema);border-top:
   function labelTex(text, sel) {
     var c = document.createElement('canvas'); c.width = 640; c.height = 120; var g = c.getContext('2d');
     g.font = '600 44px system-ui,-apple-system,Segoe UI,sans-serif'; var w = Math.min(600, g.measureText(text).width + 60), x = (640 - w) / 2;
-    g.fillStyle = sel ? 'rgba(5,102,86,0.96)' : 'rgba(42,15,46,0.88)';
+    g.fillStyle = sel ? 'rgba(7,90,67,0.96)' : 'rgba(42,15,46,0.88)';
     g.beginPath(); g.moveTo(x + 22, 18); g.lineTo(x + w, 18); g.lineTo(x + w, 80); g.lineTo(x + w - 22, 102); g.lineTo(x, 102); g.lineTo(x, 40); g.closePath(); g.fill();
-    g.fillStyle = '#2DBBA3'; g.fillRect(x, 40, 7, 62); g.fillStyle = '#f6f5f4'; g.textBaseline = 'middle'; g.fillText(text, x + 30, 61);
+    g.fillStyle = '#3CC596'; g.fillRect(x, 40, 7, 62); g.fillStyle = '#f6f5f4'; g.textBaseline = 'middle'; g.fillText(text, x + 30, 61);
     var t = new T.CanvasTexture(c); t.encoding = T.sRGBEncoding; return t;
   }
   function buildLabels() {

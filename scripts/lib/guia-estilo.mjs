@@ -5,7 +5,7 @@ export const ESTILO = `
   --sol:#3AAABB; --sol-lt:#6FC4D1; --sol-txt:#176E80;
   --crema:#F6F5F4; --arena:#E5E3E0; --arena-dk:#D6D3CC;
   --ink:#2A0F2E; --ink-soft:#5A4459; --ink-faint:#8B7A8A;
-  --rule:#E6DCDF; --vm:#07A28A; --vt:#B86A3C; --vs:#B08A24;
+  --rule:#E6DCDF; --vm:#0B7D5E; --vt:#B86A3C; --vs:#B08A24;
   --r:10px 0 10px 0; --r-lg:16px 0 16px 0;
   --serif:'Fraunces',Georgia,serif; --sans:'Hanken Grotesk',system-ui,sans-serif;
   --mono:'Hanken Grotesk',system-ui,sans-serif;
@@ -168,7 +168,7 @@ border-radius:var(--r);
 .chip{font-family:var(--mono);font-size:10.5px;letter-spacing:.02em;color:var(--ink-soft);
   background:transparent;border:1px solid var(--rule);padding:3px 9px;
   border-radius:6px 0 6px 0;}
-.chip.nota{background:#EDF1E2;color:#056656;font-weight:600;}
+.chip.nota{background:#EDF1E2;color:#075A43;font-weight:600;}
 .chips a{font-size:11.5px;color:var(--sol-txt);text-decoration:none;
   border-bottom:1px solid rgba(23,110,128,.3);}
 .chips a:hover{border-bottom-color:var(--sol-txt);}
@@ -209,7 +209,7 @@ border-radius:var(--r);
 .apts a:hover{background:rgba(230,228,223,.11);transform:translateY(-2px);}
 .apts a b{display:block;font-family:var(--serif);font-size:19px;font-weight:400;margin-bottom:3px;}
 .apts a span{font-size:12.5px;color:rgba(230,228,223,.62);}
-.apts .vm b{color:#5FD3BC;} .apts .vt b{color:#D89467;} .apts .vs b{color:#E0BC5E;}
+.apts .vm b{color:#3CC596;} .apts .vt b{color:#D89467;} .apts .vs b{color:#E0BC5E;}
 
 /* Pie como colofón de archivo: borde de puntos y la última línea en mono,
    igual que una referencia de catálogo al cierre del volumen. */

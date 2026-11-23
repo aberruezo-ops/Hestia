@@ -107,7 +107,7 @@ const LS_APTS = [{
   id: 'vm',
   name: 'Mar',
   slug: 'mar',
-  accent: '#07A28A',
+  accent: '#0B7D5E',
   ink: 'var(--vm-dk)',
   img: 'assets/apt-vm-gallery-26.jpg',
   concept_es: 'El campo de olivos llega al mar',

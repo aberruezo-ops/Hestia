@@ -186,7 +186,7 @@
 
   /* Apartamentos — identidades del brandbook */
   /* Hestía Mar · Olivo — el campo de olivos al mar */
-  --vm:  #07A28A;  --vm2: #2DBBA3;  --vm-dk: #056656;
+  --vm:  #0B7D5E;  --vm2: #3CC596;  --vm-dk: #075A43;
   /* Hestía Thalassa · Naranja tostado — Desierto de Tabernas */
   --vt:  #B86A3C;  --vt2: #D08B5A;  --vt-dk: #8A4A24;
   /* Hestía Salinas · Albero — amarillo del amanecer */
@@ -222,8 +222,8 @@
   --warn:       #C8975A;          /* alb */
   --warn-dk:    #8A6432;
   --warn-bg:    #F5E8D4;
-  --ok:         #07A28A;          /* vm olivo */
-  --ok-dk:      #056656;
+  --ok:         #0B7D5E;          /* vm olivo */
+  --ok-dk:      #075A43;
   --ok-bg:      #E6E8D5;
 
   /* Tipografía */
@@ -375,7 +375,7 @@ p  { line-height: 1.65; font-weight: 300; }
   11.11% { background: #1BC8D8; box-shadow: 0 0 4px rgba(27,200,216,.6); }
   22.22% { background: #D42B80; box-shadow: 0 0 4px rgba(212,43,128,.6); }
   33.33% { background: #D4A84A; box-shadow: 0 0 4px rgba(212,168,74,.6); }
-  44.44% { background: #07A28A; box-shadow: 0 0 4px rgba(7,162,138,.6); }
+  44.44% { background: #0B7D5E; box-shadow: 0 0 4px rgba(11,125,94,.6); }
   55.56% { background: #C8975A; box-shadow: 0 0 4px rgba(200,151,90,.6); }
   66.67% { background: #8B4A1E; box-shadow: 0 0 5px rgba(139,74,30,.7); }
   77.78% { background: #7B3B6B; box-shadow: 0 0 5px rgba(123,59,107,.7); }
@@ -532,7 +532,7 @@ p  { line-height: 1.65; font-weight: 300; }
   0%,    6.25%  { --cta-tint: rgba(42, 15, 46, 0.55); }   /* berenjena */
   12.5%, 18.75% { --cta-tint: rgba(123, 59, 107, 0.55); } /* violeta */
   25%,   31.25% { --cta-tint: rgba(58, 170, 187, 0.55); } /* turquesa */
-  37.5%, 43.75% { --cta-tint: rgba(7,162,138, 0.55); } /* verde Mar */
+  37.5%, 43.75% { --cta-tint: rgba(11,125,94, 0.55); } /* verde Mar */
   50%,   56.25% { --cta-tint: rgba(212, 43, 128, 0.55); } /* buganvilla */
   62.5%, 68.75% { --cta-tint: rgba(200, 151, 90, 0.55); } /* albero */
   75%,   81.25% { --cta-tint: rgba(212, 168, 74, 0.55); } /* sol */
@@ -993,7 +993,7 @@ p  { line-height: 1.65; font-weight: 300; }
   pointer-events: none;
   background:
     radial-gradient(ellipse 40% 30% at 75% 75%, rgba(212, 43, 128, 0.20), transparent 70%),
-    radial-gradient(ellipse 50% 35% at 15% 65%, rgba(7,162,138, 0.18), transparent 70%),
+    radial-gradient(ellipse 50% 35% at 15% 65%, rgba(11,125,94, 0.18), transparent 70%),
     radial-gradient(ellipse 35% 30% at 60% 25%, rgba(212, 168, 74, 0.16), transparent 70%);
   filter: blur(18px);
   animation: mmAuroraLayer2 28s ease-in-out infinite alternate-reverse;
@@ -2449,7 +2449,7 @@ body.apt-bar-shown .cookies {
 .haq-item:hover .haq-thumb, .haq-item:focus-visible .haq-thumb {
   box-shadow: 0 10px 22px rgba(0,0,0,.45);
 }
-.haq-item.vm:hover .haq-label, .haq-item.vm:focus-visible .haq-label { color: #2DBBA3; }
+.haq-item.vm:hover .haq-label, .haq-item.vm:focus-visible .haq-label { color: #3CC596; }
 .haq-item.vt:hover .haq-label, .haq-item.vt:focus-visible .haq-label { color: #B86A3C; }
 .haq-item.vs:hover .haq-label, .haq-item.vs:focus-visible .haq-label { color: #D4A84A; }
 
@@ -2728,7 +2728,7 @@ body.apt-bar-shown .cookies {
 .apt-card { will-change: transform; -webkit-backface-visibility: hidden; backface-visibility: hidden; }
 @media (hover: hover) and (pointer: fine) {
   .apt-card:hover { --tilt-tz: -6px; }
-  .apt-card.vm:hover { box-shadow: 0 18px 48px rgba(7,162,138,.45), 0 4px 16px rgba(7,162,138,.28); }
+  .apt-card.vm:hover { box-shadow: 0 18px 48px rgba(11,125,94,.45), 0 4px 16px rgba(11,125,94,.28); }
   .apt-card.vt:hover { box-shadow: 0 18px 48px rgba(138,74,36,.45),  0 4px 16px rgba(138,74,36,.28); }
   .apt-card.vs:hover { box-shadow: 0 18px 48px rgba(158,122,44,.45), 0 4px 16px rgba(158,122,44,.28); }
 }
@@ -2767,7 +2767,7 @@ body.apt-bar-shown .cookies {
   animation: aptBorderSpin 16s linear infinite;
   transition: opacity .35s ease;
 }
-.apt-card.vm { --apt-border-c1: #07A28A; --apt-border-c2: #2DBBA3; }
+.apt-card.vm { --apt-border-c1: #0B7D5E; --apt-border-c2: #3CC596; }
 .apt-card.vt { --apt-border-c1: #8A4A24; --apt-border-c2: #B86A3C; }
 .apt-card.vs { --apt-border-c1: #9E7A2C; --apt-border-c2: #D4A84A; }
 .apt-card:active::after { opacity: 0.85; }     /* feedback táctil al pulsar */
@@ -2794,7 +2794,7 @@ body.apt-bar-shown .cookies {
     --tilt-tz: -3px;
     transition: transform .12s ease-out, box-shadow .12s ease-out;
   }
-  .apt-card.vm:active { box-shadow: 0 14px 36px rgba(7,162,138,.45), 0 3px 12px rgba(7,162,138,.30); }
+  .apt-card.vm:active { box-shadow: 0 14px 36px rgba(11,125,94,.45), 0 3px 12px rgba(11,125,94,.30); }
   .apt-card.vt:active { box-shadow: 0 14px 36px rgba(138,74,36,.45),  0 3px 12px rgba(138,74,36,.30); }
   .apt-card.vs:active { box-shadow: 0 14px 36px rgba(158,122,44,.45), 0 3px 12px rgba(158,122,44,.30); }
 }
@@ -2829,7 +2829,7 @@ body.apt-bar-shown .cookies {
   pointer-events: none;
   mix-blend-mode: soft-light;
 }
-.apt-card.vm .apt-wash { background: linear-gradient(160deg, rgba(5,102,86,0.85) 0%, rgba(7,162,138,0.45) 55%, rgba(45,187,163,0.75) 100%); }
+.apt-card.vm .apt-wash { background: linear-gradient(160deg, rgba(7,90,67,0.85) 0%, rgba(11,125,94,0.45) 55%, rgba(60,197,150,0.75) 100%); }
 .apt-card.vt .apt-wash {
   background:
     radial-gradient(ellipse 32% 38% at 17% 67%, rgba(255,210,100,.42) 0%, transparent 100%),
@@ -2872,7 +2872,7 @@ body.apt-bar-shown .cookies {
 .apt-card .apt-name .small { font-size: 0.55em; opacity: 0.95; letter-spacing: 0.04em; color: var(--crema, #E6E4DF); }
 /* Nombre del apartamento en su color (variante clara, legible sobre foto oscura).
    El "HESTÍA" queda en crema; el nombre lleva su tinte de marca. */
-.apt-card.vm .apt-name { color: var(--vm2, #2DBBA3); }
+.apt-card.vm .apt-name { color: var(--vm2, #3CC596); }
 .apt-card.vt .apt-name { color: var(--vt2, #D08B5A); }
 .apt-card.vs .apt-name { color: var(--vs2, #E8C476); }
 .apt-card .apt-name { text-shadow: 0 2px 14px rgba(20,10,20,.55); }
@@ -4502,7 +4502,7 @@ a.asb-cta:hover,
    En las páginas de cada Hestía, los CTAs (sticky-bar, hero
    "Reservar", widget-mini plegados) llevan tratamiento glass +
    metallic + animated tint. Cada apt usa SU color:
-   - Mar      → olivo  #07A28A / claro #2DBBA3
+   - Mar      → olivo  #0B7D5E / claro #3CC596
    - Thalassa → siena  #8A4A24 / claro #B86A3C
    - Salinas  → dorado #9E7A2C / claro #D4A84A
    El metálico = gradient 3-stop (oscuro / claro / oscuro) animado
@@ -4559,10 +4559,10 @@ body[data-apt="mar"]      .ads-btn,
 [data-apt="mar"]      .ag-nav-btn-primary,
 body[data-apt="mar"]      .ag-nav-btn-primary {
   background-image: linear-gradient(135deg,
-    #07A28A 0%, #2DBBA3 32%, #07A28A 55%, #056656 78%, #07A28A 100%) !important;
-  background-color: #07A28A !important;
+    #0B7D5E 0%, #3CC596 32%, #0B7D5E 55%, #075A43 78%, #0B7D5E 100%) !important;
+  background-color: #0B7D5E !important;
   color: #E6E4DF !important;
-  --apt-glow: rgba(7,162,138, 0.55);
+  --apt-glow: rgba(11,125,94, 0.55);
 }
 /* Thalassa — siena metálico */
 [data-apt="thalassa"] .asb-cta,
@@ -5464,7 +5464,7 @@ body.no-stars .hero .stars { display: none; }
 }
 
 /* ---- APARTAMENTOS: Liquid Glass hover + glow por color ---- */
-.apt-card.vm { --apt-glow: rgba(7,162,138,.45); }
+.apt-card.vm { --apt-glow: rgba(11,125,94,.45); }
 .apt-card.vt { --apt-glow: rgba(0,195,220,.5); }
 .apt-card.vt .apt-photo { filter: brightness(1.07) saturate(1.22) contrast(1.04); }
 .apt-card.vs { --apt-glow: rgba(212,168,74,.45); }
@@ -6077,15 +6077,15 @@ a.apt-page-reserve-btn {
 a.apt-page-reserve-btn::before { display: none !important; }
 .apt-page-hero[data-apt="vm"] a.apt-page-reserve-btn,
 body[data-apt="mar"] a.apt-page-reserve-btn {
-  background-color: #07A28A !important;        /* olivo Mar */
+  background-color: #0B7D5E !important;        /* olivo Mar */
   color: #E6E4DF !important;
-  box-shadow: 0 4px 14px rgba(7,162,138,.38) !important;
+  box-shadow: 0 4px 14px rgba(11,125,94,.38) !important;
 }
 .apt-page-hero[data-apt="vm"] a.apt-page-reserve-btn:hover,
 body[data-apt="mar"] a.apt-page-reserve-btn:hover {
-  background-color: #2DBBA3 !important;
+  background-color: #3CC596 !important;
   color: #2A0F2E !important;
-  box-shadow: 0 5px 18px rgba(7,162,138,.49) !important;
+  box-shadow: 0 5px 18px rgba(11,125,94,.49) !important;
 }
 .apt-page-hero[data-apt="vt"] a.apt-page-reserve-btn,
 body[data-apt="thalassa"] a.apt-page-reserve-btn {
@@ -7175,9 +7175,9 @@ body[data-apt="salinas"] a.apt-page-reserve-btn:hover {
 .apt-main .gc-slide::after { mix-blend-mode: soft-light; }
 .apt-main[data-apt="vm"] .gc-slide::after {
   background:
-    radial-gradient(ellipse 42% 44% at 16% 84%, rgba(45,187,163,.52) 0%, transparent 100%),
-    radial-gradient(ellipse 42% 44% at 84% 84%, rgba(45,187,163,.42) 0%, transparent 100%),
-    radial-gradient(ellipse 90% 45% at 50% 10%, rgba(7,162,138,.30) 0%, transparent 100%),
+    radial-gradient(ellipse 42% 44% at 16% 84%, rgba(60,197,150,.52) 0%, transparent 100%),
+    radial-gradient(ellipse 42% 44% at 84% 84%, rgba(60,197,150,.42) 0%, transparent 100%),
+    radial-gradient(ellipse 90% 45% at 50% 10%, rgba(11,125,94,.30) 0%, transparent 100%),
     linear-gradient(to top, rgba(42,15,46,.40) 0%, transparent 54%);
 }
 .apt-main[data-apt="vt"] .gc-slide::after {
@@ -16163,15 +16163,15 @@ body:has(.sound-toggle) .wthr-fab-wrap {
    para que gane al !important del default. */
 [data-apt="mar"] .widget-cta,
 body[data-apt="mar"] .widget-cta {
-  background-color: #07A28A !important;
+  background-color: #0B7D5E !important;
   color: #E6E4DF !important;
-  box-shadow: 0 4px 14px rgba(7,162,138,.35) !important;
+  box-shadow: 0 4px 14px rgba(11,125,94,.35) !important;
 }
 [data-apt="mar"] .widget-cta:hover,
 body[data-apt="mar"] .widget-cta:hover {
-  background-color: #2DBBA3 !important;
+  background-color: #3CC596 !important;
   color: #2A0F2E !important;
-  box-shadow: 0 5px 15px rgba(7,162,138,.46) !important;
+  box-shadow: 0 5px 15px rgba(11,125,94,.46) !important;
 }
 [data-apt="thalassa"] .widget-cta,
 body[data-apt="thalassa"] .widget-cta {
@@ -16417,7 +16417,7 @@ body[data-apt="salinas"] .widget-cta:hover {
    el color del apartamento. El stack flota sobre secciones claras y
    oscuras, así que el chip es opaco (crema) con borde del Hestía y la
    etiqueta en su tono -dk: legible sobre cualquier fondo. */
-[data-apt="mar"]      { --wm-acc: #07A28A; --wm-dk: #056656; }
+[data-apt="mar"]      { --wm-acc: #0B7D5E; --wm-dk: #075A43; }
 [data-apt="thalassa"] { --wm-acc: #B86A3C; --wm-dk: #8A4A24; }
 [data-apt="salinas"]  { --wm-acc: #D4A84A; --wm-dk: #7A5E1A; }
 :is([data-apt="mar"],[data-apt="thalassa"],[data-apt="salinas"]) .widget-mini {
@@ -17387,9 +17387,9 @@ a.cta-wa-btn::before,
   align-items: flex-start;
   font-size: 12.5px;
   line-height: 1.45;
-  color: var(--ok, #056656);
-  background: color-mix(in srgb, var(--ok, #07A28A) 10%, #fff);
-  border: 1px solid color-mix(in srgb, var(--ok, #07A28A) 28%, transparent);
+  color: var(--ok, #075A43);
+  background: color-mix(in srgb, var(--ok, #0B7D5E) 10%, #fff);
+  border: 1px solid color-mix(in srgb, var(--ok, #0B7D5E) 28%, transparent);
   border-radius: 8px 0 8px 0;
   padding: 9px 12px;
   margin: 4px 0 10px;
@@ -17411,12 +17411,12 @@ a.cta-wa-btn::before,
 /* Sugerencia de corrección de email (errata típica de dominio) */
 .rf-email-suggest {
   display: inline-block; margin-top: 6px;
-  background: color-mix(in srgb, var(--vm, #07A28A) 12%, #fff);
-  border: 1px solid color-mix(in srgb, var(--vm, #07A28A) 40%, transparent);
-  color: var(--vm-dk, #056656); border-radius: 7px 0 7px 0;
+  background: color-mix(in srgb, var(--vm, #0B7D5E) 12%, #fff);
+  border: 1px solid color-mix(in srgb, var(--vm, #0B7D5E) 40%, transparent);
+  color: var(--vm-dk, #075A43); border-radius: 7px 0 7px 0;
   padding: 5px 10px; font-size: 12.5px; cursor: pointer; font: inherit; font-size: 12.5px;
 }
-.rf-email-suggest:hover { background: color-mix(in srgb, var(--vm, #07A28A) 20%, #fff); }
+.rf-email-suggest:hover { background: color-mix(in srgb, var(--vm, #0B7D5E) 20%, #fff); }
 .rf-email-suggest strong { font-weight: 700; }
 .rf-email-mismatch { display: block; margin-top: 5px; font-size: 12.5px; color: #B4322B; font-weight: 600; }
 .rf-email-checking { display: block; margin-top: 5px; font-size: 12.5px; color: var(--ink-soft); }
@@ -19063,7 +19063,7 @@ button.rf-ps:focus-visible { outline: 2px solid var(--sol); outline-offset: 4px;
       font-family: 'Hanken Grotesk', sans-serif;
       font-size: 8pt; font-weight: 500;
       letter-spacing: 0.32em;
-      color: #056656;
+      color: #075A43;
       padding-bottom: 4mm;
     }
     @top-right {
@@ -19082,7 +19082,7 @@ button.rf-ps:focus-visible { outline: 2px solid var(--sol); outline-offset: 4px;
       content: counter(page);
       font-family: 'Fraunces', serif;
       font-style: italic; font-size: 11pt;
-      color: #056656; padding-top: 4mm;
+      color: #075A43; padding-top: 4mm;
     }
   }
   @page vt-cover { size: A4; margin: 0; }
@@ -19563,8 +19563,8 @@ img[src$="photo-alex.jpg"]:not(.avatar-img):hover {
   font-weight: 700;
 }
 .rf-apt-avail-card.is-free .rf-apt-avail-badge {
-  background: color-mix(in srgb, #07A28A 18%, var(--crema));
-  color: #056656;
+  background: color-mix(in srgb, #0B7D5E 18%, var(--crema));
+  color: #075A43;
 }
 .rf-apt-avail-card.is-taken .rf-apt-avail-badge {
   background: color-mix(in srgb, #D42B80 18%, var(--crema));
@@ -21951,7 +21951,7 @@ img[src$="photo-alex.jpg"]:not(.avatar-img):hover {
 }
 @media (min-width: 1300px) { .rv-dashboard { grid-template-columns: repeat(8, 1fr); } }
 @media (max-width: 980px)  { .rv-dashboard { grid-template-columns: repeat(2, 1fr); } }
-.rv-yearly-min { color: #07A28A; }
+.rv-yearly-min { color: #0B7D5E; }
 .rv-yearly-max { color: #B86A3C; font-weight: 600; }
 .rv-mini-link {
   margin-left: 8px;
@@ -22129,7 +22129,7 @@ img[src$="photo-alex.jpg"]:not(.avatar-img):hover {
 .rv-banner-staying {
   background: rgba(106, 122, 58, 0.10);
 }
-.rv-banner-staying h3 { color: #07A28A; }
+.rv-banner-staying h3 { color: #0B7D5E; }
 .rv-banner-upcoming {
   background: rgba(232, 194, 107, 0.12);
 }
@@ -22469,8 +22469,8 @@ img[src$="photo-alex.jpg"]:not(.avatar-img):hover {
   left: 0; top: 0; bottom: 0;
   width: 3px;
 }
-.rv-status-staying { color: #07A28A; }
-.rv-status-staying::before { background: #07A28A; }
+.rv-status-staying { color: #0B7D5E; }
+.rv-status-staying::before { background: #0B7D5E; }
 .rv-status-upcoming { color: var(--sol); }
 .rv-status-upcoming::before { background: var(--sol); }
 .rv-status-past { color: var(--ink-soft); }
@@ -26106,7 +26106,7 @@ padding-left: 8px;
   color: var(--ink); text-align: left; font-family: var(--sans); font-size: 14px; line-height: 1.45; }
 .ahora-l { display: flex; align-items: center; gap: 8px; font-weight: 600; }
 .ahora-s { color: var(--ink-soft); }
-.ahora-dot { flex: none; width: 8px; height: 8px; border-radius: 50%; background: var(--ok, #07A28A); }
+.ahora-dot { flex: none; width: 8px; height: 8px; border-radius: 50%; background: var(--ok, #0B7D5E); }
 .ahora.is-off .ahora-dot { background: var(--warn, #C8975A); }
 .on-dark .ahora { background: rgba(246, 245, 244, .08); border-color: rgba(246, 245, 244, .24); color: var(--crema); }
 .on-dark .ahora-s { color: rgba(246, 245, 244, .8); }
@@ -26116,7 +26116,7 @@ padding-left: 8px;
 @media (prefers-reduced-motion: no-preference) {
   .ahora:not(.is-off) .ahora-dot { animation: ahora-pulso 2.6s ease-out infinite; }
 }
-@keyframes ahora-pulso { 0% { box-shadow: 0 0 0 0 rgba(7,162,138, .45); } 100% { box-shadow: 0 0 0 9px rgba(7,162,138, 0); } }
+@keyframes ahora-pulso { 0% { box-shadow: 0 0 0 0 rgba(11,125,94, .45); } 100% { box-shadow: 0 0 0 9px rgba(11,125,94, 0); } }
 .on-dark .ahora:not(.is-off) .ahora-dot { animation-name: ahora-pulso-claro; }
 @keyframes ahora-pulso-claro { 0% { box-shadow: 0 0 0 0 rgba(111, 196, 209, .5); } 100% { box-shadow: 0 0 0 9px rgba(111, 196, 209, 0); } }
 .contact-cta .ahora, .contact-cta .inner p.ahora { max-width: min(100%, 640px); }
@@ -26156,7 +26156,7 @@ padding-left: 8px;
 .ag-casa-l { display: flex; align-items: center; gap: 8px; font-weight: 600; }
 .ag-casa-s { color: var(--ink-soft); }
 .ag-casa-dot { flex: none; width: 9px; height: 9px; border-radius: 50%; background: var(--warn, #C8975A); }
-.ag-casa.is-lista .ag-casa-dot { background: var(--ok, #07A28A); }
+.ag-casa.is-lista .ag-casa-dot { background: var(--ok, #0B7D5E); }
 .ag-hoy { margin: 0 0 24px; }
 .ag-hoy-list { margin: 10px 0 0; display: grid; gap: 8px; }
 .ag-hoy-list > div { display: grid; grid-template-columns: 150px 1fr; gap: 12px; padding: 10px 0; border-bottom: 1px solid color-mix(in srgb, var(--ink) 14%, transparent); }

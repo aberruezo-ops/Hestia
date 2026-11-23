@@ -4978,7 +4978,7 @@ const _ALT_APTS = [{
   id: 'vm',
   name: 'Hestía Mar',
   slug: 'mar',
-  accent: '#07A28A'
+  accent: '#0B7D5E'
 }, {
   id: 'vt',
   name: 'Hestía Thalassa',
@@ -6417,8 +6417,8 @@ const _PERK_HUES = {
   },
   // buganvilla
   guia: {
-    c1: '#07A28A',
-    c2: '#2DBBA3'
+    c1: '#0B7D5E',
+    c2: '#3CC596'
   },
   // olivo
   aliados: {
@@ -7486,7 +7486,7 @@ const HESTIA_APT_META = {
   vm: {
     name: 'Hestía Mar',
     slug: 'mar',
-    accent: '#07A28A',
+    accent: '#0B7D5E',
     concept_es: 'A 300 m de la playa',
     concept_en: '300 m from the beach'
   },
