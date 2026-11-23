@@ -36,7 +36,7 @@ const MONTHS = [
   ['Septiembre', 'September'], ['Octubre', 'October'], ['Noviembre', 'November'], ['Diciembre', 'December'],
 ];
 const APT_CLASS = { 'Hestía Mar': 'vm', 'Hestía Thalassa': 'vt', 'Hestía Salinas': 'vs' };
-const APT_COLOR = { vm: '#6B7A3A', vt: '#B86A3C', vs: '#B08A24' };
+const APT_COLOR = { vm: '#07A28A', vt: '#B86A3C', vs: '#B08A24' };
 
 const T = {
   es: {

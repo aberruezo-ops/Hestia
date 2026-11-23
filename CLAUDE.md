@@ -153,7 +153,7 @@ Antes de tocar estilos, componentes, iconos, logos o cualquier recurso gráfico,
 
 - **Fondo**: cal viva (`--crema` #F6F5F4, `--arena` #E5E3E0, `--arena-dk` #D6D3CC), con el matiz cambiando con el scroll por `docs/assets/color-scroll.js`. Siempre los tokens, nunca un hex de cal. Nunca arena o beis, blanco azulado ni oro o cobre mezclado en la cabecera o en secciones claras. Excepción: los vídeos ya publicados.
 - **Sin recursos «de IA»**: ninguna caja, aviso, cita o tarjeta con raya de acento a un lado (`border-left` de 2 px o más, ni con `box-shadow: inset`) ni filo de color arriba; sin iconos en círculo de color ni emojis de adorno. Decisión del propietario (nov 2026): se mantienen el cristal en chips y botones, el texto con degradado, los destellos y halos animados y los fondos «aurora» que ya tiene la web. La marca de una tarjeta es el horizonte.
-- **Color por Hestía**: Mar olivo `--vm`, Thalassa cobre `--vt`, Salinas dorado `--vs`, siempre que se nombre o represente; sobre fondo oscuro, el marcador `apt-dot`.
+- **Color por Hestía**: Mar verde `--vm`, Thalassa cobre `--vt`, Salinas dorado `--vs`, siempre que se nombre o represente; sobre fondo oscuro, el marcador `apt-dot`.
 - **Iconos**: solo `<HiIcon name="…"/>` del sprite propio; el color de marca va en la placa, nunca en el trazo; ni emojis ni glifos como icono.
 - **Logo**: solo sus seis versiones, sin filtros ni `hue-rotate`.
 - **Contraste**: toda sección oscura lleva `on-dark`; la superficie clara anidada declara su texto oscuro; nunca `--ink`, `--ink-soft` ni un acento oscuro directo sobre oscuro; cubre hover, focus, disabled, vacío y cargando.

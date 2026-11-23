@@ -812,7 +812,7 @@ const ReviewRow = ({
   }, expanded ? '▾' : '▸'), /*#__PURE__*/React.createElement("span", {
     className: "pe-rev-status",
     style: {
-      background: isPending ? 'var(--warn, #C8975A)' : 'var(--ok, #6B7A3A)'
+      background: isPending ? 'var(--warn, #C8975A)' : 'var(--ok, #07A28A)'
     }
   }, isPending ? 'PEND' : 'PUB'), /*#__PURE__*/React.createElement("span", {
     className: "pe-rev-source-badge",
@@ -4450,11 +4450,11 @@ const APT_NAMES = {
   vs: 'Salinas'
 };
 // Colores reales de marca (Hestía brandbook):
-//   Mar      → #6B7A3A verde olivo (olivar de Vera Playa)
+//   Mar      → #07A28A verde olivo (olivar de Vera Playa)
 //   Thalassa → #B86A3C teja        (Desierto de Tabernas)
 //   Salinas  → #D4A84A albero      (amarillo del amanecer)
 const APT_COLOR = {
-  vm: '#6B7A3A',
+  vm: '#07A28A',
   vt: '#B86A3C',
   vs: '#D4A84A'
 };
@@ -7972,12 +7972,12 @@ const ReservasTab = ({
     sub: kFocus.bruto ? `${fmtPct(kFocus.limpieza / kFocus.bruto)} del bruto` : null
   }), /*#__PURE__*/React.createElement(KpiCard, {
     label: "Neto (BAI)",
-    accent: "#6B7A3A",
+    accent: "#07A28A",
     value: fmtEur(kFocus.neto),
     sub: `${fmtEur(kFocus.netoPorNoche)}/noche neto`
   }), /*#__PURE__*/React.createElement(KpiCard, {
     label: "Rentabilidad",
-    accent: "#6B7A3A",
+    accent: "#07A28A",
     value: fmtPct(kFocus.rentabilidad),
     sub: "neto / bruto"
   }), /*#__PURE__*/React.createElement(KpiCard, {
@@ -8912,7 +8912,7 @@ const HC_COL = {
 const HC_APT = {
   vm: {
     name: 'Hestía Mar',
-    accent: '#6B7A3A'
+    accent: '#07A28A'
   },
   vt: {
     name: 'Hestía Thalassa',
@@ -10517,7 +10517,7 @@ const HuecosTab = ({
 // ---------------------------------------------------------------
 const CAT_COLORS_PINS = {
   home: '#2A0F2E',
-  super: '#6B7A3A',
+  super: '#07A28A',
   restaurant: '#B86A3C',
   michelin: '#D4A84A',
   bar: '#3AAABB',

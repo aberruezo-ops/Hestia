@@ -11,7 +11,7 @@ const CREMA   = '#FAF6F0';
 const ARENA   = '#F0E8D5';
 const SOL     = '#3AAABB';
 const SOL_LT  = '#6FC4D1';
-const VM      = '#6B7A3A';   // Mar — olive
+const VM      = '#07A28A';   // Mar — olive
 const VT      = '#C87A45';   // Thalassa — terracotta
 const VS      = '#D4A84A';   // Salinas — gold
 

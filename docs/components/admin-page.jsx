@@ -736,7 +736,7 @@ const ReviewRow = ({ review, onChange, onRemove, onApprove }) => {
         aria-expanded={expanded}
       >
         <span className="pe-rev-row-chevron" aria-hidden="true">{expanded ? '▾' : '▸'}</span>
-        <span className="pe-rev-status" style={{ background: isPending ? 'var(--warn, #C8975A)' : 'var(--ok, #6B7A3A)' }}>
+        <span className="pe-rev-status" style={{ background: isPending ? 'var(--warn, #C8975A)' : 'var(--ok, #07A28A)' }}>
           {isPending ? 'PEND' : 'PUB'}
         </span>
         <span className="pe-rev-source-badge" style={{ background: sourceMeta.color, color: '#fff' }}>
@@ -3592,10 +3592,10 @@ const _syncReservasToAvailability = async (allReservas, token) => {
 
 const APT_NAMES   = { vm: 'Mar', vt: 'Thalassa', vs: 'Salinas' };
 // Colores reales de marca (Hestía brandbook):
-//   Mar      → #6B7A3A verde olivo (olivar de Vera Playa)
+//   Mar      → #07A28A verde olivo (olivar de Vera Playa)
 //   Thalassa → #B86A3C teja        (Desierto de Tabernas)
 //   Salinas  → #D4A84A albero      (amarillo del amanecer)
-const APT_COLOR   = { vm: '#6B7A3A', vt: '#B86A3C', vs: '#D4A84A' };
+const APT_COLOR   = { vm: '#07A28A', vt: '#B86A3C', vs: '#D4A84A' };
 // Albero es claro: el chip necesita texto oscuro para legibilidad.
 const APT_TEXT    = { vm: '#FAFAF9', vt: '#FAFAF9', vs: '#3D1A35' };
 
@@ -6198,8 +6198,8 @@ const ReservasTab = ({ token, refreshKey, onOpenContract }) => {
           <KpiCard label="Bruto" accent="#B86A3C" value={fmtEur(kFocus.bruto)} sub={`${fmtEur(kFocus.brutoPorNoche)}/noche medio`} />
           <KpiCard label="Comisiones" accent="#D4A84A" value={fmtEur(kFocus.comision)} sub={kFocus.bruto ? `${fmtPct(kFocus.comisionPct)} del bruto` : null} />
           <KpiCard label="Limpieza" value={fmtEur(kFocus.limpieza)} sub={kFocus.bruto ? `${fmtPct(kFocus.limpieza/kFocus.bruto)} del bruto` : null} />
-          <KpiCard label="Neto (BAI)" accent="#6B7A3A" value={fmtEur(kFocus.neto)} sub={`${fmtEur(kFocus.netoPorNoche)}/noche neto`} />
-          <KpiCard label="Rentabilidad" accent="#6B7A3A" value={fmtPct(kFocus.rentabilidad)} sub="neto / bruto" />
+          <KpiCard label="Neto (BAI)" accent="#07A28A" value={fmtEur(kFocus.neto)} sub={`${fmtEur(kFocus.netoPorNoche)}/noche neto`} />
+          <KpiCard label="Rentabilidad" accent="#07A28A" value={fmtPct(kFocus.rentabilidad)} sub="neto / bruto" />
           <KpiCard label="€/noche mín" value={kFocus.minNoche ? fmtEur(kFocus.minNoche) : '–'} sub="reserva más barata" />
           <KpiCard label="€/noche máx" value={kFocus.maxNoche ? fmtEur(kFocus.maxNoche) : '–'} sub="reserva más cara" />
         </div>
@@ -6833,7 +6833,7 @@ const HC_MAX    = { critica: 7, alta: 7, media: 28, baja: 28 };
 const HC_LBL    = { baja: 'T. baja', media: 'T. media', alta: 'T. alta', critica: 'T. crítica' };
 const HC_COL    = { baja: '#6FC4D1', media: '#B9813E', alta: '#D42B80', critica: '#8A1B1B' };
 const HC_APT    = {
-  vm: { name: 'Hestía Mar',      accent: '#6B7A3A' },
+  vm: { name: 'Hestía Mar',      accent: '#07A28A' },
   vt: { name: 'Hestía Thalassa', accent: '#B86A3C' },
   vs: { name: 'Hestía Salinas',  accent: '#D4A84A' },
 };
@@ -8005,7 +8005,7 @@ const HuecosTab = ({ token, pricesData, onPricesUpdated }) => {
 
 // ---------------------------------------------------------------
 const CAT_COLORS_PINS = {
-  home:'#2A0F2E', super:'#6B7A3A', restaurant:'#B86A3C', michelin:'#D4A84A',
+  home:'#2A0F2E', super:'#07A28A', restaurant:'#B86A3C', michelin:'#D4A84A',
   bar:'#3AAABB', fish:'#4E7A9A', abasto:'#8A6A2E', pharmacy:'#B82490',
   health:'#B8246E', vet:'#4E8A5A', 'pet-board':'#7A5E8A', physio:'#5A7A8A',
   bodega:'#8A4A2E', coworking:'#4A6A8A', laundry:'#6A8A6A', atm:'#8A7A4A',

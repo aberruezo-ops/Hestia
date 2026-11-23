@@ -27,7 +27,7 @@ const OPINIONES_COPY = {
 
 // Color de acento por Hestía (los mismos que en /opiniones tabs).
 const APT_ACCENT = {
-  vm:  '#6B7A3A',
+  vm:  '#07A28A',
   vt:  '#B86A3C',
   vs:  '#D4A84A',
   all: '#3D1A35',
@@ -438,7 +438,7 @@ const OpinionesTestimonials = ({ lang }) => {
   ];
   const aptTabs = [
     { id: 'all', es: 'Todas las Hestías', en: 'All Hestías', accent: 'var(--ber)' },
-    { id: 'vm',  es: 'Mar',              en: 'Mar',          accent: '#6B7A3A' },
+    { id: 'vm',  es: 'Mar',              en: 'Mar',          accent: '#07A28A' },
     { id: 'vt',  es: 'Thalassa',         en: 'Thalassa',     accent: '#8A4A24' },
     { id: 'vs',  es: 'Salinas',          en: 'Salinas',      accent: '#7A5E1A' },
   ];
