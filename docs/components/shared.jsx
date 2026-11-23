@@ -2455,7 +2455,7 @@ const _calcStay = (selStart, selEnd, aptId, withPets, guests) => {
 // de más cercana a más lejana. Sin estado, reutilizable en home y /reservas.
 // ================================================================
 const _ALT_APTS = [
-  { id: 'vm', name: 'Hestía Mar',      slug: 'mar',      accent: '#07A28A' },
+  { id: 'vm', name: 'Hestía Mar',      slug: 'mar',      accent: '#0B7D5E' },
   { id: 'vt', name: 'Hestía Thalassa', slug: 'thalassa', accent: '#B86A3C' },
   { id: 'vs', name: 'Hestía Salinas',  slug: 'salinas',  accent: '#D4A84A' },
 ];
@@ -3396,7 +3396,7 @@ const _PERK_HUES = {
   cancel:    { c1: '#7B3B6B', c2: '#A45A8E' },   // violeta
   pago:      { c1: '#C8975A', c2: '#E2B47A' },   // albero
   descuento: { c1: '#D42B80', c2: '#E5559C' },   // buganvilla
-  guia:      { c1: '#07A28A', c2: '#2DBBA3' },   // olivo
+  guia:      { c1: '#0B7D5E', c2: '#3CC596' },   // olivo
   aliados:   { c1: '#B8622E', c2: '#D9895A' },   // cobre
   mascotas:  { c1: '#3AAABB', c2: '#6FC4D1' },   // turquesa
   proceso:   { c1: '#4E2446', c2: '#7B3B6B' },   // berenjena
@@ -4241,7 +4241,7 @@ async function submitGuidePin(inputRef, pinState, aptId) {
 }
 Object.assign(window, { validateGuidePin, hestiaSha256Hex, logGuideAccess, submitGuidePin });
 const HESTIA_APT_META = {
-  vm: { name: 'Hestía Mar',      slug: 'mar',      accent: '#07A28A', concept_es: 'A 300 m de la playa', concept_en: '300 m from the beach' },
+  vm: { name: 'Hestía Mar',      slug: 'mar',      accent: '#0B7D5E', concept_es: 'A 300 m de la playa', concept_en: '300 m from the beach' },
   vt: { name: 'Hestía Thalassa', slug: 'thalassa', accent: '#B86A3C', concept_es: 'Ático panorámico',  concept_en: 'Panoramic penthouse' },
   vs: { name: 'Hestía Salinas',  slug: 'salinas',  accent: '#D4A84A', concept_es: 'Cerca de las salinas', concept_en: 'Near the salt flats' },
 };

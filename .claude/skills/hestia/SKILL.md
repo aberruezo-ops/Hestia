@@ -152,7 +152,7 @@ tarjetas: un aviso se distingue por fondo y texto. La marca de una tarjeta es el
 
 ```css
 /* Mar — Verde */
---vm:    #07A28A;  --vm2:  #2DBBA3;  --vm-dk: #056656;
+--vm:    #0B7D5E;  --vm2:  #3CC596;  --vm-dk: #075A43;
 
 /* Thalassa — Naranja tostado / Tabernas */
 --vt:    #B86A3C;  --vt2:  #D08B5A;  --vt-dk: #8A4A24;
@@ -173,7 +173,7 @@ Cualquier zona que liste/compare/enlace los tres (footer, tabla comparativa, sel
 ```css
 --err:    #B8246E;  --err-bg:  #F8E0EB;  /* error / peligro */
 --warn:   #C8975A;  --warn-bg: #F5E8D4;  /* aviso */
---ok:     #07A28A;  --ok-bg:   #E6E8D5;  /* éxito */
+--ok:     #0B7D5E;  --ok-bg:   #E6E8D5;  /* éxito */
 ```
 
 ---

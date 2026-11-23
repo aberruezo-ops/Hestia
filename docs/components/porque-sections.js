@@ -190,7 +190,7 @@ const BRAND_PALETTE = [{
     story: 'The sea and sky at dawn. Not the electric blue of postcards: the real turquoise, clean and luminous, that the Mediterranean and the Almería sky share only in the first minutes of the day.'
   }
 }, {
-  hex: '#07A28A',
+  hex: '#0B7D5E',
   es: {
     name: 'Verde Mar',
     story: 'El verde de Hestía Mar, el del mueble de la entrada junto al rótulo Hestia Vera. Con él reconoces la casa.'
@@ -474,7 +474,7 @@ const PorqueGestos = ({
 //   S Sencillez    → alb   (#C8975A) albero
 //   T Transparencia→ vs    (#D4A84A) amarillo amanecer
 //   I Integridad   → vio   (#7B3B6B) violeta
-//   A Arraigo      → vm    (#07A28A) verde Mar
+//   A Arraigo      → vm    (#0B7D5E) verde Mar
 const PORQUE_V4_HUES = {
   H: '212, 43, 128',
   E: '58, 170, 187',

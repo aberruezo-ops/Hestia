@@ -5883,8 +5883,8 @@ const GUIDE_MAP_COLORS = {
     border: '#2A8E9E'
   },
   'beach-dog': {
-    fill: '#07A28A',
-    border: '#056656'
+    fill: '#0B7D5E',
+    border: '#075A43'
   },
   'beach-nude': {
     fill: '#9B7FDB',
@@ -5899,8 +5899,8 @@ const GUIDE_MAP_COLORS = {
     border: '#7B50B0'
   },
   super: {
-    fill: '#2DBBA3',
-    border: '#056656'
+    fill: '#3CC596',
+    border: '#075A43'
   },
   fish: {
     fill: '#176E80',
@@ -5915,8 +5915,8 @@ const GUIDE_MAP_COLORS = {
     border: '#8A1A50'
   },
   vet: {
-    fill: '#07A28A',
-    border: '#056656'
+    fill: '#0B7D5E',
+    border: '#075A43'
   },
   physio: {
     fill: '#A070D0',
@@ -5943,8 +5943,8 @@ const GUIDE_MAP_COLORS = {
     border: '#8A1A50'
   },
   trek: {
-    fill: '#2DBBA3',
-    border: '#056656'
+    fill: '#3CC596',
+    border: '#075A43'
   },
   leisure: {
     fill: '#E8C476',
@@ -8437,7 +8437,7 @@ const THEMES_DEFS = {
     es: 'Naturaleza',
     en: 'Nature',
     icon: '🌿',
-    color: '#07A28A'
+    color: '#0B7D5E'
   },
   gastronomia: {
     es: 'Gastronomía',

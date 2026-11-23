@@ -3,7 +3,7 @@
 // ================================================================
 
 const HS_APTS = [
-  { id: 'vm', num: '01', name: 'Hestía Mar',      short: 'Mar',      slug: 'mar',      accent: '#07A28A',
+  { id: 'vm', num: '01', name: 'Hestía Mar',      short: 'Mar',      slug: 'mar',      accent: '#0B7D5E',
     concept_es: 'El campo de olivos llega al mar.',
     concept_en: 'Where the olive grove meets the sea.' },
   { id: 'vt', num: '02', name: 'Hestía Thalassa', short: 'Thalassa', slug: 'thalassa', accent: '#B86A3C',

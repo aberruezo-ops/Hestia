@@ -34,7 +34,7 @@ const winter = [12, 1, 2].map(m => climate.months.find(c => c.m === m));
 const wMax = [Math.min(...winter.map(c => c.max)), Math.max(...winter.map(c => c.max))];
 const wMin = [Math.min(...winter.map(c => c.min)), Math.max(...winter.map(c => c.min))];
 
-const C = { vm: '#07A28A', vt: '#B86A3C', vs: '#B08A24' };
+const C = { vm: '#0B7D5E', vt: '#B86A3C', vs: '#B08A24' };
 const APT = {
   es: {
     mar: ['Hestía Mar', 'vm', '/mar.html'], thalassa: ['Hestía Thalassa', 'vt', '/thalassa.html'], salinas: ['Hestía Salinas', 'vs', '/salinas.html'],

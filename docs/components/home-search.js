@@ -10,7 +10,7 @@ const HS_APTS = [{
   name: 'Hestía Mar',
   short: 'Mar',
   slug: 'mar',
-  accent: '#07A28A',
+  accent: '#0B7D5E',
   concept_es: 'El campo de olivos llega al mar.',
   concept_en: 'Where the olive grove meets the sea.'
 }, {

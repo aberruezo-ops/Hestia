@@ -1337,7 +1337,7 @@ const LastMinuteStrip = ({
     }).format(new Date(ds + 'T12:00:00Z'));
   };
   const APT_COLOR = {
-    vm: '#07A28A',
+    vm: '#0B7D5E',
     vt: '#B86A3C',
     vs: '#D4A84A'
   };

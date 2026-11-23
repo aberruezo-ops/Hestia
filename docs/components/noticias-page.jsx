@@ -391,7 +391,7 @@ const ArticleCardWithZone = ({ article, cat, lang }) => (
 // no sea un recorte plano girando. La deriva lateral va acoplada a ese
 // mismo ángulo (seno, noventa grados desfasado), nunca independiente.
 const LEAF_COLORS = [
-  { face: '#07A28A', back: '#6FD3BF' }, // Mar · verde
+  { face: '#0B7D5E', back: '#7FDDB9' }, // Mar · verde
   { face: '#B86A3C', back: '#D9A47E' }, // Thalassa · cobre
   { face: '#D4A84A', back: '#C8C1B4' }, // Salinas · dorado
 ];
