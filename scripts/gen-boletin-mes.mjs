@@ -23,7 +23,7 @@ const OUT_DIR  = 'docs/boletin';
 const SITE     = 'https://www.hestiayourhome.com';
 const MONTHS_ES = ['enero', 'febrero', 'marzo', 'abril', 'mayo', 'junio', 'julio', 'agosto', 'septiembre', 'octubre', 'noviembre', 'diciembre'];
 const APT = {
-  'Hestía Mar':      { color: '#6B7A3A', slug: 'mar.html' },
+  'Hestía Mar':      { color: '#07A28A', slug: 'mar.html' },
   'Hestía Thalassa': { color: '#B86A3C', slug: 'thalassa.html' },
   'Hestía Salinas':  { color: '#7A5E1A', slug: 'salinas.html' },
 };

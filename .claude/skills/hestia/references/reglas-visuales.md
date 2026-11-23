@@ -23,7 +23,7 @@ Además del filo de color sobre tarjetas (ver «Marca de tarjeta»), **ninguna c
 
 Cada Hestía tiene SU color y debe llevarlo **siempre que se le nombre o represente**, para que el usuario asocie el color al apartamento:
 
-- **Mar** = olivo `--vm` (#6B7A3A · dk `--vm-dk` · claro `--vm2`)
+- **Mar** = verde `--vm` (#07A28A · dk `--vm-dk` · claro `--vm2`)
 - **Thalassa** = cobre `--vt` (#B86A3C · dk `--vt-dk` · claro `--vt2`)
 - **Salinas** = dorado `--vs` (#D4A84A · dk `--vs-dk` · claro `--vs2`)
 

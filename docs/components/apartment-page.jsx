@@ -25,7 +25,7 @@ const APT_DATA = {
     name_short: 'Mar',
     video_src: 'assets/hestia-mar.mp4',
     video_duration: 'PT1M23S', video_upload: '2026-11-11T12:00:00+01:00',
-    accent: '#6B7A3A', accent2: '#8B9A52', accent_dk: '#4A5628',
+    accent: '#07A28A', accent2: '#2DBBA3', accent_dk: '#056656',
     hero_img: 'assets/apt-vm-gallery-26.jpg',
     bedroom_img: 'assets/apt-vm-gallery-26.jpg',
     reveal_img: 'assets/apt-vm-gallery-27.jpg',

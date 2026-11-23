@@ -472,17 +472,17 @@ const ArticleCardWithZone = ({
 }, article.cuerpo[lang])));
 
 // ── Hojas cayendo, guiño de otoño sobre el hero del blog ──────────
-// Cada Hestía presta su color (olivo, cobre, dorado): las hojas son el
+// Cada Hestía presta su color (verde, cobre, dorado): las hojas son el
 // territorio entero cayendo, no un efecto genérico. El giro (scaleX con
 // coseno) es lo que hace que lean como hoja y no como confeti: cruza por
 // cero al ponerse de canto y ahí se ve el reverso, más pálido, para que
 // no sea un recorte plano girando. La deriva lateral va acoplada a ese
 // mismo ángulo (seno, noventa grados desfasado), nunca independiente.
 const LEAF_COLORS = [{
-  face: '#6B7A3A',
-  back: '#9CA870'
+  face: '#07A28A',
+  back: '#6FD3BF'
 },
-// Mar · olivo
+// Mar · verde
 {
   face: '#B86A3C',
   back: '#D9A47E'

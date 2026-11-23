@@ -14,7 +14,7 @@ const MAPA_COPY = {
         title: 'Los Hestías',
         items: [
           { href: 'index.html', label: 'Home', desc: 'Empieza aquí, los tres Hestías de un vistazo.' },
-          { href: 'mar.html', label: 'Hestía Mar', desc: 'Olivo · planta primera con jardín y terraza al amanecer.', apt: 'vm' },
+          { href: 'mar.html', label: 'Hestía Mar', desc: 'Verde · planta primera con jardín y terraza al amanecer.', apt: 'vm' },
           { href: 'thalassa.html', label: 'Hestía Thalassa', desc: 'Cobre · ático con SPA comunitario y vistas panorámicas.', apt: 'vt' },
           { href: 'salinas.html', label: 'Hestía Salinas', desc: 'Dorado · el más grande, jardines con riachuelos y Parque Natural a un paseo corto.', apt: 'vs' },
         ],
@@ -57,7 +57,7 @@ const MAPA_COPY = {
         title: 'The Hestías',
         items: [
           { href: 'index.html', label: 'Home', desc: 'Start here, the three Hestías at a glance.' },
-          { href: 'mar.html', label: 'Hestía Mar', desc: 'Olive · first floor with garden and sunrise terrace.', apt: 'vm' },
+          { href: 'mar.html', label: 'Hestía Mar', desc: 'Green · first floor with garden and sunrise terrace.', apt: 'vm' },
           { href: 'thalassa.html', label: 'Hestía Thalassa', desc: 'Copper · penthouse with shared SPA and panoramic views.', apt: 'vt' },
           { href: 'salinas.html', label: 'Hestía Salinas', desc: 'Gold · the largest, gardens with streams and the Nature Park a short walk away.', apt: 'vs' },
         ],

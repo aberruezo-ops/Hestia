@@ -20,7 +20,7 @@ const MAPA_COPY = {
       }, {
         href: 'mar.html',
         label: 'Hestía Mar',
-        desc: 'Olivo · planta primera con jardín y terraza al amanecer.',
+        desc: 'Verde · planta primera con jardín y terraza al amanecer.',
         apt: 'vm'
       }, {
         href: 'thalassa.html',
@@ -105,7 +105,7 @@ const MAPA_COPY = {
       }, {
         href: 'mar.html',
         label: 'Hestía Mar',
-        desc: 'Olive · first floor with garden and sunrise terrace.',
+        desc: 'Green · first floor with garden and sunrise terrace.',
         apt: 'vm'
       }, {
         href: 'thalassa.html',

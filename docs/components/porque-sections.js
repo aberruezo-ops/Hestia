@@ -190,14 +190,14 @@ const BRAND_PALETTE = [{
     story: 'The sea and sky at dawn. Not the electric blue of postcards: the real turquoise, clean and luminous, that the Mediterranean and the Almería sky share only in the first minutes of the day.'
   }
 }, {
-  hex: '#6B7A3A',
+  hex: '#07A28A',
   es: {
-    name: 'Verde olivo',
-    story: 'El olivar de Vera Playa con la luz lateral de la mañana. Desde Hestía Mar se ve el mar entre las ramas. Este verde existe en Almería desde antes que Roma.'
+    name: 'Verde Mar',
+    story: 'El verde de Hestía Mar, el del mueble de la entrada junto al rótulo Hestia Vera. Con él reconoces la casa.'
   },
   en: {
-    name: 'Olive green',
-    story: 'The Vera Playa olive grove in the side-light of morning. From Hestía Mar you see the sea between the branches. This green existed in Almería before Rome did.'
+    name: 'Mar green',
+    story: 'The green of Hestía Mar, the one on the cabinet by the entrance next to the Hestia Vera sign. It is how you recognise the home.'
   }
 }, {
   hex: '#D42B80',
@@ -474,7 +474,7 @@ const PorqueGestos = ({
 //   S Sencillez    → alb   (#C8975A) albero
 //   T Transparencia→ vs    (#D4A84A) amarillo amanecer
 //   I Integridad   → vio   (#7B3B6B) violeta
-//   A Arraigo      → vm    (#6B7A3A) olivo
+//   A Arraigo      → vm    (#07A28A) verde Mar
 const PORQUE_V4_HUES = {
   H: '212, 43, 128',
   E: '58, 170, 187',

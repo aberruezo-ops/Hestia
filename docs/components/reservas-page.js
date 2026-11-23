@@ -512,7 +512,7 @@ const ReservasForm = ({
     vs: 'Hestía Salinas'
   };
   const aptAccents = {
-    vm: '#6B7A3A',
+    vm: '#07A28A',
     vt: '#B86A3C',
     vs: '#D4A84A'
   };
@@ -1144,7 +1144,7 @@ const ReservasForm = ({
   }, [{
     id: 'vm',
     name: 'Hestía Mar',
-    accent: '#6B7A3A'
+    accent: '#07A28A'
   }, {
     id: 'vt',
     name: 'Hestía Thalassa',
@@ -1178,7 +1178,7 @@ const ReservasForm = ({
     setCheckout: setCheckout,
     blocked: apt && avail && avail[apt] ? avail[apt].blocked : allAptsBlocked,
     gapOffers: apt && window.PRICES_V2 && window.PRICES_V2.gapOverrides ? Object.values(window.PRICES_V2.gapOverrides).filter(o => o && o.apt === apt) : [],
-    accent: apt === 'vm' ? '#6B7A3A' : apt === 'vt' ? '#B86A3C' : apt === 'vs' ? '#D4A84A' : '#3AAABB',
+    accent: apt === 'vm' ? '#07A28A' : apt === 'vt' ? '#B86A3C' : apt === 'vs' ? '#D4A84A' : '#3AAABB',
     lang: lang
   }), !apt && /*#__PURE__*/React.createElement("p", {
     className: "form-help-note"
@@ -1306,7 +1306,7 @@ const ReservasForm = ({
     id: 'vm',
     name: 'Hestía Mar',
     slug: 'mar',
-    color: '#6B7A3A'
+    color: '#07A28A'
   }, {
     id: 'vt',
     name: 'Hestía Thalassa',
