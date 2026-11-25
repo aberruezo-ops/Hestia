@@ -3228,6 +3228,10 @@ const PLACES = [
     name: 'Cabalgata de Reyes Magos',
     when: '5 de enero',
     d: 'Los Reyes Magos recorren el casco antiguo; buen plan de invierno para ir con niños.'
+  }, {
+    name: 'Encendido de las luces de Navidad y Disney Day',
+    when: 'finales de noviembre',
+    d: 'Personajes Disney por el casco antiguo y encendido de las luces a las 19:00. Confirma el programa en el ayuntamiento.'
   }],
   cat: 'town',
   lat: 37.1377,
@@ -3252,6 +3256,10 @@ const PLACES = [
     name: 'Festival de Cante Flamenco',
     when: 'agosto',
     d: 'Uno de los festivales flamencos veteranos del Levante almeriense.'
+  }, {
+    name: 'Belén monumental y ruta de belenes',
+    when: 'diciembre, hasta el 6 de enero',
+    d: 'Belén monumental con más de 2.000 figuras artesanales y ruta de belenes por el pueblo. Confirma el programa en el ayuntamiento.'
   }],
   cat: 'town',
   lat: 37.2491,
@@ -3380,6 +3388,10 @@ const PLACES = [
     name: 'Feria de Cuevas',
     when: 'mediados de agosto',
     d: 'Feria veraniega con caseta municipal y conciertos.'
+  }, {
+    name: 'La Invernal (Motorbeach)',
+    when: '26 de febrero–1 de marzo de 2027',
+    d: 'Primera edición invernal del festival en la playa de Quitapellejos: motos, música en directo y camping junto al mar.'
   }],
   cat: 'town',
   lat: 37.2978,
@@ -3457,6 +3469,14 @@ const PLACES = [
     name: 'Cabalgata de Reyes Magos',
     when: '5 de enero',
     d: 'Desfile de los Reyes Magos por el centro de la ciudad.'
+  }, {
+    name: 'Mercadillo navideño de la Rambla',
+    when: 'del 1 de diciembre al 7 de enero',
+    d: 'Unas 70 casetas de madera en la Rambla Federico García Lorca. Confirma el programa en el ayuntamiento.'
+  }, {
+    name: 'Carnaval de Almería',
+    when: 'febrero',
+    d: 'Carnaval infantil, cabalgata y Entierro de la Sardina (en 2026, del 14 al 22 de febrero). Confirma el programa.'
   }],
   cat: 'town',
   lat: 36.8350,

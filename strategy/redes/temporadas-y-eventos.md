@@ -19,7 +19,10 @@
 - **Enero:** San Antonio Abad (17, hogueras y bendición de animales, encaja con
   el mensaje pet-friendly).
   Cabalgata de Reyes Magos (5, tarde) en Garrucha, Mojácar y Almería capital.
-- **Febrero:** Carnaval de Águilas (Interés Turístico Internacional).
+- **Febrero:** Carnaval de Águilas (Interés Turístico Internacional), Carnaval de
+  Almería (en 2026, del 14 al 22; confirmar fechas) y La Invernal Motorbeach en la
+  playa de Quitapellejos, Cuevas del Almanzora (26 feb–1 mar de 2027, motos y
+  música en directo).
 - **Marzo/Abril:** Semana Santa de Almería (Interés Turístico Nacional) y de
   Lorca (Internacional, procesiones con caballos y bordados en oro).
 - **Abril:** Romerías de la Virgen de las Angustias y de la Virgen de la Cabeza
@@ -41,7 +44,10 @@
   Gamba Roja en Garrucha (último fin de semana, degustaciones y showcookings
   junto al puerto, a 10 min de Hestía), Alfarería de Sorbas. Otoño suave.
 - **Noviembre:** San Diego (12-13). Empieza el ángulo teletrabajo/invierno.
-- **Diciembre:** Navidad tranquila junto al mar.
+- **Diciembre:** Navidad tranquila junto al mar. Encendido de luces y Disney Day
+  en Mojácar (finales de noviembre), belén monumental y ruta de belenes de Vera
+  (hasta el 6 de enero) y mercadillo navideño en la Rambla de Almería (1 dic–7 ene).
+  Confirmar programa en los ayuntamientos.
 
 ## Ideas de contenido recurrente (sin fecha)
 - "Hueco de última hora" (fechas concretas que quedan libres entre reservas).
