@@ -55,6 +55,7 @@ const APT_DATA = {
     license: 'VFT/AL/01580',
     name_short: 'Mar',
     video_src: 'assets/hestia-mar.mp4',
+    video_lite: 'assets/hestia-mar-720.mp4',
     video_duration: 'PT1M23S',
     video_upload: '2026-11-11T12:00:00+01:00',
     accent: '#0B7D5E',
@@ -121,6 +122,7 @@ const APT_DATA = {
     license: 'VFT/AL/05535',
     name_short: 'Thalassa',
     video_src: 'assets/hestia-thalassa.mp4',
+    video_lite: 'assets/hestia-thalassa-720.mp4',
     video_duration: 'PT1M8S',
     video_upload: '2026-11-11T12:00:00+01:00',
     accent: '#B86A3C',
@@ -183,6 +185,7 @@ const APT_DATA = {
     license: 'VFT/AL/07056',
     name_short: 'Salinas',
     video_src: 'assets/hestia-salinas.mp4',
+    video_lite: 'assets/hestia-salinas-720.mp4',
     video_duration: 'PT1M22S',
     video_upload: '2026-11-11T12:00:00+01:00',
     accent: '#D4A84A',
@@ -1076,7 +1079,8 @@ const APT_WM = {
   vs: 'salinas'
 };
 
-// El vídeo pesa 22-25 MB: no se descarga hasta que la sección está a punto de
+// Aquí va la versión ligera (720p, keyframe cada 2 s); la de 1080p solo se descarga
+// al abrir el vídeo completo. No se descarga hasta que la sección está a punto de
 // verse, y se pausa al salir de pantalla.
 const AptVideoDesc = ({
   apt,
@@ -1125,7 +1129,7 @@ const AptVideoDesc = ({
   }, /*#__PURE__*/React.createElement("video", {
     ref: vidRef,
     className: "avd-iframe",
-    src: near ? apt.video_src : undefined,
+    src: near ? apt.video_lite || apt.video_src : undefined,
     preload: "none",
     autoPlay: near,
     muted: true,

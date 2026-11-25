@@ -24,6 +24,7 @@ const APT_DATA = {
     id: 'vm', num: '01', slug: 'mar', license: 'VFT/AL/01580',
     name_short: 'Mar',
     video_src: 'assets/hestia-mar.mp4',
+    video_lite: 'assets/hestia-mar-720.mp4',
     video_duration: 'PT1M23S', video_upload: '2026-11-11T12:00:00+01:00',
     accent: '#0B7D5E', accent2: '#3CC596', accent_dk: '#075A43',
     hero_img: 'assets/apt-vm-gallery-26.jpg',
@@ -126,6 +127,7 @@ const APT_DATA = {
     id: 'vt', num: '02', slug: 'thalassa', license: 'VFT/AL/05535',
     name_short: 'Thalassa',
     video_src: 'assets/hestia-thalassa.mp4',
+    video_lite: 'assets/hestia-thalassa-720.mp4',
     video_duration: 'PT1M8S', video_upload: '2026-11-11T12:00:00+01:00',
     accent: '#B86A3C', accent2: '#D08B5A', accent_dk: '#8A4A24',
     hero_img: 'assets/apt-vt-gallery-33.jpg',
@@ -223,6 +225,7 @@ const APT_DATA = {
     id: 'vs', num: '03', slug: 'salinas', license: 'VFT/AL/07056',
     name_short: 'Salinas',
     video_src: 'assets/hestia-salinas.mp4',
+    video_lite: 'assets/hestia-salinas-720.mp4',
     video_duration: 'PT1M22S', video_upload: '2026-11-11T12:00:00+01:00',
     accent: '#D4A84A', accent2: '#E8C476', accent_dk: '#7A5E1A',
     hero_img: 'assets/apt-vs-gallery-33.jpg',
@@ -925,7 +928,8 @@ const GALLERY_ZONES = [
 // Logo de la marca de agua: el del color de cada Hestía.
 const APT_WM = { vm: 'mar', vt: 'thalassa', vs: 'salinas' };
 
-// El vídeo pesa 22-25 MB: no se descarga hasta que la sección está a punto de
+// Aquí va la versión ligera (720p, keyframe cada 2 s); la de 1080p solo se descarga
+// al abrir el vídeo completo. No se descarga hasta que la sección está a punto de
 // verse, y se pausa al salir de pantalla.
 const AptVideoDesc = ({ apt, lang }) => {
   const vidRef = React.useRef(null);
@@ -954,7 +958,7 @@ const AptVideoDesc = ({ apt, lang }) => {
             <video
               ref={vidRef}
               className="avd-iframe"
-              src={near ? apt.video_src : undefined}
+              src={near ? (apt.video_lite || apt.video_src) : undefined}
               preload="none"
               autoPlay={near} muted loop playsInline controls
               poster={apt.hero_img}
